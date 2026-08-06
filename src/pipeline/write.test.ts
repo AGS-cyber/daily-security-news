@@ -5,7 +5,7 @@ import type { Item, Section, Selection, Usage } from '../types.js';
 import { write } from './write.js';
 
 const USAGE: Usage = {
-  model: 'deepseek-v4-pro',
+  model: 'deepseek-v4-flash',
   promptCacheHitTokens: 0,
   promptCacheMissTokens: 100,
   outputTokens: 800,

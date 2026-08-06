@@ -5,7 +5,7 @@ import type { Item, Usage } from '../types.js';
 import { select } from './select.js';
 
 const USAGE: Usage = {
-  model: 'deepseek-v4-pro',
+  model: 'deepseek-v4-flash',
   promptCacheHitTokens: 0,
   promptCacheMissTokens: 100,
   outputTokens: 20,
@@ -58,7 +58,7 @@ test('a well-formed response parses to the expected selections', async () => {
     { id: 's2', section: 'exploited', rank: 1, angle: 'under attack now' },
     { id: 's1', section: 'industry', rank: 2, angle: 'sets a precedent' },
   ]);
-  assert.equal(result.usage.model, 'deepseek-v4-pro');
+  assert.equal(result.usage.model, 'deepseek-v4-flash');
 });
 
 test('rejects an id that is not in this run', async () => {

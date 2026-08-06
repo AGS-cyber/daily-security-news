@@ -5,7 +5,7 @@ mattered in security over the previous 24 hours. Not a feed dump and not a list
 of headlines — a piece you read start to finish in a few minutes and come away
 current.
 
-**Live site:** https://ags-cyber.github.io/daily-security-news/
+**Live site:** not yet set — deployed on Vercel from `main`.
 
 The reader is assumed to be security-literate. They don't need "what is
 ransomware"; they need to know which of yesterday's forty stories are worth
@@ -30,7 +30,7 @@ publishes a plain chronological digest, not a written article.
 | Layer | What it adds | Status |
 |---|---|---|
 | 1 | RSS → dedupe → digest page, run by hand | done |
-| 2 | Actions schedule, Pages deploy, archive, seen store | done |
+| 2 | Actions schedule, hosted deploy, archive, seen store | done |
 | 3 | `select` + `write` against DeepSeek — the actual article | built; see below |
 | 4 | CISA KEV + NVD enrichment | not started |
 | 5 | Hacker News, r/netsec, optional search API | not started |
@@ -88,7 +88,8 @@ between `filter` and `render`.
 - **filter** — drop anything already published in an earlier edition, or older
   than 7 days. See §3; this is one window, not two.
 - **render** — edition JSON, then `index.html`, a dated page, and the archive.
-- **publish** — Actions commits `site/` and `data/` and deploys to Pages.
+- **publish** — Actions commits `site/` and `data/` to `main`. Vercel deploys
+  off that push; there is no deploy job.
 
 Pipeline-stage failures are hard failures: the run aborts, nothing deploys,
 yesterday's article stays up, and the build goes red. There is no partial
@@ -125,7 +126,8 @@ src/
 data/
   seen.json                 canonical-URL hashes → date first covered
   editions/YYYY-MM-DD.json  the record behind each page
-site/                       generated, published to Pages
+site/                       generated, served by Vercel
+vercel.json                 output directory; no build step
 ```
 
 `data/` and `site/` are committed on purpose — they are the product, and the
