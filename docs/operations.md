@@ -32,6 +32,20 @@ chronological digest under a banner explaining the article is missing (§8).
 That is a disclosed fallback, not a crash, and it is the behaviour you should
 expect to see until the secret is set.
 
+> **A `.env` file will not work.** `.gitignore` lists `.env` and `.env.*`, but
+> there is no `dotenv` dependency and nothing reads one — `llm/client.ts` goes
+> straight to `process.env`. The gitignore entries are there so a stray file
+> cannot be committed, not because the file would be loaded. Put the key in a
+> real environment variable:
+>
+> ```powershell
+> $env:DEEPSEEK_API_KEY = "sk-..."                                            # this shell
+> [Environment]::SetEnvironmentVariable('DEEPSEEK_API_KEY','sk-...','User')   # persists
+> ```
+>
+> The failure is at least loud: a `.env`-only setup produces the digest under
+> the "is not set" banner rather than appearing to work.
+
 > **The generation path first ran on 2026-08-06** and produced an article on
 > the first attempt: `mode: "article"`, empty `degraded`, 8 stories, $0.0047.
 > The model honoured the prompt contract — valid JSON from `select`, and no
@@ -108,17 +122,42 @@ dead feeds do not announce themselves.
 **Change the schedule.** The cron in `daily.yml`. If you move it, re-check
 §6/§9 — some hours cost twice as much on DeepSeek.
 
-**Regenerate a day's edition from scratch.** Delete the generated state and
-re-run. Everything is reproducible from the feeds plus the seen store:
+**Change how pages look, then rebuild them all.** A normal run rewrites only
+three files — today's dated page, `index.html`, and the archive. So after any
+change under `render/` — the CSS, the layout, the markup — **every past dated
+page keeps the old design**, silently and indefinitely. Nothing warns you;
+stale pages render perfectly, just wrong.
+
+```sh
+npm run rerender
+```
+
+That rebuilds every page from `data/editions`. It makes no network calls, calls
+no model, and does not touch `seen.json` — the edition pages are a pure
+function of the editions, which is the whole reason the editions are the
+record. It is also the right way to preview a design change: run it, open
+`site/index.html`, and no API budget is spent.
+
+**Expect one line of diff even when nothing changed.** `archive.html` carries a
+`Generated <timestamp>` footer stamped at render time, so it differs on every
+run. If that footer is the *only* change after a re-render, your renderer edit
+had no visible effect — that is a useful signal, not a fault. The dated pages
+and `index.html` are byte-stable when the markup is unchanged.
+
+**Regenerate a day's edition from scratch.** Different operation, and a
+destructive one — this re-runs the pipeline rather than re-rendering what it
+already produced:
 
 ```sh
 rm -rf data site
 npm start
 ```
 
-Note this rebuilds `seen.json` empty, so the run pulls the full 7-day window
-and produces an unusually large edition. That is the cold-start behaviour
-described in §3, not a fault.
+This rebuilds `seen.json` empty, so the run pulls the full 7-day window and
+produces an unusually large edition — the cold-start behaviour in §3, not a
+fault. It also spends an LLM call and writes a *different* article from a
+different story set (see "A later re-run produces a smaller edition" in §5).
+If all you changed was presentation, you want `npm run rerender` instead.
 
 **Inspect an edition without opening the HTML:**
 
