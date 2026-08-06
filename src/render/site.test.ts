@@ -51,7 +51,7 @@ function articleEdition(over: Partial<ArticleEdition> = {}): ArticleEdition {
       published: 2,
     },
     usage: {
-      model: 'deepseek-v4-pro',
+      model: 'deepseek-v4-flash',
       promptCacheHitTokens: 0,
       promptCacheMissTokens: 40_000,
       outputTokens: 15_000,

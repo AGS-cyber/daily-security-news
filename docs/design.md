@@ -34,6 +34,18 @@ it means nothing collected is silently discarded.
 
 Static HTML with inlined CSS. No client-side framework.
 
+**Presentation — a green-phosphor terminal.** Monospace throughout, near-black
+background, a fixed scanline overlay, and shell-prompt chrome. Dark only: there
+is no light palette, because a light-mode CRT is a contradiction and carrying
+two themes for one page buys nothing.
+
+Every decorative character — the `root@sec:~$` prompt, the `$` and `##` sigils,
+the `[01]` story numbers, the blinking cursor — is CSS `content`, never markup.
+The document stays plain readable prose with the stylesheet off, and the theme
+never touches a story's title, link, or timestamp. Styling is confined to the
+`CSS` constant and `layout()` in `render/html.ts`; no other module knows what
+the page looks like.
+
 ## 3. Pipeline
 
 One run produces one article. Stages are pure where possible: each takes data
@@ -54,7 +66,7 @@ collect ─▶ normalize ─▶ dedupe ─▶ filter ─▶ enrich ─▶ select
 | `select` | LLM call 1 — which stories make the article, and why | Fatal, disclosed fallback (§8) |
 | `write` | LLM call 2 — the article prose | Fatal, disclosed fallback (§8) |
 | `render` | Article JSON + HTML pages | Fatal |
-| `publish` | Commit `site/` and `data/`, deploy to Pages | Fatal |
+| `publish` | Commit `site/` and `data/`; the push is the deploy (§9) | Fatal |
 
 **Window.** An item is included when it is **not in the seen store** and was
 **published within the last 7 days**. That is the whole rule.
@@ -215,11 +227,20 @@ base URL with `DEEPSEEK_API_KEY`. No DeepSeek-specific SDK.
 
 Both: 1M context, 384K max output.
 
-Use **`deepseek-v4-pro` for both calls.** At roughly 40K input and 15K output
-tokens per run that is about **$0.03 a day — under $1 a month**, and both
-calls are editorial judgment, which is what the reasoning model is for. Flash
-would save about two thirds of nearly nothing. Cost is not the constraint
-here; quality of selection is.
+Use **`deepseek-v4-flash` for both calls** — decided 2026-08-06, revising an
+earlier choice of `deepseek-v4-pro`. At roughly 40K input and 15K output
+tokens per run that is about **$0.01 a day**.
+
+The tradeoff is stated rather than buried, because the original reasoning
+still stands on its own terms: both calls are editorial judgment, which is
+what a reasoning model is for, and flash saves about two cents a day. **Cost
+is not what justifies this.** The justification is that the generation path
+has never produced an edition anyone has read (`operations.md` §1), and flash
+is the cheaper and faster model to iterate the prompt contract against while
+that is still true.
+
+So this is a decision with an expiry date, not a settled one — see §11.
+Reverting is one constant and one price table in `llm/client.ts`.
 
 **Peak pricing is 2× during 09:00–12:00 and 14:00–18:00 Beijing time
 (UTC+8)** — that is 01:00–04:00 and 06:00–10:00 UTC. Whether the 08:00 run
@@ -272,7 +293,8 @@ src/
 data/
   seen.json                 dedupe state, committed
   editions/YYYY-MM-DD.json  the record
-site/                       generated, published to Pages
+site/                       generated, served by Vercel
+vercel.json                 output directory; no build step
 .github/workflows/daily.yml
 ```
 
@@ -315,10 +337,10 @@ not a dash that reads like a real value.
 
 ## 9. Scheduling
 
-GitHub Actions, cron, once daily. The job checks out, runs the generator,
-commits `site/` and `data/`, and deploys to GitHub Pages. Actions cron is
-**UTC only**, so "08:00" has to be pinned to a zone — and the choice
-interacts with DeepSeek's peak window (§6):
+GitHub Actions, cron, once daily. The job checks out, runs the generator, and
+commits `site/` and `data/` to `main`. Actions cron is **UTC only**, so "08:00"
+has to be pinned to a zone — and the choice interacts with DeepSeek's peak
+window (§6):
 
 | 08:00 in | UTC | Beijing | DeepSeek rate |
 |---|---|---|---|
@@ -342,6 +364,26 @@ fight the scheduler.
 until keyed API sources are added. A failed run leaves the previous article
 deployed and surfaces as a failed check.
 
+**Hosting: Vercel, static only** (decided 2026-08-06, replacing GitHub Pages).
+Vercel's Git integration builds `main` on every push, and the workflow already
+pushes `site/`, so the push *is* the deploy. There is no deploy job, no Vercel
+token in this repository, and no second place for the site to drift out of
+sync with the record.
+
+**Generation stays in Actions, and this is not a temporary arrangement.** The
+obvious-looking alternative — a Vercel cron hitting a serverless function —
+breaks §3. Functions get an ephemeral filesystem, so `data/seen.json` cannot
+survive between invocations, and the seen store is the mechanism that makes
+each edition a day's news rather than the whole 7-day window republished
+daily. Losing it is the cold-start behaviour on a loop. `render` also writes
+`site/*.html` to disk, which a serverless function has nowhere to put.
+
+Running the pipeline on Vercel therefore means replacing the seen store with a
+hosted database and rewriting `render`/`publish` — a large change that buys
+nothing, since Actions already runs the generator for free and holds the one
+piece of mutable state in the same git history as the output it explains.
+**The split is deliberate: Actions computes, Vercel serves.**
+
 ## 10. Build order
 
 Each layer ends with something that works end to end. Nothing is left
@@ -351,7 +393,7 @@ half-built to start the next one.
    plain chronological page, run by hand. No LLM. This is a working product
    and it is also the §8 fallback mode — building it first means the fallback
    is real code that runs, not an untested branch.
-2. **Automate.** GitHub Actions on a schedule, Pages deploy, archive pages,
+2. **Automate.** GitHub Actions on a schedule, hosted deploy, archive pages,
    seen-store persistence.
 3. **Write.** Add `select` and `write` against DeepSeek, with Zod validation,
    the retry, and the fallback wired from day one.
@@ -371,5 +413,10 @@ Decide before the layer that needs them; don't guess early.
   Still worth revisiting after a week of real output.
 - ~~How many stories get written up versus listed below.~~ Decided
   2026-08-06 — **6–8**, a range rather than a quota. See §6.
+- **Whether `deepseek-v4-flash` is good enough at `select`.** Chosen
+  2026-08-06 to iterate against (§6). Judge it on a week of real output, not
+  in the abstract: if the lead story is routinely the wrong one, or sections
+  are misassigned, go back to `deepseek-v4-pro` — the difference is about
+  two cents a day, so quality is the only thing that should decide it.
 - Whether the archive needs search. Probably not at 365 pages; definitely not
   at 30.

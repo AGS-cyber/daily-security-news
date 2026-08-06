@@ -1,14 +1,14 @@
 import OpenAI from 'openai';
 import type { Usage } from '../types.js';
 
-const MODEL = 'deepseek-v4-pro';
+const MODEL = 'deepseek-v4-flash';
 const BASE_URL = 'https://api.deepseek.com';
 
-/** USD per million tokens, design §6, deepseek-v4-pro. */
+/** USD per million tokens, design §6, deepseek-v4-flash. */
 const PRICE_PER_MILLION = {
-  cacheHit: 0.003625,
-  cacheMiss: 0.435,
-  output: 0.87,
+  cacheHit: 0.0028,
+  cacheMiss: 0.14,
+  output: 0.28,
 };
 
 export interface LlmResult {

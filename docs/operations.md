@@ -5,7 +5,8 @@ for *what* the system is and why it is shaped that way; this file is what you
 need when it is 08:00 and the build is red.
 
 Repository: https://github.com/AGS-cyber/daily-security-news
-Live site: https://ags-cyber.github.io/daily-security-news/
+Live site: **not yet set** — hosted on Vercel; fill this in from the project's
+Domains tab once it exists. The old GitHub Pages URL is retired.
 
 ## 1. Setup
 
@@ -57,16 +58,26 @@ what makes it possible to answer "why wasn't this story covered?" later.
 `.github/workflows/daily.yml`, cron `0 12 * * *` UTC — 08:00 US Eastern, which
 also dodges DeepSeek's 2× peak-pricing window (§6, §9).
 
-Two jobs. `build` checks out, installs, typechecks, tests, runs the generator,
-commits `site/` and `data/` back to `main`, and uploads `site/` as a Pages
-artifact. `deploy` publishes that artifact via `actions/deploy-pages@v4`.
+One job. `build` checks out, installs, typechecks, tests, runs the generator,
+and commits `site/` and `data/` back to `main`. It needs `contents: write` and
+nothing else.
 
-Needs `contents: write` (to commit), `pages: write` and `id-token: write` (to
-deploy), and Pages configured with **build source = GitHub Actions**:
+**There is no deploy job — the push is the deploy.** Vercel's Git integration
+builds `main` on every commit, so the workflow's `git push` is what publishes.
+Nothing in this repository talks to Vercel, and no Vercel token is stored here.
 
-```sh
-gh api repos/AGS-cyber/daily-security-news/pages -X POST -f build_type=workflow
-```
+Vercel project settings, which `vercel.json` pins so they are not dashboard-only
+state:
+
+| Setting | Value | Why |
+|---|---|---|
+| Framework Preset | Other | There is no framework |
+| Output Directory | `site` | The pages are committed, not built |
+| Build Command | empty | Nothing to build |
+| Install Command | empty | The site needs no dependencies |
+
+If the first deploy 404s, it is almost always Output Directory: Vercel served
+the repo root instead of `site/`.
 
 `workflow_dispatch` is enabled, so you can trigger a run by hand:
 
@@ -222,27 +233,33 @@ failure mode), and `select`/`write` each retry once more on a *validation*
 failure. Worst case is two validation attempts, not four transport attempts.
 
 **Cost.** A successful run logs a cost per call, summed into `usage` on the
-edition. Expect roughly $0.03/day on `deepseek-v4-pro` at ~40K in / ~15K out.
+edition. Expect roughly $0.01/day on `deepseek-v4-flash` at ~40K in / ~15K out.
 If the figure looks wrong, check `usage` in the edition JSON —
 `promptCacheHitTokens` and `promptCacheMissTokens` are recorded separately so
 cache behaviour is observable rather than assumed.
 
-### Pages deploy fails with `deployment_queued`, or a run sits in `queued`
+### A run sits in `queued`, or the deploy never happens
 
-**Symptom:** the `build` job passes every step, then `deploy` polls
-`deployment_queued` until `Timeout reached, aborting!`. Or the whole run sits
-`queued` for ten minutes without starting.
+**Symptom:** the whole workflow sits `queued` for ten minutes without starting.
+Or `build` passes every step and the live site never updates.
 
-**Actual cause:** GitHub-side capacity, not this repository. The same workflow
-deployed cleanly twice end to end minutes earlier with no changes in between.
+**Actual cause, historically:** GitHub-side capacity, not this repository. The
+same workflow ran cleanly minutes earlier with no changes in between.
 
 **Response:** re-run it. `gh workflow run daily.yml`. Do not start rewriting
 the workflow — check whether it has ever succeeded unchanged first.
 
-**Side effect while it is failing:** the live site and the repo disagree. The
-build job still commits `site/` and `data/`, so the repo moves ahead while
-Pages keeps serving the last successful deploy. The next successful deploy
-reconciles them. Nothing is lost.
+**A green build does not mean a deploy happened.** The two are decoupled by
+design: `build` commits and pushes, Vercel deploys off the push. So a green
+check plus a stale site means the push landed and Vercel did not act on it —
+check the Vercel dashboard's deployment log, not the Actions log. Nothing is
+lost either way; the pages are committed, so the next successful deploy
+reconciles them.
+
+> Recorded because it was the shape of a real failure under the previous host:
+> the build job committed while GitHub Pages kept serving the last successful
+> deploy, so the repo and the live site disagreed while every check was green.
+> The decoupling survived the move to Vercel, so the symptom will too.
 
 ## 6. Error-handling contract
 
@@ -280,6 +297,6 @@ gh run view <run-id> --log-failed
 # Did the last CI run change what I expected?
 git fetch origin && git show --stat origin/main
 
-# Is the live site current?
-curl -sS https://ags-cyber.github.io/daily-security-news/ | grep -oE '[0-9]+ stories[^<]*'
+# Is the live site current? (SITE_URL — see the top of this file)
+curl -sS "$SITE_URL" | grep -oE '[0-9]+ stories[^<]*'
 ```
