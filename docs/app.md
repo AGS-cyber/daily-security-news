@@ -173,6 +173,42 @@ brackets, doubled `*`/`_`, and a URL containing parens. This is the highest
 risk seam in the app — everything else fails visibly, but a citation bug
 renders a plausible-looking screen with nothing wrong server-side.
 
+`substituteCitations` in `app/shared/.../render/Citations.kt` resolves both
+traps with two decisions:
+
+**It backslash-escapes every ASCII punctuation character in the title**,
+rather than a curated list of the dangerous ones. CommonMark guarantees a
+backslash escape works for any of them, so escaping all of them is always
+valid, and it removes a judgment call that would rot the moment the renderer
+changes. Under-escaping has two grades of failure and both are unacceptable:
+an unbalanced `]` corrupts the document structure, and a stray `*` pair
+silently italicises part of a headline — the "looks fine but is wrong" case
+this project ranks last. In the destination only `\`, `<` and `>` are
+escaped; the angle brackets already protect the parentheses.
+
+**Both escapers are a single pass over the characters**, which dissolves
+trap 1 rather than handling it: there is no second pass to re-process the
+backslashes the first one emitted. The ordering trap only exists for a chain
+of `String.replace` calls, so do not rewrite them as one. The
+trailing-backslash test stays regardless, as the guard against someone doing
+exactly that.
+
+Verified two ways: exact-string unit tests in `CitationsTest`, and — because
+a test can assert a confidently wrong expectation — by feeding the escaped
+output through `marked`, the site's own CommonMark parser, and checking the
+link text and destination came back identical to the story's title and URL.
+
+### An unresolved citation does not throw
+
+The web throws on a citation with no matching story, because it runs at
+publish time where a throw stops a bad page from ever existing. The app runs
+against an edition that is *already published*, so the same throw would
+blank an otherwise fine article over one bad token. It therefore leaves the
+literal `[[s7]]` in the text and returns the id in
+`CitationResult.unresolved`, so the screen can disclose it. That is
+`CLAUDE.md`'s "falls back visibly" tier, which outranks "fails with a clear
+error" — the token reads as obviously broken to anyone looking at it.
+
 ## 6. Building
 
 Requires JDK 21 and an Android SDK; no Android Studio needed. From `app/`:
@@ -227,9 +263,9 @@ Same rule as `design.md` §10 — each layer ends with something that works.
    running (§3, §7).
 3. ~~**Models.**~~ Done — kotlinx.serialization classes mirroring
    `src/types.ts`, decoding the captured 2026-08-06 edition (§4).
-4. **Citations.** The substitution function and its adversarial tests (§5).
-   Isolated deliberately: it is the one bug class with no server-side
-   signal.
+4. ~~**Citations.**~~ Done — the substitution function and its adversarial
+   tests (§5). Isolated deliberately: it is the one bug class with no
+   server-side signal.
 5. **Networking and cache.** Ktor client against the two endpoints; Okio
    file cache of the last fetch for offline reading.
 6. **Screens.** Today, Archive, and a shared detail renderer handling both
