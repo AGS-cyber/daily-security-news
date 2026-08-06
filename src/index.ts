@@ -48,8 +48,9 @@ async function writeArticle(
 
   const reason = (err: unknown): string => (err instanceof Error ? err.message : String(err));
 
-  const client = createClient();
-  if (!client) return fallback('select', 'DEEPSEEK_API_KEY is not set');
+  const created = createClient();
+  if (!created.ok) return fallback('select', created.reason);
+  const { client } = created;
   if (candidates.length === 0) return fallback('select', 'there are no stories to select from');
 
   let selections: Selection[];

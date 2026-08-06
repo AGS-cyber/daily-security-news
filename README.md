@@ -5,7 +5,8 @@ mattered in security over the previous 24 hours. Not a feed dump and not a list
 of headlines — a piece you read start to finish in a few minutes and come away
 current.
 
-**Live site:** not yet set — deployed on Vercel from `main`.
+**Live site:** https://daily-security-news.vercel.app/ — deployed on Vercel
+from `main`.
 
 The reader is assumed to be security-literate. They don't need "what is
 ransomware"; they need to know which of yesterday's forty stories are worth
@@ -24,29 +25,29 @@ duplicate either:
 
 ## Current state
 
-Build order §10 has five layers. **Layers 1 and 2 are done**; the site currently
-publishes a plain chronological digest, not a written article.
+Build order §10 has five layers. **Layers 1, 2 and 3 are done** — the site
+publishes a written article daily, unattended.
 
 | Layer | What it adds | Status |
 |---|---|---|
 | 1 | RSS → dedupe → digest page, run by hand | done |
 | 2 | Actions schedule, hosted deploy, archive, seen store | done |
-| 3 | `select` + `write` against DeepSeek — the actual article | built; see below |
+| 3 | `select` + `write` against DeepSeek — the actual article | done |
 | 4 | CISA KEV + NVD enrichment | not started |
 | 5 | Hacker News, r/netsec, optional search API | not started |
 
-**Layer 3 is built but has never generated a real article.** No
-`DEEPSEEK_API_KEY` is set, so every run currently takes the §8 fallback: it
-publishes the chronological digest under a banner naming the missing key. That
-path is verified end to end. The generation path — the DeepSeek calls
-themselves, the usage accounting, and whether the model honours the prompt
-contract — has made zero real HTTP requests and is covered only by tests
-against a stubbed client. Set the key and the first real run is also the first
-test of it.
+**First real article: 2026-08-06**, on `deepseek-v4-flash`. Before that the
+generation path had never made a real HTTP request — it was covered only by
+tests against a stubbed client — so that run was also its first test. It
+produced `mode: "article"` with an empty `degraded` array, 8 stories written up
+across all five sections and 117 listed below, at a measured **$0.0047**.
 
-That the fallback is a *disclosed* one is the point: §8 forbids a degraded page
-that looks like a normal edition, and the digest renderer is the permanent
-fallback mode, so it ships as exercised code rather than an untested branch.
+The digest renderer remains the permanent §8 fallback, not dead code. When
+`select` or `write` fails, the page publishes as a chronological digest under a
+banner naming the stage and the reason. That the fallback is a *disclosed* one
+is the point: §8 forbids a degraded page that looks like a normal edition, and
+because the digest shipped first (build order §10.1) it is exercised code
+rather than an untested branch.
 
 ## Running it
 
@@ -70,12 +71,14 @@ after it settles to roughly a day's news.
 ## How a run works
 
 ```
-collect ─▶ normalize ─▶ dedupe ─▶ filter ─▶ render ─▶ publish
+collect ─▶ normalize ─▶ dedupe ─▶ filter ─▶ select ─▶ write ─▶ render ─▶ publish
+                                            └───  LLM  ───┘
 ```
 
 Each stage takes data in and returns data out, so any stage can be run and
-inspected alone. Layer 3 inserts `select` and `write` (the two LLM calls)
-between `filter` and `render`.
+inspected alone. Only the two middle stages call a model; everything else is
+deterministic code, because fetching, parsing and deduping are not judgment
+calls.
 
 - **collect** — fetch all feeds concurrently. Per-source failures are
   non-fatal: they append a notice to the edition and render as a banner naming
@@ -87,6 +90,12 @@ between `filter` and `render`.
   who else covered it.
 - **filter** — drop anything already published in an earlier edition, or older
   than 7 days. See §3; this is one window, not two.
+- **select** — LLM call 1. Which 6–8 stories make the article, in what order,
+  under which section. Returns JSON, validated with Zod.
+- **write** — LLM call 2. The prose, in Markdown. The model never emits a URL
+  or a date: it cites stories by pipeline-assigned id (`[[s7]]`) and `render`
+  substitutes the real link. A cited id that doesn't exist is a hard error, not
+  a broken link shipped to the reader.
 - **render** — edition JSON, then `index.html`, a dated page, and the archive.
 - **publish** — Actions commits `site/` and `data/` to `main`. Vercel deploys
   off that push; there is no deploy job.
@@ -120,8 +129,9 @@ src/
   index.ts                  entry point — one run, one edition
   config/sources.ts         the source list
   collect/                  one module per source kind
-  pipeline/                 normalize, dedupe, filter
-  render/                   edition JSON + HTML
+  pipeline/                 normalize, dedupe, filter, select, write
+  llm/client.ts             DeepSeek client + usage accounting
+  render/                   edition JSON + HTML, and the terminal theme
   store/seen.ts             the only mutable state
 data/
   seen.json                 canonical-URL hashes → date first covered

@@ -70,14 +70,34 @@ export interface DeepSeekClient {
   }): Promise<LlmResult>;
 }
 
-/** Returns null when DEEPSEEK_API_KEY is unset. Never throws at construction. */
-export function createClient(): DeepSeekClient | null {
-  const apiKey = process.env['DEEPSEEK_API_KEY']?.trim();
-  if (!apiKey) return null;
+/** The client, or the reason there is not one. */
+export type ClientOrReason =
+  | { ok: true; client: DeepSeekClient }
+  | { ok: false; reason: string };
+
+/**
+ * Never throws at construction — an unusable credential is a disclosed
+ * fallback (§8), not a crash.
+ *
+ * **Unset and empty are reported separately on purpose.** They produce the
+ * same outcome but are different mistakes, and `gh secret set` takes its value
+ * from a blind paste, so an empty secret is easy to create and invisible
+ * afterwards. Collapsing the two once cost a run: the banner read "is not set"
+ * while the secret plainly existed, which sent the search to the workflow file
+ * instead of the stored value. See operations.md §5.
+ */
+export function createClient(): ClientOrReason {
+  const raw = process.env['DEEPSEEK_API_KEY'];
+  if (raw === undefined) return { ok: false, reason: 'DEEPSEEK_API_KEY is not set' };
+
+  const apiKey = raw.trim();
+  if (apiKey === '') {
+    return { ok: false, reason: 'DEEPSEEK_API_KEY is set but its value is empty' };
+  }
 
   const openai = new OpenAI({ apiKey, baseURL: BASE_URL });
 
-  return {
+  const client: DeepSeekClient = {
     async complete(o) {
       let lastError = '';
 
@@ -109,4 +129,6 @@ export function createClient(): DeepSeekClient | null {
       throw new LlmUnavailableError(`DeepSeek request failed twice: ${lastError}`);
     },
   };
+
+  return { ok: true, client };
 }

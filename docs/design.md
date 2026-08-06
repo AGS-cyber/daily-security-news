@@ -211,8 +211,10 @@ they get different calls:
   number, which is the failure §11 warned about. Everything not selected
   still renders in the plain list below, so nothing is discarded.
 - **All five sections** from §5, with any section that has no stories omitted
-  entirely rather than printed as an empty heading. At 6–8 stories most days
-  won't fill all five.
+  entirely rather than printed as an empty heading. This section predicted that
+  6–8 stories would rarely fill all five; the first real edition (2026-08-06)
+  filled all five with 8 stories. One counterexample is not a pattern, but the
+  prediction is on notice.
 
 **Provider.** DeepSeek, `https://api.deepseek.com`. The API is
 OpenAI-compatible, so the client is the `openai` npm package pointed at that
@@ -228,8 +230,14 @@ base URL with `DEEPSEEK_API_KEY`. No DeepSeek-specific SDK.
 Both: 1M context, 384K max output.
 
 Use **`deepseek-v4-flash` for both calls** — decided 2026-08-06, revising an
-earlier choice of `deepseek-v4-pro`. At roughly 40K input and 15K output
-tokens per run that is about **$0.01 a day**.
+earlier choice of `deepseek-v4-pro`.
+
+**Measured on the first real run (2026-08-06):** 16,785 input tokens, 8,337
+output, **$0.0047** — about $0.15 a month. The earlier figure in this section
+guessed 40K in / 15K out and was more than double the truth; it is replaced
+rather than annotated, because a stale estimate sitting next to a real
+measurement is just a second number to disbelieve. One day of news is one data
+point, so treat the shape as established and the magnitude as provisional.
 
 The tradeoff is stated rather than buried, because the original reasoning
 still stands on its own terms: both calls are editorial judgment, which is
@@ -418,5 +426,8 @@ Decide before the layer that needs them; don't guess early.
   in the abstract: if the lead story is routinely the wrong one, or sections
   are misassigned, go back to `deepseek-v4-pro` — the difference is about
   two cents a day, so quality is the only thing that should decide it.
+  **Day 1:** led on an actively exploited TeamCity RCE flagged by CISA over a
+  guilty plea and a Spectre-v2 bypass — a defensible lead, and the prompt
+  contract held (valid JSON, no invented citations). Six days to go.
 - Whether the archive needs search. Probably not at 365 pages; definitely not
   at 30.
