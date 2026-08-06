@@ -30,6 +30,8 @@ jobs:
       - run: npm run typecheck
       - run: npm test
       - run: npm start
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
 
       - name: Commit site and data
         run: |

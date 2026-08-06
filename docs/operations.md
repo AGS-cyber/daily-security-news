@@ -31,6 +31,13 @@ chronological digest under a banner explaining the article is missing (§8).
 That is a disclosed fallback, not a crash, and it is the behaviour you should
 expect to see until the secret is set.
 
+> **The generation path has never run.** Everything downstream of a successful
+> DeepSeek response — the HTTP calls, usage accounting, and whether the model
+> honours the prompt contract — is covered only by tests against a stubbed
+> client. The first run with a real key is also the first test of it. Watch
+> that run rather than assuming it worked, and check the edition JSON has
+> `mode: "article"` with a plausible `usage` block.
+
 ## 2. What a run produces
 
 ```
@@ -187,6 +194,38 @@ time. Harmless for a once-daily job. It becomes a real question at layer 3,
 where a re-run regenerates a different article from a different story set. If
 that ever matters, the fix is to union a re-run's items with the existing
 edition for that date so the day's record only ever grows.
+
+### The article is missing and the page is a digest
+
+**Symptom:** the run logs `select FAILED (...) — falling back to digest`, the
+page carries an "This edition is incomplete" banner, and the edition JSON has
+`mode: "digest"` with a populated `degraded` array.
+
+**This is working correctly.** Per §8 an LLM failure falls back visibly, once.
+The banner names the stage and the reason. Read it — it distinguishes the cases:
+
+| Banner says | Meaning |
+|---|---|
+| `DEEPSEEK_API_KEY is not set` | No credential. Set the secret. |
+| `select failed — …` after retries | DeepSeek was unreachable, returned empty content twice, or its JSON failed validation |
+| `write failed — …` | Selection succeeded; prose generation or its citation validation failed |
+| `there are no stories to select from` | The window was genuinely empty — every feed item was already covered |
+
+**What must never happen:** a half-written article, an article citing a story
+`select` did not choose, or a page that looks like a normal edition when no
+writing occurred. If you ever see one of those, that is a real bug — the
+validation in `select.ts` / `write.ts` / `citations.ts` is what prevents it.
+
+**Retry shape.** Two layers, deliberately: the client retries once on transport
+failure or empty content (§6 documents empty responses as a real DeepSeek
+failure mode), and `select`/`write` each retry once more on a *validation*
+failure. Worst case is two validation attempts, not four transport attempts.
+
+**Cost.** A successful run logs a cost per call, summed into `usage` on the
+edition. Expect roughly $0.03/day on `deepseek-v4-pro` at ~40K in / ~15K out.
+If the figure looks wrong, check `usage` in the edition JSON —
+`promptCacheHitTokens` and `promptCacheMissTokens` are recorded separately so
+cache behaviour is observable rather than assumed.
 
 ### Pages deploy fails with `deployment_queued`, or a run sits in `queued`
 

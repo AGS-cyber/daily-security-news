@@ -31,15 +31,22 @@ publishes a plain chronological digest, not a written article.
 |---|---|---|
 | 1 | RSS → dedupe → digest page, run by hand | done |
 | 2 | Actions schedule, Pages deploy, archive, seen store | done |
-| 3 | `select` + `write` against DeepSeek — the actual article | next |
+| 3 | `select` + `write` against DeepSeek — the actual article | built; see below |
 | 4 | CISA KEV + NVD enrichment | not started |
 | 5 | Hacker News, r/netsec, optional search API | not started |
 
-Until layer 3 lands, every page carries a block saying it is an automated
-digest rather than a written article. That is deliberate: §8 forbids a degraded
-page that looks like a normal edition, and the digest renderer *is* the
-permanent fallback mode, so it ships as exercised code rather than an untested
-branch.
+**Layer 3 is built but has never generated a real article.** No
+`DEEPSEEK_API_KEY` is set, so every run currently takes the §8 fallback: it
+publishes the chronological digest under a banner naming the missing key. That
+path is verified end to end. The generation path — the DeepSeek calls
+themselves, the usage accounting, and whether the model honours the prompt
+contract — has made zero real HTTP requests and is covered only by tests
+against a stubbed client. Set the key and the first real run is also the first
+test of it.
+
+That the fallback is a *disclosed* one is the point: §8 forbids a degraded page
+that looks like a normal edition, and the digest renderer is the permanent
+fallback mode, so it ships as exercised code rather than an untested branch.
 
 ## Running it
 
