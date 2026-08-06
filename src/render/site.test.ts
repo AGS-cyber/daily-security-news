@@ -105,6 +105,12 @@ test('an article edition survives the disk round-trip into page and archive', as
 
     const archive = await readFile(join(dirs.siteDir, 'archive.html'), 'utf8');
     assert.match(archive, /A quiet week ends loudly/);
+
+    // The web-served copy of the record must be the edition itself, verbatim.
+    const served: unknown = JSON.parse(
+      await readFile(join(dirs.siteDir, 'editions', '2026-08-06.json'), 'utf8'),
+    );
+    assert.deepStrictEqual(served, edition);
   });
 });
 
@@ -121,6 +127,20 @@ test('archive renders article and digest editions side by side', async () => {
     assert.match(archive, /2026-08-05/);
     // Newest first.
     assert.ok(archive.indexOf('2026-08-06') < archive.indexOf('2026-08-05'));
+
+    // index.json is the same archive index as data, newest first.
+    const index: unknown = JSON.parse(
+      await readFile(join(dirs.siteDir, 'editions', 'index.json'), 'utf8'),
+    );
+    assert.ok(Array.isArray(index));
+    const newer = index.findIndex((e: { date: string }) => e.date === '2026-08-06');
+    const older_ = index.findIndex((e: { date: string }) => e.date === '2026-08-05');
+    assert.ok(newer !== -1, 'index.json should contain 2026-08-06');
+    assert.ok(older_ !== -1, 'index.json should contain 2026-08-05');
+    assert.equal(index[newer].mode, 'article');
+    assert.equal(index[newer].headline, 'A quiet week ends loudly');
+    // Newest first.
+    assert.ok(newer < older_);
   });
 });
 
