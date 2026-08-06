@@ -5,8 +5,8 @@ for *what* the system is and why it is shaped that way; this file is what you
 need when it is 08:00 and the build is red.
 
 Repository: https://github.com/AGS-cyber/daily-security-news
-Live site: **not yet set** — hosted on Vercel; fill this in from the project's
-Domains tab once it exists. The old GitHub Pages URL is retired.
+Live site: https://daily-security-news.vercel.app/ — Vercel, built from `main`
+on every push. The old GitHub Pages URL is retired.
 
 ## 1. Setup
 
@@ -32,12 +32,15 @@ chronological digest under a banner explaining the article is missing (§8).
 That is a disclosed fallback, not a crash, and it is the behaviour you should
 expect to see until the secret is set.
 
-> **The generation path has never run.** Everything downstream of a successful
-> DeepSeek response — the HTTP calls, usage accounting, and whether the model
-> honours the prompt contract — is covered only by tests against a stubbed
-> client. The first run with a real key is also the first test of it. Watch
-> that run rather than assuming it worked, and check the edition JSON has
-> `mode: "article"` with a plausible `usage` block.
+> **The generation path first ran on 2026-08-06** and produced an article on
+> the first attempt: `mode: "article"`, empty `degraded`, 8 stories, $0.0047.
+> The model honoured the prompt contract — valid JSON from `select`, and no
+> citation in `write` that `select` had not chosen.
+>
+> Keep checking anyway. After any change to a prompt, the model, or the item
+> set, confirm the edition JSON has `mode: "article"` with a plausible `usage`
+> block rather than trusting the green check — §5 records what a green check
+> is worth on its own.
 
 ## 2. What a run produces
 
@@ -78,6 +81,12 @@ state:
 
 If the first deploy 404s, it is almost always Output Directory: Vercel served
 the repo root instead of `site/`.
+
+**A known, harmless annotation.** Every run reports that `actions/checkout@v4`
+and `actions/setup-node@v4` target Node 20 and are being forced onto Node 24.
+It is a deprecation notice about the actions' own runtime, not about the Node
+22 this project runs on, and it does not affect the build. Bumping both to
+`@v5` clears it whenever someone is in the file anyway.
 
 `workflow_dispatch` is enabled, so you can trigger a run by hand:
 
@@ -217,7 +226,8 @@ The banner names the stage and the reason. Read it — it distinguishes the case
 
 | Banner says | Meaning |
 |---|---|
-| `DEEPSEEK_API_KEY is not set` | No credential. Set the secret. |
+| `DEEPSEEK_API_KEY is not set` | No credential at all — the variable is absent |
+| `DEEPSEEK_API_KEY is set but its value is empty` | The secret exists and holds nothing. See below |
 | `select failed — …` after retries | DeepSeek was unreachable, returned empty content twice, or its JSON failed validation |
 | `write failed — …` | Selection succeeded; prose generation or its citation validation failed |
 | `there are no stories to select from` | The window was genuinely empty — every feed item was already covered |
@@ -233,10 +243,66 @@ failure mode), and `select`/`write` each retry once more on a *validation*
 failure. Worst case is two validation attempts, not four transport attempts.
 
 **Cost.** A successful run logs a cost per call, summed into `usage` on the
-edition. Expect roughly $0.01/day on `deepseek-v4-flash` at ~40K in / ~15K out.
-If the figure looks wrong, check `usage` in the edition JSON —
-`promptCacheHitTokens` and `promptCacheMissTokens` are recorded separately so
-cache behaviour is observable rather than assumed.
+edition. **Measured on the first real run (2026-08-06): $0.0047** — 16,785
+input tokens, 8,337 output, all cache misses, on `deepseek-v4-flash`. That is
+about **$0.15/month**. Treat it as one data point from one day's news, not a
+settled average; §6 previously *estimated* 40K in / 15K out, which was more
+than double the truth. If the figure looks wrong, check `usage` in the edition
+JSON — `promptCacheHitTokens` and `promptCacheMissTokens` are recorded
+separately so cache behaviour is observable rather than assumed. A once-daily
+run will usually miss the cache, so expect the hit count to stay at zero.
+
+### The secret exists but its value is empty
+
+**Symptom:** `gh secret list` shows `DEEPSEEK_API_KEY`, the workflow passes it
+through `env:`, and the edition still comes out `mode: "digest"` with
+`select failed — DEEPSEEK_API_KEY is set but its value is empty`. The build is
+green and fast — about 20 seconds, versus roughly two minutes for a real run.
+
+**Actual cause:** the secret exists but its **value is empty**. `gh secret set`
+takes the value from a blind paste that echoes nothing, so a paste that does
+not register still creates the secret. `gh secret list` only ever proves a
+secret exists — it never shows the value, so it cannot tell you this.
+
+**Diagnose from the run log,** which settles it in one line:
+
+```sh
+gh run view <run-id> --log | grep -A2 'Run npm start'
+```
+
+Actions masks a real secret as `***`. So this is a populated secret:
+
+```
+env:
+  DEEPSEEK_API_KEY: ***
+```
+
+and this is an empty one — nothing to mask, nothing printed:
+
+```
+env:
+  DEEPSEEK_API_KEY:
+```
+
+**Fix:** re-set it through the GitHub web UI (Settings → Secrets and variables
+→ Actions), where the value is visible before you save. From the terminal,
+redirect from a file rather than pasting blind:
+
+```sh
+gh secret set DEEPSEEK_API_KEY --repo AGS-cyber/daily-security-news < key.txt
+```
+
+**Runtime is the cheap tell.** Two DeepSeek calls take on the order of two
+minutes. Any "successful" run finishing in well under a minute did not call a
+model, whatever the check colour says.
+
+**The banner used to lie about this, and no longer does.** Until 2026-08-06
+`createClient()` returned the same `null` for an unset key and an empty one, so
+both printed "is not set" — which is why the first diagnosis went hunting
+through the workflow file while the fault was in the stored value. The two
+reasons are now distinct, and `src/llm/client.test.ts` guards the distinction,
+including the whitespace-only case. If you ever see "is not set" again, the
+variable really is absent.
 
 ### A run sits in `queued`, or the deploy never happens
 
@@ -297,6 +363,9 @@ gh run view <run-id> --log-failed
 # Did the last CI run change what I expected?
 git fetch origin && git show --stat origin/main
 
-# Is the live site current? (SITE_URL — see the top of this file)
-curl -sS "$SITE_URL" | grep -oE '[0-9]+ stories[^<]*'
+# Is the live site current?
+curl -sS https://daily-security-news.vercel.app/ | grep -oE '[0-9]+ stories[^<]*'
+
+# Does the live site match what was committed? A green build is not a deploy.
+curl -sS https://daily-security-news.vercel.app/index.html | diff - site/index.html
 ```
