@@ -1,18 +1,14 @@
+import { marked } from 'marked';
 import { sources } from '../config/sources.js';
-import type { Edition } from '../types.js';
+import type { ArticleEdition, DegradedNotice, DigestEdition, Item } from '../types.js';
+import { substituteCitations } from './citations.js';
+import { escapeHtml } from './escape.js';
+
+export { escapeHtml };
 
 const NAMES = new Map(sources.map((s) => [s.id, s.name]));
 function sourceLabel(sourceId: string): string {
   return NAMES.get(sourceId) ?? sourceId;
-}
-
-export function escapeHtml(s: string): string {
-  return s
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
 }
 
 const CSS = `
@@ -47,6 +43,11 @@ ol.stories > li { border-top: 1px solid var(--rule); padding: 1.25rem 0; }
 .meta { color: var(--muted); font-size: .85rem; margin: 0 0 .5rem; }
 .excerpt { margin: .4rem 0 0; }
 .also { font-size: .88rem; color: var(--muted); margin: .5rem 0 0; }
+.standfirst { font-size: 1.15rem; color: var(--fg); margin: 0 0 1.5rem; }
+.article h2 { font-size: 1.25rem; margin: 2rem 0 .5rem; }
+.article p { margin: 0 0 1rem; }
+.also-heading { border-top: 1px solid var(--rule); margin-top: 2.5rem; padding-top: 1.5rem;
+  font-size: 1.15rem; }
 ul.archive { list-style: none; margin: 0; padding: 0; }
 ul.archive li { border-top: 1px solid var(--rule); padding: .6rem 0; }
 ul.archive .count { color: var(--muted); font-size: .9rem; }
@@ -96,27 +97,21 @@ function formatTime(iso: string): string {
   return `${String(d.getUTCHours()).padStart(2, '0')}:${String(d.getUTCMinutes()).padStart(2, '0')} UTC`;
 }
 
-export function digestPage(edition: Edition): string {
-  const { stats } = edition;
-
-  const disclosure = `<div class="notice">
-<strong>This is an automated chronological digest, not a written article.</strong>
-Every story collected in the window is listed below in the order it was published,
-with no editorial selection, ranking, or summarising applied.
-</div>`;
-
-  const degraded = edition.degraded.length
-    ? `<div class="degraded">
+function degradedBanner(notices: DegradedNotice[]): string {
+  if (notices.length === 0) return '';
+  return `<div class="degraded">
 <h2>This edition is incomplete</h2>
 <ul>
-${edition.degraded.map((n) => `<li>${escapeHtml(n.message)}</li>`).join('\n')}
+${notices.map((n) => `<li>${escapeHtml(n.message)}</li>`).join('\n')}
 </ul>
-</div>`
-    : '';
+</div>`;
+}
 
-  const body = edition.items.length
-    ? `<ol class="stories">
-${edition.items
+function storyList(items: Item[], emptyText: string): string {
+  if (items.length === 0) return `<p class="empty">${escapeHtml(emptyText)}</p>`;
+
+  return `<ol class="stories">
+${items
   .map((item) => {
     const also = item.alsoCoveredBy.length
       ? `<p class="also">Also covered by: ${item.alsoCoveredBy
@@ -132,8 +127,21 @@ ${also}
 </li>`;
   })
   .join('\n')}
-</ol>`
-    : `<p class="empty">No new stories in this window.</p>`;
+</ol>`;
+}
+
+export function digestPage(edition: DigestEdition): string {
+  const { stats } = edition;
+
+  const disclosure = `<div class="notice">
+<strong>This is an automated chronological digest, not a written article.</strong>
+Every story collected in the window is listed below in the order it was published,
+with no editorial selection, ranking, or summarising applied.
+</div>`;
+
+  const degraded = degradedBanner(edition.degraded);
+
+  const body = storyList(edition.items, 'No new stories in this window.');
 
   const summary = `${stats.published} ${stats.published === 1 ? 'story' : 'stories'} · ${stats.sourcesOk} of ${stats.sourcesConfigured} sources · generated ${escapeHtml(formatTime(edition.generatedAt))}`;
 
@@ -148,14 +156,50 @@ ${body}`,
   });
 }
 
-export function archivePage(entries: { date: string; count: number }[]): string {
+export function articlePage(edition: ArticleEdition): string {
+  const { stats } = edition;
+
+  const degraded = degradedBanner(edition.degraded);
+
+  const bodyHtml = marked.parse(substituteCitations(edition.bodyMarkdown, edition.selected), {
+    async: false,
+  });
+
+  const also = `<h2 class="also-heading">Also collected today</h2>
+${storyList(edition.alsoCollected, 'Every story collected today was written up above.')}`;
+
+  const summary = `${edition.selected.length} of ${stats.published} ${stats.published === 1 ? 'story' : 'stories'} written up · ${stats.sourcesOk} of ${stats.sourcesConfigured} sources · generated ${escapeHtml(formatTime(edition.generatedAt))}`;
+
+  return layout({
+    title: `${edition.headline} — ${formatDate(edition.date)}`,
+    generatedAt: edition.generatedAt,
+    bodyHtml: `<h1>${escapeHtml(edition.headline)}</h1>
+<p class="summary">${summary}</p>
+${degraded}
+<p class="standfirst">${escapeHtml(edition.standfirst)}</p>
+<div class="article">
+${bodyHtml}
+</div>
+${also}`,
+  });
+}
+
+export type ArchiveEntry = {
+  date: string;
+  count: number;
+} & ({ mode: 'digest' } | { mode: 'article'; headline: string });
+
+export function archivePage(entries: ArchiveEntry[]): string {
   const list = entries.length
     ? `<ul class="archive">
 ${entries
-  .map(
-    (e) =>
-      `<li><a href="${escapeHtml(e.date)}.html">${escapeHtml(formatDate(e.date))}</a> <span class="count">${e.count} ${e.count === 1 ? 'story' : 'stories'}</span></li>`,
-  )
+  .map((e) => {
+    const label =
+      e.mode === 'article'
+        ? escapeHtml(e.headline)
+        : `Daily digest — ${e.count} ${e.count === 1 ? 'story' : 'stories'}`;
+    return `<li><a href="${escapeHtml(e.date)}.html">${escapeHtml(formatDate(e.date))}</a> <span class="count">${label}</span></li>`;
+  })
   .join('\n')}
 </ul>`
     : `<p class="empty">No editions yet.</p>`;

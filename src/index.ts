@@ -1,16 +1,94 @@
 import { collectRss } from './collect/rss.js';
 import { sources } from './config/sources.js';
+import { createClient, sumUsage } from './llm/client.js';
 import { dedupe } from './pipeline/dedupe.js';
 import { filter } from './pipeline/filter.js';
 import { normalize } from './pipeline/normalize.js';
+import { select } from './pipeline/select.js';
+import { write } from './pipeline/write.js';
 import { writeEdition } from './render/edition.js';
 import { writeSite } from './render/site.js';
 import { loadSeen } from './store/seen.js';
-import type { DegradedNotice, Edition, Item } from './types.js';
+import type {
+  ArticleEdition,
+  DegradedNotice,
+  Edition,
+  Item,
+  Selection,
+  Usage,
+} from './types.js';
 
 const SEEN_PATH = 'data/seen.json';
 const EDITIONS_DIR = 'data/editions';
 const SITE_DIR = 'site';
+
+/** The article-only half of an ArticleEdition; the rest is common to both modes. */
+type ArticleParts = Omit<
+  ArticleEdition,
+  'date' | 'generatedAt' | 'degraded' | 'stats' | 'mode'
+>;
+
+/**
+ * Runs the two LLM stages. Returns null when the article could not be written,
+ * having appended a disclosed degraded notice (§8) — the run still publishes,
+ * as a digest edition.
+ */
+async function writeArticle(
+  candidates: Item[],
+  degraded: DegradedNotice[],
+): Promise<ArticleParts | null> {
+  function fallback(stage: 'select' | 'write', why: string): null {
+    degraded.push({
+      stage,
+      message: `The written article could not be generated: ${stage} failed — ${why}. This page is the chronological digest of everything collected instead.`,
+    });
+    console.log(`${stage.padEnd(12)}FAILED (${why}) — falling back to digest`);
+    return null;
+  }
+
+  const reason = (err: unknown): string => (err instanceof Error ? err.message : String(err));
+
+  const client = createClient();
+  if (!client) return fallback('select', 'DEEPSEEK_API_KEY is not set');
+  if (candidates.length === 0) return fallback('select', 'there are no stories to select from');
+
+  let selections: Selection[];
+  let selectUsage: Usage;
+  try {
+    const result = await select(candidates, client);
+    selections = result.selections;
+    selectUsage = result.usage;
+  } catch (err) {
+    return fallback('select', reason(err));
+  }
+  console.log(
+    `select      ${selections.length} stories · $${selectUsage.estimatedCostUsd.toFixed(4)}`,
+  );
+
+  const byId = new Map(candidates.map((item) => [item.id, item]));
+  const selected = selections
+    .slice()
+    .sort((a, b) => a.rank - b.rank)
+    .map((selection) => ({ ...byId.get(selection.id)!, ...selection }));
+
+  try {
+    const written = await write(selected, client);
+    const words = written.bodyMarkdown.split(/\s+/).filter(Boolean).length;
+    console.log(`write       ${words} words · $${written.usage.estimatedCostUsd.toFixed(4)}`);
+
+    const chosen = new Set(selected.map((story) => story.id));
+    return {
+      headline: written.headline,
+      standfirst: written.standfirst,
+      bodyMarkdown: written.bodyMarkdown,
+      selected,
+      alsoCollected: candidates.filter((item) => !chosen.has(item.id)),
+      usage: sumUsage(selectUsage, written.usage),
+    };
+  } catch (err) {
+    return fallback('write', reason(err));
+  }
+}
 
 async function run(): Promise<void> {
   const now = new Date();
@@ -43,11 +121,9 @@ async function run(): Promise<void> {
 
   const items: Item[] = filtered.kept.map((cluster, i) => ({ ...cluster, id: `s${i + 1}` }));
 
-  const edition: Edition = {
+  const base = {
     date,
     generatedAt: now.toISOString(),
-    mode: 'digest',
-    items,
     degraded,
     stats: {
       sourcesConfigured: sources.length,
@@ -58,6 +134,11 @@ async function run(): Promise<void> {
       published: items.length,
     },
   };
+
+  const article = await writeArticle(items, degraded);
+  const edition: Edition = article
+    ? { ...base, mode: 'article', ...article }
+    : { ...base, mode: 'digest', items };
 
   await writeEdition(edition, EDITIONS_DIR);
   const written = await writeSite(edition, { siteDir: SITE_DIR, editionsDir: EDITIONS_DIR });

@@ -34,16 +34,37 @@ export interface Item extends Cluster {
 }
 
 export interface DegradedNotice {
-  stage: 'collect' | 'normalize' | 'filter';
+  stage: 'collect' | 'normalize' | 'filter' | 'select' | 'write';
   sourceId?: string;
   message: string;
 }
 
-export interface Edition {
+export type Section =
+  | 'exploited'
+  | 'vulnerabilities'
+  | 'breaches'
+  | 'research'
+  | 'industry';
+
+/** LLM call 1 output, one entry per selected story. */
+export interface Selection {
+  id: string;
+  section: Section;
+  rank: number;
+  angle: string;
+}
+
+export interface Usage {
+  model: string;
+  promptCacheHitTokens: number;
+  promptCacheMissTokens: number;
+  outputTokens: number;
+  estimatedCostUsd: number;
+}
+
+interface EditionBase {
   date: string;
   generatedAt: string;
-  mode: 'digest';
-  items: Item[];
   degraded: DegradedNotice[];
   stats: {
     sourcesConfigured: number;
@@ -54,3 +75,21 @@ export interface Edition {
     published: number;
   };
 }
+
+export interface DigestEdition extends EditionBase {
+  mode: 'digest';
+  items: Item[];
+}
+
+export interface ArticleEdition extends EditionBase {
+  mode: 'article';
+  headline: string;
+  standfirst: string;
+  /** Cites stories as [[s7]]; render substitutes the real link. */
+  bodyMarkdown: string;
+  selected: (Item & Selection)[];
+  alsoCollected: Item[];
+  usage: Usage;
+}
+
+export type Edition = DigestEdition | ArticleEdition;
