@@ -110,6 +110,44 @@ Two consequences for the Kotlin side:
   tie between them, so a fixture copied from `data/editions/` is the only
   thing that catches drift.
 
+`Item` and `SelectedItem` are separate flat classes because `selected` is
+`Item & Selection` in TypeScript — an intersection, not a nested object. A
+`Story` interface carries the nine fields they share, so the renderer can
+treat a selected story and a merely-collected one the same way.
+
+**`section`, `sourceKind` and `stage` are `String`, not enums.**
+`ignoreUnknownKeys` does not cover unknown enum *values*: one new section
+name on the site would hard-fail every installed app. The obvious repair,
+`coerceInputValues`, is worse — it rewrites the unrecognised value to a
+default and renders a screen from data the server never sent, which is
+exactly the silent degradation `CLAUDE.md` ranks last. So the strings
+survive the parse and the display layer maps them. `mode` is the deliberate
+exception: it picks the renderer, so a mode the app does not know must fail
+loudly, which the sealed `Edition` gives for free.
+
+Only fields TypeScript marks optional carry a Kotlin default. A missing
+required field throws — a removed field is a broken contract, not an
+additive change.
+
+### The fixture is the real file
+
+`app/shared/src/commonTest/fixtures/` holds byte-identical copies of what
+the deploy serves, and `:shared:generateJsonFixtures` compiles them into a
+Kotlin source file that `commonTest` reads. Three constraints shaped that,
+none of them obvious:
+
+- **`commonTest` has no multiplatform file API**, so the JSON has to arrive
+  as source rather than as a resource read at runtime.
+- **A JVM string literal cannot exceed 64 KB of UTF-8** and the captured
+  edition is 106 KB, so the generator emits it in chunks. It escapes every
+  non-ASCII character as `\uXXXX` — that keeps the generated file pure ASCII
+  and makes a chunk boundary landing between a surrogate pair harmless — and
+  escapes `$`, which edition text really does contain and which would
+  otherwise be a Kotlin template expression.
+- **`org.gradle.configuration-cache=true` is on**, so the generator is a
+  typed task with annotated inputs and outputs, not a `doLast { }` closure
+  capturing project state.
+
 ## 5. Citations — where the app must not copy the web
 
 `bodyMarkdown` cites stories as `[[s7]]` tokens; the renderer substitutes
@@ -187,8 +225,8 @@ Same rule as `design.md` §10 — each layer ends with something that works.
 1. ~~**Data.**~~ Done — `site/editions/*.json` (§4).
 2. ~~**Scaffold.**~~ Done — modules, both platforms compiling, Android
    running (§3, §7).
-3. **Models.** kotlinx.serialization classes mirroring `src/types.ts`,
-   tested against a captured edition (§4).
+3. ~~**Models.**~~ Done — kotlinx.serialization classes mirroring
+   `src/types.ts`, decoding the captured 2026-08-06 edition (§4).
 4. **Citations.** The substitution function and its adversarial tests (§5).
    Isolated deliberately: it is the one bug class with no server-side
    signal.
