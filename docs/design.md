@@ -56,15 +56,22 @@ collect ─▶ normalize ─▶ dedupe ─▶ filter ─▶ enrich ─▶ select
 | `render` | Article JSON + HTML pages | Fatal |
 | `publish` | Commit `site/` and `data/`, deploy to Pages | Fatal |
 
-**Window.** Items published in the 24 hours before the run, plus anything not
-seen in a previous edition (a source that lags a day still gets covered once).
+**Window.** An item is included when it is **not in the seen store** and was
+**published within the last 7 days**. That is the whole rule.
 
-The "not seen" clause needs a bound, or the first run against a fresh
-`seen.json` ingests every feed's entire back catalogue. **Decided 2026-08-05:**
-an unseen item stays eligible for **7 days** after its publication date and is
-dropped after that. Laggy sources still get covered; archives don't flood in.
-A cold start therefore produces one unusually large edition, then settles to a
-24-hour rhythm — expected, not a bug.
+It was originally written as two windows — "the last 24 hours, plus anything
+not seen before" — but the seen store makes the 24-hour clause unreachable:
+anything older than a day has already been covered by an earlier edition and
+is dropped by the seen check before age is consulted, so the 7-day bound is
+the only test that ever decides an item's fate. Implementing both produced
+dead logic. One window, stated honestly.
+
+The 7-day bound exists because "anything not seen before" is unbounded on its
+own — a fresh `seen.json` would ingest every feed's entire back catalogue.
+Laggy sources still get covered once; archives don't flood in. A cold start
+therefore produces one unusually large edition, and every run after it settles
+to roughly a day's news — an emergent property of the seen store, not a
+window check.
 
 **Dedupe.** Canonical URL match first (strip `utm_*`, fragments, AMP paths).
 Then title similarity within the window to catch the same story reported by
