@@ -55,14 +55,19 @@ Requires Node 22+ (the code uses native `fetch` and the built-in test runner).
 
 ```sh
 npm install
-npm start        # one run, one edition
-npm test         # unit tests for the two pure, tricky functions
+npm start          # one run, one edition
+npm run rerender   # rebuild all pages from stored editions — no network, no LLM
+npm test
 npm run typecheck
 ```
 
 A run collects every feed, writes `data/editions/<date>.json` and the pages
 under `site/`, then records what it published in `data/seen.json`. Open
 `site/index.html` in a browser.
+
+`npm run rerender` is what you want after changing anything under `render/`: a
+normal run only rewrites today's page, `index.html` and the archive, so past
+dated pages would otherwise keep the old design indefinitely.
 
 Expect the **first** run to produce an unusually large edition — a fresh seen
 store makes the full 7-day eligibility window available at once. Every run
