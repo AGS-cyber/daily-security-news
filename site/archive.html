@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Archive — Daily Security News</title>
+<style>
+:root { color-scheme: light dark; --bg:#fff; --fg:#1a1a1a; --muted:#5b5b5b;
+  --rule:#e2e2e2; --link:#0b57d0; --warn-bg:#fff6e5; --warn-edge:#c77700;
+  --note-bg:#eef2f8; --note-edge:#5b7cb5; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg:#14161a; --fg:#e8e8e8; --muted:#a3a3a3; --rule:#2c2f36;
+    --link:#8ab4f8; --warn-bg:#302407; --warn-edge:#d99b1c;
+    --note-bg:#1b2230; --note-edge:#6f8fc4; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); line-height: 1.65;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 17px; }
+main, header, footer { max-width: 42rem; margin: 0 auto; padding: 0 1.25rem; }
+header { display: flex; gap: 1rem; align-items: baseline;
+  border-bottom: 1px solid var(--rule); padding-top: 1.5rem; padding-bottom: .75rem; }
+header .brand { font-weight: 700; }
+a { color: var(--link); }
+h1 { font-size: 1.7rem; line-height: 1.25; margin: 1.5rem 0 .5rem; }
+h2 { font-size: 1.15rem; margin: 0 0 .5rem; }
+.summary { color: var(--muted); font-size: .92rem; margin: 0 0 1.25rem; }
+.notice { border-left: 4px solid var(--note-edge); background: var(--note-bg);
+  padding: .75rem 1rem; border-radius: 4px; margin: 1.25rem 0; font-size: .95rem; }
+.degraded { border-left: 4px solid var(--warn-edge); background: var(--warn-bg);
+  padding: .75rem 1rem; border-radius: 4px; margin: 1.25rem 0; font-size: .95rem; }
+.degraded ul { margin: .5rem 0 0; padding-left: 1.2rem; }
+ol.stories { list-style: none; margin: 0; padding: 0; }
+ol.stories > li { border-top: 1px solid var(--rule); padding: 1.25rem 0; }
+.story-title { font-size: 1.12rem; font-weight: 650; margin: 0 0 .25rem; }
+.meta { color: var(--muted); font-size: .85rem; margin: 0 0 .5rem; }
+.excerpt { margin: .4rem 0 0; }
+.also { font-size: .88rem; color: var(--muted); margin: .5rem 0 0; }
+ul.archive { list-style: none; margin: 0; padding: 0; }
+ul.archive li { border-top: 1px solid var(--rule); padding: .6rem 0; }
+ul.archive .count { color: var(--muted); font-size: .9rem; }
+footer { border-top: 1px solid var(--rule); margin-top: 2.5rem; padding-top: 1rem;
+  padding-bottom: 2.5rem; color: var(--muted); font-size: .85rem; }
+.empty { color: var(--muted); font-style: italic; padding: 1.5rem 0; }
+</style>
+</head>
+<body>
+<header>
+<span class="brand">Daily Security News</span>
+<a href="index.html">Today</a>
+<a href="archive.html">Archive</a>
+</header>
+<main>
+<h1>Archive</h1>
+<ul class="archive">
+<li><a href="2026-08-06.html">6 August 2026</a> <span class="count">140 stories</span></li>
+</ul>
+</main>
+<footer>Generated 2026-08-06T03:06:08.567Z</footer>
+</body>
+</html>
