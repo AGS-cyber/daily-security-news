@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#080b08">
-<title>Security digest — 6 August 2026</title>
+<title>TeamCity Exploitation Leads a Day of Build-Server, CPU, and Database Attacks — 6 August 2026</title>
 <style>
 :root { color-scheme: dark;
   --bg:#080b08; --fg:#c9f5d5; --bright:#7dffa4; --muted:#6aa87f; --dim:#4a7f5e;
@@ -98,19 +98,27 @@ footer::before { content: "// "; color: var(--dim); }
 </nav>
 </header>
 <main>
-<h1>Security digest — 6 August 2026</h1>
-<p class="summary">125 stories · 12 of 12 sources · generated 20:10 UTC</p>
-<div class="notice">
-<strong>This is an automated chronological digest, not a written article.</strong>
-Every story collected in the window is listed below in the order it was published,
-with no editorial selection, ranking, or summarising applied.
+<h1>TeamCity Exploitation Leads a Day of Build-Server, CPU, and Database Attacks</h1>
+<p class="summary">8 of 125 stories written up · 12 of 12 sources · generated 20:15 UTC</p>
+
+<p class="standfirst">Defenders woke up to an actively exploited build-server vulnerability, a guilty plea in the Snowflake extortions, and new research that erodes trusted CPU mitigations and turns database engines into living-off-the-land attack platforms. The through-line is the same: attackers keep finding ways to use what you already trust — build pipelines, AI browsers, routers, compilers, and SQL engines — against you.</p>
+<div class="article">
+<h2>Actively exploited</h2>
+<p>The U.S. cybersecurity agency has added a critical JetBrains TeamCity remote code execution flaw to its known exploited vulnerabilities catalog after confirming active exploitation. The bug, a deserialization issue in on-premise TeamCity servers, lets an unauthenticated attacker with network access take over a build server and, from there, likely the software supply chain that depends on it. TeamCity is a prime target because build servers hold credentials, signing keys, and source code; a foothold there is a springboard into production environments. The agency&#39;s move is the clearest signal yet that asset owners should treat this as an emergency patching event, not a routine update. <a href="https://thehackernews.com/2026/08/cisa-flags-teamcity-cve-2026-63077-rce.html">CISA Flags TeamCity CVE-2026-63077 RCE Flaw Under Active Exploitation in the Wild</a></p>
+<h2>Industry</h2>
+<p>The Snowflake extortion saga reached a legal milestone. A 26-year-old Canadian man pleaded guilty to computer fraud and conspiracy for his role in hacking and extorting more than 165 organizations that used the cloud data storage provider, and to stealing call and text history records belonging to more than 100 million customers of a major U.S. carrier. The plea confirms what many suspected: the campaign was a coordinated, large-scale data theft operation, not a series of opportunistic intrusions. The guilty plea also puts a spotlight on the credential and identity failures that allowed the attackers to move so freely through victim environments. <a href="https://krebsonsecurity.com/2026/08/canadian-man-pleads-guilty-in-snowflake-extortions/">Canadian Man Pleads Guilty in Snowflake Extortions</a></p>
+<p>Separately, a House committee report concludes that three Chinese telecommunications companies continue to hold significant footholds in the U.S. internet ecosystem despite their alleged connections to state-sponsored hacking campaigns. The report is the latest pressure point in the long-running policy fight over Chinese access to U.S. networks, and it lands at a moment when regulators are still deciding how much to restrict or unwind that presence. The concerns are not hypothetical: the same infrastructure that carries traffic can also be used to tap it, and the committee&#39;s findings will likely feed new legislative and regulatory proposals. <a href="https://therecord.media/chinese-hackers-telecoms-house">Chinese telcos maintain deep US presence despite Salt Typhoon links, House committee says</a></p>
+<h2>Vulnerabilities</h2>
+<p>AI assistant browsers are the latest zero-click target. Researchers found that malicious emails or X posts can trigger a full hijack of the browser-based AI assistants in Claude and ChatGPT Atlas, with no user interaction beyond opening the message. The attacks reportedly remain unpatched after being disclosed, leaving users exposed to session takeover, credential theft, and malicious tool invocations. The finding is significant because AI assistants are increasingly granted broad permissions over email, files, and applications; a browser-level hijack bypasses the AI&#39;s own safeguards and gives the attacker the same trust boundary as the assistant. Until patches land, this is a vulnerability that defenders cannot fully mitigate with configuration changes. <a href="https://www.securityweek.com/zero-click-ai-browser-hacking-claude-and-chatgpt-atlas-hijacked-via-emails-x-posts/">Zero-Click AI Browser Hacking: Claude and ChatGPT Atlas Hijacked via Emails, X Posts</a></p>
+<p>On the hardware side, researchers disclosed a factory-shipped backdoor in at least 20 Chinese router models from Zbtlink. The implant is present across all 21 firmware images currently available from the vendor, spans more than two years of releases, and provides an unauthenticated root shell that starts automatically and attempts to beacon out to a remote server. For buyers, this is not a vulnerability waiting to be triggered — it is a deliberate, persistent backdoor at the supply-chain level. Any organization with these devices on their network should treat them as fully compromised and replace them, not just patch or configure them. <a href="https://thehackernews.com/2026/08/chinese-made-zbtlink-routers-ship-with.html">Chinese-Made Zbtlink Routers Ship With Backdoor That Opens Unauthenticated Root Shells</a></p>
+<h2>Research</h2>
+<p>A new CPU attack punctures existing Spectre v2 mitigations. The technique, called INTERRUPT INJECTION, works by timing a hardware interrupt to land in the tiny gap between the processor sanitizing its branch predictor and the kernel reusing it. An unprivileged Linux program can use this to re-poison the predictor after the defense has run, defeating default mitigations on both Intel and AMD processors. The practical impact is still being measured, but the research matters because it shows that even carefully constructed microarchitectural defenses have a race window that attackers can slip into. Software-only workarounds may be possible, but CPU vendors are likely to need microcode-level fixes or new hardware designs. <a href="https://thehackernews.com/2026/08/new-interrupt-injection-attack-can.html">New Interrupt Injection Attack Can Bypass Spectre v2 Defenses on Intel and AMD CPUs</a></p>
+<p>In a separate campaign, attackers turned an Oracle database into a fileless post-exploitation platform. The initial entry was a SQL injection flaw in a public-facing web application, but instead of dropping a webshell or executable, the attackers fed Java source code directly to the database, let Oracle compile it into stored schema objects, and ran commands from inside the database engine. The technique, tracked as khunt, ultimately gave them a path to Windows SYSTEM access without writing an executable to disk. For defenders, this is a reminder that SQL injection is no longer just a data-access problem; if the database can compile code, it becomes a foothold for operating-system compromise. <a href="https://thehackernews.com/2026/08/attackers-compile-khunt-inside-oracle.html">Attackers Compile khunt Inside Oracle to Turn SQL Injection Into Windows SYSTEM Access</a></p>
+<h2>Breaches</h2>
+<p>Switzerland&#39;s federal IT office reports that attackers exploited vulnerabilities in its Microsoft SharePoint servers and compromised around 200 accounts. The breach, which officials believe may be state-sponsored espionage, underscores how common it is for a well-resourced attacker to find an unpatched on-premises collaboration server. SharePoint frequently holds an organization&#39;s crown jewels — documents, credentials, and internal communications — and 200 compromised accounts gives an intruder ample room to move laterally and extract intelligence. The incident is still in the investigation phase, but the pattern matches some of the more aggressive espionage operations seen recently against European government networks. <a href="https://www.bleepingcomputer.com/news/security/swiss-government-sharepoint-breach-compromised-200-accounts/">Swiss government SharePoint breach compromised 200 accounts</a></p>
+
 </div>
-<div class="degraded">
-<h2>This edition is incomplete</h2>
-<ul>
-<li>The written article could not be generated: select failed — DEEPSEEK_API_KEY is not set. This page is the chronological digest of everything collected instead.</li>
-</ul>
-</div>
+<h2 class="also-heading">Also collected today</h2>
 <ol class="stories">
 <li id="s1">
 <p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/hedge-fund-cyberattacks-tied-to-blackfile-linked-unc6671-extortion-group/">Hedge fund cyberattacks tied to BlackFile-linked UNC6671 extortion group</a></p>
@@ -122,12 +130,6 @@ with no editorial selection, ranking, or summarising applied.
 <p class="story-title"><a href="https://www.darkreading.com/cybersecurity-operations/from-bobmojis-to-bobbleheads-how-the-democratic-party-built-a-security-first-culture">From Bobmojis to Bobbleheads: How the Democratic Party Built a Security-First Culture</a></p>
 <p class="meta">Dark Reading · 19:00 UTC</p>
 <p class="excerpt">Former chief security officers of the Democratic National Committee explain that a strong security-first mindset requires executive support – and a dose of absurdity.</p>
-
-</li>
-<li id="s3">
-<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/swiss-government-sharepoint-breach-compromised-200-accounts/">Swiss government SharePoint breach compromised 200 accounts</a></p>
-<p class="meta">BleepingComputer · 18:14 UTC</p>
-<p class="excerpt">Switzerland&#39;s federal IT office says hackers exploited vulnerabilities to breach its Microsoft SharePoint servers and compromised approximately 200 accounts. [...]</p>
 
 </li>
 <li id="s4">
@@ -160,18 +162,6 @@ with no editorial selection, ranking, or summarising applied.
 <p class="excerpt">Cisco has rolled out updates to address multiple critical security vulnerabilities impacting Catalyst SD-WAN and IOS XE Software as part of a comprehensive internal security review. The security issues affect Cisco Catalyst SD-WAN Software, regardless of device configuration, and Cisco IOS XE Software when it is running in autonomous or controller mode. &quot;These vulnerabilities were found</p>
 
 </li>
-<li id="s9">
-<p class="story-title"><a href="https://krebsonsecurity.com/2026/08/canadian-man-pleads-guilty-in-snowflake-extortions/">Canadian Man Pleads Guilty in Snowflake Extortions</a></p>
-<p class="meta">Krebs on Security · 17:00 UTC</p>
-<p class="excerpt">A 26-year-old Canadian man once described as one of the most consequential cybercrime threat actors of 2024 has pleaded guilty to computer fraud and conspiracy to hack and extort more than 165 organizations that used the cloud data storage provider Snowflake. Connor Riley Moucka, of Kitchener, Ontario, also admitted to stealing call and text history records of more than 100 million AT&amp;T customers.</p>
-
-</li>
-<li id="s10">
-<p class="story-title"><a href="https://thehackernews.com/2026/08/new-interrupt-injection-attack-can.html">New Interrupt Injection Attack Can Bypass Spectre v2 Defenses on Intel and AMD CPUs</a></p>
-<p class="meta">The Hacker News · 16:17 UTC</p>
-<p class="excerpt">An unprivileged Linux program can time a hardware interrupt to land in the gap between a processor sanitizing its branch predictor and the kernel using it, re-poisoning the predictor after the defense has run. MIT CSAIL researchers Daniël Trujillo and Mengjia Yan named the technique INTERRUPT INJECTION. On an AMD Zen 2 machine running Linux 6.14 with every default Spectre v2 mitigation on,</p>
-
-</li>
 <li id="s11">
 <p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/meta-ai-model-hacked-a-company-during-misconfigured-cyber-test/">Meta AI model hacked a company during misconfigured cyber test</a></p>
 <p class="meta">BleepingComputer · 16:11 UTC</p>
@@ -200,12 +190,6 @@ with no editorial selection, ranking, or summarising applied.
 <p class="story-title"><a href="https://therecord.media/belarus-hacker-ransomware-sentenced">Belarusian cybercriminal behind Ransom Cartel gets 16-year prison sentence</a></p>
 <p class="meta">The Record · 13:15 UTC</p>
 <p class="excerpt">A Belarusian national active in the cybercriminal world for decades was sentenced to 16 years in U.S. prison for running the Ransom Cartel ransomware operation.</p>
-
-</li>
-<li id="s16">
-<p class="story-title"><a href="https://www.securityweek.com/zero-click-ai-browser-hacking-claude-and-chatgpt-atlas-hijacked-via-emails-x-posts/">Zero-Click AI Browser Hacking: Claude and ChatGPT Atlas Hijacked via Emails, X Posts</a></p>
-<p class="meta">SecurityWeek · 12:54 UTC</p>
-<p class="excerpt">Zenity researchers reported the findings to Anthropic and OpenAI in late 2025 and early 2026, but they remain unpatched. The post Zero-Click AI Browser Hacking: Claude and ChatGPT Atlas Hijacked via Emails, X Posts appeared first on SecurityWeek.</p>
 
 </li>
 <li id="s17">
@@ -280,34 +264,16 @@ with no editorial selection, ranking, or summarising applied.
 <p class="excerpt">Maksim Silnikau was the creator and administrator of the ransomware group and involved in Angler EK’s distribution. The post Belarusian Ransom Cartel Mastermind Gets 16 Years in Prison appeared first on SecurityWeek.</p>
 
 </li>
-<li id="s29">
-<p class="story-title"><a href="https://thehackernews.com/2026/08/attackers-compile-khunt-inside-oracle.html">Attackers Compile khunt Inside Oracle to Turn SQL Injection Into Windows SYSTEM Access</a></p>
-<p class="meta">The Hacker News · 09:19 UTC</p>
-<p class="excerpt">Attackers broke into an organization&#39;s Oracle database through a SQL injection flaw in a public-facing web application, then installed a post-exploitation toolkit without writing an executable to disk. They fed Java source code to the database, let Oracle compile it into stored schema objects, and ran commands from inside the database engine. Huntress, which tracks the toolkit as khunt,</p>
-
-</li>
 <li id="s30">
 <p class="story-title"><a href="https://thehackernews.com/2026/08/aws-google-and-vercel-patch-agent-flaws.html">AWS, Google, and Vercel Agent Flaws Let Attackers Trigger Tools Without Running the Model</a></p>
 <p class="meta">The Hacker News · 08:57 UTC</p>
 <p class="excerpt">Security flaws in agent infrastructure from Amazon Web Services (AWS), Google, and Vercel let untrusted or forged instructions reach an agent&#39;s tools with no check that a model turn had authorized them. In several of the attack paths, the model never ran at all, so system prompts, content filters, and model-level guardrails never got a chance to intervene. The affected products include Amazon</p>
 
 </li>
-<li id="s31">
-<p class="story-title"><a href="https://thehackernews.com/2026/08/chinese-made-zbtlink-routers-ship-with.html">Chinese-Made Zbtlink Routers Ship With Backdoor That Opens Unauthenticated Root Shells</a></p>
-<p class="meta">The Hacker News · 08:05 UTC</p>
-<p class="excerpt">Cybersecurity researchers have disclosed details of a &quot;factory-shipped backdoor&quot; implanted in at least 20 Chinese router models from Zbtlink. According to a new report from VulnCheck, the implant appears in all 21 firmware images currently available from Zbtlink that span more than 2 years. The backdoors are designed such that they start automatically and attempt to beacon to Chinese</p>
-
-</li>
 <li id="s32">
 <p class="story-title"><a href="https://www.securityweek.com/cisco-patches-critical-sd-wan-ios-xe-fmc-vulnerabilities/">Cisco Patches Critical SD-WAN, IOS XE, FMC Vulnerabilities</a></p>
 <p class="meta">SecurityWeek · 07:20 UTC</p>
 <p class="excerpt">Patches were rolled out for two dozen vulnerabilities, including one with public proof-of-concept (PoC) code. The post Cisco Patches Critical SD-WAN, IOS XE, FMC Vulnerabilities appeared first on SecurityWeek.</p>
-
-</li>
-<li id="s33">
-<p class="story-title"><a href="https://thehackernews.com/2026/08/cisa-flags-teamcity-cve-2026-63077-rce.html">CISA Flags TeamCity CVE-2026-63077 RCE Flaw Under Active Exploitation in the Wild</a></p>
-<p class="meta">The Hacker News · 06:51 UTC</p>
-<p class="excerpt">A newly patched security flaw impacting on-premise versions of JetBrains TeamCity has come under active exploitation in the wild, according to the U.S. Cybersecurity and Infrastructure Security Agency (CISA). The vulnerability in question is CVE-2026-63077 (CVSS score: 9.8), a case of deserialization of untrusted data that could allow an unauthenticated attacker with access to a TeamCity server</p>
 
 </li>
 <li id="s34">
@@ -356,12 +322,6 @@ with no editorial selection, ranking, or summarising applied.
 <p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/canadian-pleads-guilty-to-snowflake-cloud-data-theft-attacks/">Canadian pleads guilty to Snowflake cloud data-theft attacks</a></p>
 <p class="meta">BleepingComputer · 21:53 UTC</p>
 <p class="excerpt">A Canadian man pleaded guilty today to his role in accessing company accounts at cloud storage provider Snowflake and stealing data from at least 165 organizations in a scheme to extort millions of dollars from victims. [...]</p>
-
-</li>
-<li id="s42">
-<p class="story-title"><a href="https://therecord.media/chinese-hackers-telecoms-house">Chinese telcos maintain deep US presence despite Salt Typhoon links, House committee says</a></p>
-<p class="meta">The Record · 20:45 UTC</p>
-<p class="excerpt">Three Chinese telecommunications giants continue to have footholds in the U.S. internet ecosystem despite their alleged role in previous Chinese hacking campaigns, a House committee report concluded.</p>
 
 </li>
 <li id="s43">
@@ -864,6 +824,6 @@ with no editorial selection, ranking, or summarising applied.
 </li>
 </ol>
 </main>
-<footer>Generated 2026-08-06T20:10:16.629Z</footer>
+<footer>Generated 2026-08-06T20:15:35.347Z</footer>
 </body>
 </html>
