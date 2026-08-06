@@ -296,6 +296,7 @@ project works without it.
 
 ```
 docs/design.md              this file
+docs/app.md                 the native app, and its contract with site/
 src/
   index.ts                  entry point — one run, one article
   config/sources.ts         the source list
@@ -309,6 +310,10 @@ data/
 site/                       generated, served by Vercel
   editions/YYYY-MM-DD.json  the record, web-served
   editions/index.json       the archive index, web-served
+app/                        the native app — see docs/app.md
+  shared/                   KMP library: shared Compose UI and logic
+  androidApp/               Android application module
+  iosApp/                   SwiftUI host
 vercel.json                 output directory; no build step
 .github/workflows/daily.yml
 ```
