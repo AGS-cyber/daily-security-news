@@ -95,6 +95,13 @@ Vercel deploy already serves, written by `writeSite()` in
 
 Base URL: `https://daily-security-news.vercel.app`.
 
+**Both endpoints 404 until `site/editions/` reaches `origin/main`.** Vercel
+deploys the pushed branch, not the working tree, so committing the JSON
+locally is not the same as publishing it — `/` and `/archive.html` serve
+happily from an older deploy while `/editions/*.json` does not exist. Worth
+checking with a plain `curl` before concluding the app's networking is
+broken.
+
 This is the whole reason the app needed no new infrastructure. `site/` is
 already committed and already deployed, so anything written there is a
 public URL for free. `data/` is *not* deployed — only `site/` is — which is
@@ -266,8 +273,8 @@ Same rule as `design.md` §10 — each layer ends with something that works.
 4. ~~**Citations.**~~ Done — the substitution function and its adversarial
    tests (§5). Isolated deliberately: it is the one bug class with no
    server-side signal.
-5. **Networking and cache.** Ktor client against the two endpoints; Okio
-   file cache of the last fetch for offline reading.
+5. ~~**Networking and cache.**~~ Done — Ktor client against the two
+   endpoints; Okio file cache of the last fetch for offline reading (§9).
 6. **Screens.** Today, Archive, and a shared detail renderer handling both
    `article` and `digest` modes, the degraded banner, and explicit
    offline/error states. A blank screen is never an acceptable state —
@@ -276,3 +283,46 @@ Same rule as `design.md` §10 — each layer ends with something that works.
    an `android` job on ubuntu and an `ios` job on macos that runs both the
    framework link *and* `xcodebuild`, since the link task alone never
    touches the Swift code.
+
+## 9. Networking and cache
+
+`EditionRepository` reads the two endpoints network-first and caches the
+**raw response text** on disk, so a field the site adds survives a round
+trip through the cache. Ktor 3 with the OkHttp engine on Android and Darwin
+on iOS, chosen through a three-line `expect`/`actual` rather than
+classpath auto-discovery — an engine that fails to be discovered fails at
+runtime, and this way it fails at compile time instead.
+
+No `ContentNegotiation` plugin. The module already has a configured
+`EditionJson`; the body is read with `bodyAsText()` and decoded explicitly,
+which is fewer moving parts and keeps a decode failure visible at the call
+site instead of inside a plugin.
+
+**Cached data is a disclosed mode, not a silent one.** Every load returns
+`Load.Fresh`, `Load.Cached` or `Load.Failed`, and `Cached` carries the
+original network error rather than swallowing it, so the screen can say
+*why* it is showing an older edition. A caller cannot accidentally render
+yesterday's news as today's, because it cannot get at the value without
+seeing which case it is in. `Failed` likewise carries the network error, not
+a cache error — the network failure is the one worth reporting.
+
+One error is deliberately swallowed, and only one: a **cache write** that
+fails leaves an already-successful fetch alone rather than failing a good
+load because the disk is full. It is commented as such at the swallow site.
+
+`loadEdition` validates its date against `\d{4}-\d{2}-\d{2}` before it can
+become either a URL path or a file path. Dates come from the server's index,
+which is data rather than trusted input, and the check is what stops a value
+like `../../../etc/passwd` reaching the file system. It throws rather than
+returning `Failed`: a malformed date is a bug in the caller, not a runtime
+condition to render.
+
+There is no eviction policy. §1 puts a real offline archive out of scope for
+v1, and a handful of small JSON files does not warrant one yet.
+
+Constructor injection throughout — client, file system, cache directory and
+base URL are all parameters — which is what lets the tests drive the whole
+class with Ktor's `MockEngine` and Okio's `FakeFileSystem`, serving the real
+captured edition, without touching the network. The Android host needs
+`INTERNET` in its manifest; without it every request fails at runtime on a
+build that compiled perfectly.

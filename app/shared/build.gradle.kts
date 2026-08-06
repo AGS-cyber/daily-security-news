@@ -127,12 +127,23 @@ kotlin {
             api(compose.ui)
             api(compose.components.resources)
             implementation(libs.kotlinx.serialization.json)
+            implementation(libs.ktor.client.core)
+            implementation(libs.okio)
+        }
+        androidMain.dependencies {
+            implementation(libs.ktor.client.okhttp)
+        }
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
         }
         commonTest {
             kotlin.srcDir(generateJsonFixtures.flatMap { it.outputDir })
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+            implementation(libs.ktor.client.mock)
+            implementation(libs.okio.fakefilesystem)
+            implementation(libs.kotlinx.coroutines.test)
         }
     }
 }
