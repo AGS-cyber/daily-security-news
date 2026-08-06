@@ -191,6 +191,17 @@ they get different calls:
 - **`write`** returns Markdown — no JSON escaping around multi-paragraph
   prose, and nothing to parse but text.
 
+**Editorial spec** (decided 2026-08-06; these are prompt constants, §11):
+
+- **~800 words** of body prose — a three-to-four minute read, per §1.
+- **6–8 stories** written up, chosen from roughly 30–50 daily candidates. A
+  *range*, not a quota: a quiet day runs short rather than padding to a
+  number, which is the failure §11 warned about. Everything not selected
+  still renders in the plain list below, so nothing is discarded.
+- **All five sections** from §5, with any section that has no stories omitted
+  entirely rather than printed as an empty heading. At 6–8 stories most days
+  won't fill all five.
+
 **Provider.** DeepSeek, `https://api.deepseek.com`. The API is
 OpenAI-compatible, so the client is the `openai` npm package pointed at that
 base URL with `DEEPSEEK_API_KEY`. No DeepSeek-specific SDK.
@@ -355,10 +366,10 @@ Decide before the layer that needs them; don't guess early.
 
 - ~~**Which 08:00?**~~ Decided 2026-08-05 — 08:00 US Eastern, cron
   `0 12 * * *`. See §9.
-- Article length. A 400-word tight digest and a 1,500-word piece are
-  different products; the prompt has to specify one.
-- Section list (§5) is a first guess. Revisit after a week of real output.
-- How many stories get written up versus listed below. Unbounded selection
-  defeats the purpose; the right cap isn't knowable yet.
+- ~~Article length.~~ Decided 2026-08-06 — **~800 words**. See §6.
+- ~~Section list.~~ Decided 2026-08-06 — keep all five, omit empty ones.
+  Still worth revisiting after a week of real output.
+- ~~How many stories get written up versus listed below.~~ Decided
+  2026-08-06 — **6–8**, a range rather than a quota. See §6.
 - Whether the archive needs search. Probably not at 365 pages; definitely not
   at 30.
