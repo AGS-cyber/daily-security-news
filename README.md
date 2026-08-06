@@ -11,9 +11,16 @@ The reader is assumed to be security-literate. They don't need "what is
 ransomware"; they need to know which of yesterday's forty stories are worth
 their attention and why.
 
-`docs/design.md` is the source of truth for how this project is meant to fit
-together. This file is the entry point; that one is the design. Read it before
-changing anything.
+Two documents sit behind this one, and this file deliberately does not
+duplicate either:
+
+- **`docs/design.md`** — the source of truth for what this system is and why
+  it is shaped the way it is, including every decision made and the reasoning
+  that settled it. Read it before changing anything.
+- **`docs/operations.md`** — running it, deploying it, and debugging it. Go
+  straight there when the build is red, a feed stops working, or the site and
+  the repo disagree. It records the failure modes that have actually happened,
+  each of which pointed somewhere other than its cause.
 
 ## Current state
 
@@ -100,6 +107,7 @@ Anything that isn't an XML content type means the URL moved.
 
 ```
 docs/design.md              the design — source of truth
+docs/operations.md          running, deploying, debugging
 src/
   index.ts                  entry point — one run, one edition
   config/sources.ts         the source list
