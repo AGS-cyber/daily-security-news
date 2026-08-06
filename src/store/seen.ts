@@ -5,7 +5,16 @@ import { dirname } from 'node:path';
 const RETENTION_DAYS = 30;
 
 export interface SeenStore {
-  has(canonicalUrl: string): boolean;
+  /**
+   * True when an *earlier* edition already covered this URL.
+   *
+   * Deliberately not "have we ever seen this". An item first covered today is
+   * still part of today's edition, so a second run on the same date rebuilds
+   * that edition instead of finding nothing and rendering an empty page over
+   * it. Re-runs — a hand-triggered dispatch, a retry after a failed publish, a
+   * cron double-fire — are therefore idempotent within a day.
+   */
+  publishedBefore(canonicalUrl: string, date: string): boolean;
   add(canonicalUrl: string, date: string): void;
   save(): Promise<void>;
   size: number;
@@ -49,8 +58,9 @@ export async function loadSeen(filePath: string): Promise<SeenStore> {
   }
 
   return {
-    has(canonicalUrl) {
-      return key(canonicalUrl) in entries;
+    publishedBefore(canonicalUrl, date) {
+      const covered = entries[key(canonicalUrl)];
+      return covered !== undefined && covered < date;
     },
     add(canonicalUrl, date) {
       entries[key(canonicalUrl)] = date;

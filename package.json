@@ -8,7 +8,7 @@
   "scripts": {
     "start": "tsx src/index.ts",
     "typecheck": "tsc --noEmit",
-    "test": "tsx --test src/pipeline/normalize.test.ts src/pipeline/dedupe.test.ts"
+    "test": "tsx --test src/pipeline/normalize.test.ts src/pipeline/dedupe.test.ts src/pipeline/filter.test.ts"
   },
   "dependencies": {
     "rss-parser": "^3.13.0"

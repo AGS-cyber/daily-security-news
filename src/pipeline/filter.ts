@@ -15,11 +15,12 @@ export function filter(
   now: Date,
 ): { kept: Cluster[]; droppedSeen: number; droppedOld: number } {
   const kept: Cluster[] = [];
+  const date = now.toISOString().slice(0, 10);
   let droppedSeen = 0;
   let droppedOld = 0;
 
   for (const cluster of clusters) {
-    if (seen.has(cluster.canonicalUrl)) {
+    if (seen.publishedBefore(cluster.canonicalUrl, date)) {
       droppedSeen++;
       continue;
     }

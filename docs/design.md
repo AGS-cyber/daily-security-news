@@ -83,6 +83,16 @@ that first covered it, pruned to 30 days. Committed back by the workflow so
 the next run knows what's already been written about. This is the only
 mutable state.
 
+**The store is consulted by date, not by presence.** An item is excluded only
+when an *earlier* edition covered it; an item first covered today is still part
+of today's edition. This matters because runs are not once-per-day in practice
+— `workflow_dispatch` exists, publishes get retried, and Actions cron can
+double-fire. Treating "seen at all" as a drop meant the second run of any day
+found nothing to publish and rendered an empty edition *over* the real one,
+destroying that day's record while the page still read as healthy ("No new
+stories in this window"). That is the §8 failure this project refuses to ship,
+so the rule is date-aware and same-day runs are idempotent.
+
 ## 4. Sources
 
 Config lives in `src/config/sources.ts` — one typed array, no dynamic
