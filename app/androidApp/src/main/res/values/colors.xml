@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The `bg` colour from the site's palette in `src/render/html.ts`. Restated here
+    because a window background is set before any Compose code runs, so it
+    cannot read the Kotlin palette in `ui/Theme.kt`. Three copies of this
+    colour now exist — the CSS, the Compose theme, and this file — and a
+    change to the site's background has to reach all three.
+-->
+<resources>
+    <color name="terminal_bg">#080B08</color>
+</resources>
