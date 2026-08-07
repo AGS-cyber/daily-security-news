@@ -1,0 +1,10 @@
+# Gradle
+.gradle/
+build/
+local.properties
+.kotlin/
+
+# Xcode
+xcuserdata/
+DerivedData/
+*.xcworkspace

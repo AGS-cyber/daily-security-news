@@ -64,6 +64,8 @@ data/editions/YYYY-MM-DD.json the full record behind that day's page
 site/index.html               today's edition
 site/YYYY-MM-DD.html          the same content, permanently addressed
 site/archive.html             index of every edition
+site/editions/YYYY-MM-DD.json the same record as data/editions, also web-served
+site/editions/index.json      the archive index as JSON, also web-served
 ```
 
 `data/` and `site/` are **committed on purpose** — they are the product. The
