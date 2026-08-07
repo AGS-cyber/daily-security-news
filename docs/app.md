@@ -104,12 +104,20 @@ Vercel deploy already serves, written by `writeSite()` in
 
 Base URL: `https://daily-security-news.vercel.app`.
 
-**Both endpoints 404 until `site/editions/` reaches `origin/main`.** Vercel
-deploys the pushed branch, not the working tree, so committing the JSON
-locally is not the same as publishing it — `/` and `/archive.html` serve
-happily from an older deploy while `/editions/*.json` does not exist. Worth
-checking with a plain `curl` before concluding the app's networking is
-broken.
+**Both endpoints are live** as of 2026-08-07, and the served editions are
+byte-identical to the committed `data/editions/` blobs.
+
+They 404'd until `site/editions/` reached `origin/main`, which is worth
+remembering the next time they appear to break. Vercel deploys the pushed
+branch, not the working tree, so committing the JSON locally is not the same
+as publishing it — `/` and `/archive.html` serve happily from an older
+deploy while `/editions/*.json` does not exist. Check with a plain `curl`
+before concluding the app's networking is broken.
+
+When comparing a served file against `data/editions/` on a Windows checkout,
+compare against the **git blob**, not the working file. `core.autocrlf`
+rewrites the checkout to CRLF, so a byte comparison fails by exactly one
+byte per line and looks like a broken contract when nothing is wrong.
 
 This is the whole reason the app needed no new infrastructure. `site/` is
 already committed and already deployed, so anything written there is a
@@ -504,10 +512,26 @@ is given a `markdownTypography(...)` mapping `h1`/`h2` to `titleLarge` and
 `h3` to `titleMedium`. Not a rendering bug — a default that had to be
 overridden, and only visible on a device.
 
-**Verified on the emulator, not just in tests:** the error state against the
-live 404, the full article rendering from a hand-seeded cache under the
-offline banner, the archive and an edition reached through it, and system
-back walking Edition → Archive → Today → exit.
+**Verified on the emulator, not just in tests.** First against a hand-seeded
+cache and the live 404 — the error state, the offline banner, the archive
+and an edition reached through it, and system back walking
+Edition → Archive → Today → exit.
+
+Re-verified on 2026-08-07 **against the live endpoints**, which is a
+different test: the seeded run could not distinguish working networking from
+a convincing cache. App data was cleared first so no cache could masquerade
+as a fetch, and the cache directory afterwards held `index.json` and both
+editions at byte sizes matching what the endpoints serve. Today rendered the
+day's edition with **no** offline banner — `Fresh`, not `Cached`, which is
+the one thing the seeded run could never show. Citations render as links,
+the section headings still rank below the article headline, and back still
+walks Edition → Archive → Today → exit.
+
+One note for whoever automates this next: drive taps from the bounds in
+`uiautomator dump`, not from screenshot pixels, and treat a dump of a
+Compose hierarchy as unreliable — it can race recomposition and return a
+partial tree. Trust the screenshot for what is on screen and the dump only
+for where things are.
 
 That list is long on purpose. Screenshots are the only reason the
 plain-text-citation bug in §5 was caught — every test was green while the
