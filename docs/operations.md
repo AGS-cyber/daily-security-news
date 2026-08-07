@@ -410,3 +410,56 @@ curl -sS https://daily-security-news.vercel.app/ | grep -oE '[0-9]+ stories[^<]*
 # Does the live site match what was committed? A green build is not a deploy.
 curl -sS https://daily-security-news.vercel.app/index.html | diff - site/index.html
 ```
+
+## 8. Releasing the Android app
+
+`app-ci.yml` proves every change to `app/` builds. `app-release.yml` turns a
+chosen commit into a downloadable APK, and the tag is how you choose it.
+
+```sh
+# 1. The tag's version and the manifest's must agree, or the job fails.
+grep versionName app/androidApp/build.gradle.kts
+
+# 2. Tag the commit you want and push it. Pushing the tag is the trigger.
+git tag app-v0.1.0
+git push origin app-v0.1.0
+
+# 3. Watch it, then check what actually got attached.
+gh run watch "$(gh run list --workflow=app-release.yml --limit 1 \
+  --json databaseId --jq '.[0].databaseId')"
+gh release view app-v0.1.0
+```
+
+To rebuild a tag that produced a broken release, re-run it by hand rather
+than inventing a version number — `gh workflow run app-release.yml -f
+tag=app-v0.1.0`. Delete the existing release first (`gh release delete`), as
+`gh release create` will not overwrite one.
+
+**The APK is the `debug` variant, and that is deliberate.** The `release`
+build type has no signing config, so it produces `app-release-unsigned.apk`,
+which no device will install; signing is out of scope for v1 (`app.md` §1).
+The consequence to warn people about is real: each CI run generates its own
+throwaway debug key, so **a new release will not install over an older one**
+— Android rejects it with `INSTALL_FAILED_UPDATE_INCOMPATIBLE` and the fix is
+to uninstall first.
+
+Making releases upgradeable means a real keystore in GitHub secrets. That is
+a credential decision, not a build one, and it is the first thing to do when
+store submission stops being out of scope.
+
+Two guards worth knowing about, because both fail the job rather than
+publishing something wrong:
+
+- **The tag must match `versionName`.** Nothing otherwise keeps them in step,
+  and an APK whose filename disagrees with the version it reports to the
+  system is exactly the quiet wrongness `CLAUDE.md` ranks last.
+- **The release is re-read after publishing** to confirm an APK is actually
+  attached. A release that exists with no asset is worse than a failed job,
+  because it looks finished.
+
+The workflow uses the runner's preinstalled `gh` rather than a third-party
+release action — one less dependency to trust in a repository that publishes
+security news.
+
+**iOS is not distributed.** CI builds and links it, but it has no signing
+identity and its `AppIcon.appiconset` is empty (`app.md` §1, §7).
