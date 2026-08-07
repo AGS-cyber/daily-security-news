@@ -277,6 +277,13 @@ Requires JDK 21 and an Android SDK; no Android Studio needed. From `app/`:
   and merely warns that `commonTest` exists but host tests are not enabled.
   Every test in the module then silently stops running while the build
   stays green. Do not remove it.
+- **A cached compile task replays no compiler diagnostics.**
+  `org.gradle.caching=true` is on, so a plain `assembleDebug` after a
+  `clean` can print no warnings at all while the same build with
+  `--rerun-tasks --no-build-cache` prints several — the Kotlin compile came
+  back `FROM-CACHE` and warnings are not part of what is cached. A build
+  that looks warning-free may simply not have compiled anything. Use
+  `--rerun-tasks --no-build-cache` before concluding a warning is gone.
 
 `shared`'s Android namespace is `dev.dailysecuritynews.app.shared` — AGP
 requires namespaces to be unique per module, and `androidApp` owns the
@@ -315,8 +322,8 @@ Same rule as `design.md` §10 — each layer ends with something that works.
    - a. ~~**Today.**~~ Done — the newest edition, both `article` and
      `digest` modes, all three banners, and explicit loading/offline/error
      states (§10). Verified on the emulator.
-   - b. **Archive.** The list from `index.json`, navigation to any past
-     edition, and the heading-hierarchy fix in §10.
+   - b. ~~**Archive.**~~ Done — the list from `index.json`, navigation to a
+     past edition, system back, and the heading-hierarchy fix (§10).
 7. **iOS host and CI.** SwiftUI shell, then `.github/workflows/app-ci.yml`:
    an `android` job on ubuntu and an `ios` job on macos that runs both the
    framework link *and* `xcodebuild`, since the link task alone never
@@ -365,10 +372,10 @@ captured edition, without touching the network. The Android host needs
 `INTERNET` in its manifest; without it every request fails at runtime on a
 build that compiled perfectly.
 
-## 10. The Today screen
+## 10. The screens
 
-`EditionsStore` turns two `Load` results into one `TodayState` — `Loading`,
-`Ready` or `Error` — and `TodayScreen` renders each. **There is no fourth,
+`EditionsStore` turns a `Load` result into one `EditionState` — `Loading`,
+`Ready` or `Error` — and `EditionScreen` renders each. **There is no fourth,
 blank case**, which is the point: `design.md` §8's disclosure rule says a
 degraded mode has to be visible, and three of these states exist only to
 make failure legible.
@@ -394,12 +401,60 @@ Story rows use the `Story` interface, so one composable serves both a
 selected story and a merely-collected one, and open links through
 `LocalUriHandler` rather than an `expect`/`actual` of their own.
 
-**Known and deliberate, for 6b:** the Markdown renderer styles `##` larger
-than the `headlineMedium` used for the edition's own headline, so a section
-heading currently outranks the article title. It is a theme mapping to pass
-into `Markdown(...)`, not a rendering bug.
+The store keeps `today` and `viewed` in separate slots. An edition opened
+from the archive cannot knock today's out of `Ready` into `Error`, and
+coming back does not re-fetch — the screen is still scrolled where it was.
+`loadToday` and `openEdition` share one private `Load<Edition>` →
+`EditionState` conversion, so citation substitution and cache disclosure
+cannot drift between the two entry points.
+
+An empty archive is `Ready(emptyList())`, never `Error`. Nothing published
+yet is a fact about the archive, not a failure to load it, and the screen
+says so in a sentence.
+
+**Navigation is a sealed `Screen` and one `mutableStateOf`** — Today,
+Archive, Edition. A navigation library would be indirection bought for two
+transitions. The app-bar Back button and Android's system back share a
+single `back` lambda so they cannot disagree about where "back" goes; system
+back is disabled on Today so it still exits the app from there. That handler
+needs its own dependency line, `org.jetbrains.compose.ui:ui-backhandler` —
+it does not ship inside `compose.ui`, which is surprising enough to be worth
+writing down.
+
+`BackHandler` is deprecated in favour of `NavigationEventHandler`, and the
+warning stays for now: **`androidx.navigationevent:navigationevent-compose`
+publishes no Apple targets** at 1.0.0 or 1.0.1. Its module metadata lists
+`android`, `jvmstubs` and `linuxx64stubs` and nothing else, so the iOS
+compile fails at dependency resolution before it reaches any code. Only the
+base `androidx.navigationevent` module is multiplatform; the Compose wrapper
+is not. Forcing it would mean an `expect`/`actual` split for a back button,
+which is not worth it. Revisit when that artifact ships Apple targets —
+this was evaluated and blocked, not missed.
+
+**Heading hierarchy is set explicitly.** Left alone, the Markdown renderer
+styles `##` larger than the `headlineMedium` used for the edition's own
+headline, so a section heading outranks the article title. `Markdown(...)`
+is given a `markdownTypography(...)` mapping `h1`/`h2` to `titleLarge` and
+`h3` to `titleMedium`. Not a rendering bug — a default that had to be
+overridden, and only visible on a device.
 
 **Verified on the emulator, not just in tests:** the error state against the
-live 404, and the full article rendering from a hand-seeded cache under the
-offline banner. Screenshots are how the plain-text-citation bug in §5 was
-caught at all — every test was green while the article had no links in it.
+live 404, the full article rendering from a hand-seeded cache under the
+offline banner, the archive and an edition reached through it, and system
+back walking Edition → Archive → Today → exit.
+
+That list is long on purpose. Screenshots are the only reason the
+plain-text-citation bug in §5 was caught — every test was green while the
+article had no links in it at all — and the heading hierarchy and the
+system-back gap were both invisible to the test suite too. **For this app,
+a green Gradle run is evidence about the code and nothing at all about the
+screen.** Seed the cache by hand and look at it:
+
+```
+adb push site/editions/index.json /sdcard/index.json
+type <file> | adb shell run-as dev.dailysecuritynews.app sh -c 'cat > /data/data/dev.dailysecuritynews.app/cache/index.json'
+```
+
+`run-as` cannot read `/sdcard` directly, hence the pipe. Screenshot with
+`adb shell screencap -p /sdcard/shot.png` then `adb pull` — PowerShell `>`
+redirection corrupts the PNG (`android-toolchain` notes, §6).

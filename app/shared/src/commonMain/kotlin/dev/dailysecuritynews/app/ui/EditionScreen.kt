@@ -3,14 +3,13 @@ package dev.dailysecuritynews.app.ui
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -21,30 +20,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import com.mikepenz.markdown.m3.Markdown
+import com.mikepenz.markdown.m3.markdownTypography
 import dev.dailysecuritynews.app.data.ArticleEdition
 import dev.dailysecuritynews.app.data.DigestEdition
 import dev.dailysecuritynews.app.data.Story
 import dev.dailysecuritynews.app.render.CitationResult
 
 /**
- * The one screen. Archive and navigation are a later step.
+ * Renders one edition — today's or one opened from the archive.
  *
- * Every branch renders something. A blank screen is never an acceptable
- * state — `docs/app.md` §8 — and the three banners below exist so a reader
- * can tell a partial or stale edition from a complete one without having to
- * check the site.
+ * Every branch renders something. A blank screen is never an acceptable state
+ * — `docs/app.md` §8 — and the three banners exist so a reader can tell a
+ * partial or stale edition from a complete one without checking the site.
  */
 @Composable
-fun TodayScreen(state: TodayState, onRetry: () -> Unit) {
+fun EditionScreen(state: EditionState, onRetry: () -> Unit) {
     when (state) {
-        is TodayState.Loading -> LoadingBody()
-        is TodayState.Error -> ErrorBody(state, onRetry)
-        is TodayState.Ready -> ReadyBody(state)
+        is EditionState.Loading -> LoadingBody("Loading the edition")
+        is EditionState.Error -> ErrorBody(state.message, onRetry)
+        is EditionState.Ready -> ReadyBody(state)
     }
 }
 
 @Composable
-private fun LoadingBody() {
+internal fun LoadingBody(label: String) {
     Column(
         modifier = Modifier.fillMaxSize().padding(24.dp),
         verticalArrangement = Arrangement.Center,
@@ -52,7 +51,7 @@ private fun LoadingBody() {
     ) {
         CircularProgressIndicator()
         Text(
-            text = "Loading today's edition",
+            text = label,
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(top = 16.dp),
         )
@@ -64,17 +63,17 @@ private fun LoadingBody() {
  * can see the real error can report it, and a euphemism costs that.
  */
 @Composable
-private fun ErrorBody(state: TodayState.Error, onRetry: () -> Unit) {
+internal fun ErrorBody(message: String, onRetry: () -> Unit) {
     Column(
         modifier = Modifier.fillMaxSize().padding(24.dp),
         verticalArrangement = Arrangement.Center,
     ) {
         Text(
-            text = "Couldn't load today's edition",
+            text = "Couldn't load the edition",
             style = MaterialTheme.typography.headlineSmall,
         )
         Text(
-            text = state.message,
+            text = message,
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(top = 12.dp),
         )
@@ -85,11 +84,11 @@ private fun ErrorBody(state: TodayState.Error, onRetry: () -> Unit) {
 }
 
 @Composable
-private fun ReadyBody(state: TodayState.Ready) {
+private fun ReadyBody(state: EditionState.Ready) {
     val edition = state.edition
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp),
+        contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         if (state.fromCache) {
@@ -160,34 +159,21 @@ private fun ArticleBody(body: CitationResult?) {
     if (body == null) return
     // The renderer's own CommonMark parser — the escaping in Citations.kt is
     // written against this parser, not against our reading of the spec.
-    Markdown(content = body.markdown, modifier = Modifier.fillMaxWidth())
-}
-
-@Composable
-private fun Banner(title: String, lines: List<String>, error: Boolean) {
-    val colors = if (error) {
-        CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.errorContainer,
-            contentColor = MaterialTheme.colorScheme.onErrorContainer,
-        )
-    } else {
-        CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-            contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
-        )
-    }
-    Card(colors = colors, modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(12.dp)) {
-            Text(title, style = MaterialTheme.typography.titleSmall)
-            for (line in lines) {
-                Text(
-                    text = line,
-                    style = MaterialTheme.typography.bodySmall,
-                    modifier = Modifier.padding(top = 4.dp),
-                )
-            }
-        }
-    }
+    //
+    // The typography override is load-bearing, not cosmetic: the renderer's
+    // default maps `##` to a style larger than the `headlineMedium` used for
+    // the edition's own headline above, so a section heading outranked the
+    // article title. Capping headings at `titleLarge` puts them back underneath
+    // it.
+    Markdown(
+        content = body.markdown,
+        typography = markdownTypography(
+            h1 = MaterialTheme.typography.titleLarge,
+            h2 = MaterialTheme.typography.titleLarge,
+            h3 = MaterialTheme.typography.titleMedium,
+        ),
+        modifier = Modifier.fillMaxWidth(),
+    )
 }
 
 /** One composable for both [dev.dailysecuritynews.app.data.SelectedItem] and
