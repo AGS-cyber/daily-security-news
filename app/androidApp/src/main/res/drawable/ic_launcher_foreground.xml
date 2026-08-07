@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The `$_` shell prompt, in phosphor green. `$` is the sigil the site puts
+    before every h1 and the tail of its `root@sec:~$` brand, so the mark is
+    drawn from the product rather than invented for it (design.md §2).
+
+    108x108 is the adaptive-icon canvas; only the central 66x66 is guaranteed
+    to survive a launcher's mask, so the glyph stays inside it. The `$` is a
+    stroked S with a bar through it rather than a filled outline — a stroke
+    keeps the weight even at 48dp, where a filled counter would silt up.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- The S. Four curves: top arc, upper bowl into the waist, lower bowl,
+         bottom arc. -->
+    <path
+        android:pathData="M 54 44 C 54 36 43 32.5 36 36 C 29.5 39.5 29.5 48 37.5 52 C 46 56 54 59.5 53 66.5 C 52 73.5 40.5 75.5 33 71"
+        android:strokeColor="#7DFFA4"
+        android:strokeWidth="7"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+
+    <!-- The bar through it, extending past the S at both ends as it does in
+         a real glyph. -->
+    <path
+        android:pathData="M 41.5 27 L 41.5 80"
+        android:strokeColor="#7DFFA4"
+        android:strokeWidth="7"
+        android:strokeLineCap="round" />
+
+    <!-- The cursor. A stroked line with round caps rather than a rounded
+         rect, so its ends match the weight of the `$`. -->
+    <path
+        android:pathData="M 64.5 71.5 L 78.5 71.5"
+        android:strokeColor="#7DFFA4"
+        android:strokeWidth="7"
+        android:strokeLineCap="round" />
+</vector>

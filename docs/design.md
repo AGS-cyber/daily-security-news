@@ -51,6 +51,10 @@ never touches a story's title, link, or timestamp. Styling is confined to the
 `CSS` constant and `layout()` in `render/html.ts`; no other module knows what
 the page looks like.
 
+**The app mirrors this palette rather than sharing it** — see `app.md` §11.
+Nothing ties the Kotlin copy to the CSS, so a colour changed here has to be
+changed there too.
+
 ## 3. Pipeline
 
 One run produces one article. Stages are pure where possible: each takes data

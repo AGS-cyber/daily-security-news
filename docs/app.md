@@ -19,8 +19,9 @@ out of scope, each its own later decision:
   persistent state, new privacy surface) and a notify step in the workflow.
   Layered on after the app works end to end, per `design.md` §10's rule.
 - Store submission, signing, TestFlight/Play Console.
-- App icon and branding. The Android icon is currently the platform stock
-  icon and the iOS `AppIcon.appiconset` is empty.
+- ~~App icon and branding.~~ Done on 2026-08-07 for Android (§11). The iOS
+  `AppIcon.appiconset` is still empty — it needs raster PNGs, which iOS being
+  deprioritised has not earned yet.
 - Search, settings, accounts, offline archive beyond the last-read edition.
 
 ## 2. Stack
@@ -104,12 +105,20 @@ Vercel deploy already serves, written by `writeSite()` in
 
 Base URL: `https://daily-security-news.vercel.app`.
 
-**Both endpoints 404 until `site/editions/` reaches `origin/main`.** Vercel
-deploys the pushed branch, not the working tree, so committing the JSON
-locally is not the same as publishing it — `/` and `/archive.html` serve
-happily from an older deploy while `/editions/*.json` does not exist. Worth
-checking with a plain `curl` before concluding the app's networking is
-broken.
+**Both endpoints are live** as of 2026-08-07, and the served editions are
+byte-identical to the committed `data/editions/` blobs.
+
+They 404'd until `site/editions/` reached `origin/main`, which is worth
+remembering the next time they appear to break. Vercel deploys the pushed
+branch, not the working tree, so committing the JSON locally is not the same
+as publishing it — `/` and `/archive.html` serve happily from an older
+deploy while `/editions/*.json` does not exist. Check with a plain `curl`
+before concluding the app's networking is broken.
+
+When comparing a served file against `data/editions/` on a Windows checkout,
+compare against the **git blob**, not the working file. `core.autocrlf`
+rewrites the checkout to CRLF, so a byte comparison fails by exactly one
+byte per line and looks like a broken contract when nothing is wrong.
 
 This is the whole reason the app needed no new infrastructure. `site/` is
 already committed and already deployed, so anything written there is a
@@ -504,10 +513,26 @@ is given a `markdownTypography(...)` mapping `h1`/`h2` to `titleLarge` and
 `h3` to `titleMedium`. Not a rendering bug — a default that had to be
 overridden, and only visible on a device.
 
-**Verified on the emulator, not just in tests:** the error state against the
-live 404, the full article rendering from a hand-seeded cache under the
-offline banner, the archive and an edition reached through it, and system
-back walking Edition → Archive → Today → exit.
+**Verified on the emulator, not just in tests.** First against a hand-seeded
+cache and the live 404 — the error state, the offline banner, the archive
+and an edition reached through it, and system back walking
+Edition → Archive → Today → exit.
+
+Re-verified on 2026-08-07 **against the live endpoints**, which is a
+different test: the seeded run could not distinguish working networking from
+a convincing cache. App data was cleared first so no cache could masquerade
+as a fetch, and the cache directory afterwards held `index.json` and both
+editions at byte sizes matching what the endpoints serve. Today rendered the
+day's edition with **no** offline banner — `Fresh`, not `Cached`, which is
+the one thing the seeded run could never show. Citations render as links,
+the section headings still rank below the article headline, and back still
+walks Edition → Archive → Today → exit.
+
+One note for whoever automates this next: drive taps from the bounds in
+`uiautomator dump`, not from screenshot pixels, and treat a dump of a
+Compose hierarchy as unreliable — it can race recomposition and return a
+partial tree. Trust the screenshot for what is on screen and the dump only
+for where things are.
 
 That list is long on purpose. Screenshots are the only reason the
 plain-text-citation bug in §5 was caught — every test was green while the
@@ -524,3 +549,84 @@ type <file> | adb shell run-as dev.dailysecuritynews.app sh -c 'cat > /data/data
 `run-as` cannot read `/sdcard` directly, hence the pipe. Screenshot with
 `adb shell screencap -p /sdcard/shot.png` then `adb pull` — PowerShell `>`
 redirection corrupts the PNG (`android-toolchain` notes, §6).
+
+## 11. Presentation — the terminal, ported
+
+The app wears the site's green-phosphor terminal (`design.md` §2), because
+two readers over one edition should not look like two products. Dark only,
+for the same reason the site is: a light-mode CRT is a contradiction.
+
+**The palette is a hand-maintained mirror, not a shared source.** The CSS
+`:root` block in `src/render/html.ts` is the original; `ui/Theme.kt` restates
+it as Compose `Color`s, and `androidApp/res/values/colors.xml` restates the
+background a third time because a window background is resolved before any
+Compose code runs. Nothing ties the three together — this is the same drift
+risk §4 describes for the Kotlin models against `src/types.ts`, and the same
+answer: there is no compiler tie to be had across TypeScript, Kotlin and
+Android resources, so it is written down instead. A colour change on the site
+has to reach all three.
+
+**Decorative characters are added by the composable that draws them**, never
+by touching an edition's text. On the web they are CSS `content`; here they
+are `AnnotatedString` spans. The rule that matters is the one `design.md` §2
+sets: the theme never edits a story's title, headline, markdown or timestamp.
+So the app carries `root@sec:~$` on the brand, `$ ` before the headline,
+`[archive]`/`[back]` bracket nav, `[01]` story numbers, `›` archive bullets,
+and `[ !! DEGRADED ]` / `[ !! OFFLINE ]` / `[ NOTICE ]` banner labels.
+
+Three details are less obvious than they look:
+
+- **The blinking cursor is a span inside the headline, not a sibling
+  composable.** As a sibling it lands at the top-right of the headline's box,
+  level with the *first* line, because that is where a `Row` puts it. Only
+  inside the same `AnnotatedString` does text layout place it after the final
+  character, which is what `h1::after` does. It blinks by alpha on that span,
+  so nothing reflows.
+- **The app bar title is 14sp, not the default 22sp.** The brand lockup is 31
+  monospace characters; anything larger wraps `root@sec:~$` onto its own line
+  above the name, which reads as a shell prompt with its command on the wrong
+  line — the one arrangement a terminal never shows. There is no `maxLines`:
+  the site's header is `flex-wrap: wrap`, so wrapping on a genuinely narrow
+  screen matches it, and clipping the brand would not.
+- **`markdownColor` cannot colour links** in
+  `multiplatform-markdown-renderer` 0.41.0 — its `MarkdownColors` has no such
+  field. Link colour goes through `markdownTypography(textLink = …)` instead.
+  Checked against the resolved artifact rather than assumed.
+
+Reduce-motion is honoured for the blink, through an `expect`/`actual` pair in
+`ui/Motion.kt` — `ANIMATOR_DURATION_SCALE` on Android,
+`UIAccessibilityIsReduceMotionEnabled()` on iOS. Compose Multiplatform has no
+common API for it. When it is on, the cursor renders static and visible,
+matching the site's `animation: none`.
+
+### The icon
+
+`$_` in phosphor green on the site's background: `$` is the sigil before
+every `h1` and the tail of `root@sec:~$`, so the mark is drawn from the
+product rather than invented for it. All vector, no PNGs — an adaptive icon
+for API 26+, plus a scaled-up legacy vector in `mipmap/` because `minSdk` is
+24 and two API levels have no adaptive icons. The legacy copy is scaled 1.45×
+since nothing crops it, where the adaptive foreground must stay inside the
+66dp safe zone.
+
+**Deliberately no scanlines in the icon.** One line every three reads as
+texture on a page and as moiré at 48dp. The overlay belongs in the UI, drawn
+at its real size.
+
+`androidApp/res/values/themes.xml` exists for one reason worth stating: the
+activity's window is drawn before Compose's first frame, so under the
+platform's light theme the app opened on a white flash and then snapped to
+near-black. Nothing in `ui/Theme.kt` can prevent that, because none of it has
+run yet.
+
+### Verified on the emulator
+
+The article and archive screens, the one-line brand, the `$` sigil with its
+glow, the cursor trailing the last character, the standfirst rule, `›`
+prefixes, `[01]` numbering, and — with the network disabled — the
+`[ !! OFFLINE ]` banner showing its underlying error verbatim. The launcher
+icon was checked in the app drawer, not just built.
+
+Both defects that reached the emulator were invisible to a green build: the
+wrapping brand and the detached cursor. §10's rule holds and keeps holding —
+a green Gradle run is evidence about the code and nothing about the screen.

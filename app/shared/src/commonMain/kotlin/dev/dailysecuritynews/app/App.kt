@@ -9,6 +9,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -19,14 +20,88 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.backhandler.BackHandler
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import dev.dailysecuritynews.app.net.editionRepository
 import dev.dailysecuritynews.app.ui.ArchiveScreen
+import dev.dailysecuritynews.app.ui.DailySecurityNewsTheme
 import dev.dailysecuritynews.app.ui.EditionScreen
 import dev.dailysecuritynews.app.ui.EditionsStore
+import dev.dailysecuritynews.app.ui.PhosphorGlow
+import dev.dailysecuritynews.app.ui.Terminal
+import dev.dailysecuritynews.app.ui.scanlines
 import kotlinx.coroutines.launch
 import okio.Path.Companion.toPath
 
 const val APP_TITLE = "Daily Security News"
+
+/**
+ * The site's brand lockup — `header .brand::before { content: "root@sec:~$ " }`
+ * followed by the brand itself.
+ *
+ * One [AnnotatedString] rather than two composables, so the prompt and the
+ * name can never wrap apart from each other. The prompt is decoration drawn
+ * here, never part of any data.
+ *
+ * The site's brand text is `daily-security-news`, which is deliberately not
+ * [APP_TITLE] — that constant stays the Android launcher label.
+ */
+private val BrandLockup: AnnotatedString = buildAnnotatedString {
+    withStyle(SpanStyle(color = Terminal.dim, fontWeight = FontWeight.Normal)) {
+        append("root@sec:~$ ")
+    }
+    withStyle(
+        SpanStyle(
+            color = Terminal.bright,
+            fontWeight = FontWeight.Bold,
+            shadow = PhosphorGlow,
+        ),
+    ) {
+        append("daily-security-news")
+    }
+}
+
+/**
+ * Every app-bar title, at the site's header size.
+ *
+ * `TopAppBar` styles its title slot `titleLarge` — 22sp — and the brand lockup
+ * does not fit that beside the `[archive]` action on a 1080px screen: it wrapped
+ * onto two lines and the bar grew to fit. The site's `header .brand` is **16px**,
+ * the same as its body text, so the brand is not a large title there either.
+ *
+ * The override is here rather than on `Typography.titleLarge`, which the Markdown
+ * renderer's `h1`/`h2` mapping depends on (`docs/app.md` §10), and rather than at
+ * each `Text` call, so the three titles cannot drift apart. `TopAppBar` provides
+ * its style through `LocalTextStyle`, which an explicit `style` argument replaces.
+ */
+@Composable
+private fun BarTitle(text: AnnotatedString) {
+    // 14sp, not the app bar's default 22sp `titleLarge`. The brand lockup is
+    // 31 monospace characters, and anything larger wraps `root@sec:~$` onto
+    // its own line above `daily-security-news` — which reads as a shell prompt
+    // with the command on the wrong line, the one arrangement a terminal never
+    // shows. No `maxLines`: the site's own header is `flex-wrap: wrap`, so
+    // wrapping on a genuinely narrow screen matches it, whereas clipping the
+    // brand would not.
+    Text(text, style = MaterialTheme.typography.bodyMedium)
+}
+
+@Composable
+private fun BarTitle(text: String) = BarTitle(AnnotatedString(text))
+
+/**
+ * `.nav a::before/::after` — the brackets are `dim`, the label is `link`. One
+ * annotated string so a bracket cannot be orphaned from its label.
+ */
+private fun bracketNav(label: String): AnnotatedString = buildAnnotatedString {
+    val brackets = SpanStyle(color = Terminal.dim)
+    withStyle(brackets) { append("[") }
+    withStyle(SpanStyle(color = Terminal.link)) { append(label) }
+    withStyle(brackets) { append("]") }
+}
 
 /**
  * The three destinations. A sealed interface and one `mutableStateOf` is the
@@ -85,35 +160,41 @@ fun App(cacheDir: String) {
     }
     BackHandler(enabled = screen !is Screen.Today, onBack = back)
 
-    MaterialTheme {
+    DailySecurityNewsTheme {
         Scaffold(
-            modifier = Modifier.fillMaxSize(),
+            // The scanline overlay sits on the Scaffold, not on the content
+            // slot, so it covers the app bar too — the site's overlay is
+            // `position: fixed` over the whole viewport.
+            modifier = Modifier.fillMaxSize().scanlines(),
+            containerColor = MaterialTheme.colorScheme.background,
             topBar = {
                 TopAppBar(
                     title = {
-                        Text(
-                            when (val current = screen) {
-                                is Screen.Today -> APP_TITLE
-                                is Screen.Archive -> "Archive"
-                                is Screen.Edition -> current.date
-                            },
-                        )
+                        when (val current = screen) {
+                            is Screen.Today -> BarTitle(BrandLockup)
+                            is Screen.Archive -> BarTitle("archive")
+                            is Screen.Edition -> BarTitle(current.date)
+                        }
                     },
                     navigationIcon = {
                         if (screen !is Screen.Today) {
                             // A text button, not an icon: the material-icons
                             // artifact is not on the classpath and an icon is
                             // not worth a dependency.
-                            TextButton(onClick = back) { Text("Back") }
+                            TextButton(onClick = back) { Text(bracketNav("back")) }
                         }
                     },
                     actions = {
                         if (screen is Screen.Today) {
                             TextButton(onClick = { screen = Screen.Archive }) {
-                                Text("Archive")
+                                Text(bracketNav("archive"))
                             }
                         }
                     },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.background,
+                        scrolledContainerColor = MaterialTheme.colorScheme.background,
+                    ),
                 )
             },
         ) { padding ->

@@ -14,6 +14,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import dev.dailysecuritynews.app.data.EditionSummary
 
@@ -46,9 +49,10 @@ private fun ReadyBody(state: ArchiveState.Ready, onSelect: (String) -> Unit) {
         if (state.fromCache) {
             item {
                 Banner(
+                    label = "[ !! OFFLINE ]",
+                    kind = BannerKind.Warn,
                     title = "Offline — showing a saved copy of the archive",
                     lines = listOfNotNull(state.cacheReason),
-                    error = true,
                 )
             }
         }
@@ -74,7 +78,15 @@ private fun SummaryRow(summary: EditionSummary, onSelect: (String) -> Unit) {
             .clickable { onSelect(summary.date) }
             .padding(vertical = 8.dp),
     ) {
-        Text(summary.date, style = MaterialTheme.typography.titleMedium)
+        // `ul.archive li::before { content: "\203A"; color: var(--dim) }` —
+        // decoration drawn here, never prepended to the edition's date.
+        Text(
+            text = buildAnnotatedString {
+                withStyle(SpanStyle(color = Terminal.dim)) { append("› ") }
+                append(summary.date)
+            },
+            style = MaterialTheme.typography.titleMedium,
+        )
         // A digest edition has no headline; showing the date and count alone
         // beats an empty line pretending a headline exists.
         summary.headline?.let {
@@ -87,9 +99,9 @@ private fun SummaryRow(summary: EditionSummary, onSelect: (String) -> Unit) {
         Text(
             text = "${summary.count} stories",
             style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            color = Terminal.muted,
             modifier = Modifier.padding(top = 2.dp),
         )
-        HorizontalDivider(modifier = Modifier.padding(top = 8.dp))
+        HorizontalDivider(modifier = Modifier.padding(top = 8.dp), color = Terminal.rule)
     }
 }
