@@ -10,7 +10,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent {
-            App()
+            App(cacheDir = cacheDir.absolutePath)
         }
     }
 }

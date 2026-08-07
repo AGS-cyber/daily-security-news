@@ -10,6 +10,10 @@ kotlinx-serialization = "1.11.0"
 ktor = "3.5.2"
 okio = "3.18.1"
 coroutines = "1.11.0"
+# 0.42.0 and 0.43.0 publish an AAR requiring compileSdk 37; docs/app.md §2
+# deliberately pins 36. 0.41.0 is the newest release that builds against 36.
+markdown-renderer = "0.41.0"
+jetbrains-markdown = "0.7.5"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
@@ -22,6 +26,8 @@ ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 okio-fakefilesystem = { module = "com.squareup.okio:okio-fakefilesystem", version.ref = "okio" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+markdown-renderer-m3 = { module = "com.mikepenz:multiplatform-markdown-renderer-m3", version.ref = "markdown-renderer" }
+jetbrains-markdown = { module = "org.jetbrains:markdown", version.ref = "jetbrains-markdown" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

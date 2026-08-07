@@ -37,7 +37,7 @@ class CitationsTest {
             "[[s1]]",
             listOf(story("s1", "Windows path C:\\", "https://x.test/a")),
         )
-        assertEquals("""[Windows path C\:\\](<https://x.test/a>)""", result.markdown)
+        assertEquals("""[Windows path C\:\\](https://x.test/a)""", result.markdown)
         assertEquals(emptyList(), result.unresolved)
     }
 
@@ -48,7 +48,7 @@ class CitationsTest {
             listOf(story("s1", "A [nested] and ] alone", "https://x.test/b")),
         )
         assertEquals(
-            """[A \[nested\] and \] alone](<https://x.test/b>)""",
+            """[A \[nested\] and \] alone](https://x.test/b)""",
             result.markdown,
         )
         assertEquals(emptyList(), result.unresolved)
@@ -61,33 +61,59 @@ class CitationsTest {
             listOf(story("s1", "**bold** and __under__", "https://x.test/c")),
         )
         assertEquals(
-            """[\*\*bold\*\* and \_\_under\_\_](<https://x.test/c>)""",
+            """[\*\*bold\*\* and \_\_under\_\_](https://x.test/c)""",
             result.markdown,
         )
         assertEquals(emptyList(), result.unresolved)
     }
 
     @Test
-    fun parenthesisedUrlSurvivesInsideAngleBrackets() {
+    fun parenthesisedUrlIsEscapedInABareDestination() {
         val result = substituteCitations(
             "[[s1]]",
             listOf(story("s1", "Wiki", "https://x.test/a_(disambiguation)")),
         )
         assertEquals(
-            """[Wiki](<https://x.test/a_(disambiguation)>)""",
+            """[Wiki](https://x.test/a_\(disambiguation\))""",
             result.markdown,
         )
         assertEquals(emptyList(), result.unresolved)
     }
 
-    /** The asymmetry: parens escaped in the text, untouched in the destination. */
     @Test
-    fun parenthesesAreEscapedInTextButNotInDestination() {
+    fun parenthesesAreEscapedInBothTheTextAndTheDestination() {
         val result = substituteCitations(
             "[[s1]]",
             listOf(story("s1", "Foo (bar)", "https://x.test/a(1)")),
         )
-        assertEquals("""[Foo \(bar\)](<https://x.test/a(1)>)""", result.markdown)
+        assertEquals("""[Foo \(bar\)](https://x.test/a\(1\))""", result.markdown)
+    }
+
+    /**
+     * The case the old angle-bracketed form was adopted for. A bare
+     * destination handles it too, as long as the paren is escaped — an
+     * unescaped one would end the destination early.
+     */
+    @Test
+    fun unbalancedOpenParenInUrlIsEscaped() {
+        val result = substituteCitations(
+            "[[s1]]",
+            listOf(story("s1", "K", "https://x.test/k(1")),
+        )
+        assertEquals("""[K](https://x.test/k\(1)""", result.markdown)
+    }
+
+    /**
+     * A space has no backslash escape in CommonMark and a bare destination
+     * cannot contain one, so it must be percent-encoded instead.
+     */
+    @Test
+    fun spaceInUrlIsPercentEncoded() {
+        val result = substituteCitations(
+            "[[s1]]",
+            listOf(story("s1", "L", "https://x.test/l m")),
+        )
+        assertEquals("""[L](https://x.test/l%20m)""", result.markdown)
     }
 
     @Test
@@ -96,7 +122,7 @@ class CitationsTest {
             "[[s1]]",
             listOf(story("s1", "] ) *", "https://x.test/e")),
         )
-        assertEquals("""[\] \) \*](<https://x.test/e>)""", result.markdown)
+        assertEquals("""[\] \) \*](https://x.test/e)""", result.markdown)
     }
 
     @Test
@@ -105,7 +131,7 @@ class CitationsTest {
             "[[s1]]",
             listOf(story("s1", "U", "https://x.test/a<b>c")),
         )
-        assertEquals("""[U](<https://x.test/a\<b\>c>)""", result.markdown)
+        assertEquals("""[U](https://x.test/a\<b\>c)""", result.markdown)
     }
 
     // --- resolution behaviour ----------------------------------------------
@@ -124,7 +150,7 @@ class CitationsTest {
             listOf(story("s1", "T", "https://x.test/a")),
         )
         assertEquals(
-            """One [T](<https://x.test/a>) two [[s99]].""",
+            """One [T](https://x.test/a) two [[s99]].""",
             result.markdown,
         )
         assertEquals(listOf("s99"), result.unresolved)
@@ -143,7 +169,7 @@ class CitationsTest {
             "[[ s1 ]]",
             listOf(story("s1", "T", "https://x.test/a")),
         )
-        assertEquals("""[T](<https://x.test/a>)""", result.markdown)
+        assertEquals("""[T](https://x.test/a)""", result.markdown)
         assertEquals(emptyList(), result.unresolved)
     }
 
@@ -165,7 +191,7 @@ class CitationsTest {
             listOf(story("s1", "T", "https://x.test/a")),
         )
         assertEquals(
-            """[T](<https://x.test/a>) and again [T](<https://x.test/a>)""",
+            """[T](https://x.test/a) and again [T](https://x.test/a)""",
             result.markdown,
         )
         assertEquals(emptyList(), result.unresolved)
@@ -185,7 +211,7 @@ class CitationsTest {
         )
         assertEquals(
             "[Curly \u2019quote\u2019 and \u653b\u6483 \u2014 dash\\!]" +
-                "(<https://x.test/n>)",
+                "(https://x.test/n)",
             result.markdown,
         )
     }
@@ -199,7 +225,7 @@ class CitationsTest {
                 story("s1", "Second", "https://x.test/2"),
             ),
         )
-        assertEquals("""[First](<https://x.test/1>)""", result.markdown)
+        assertEquals("""[First](https://x.test/1)""", result.markdown)
     }
 
     // --- against the captured production edition ---------------------------
@@ -216,8 +242,8 @@ class CitationsTest {
         assertTrue("[[" !in result.markdown, "a citation token survived substitution")
         // Eight links actually emitted, rather than eight tokens deleted.
         assertEquals(
-            occurrences(body, "](<") + 8,
-            occurrences(result.markdown, "](<"),
+            occurrences(body, "](") + 8,
+            occurrences(result.markdown, "]("),
         )
     }
 
