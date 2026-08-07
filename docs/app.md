@@ -289,6 +289,13 @@ Requires JDK 21 and an Android SDK; no Android Studio needed. From `app/`:
 requires namespaces to be unique per module, and `androidApp` owns the
 unsuffixed one because it holds the manifest and resources.
 
+**`app/gradlew` is mode `100644` in git — not executable.** It was committed
+from Windows, where the bit is meaningless. Nothing local notices, because
+`gradlew.bat` is what runs here, but any Linux or macOS checkout gets a
+wrapper it cannot execute. Anything running the wrapper off a fresh clone
+needs `chmod +x ./gradlew` first. Check with `git ls-files -s app/gradlew`
+before assuming otherwise.
+
 ## 7. What is verified, and what is not
 
 Verified on a Pixel 7 / Android 16 emulator: the app assembles, installs,
