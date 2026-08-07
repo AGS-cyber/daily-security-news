@@ -1,0 +1,128 @@
+name: app-ci
+
+on:
+  push:
+    branches: [main]
+    # `daily.yml` commits a new edition to `main` every morning. Without this
+    # filter each edition would spin up the whole Android + macOS matrix for a
+    # change that cannot possibly affect the app's code (app.md §4: the app
+    # reads the published JSON over HTTP, it does not compile it in).
+    paths:
+      - 'app/**'
+      - '.github/workflows/app-ci.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'app/**'
+      - '.github/workflows/app-ci.yml'
+
+# Unlike `daily.yml` — where a cancelled run would lose an edition — a
+# superseded CI run tells us nothing, so cancelling it is correct.
+concurrency:
+  group: app-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      # The runner image's SDK is not at the level `compileSdk 36` needs
+      # (app.md §2); let the action install and license it.
+      - uses: android-actions/setup-android@v3
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      # `app/gradlew` is mode 100644 in git, so the checkout has no executable
+      # bit. Fixed here rather than by committing a mode change.
+      - name: Make the wrapper executable
+        working-directory: app
+        run: chmod +x ./gradlew
+
+      # Not `testDebugUnitTest` — the new KMP library plugin renames the source
+      # set, and the old task name does not exist at all (app.md §6).
+      - name: Unit tests
+        working-directory: app
+        run: ./gradlew :shared:testAndroidHostTest
+
+      - name: Assemble the Android app
+        working-directory: app
+        run: ./gradlew :androidApp:assembleDebug
+
+      # `always()`, because the run that most needs the report is the one that
+      # failed: the XML names which test it was.
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-test-results
+          path: app/shared/build/test-results/
+
+  ios:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      # Surprising, but an iOS-only job still needs an Android SDK. Gradle
+      # configures every subproject under `app/` before it runs any task, and
+      # both `:shared` (the AGP KMP library plugin, app.md §3) and `:androidApp`
+      # demand a valid SDK location at configuration time — so the framework
+      # link below cannot even be reached without one, and the failure is a
+      # bare `SDK location not found` that says nothing about iOS.
+      #
+      # The macOS image does ship an SDK and set ANDROID_HOME, so this step is
+      # belt-and-braces: it pins the job to an SDK it asked for rather than
+      # resting on whichever image `macos-latest` happens to resolve to.
+      - uses: android-actions/setup-android@v3
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Make the wrapper executable
+        working-directory: app
+        run: chmod +x ./gradlew
+
+      # This task's `onlyIf` requires macOS, so on a Windows dev box it SKIPS
+      # and the build goes green having linked nothing (app.md §6). This job is
+      # the first place it ever actually runs.
+      - name: Link the iOS framework
+        working-directory: app
+        run: ./gradlew :shared:linkDebugFrameworkIosSimulatorArm64
+
+      # The link task never touches the Swift host or the project file, so it
+      # proves nothing about them. `project.pbxproj` and the shared scheme are
+      # hand-written with synthetic object IDs and have never been parsed by
+      # Xcode (app.md §7) — this step is their real first test.
+      #
+      # No signing identity: signing is out of scope for v1 (app.md §1), and a
+      # certificate would be a secret this workflow has no business needing.
+      #
+      # `arm64` only, because `iosSimulatorArm64` is the sole simulator target
+      # the shared module declares (app.md §2) — there is no `iosX64`. Debug
+      # sets `ONLY_ACTIVE_ARCH = YES`, but a *generic* destination has no
+      # active arch, so Xcode would fall back to `ARCHS_STANDARD` and also ask
+      # for `x86_64`, which no Kotlin target can satisfy.
+      - name: Build the iOS app
+        working-directory: app
+        run: |
+          xcodebuild -project iosApp/iosApp.xcodeproj \
+                     -scheme iosApp \
+                     -destination 'generic/platform=iOS Simulator' \
+                     -configuration Debug \
+                     CODE_SIGNING_ALLOWED=NO \
+                     ARCHS=arm64 \
+                     ONLY_ACTIVE_ARCH=NO \
+                     build
