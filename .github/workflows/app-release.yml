@@ -1,0 +1,143 @@
+name: app-release
+
+# Tag-driven, not push-driven. `app-ci.yml` already proves every change to
+# `app/` builds; this exists only to turn a chosen commit into a downloadable
+# APK, and choosing is what the tag is.
+on:
+  push:
+    tags:
+      - 'app-v*'
+  # A tag that built a broken release should be fixable without inventing a
+  # new version number.
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing app-v* tag to (re)build and publish'
+        required: true
+
+# The only workflow here that writes: `gh release create` needs it. `daily.yml`
+# has it to commit an edition; `app-ci.yml` deliberately does not.
+permissions:
+  contents: write
+
+concurrency:
+  group: app-release-${{ github.event.inputs.tag || github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - uses: android-actions/setup-android@v3
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      # `app/gradlew` is mode 100644 in git (app.md §6), so a fresh checkout
+      # has no executable bit.
+      - name: Make the wrapper executable
+        working-directory: app
+        run: chmod +x ./gradlew
+
+      # The tag names the version a user will see; `versionName` is what the
+      # APK actually reports. Nothing keeps them in step, and a release whose
+      # filename disagrees with its own manifest is the kind of quiet wrongness
+      # CLAUDE.md ranks last — so fail here rather than publish it.
+      - name: Tag must match versionName
+        id: version
+        working-directory: app
+        run: |
+          TAG="${{ github.event.inputs.tag || github.ref_name }}"
+          TAG_VERSION="${TAG#app-v}"
+          GRADLE_VERSION=$(sed -n 's/.*versionName *= *"\([^"]*\)".*/\1/p' androidApp/build.gradle.kts)
+          echo "tag=$TAG"                     >> "$GITHUB_OUTPUT"
+          echo "version=$TAG_VERSION"         >> "$GITHUB_OUTPUT"
+          if [ -z "$GRADLE_VERSION" ]; then
+            echo "::error::could not read versionName from androidApp/build.gradle.kts"
+            exit 1
+          fi
+          if [ "$TAG_VERSION" != "$GRADLE_VERSION" ]; then
+            echo "::error::tag $TAG implies version $TAG_VERSION but versionName is $GRADLE_VERSION"
+            exit 1
+          fi
+          echo "publishing $TAG (versionName $GRADLE_VERSION)"
+
+      # Never publish an APK whose tests did not pass. app.md §6: the task is
+      # `testAndroidHostTest`, not `testDebugUnitTest`, which does not exist.
+      - name: Unit tests
+        working-directory: app
+        run: ./gradlew :shared:testAndroidHostTest
+
+      # The debug variant, deliberately — see operations.md §8. `release` has
+      # no signing config, so it would produce `app-release-unsigned.apk`,
+      # which no device will install. Signing is out of scope per app.md §1.
+      - name: Build the APK
+        working-directory: app
+        run: ./gradlew :androidApp:assembleDebug
+
+      - name: Name it after the release
+        id: apk
+        run: |
+          SRC=app/androidApp/build/outputs/apk/debug/androidApp-debug.apk
+          DEST="daily-security-news-${{ steps.version.outputs.version }}.apk"
+          test -f "$SRC" || { echo "::error::no APK at $SRC"; exit 1; }
+          cp "$SRC" "$DEST"
+          echo "path=$DEST" >> "$GITHUB_OUTPUT"
+          echo "size=$(du -h "$DEST" | cut -f1)" >> "$GITHUB_OUTPUT"
+          sha256sum "$DEST" | tee "$DEST.sha256"
+
+      # `gh` is preinstalled on the runner. Preferred over a third-party
+      # release action: one less dependency to trust in a repository that
+      # publishes security news.
+      # The notes go to a file rather than inline. A heredoc's body has to sit
+      # at column 0 for bash, and column 0 inside a YAML block scalar ends the
+      # block — indenting it with the rest of the script is what lets both be
+      # true, since YAML strips the common indent before bash ever sees it.
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cat > release-notes.md <<'NOTES'
+          Android APK, built from this tag by `app-release.yml`.
+
+          **This is a debug-signed build.** It installs and runs, but it is
+          signed with the runner's throwaway debug key, so:
+
+          - Android will refuse to install it over a copy signed with a
+            different key. Uninstall the old one first if you see
+            `INSTALL_FAILED_UPDATE_INCOMPATIBLE`.
+          - It is not a Play Store artifact. Store submission and real signing
+            are out of scope for v1 (`docs/app.md` §1).
+
+          Verify the download against the published `.sha256` before
+          installing it.
+
+          iOS is built and tested in CI but not distributed — it has no
+          signing identity and no app icon yet.
+          NOTES
+
+          gh release create "${{ steps.version.outputs.tag }}" \
+            "${{ steps.apk.outputs.path }}" \
+            "${{ steps.apk.outputs.path }}.sha256" \
+            --title "Daily Security News ${{ steps.version.outputs.version }} (Android)" \
+            --notes-file release-notes.md
+
+      # A release that exists but has no APK attached is worse than a failed
+      # job, because it looks finished.
+      - name: Confirm the asset is actually attached
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ASSETS=$(gh release view "${{ steps.version.outputs.tag }}" \
+                     --json assets --jq '.assets[].name')
+          echo "$ASSETS"
+          echo "$ASSETS" | grep -q '\.apk$' \
+            || { echo "::error::release published with no APK attached"; exit 1; }
