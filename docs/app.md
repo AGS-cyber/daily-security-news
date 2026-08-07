@@ -331,10 +331,16 @@ Same rule as `design.md` §10 — each layer ends with something that works.
      states (§10). Verified on the emulator.
    - b. ~~**Archive.**~~ Done — the list from `index.json`, navigation to a
      past edition, system back, and the heading-hierarchy fix (§10).
-7. **iOS host and CI.** SwiftUI shell, then `.github/workflows/app-ci.yml`:
-   an `android` job on ubuntu and an `ios` job on macos that runs both the
-   framework link *and* `xcodebuild`, since the link task alone never
-   touches the Swift code.
+7. **CI.** The iOS host is already done — `iOSApp.swift`, `ContentView.swift`
+   and `MainViewController()` are complete and wired, so **no Swift needs
+   writing**. What remains is `.github/workflows/app-ci.yml`: an `android`
+   job on ubuntu, and an `ios` job on macos running both the framework link
+   *and* `xcodebuild`, since the link task alone never touches the Swift
+   code or the project file.
+
+   This is the step that finally tests §7's claim. Expect the first real run
+   to fail on the hand-written Xcode project — that is the job working.
+   Nothing runs at all until the repo is pushed.
 
 ## 9. Networking and cache
 
