@@ -67,8 +67,20 @@ export async function writeSite(
   await writeFile(datedPath, html, 'utf8');
   await writeFile(indexPath, html, 'utf8');
 
+  const entries = await archiveEntries(o.editionsDir);
   const archivePath = join(o.siteDir, 'archive.html');
-  await writeFile(archivePath, archivePage(await archiveEntries(o.editionsDir)), 'utf8');
+  await writeFile(archivePath, archivePage(entries), 'utf8');
 
-  return [indexPath, datedPath, archivePath];
+  // The same records as `data/editions`, written under `site/` so Vercel
+  // serves them over HTTP without any new infrastructure.
+  const jsonDir = join(o.siteDir, 'editions');
+  await mkdir(jsonDir, { recursive: true });
+
+  const editionJsonPath = join(jsonDir, `${edition.date}.json`);
+  await writeFile(editionJsonPath, JSON.stringify(edition, null, 2) + '\n', 'utf8');
+
+  const indexJsonPath = join(jsonDir, 'index.json');
+  await writeFile(indexJsonPath, JSON.stringify(entries, null, 2) + '\n', 'utf8');
+
+  return [indexPath, datedPath, archivePath, editionJsonPath, indexJsonPath];
 }

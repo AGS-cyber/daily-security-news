@@ -26,6 +26,11 @@ A static site whose front page is today's article.
 - `site/archive.html` — index of all past articles.
 - `data/editions/YYYY-MM-DD.json` — the structured record that produced the
   page: the article text, every story considered, and what was selected.
+- `site/editions/YYYY-MM-DD.json` — the same record as
+  `data/editions/YYYY-MM-DD.json`, additionally served over HTTP by Vercel
+  since it lives under `site/`.
+- `site/editions/index.json` — the archive index as JSON (the data behind
+  `archive.html`): an array of `{date, mode, count, headline?}`, newest first.
 
 The article carries a headline, a one-paragraph standfirst, a handful of
 sections, and inline links to primary sources. Below it, a plain list of
@@ -291,6 +296,7 @@ project works without it.
 
 ```
 docs/design.md              this file
+docs/app.md                 the native app, and its contract with site/
 src/
   index.ts                  entry point — one run, one article
   config/sources.ts         the source list
@@ -302,6 +308,12 @@ data/
   seen.json                 dedupe state, committed
   editions/YYYY-MM-DD.json  the record
 site/                       generated, served by Vercel
+  editions/YYYY-MM-DD.json  the record, web-served
+  editions/index.json       the archive index, web-served
+app/                        the native app — see docs/app.md
+  shared/                   KMP library: shared Compose UI and logic
+  androidApp/               Android application module
+  iosApp/                   SwiftUI host
 vercel.json                 output directory; no build step
 .github/workflows/daily.yml
 ```
