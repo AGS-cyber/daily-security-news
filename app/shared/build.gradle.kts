@@ -129,6 +129,7 @@ kotlin {
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.ktor.client.core)
             implementation(libs.okio)
+            implementation(libs.markdown.renderer.m3)
         }
         androidMain.dependencies {
             implementation(libs.ktor.client.okhttp)
@@ -144,6 +145,10 @@ kotlin {
             implementation(libs.ktor.client.mock)
             implementation(libs.okio.fakefilesystem)
             implementation(libs.kotlinx.coroutines.test)
+            // Explicit rather than transitive: CitationMarkdownTest parses with
+            // the same parser Markdown(...) uses, so it must not depend on the
+            // renderer's transitive graph staying as it is today.
+            implementation(libs.jetbrains.markdown)
         }
     }
 }

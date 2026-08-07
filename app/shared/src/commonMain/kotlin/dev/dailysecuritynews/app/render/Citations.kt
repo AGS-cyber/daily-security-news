@@ -17,8 +17,9 @@ data class CitationResult(
 /**
  * Replace every `[[id]]` in [markdown] with a CommonMark link to the matching
  * story. The web emits a raw HTML anchor instead; a Compose Markdown renderer
- * has no such escape hatch, so the title is escaped and the destination is
- * angle-bracketed — docs/app.md §5.
+ * has no such escape hatch, so both the title and the destination are escaped
+ * — docs/app.md §5. The destination is bare, not angle-bracketed: see
+ * [escapeLinkDestination] for why the angle brackets had to go.
  *
  * **An unresolved token does not throw, and must not be "fixed" into one.**
  * The web throws because it runs at publish time, where a throw stops a bad
@@ -42,7 +43,7 @@ fun substituteCitations(markdown: String, stories: List<Story>): CitationResult 
             // Verbatim, untrimmed: visibly broken beats silently deleted.
             match.value
         } else {
-            "[${escapeLinkText(story.title)}](<${escapeLinkDestination(story.url)}>)"
+            "[${escapeLinkText(story.title)}](${escapeLinkDestination(story.url)})"
         }
     }
     return CitationResult(substituted, unresolved.toList())
@@ -70,16 +71,43 @@ private fun escapeLinkText(text: String): String {
 }
 
 /**
- * Backslash-escape `\`, `<` and `>` only. The caller wraps the result in
- * `<…>`, and inside angle brackets those are the only characters that need
- * escaping — which is why parentheses, common in news URLs, survive untouched
- * here while they *are* escaped in the link text.
+ * Escape a **bare** link destination — no angle brackets.
+ *
+ * The angle-bracketed form `[t](<url>)` that this used to emit is unusable:
+ * `org.intellij.markdown`, the parser the app's Compose renderer runs on,
+ * files an angle-bracketed destination under an `AUTOLINK` node instead of
+ * `LINK_DESTINATION`, resolves the destination to `href=""`, and the citation
+ * renders on the device as plain text with no link at all. That is precisely
+ * the "looks fine but is wrong" failure docs/app.md §5 was written to prevent,
+ * arriving through the renderer rather than through the escaping.
+ *
+ * So parentheses are escaped here now, and for their own reason rather than
+ * because angle brackets covered them: an unbalanced `)` would end the
+ * destination early and swallow the rest of the link. `\`, `<` and `>` stay
+ * escaped as before.
+ *
+ * Characters at or below `0x20`, and `0x7F`, are **percent-encoded** rather
+ * than backslash-escaped. A bare destination cannot contain a space, and
+ * CommonMark has no backslash escape for one, so encoding is the only form
+ * that survives.
+ *
+ * Single pass, for the same reason [escapeLinkText] is: there is no second
+ * pass to re-process what the first one emitted.
  */
 private fun escapeLinkDestination(url: String): String {
     val out = StringBuilder(url.length)
     for (ch in url) {
-        if (ch == '\\' || ch == '<' || ch == '>') out.append('\\')
-        out.append(ch)
+        when {
+            ch == '\\' || ch == '(' || ch == ')' || ch == '<' || ch == '>' -> {
+                out.append('\\').append(ch)
+            }
+            ch.code <= 0x20 || ch.code == 0x7F -> {
+                out.append('%').append(HEX[ch.code shr 4]).append(HEX[ch.code and 0xF])
+            }
+            else -> out.append(ch)
+        }
     }
     return out.toString()
 }
+
+private const val HEX = "0123456789ABCDEF"

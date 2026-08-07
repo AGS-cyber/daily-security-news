@@ -47,6 +47,15 @@ and has been stable on iOS since 1.8.0.
 `compileSdk` is 36 rather than 37 because 37 is still churning through
 `37.0` / `37.1` / `37.2-beta` under a new fractional-versioning scheme.
 
+That pin has one consequence worth recording, because it looks like an
+oversight otherwise. **`com.mikepenz:multiplatform-markdown-renderer-m3` is
+held at 0.41.0**, not the current 0.43.0: 0.42.0 and later publish AAR
+metadata demanding that consumers compile against API 37 or higher, so
+`assembleDebug` fails outright at `checkDebugAarMetadata`. 0.41.0 renders
+what this app needs. Moving the whole project to 37 to pick up one library's
+point releases is the wrong trade while 37 is still unstable — revisit both
+together, not separately.
+
 ## 3. Module layout
 
 ```
@@ -172,8 +181,9 @@ crash:
    backslash otherwise combines with the synthetic closing `]`, CommonMark
    reads it as an escaped bracket, the link never closes, and every
    character after it in the article parses wrong.
-2. **Wrap the URL in angle brackets** — `[title](<url>)`. News URLs
-   routinely contain parentheses, which break a bare link destination.
+2. **Escape the parentheses in the URL.** News URLs routinely contain them,
+   and an unbalanced one ends a link destination early and swallows the rest
+   of the link.
 
 Both belong in an adversarial unit test: trailing backslash, nested
 brackets, doubled `*`/`_`, and a URL containing parens. This is the highest
@@ -190,8 +200,24 @@ valid, and it removes a judgment call that would rot the moment the renderer
 changes. Under-escaping has two grades of failure and both are unacceptable:
 an unbalanced `]` corrupts the document structure, and a stray `*` pair
 silently italicises part of a headline — the "looks fine but is wrong" case
-this project ranks last. In the destination only `\`, `<` and `>` are
-escaped; the angle brackets already protect the parentheses.
+this project ranks last.
+
+**The destination is bare, and must stay bare.** An earlier version wrapped
+it — `[title](<url>)` — which is valid CommonMark and was the wrong choice
+anyway: `org.intellij.markdown`, the parser the Compose renderer runs on,
+files an angle-bracketed destination under an `AUTOLINK` node rather than
+`LINK_DESTINATION`, resolves it to `href=""`, and renders the citation as
+**plain text with no link at all**. Nothing failed; the article simply
+stopped having links in it, which is exactly the class of bug this section
+exists to prevent, arriving through the renderer instead of the escaping.
+So the destination escapes `\`, `(`, `)`, `<` and `>` with backslashes, and
+percent-encodes anything at or below `0x20` plus `0x7F` — a space cannot
+appear in a bare destination and CommonMark has no backslash escape for one,
+so encoding is the only form that survives.
+
+The lesson generalises past this bug: **spec-correct is not the same as
+renders-correctly.** Both forms are valid CommonMark; only one of them works
+in the renderer the app actually ships.
 
 **Both escapers are a single pass over the characters**, which dissolves
 trap 1 rather than handling it: there is no second pass to re-process the
@@ -200,10 +226,19 @@ of `String.replace` calls, so do not rewrite them as one. The
 trailing-backslash test stays regardless, as the guard against someone doing
 exactly that.
 
-Verified two ways: exact-string unit tests in `CitationsTest`, and — because
-a test can assert a confidently wrong expectation — by feeding the escaped
-output through `marked`, the site's own CommonMark parser, and checking the
-link text and destination came back identical to the story's title and URL.
+Verified three ways, and it took all three. Exact-string unit tests in
+`CitationsTest`; a round trip through `marked`, the site's own parser; and
+`CitationMarkdownTest`, which parses the substituted body with
+`org.intellij.markdown` — the renderer's own parser — and asserts every
+anchor's `href` and text come back equal to the story's URL and title.
+
+Only the third catches the angle-bracket defect, and it caught it only after
+being fixed: the first version of that test read destinations out of the
+parse tree and stripped the backslashes and angle brackets before comparing.
+It passed against a screen that showed no links. **A test that normalises
+its input before asserting is testing the normaliser** — if a citation
+assertion needs to clean up the value first, that is the bug, not the
+cleanup.
 
 ### An unresolved citation does not throw
 
@@ -275,10 +310,13 @@ Same rule as `design.md` §10 — each layer ends with something that works.
    server-side signal.
 5. ~~**Networking and cache.**~~ Done — Ktor client against the two
    endpoints; Okio file cache of the last fetch for offline reading (§9).
-6. **Screens.** Today, Archive, and a shared detail renderer handling both
-   `article` and `digest` modes, the degraded banner, and explicit
-   offline/error states. A blank screen is never an acceptable state —
-   `design.md` §8's disclosure rule applies to the app too.
+6. **Screens.** Split in two, because the first half is already a usable
+   product on its own.
+   - a. ~~**Today.**~~ Done — the newest edition, both `article` and
+     `digest` modes, all three banners, and explicit loading/offline/error
+     states (§10). Verified on the emulator.
+   - b. **Archive.** The list from `index.json`, navigation to any past
+     edition, and the heading-hierarchy fix in §10.
 7. **iOS host and CI.** SwiftUI shell, then `.github/workflows/app-ci.yml`:
    an `android` job on ubuntu and an `ios` job on macos that runs both the
    framework link *and* `xcodebuild`, since the link task alone never
@@ -326,3 +364,42 @@ class with Ktor's `MockEngine` and Okio's `FakeFileSystem`, serving the real
 captured edition, without touching the network. The Android host needs
 `INTERNET` in its manifest; without it every request fails at runtime on a
 build that compiled perfectly.
+
+## 10. The Today screen
+
+`EditionsStore` turns two `Load` results into one `TodayState` — `Loading`,
+`Ready` or `Error` — and `TodayScreen` renders each. **There is no fourth,
+blank case**, which is the point: `design.md` §8's disclosure rule says a
+degraded mode has to be visible, and three of these states exist only to
+make failure legible.
+
+- `Error` shows the underlying message **verbatim**, plus Retry. A reader
+  who can see `GET …/editions/index.json failed: 404` can report it; a
+  reader shown "Something went wrong" cannot.
+- `Ready` carries `fromCache` and `cacheReason`, and a cached edition
+  renders under a loud `errorContainer` banner naming the edition's date and
+  the error that caused the fallback. This is the banner that stops the app
+  passing an old edition off as today's.
+- `edition.degraded` and any unresolved citations each get their own banner,
+  so a partial edition looks partial.
+
+A plain class with a Compose `mutableStateOf`, not a ViewModel: it is
+directly readable from a `runTest` block with no dispatcher plumbing, and
+the app has no state that outlives the screen. The repository is built from
+a `cacheDir` string the host passes in — `context.cacheDir` on Android,
+`NSCachesDirectory` on iOS — because the shared module has no platform file
+API and each host already knows its own.
+
+Story rows use the `Story` interface, so one composable serves both a
+selected story and a merely-collected one, and open links through
+`LocalUriHandler` rather than an `expect`/`actual` of their own.
+
+**Known and deliberate, for 6b:** the Markdown renderer styles `##` larger
+than the `headlineMedium` used for the edition's own headline, so a section
+heading currently outranks the article title. It is a theme mapping to pass
+into `Markdown(...)`, not a rendering bug.
+
+**Verified on the emulator, not just in tests:** the error state against the
+live 404, and the full article rendering from a hand-seeded cache under the
+offline banner. Screenshots are how the plain-text-citation bug in §5 was
+caught at all — every test was green while the article had no links in it.
