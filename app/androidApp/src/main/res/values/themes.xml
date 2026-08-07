@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The window behind Compose. This exists for one reason: the activity's
+    window is drawn before any Compose frame is, so with the platform's light
+    theme the app opened on a white flash and then snapped to near-black.
+    Nothing in `ui/Theme.kt` can prevent that, because none of it has run yet.
+
+    `Theme.Material.NoActionBar` rather than the `.Light` variant, matching
+    `design.md` §2: dark only, because a light-mode CRT is a contradiction.
+
+    `windowLightStatusBar` is deliberately unset. Its default is false, which
+    means light icons on the status bar — correct on this background, and
+    stating it would cost a `values-v27` split for no change in behaviour.
+-->
+<resources>
+    <style name="Theme.DailySecurityNews" parent="@android:style/Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/terminal_bg</item>
+        <item name="android:statusBarColor">@color/terminal_bg</item>
+        <item name="android:navigationBarColor">@color/terminal_bg</item>
+    </style>
+</resources>
