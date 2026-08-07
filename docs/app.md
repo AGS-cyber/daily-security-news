@@ -301,12 +301,53 @@ before assuming otherwise.
 Verified on a Pixel 7 / Android 16 emulator: the app assembles, installs,
 launches, and renders. Both Apple targets compile.
 
-**Not verified, and no one should assume otherwise until a Mac says so:**
-the Xcode project has never been opened or built. `project.pbxproj` and the
-shared scheme are hand-written to the wizard's shape with synthetic object
-IDs — a malformed one looks exactly like a correct one until Xcode parses
-it. Framework linking, embedding and signing are likewise unproven. Treat
-the first macOS CI run as the real test of those files.
+**The hand-written Xcode project is no longer unproven.** A macOS runner
+parsed and built it on 2026-08-07 (§8 step 7): `project.pbxproj` and the
+shared scheme parse, the Swift host compiles for `arm64`, `Info.plist` is
+processed, and the app binary *links* — `BUILD SUCCEEDED`, not merely "no
+errors reported".
+
+That link is the interesting part, because the project looks like it should
+not link at all. The framework is **static**, the `PBXFrameworksBuildPhase`
+is **empty**, and there is no `OTHER_LDFLAGS`. Nothing names `ComposeApp` to
+the linker. It works because Clang synthesises the link for a framework
+module that declares no `link` libraries of its own, so `import ComposeApp`
+emits the linker option itself, and `FRAMEWORK_SEARCH_PATHS` is all the
+project has to supply. The current `Kotlin/KMP-App-Template` — two Apple
+targets, no `iosX64`, static framework, empty frameworks phase — ships the
+same shape. **Do not "fix" this by adding `-framework ComposeApp`.** It is
+not missing.
+
+Two build settings are load-bearing, and both were added by review *before*
+the first run rather than after it. Each trips a diagnostic the Kotlin
+Gradle plugin declares **FATAL**, so each would have failed the job outright:
+
+- **`EXCLUDED_ARCHS[sdk=iphonesimulator*] = x86_64`.** The shared module has
+  no `iosX64` target, but the simulator SDK's `ARCHS_STANDARD` includes
+  `x86_64` on Apple silicon — and `ONLY_ACTIVE_ARCH = YES` does not save
+  you, because it needs an active run destination and a *generic* simulator
+  destination has none. Xcode then asks Kotlin for an architecture that does
+  not exist, and the plugin refuses to build it.
+- **`ENABLE_USER_SCRIPT_SANDBOXING = NO`.** The target shells out to Gradle
+  from a run-script phase, which writes outside the sandboxed output
+  directory. Left unset, the value is inherited from the toolchain rather
+  than chosen — not something to leave to chance in a file nothing had ever
+  parsed.
+
+`embedAndSignAppleFrameworkForXcode` reports `SKIPPED`, which looks like
+§6's Windows false-green and is not the same thing. The embed step is gated
+on the framework *not* being static: a static framework is linked into the
+binary and must not be copied into the `.app`. Its dependencies still run,
+and those are what write `shared/build/xcode-frameworks/…` where
+`FRAMEWORK_SEARCH_PATHS` expects it. `EXPANDED_CODE_SIGN_IDENTITY` is
+likewise not required — signing is skipped when it is absent.
+
+**Still not verified: the iOS app has never been run.** It has been built,
+which is a different claim. §10 is the record of how much a build can miss —
+three defects there survived a fully green 57-test suite and appeared only
+on a screen. Nothing has launched this app in a simulator, so no one has
+seen an iOS screen render. Framework *embedding* and real signing stay
+unexercised for the same reason.
 
 `dev.dailysecuritynews.app` is a placeholder bundle id on both platforms.
 
@@ -331,16 +372,28 @@ Same rule as `design.md` §10 — each layer ends with something that works.
      states (§10). Verified on the emulator.
    - b. ~~**Archive.**~~ Done — the list from `index.json`, navigation to a
      past edition, system back, and the heading-hierarchy fix (§10).
-7. **CI.** The iOS host is already done — `iOSApp.swift`, `ContentView.swift`
-   and `MainViewController()` are complete and wired, so **no Swift needs
-   writing**. What remains is `.github/workflows/app-ci.yml`: an `android`
-   job on ubuntu, and an `ios` job on macos running both the framework link
-   *and* `xcodebuild`, since the link task alone never touches the Swift
-   code or the project file.
+7. ~~**CI.**~~ Done — `.github/workflows/app-ci.yml`. An `android` job on
+   ubuntu runs the tests and assembles the APK; an `ios` job on macOS links
+   the framework *and* runs `xcodebuild`, because the link task alone never
+   touches the Swift code or the project file. Both jobs passed on
+   2026-08-07, with 57 tests executed in CI and the Xcode project built for
+   the first time (§7).
 
-   This is the step that finally tests §7's claim. Expect the first real run
-   to fail on the hand-written Xcode project — that is the job working.
-   Nothing runs at all until the repo is pushed.
+   **The prediction that the first run would fail was wrong, and the reason
+   matters.** Two defects that would each have failed it were found by
+   reading the project against the official KMP template beforehand, and
+   fixed in the same change (§7). Expecting a failure is not the same as
+   accepting one: the hand-written file was reviewable all along, and
+   reviewing it was cheaper than a macOS runner discovering it.
+
+   Two things the `ios` job does that read as mistakes and are not. It
+   installs the **Android** SDK, because Gradle configures every subproject
+   under `app/` — including `:androidApp` — before it will run any task, so
+   the framework link cannot be reached without an SDK location. And it
+   pins `ARCHS=arm64` even though the project already excludes `x86_64`
+   (§7); the exclusion lives in the project so local Xcode builds inherit
+   it, and the pin lives in CI so the job does not depend on a file that,
+   at the time it was written, nothing had ever parsed.
 
 ## 9. Networking and cache
 
