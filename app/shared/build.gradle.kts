@@ -130,6 +130,11 @@ kotlin {
             implementation(libs.ktor.client.core)
             implementation(libs.okio)
             implementation(libs.markdown.renderer.m3)
+            // BackHandler ships in its own Compose Multiplatform artifact
+            // rather than in compose.ui, so system back needs this on the
+            // classpath even though everything else here comes from the
+            // compose plugin's own accessors.
+            implementation(libs.compose.ui.backhandler)
         }
         androidMain.dependencies {
             implementation(libs.ktor.client.okhttp)

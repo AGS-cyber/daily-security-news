@@ -82,7 +82,7 @@ class EditionsStoreTest {
     @Test
     fun startsLoadingBeforeAnythingIsRequested() {
         val store = store(engine(), fs())
-        assertIs<TodayState.Loading>(store.today)
+        assertIs<EditionState.Loading>(store.today)
     }
 
     // --- 1, 2 --------------------------------------------------------------
@@ -91,7 +91,7 @@ class EditionsStoreTest {
     fun freshIndexAndEditionAreReadyAndNotFromCache() = runTest {
         val store = store(engine(), fs())
         store.loadToday()
-        val ready = assertIs<TodayState.Ready>(store.today)
+        val ready = assertIs<EditionState.Ready>(store.today)
         val edition = assertIs<ArticleEdition>(ready.edition)
         assertEquals("2026-08-06", edition.date)
         assertEquals(8, edition.selected.size)
@@ -103,7 +103,7 @@ class EditionsStoreTest {
     fun everyCitationInTheRealEditionIsSubstituted() = runTest {
         val store = store(engine(), fs())
         store.loadToday()
-        val ready = assertIs<TodayState.Ready>(store.today)
+        val ready = assertIs<EditionState.Ready>(store.today)
         val body = ready.body!!
         assertTrue("[[" !in body.markdown, "an unsubstituted citation token survived")
         assertEquals(emptyList(), body.unresolved)
@@ -117,7 +117,7 @@ class EditionsStoreTest {
         fs.write(cacheDir / "edition-2026-08-06.json") { writeUtf8(editionBody) }
         val store = store(engine(failEdition = "network is down"), fs)
         store.loadToday()
-        val ready = assertIs<TodayState.Ready>(store.today)
+        val ready = assertIs<EditionState.Ready>(store.today)
         assertEquals(true, ready.fromCache)
         assertTrue(
             ready.cacheReason!!.contains("network is down"),
@@ -131,7 +131,7 @@ class EditionsStoreTest {
     fun indexFailureWithNoCacheSurfacesTheRealCause() = runTest {
         val store = store(engine(failIndex = "no route to host"), fs())
         store.loadToday()
-        val error = assertIs<TodayState.Error>(store.today)
+        val error = assertIs<EditionState.Error>(store.today)
         assertTrue(
             error.message.contains("no route to host"),
             "message was ${error.message}",
@@ -144,7 +144,7 @@ class EditionsStoreTest {
     fun emptyIndexSaysNothingHasBeenPublished() = runTest {
         val store = store(engine(index = "[]"), fs())
         store.loadToday()
-        val error = assertIs<TodayState.Error>(store.today)
+        val error = assertIs<EditionState.Error>(store.today)
         assertTrue(
             error.message.contains("No editions have been published"),
             "message was ${error.message}",
@@ -157,8 +157,109 @@ class EditionsStoreTest {
     fun digestEditionHasNoBody() = runTest {
         val store = store(engine(edition = digestBody), fs())
         store.loadToday()
-        val ready = assertIs<TodayState.Ready>(store.today)
+        val ready = assertIs<EditionState.Ready>(store.today)
         assertIs<DigestEdition>(ready.edition)
         assertNull(ready.body)
+    }
+
+    // --- the archive -------------------------------------------------------
+
+    @Test
+    fun archiveStartsLoadingBeforeAnythingIsRequested() {
+        val store = store(engine(), fs())
+        assertIs<ArchiveState.Loading>(store.archive)
+    }
+
+    @Test
+    fun freshIndexIsAnArchiveNotFromCache() = runTest {
+        val store = store(engine(), fs())
+        store.loadArchive()
+        val ready = assertIs<ArchiveState.Ready>(store.archive)
+        assertEquals(1, ready.editions.size)
+        assertEquals("2026-08-06", ready.editions[0].date)
+        assertEquals(false, ready.fromCache)
+        assertNull(ready.cacheReason)
+    }
+
+    @Test
+    fun cachedArchiveDisclosesTheNetworkError() = runTest {
+        val fs = fs()
+        fs.write(cacheDir / "index.json") { writeUtf8(indexBody) }
+        val store = store(engine(failIndex = "network is down"), fs)
+        store.loadArchive()
+        val ready = assertIs<ArchiveState.Ready>(store.archive)
+        assertEquals(1, ready.editions.size)
+        assertEquals(true, ready.fromCache)
+        assertTrue(
+            ready.cacheReason!!.contains("network is down"),
+            "cacheReason was ${ready.cacheReason}",
+        )
+    }
+
+    @Test
+    fun archiveFailureWithNoCacheSurfacesTheRealCause() = runTest {
+        val store = store(engine(failIndex = "no route to host"), fs())
+        store.loadArchive()
+        val error = assertIs<ArchiveState.Error>(store.archive)
+        assertTrue(
+            error.message.contains("no route to host"),
+            "message was ${error.message}",
+        )
+    }
+
+    /** An empty archive is a fact about the data, not a failure to load it. */
+    @Test
+    fun emptyIndexIsAnEmptyArchiveNotAnError() = runTest {
+        val store = store(engine(index = "[]"), fs())
+        store.loadArchive()
+        val ready = assertIs<ArchiveState.Ready>(store.archive)
+        assertEquals(emptyList(), ready.editions)
+    }
+
+    // --- opening an edition from the archive -------------------------------
+
+    @Test
+    fun viewedStartsLoadingBeforeAnythingIsRequested() {
+        val store = store(engine(), fs())
+        assertIs<EditionState.Loading>(store.viewed)
+    }
+
+    @Test
+    fun openEditionSubstitutesCitationsLikeTodayDoes() = runTest {
+        val store = store(engine(), fs())
+        store.openEdition("2026-08-06")
+        val ready = assertIs<EditionState.Ready>(store.viewed)
+        val edition = assertIs<ArticleEdition>(ready.edition)
+        assertEquals("2026-08-06", edition.date)
+        val body = ready.body!!
+        assertTrue("[[" !in body.markdown, "an unsubstituted citation token survived")
+        assertEquals(emptyList(), body.unresolved)
+        assertEquals(false, ready.fromCache)
+    }
+
+    /** The whole reason `viewed` is a separate field from `today`. */
+    @Test
+    fun openEditionFailingLeavesTodayUntouched() = runTest {
+        // The network works for the first load and fails afterwards, so one
+        // store can hold a good `today` and a failed `viewed` at once.
+        var broken = false
+        val engine = MockEngine { request ->
+            if (broken) throw RuntimeException("network is down")
+            val body = if (request.url.encodedPath.endsWith("index.json")) indexBody else editionBody
+            respond(body, headers = headersOf(HttpHeaders.ContentType, "application/json"))
+        }
+        val store = store(engine, fs())
+
+        store.loadToday()
+        val todayBefore = assertIs<EditionState.Ready>(store.today)
+
+        broken = true
+        // A date `loadToday` did not cache, so this genuinely has nowhere to
+        // fall back to — otherwise the cache would rescue it into `Ready`.
+        store.openEdition("2026-08-05")
+
+        val error = assertIs<EditionState.Error>(store.viewed)
+        assertTrue(error.message.contains("network is down"), "message was ${error.message}")
+        assertEquals(todayBefore, store.today)
     }
 }
