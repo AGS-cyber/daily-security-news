@@ -1,14 +1,21 @@
 package dev.dailysecuritynews.app.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
@@ -18,8 +25,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.mikepenz.markdown.m3.Markdown
+import com.mikepenz.markdown.m3.markdownColor
 import com.mikepenz.markdown.m3.markdownTypography
 import dev.dailysecuritynews.app.data.ArticleEdition
 import dev.dailysecuritynews.app.data.DigestEdition
@@ -94,9 +107,10 @@ private fun ReadyBody(state: EditionState.Ready) {
         if (state.fromCache) {
             item {
                 Banner(
+                    label = "[ !! OFFLINE ]",
+                    kind = BannerKind.Warn,
                     title = "Offline — showing a saved copy of the ${edition.date} edition",
                     lines = listOfNotNull(state.cacheReason),
-                    error = true,
                 )
             }
         }
@@ -104,12 +118,13 @@ private fun ReadyBody(state: EditionState.Ready) {
         if (edition.degraded.isNotEmpty()) {
             item {
                 Banner(
+                    label = "[ !! DEGRADED ]",
+                    kind = BannerKind.Warn,
                     title = "This edition is incomplete",
                     lines = edition.degraded.map { notice ->
                         val source = notice.sourceId?.let { " ($it)" } ?: ""
                         "${notice.stage}$source: ${notice.message}"
                     },
-                    error = false,
                 )
             }
         }
@@ -118,39 +133,86 @@ private fun ReadyBody(state: EditionState.Ready) {
         if (unresolved.isNotEmpty()) {
             item {
                 Banner(
+                    label = "[ NOTICE ]",
+                    kind = BannerKind.Note,
                     title = "${unresolved.size} citations could not be resolved",
                     lines = listOf(unresolved.joinToString(", ")),
-                    error = false,
                 )
             }
         }
 
         when (edition) {
             is ArticleEdition -> {
-                item {
-                    Text(edition.headline, style = MaterialTheme.typography.headlineMedium)
-                }
-                item {
-                    Text(
-                        text = edition.standfirst,
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
+                item { Headline(edition.headline) }
+                item { Standfirst(edition.standfirst) }
                 item { ArticleBody(state.body) }
                 if (edition.alsoCollected.isNotEmpty()) {
                     item {
                         Text("Also collected", style = MaterialTheme.typography.titleMedium)
                     }
-                    items(edition.alsoCollected) { StoryRow(it) }
+                    itemsIndexed(edition.alsoCollected) { index, story ->
+                        StoryRow(index + 1, story)
+                    }
                 }
             }
 
             is DigestEdition -> {
-                item { Text(edition.date, style = MaterialTheme.typography.headlineMedium) }
-                items(edition.items) { StoryRow(it) }
+                item { Headline(edition.date) }
+                itemsIndexed(edition.items) { index, story -> StoryRow(index + 1, story) }
             }
         }
+    }
+}
+
+/**
+ * The site's `h1`: a `$ ` prompt sigil in `dim`, the headline in `bright` with
+ * the phosphor glow, then the blinking block cursor.
+ *
+ * The sigil is drawn here and is never concatenated onto the edition's data —
+ * `docs/design.md` §2 keeps every decorative character out of the content.
+ * Prefix and headline share one `AnnotatedString` so they wrap as a unit.
+ *
+ * The cursor is in that same string, as a trailing span. It is `h1::after` on
+ * the site, so it has to follow the final character of the *wrapped* heading;
+ * as a sibling composable it sat at the top right of the headline's box,
+ * level with the first line. Inside the string, text layout places it.
+ *
+ * `headlineMedium` is unchanged: `docs/app.md` §10 records that the heading
+ * hierarchy is load-bearing, so no type scale moves here.
+ */
+@Composable
+private fun Headline(text: String) {
+    val alpha = cursorAlpha()
+    Text(
+        text = buildAnnotatedString {
+            withStyle(SpanStyle(color = Terminal.dim, fontWeight = FontWeight.Normal)) {
+                append("$ ")
+            }
+            withStyle(SpanStyle(color = Terminal.bright, shadow = PhosphorGlow)) {
+                append(text)
+            }
+            appendCursor(alpha)
+        },
+        style = MaterialTheme.typography.headlineMedium,
+    )
+}
+
+/** `.standfirst { border-left: 2px solid var(--dim); padding-left: 1rem }`. */
+@Composable
+private fun Standfirst(text: String) {
+    Row(modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Min)) {
+        Box(
+            modifier = Modifier
+                .width(2.dp)
+                .fillMaxHeight()
+                .background(Terminal.dim),
+        )
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodyLarge,
+            color = Terminal.fg,
+            modifier = Modifier.padding(start = 16.dp),
+        )
     }
 }
 
@@ -167,10 +229,20 @@ private fun ArticleBody(body: CitationResult?) {
     // it.
     Markdown(
         content = body.markdown,
+        colors = markdownColor(
+            text = Terminal.fg,
+            dividerColor = Terminal.rule,
+        ),
         typography = markdownTypography(
             h1 = MaterialTheme.typography.titleLarge,
             h2 = MaterialTheme.typography.titleLarge,
             h3 = MaterialTheme.typography.titleMedium,
+            // `markdownColor` in 0.41.0 carries no link colour — its
+            // `MarkdownColors` has only text, the two code backgrounds, the
+            // divider and the table background. Links are styled through the
+            // typography's `TextLinkStyles`, so that is where `--link` goes.
+            // The three heading overrides above are untouched.
+            textLink = TextLinkStyles(style = SpanStyle(color = Terminal.link)),
         ),
         modifier = Modifier.fillMaxWidth(),
     )
@@ -180,7 +252,7 @@ private fun ArticleBody(body: CitationResult?) {
  * [dev.dailysecuritynews.app.data.Item] — that is what the `Story` interface
  * is for. */
 @Composable
-private fun StoryRow(story: Story) {
+private fun StoryRow(number: Int, story: Story) {
     val uriHandler = LocalUriHandler.current
     Column(
         modifier = Modifier
@@ -188,12 +260,28 @@ private fun StoryRow(story: Story) {
             .clickable { uriHandler.openUri(story.url) }
             .padding(vertical = 8.dp),
     ) {
-        Text(story.title, style = MaterialTheme.typography.bodyLarge)
+        // `.story-title::before { content: "[" counter(story, decimal-leading-zero) "] " }`
+        // — drawn here, never spliced into the story's own title. Zero-padded
+        // to two digits and left to run past 99 naturally, as `counter` does.
+        Text(
+            text = buildAnnotatedString {
+                withStyle(SpanStyle(color = Terminal.dim, fontWeight = FontWeight.Normal)) {
+                    append("[${number.toString().padStart(2, '0')}] ")
+                }
+                withStyle(SpanStyle(color = Terminal.bright, fontWeight = FontWeight.Bold)) {
+                    append(story.title)
+                }
+            },
+            style = MaterialTheme.typography.bodyLarge,
+        )
         Text(
             text = story.sourceId,
             style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            color = Terminal.muted,
         )
-        HorizontalDivider(modifier = Modifier.padding(top = 8.dp))
+        HorizontalDivider(
+            modifier = Modifier.padding(top = 8.dp),
+            color = Terminal.rule,
+        )
     }
 }
