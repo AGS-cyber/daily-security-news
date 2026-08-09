@@ -4,6 +4,7 @@ import { sources } from '../config/sources.js';
 import type { ArticleEdition, DegradedNotice, DigestEdition, Item } from '../types.js';
 import { substituteCitations } from './citations.js';
 import { escapeHtml } from './escape.js';
+import { FAVICON_HREF } from './icon.js';
 import { MONO, PALETTE } from './palette.js';
 
 export { escapeHtml };
@@ -159,6 +160,7 @@ export function layout(o: { title: string; bodyHtml: string; generatedAt: string
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="${PALETTE.bg}">
+<link rel="icon" type="image/svg+xml" href="${FAVICON_HREF}">
 <title>${escapeHtml(o.title)}</title>
 <style>${CSS}</style>
 </head>

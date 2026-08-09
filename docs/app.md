@@ -615,6 +615,13 @@ since nothing crops it, where the adaptive foreground must stay inside the
 texture on a page and as moiré at 48dp. The overlay belongs in the UI, drawn
 at its real size.
 
+**The site's tab icon is this same mark**, ported to SVG in
+`src/render/icon.ts` (`design.md` §2). It copies the legacy variant, scale and
+all, because a browser tab crops nothing either. The path data is copied, not
+shared — there is no tie between an Android resource and TypeScript any more
+than there is for the palette — so the glyph now lives in three files and a
+change to it is a change to all three.
+
 `androidApp/res/values/themes.xml` exists for one reason worth stating: the
 activity's window is drawn before Compose's first frame, so under the
 platform's light theme the app opened on a white flash and then snapped to

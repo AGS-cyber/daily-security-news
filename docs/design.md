@@ -71,6 +71,16 @@ never edits a story's title or an edition's prose.
 Nothing ties the Kotlin copy to the TypeScript, so a colour changed there has
 to be changed in `ui/Theme.kt` and `colors.xml` too.
 
+**The tab icon is the app's launcher mark** — `$_` in phosphor green, drawn
+again in SVG in `render/icon.ts`. It mirrors the *legacy* Android variant
+rather than the adaptive one, because a browser tab crops nothing exactly like
+a pre-API-26 launcher does not, so the glyph is scaled up the same 1.45×
+(`app.md` §11). It is inlined into every page as a `data:` URI rather than
+served as `/favicon.svg`: the page already carries its whole stylesheet inline
+and makes no subresource request, and half a kilobyte of mark is not the thing
+to break that for. Like the palette, the mark is hand-mirrored — the glyph now
+exists in three files, and a change to it has to reach all three.
+
 ## 3. Pipeline
 
 One run produces one article. Stages are pure where possible: each takes data

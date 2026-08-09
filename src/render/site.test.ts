@@ -177,6 +177,29 @@ test('every page carries the subscribe form, and it needs no JavaScript', async 
   });
 });
 
+test('every page carries the tab icon, inlined rather than fetched', async () => {
+  await withDirs(async (dirs) => {
+    const edition = articleEdition();
+    await writeEdition(edition, dirs.editionsDir);
+    await writeSite(edition, dirs);
+
+    // In layout(), like the subscribe form, so it reaches all three page kinds.
+    for (const file of ['index.html', '2026-08-06.html', 'archive.html']) {
+      const page = await readFile(join(dirs.siteDir, file), 'utf8');
+      const encoded = /<link rel="icon" type="image\/svg\+xml" href="data:image\/svg\+xml,([^"]+)">/
+        .exec(page)
+        ?.at(1);
+      assert.ok(encoded, `${file} is missing the tab icon`);
+
+      const svg = decodeURIComponent(encoded);
+      // The `$` is three strokes. An SVG path fills black by default, so
+      // without this the mark renders as a blob rather than failing.
+      assert.match(svg, /fill="none"/, `${file}: the glyph would fill black`);
+      assert.match(svg, /stroke="#7dffa4"/, `${file}: the glyph is not phosphor green`);
+    }
+  });
+});
+
 test('a malformed edition JSON is fatal rather than skipped', async () => {
   await withDirs(async (dirs) => {
     const edition = articleEdition();
