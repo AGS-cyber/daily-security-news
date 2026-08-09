@@ -14,8 +14,16 @@ The reader is security-literate. They don't need "what is ransomware"; they
 need to know which of yesterday's forty stories are worth their attention and
 why.
 
-Non-goals: real-time alerting, a general RSS reader, a newsletter service,
-user accounts.
+Non-goals: real-time alerting, a general RSS reader, user accounts.
+
+~~A newsletter service.~~ **Reversed 2026-08-07.** Readers can now receive the
+edition by email, from the site or the app — see §12. The reversal is narrow
+and the rest of the line still holds: the list lives at Buttondown, so this
+project gained a delivery channel, not accounts, not subscriber records, and
+not a second product. The word "newsletter" was doing two jobs in the original
+sentence — "we are not building list management" (still true) and "email is not
+a way to read this" (no longer true) — which is why it is struck out rather
+than quietly deleted.
 
 ## 2. Deliverable
 
@@ -51,9 +59,17 @@ never touches a story's title, link, or timestamp. Styling is confined to the
 `CSS` constant and `layout()` in `render/html.ts`; no other module knows what
 the page looks like.
 
+**The email edition inverts that rule and only that rule** — see §12. Email
+clients strip generated content, so there the same characters are real markup.
+Everything else holds, including the part that matters most: the theme still
+never edits a story's title or an edition's prose.
+
+**The colours live in `render/palette.ts`**, which `html.ts` interpolates into
+`:root` and `email.ts` inlines. One definition, two web-side consumers.
+
 **The app mirrors this palette rather than sharing it** — see `app.md` §11.
-Nothing ties the Kotlin copy to the CSS, so a colour changed here has to be
-changed there too.
+Nothing ties the Kotlin copy to the TypeScript, so a colour changed there has
+to be changed in `ui/Theme.kt` and `colors.xml` too.
 
 ## 3. Pipeline
 
@@ -303,13 +319,19 @@ docs/design.md              this file
 docs/app.md                 the native app, and its contract with site/
 src/
   index.ts                  entry point — one run, one article
+  email.ts                  entry point — mail one edition (§12)
   config/sources.ts         the source list
+  config/newsletter.ts      the Buttondown account and its public URLs
   collect/                  one module per source kind
   pipeline/                 normalize, dedupe, filter, enrich, select, write
   llm/client.ts             DeepSeek client + usage accounting
   render/                   article JSON + HTML
+  render/palette.ts         the colours, shared by the page and the email
+  render/email.ts           the edition as an HTML email (§12)
+  store/sent.ts             the send ledger
 data/
   seen.json                 dedupe state, committed
+  sent.json                 which editions have been mailed, committed
   editions/YYYY-MM-DD.json  the record
 site/                       generated, served by Vercel
   editions/YYYY-MM-DD.json  the record, web-served
@@ -447,3 +469,97 @@ Decide before the layer that needs them; don't guess early.
   contract held (valid JSON, no invented citations). Six days to go.
 - Whether the archive needs search. Probably not at 365 pages; definitely not
   at 30.
+- **Whether the email edition should be its own thing.** It is currently the
+  page, restyled — same headline, same prose, same also-collected list. If
+  open rates say people read the email and not the site, the email becomes the
+  primary surface and its own editorial decisions follow. Nothing to decide
+  until there is a week of sends to look at.
+
+## 12. The email edition
+
+Added 2026-08-07, reversing half of §1's newsletter non-goal. Readers can
+receive the edition in their inbox instead of visiting the page.
+
+**Buttondown holds the list, and that is the whole point of choosing it.** A
+subscriber list is personal data with obligations attached — confirmed opt-in,
+a working unsubscribe in every message, bounce and complaint handling, deletion
+on request — and none of it is work this project is equipped to do well. So it
+is not done here. Buttondown stores the subscribers, sends the confirmation,
+owns the unsubscribe link, and answers for the data. **No email address is
+stored in this repository, ever.**
+
+That also keeps §9 intact rather than amending it. There is no serverless
+function, no database, and no new credential on the serving side. Actions still
+computes; Vercel still serves static files.
+
+### Subscribing
+
+Both clients POST to Buttondown's **keyless** embed endpoint —
+`buttondown.com/api/emails/embed-subscribe/<username>`, configured in
+`src/config/newsletter.ts`.
+
+Keyless is what makes one mechanism serve both. The website posts an ordinary
+`<form method="post">` — no JavaScript, and the site still has no `<script>`
+tag anywhere. The app posts the same form fields over Ktor. A key-bearing
+endpoint would have forced a proxy of our own for the web and would have been
+flatly unusable from the app, since a key inside a shipped binary is an
+extracted key.
+
+The form is rendered in `layout()`, so it appears on today's edition, every
+dated page and the archive from one place. **Changing it therefore needs
+`npm run rerender`** or past pages keep the old markup (operations.md §4).
+
+### Rendering
+
+`src/render/email.ts`, and it deliberately does not reuse the page's `CSS`.
+
+Email clients strip `::before`/`::after`, custom properties, counters, flexbox
+and `position: fixed` — which is nearly every mechanism §2 relies on. So the
+email inlines a style on every element, and **the decorative characters become
+real markup**: `root@sec:~$`, the `$` sigil, `## `, `[01]`, `// `. §2 says
+those must never be markup, because the page has to read as prose with the
+stylesheet off. An email has no stylesheet to switch off. Same rule — the
+reader gets the terminal — reached the opposite way, because the medium is
+different. That is stated at the top of the module so it does not read as
+someone ignoring §2.
+
+Dropped for the same reason: the scanline overlay (the only `position: fixed`
+selector) and the blinking cursor. The cursor renders static, which is what the
+site itself shows under `prefers-reduced-motion` — an email is permanently in
+that mode.
+
+The colours are not duplicated. `src/render/palette.ts` holds them, `html.ts`
+interpolates them into `:root`, and `email.ts` inlines them. The Kotlin and
+Android-resource copies (`app.md` §11) are still hand-maintained, because no
+compiler tie crosses the three languages — three copies now, not four.
+
+> **One trap, found on screen and now guarded by a test.** The monospace stack
+> quotes its family names with **apostrophes**. A double quote inside a
+> double-quoted `style="…"` attribute closes the attribute at `"SF Mono"` and
+> silently discards every declaration after it — font, size, line height and
+> colour all gone, on a page that still renders perfectly. That is the "looks
+> fine but is wrong" failure `CLAUDE.md` ranks last, and nothing but looking at
+> it would have caught it.
+
+### Sending
+
+`npm run email` reads `data/editions/<date>.json`, renders, and POSTs to
+Buttondown with `BUTTONDOWN_API_KEY`. Native `fetch`, no new dependency. It
+runs in `daily.yml` **after** the publish commit, so publishing never waits on
+it and never fails because of it.
+
+`--dry-run` writes the HTML and sends nothing — the same role `npm run
+rerender` plays for the page, and the only sane way to iterate on an email.
+
+**`data/sent.json` is the re-send guard.** A map of date to `{sentAt,
+emailId}`, committed like `seen.json` and for the same reason §3 gives: runs
+are not once-per-day in practice. Re-rendering a page twice is invisible;
+mailing an edition twice is not, and the subscriber is who notices. Nothing is
+pruned — an expired entry would re-mail a months-old edition.
+
+**A failed send is red, and there is no fallback.** This is the one stage where
+§8's disclosure tier does not apply: either subscribers received the edition or
+they did not, and there is no degraded version of a delivered email. Since the
+site is already published by then, a red check costs the web reader nothing and
+makes the failure findable. That is `CLAUDE.md`'s "fails with a clear error
+message" — the best tier available here, not a lapse from the one above it.

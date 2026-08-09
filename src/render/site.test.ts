@@ -155,6 +155,28 @@ test('a digest edition still renders its fallback disclosure', async () => {
   });
 });
 
+test('every page carries the subscribe form, and it needs no JavaScript', async () => {
+  await withDirs(async (dirs) => {
+    const edition = articleEdition();
+    await writeEdition(edition, dirs.editionsDir);
+    await writeSite(edition, dirs);
+
+    // In layout(), so today's page, the dated page and the archive all have it.
+    for (const file of ['index.html', '2026-08-06.html', 'archive.html']) {
+      const page = await readFile(join(dirs.siteDir, file), 'utf8');
+      assert.match(
+        page,
+        /<form method="post" action="https:\/\/buttondown\.com\/api\/emails\/embed-subscribe\//,
+        `${file} is missing the subscribe form`,
+      );
+      assert.match(page, /name="email"[^>]*required|required[^>]*name="email"/, file);
+      assert.match(page, /name="embed" value="1"/, file);
+      // The site has never shipped a script tag and this must not be the first.
+      assert.doesNotMatch(page, /<script/i, `${file} gained a script tag`);
+    }
+  });
+});
+
 test('a malformed edition JSON is fatal rather than skipped', async () => {
   await withDirs(async (dirs) => {
     const edition = articleEdition();

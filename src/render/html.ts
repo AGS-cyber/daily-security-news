@@ -1,8 +1,10 @@
 import { marked } from 'marked';
+import { SUBSCRIBE_URL } from '../config/newsletter.js';
 import { sources } from '../config/sources.js';
 import type { ArticleEdition, DegradedNotice, DigestEdition, Item } from '../types.js';
 import { substituteCitations } from './citations.js';
 import { escapeHtml } from './escape.js';
+import { MONO, PALETTE } from './palette.js';
 
 export { escapeHtml };
 
@@ -18,13 +20,17 @@ function sourceLabel(sourceId: string): string {
  * The decorative characters — the shell prompt, the `$` and `##` sigils, the
  * `[01]` story numbers — are CSS `content`, never markup. The document stays
  * readable prose when the stylesheet doesn't apply.
+ *
+ * The colours come from `palette.ts` rather than being written here, because
+ * `email.ts` needs the same values and cannot use custom properties. This is
+ * the only place they become CSS variables.
  */
 const CSS = `
 :root { color-scheme: dark;
-  --bg:#080b08; --fg:#c9f5d5; --bright:#7dffa4; --muted:#6aa87f; --dim:#4a7f5e;
-  --rule:#1e3327; --link:#79dfff; --warn:#ffb642; --warn-bg:#1e1505; --warn-fg:#ffdca6;
-  --note:#79dfff; --note-bg:#06181f;
-  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace; }
+  --bg:${PALETTE.bg}; --fg:${PALETTE.fg}; --bright:${PALETTE.bright}; --muted:${PALETTE.muted}; --dim:${PALETTE.dim};
+  --rule:${PALETTE.rule}; --link:${PALETTE.link}; --warn:${PALETTE.warn}; --warn-bg:${PALETTE.warnBg}; --warn-fg:${PALETTE.warnFg};
+  --note:${PALETTE.note}; --note-bg:${PALETTE.noteBg};
+  --mono: ${MONO}; }
 * { box-sizing: border-box; }
 html { background: var(--bg); scrollbar-color: var(--dim) var(--bg); }
 body { margin: 0; color: var(--fg); line-height: 1.6; font-family: var(--mono); font-size: 16px;
@@ -34,7 +40,7 @@ body { margin: 0; color: var(--fg); line-height: 1.6; font-family: var(--mono); 
 body::before { content: ""; position: fixed; inset: 0; z-index: 9; pointer-events: none;
   background: repeating-linear-gradient(to bottom, rgba(0,0,0,.20) 0 1px, transparent 1px 3px); }
 ::selection { background: var(--bright); color: var(--bg); text-shadow: none; }
-main, header, footer { max-width: 76ch; margin: 0 auto; padding: 0 1.25rem; }
+main, header, footer, .subscribe { max-width: 76ch; margin: 0 auto; padding: 0 1.25rem; }
 header { display: flex; flex-wrap: wrap; gap: .4rem 1.25rem; align-items: baseline;
   border-bottom: 1px solid var(--rule); padding-top: 1.5rem; padding-bottom: .6rem; }
 header .brand { color: var(--bright); font-weight: 700; text-shadow: 0 0 10px rgba(125,255,164,.35); }
@@ -101,7 +107,50 @@ footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
 footer::before { content: "// "; color: var(--dim); }
 .empty { color: var(--muted); padding: 1.5rem 0; }
 .empty::before { content: "# "; color: var(--dim); }
+.subscribe { border-top: 1px dashed var(--rule); margin-top: 3rem; padding-top: 1.5rem; }
+.subscribe h2 { margin-bottom: .35rem; }
+.subscribe h2::before { content: "## "; color: var(--dim); }
+.subscribe p { color: var(--muted); font-size: .82rem; margin: 0 0 .9rem; }
+.subscribe form { display: flex; flex-wrap: wrap; gap: .5rem .75rem; align-items: center; }
+.subscribe label { color: var(--dim); }
+.subscribe input { flex: 1 1 20ch; min-width: 0; font: inherit; padding: .45rem .6rem;
+  background: var(--bg); color: var(--fg); border: 1px solid var(--dim); border-radius: 0; }
+.subscribe input::placeholder { color: var(--dim); }
+.subscribe input:focus-visible { border-color: var(--bright); outline: 1px solid var(--bright);
+  outline-offset: 1px; }
+.subscribe button { font: inherit; cursor: pointer; padding: .45rem .9rem;
+  background: var(--bg); color: var(--link); border: 1px solid var(--dim); border-radius: 0; }
+.subscribe button::before { content: "["; color: var(--dim); }
+.subscribe button::after { content: "]"; color: var(--dim); }
+.subscribe button:hover, .subscribe button:focus-visible { background: var(--link); color: var(--bg); }
+.subscribe button:hover::before, .subscribe button:hover::after,
+.subscribe button:focus-visible::before, .subscribe button:focus-visible::after { color: inherit; }
 `;
+
+/**
+ * An ordinary form POST to Buttondown's keyless embed endpoint — no
+ * JavaScript, and none needed. The site has never carried a `<script>` tag
+ * (design.md §2, "no client-side framework"), the endpoint takes a normal
+ * form submission, and Buttondown renders the response page. A `fetch` here
+ * would buy an inline success message at the cost of the page failing shut
+ * for anyone without JS.
+ *
+ * It lives in `layout()` rather than on one page, so it reaches today's
+ * edition, every dated page and the archive from a single place. Changing it
+ * therefore needs `npm run rerender` to reach past pages (operations.md §4).
+ */
+function subscribeForm(): string {
+  return `<section class="subscribe">
+<h2>Get it by email</h2>
+<p>One edition a day, around 08:00 US Eastern. We send a confirmation link first, and every email carries an unsubscribe link.</p>
+<form method="post" action="${escapeHtml(SUBSCRIBE_URL)}">
+<input type="hidden" name="embed" value="1">
+<label for="subscribe-email">email</label>
+<input id="subscribe-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+<button type="submit">subscribe</button>
+</form>
+</section>`;
+}
 
 export function layout(o: { title: string; bodyHtml: string; generatedAt: string }): string {
   return `<!doctype html>
@@ -109,7 +158,7 @@ export function layout(o: { title: string; bodyHtml: string; generatedAt: string
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#080b08">
+<meta name="theme-color" content="${PALETTE.bg}">
 <title>${escapeHtml(o.title)}</title>
 <style>${CSS}</style>
 </head>
@@ -124,6 +173,7 @@ export function layout(o: { title: string; bodyHtml: string; generatedAt: string
 <main>
 ${o.bodyHtml}
 </main>
+${subscribeForm()}
 <footer>Generated ${escapeHtml(o.generatedAt)}</footer>
 </body>
 </html>
