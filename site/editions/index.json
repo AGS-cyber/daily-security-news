@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-08-09",
+    "mode": "article",
+    "headline": "The update path is the attack path in the TrueConf installer compromise",
+    "count": 1
+  },
+  {
     "date": "2026-08-08",
     "mode": "article",
     "headline": "The briefing: Active zero-days, AI data exfiltration, and webmail's broken boundary",
