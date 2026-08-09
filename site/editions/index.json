@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-08-08",
+    "mode": "article",
+    "headline": "The briefing: Active zero-days, AI data exfiltration, and webmail's broken boundary",
+    "count": 25
+  },
+  {
     "date": "2026-08-07",
     "mode": "article",
     "headline": "MFA-Bypassing Phishing, a Linux Container Escape, and the New Default Attack Surface",
