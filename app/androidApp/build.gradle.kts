@@ -12,8 +12,11 @@ android {
         applicationId = "dev.dailysecuritynews.app"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "0.1.0"
+        // `versionCode` is what Android compares to decide an install is an
+        // upgrade; `versionName` is what a human reads, and what the
+        // `app-v*` tag must equal or `app-release.yml` refuses to publish.
+        versionCode = 2
+        versionName = "0.2.0"
     }
 
     packaging {
