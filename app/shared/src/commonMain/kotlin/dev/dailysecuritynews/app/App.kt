@@ -26,11 +26,14 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import dev.dailysecuritynews.app.net.editionRepository
+import dev.dailysecuritynews.app.net.subscribeRepository
 import dev.dailysecuritynews.app.ui.ArchiveScreen
 import dev.dailysecuritynews.app.ui.DailySecurityNewsTheme
 import dev.dailysecuritynews.app.ui.EditionScreen
 import dev.dailysecuritynews.app.ui.EditionsStore
 import dev.dailysecuritynews.app.ui.PhosphorGlow
+import dev.dailysecuritynews.app.ui.SubscribeSlot
+import dev.dailysecuritynews.app.ui.SubscribeStore
 import dev.dailysecuritynews.app.ui.Terminal
 import dev.dailysecuritynews.app.ui.scanlines
 import kotlinx.coroutines.launch
@@ -108,6 +111,11 @@ private fun bracketNav(label: String): AnnotatedString = buildAnnotatedString {
  * whole navigation requirement — a navigation library would be indirection
  * bought for two transitions, which is what `CLAUDE.md` calls a speculative
  * abstraction.
+ *
+ * Subscribing is deliberately *not* a fourth destination. The site puts its
+ * form at the foot of every page rather than in the nav, and the app follows —
+ * which also keeps the app bar to one action, the only arrangement that fits
+ * beside the brand lockup (§11).
  */
 private sealed interface Screen {
     data object Today : Screen
@@ -128,6 +136,7 @@ fun App(cacheDir: String) {
     val store = remember(cacheDir) {
         EditionsStore(editionRepository(cacheDir.toPath()))
     }
+    val subscriptions = remember { SubscribeStore(subscribeRepository()) }
     val scope = rememberCoroutineScope()
     var screen: Screen by remember { mutableStateOf(Screen.Today) }
 
@@ -186,6 +195,15 @@ fun App(cacheDir: String) {
                     },
                     actions = {
                         if (screen is Screen.Today) {
+                            // Exactly one action, and that is a constraint, not
+                            // a preference. A second one was tried — an
+                            // `[email]` entry to the subscribe form — and it
+                            // narrowed the title slot enough to wrap the brand
+                            // lockup onto two lines on a 1080px screen, which
+                            // is the precise failure §11 exists to prevent. The
+                            // site does not put subscribing in its nav either;
+                            // it puts the form at the foot of the page, and so
+                            // does the app (see EditionScreen).
                             TextButton(onClick = { screen = Screen.Archive }) {
                                 Text(bracketNav("archive"))
                             }
@@ -199,10 +217,19 @@ fun App(cacheDir: String) {
             },
         ) { padding ->
             Box(modifier = Modifier.padding(padding).fillMaxSize()) {
+                // One subscribe store for the whole app, so an address typed on
+                // today's edition is not lost by opening an archived one.
+                val subscribe = SubscribeSlot(
+                    state = subscriptions.state,
+                    onSubmit = { email -> scope.launch { subscriptions.submit(email) } },
+                    onReset = { subscriptions.reset() },
+                )
+
                 when (val current = screen) {
                     is Screen.Today -> EditionScreen(
                         state = store.today,
                         onRetry = { scope.launch { store.loadToday() } },
+                        subscribe = subscribe,
                     )
 
                     is Screen.Archive -> {
@@ -219,6 +246,7 @@ fun App(cacheDir: String) {
                         EditionScreen(
                             state = store.viewed,
                             onRetry = { scope.launch { store.openEdition(current.date) } },
+                            subscribe = subscribe,
                         )
                     }
                 }

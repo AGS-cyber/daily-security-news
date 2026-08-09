@@ -40,3 +40,26 @@ jobs:
           git add site data
           git diff --staged --quiet || git commit -m "edition: $(date -u +%Y-%m-%d)"
           git push
+
+      # Deliberately after the publish commit, so publishing never depends on
+      # the send. A failure here is red and has no fallback — subscribers
+      # either received the edition or they did not (design §12) — but the site
+      # is already deployed by this point, so the reader on the web loses
+      # nothing. `data/sent.json` makes a re-run or a cron double-fire a no-op.
+      - name: Email the edition
+        run: npm run email
+        env:
+          BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
+
+      - name: Commit the send ledger
+        # `always()` so a failed send still records whatever did go out before
+        # it failed. The existence check matters: until the first successful
+        # send there is no ledger, and `git add` on a missing path is an error
+        # that would fail this step for the wrong reason.
+        if: always()
+        run: |
+          if [ -f data/sent.json ]; then
+            git add data/sent.json
+            git diff --staged --quiet || git commit -m "sent: $(date -u +%Y-%m-%d)"
+            git push
+          fi
