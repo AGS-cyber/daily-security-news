@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-08-10",
+    "mode": "article",
+    "headline": "A Triple Active-Exploitation Warning Leads the Day",
+    "count": 16
+  },
+  {
     "date": "2026-08-09",
     "mode": "article",
     "headline": "The update path is the attack path in the TrueConf installer compromise",
