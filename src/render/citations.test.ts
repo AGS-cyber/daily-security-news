@@ -16,6 +16,7 @@ function story(id: string, title: string, url: string): Item & Selection {
     canonicalUrl: url,
     publishedAt: '2026-08-06T09:00:00.000Z',
     alsoCoveredBy: [],
+    cves: [],
   };
 }
 

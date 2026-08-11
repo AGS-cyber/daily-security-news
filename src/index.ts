@@ -1,5 +1,6 @@
 import { collectRss } from './collect/rss.js';
 import { sources } from './config/sources.js';
+import { VULNERABILITY_CACHE_PATH } from './config/vulnerability.js';
 import { createClient, sumUsage } from './llm/client.js';
 import { dedupe } from './pipeline/dedupe.js';
 import { filter } from './pipeline/filter.js';
@@ -9,6 +10,16 @@ import { write } from './pipeline/write.js';
 import { writeEdition } from './render/edition.js';
 import { writeSite } from './render/site.js';
 import { loadSeen } from './store/seen.js';
+import {
+  createEmptyVulnerabilityCache,
+  createMemoryVulnerabilityCache,
+  loadVulnerabilityCache,
+} from './vulnerability/cache.js';
+import { enrichVulnerabilities } from './vulnerability/enrich.js';
+import { extractVulnerabilityReferences } from './vulnerability/extract.js';
+import { createKevClient } from './vulnerability/kev.js';
+import { createNvdClient } from './vulnerability/nvd.js';
+import { vulnerabilityPriority } from './vulnerability/priority.js';
 import type {
   ArticleEdition,
   DegradedNotice,
@@ -120,7 +131,43 @@ async function run(): Promise<void> {
     `filter      ${filtered.kept.length} items · ${filtered.droppedSeen} seen · ${filtered.droppedOld} outside window`,
   );
 
-  const items: Item[] = filtered.kept.map((cluster, i) => ({ ...cluster, id: `s${i + 1}` }));
+  const referenced = extractVulnerabilityReferences(filtered.kept);
+  const cveCount = new Set(
+    referenced.flatMap((cluster) => cluster.cveReferences.map((cve) => cve.id)),
+  ).size;
+  console.log(`extract     ${cveCount} unique CVEs across ${referenced.length} stories`);
+
+  let vulnerabilityCache = createMemoryVulnerabilityCache();
+  if (cveCount > 0) {
+    try {
+      vulnerabilityCache = await loadVulnerabilityCache(VULNERABILITY_CACHE_PATH);
+    } catch (err) {
+      const why = err instanceof Error ? err.message : String(err);
+      degraded.push({
+        stage: 'enrich',
+        sourceId: 'vulnerability-cache',
+        message: `The vulnerability cache was unreadable and will be rebuilt where authoritative sources are available: ${why}`,
+      });
+      vulnerabilityCache = createEmptyVulnerabilityCache(VULNERABILITY_CACHE_PATH);
+    }
+  }
+
+  const enriched = await enrichVulnerabilities(referenced, {
+    kevClient: createKevClient(),
+    nvdClient: createNvdClient({ apiKey: process.env['NVD_API_KEY'] }),
+    cache: vulnerabilityCache,
+    now,
+  });
+  degraded.push(...enriched.degraded);
+
+  const items: Item[] = enriched.items.map((cluster, i) => ({ ...cluster, id: `s${i + 1}` }));
+  const kevCount = new Set(
+    items.flatMap((item) => item.cves.filter((cve) => cve.knownExploited).map((cve) => cve.id)),
+  ).size;
+  const prioritized = items.filter((item) => vulnerabilityPriority(item) !== 'none').length;
+  console.log(
+    `enrich     ${cveCount} CVEs - ${kevCount} CISA KEV - ${prioritized} stories with vulnerability signals`,
+  );
 
   const base = {
     date,

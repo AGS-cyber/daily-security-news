@@ -8,7 +8,7 @@ const NOW = new Date('2026-08-06T12:00:00.000Z');
 const TODAY = '2026-08-06';
 
 function cluster(canonicalUrl: string, publishedAt: string): Cluster {
-  return {
+  const value: Cluster = {
     sourceId: 'krebs',
     sourceKind: 'rss',
     title: canonicalUrl,
@@ -16,7 +16,10 @@ function cluster(canonicalUrl: string, publishedAt: string): Cluster {
     canonicalUrl,
     publishedAt,
     alsoCoveredBy: [],
+    members: [],
   };
+  value.members = [value];
+  return value;
 }
 
 /** Minimal store standing in for data/seen.json, keyed by URL for readability. */

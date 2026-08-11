@@ -150,6 +150,10 @@ private fun ReadyBody(state: EditionState.Ready, subscribe: SubscribeSlot) {
             is ArticleEdition -> {
                 item { Headline(edition.headline) }
                 item { Standfirst(edition.standfirst) }
+                val vulnerabilities = importantVulnerabilityLines(edition.selected)
+                if (vulnerabilities.isNotEmpty()) {
+                    item { VulnerabilityMetadata(vulnerabilities, heading = true) }
+                }
                 item { ArticleBody(state.body) }
                 if (edition.alsoCollected.isNotEmpty()) {
                     item {
@@ -255,6 +259,74 @@ private fun ArticleBody(body: CitationResult?) {
     )
 }
 
+private data class VulnerabilityLine(val text: String, val href: String?)
+
+private fun importantVulnerabilityLines(stories: List<Story>): List<VulnerabilityLine> {
+    val byId = linkedMapOf<String, dev.dailysecuritynews.app.data.VulnerabilityIntelligence>()
+    for (story in stories) {
+        for (cve in story.cves) {
+            val current = byId[cve.id]
+            if (current == null || (current.nvd == null && cve.nvd != null) ||
+                (current.kev == null && cve.kev != null)
+            ) {
+                byId[cve.id] = cve
+            }
+        }
+    }
+
+    return byId.values.mapNotNull { cve ->
+        val metric = cve.nvd?.cvss
+        val important = cve.knownExploited == true || metric?.severity == "CRITICAL" ||
+            metric?.severity == "HIGH" || (metric?.score ?: -1.0) >= 7.0
+        if (!important) return@mapNotNull null
+
+        val labels = mutableListOf(cve.id)
+        metric?.score?.let { score ->
+            labels += "CVSS " + if (score % 1.0 == 0.0) "${score.toInt()}.0" else score.toString()
+        }
+        metric?.severity?.let { labels += it.lowercase().replaceFirstChar { first -> first.titlecase() } }
+        if (cve.knownExploited == true) labels += "CISA KEV"
+        if (cve.kev?.knownRansomwareCampaignUse?.lowercase() == "known") {
+            labels += "CISA ransomware use: Known"
+        }
+        val href = when {
+            cve.provenance.nvd.status == "found" -> cve.provenance.nvd.recordUrl
+            cve.knownExploited == true -> cve.provenance.cisaKev.catalogUrl
+            else -> null
+        }
+        VulnerabilityLine(labels.joinToString(" / "), href)
+    }
+}
+
+@Composable
+private fun VulnerabilityMetadata(lines: List<VulnerabilityLine>, heading: Boolean) {
+    val uriHandler = LocalUriHandler.current
+    Column(modifier = Modifier.fillMaxWidth()) {
+        if (heading) {
+            Text(
+                text = "Vulnerability intelligence",
+                style = MaterialTheme.typography.titleMedium,
+                color = Terminal.bright,
+                modifier = Modifier.padding(bottom = 4.dp),
+            )
+        }
+        for (line in lines) {
+            val href = line.href
+            val modifier = if (href == null) {
+                Modifier.fillMaxWidth()
+            } else {
+                Modifier.fillMaxWidth().clickable { uriHandler.openUri(href) }
+            }
+            Text(
+                text = "> ${line.text}",
+                style = MaterialTheme.typography.labelMedium,
+                color = Terminal.muted,
+                modifier = modifier.padding(vertical = 2.dp),
+            )
+        }
+    }
+}
+
 /** One composable for both [dev.dailysecuritynews.app.data.SelectedItem] and
  * [dev.dailysecuritynews.app.data.Item] — that is what the `Story` interface
  * is for. */
@@ -286,6 +358,10 @@ private fun StoryRow(number: Int, story: Story) {
             style = MaterialTheme.typography.labelMedium,
             color = Terminal.muted,
         )
+        val vulnerabilities = importantVulnerabilityLines(listOf(story))
+        if (vulnerabilities.isNotEmpty()) {
+            VulnerabilityMetadata(vulnerabilities, heading = false)
+        }
         HorizontalDivider(
             modifier = Modifier.padding(top = 8.dp),
             color = Terminal.rule,

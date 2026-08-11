@@ -142,6 +142,14 @@ Two consequences for the Kotlin side:
 `Story` interface carries the nine fields they share, so the renderer can
 treat a selected story and a merely-collected one the same way.
 
+The interface now also carries `cves: List<VulnerabilityIntelligence>`. The
+Kotlin mirror intentionally models only the fields the app presents — CVE ID,
+KEV status, ransomware-use flag, chosen CVSS score/severity, and provenance
+links — while `ignoreUnknownKeys` preserves the richer NVD/KEV record in the
+raw cached JSON. `cves` defaults to an empty list as the one historical-schema
+exception: editions published before enrichment are permanent records and
+must remain readable without being rewritten with facts they never collected.
+
 **`section`, `sourceKind` and `stage` are `String`, not enums.**
 `ignoreUnknownKeys` does not cover unknown enum *values*: one new section
 name on the site would hard-fail every installed app. The obvious repair,
@@ -477,6 +485,13 @@ API and each host already knows its own.
 Story rows use the `Story` interface, so one composable serves both a
 selected story and a merely-collected one, and open links through
 `LocalUriHandler` rather than an `expect`/`actual` of their own.
+
+Important structured vulnerability facts use the same component on both
+paths. An article gets one compact summary after its standfirst; digest and
+also-collected rows get the same line below source metadata. Only KEV,
+Critical, or High entries render, and only known fields are included, for
+example `CVE-2026-12345 / CVSS 9.8 / Critical / CISA KEV`. A found NVD record
+links to its NVD detail page; a KEV-only record links to the CISA catalog.
 
 The store keeps `today` and `viewed` in separate slots. An edition opened
 from the archive cannot knock today's out of `Ready` into `Error`, and

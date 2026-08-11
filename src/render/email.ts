@@ -5,6 +5,7 @@ import type { ArticleEdition, DegradedNotice, DigestEdition, Edition, Item } fro
 import { substituteCitations } from './citations.js';
 import { escapeHtml } from './escape.js';
 import { MONO, PALETTE as P } from './palette.js';
+import { vulnerabilityDisplays } from './vulnerabilities.js';
 
 /**
  * The edition as an HTML email — the same terminal the site wears, rebuilt
@@ -145,6 +146,25 @@ function noticeBox(html: string): string {
 </div>`;
 }
 
+function vulnerabilityMetadata(items: Item[], summary = false): string {
+  const rows = vulnerabilityDisplays(items);
+  if (rows.length === 0) return '';
+  const lines = rows
+    .map((row) => {
+      const id = row.href
+        ? `<a href="${escapeHtml(row.href)}" style="${S.link}">${escapeHtml(row.id)}</a>`
+        : escapeHtml(row.id);
+      const details = row.labels.length
+        ? ` &middot; ${row.labels.map(escapeHtml).join(' &middot; ')}`
+        : '';
+      return `<p style="${S.small}margin:4px 0;">${sigil('> ')}${id}${details}</p>`;
+    })
+    .join('\n');
+  return summary
+    ? `\n<div style="border:1px solid ${P.rule};padding:12px 16px;margin:0 0 24px;"><p style="${S.h2}font-size:14px;">${sigil('## ')}Vulnerability intelligence</p>${lines}</div>`
+    : `\n${lines}`;
+}
+
 function storyList(items: Item[], emptyText: string): string {
   if (items.length === 0) {
     return `<p style="${S.small}margin:24px 0;">${sigil('# ')}${escapeHtml(emptyText)}</p>`;
@@ -162,9 +182,10 @@ function storyList(items: Item[], emptyText: string): string {
       const excerpt = item.excerpt
         ? `<p style="margin:6px 0 0;font-size:15px;">${escapeHtml(item.excerpt)}</p>`
         : '';
+      const vulnerabilities = vulnerabilityMetadata([item]);
       return `<div style="${S.rule}padding:16px 0;">
 <p style="margin:0 0 4px;font-size:16px;font-weight:700;">${sigil(`[${n}] `)}<a href="${escapeHtml(item.url)}" style="${S.link}">${escapeHtml(item.title)}</a></p>
-<p style="${S.small}">${escapeHtml(sourceLabel(item.sourceId))} · ${escapeHtml(formatTime(item.publishedAt))}</p>
+<p style="${S.small}">${escapeHtml(sourceLabel(item.sourceId))} · ${escapeHtml(formatTime(item.publishedAt))}</p>${vulnerabilities}
 ${excerpt}
 ${also}
 </div>`;
@@ -234,7 +255,7 @@ function articleEmail(edition: ArticleEdition): { subject: string; html: string 
   const bodyHtml = `<h1 style="${S.h1}">${sigil('$ ')}${escapeHtml(edition.headline)}</h1>
 <p style="${S.small}margin-bottom:24px;">${sigil('// ')}${escapeHtml(summary)}</p>
 ${degradedBanner(edition.degraded)}
-<p style="margin:0 0 28px;padding-left:16px;border-left:2px solid ${P.dim};">${escapeHtml(edition.standfirst)}</p>
+<p style="margin:0 0 28px;padding-left:16px;border-left:2px solid ${P.dim};">${escapeHtml(edition.standfirst)}</p>${vulnerabilityMetadata(edition.selected, true)}
 ${articleBody(edition)}
 <h2 style="${S.h2}${S.rule}margin-top:36px;padding-top:24px;">${sigil('## ')}Also collected today</h2>
 ${storyList(edition.alsoCollected, 'Every story collected today was written up above.')}`;

@@ -4,6 +4,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
 import type { ArticleEdition, DigestEdition, Item, Selection } from '../types.js';
+import { vulnerability } from '../test-helpers.js';
 import { writeEdition } from './edition.js';
 import { writeSite } from './site.js';
 
@@ -24,6 +25,7 @@ function item(id: string, title: string, url: string): Item {
     canonicalUrl: url,
     publishedAt: '2026-08-06T09:00:00.000Z',
     alsoCoveredBy: [],
+    cves: [],
   };
 }
 
@@ -152,6 +154,29 @@ test('a digest edition still renders its fallback disclosure', async () => {
 
     const page = await readFile(join(dirs.siteDir, 'index.html'), 'utf8');
     assert.match(page, /automated chronological digest/);
+  });
+});
+
+test('important selected vulnerabilities render as compact authoritative metadata', async () => {
+  await withDirs(async (dirs) => {
+    const story = selected('s1', 'Router flaw', 'https://example.test/a');
+    story.cves = [vulnerability()];
+    const edition = articleEdition({ selected: [story], alsoCollected: [] });
+    await writeEdition(edition, dirs.editionsDir);
+    await writeSite(edition, dirs);
+
+    const page = await readFile(join(dirs.siteDir, 'index.html'), 'utf8');
+    assert.match(page, /Vulnerability intelligence/);
+    assert.match(page, /CVE-2026-12345/);
+    assert.match(page, /CVSS 9\.8/);
+    assert.match(page, /Critical/);
+    assert.match(page, /CISA KEV/);
+    assert.match(page, /CISA ransomware use: Known/);
+
+    const stored = JSON.parse(
+      await readFile(join(dirs.editionsDir, '2026-08-06.json'), 'utf8'),
+    ) as ArticleEdition;
+    assert.deepEqual(stored.selected[0]?.cves, story.cves);
   });
 });
 

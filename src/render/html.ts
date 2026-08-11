@@ -6,6 +6,7 @@ import { substituteCitations } from './citations.js';
 import { escapeHtml } from './escape.js';
 import { FAVICON_HREF } from './icon.js';
 import { MONO, PALETTE } from './palette.js';
+import { vulnerabilityDisplays } from './vulnerabilities.js';
 
 export { escapeHtml };
 
@@ -88,6 +89,14 @@ ol.stories > li { counter-increment: story; border-top: 1px solid var(--rule); p
 .meta { color: var(--muted); font-size: .8rem; margin: 0 0 .45rem; }
 .excerpt { margin: .4rem 0 0; }
 .also { font-size: .82rem; color: var(--muted); margin: .5rem 0 0; }
+.vuln-summary { border: 1px solid var(--rule); margin: 0 0 1.75rem; padding: .75rem 1rem; }
+.vuln-summary h2 { margin: 0 0 .4rem; font-size: .9rem; }
+.vuln-summary h2::before { content: "## "; color: var(--dim); }
+.vuln-list { list-style: none; margin: 0; padding: 0; }
+.vuln-list li { color: var(--muted); font-size: .82rem; padding: .15rem 0; }
+.vuln-list li::before { content: "> "; color: var(--dim); }
+.vuln-meta { margin: .35rem 0 0; }
+.vuln-list span + span::before { content: " \\00B7 "; color: var(--dim); }
 .standfirst { color: var(--fg); margin: 0 0 1.75rem; padding-left: 1rem;
   border-left: 2px solid var(--dim); }
 .article h2 { margin: 2.25rem 0 .75rem; }
@@ -209,6 +218,24 @@ ${notices.map((n) => `<li>${escapeHtml(n.message)}</li>`).join('\n')}
 </div>`;
 }
 
+function vulnerabilityMetadata(items: Item[], summary = false): string {
+  const rows = vulnerabilityDisplays(items);
+  if (rows.length === 0) return '';
+  const list = rows
+    .map((row) => {
+      const id = row.href
+        ? `<a href="${escapeHtml(row.href)}">${escapeHtml(row.id)}</a>`
+        : escapeHtml(row.id);
+      return `<li>${[id, ...row.labels.map(escapeHtml)]
+        .map((part) => `<span>${part}</span>`)
+        .join('')}</li>`;
+    })
+    .join('\n');
+  return summary
+    ? `\n<aside class="vuln-summary"><h2>Vulnerability intelligence</h2><ul class="vuln-list">${list}</ul></aside>`
+    : `\n<ul class="vuln-list vuln-meta">${list}</ul>`;
+}
+
 function storyList(items: Item[], emptyText: string): string {
   if (items.length === 0) return `<p class="empty">${escapeHtml(emptyText)}</p>`;
 
@@ -221,9 +248,10 @@ ${items
           .join(', ')}</p>`
       : '';
     const excerpt = item.excerpt ? `<p class="excerpt">${escapeHtml(item.excerpt)}</p>` : '';
+    const vulnerabilities = vulnerabilityMetadata([item]);
     return `<li id="${escapeHtml(item.id)}">
 <p class="story-title"><a href="${escapeHtml(item.url)}">${escapeHtml(item.title)}</a></p>
-<p class="meta">${escapeHtml(sourceLabel(item.sourceId))} · ${escapeHtml(formatTime(item.publishedAt))}</p>
+<p class="meta">${escapeHtml(sourceLabel(item.sourceId))} · ${escapeHtml(formatTime(item.publishedAt))}</p>${vulnerabilities}
 ${excerpt}
 ${also}
 </li>`;
@@ -278,7 +306,7 @@ ${storyList(edition.alsoCollected, 'Every story collected today was written up a
     bodyHtml: `<h1>${escapeHtml(edition.headline)}</h1>
 <p class="summary">${summary}</p>
 ${degraded}
-<p class="standfirst">${escapeHtml(edition.standfirst)}</p>
+<p class="standfirst">${escapeHtml(edition.standfirst)}</p>${vulnerabilityMetadata(edition.selected, true)}
 <div class="article">
 ${bodyHtml}
 </div>

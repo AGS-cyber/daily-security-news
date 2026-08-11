@@ -1,9 +1,15 @@
 # Daily Security News
 
-One written article per day, around 08:00 US Eastern, covering what actually
-mattered in security over the previous 24 hours. Not a feed dump and not a list
-of headlines — a piece you read start to finish in a few minutes and come away
-current.
+An open-source security-intelligence pipeline that collects fragmented
+security reporting, normalizes and deduplicates it, enriches referenced
+vulnerabilities with authoritative CISA KEV and NVD data, uses the structured
+intelligence to prioritize important developments, and generates a traceable
+daily security briefing around 08:00 US Eastern.
+
+The output is one written article rather than a feed dump or a list of
+headlines. The model performs editorial selection and writing; deterministic
+code owns collection, CVE extraction, authoritative lookups, validation,
+provenance, and output links.
 
 **Live site:** https://daily-security-news.vercel.app/ — deployed on Vercel
 from `main`.
@@ -12,8 +18,8 @@ The reader is assumed to be security-literate. They don't need "what is
 ransomware"; they need to know which of yesterday's forty stories are worth
 their attention and why.
 
-Two documents sit behind this one, and this file deliberately does not
-duplicate either:
+Three documents sit behind this one, and this file deliberately does not
+duplicate them:
 
 - **`docs/design.md`** — the source of truth for what this system is and why
   it is shaped the way it is, including every decision made and the reasoning
@@ -22,10 +28,12 @@ duplicate either:
   straight there when the build is red, a feed stops working, or the site and
   the repo disagree. It records the failure modes that have actually happened,
   each of which pointed somewhere other than its cause.
+- **`docs/vulnerability-intelligence.md`** — CVE extraction, KEV/NVD data,
+  provenance, caching, rate limits, priority signals, and failure behavior.
 
 ## Current state
 
-Build order §10 has five layers. **Layers 1, 2 and 3 are done** — the site
+Build order §10 has five layers. **Layers 1 through 4 are done** — the site
 publishes a written article daily, unattended.
 
 | Layer | What it adds | Status |
@@ -33,7 +41,7 @@ publishes a written article daily, unattended.
 | 1 | RSS → dedupe → digest page, run by hand | done |
 | 2 | Actions schedule, hosted deploy, archive, seen store | done |
 | 3 | `select` + `write` against DeepSeek — the actual article | done |
-| 4 | CISA KEV + NVD enrichment | not started |
+| 4 | CISA KEV + NVD enrichment | done |
 | 5 | Hacker News, r/netsec, optional search API | not started |
 
 **First real article: 2026-08-06**, on `deepseek-v4-flash`. Before that the
@@ -65,6 +73,10 @@ A run collects every feed, writes `data/editions/<date>.json` and the pages
 under `site/`, then records what it published in `data/seen.json`. Open
 `site/index.html` in a browser.
 
+`NVD_API_KEY` is optional. Without it the pipeline uses NVD's public rate
+limit; with it, the client sends the value only in the `apiKey` header. CISA
+KEV needs no key. A missing vulnerability API key never disables enrichment.
+
 `npm run rerender` is what you want after changing anything under `render/`: a
 normal run only rewrites today's page, `index.html` and the archive, so past
 dated pages would otherwise keep the old design indefinitely.
@@ -76,8 +88,8 @@ after it settles to roughly a day's news.
 ## How a run works
 
 ```
-collect ─▶ normalize ─▶ dedupe ─▶ filter ─▶ select ─▶ write ─▶ render ─▶ publish
-                                            └───  LLM  ───┘
+collect -> normalize -> dedupe -> filter -> extract CVEs -> enrich -> select -> write -> render -> publish
+                                                                    |--- LLM ---|
 ```
 
 Each stage takes data in and returns data out, so any stage can be run and
@@ -95,6 +107,11 @@ calls.
   who else covered it.
 - **filter** — drop anything already published in an earlier edition, or older
   than 7 days. See §3; this is one window, not two.
+- **extract CVEs** — scan every dedupe-cluster member's title, excerpt and URL;
+  normalize identifiers to uppercase and merge their news-source provenance.
+- **enrich** — validate CVEs against CISA KEV and retrieve batched NVD metadata.
+  Source failures are independent and visibly degraded; publication continues
+  with explicit null/empty fields rather than guesses.
 - **select** — LLM call 1. Which 6–8 stories make the article, in what order,
   under which section. Returns JSON, validated with Zod.
 - **write** — LLM call 2. The prose, in Markdown. The model never emits a URL
@@ -105,14 +122,21 @@ calls.
 - **publish** — Actions commits `site/` and `data/` to `main`. Vercel deploys
   off that push; there is no deploy job.
 
-Pipeline-stage failures are hard failures: the run aborts, nothing deploys,
-yesterday's article stays up, and the build goes red. There is no partial
-publish and no placeholder content.
+Core pipeline failures are hard failures: the run aborts, nothing deploys, and
+yesterday's article stays up. Feed and vulnerability-source failures are
+visible degradations because a partial edition is still useful when it says
+exactly what could not be collected or refreshed.
 
 ## Sources
 
 Twelve RSS feeds in `src/config/sources.ts` — news outlets, vendor research
 blogs, and CISA advisories. Adding one is a one-line edit.
+
+Vulnerability enrichment uses the official CISA KEV JSON catalog and NVD API
+v2. KEV is the authority for catalog membership; news articles never establish
+that flag. NVD supplies descriptions, CVSS, CWE, dates, references and affected
+configuration data when available. This product uses data from the NVD API but
+is not endorsed or certified by the NVD.
 
 Feed URLs rot, and they rot quietly: a dead feed usually returns HTTP 200 with
 an HTML page rather than a 404, which surfaces as an XML parse error that reads
@@ -130,17 +154,20 @@ Anything that isn't an XML content type means the URL moved.
 ```
 docs/design.md              the design — source of truth
 docs/operations.md          running, deploying, debugging
+docs/vulnerability-intelligence.md  enrichment contract
 src/
   index.ts                  entry point — one run, one edition
-  config/sources.ts         the source list
+  config/                   sources, newsletter, vulnerability endpoints/cache
   collect/                  one module per source kind
   pipeline/                 normalize, dedupe, filter, select, write
+  vulnerability/            extraction, clients, cache, enrichment, priority
   llm/client.ts             DeepSeek client + usage accounting
   render/                   edition JSON + HTML, and the terminal theme
-  store/seen.ts             the only mutable state
+  store/                    seen and email-send ledgers
 data/
   seen.json                 canonical-URL hashes → date first covered
   editions/YYYY-MM-DD.json  the record behind each page
+  cache/                    KEV catalog and per-CVE NVD cache
 site/                       generated, served by Vercel
 vercel.json                 output directory; no build step
 ```

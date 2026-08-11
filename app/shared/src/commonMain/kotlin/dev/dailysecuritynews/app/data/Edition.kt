@@ -16,6 +16,49 @@ import kotlinx.serialization.json.JsonClassDiscriminator
 @Serializable
 data class Coverage(val sourceId: String, val name: String, val url: String)
 
+@Serializable
+data class KevEnrichment(
+    val knownRansomwareCampaignUse: String? = null,
+)
+
+@Serializable
+data class CvssMetric(
+    val score: Double? = null,
+    val severity: String? = null,
+)
+
+@Serializable
+data class NvdEnrichment(
+    val cvss: CvssMetric? = null,
+)
+
+@Serializable
+data class CisaKevProvenance(
+    val status: String,
+    val catalogUrl: String,
+)
+
+@Serializable
+data class NvdProvenance(
+    val status: String,
+    val recordUrl: String,
+)
+
+@Serializable
+data class VulnerabilityProvenance(
+    val cisaKev: CisaKevProvenance,
+    val nvd: NvdProvenance,
+)
+
+@Serializable
+data class VulnerabilityIntelligence(
+    val id: String,
+    val knownExploited: Boolean?,
+    val kev: KevEnrichment?,
+    val nvd: NvdEnrichment?,
+    val provenance: VulnerabilityProvenance,
+)
+
 interface Story {
     val id: String
     val sourceId: String
@@ -26,6 +69,7 @@ interface Story {
     val publishedAt: String
     val excerpt: String?
     val alsoCoveredBy: List<Coverage>
+    val cves: List<VulnerabilityIntelligence>
 }
 
 @Serializable
@@ -39,6 +83,7 @@ data class Item(
     override val publishedAt: String,
     override val excerpt: String? = null,
     override val alsoCoveredBy: List<Coverage>,
+    override val cves: List<VulnerabilityIntelligence> = emptyList(),
 ) : Story
 
 @Serializable
@@ -52,6 +97,7 @@ data class SelectedItem(
     override val publishedAt: String,
     override val excerpt: String? = null,
     override val alsoCoveredBy: List<Coverage>,
+    override val cves: List<VulnerabilityIntelligence> = emptyList(),
     /**
      * A `String`, not an enum: `ignoreUnknownKeys` does not cover unknown enum
      * *values*, so a section added to the site would hard-fail an installed

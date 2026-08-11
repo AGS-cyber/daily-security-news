@@ -87,8 +87,8 @@ One run produces one article. Stages are pure where possible: each takes data
 in and returns data out, so any stage can be run and inspected alone.
 
 ```
-collect ─▶ normalize ─▶ dedupe ─▶ filter ─▶ enrich ─▶ select ─▶ write ─▶ render ─▶ publish
-                                                      └─ LLM ──┘
+collect -> normalize -> dedupe -> filter -> extract CVEs -> enrich -> select -> write -> render -> publish
+                                                                    |--- LLM ---|
 ```
 
 | Stage | Does | Fails how |
@@ -97,7 +97,8 @@ collect ─▶ normalize ─▶ dedupe ─▶ filter ─▶ enrich ─▶ select
 | `normalize` | Canonical URL, parsed date, plain-text excerpt | Per-item, non-fatal |
 | `dedupe` | Collapse the same story across sources into one item | Fatal |
 | `filter` | Drop items outside the window or already published | Fatal |
-| `enrich` | Attach CVE/KEV facts to items that reference a CVE | Per-item, non-fatal |
+| `extract` | Deterministically merge CVE references from every cluster member | Fatal |
+| `enrich` | Attach CISA KEV and NVD intelligence with provenance | Per-source, non-fatal |
 | `select` | LLM call 1 — which stories make the article, and why | Fatal, disclosed fallback (§8) |
 | `write` | LLM call 2 — the article prose | Fatal, disclosed fallback (§8) |
 | `render` | Article JSON + HTML pages | Fatal |
@@ -127,8 +128,9 @@ best one and note who else covered it.
 
 **Seen store.** `data/seen.json` — a map of canonical-URL hash to the date
 that first covered it, pruned to 30 days. Committed back by the workflow so
-the next run knows what's already been written about. This is the only
-mutable state.
+the next run knows what's already been written about. It is the publication
+dedupe state; the send ledger and disposable vulnerability cache are the other
+committed state files.
 
 **The store is consulted by date, not by presence.** An item is excluded only
 when an *earlier* edition covered it; an item first covered today is still part
@@ -150,9 +152,13 @@ Cheap, stable, no keys. `rss-parser` handles both formats.
 
 **Vulnerability APIs** — structured, authoritative, and the reason this
 project beats a feed reader:
-- CISA KEV catalog (JSON, no key) — newly added known-exploited CVEs.
-- NVD CVE API (no key required; keyed access has higher rate limits) — CVSS
-  score, CWE, affected products for any CVE mentioned by another item.
+- CISA KEV catalog (JSON, no key) — authoritative known-exploited membership,
+  required actions, due dates and ransomware-use reporting.
+- NVD CVE API v2 (`NVD_API_KEY` optional) — descriptions, multiple CVSS schema
+  versions, CWE, references and affected configurations for referenced CVEs.
+
+The exact extraction, source, cache, provenance and failure contracts are in
+`vulnerability-intelligence.md`.
 
 **Aggregators** — Hacker News (Algolia API) and `r/netsec` for
 discussion-driven items the outlets haven't picked up. Noisy; they enter the
@@ -165,7 +171,7 @@ last thing to build, if at all.
 ## 5. Data model
 
 ```ts
-type SourceKind = 'rss' | 'kev' | 'nvd' | 'hn' | 'reddit' | 'search';
+type SourceKind = 'rss';
 
 interface RawItem {
   sourceId: string;        // key into the sources config
@@ -180,15 +186,19 @@ interface Item extends RawItem {
   id: string;              // short, stable within the run — e.g. "s7"
   canonicalUrl: string;
   alsoCoveredBy: { sourceId: string; url: string }[];
-  cves: CveFact[];         // from enrich; empty if none referenced
+  cves: VulnerabilityIntelligence[]; // empty if no CVE was referenced
 }
 
-interface CveFact {
-  id: string;              // CVE-2026-1234
-  cvss?: number;
-  inKev: boolean;
-  kevDueDate?: string;
-  summary?: string;
+interface VulnerabilityIntelligence {
+  id: string;              // normalized uppercase CVE ID
+  knownExploited: boolean | null; // null means KEV unavailable, not a miss
+  kev: KevEnrichment | null;
+  nvd: NvdEnrichment | null;
+  provenance: {
+    news: CveMention[];
+    cisaKev: { status: 'found' | 'not_found' | 'unavailable' };
+    nvd: { status: 'found' | 'not_found' | 'unavailable' };
+  };
 }
 
 // LLM call 1 output, one entry per selected story
@@ -219,10 +229,11 @@ interface Article {
 }
 ```
 
-**The model never emits a URL, date, CVE ID, or source name.** It refers to
-stories by the pipeline-assigned `id`, and `render` substitutes the real link.
-An `id` in the prose that doesn't exist in this run's item set is a hard
-error, not a broken link shipped to the reader.
+**The model never emits a URL, date, or source name.** It refers to stories by
+the pipeline-assigned `id`, and `render` substitutes the real link. It may use
+only CVE facts present in structured enrichment context; a CVE ID in generated
+prose that was not supplied with a selected story is a hard error. The prompts
+also treat every external string as untrusted data rather than an instruction.
 
 ## 6. LLM usage — DeepSeek
 
@@ -327,13 +338,14 @@ project works without it.
 ```
 docs/design.md              this file
 docs/app.md                 the native app, and its contract with site/
+docs/vulnerability-intelligence.md  enrichment contract
 src/
   index.ts                  entry point — one run, one article
   email.ts                  entry point — mail one edition (§12)
-  config/sources.ts         the source list
-  config/newsletter.ts      the Buttondown account and its public URLs
+  config/                   source, newsletter and vulnerability configuration
   collect/                  one module per source kind
-  pipeline/                 normalize, dedupe, filter, enrich, select, write
+  pipeline/                 normalize, dedupe, filter, select, write
+  vulnerability/            extraction, KEV/NVD, cache, enrich, priority
   llm/client.ts             DeepSeek client + usage accounting
   render/                   article JSON + HTML
   render/palette.ts         the colours, shared by the page and the email
@@ -343,6 +355,7 @@ data/
   seen.json                 dedupe state, committed
   sent.json                 which editions have been mailed, committed
   editions/YYYY-MM-DD.json  the record
+  cache/vulnerability-intelligence.json  KEV/NVD cache, committed
 site/                       generated, served by Vercel
   editions/YYYY-MM-DD.json  the record, web-served
   editions/index.json       the archive index, web-served
@@ -363,13 +376,14 @@ parsing to save one small, well-maintained dependency is the wrong trade.
 
 ## 8. Error handling
 
-Follows the fail-loud rules in `CLAUDE.md`, applied to this pipeline. Two
+Follows the fail-loud rules in `CLAUDE.md`, applied to this pipeline. Three
 tiers, and the tier is a property of the stage, not a judgment made at the
 call site:
 
-**Source-level failures are visible degradations.** A feed that times out,
-404s, or returns garbage does not kill the article — it appends a
-`DegradedNotice` to `Article.degraded` and logs a warning. The page renders
+**Source-level failures are visible degradations.** A feed, CISA KEV refresh,
+or NVD batch that times out, returns an HTTP error, or returns garbage does not
+kill the article — it appends a
+`DegradedNotice` to `Edition.degraded` and logs a warning. The page renders
 with a banner naming every source that failed and what happened. The reader
 knows the edition is partial. Silently rendering a thinner page and calling
 it complete is exactly the failure mode we refuse.
@@ -416,9 +430,9 @@ which is why the target is "around 08:00" and not a promise. If publication
 time ever needs to be exact, generate earlier and deploy on a timer; don't
 fight the scheduler.
 
-`DEEPSEEK_API_KEY` is a repository secret. Nothing else needs a credential
-until keyed API sources are added. A failed run leaves the previous article
-deployed and surfaces as a failed check.
+`DEEPSEEK_API_KEY` is a repository secret. `NVD_API_KEY` is an optional secret
+that raises NVD's rate limit; public access remains functional without it. A
+failed run leaves the previous article deployed and surfaces as a failed check.
 
 **Hosting: Vercel, static only** (decided 2026-08-06, replacing GitHub Pages).
 Vercel's Git integration builds `main` on every push, and the workflow already
@@ -453,8 +467,8 @@ half-built to start the next one.
    seen-store persistence.
 3. **Write.** Add `select` and `write` against DeepSeek, with Zod validation,
    the retry, and the fallback wired from day one.
-4. **Enrich.** CISA KEV and NVD lookups; the "actively exploited" section
-   becomes trustworthy.
+4. **Enrich — done.** Deterministic CVE extraction, CISA KEV and NVD lookups,
+   provenance, caching, priority signals, LLM context and compact presentation.
 5. **Widen.** Hacker News and r/netsec with scoring; then, only if it's
    earning its keep, a third-party search API for discovery.
 

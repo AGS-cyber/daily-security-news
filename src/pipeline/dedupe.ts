@@ -48,7 +48,7 @@ function buildCluster(members: NormalizedItem[]): Cluster {
     });
   }
 
-  return { ...primary, alsoCoveredBy };
+  return { ...primary, alsoCoveredBy, members: ordered };
 }
 
 export function dedupe(items: NormalizedItem[]): Cluster[] {

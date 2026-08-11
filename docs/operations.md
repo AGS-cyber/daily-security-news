@@ -9,7 +9,7 @@ Live site: https://daily-security-news.vercel.app/ — Vercel, built from `main`
 on every push. The old GitHub Pages URL is retired.
 Newsletter: https://buttondown.com/AGS — Buttondown, free tier (100 subscribers).
 Android: https://github.com/AGS-cyber/daily-security-news/releases — latest is
-`app-v0.2.0`.
+`app-v0.3.0`.
 
 ## 0. Where things stand
 
@@ -17,9 +17,9 @@ A short, dated state-of-the-world, because the sections below explain *how*
 things work and not *what has actually happened yet*. Update it when one of
 these lines stops being true.
 
-**As of 2026-08-09:**
+**As of 2026-08-11:**
 
-- The pipeline has published daily since 2026-08-06. Three editions exist.
+- The pipeline has published daily since 2026-08-06. Five editions exist.
 - **The email edition is live but has never delivered to a human.** The
   subscribe form is on every page and in the app, `BUTTONDOWN_API_KEY` is set,
   and the cron send is armed — but the list has no confirmed subscribers, so
@@ -34,8 +34,8 @@ these lines stops being true.
      hostile, but nothing has confirmed the result in Outlook or Gmail. Use
      `npm run email -- --dry-run` and an email-rendering tester before
      assuming it is fine.
-- Android `0.2.0` is published and confirmed to install and run from the
-  published artifact. **iOS still compiles but has never been run** — see
+- Android `0.3.0` adds compact CISA KEV and NVD vulnerability intelligence to
+  the briefing. **iOS still compiles but has never been run** — see
   `app.md` §7, which is emphatic that a build proves nothing about a screen.
 
 ## 1. Setup
@@ -50,12 +50,18 @@ npm test
 npm run typecheck
 ```
 
-Two credentials:
+Two operational credentials and one optional enrichment credential:
 
 ```sh
 gh secret set DEEPSEEK_API_KEY --repo AGS-cyber/daily-security-news
 gh secret set BUTTONDOWN_API_KEY --repo AGS-cyber/daily-security-news < key.txt
+gh secret set NVD_API_KEY --repo AGS-cyber/daily-security-news < nvd-key.txt  # optional
 ```
+
+`NVD_API_KEY` raises the NVD API limit from 5 to 50 requests per rolling 30
+seconds. The pipeline batches up to 100 CVEs per request and remains functional
+without a key. An unset or empty optional key is omitted from the request; it is
+never written to a URL, log, cache, edition, or generated page.
 
 **They fail differently and the difference is deliberate.** A missing
 `DEEPSEEK_API_KEY` is a disclosed fallback and the build stays green. A missing
@@ -136,6 +142,7 @@ expect to see until the secret is set.
 ```
 data/seen.json                canonical-URL hash → date first covered
 data/sent.json                date → {sentAt, emailId} for every edition mailed
+data/cache/vulnerability-intelligence.json  validated KEV/NVD cache
 data/editions/YYYY-MM-DD.json the full record behind that day's page
 site/index.html               today's edition
 site/YYYY-MM-DD.html          the same content, permanently addressed
@@ -147,6 +154,11 @@ site/editions/index.json      the archive index as JSON, also web-served
 `data/` and `site/` are **committed on purpose** — they are the product. The
 edition JSON is the record of everything considered on a given day, which is
 what makes it possible to answer "why wasn't this story covered?" later.
+
+The vulnerability cache is committed so same-day reruns and temporary
+CISA/NVD outages can reuse authoritative data. It is disposable state, unlike
+the seen and send ledgers: a malformed cache is visibly ignored and rebuilt
+where authoritative sources are available, never trusted.
 
 ## 3. The scheduled job
 
@@ -487,6 +499,34 @@ reconciles them.
 > deploy, so the repo and the live site disagreed while every check was green.
 > The decoupling survived the move to Vercel, so the symptom will too.
 
+### Vulnerability enrichment is partial or stale
+
+**Symptom:** the edition remains an article or digest, but its degraded banner
+names `cisa-kev`, `nvd`, or `vulnerability-cache`. Individual CVEs show
+provenance status `unavailable`, or the banner says a cached timestamp was
+used.
+
+**This normally means publication degraded correctly.** KEV and NVD are
+independent sources. A KEV failure must not remove valid NVD data, an NVD
+failure must not remove a confirmed KEV hit, and neither failure may remove the
+CVE identifier extracted from the news story.
+
+Checks, in order:
+
+1. Inspect the banner or `edition.degraded`; the original HTTP, timeout,
+   malformed-response, or cache error is preserved.
+2. Inspect `data/cache/vulnerability-intelligence.json`. Its entries are fresh
+   for 20 hours. Older data is allowed only as a disclosed fallback.
+3. If NVD returned 429, wait for its rolling window. The client respects
+   `Retry-After`, retries once, and batches up to 100 IDs; do not add parallel
+   NVD calls.
+4. If public NVD access is routinely limiting runs, configure the optional
+   `NVD_API_KEY`. Do not move it into a query parameter.
+5. If CISA.gov returns 403, confirm the log tried the official
+   `cisagov/kev-data` mirror before treating the source as down.
+
+The exact source and model contract is in `vulnerability-intelligence.md`.
+
 ## 6. Error-handling contract
 
 From §8, so you know which failures should page you and which are working
@@ -496,6 +536,9 @@ as designed:
 |---|---|---|
 | A feed times out, 404s, or returns garbage | Notice appended, banner on the page naming the source | green |
 | Items unparseable in `normalize` | One aggregated notice, banner | green |
+| CISA KEV or NVD times out, rate-limits, or returns malformed data | Use fresh/stale cache where possible; otherwise explicit unavailable fields and an `enrich` banner | green |
+| A CVE is absent from NVD | Confirmed `not_found`; NVD fields remain null/empty | green |
+| The vulnerability cache cannot be read or written | Rebuild or continue in memory, with an `enrich` banner | green |
 | `select` or `write` fails after one retry | Falls back to the digest under a banner saying why | green |
 | `DEEPSEEK_API_KEY` missing | Same as above — disclosed fallback | green |
 | `dedupe`, `render`, or `publish` fails | Run aborts, nothing deploys, yesterday's edition stays up | **red** |
@@ -516,6 +559,12 @@ outcome this project refuses.
 node -e "const e=require('./data/editions/$(date -u +%F).json');
   const b={}; for(const i of e.items) b[i.sourceId]=(b[i.sourceId]||0)+1;
   console.log(b); console.log('degraded:', e.degraded)"
+
+# Which CVEs were enriched, and from which authoritative sources
+node -e "const e=require('./data/editions/$(date -u +%F).json');
+  const s=e.mode==='article'?[...e.selected,...e.alsoCollected]:e.items;
+  for(const i of s) for(const v of i.cves||[])
+    console.log(v.id,v.provenance.cisaKev.status,v.provenance.nvd.status)"
 
 # Is a feed URL still a feed?
 curl -sSL -o /dev/null -w '%{http_code} %{content_type}\n' <feed-url>
@@ -551,13 +600,13 @@ chosen commit into a downloadable APK, and the tag is how you choose it.
 grep -E 'versionCode|versionName' app/androidApp/build.gradle.kts
 
 # 2. Commit the bump, tag that commit, and push the tag. The tag is the trigger.
-git tag app-v0.2.0
-git push origin app-v0.2.0
+git tag app-v0.3.0
+git push origin app-v0.3.0
 
 # 3. Watch it, then check what actually got attached.
 gh run watch "$(gh run list --workflow=app-release.yml --limit 1 \
   --json databaseId --jq '.[0].databaseId')"
-gh release view app-v0.2.0
+gh release view app-v0.3.0
 ```
 
 **`versionCode` is not guarded by anything — remember it yourself.** The
@@ -566,13 +615,13 @@ that bumps the name and forgets the code builds, publishes, and looks
 completely correct. It is `versionCode` that Android compares to decide an
 install is an upgrade rather than a reinstall, so forgetting it is invisible
 until a user cannot upgrade. Both numbers move together, every time:
-0.1.0/1 → 0.2.0/2.
+0.1.0/1 → 0.2.0/2 → 0.3.0/3.
 
 Verify the number that actually shipped, from the published artifact rather
 than the build directory:
 
 ```sh
-gh release download app-v0.2.0 -D /tmp/rel --clobber
+gh release download app-v0.3.0 -D /tmp/rel --clobber
 sha256sum -c /tmp/rel/*.sha256
 "$ANDROID_HOME/build-tools/36.0.0/aapt2" dump badging /tmp/rel/*.apk | head -1
 ```

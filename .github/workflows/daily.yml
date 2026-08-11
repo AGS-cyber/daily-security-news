@@ -30,6 +30,9 @@ jobs:
       - run: npm start
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          # Optional. The public NVD API still works without this, at a lower
+          # rate limit; the client batches CVEs either way.
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
 
       # The push is the deploy: Vercel's Git integration builds `main` on every
       # commit. There is no deploy job here on purpose (design §9).

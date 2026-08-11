@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import type { ArticleEdition, DigestEdition, Item, Selection } from '../types.js';
+import { vulnerability } from '../test-helpers.js';
 import { emailEdition } from './email.js';
 
 function item(over: Partial<Item> = {}): Item {
@@ -13,6 +14,7 @@ function item(over: Partial<Item> = {}): Item {
     canonicalUrl: 'https://example.test/a',
     publishedAt: '2026-08-06T09:30:00.000Z',
     alsoCoveredBy: [],
+    cves: [],
     ...over,
   };
 }
@@ -193,6 +195,16 @@ test('an empty digest says the window was empty rather than rendering nothing', 
     digestEdition({ items: [], stats: { ...digestEdition().stats, published: 0 } }),
   );
   assert.match(html, /No new stories in this window\./);
+});
+
+test('important vulnerability metadata is present without unknown placeholders', () => {
+  const story = selected({ cves: [vulnerability()] });
+  const { html } = emailEdition(articleEdition({ selected: [story] }));
+  assert.match(html, /Vulnerability intelligence/);
+  assert.match(html, /CVE-2026-12345/);
+  assert.match(html, /CVSS 9\.8/);
+  assert.match(html, /CISA KEV/);
+  assert.doesNotMatch(html, /CVSS unknown|CVSS null/);
 });
 
 test('the email links back to its own permanent page', () => {

@@ -83,6 +83,7 @@ class EditionParsingTest {
             )
         }
         assertEquals(125, stories.map { it.id }.toSet().size, "duplicate story ids")
+        assertTrue(stories.all { it.cves.isEmpty() }, "historical editions default missing cves to empty")
     }
 
     @Test
@@ -156,6 +157,43 @@ class EditionParsingTest {
         val edition = assertIs<DigestEdition>(EditionJson.decodeFromString<Edition>(json))
         assertEquals(1, edition.items.size)
         assertEquals("s1", edition.items[0].id)
+    }
+
+    @Test
+    fun enrichedVulnerabilityMetadataDecodes() {
+        val json = """
+            {
+              "mode": "article",
+              "date": "2026-08-07",
+              "generatedAt": "2026-08-07T06:00:00.000Z",
+              "degraded": [],
+              "stats": $STATS_JSON,
+              "headline": "H",
+              "standfirst": "S",
+              "bodyMarkdown": "## H\n\nB [[s1]]",
+              "selected": [{$STORY_JSON, "section": "exploited", "rank": 1,
+                "angle": "A", "cves": [{
+                  "id": "CVE-2026-12345",
+                  "knownExploited": true,
+                  "kev": {"knownRansomwareCampaignUse": "Known"},
+                  "nvd": {"cvss": {"score": 9.8, "severity": "CRITICAL"}},
+                  "provenance": {
+                    "news": [],
+                    "cisaKev": {"status": "found", "catalogUrl": "https://cisa.test/kev"},
+                    "nvd": {"status": "found", "recordUrl": "https://nvd.test/CVE-2026-12345"}
+                  }
+                }]}],
+              "alsoCollected": [],
+              "usage": $USAGE_JSON
+            }
+        """.trimIndent()
+        val edition = assertIs<ArticleEdition>(EditionJson.decodeFromString<Edition>(json))
+        val cve = edition.selected.single().cves.single()
+        assertEquals("CVE-2026-12345", cve.id)
+        assertEquals(true, cve.knownExploited)
+        assertEquals(9.8, cve.nvd?.cvss?.score)
+        assertEquals("Known", cve.kev?.knownRansomwareCampaignUse)
+        assertEquals("https://nvd.test/CVE-2026-12345", cve.provenance.nvd.recordUrl)
     }
 
     @Test
