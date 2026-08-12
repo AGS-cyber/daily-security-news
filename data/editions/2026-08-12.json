@@ -1,0 +1,1306 @@
+{
+  "date": "2026-08-12",
+  "generatedAt": "2026-08-12T12:56:28.165Z",
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 224,
+    "published": 50
+  },
+  "mode": "article",
+  "headline": "Zero-Day Driver, Firewall DoS, vCenter Exploits Lead a Heavy Patch Day",
+  "standfirst": "A Windows kernel zero-day already under attack tops a record-setting Microsoft update, while Cisco firewall appliances and VMware vCenter are being exploited in the wild. Adobe ships three maximum-severity fixes, a PyPI supply-chain incident may have exposed credentials at thousands of organizations, and a new OpenAI cyber model reopens the dual-use question.",
+  "bodyMarkdown": "## Actively exploited\n\nMicrosoft's latest security release is the largest in the company's history, and one bug should outrank every other patch queued this week. [[s27]] CVE-2026-68820 is a use-after-free in the Windows Ancillary Function Driver for WinSock, the kernel component that handles network socket operations. It requires an attacker to already have code execution on a machine, but from that position it grants SYSTEM privileges, turning any foothold into full control. The CVSS score is a comparatively modest 7.0, but confirmed in-the-wild exploitation makes that number almost irrelevant. CISA has added the flaw to its Known Exploited Vulnerabilities catalog, reinforcing the urgency of applying the Windows update before anything else.\n\nNetwork devices are equally at risk. [[s19]] CVE-2026-20349 is a high-severity flaw in Cisco Secure Firewall ASA and FTD software, specifically in the Remote Access SSL VPN service. Insufficient error checking on HTTP requests lets an unauthenticated remote attacker force a device reload with one crafted request. Knocking a firewall offline is often as useful to an attacker as bypassing it, which is why CISA's active-exploitation warning deserves immediate attention. The CVSS 8.6 rating arguably understates the operational pain of a security appliance that keeps dropping off the network.\n\nVMware vCenter is another active target. [[s11]] CVE-2026-59310 is a directory traversal in the vCenter Syslog server, rated critical at 9.8. Per QUIRSO, attackers are already exploiting it to gain persistent remote access to virtual infrastructure. Patches shipped recently, but the window between disclosure and offensive use has effectively closed. vCenter manages every workload and credential in the environment, so this should be treated as an emergency even though CISA does not yet list it as known exploited.\n\nFinally, [[s3]] a proof-of-concept for a critical Microsoft SharePoint RCE published by Rapid7 is already being used in attacks. Public PoCs collapse the time-to-exploit from weeks to days, and confirmed use means unpatched SharePoint servers are at immediate risk. The SharePoint patch belongs in the same deployment wave as the Windows driver fix.\n\n## Breaches\n\n[[s14]] Two malicious LiteLLM releases were available on PyPI for roughly forty minutes, yet the blast radius is large. They carried code that harvests cloud keys, SSH keys, Kubernetes tokens, database passwords, and other secrets from any system that installed them. CloudSEK says the dataset built from about 434,000 captured files maps potential exposure to more than 2,100 organizations. A forty-minute dwell time is an eternity when automated builds pull new versions constantly, so affected organizations should rotate every credential on those machines and audit for follow-on access.\n\n## Vulnerabilities\n\nAdobe has shipped fixes for three CVSS 10.0 vulnerabilities across ColdFusion, Commerce, and Campaign Classic. [[s7]] The most severe is CVE-2026-48362, an OS command injection in ColdFusion. It can be exploited remotely with no authentication and no user interaction, executing commands in the context of the current user; the scope-changed vector means the impact can cross trust boundaries. Unauthenticated, maximum-severity command injection in an internet-facing application server gets weaponized quickly. Test and deploy the Adobe updates promptly, especially for any exposed ColdFusion or Campaign Classic instances.\n\n## Research\n\nCERT-UA has tied a new social engineering campaign to UAC-0145, a subgroup of the Sandworm cluster. [[s34]] The lure is a fake job interview targeting IT workers in Ukraine; instead of a legitimate meeting application, targets are directed to a trojanized WireGuard installer with command-execution functionality. The campaign is notable both for its targeting — people who run networks, not random users — and for its pedigree. Nation-state actors posing as recruiters and asking targets to install a VPN client is a classic pattern, but one that remains effective. Unsolicited recruiting contacts that require installing software should be treated as a red flag.\n\n## Industry\n\nOpenAI has released GPT-5.6-Cyber, a model built on GPT-5.6 Sol and focused on vulnerability research, penetration testing, and incident response. [[s46]] The company says it is trained to improve on tasks such as finding zero-days and developing exploit chains, and to reduce refusals for certain higher-risk requests. That combination is exactly why the release is contentious. A cyber-defense assistant with fewer safeguards is also an offensive capability that lowers the barrier for less skilled attackers. Defenders will judge it on whether it improves real workflows; regulators will judge it on who gets to use reduced-refusal exploit tooling.",
+  "selected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Microsoft Patches 398 Flaws Including a Windows Driver Zero-Day Under Active Attack",
+      "url": "https://thehackernews.com/2026/08/microsoft-patches-398-flaws-including.html",
+      "publishedAt": "2026-08-11T20:10:55.000Z",
+      "excerpt": "Microsoft released its monthly security updates on Tuesday, and one of the flaws it closed is already being used in attacks. The bug sits in a core Windows kernel driver that handles network socket operations. An attacker with code already running on a machine can use it to escalate to SYSTEM. That patch goes out first. The flaw is tracked as CVE-2026-68820 (CVSS score: 7.0) and is the only",
+      "canonicalUrl": "https://thehackernews.com/2026/08/microsoft-patches-398-flaws-including.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-68820",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Microsoft",
+            "product": "Windows Ancillary Function Driver for WinSock ",
+            "vulnerabilityName": "Microsoft Windows Ancillary Function Driver for WinSock Use-After-Free Vulnerability",
+            "dateAdded": "2026-08-11",
+            "shortDescription": "Microsoft Windows Ancillary Function Driver for WinSock contains a use-after-free vulnerability that allows an authorized attacker to elevate privileges locally.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-08-25",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://portal.msrc.microsoft.com/en-US/security-guidance/advisory/CVE-2026-68820 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-68820",
+            "cwes": [
+              "CWE-416"
+            ]
+          },
+          "nvd": {
+            "description": "Use after free in Windows Ancillary Function Driver for WinSock allows an authorized attacker to elevate privileges locally.",
+            "cvss": {
+              "version": "3.1",
+              "score": 7,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+              "source": "secure@microsoft.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-416"
+            ],
+            "published": "2026-08-11T17:19:06.357",
+            "lastModified": "2026-08-12T05:19:45.527",
+            "vulnStatus": "Undergoing Analysis",
+            "references": [
+              {
+                "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-68820",
+                "source": "secure@microsoft.com",
+                "tags": []
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-68820",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/08/microsoft-patches-398-flaws-including.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.11",
+              "dateReleased": "2026-08-11T18:59:43.6861Z",
+              "retrievedAt": "2026-08-12T12:56:28.165Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-48362%2CCVE-2026-59310%2CCVE-2026-58231%2CCVE-2026-50656%2CCVE-2026-20349%2CCVE-2026-68820%2CCVE-2026-55040%2CCVE-2026-21655%2CCVE-2026-18844",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-68820",
+              "retrievedAt": "2026-08-12T12:56:28.165Z"
+            }
+          }
+        }
+      ],
+      "id": "s27",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "Microsoft's record-breaking Patch Tuesday includes an actively exploited Windows kernel zero-day, making prioritization urgent."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Cisco ASA and FTD Flaw Exploited in the Wild Can Trigger Remote DoS",
+      "url": "https://thehackernews.com/2026/08/cisco-asa-and-ftd-flaw-exploited-in.html",
+      "publishedAt": "2026-08-12T06:15:58.000Z",
+      "excerpt": "Cisco has warned that a new vulnerability impacting Secure Firewall Adaptive Security Appliance (ASA) Software and Secure Firewall Threat Defense (FTD) Software has been exploited in the wild. The high-severity flaw, tracked as CVE-2026-20349 (CVSS score: 8.6), is a case of insufficient error checking when processing HTTP requests that could allow an unauthenticated, remote attacker to trigger",
+      "canonicalUrl": "https://thehackernews.com/2026/08/cisco-asa-and-ftd-flaw-exploited-in.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-20349",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Cisco",
+            "product": "Secure Firewall Adaptive Security Appliance (ASA) and Secure Firewall Threat Defense (FTD) ",
+            "vulnerabilityName": "Cisco Secure Firewall Adaptive Security Appliance (ASA) and Secure Firewall Threat Defense (FTD) Heap Inspection Vulnerability",
+            "dateAdded": "2026-08-11",
+            "shortDescription": "Cisco Secure Firewall Adaptive Security Appliance (ASA) and Secure Firewall Threat Defense (FTD) contain a heap inspection vulnerability that could allow an unauthenticated, remote attacker to cause the device to reload unexpectedly, resulting in a denial of service (DoS) condition.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-08-14",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-asaftd-vpn-dos-dzv4mQFF ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-20349",
+            "cwes": [
+              "CWE-244"
+            ]
+          },
+          "nvd": {
+            "description": "A vulnerability in the Remote Access SSL VPN service for Cisco Secure Firewall Adaptive Security Appliance (ASA) Software and Cisco Secure Firewall Threat Defense (FTD) Software could allow an unauthenticated, remote attacker to cause the device to reload unexpectedly, resulting in a denial of service (DoS) condition.&nbsp;\r\n\r\nThis vulnerability is due to insufficient error checking when processing HTTP requests. An attacker could exploit this vulnerability by sending a crafted HTTP request to the Remote Access SSL VPN service on an affected device. A successful exploit could allow the attacker to cause the affected device to reload, resulting in a DoS condition.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.6,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H",
+              "source": "psirt@cisco.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-244"
+            ],
+            "published": "2026-08-11T17:17:48.833",
+            "lastModified": "2026-08-12T05:17:44.330",
+            "vulnStatus": "Undergoing Analysis",
+            "references": [
+              {
+                "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-asaftd-vpn-dos-dzv4mQFF",
+                "source": "psirt@cisco.com",
+                "tags": []
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-20349",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/08/cisco-asa-and-ftd-flaw-exploited-in.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.11",
+              "dateReleased": "2026-08-11T18:59:43.6861Z",
+              "retrievedAt": "2026-08-12T12:56:28.165Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-48362%2CCVE-2026-59310%2CCVE-2026-58231%2CCVE-2026-50656%2CCVE-2026-20349%2CCVE-2026-68820%2CCVE-2026-55040%2CCVE-2026-21655%2CCVE-2026-18844",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-20349",
+              "retrievedAt": "2026-08-12T12:56:28.165Z"
+            }
+          }
+        }
+      ],
+      "id": "s19",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "CISA warns of active exploitation of a Cisco firewall zero-day; patch by Aug 14."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Attackers Exploit VMware vCenter Vulnerability to Gain Persistent Remote Access",
+      "url": "https://thehackernews.com/2026/08/attackers-exploit-vmware-vcenter.html",
+      "publishedAt": "2026-08-12T09:01:54.000Z",
+      "excerpt": "Threat actors have begun to actively exploit a recently patched critical security flaw in Broadcom VMware vCenter, according to new findings from QUIRSO. The vulnerability in question is CVE-2026-59310 (CVSS score: 9.8), a directory-traversal vulnerability in the VMware vCenter server that a malicious actor with network access can exploit to execute arbitrary code. Patches for the flaw were",
+      "canonicalUrl": "https://thehackernews.com/2026/08/attackers-exploit-vmware-vcenter.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-59310",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "VMware vCenter contains a directory traversal vulnerability in the Syslog server. A malicious actor with network access to vCenter may exploit this issue to execute arbitrary code.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "security@vmware.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-22"
+            ],
+            "published": "2026-07-30T13:16:53.993",
+            "lastModified": "2026-07-30T16:17:15.183",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://support.broadcom.com/web/ecx/support-content-notification/-/external/content/SecurityAdvisories/0/38017",
+                "source": "security@vmware.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/08/attackers-exploit-vmware-vcenter.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.11",
+              "dateReleased": "2026-08-11T18:59:43.6861Z",
+              "retrievedAt": "2026-08-12T12:56:28.165Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-48362%2CCVE-2026-59310%2CCVE-2026-58231%2CCVE-2026-50656%2CCVE-2026-20349%2CCVE-2026-68820%2CCVE-2026-55040%2CCVE-2026-21655%2CCVE-2026-18844",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-59310",
+              "retrievedAt": "2026-08-12T12:56:28.165Z"
+            }
+          }
+        }
+      ],
+      "id": "s11",
+      "section": "exploited",
+      "rank": 3,
+      "angle": "Critical VMware vCenter flaw is being exploited for persistent remote access; apply patches immediately."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers leverage new Microsoft SharePoint exploit in attacks",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/hackers-leverage-new-microsoft-sharepoint-exploit-in-attacks/",
+      "publishedAt": "2026-08-12T12:25:37.000Z",
+      "excerpt": "Hackers have already begun using a proof-of-concept (PoC) exploit for a critical Microsoft SharePoint vulnerability, published by cybersecurity company Rapid7 on Tuesday. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/hackers-leverage-new-microsoft-sharepoint-exploit-in-attacks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s3",
+      "section": "exploited",
+      "rank": 4,
+      "angle": "Attackers are already using a PoC for a critical SharePoint RCE, so unpatched servers are at risk."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Malicious LiteLLM Releases Tied to Trivy Hack May Have Exposed 2,100+ Organizations",
+      "url": "https://thehackernews.com/2026/08/malicious-litellm-releases-tied-to.html",
+      "publishedAt": "2026-08-12T08:04:52.000Z",
+      "excerpt": "Two malicious LiteLLM releases sat on PyPI for about 40 minutes in March carrying credential-stealing code capable of harvesting cloud keys, SSH keys, Kubernetes tokens, database passwords, and other secrets from systems that installed them. Threat intelligence firm CloudSEK now says a dataset it obtained, built from roughly 434,000 files the attackers captured, maps potential exposure to more",
+      "canonicalUrl": "https://thehackernews.com/2026/08/malicious-litellm-releases-tied-to.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s14",
+      "section": "breaches",
+      "rank": 5,
+      "angle": "A supply chain attack on LiteLLM may have exposed cloud credentials for thousands of organizations."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Adobe Patches Three CVSS 10.0 ColdFusion and Campaign Classic Flaws",
+      "url": "https://thehackernews.com/2026/08/adobe-patches-three-cvss-100-coldfusion.html",
+      "publishedAt": "2026-08-12T11:13:03.000Z",
+      "excerpt": "Adobe has shipped updates to address multiple critical security vulnerabilities impacting ColdFusion, Commerce, and Campaign Classic that, if successfully exploited, could result in arbitrary code execution and privilege escalation. The most severe of the flaws are listed below - CVE-2026-48362 (CVSS score: 10.0) - An operating system command injection vulnerability in ColdFusion that could",
+      "canonicalUrl": "https://thehackernews.com/2026/08/adobe-patches-three-cvss-100-coldfusion.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-48362",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "ColdFusion is affected by an Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') vulnerability that could result in arbitrary code execution in the context of the current user. An attacker could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction. Scope is changed.",
+            "cvss": {
+              "version": "3.1",
+              "score": 10,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+              "source": "psirt@adobe.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-78"
+            ],
+            "published": "2026-08-11T17:17:59.627",
+            "lastModified": "2026-08-12T05:17:47.677",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://helpx.adobe.com/security/products/coldfusion/apsb26-90.html",
+                "source": "psirt@adobe.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/08/adobe-patches-three-cvss-100-coldfusion.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.11",
+              "dateReleased": "2026-08-11T18:59:43.6861Z",
+              "retrievedAt": "2026-08-12T12:56:28.165Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-48362%2CCVE-2026-59310%2CCVE-2026-58231%2CCVE-2026-50656%2CCVE-2026-20349%2CCVE-2026-68820%2CCVE-2026-55040%2CCVE-2026-21655%2CCVE-2026-18844",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-48362",
+              "retrievedAt": "2026-08-12T12:56:28.165Z"
+            }
+          }
+        }
+      ],
+      "id": "s7",
+      "section": "vulnerabilities",
+      "rank": 6,
+      "angle": "Adobe ships fixes for CVSS 10.0 ColdFusion and Campaign Classic bugs that allow unauthenticated RCE."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Sandworm-Linked UAC-0145 Uses Fake Job Interviews to Push VPN That Can Run Commands",
+      "url": "https://thehackernews.com/2026/08/sandworm-linked-uac-0145-uses-fake-job.html",
+      "publishedAt": "2026-08-11T18:36:47.000Z",
+      "excerpt": "The Computer Emergency Response Team of Ukraine (CERT-UA) has disclosed details of a new social engineering campaign orchestrated by Russian nation-state threat actors targeting IT workers in the country by masquerading as recruiters to trick them into installing malware. CERT-UA pinned the activity on a threat cluster it tracks as UAC-0145, which is a subgroup within Sandworm (aka APT44,",
+      "canonicalUrl": "https://thehackernews.com/2026/08/sandworm-linked-uac-0145-uses-fake-job.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s34",
+      "section": "research",
+      "rank": 7,
+      "angle": "Sandworm-linked actors target IT pros with trojanized WireGuard and fake job offers."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "OpenAI Launches GPT-5.6-Cyber with Reduced Safeguards for Exploit Development",
+      "url": "https://thehackernews.com/2026/08/openai-launches-gpt-56-cyber-with.html",
+      "publishedAt": "2026-08-11T13:11:23.000Z",
+      "excerpt": "OpenAI on Monday unveiled a new cybersecurity-focused model called GPT‑5.6‑Cyber that it said is focused on vulnerability research, penetration testing, and incident response. \"Built on GPT‑5.6 Sol, it is trained to improve capabilities on several specialized cybersecurity tasks (e.g., finding zero-day vulnerabilities and developing exploit chains) and to reduce refusals for certain higher-risk",
+      "canonicalUrl": "https://thehackernews.com/2026/08/openai-launches-gpt-56-cyber-with.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s46",
+      "section": "industry",
+      "rank": 8,
+      "angle": "OpenAI's new cyber model reduces safeguards for exploit development, raising dual-use concerns."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Walmart Leaders Transform Security Operations Without Going Bananas",
+      "url": "https://www.darkreading.com/cybersecurity-operations/walmart-leaders-transform-security-operations-without-going-bananas",
+      "publishedAt": "2026-08-12T12:41:03.000Z",
+      "excerpt": "The big-box giant has scaled its defenses by encouraging trust and innovation. Good communications, transparency and team spirit are key factors.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/walmart-leaders-transform-security-operations-without-going-bananas",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Microsoft’s massive Patch Tuesday releases continue as AI reshapes bug discovery",
+      "url": "https://therecord.media/microsoft-massive-patch-tuesday-releases-continue-ai",
+      "publishedAt": "2026-08-12T12:38:00.000Z",
+      "excerpt": "This month’s update features about five times the volume of patches Microsoft was shipping in a typical month before AI-assisted vulnerability discovery took hold.",
+      "canonicalUrl": "https://therecord.media/microsoft-massive-patch-tuesday-releases-continue-ai",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "CISA gives federal agencies two weeks to patch Microsoft bug exploited in DPRK campaign",
+      "url": "https://therecord.media/cisa-gives-federal-agencies-two-weeks-to-patch-dprk-microsoft-bug",
+      "publishedAt": "2026-08-12T12:06:00.000Z",
+      "excerpt": "Researchers disclosed the bug to Microsoft after examining a long-running campaign by North Korean hackers to exploit the job application process.",
+      "canonicalUrl": "https://therecord.media/cisa-gives-federal-agencies-two-weeks-to-patch-dprk-microsoft-bug",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Ceva Logistics Operations Disrupted by Cyberattack",
+      "url": "https://www.securityweek.com/ceva-logistics-operations-disrupted-by-cyberattack/",
+      "publishedAt": "2026-08-12T11:37:28.000Z",
+      "excerpt": "Affecting European contract logistics operations at eight Ceva warehouses, the incident caused shipment delays for multiple customers. The post Ceva Logistics Operations Disrupted by Cyberattack appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/ceva-logistics-operations-disrupted-by-cyberattack",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Signal adds new security feature to thwart man-in-the-middle attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/signal-adds-new-security-feature-to-thwart-man-in-the-middle-attacks/",
+      "publishedAt": "2026-08-12T11:21:42.000Z",
+      "excerpt": "​Signal has introduced Automatic Key Verification, a new security feature that gives users a new way to ensure their encrypted chats haven't been intercepted. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/signal-adds-new-security-feature-to-thwart-man-in-the-middle-attacks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Chipmaker Patch Tuesday: Intel, AMD Fix Over 80 Vulnerabilities Combined",
+      "url": "https://www.securityweek.com/chipmaker-patch-tuesday-intel-amd-fix-over-80-vulnerabilities-combined/",
+      "publishedAt": "2026-08-12T10:55:04.000Z",
+      "excerpt": "Intel has informed customers about several high-severity vulnerabilities that can lead to privilege escalation and even code execution. The post Chipmaker Patch Tuesday: Intel, AMD Fix Over 80 Vulnerabilities Combined appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/chipmaker-patch-tuesday-intel-amd-fix-over-80-vulnerabilities-combined",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "New Microsoft Defender 'ShieldBreak' zero-day grants SYSTEM privileges",
+      "url": "https://www.bleepingcomputer.com/news/security/new-microsoft-defender-shieldbreak-zero-day-grants-system-privileges/",
+      "publishedAt": "2026-08-12T10:15:22.000Z",
+      "excerpt": "Nightmare Eclipse has released a new Microsoft Defender zero-day exploit named \"ShieldBreak\" after Microsoft released the August 2026 Patch Tuesday security updates. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/new-microsoft-defender-shieldbreak-zero-day-grants-system-privileges",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Over 2,500 Organizations Impacted by LiteLLM Supply Chain Attack",
+      "url": "https://www.securityweek.com/over-2500-organizations-impacted-by-litellm-supply-chain-attack/",
+      "publishedAt": "2026-08-12T09:55:45.000Z",
+      "excerpt": "LiteLLM was compromised through the Trivy hack and abused to distribute information-stealing malware to its users. The post Over 2,500 Organizations Impacted by LiteLLM Supply Chain Attack appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/over-2500-organizations-impacted-by-litellm-supply-chain-attack",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Fresh Windows Zero-Day Exploited in North Korean Cyberattacks",
+      "url": "https://www.securityweek.com/fresh-windows-zero-day-exploited-in-north-korean-cyberattacks/",
+      "publishedAt": "2026-08-12T08:45:53.000Z",
+      "excerpt": "The bug allowed attackers to gain full control of the victims’ systems and deploy the ForestTiger backdoor. The post Fresh Windows Zero-Day Exploited in North Korean Cyberattacks appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/fresh-windows-zero-day-exploited-in-north-korean-cyberattacks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Ivanti EPM Update Patches Remotely Exploitable Flaws",
+      "url": "https://www.securityweek.com/ivanti-epm-update-patches-remotely-exploitable-flaws/",
+      "publishedAt": "2026-08-12T08:14:46.000Z",
+      "excerpt": "The vulnerabilities could be exploited to leak credentials for external SQL connections or crash an agent service. The post Ivanti EPM Update Patches Remotely Exploitable Flaws appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/ivanti-epm-update-patches-remotely-exploitable-flaws",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "ICS Patch Tuesday: Vulnerabilities Fixed by Siemens, Schneider, Phoenix Contact",
+      "url": "https://www.securityweek.com/ics-patch-tuesday-vulnerabilities-fixed-by-siemens-schneider-phoenix-contact-2/",
+      "publishedAt": "2026-08-12T07:51:55.000Z",
+      "excerpt": "CISA has also published several advisories describing vulnerabilities in ICS and other OT products. The post ICS Patch Tuesday: Vulnerabilities Fixed by Siemens, Schneider, Phoenix Contact appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/ics-patch-tuesday-vulnerabilities-fixed-by-siemens-schneider-phoenix-contact-2",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "SAP Commerce Cloud Flaw Could Let Unauthenticated Attackers Execute Arbitrary Code",
+      "url": "https://thehackernews.com/2026/08/sap-commerce-cloud-flaw-could-let.html",
+      "publishedAt": "2026-08-12T07:31:40.000Z",
+      "excerpt": "SAP has released patches to address a maximum-severity security flaw impacting Commerce Cloud (Data Hub Adapter) that could result in arbitrary code execution. The vulnerability, assigned the CVE identifier CVE-2026-58231, is rated 10.0 on the CVSS scoring system. It has been described as a case of insufficient authorization checks and input validation. \"SAP Commerce Cloud allows an",
+      "canonicalUrl": "https://thehackernews.com/2026/08/sap-commerce-cloud-flaw-could-let.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-58231",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "SAP Commerce Cloud allows an unauthenticated\nattacker to abuse a default authentication client and submit specially crafted\ninput to certain functions lacking sufficient validation. Successful\nexploitation could enable arbitrary code execution and compromise internal\ncomponents, resulting in high impact on confidentiality, integrity, and\navailability of the application.",
+            "cvss": {
+              "version": "3.1",
+              "score": 10,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+              "source": "cna@sap.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-94"
+            ],
+            "published": "2026-08-11T11:17:15.390",
+            "lastModified": "2026-08-12T05:17:56.963",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://me.sap.com/notes/3771065",
+                "source": "cna@sap.com",
+                "tags": []
+              },
+              {
+                "url": "https://url.sap/sapsecuritypatchday",
+                "source": "cna@sap.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/08/sap-commerce-cloud-flaw-could-let.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.11",
+              "dateReleased": "2026-08-11T18:59:43.6861Z",
+              "retrievedAt": "2026-08-12T12:56:28.165Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-48362%2CCVE-2026-59310%2CCVE-2026-58231%2CCVE-2026-50656%2CCVE-2026-20349%2CCVE-2026-68820%2CCVE-2026-55040%2CCVE-2026-21655%2CCVE-2026-18844",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-58231",
+              "retrievedAt": "2026-08-12T12:56:28.165Z"
+            }
+          }
+        }
+      ],
+      "id": "s16"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "SonicWall Patches Critical Vulnerabilities in Discontinued GMS Platform",
+      "url": "https://www.securityweek.com/sonicwall-patches-critical-vulnerabilities-in-discontinued-gms-platform/",
+      "publishedAt": "2026-08-12T07:31:11.000Z",
+      "excerpt": "The security defects could allow unauthenticated attackers to execute arbitrary code remotely and read sensitive data. The post SonicWall Patches Critical Vulnerabilities in Discontinued GMS Platform appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/sonicwall-patches-critical-vulnerabilities-in-discontinued-gms-platform",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "ShieldBreak Zero-Day PoC Claims Microsoft Defender Patch Bypass With SYSTEM Access",
+      "url": "https://thehackernews.com/2026/08/shieldbreak-zero-day-poc-claims.html",
+      "publishedAt": "2026-08-12T06:41:38.000Z",
+      "excerpt": "The security researcher going by the name Chaotic Eclipse (aka INFINITE NIGHTMARE, MSNightmare, and Nightmare-Eclipse) has released a proof-of-concept (PoC) for a new Microsoft zero-day called ShieldBreak. The vulnerability, rooted in Microsoft Defender for Windows, demonstrates a patch bypass for CVE-2026-50656 (CVSS score: 7.8), otherwise known as RoguePlanet. RoguePlanet has been described",
+      "canonicalUrl": "https://thehackernews.com/2026/08/shieldbreak-zero-day-poc-claims.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-50656",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Microsoft is aware of an elevation of privilege in the Microsoft Malware Protection Engine in Microsoft Defender publicly referred to as &quot;RoguePlanet &quot;.",
+            "cvss": {
+              "version": "3.1",
+              "score": 7,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+              "source": "nvd@nist.gov",
+              "type": "Primary"
+            },
+            "cwes": [
+              "CWE-59"
+            ],
+            "published": "2026-06-16T19:16:59.683",
+            "lastModified": "2026-07-09T00:17:26.607",
+            "vulnStatus": "Modified",
+            "references": [
+              {
+                "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-50656",
+                "source": "secure@microsoft.com",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/MSNightmare/RoguePlanet",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Product"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:microsoft:malware_protection_engine:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1CF44512-0B67-4B5F-B271-C8CA45D30DA8",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/08/shieldbreak-zero-day-poc-claims.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.11",
+              "dateReleased": "2026-08-11T18:59:43.6861Z",
+              "retrievedAt": "2026-08-12T12:56:28.165Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-48362%2CCVE-2026-59310%2CCVE-2026-58231%2CCVE-2026-50656%2CCVE-2026-20349%2CCVE-2026-68820%2CCVE-2026-55040%2CCVE-2026-21655%2CCVE-2026-18844",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-50656",
+              "retrievedAt": "2026-08-12T12:56:28.165Z"
+            }
+          }
+        }
+      ],
+      "id": "s18"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Cisco Patches Firewall Zero-Day Exploited for DoS Attacks",
+      "url": "https://www.securityweek.com/cisco-patches-firewall-zero-day-exploited-for-dos-attacks/",
+      "publishedAt": "2026-08-12T05:10:47.000Z",
+      "excerpt": "CVE-2026-20349 can be exploited remotely without authentication against Secure Firewall ASA and FTD devices. The post Cisco Patches Firewall Zero-Day Exploited for DoS Attacks appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/cisco-patches-firewall-zero-day-exploited-for-dos-attacks",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-20349",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Cisco",
+            "product": "Secure Firewall Adaptive Security Appliance (ASA) and Secure Firewall Threat Defense (FTD) ",
+            "vulnerabilityName": "Cisco Secure Firewall Adaptive Security Appliance (ASA) and Secure Firewall Threat Defense (FTD) Heap Inspection Vulnerability",
+            "dateAdded": "2026-08-11",
+            "shortDescription": "Cisco Secure Firewall Adaptive Security Appliance (ASA) and Secure Firewall Threat Defense (FTD) contain a heap inspection vulnerability that could allow an unauthenticated, remote attacker to cause the device to reload unexpectedly, resulting in a denial of service (DoS) condition.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-08-14",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-asaftd-vpn-dos-dzv4mQFF ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-20349",
+            "cwes": [
+              "CWE-244"
+            ]
+          },
+          "nvd": {
+            "description": "A vulnerability in the Remote Access SSL VPN service for Cisco Secure Firewall Adaptive Security Appliance (ASA) Software and Cisco Secure Firewall Threat Defense (FTD) Software could allow an unauthenticated, remote attacker to cause the device to reload unexpectedly, resulting in a denial of service (DoS) condition.&nbsp;\r\n\r\nThis vulnerability is due to insufficient error checking when processing HTTP requests. An attacker could exploit this vulnerability by sending a crafted HTTP request to the Remote Access SSL VPN service on an affected device. A successful exploit could allow the attacker to cause the affected device to reload, resulting in a DoS condition.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.6,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H",
+              "source": "psirt@cisco.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-244"
+            ],
+            "published": "2026-08-11T17:17:48.833",
+            "lastModified": "2026-08-12T05:17:44.330",
+            "vulnStatus": "Undergoing Analysis",
+            "references": [
+              {
+                "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-asaftd-vpn-dos-dzv4mQFF",
+                "source": "psirt@cisco.com",
+                "tags": []
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-20349",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/cisco-patches-firewall-zero-day-exploited-for-dos-attacks/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.11",
+              "dateReleased": "2026-08-11T18:59:43.6861Z",
+              "retrievedAt": "2026-08-12T12:56:28.165Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-48362%2CCVE-2026-59310%2CCVE-2026-58231%2CCVE-2026-50656%2CCVE-2026-20349%2CCVE-2026-68820%2CCVE-2026-55040%2CCVE-2026-21655%2CCVE-2026-18844",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-20349",
+              "retrievedAt": "2026-08-12T12:56:28.165Z"
+            }
+          }
+        }
+      ],
+      "id": "s20"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Google says Chrome cuts 7 billion unwanted Android notifications a day to fight abuse",
+      "url": "https://www.bleepingcomputer.com/news/security/google-says-chrome-cuts-7-billion-unwanted-android-notifications-a-day-to-fight-abuse/",
+      "publishedAt": "2026-08-12T01:15:55.000Z",
+      "excerpt": "Google says Chrome's anti-abuse systems reduced unwanted notifications on Android by more than 7 billion per day during the first quarter of 2026. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/google-says-chrome-cuts-7-billion-unwanted-android-notifications-a-day-to-fight-abuse",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s21"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "DeadLock ransomware uses blockchain to resist infrastructure takedown",
+      "url": "https://www.bleepingcomputer.com/news/security/deadlock-ransomware-uses-blockchain-to-resist-infrastructure-takedown/",
+      "publishedAt": "2026-08-11T22:15:22.000Z",
+      "excerpt": "The DeadLock ransomware operation is using a decentralized infrastructure that relies on blockchain-backed services to protect its communication with victims and data-leak activity. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/deadlock-ransomware-uses-blockchain-to-resist-infrastructure-takedown",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s22"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Microsoft's Patch Tuesday Deluge Continues With August Updates",
+      "url": "https://www.darkreading.com/application-security/microsofts-patch-tuesday-deluge-continues",
+      "publishedAt": "2026-08-11T21:42:34.000Z",
+      "excerpt": "Security experts say prioritization should be the main focus for the August updates, not the massive CVE volume.",
+      "canonicalUrl": "https://darkreading.com/application-security/microsofts-patch-tuesday-deluge-continues",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "krebs",
+      "sourceKind": "rss",
+      "title": "Microsoft Plugs Nearly 400 Security Holes",
+      "url": "https://krebsonsecurity.com/2026/08/microsoft-plugs-nearly-400-security-holes/",
+      "publishedAt": "2026-08-11T21:28:35.000Z",
+      "excerpt": "Microsoft today released updates to remedy at least 398 security vulnerabilities in its Windows operating systems and supported software, including one weakness that is already being actively exploited and two others that were publicly detailed prior to today.",
+      "canonicalUrl": "https://krebsonsecurity.com/2026/08/microsoft-plugs-nearly-400-security-holes",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s24"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Gunra Ransomware Gang Exploits Fortinet Flaws, Bypasses MFA",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/gunra-ransomware-gang-fortinet-flaws-bypasses-mfa",
+      "publishedAt": "2026-08-11T21:16:25.000Z",
+      "excerpt": "The ransomware-as-a-service operation is finding success against critical infrastructure targets with leaked Conti code and old flaws in firewalls and VPN appliances.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/gunra-ransomware-gang-fortinet-flaws-bypasses-mfa",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Sandworm hackers target IT pros with trojanized WireGuard VPN client",
+      "url": "https://www.bleepingcomputer.com/news/security/sandworm-hackers-target-it-pros-with-trojanized-wireguard-vpn-client/",
+      "publishedAt": "2026-08-11T21:07:24.000Z",
+      "excerpt": "Hackers associated with the Russian threat group Sandworm have been targeting system administrators and IT professionals through fake job offers since at least May. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/sandworm-hackers-target-it-pros-with-trojanized-wireguard-vpn-client",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "NSA installs DHS lawyer as new general counsel",
+      "url": "https://therecord.media/kerianne-tobitsch-new-nsa-general-counsel",
+      "publishedAt": "2026-08-11T20:00:09.000Z",
+      "excerpt": "Kerianne Tobitsch, who most recently served as a senior lawyer at the Homeland Security Department, is the NSA's new general counsel, sources told Recorded Future News.",
+      "canonicalUrl": "https://therecord.media/kerianne-tobitsch-new-nsa-general-counsel",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s28"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Cisco warns of ASA and FTD VPN flaw exploited to crash devices",
+      "url": "https://www.bleepingcomputer.com/news/security/cisco-warns-of-asa-and-ftd-vpn-flaw-exploited-to-crash-devices/",
+      "publishedAt": "2026-08-11T19:45:31.000Z",
+      "excerpt": "Cisco is warning that a high-severity denial-of-service vulnerability in Secure Firewall ASA and Threat Defense (FTD) software is being actively exploited in attacks to remotely crash affected devices. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/cisco-warns-of-asa-and-ftd-vpn-flaw-exploited-to-crash-devices",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s29"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Kimwolf v7 Android Botnet Makes HTTP/2 DDoS Traffic Look Like Legitimate Browsing",
+      "url": "https://thehackernews.com/2026/08/kimwolf-v7-android-botnet-makes-http2.html",
+      "publishedAt": "2026-08-11T19:36:37.000Z",
+      "excerpt": "Cybersecurity researchers have discovered a new version of the Kimwolf/AISURU Android and Internet of Things (IoT) botnet that comes with significant improvements to improve its operational resilience and conduct distributed denial-of-service (DDoS) attacks. The new version, tracked as Kimwolf v7, was discovered by Palo Alto Networks Unit 42 in February 2026. \"Kimwolf v7 adds an HTTP/2-based",
+      "canonicalUrl": "https://thehackernews.com/2026/08/kimwolf-v7-android-botnet-makes-http2.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s30"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Ransomware group hijacks hospital system’s Facebook page amid ongoing cyberattack fallout",
+      "url": "https://therecord.media/ransomware-group-hijacks-hospital-facebook-amid-cyberattack-response",
+      "publishedAt": "2026-08-11T19:15:00.000Z",
+      "excerpt": "The hackers claimed to have exfiltrated 6 terabytes of data, including highly sensitive health information like records related to sexual assault, mental health, abortions and sexual harassment incidents.",
+      "canonicalUrl": "https://therecord.media/ransomware-group-hijacks-hospital-facebook-amid-cyberattack-response",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s31"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Zoom Annotation Flaws Could Let a Meeting Participant Hijack Another Attendee's Client",
+      "url": "https://thehackernews.com/2026/08/zoom-annotation-flaws-could-let-meeting.html",
+      "publishedAt": "2026-08-11T19:08:47.000Z",
+      "excerpt": "Anyone sharing their screen on a Zoom call could have taken over the computers of everyone watching, and anyone watching could have taken over the presenter's. The flaw sat in the annotation tool, the feature that lets participants draw and type on a shared screen, and it asked nothing of the victim beyond being in the meeting. No click, no download, no prompt, and nothing on screen to show it",
+      "canonicalUrl": "https://thehackernews.com/2026/08/zoom-annotation-flaws-could-let-meeting.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s32"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "August 2026 Patch Tuesday: Microsoft Fixes 421 CVEs, One Exploited Zero-Day",
+      "url": "https://www.securityweek.com/august-2026-patch-tuesday-microsoft-fixes-421-cves-one-exploited-zero-day/",
+      "publishedAt": "2026-08-11T18:46:07.000Z",
+      "excerpt": "A use-after-free in the afd.sys Windows kernel-mode driver has been exploited to gain SYSTEM privileges. The post August 2026 Patch Tuesday: Microsoft Fixes 421 CVEs, One Exploited Zero-Day appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/august-2026-patch-tuesday-microsoft-fixes-421-cves-one-exploited-zero-day",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s33"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Delta probes Wi-Fi deauth attack on flight carrying DEF CON attendees",
+      "url": "https://www.bleepingcomputer.com/news/security/delta-probes-wi-fi-deauth-attack-on-flight-carrying-def-con-attendees/",
+      "publishedAt": "2026-08-11T18:34:23.000Z",
+      "excerpt": "Delta Air Lines is investigating an unauthorized Wi-Fi network that appeared aboard a flight from Las Vegas to Atlanta carrying passengers who had attended the DEF CON hacker convention. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/delta-probes-wi-fi-deauth-attack-on-flight-carrying-def-con-attendees",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s35"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft releases Windows 10 KB5120249 extended security update",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/windows-10-kb5120249-cumulative-update-released-with-fixes/",
+      "publishedAt": "2026-08-11T18:26:03.000Z",
+      "excerpt": "Microsoft has released Windows 10 KB5120249 Extended Security Updates for versions 22H2 and 21H2 to fix security vulnerabilities and bugs. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/windows-10-kb5120249-cumulative-update-released-with-fixes",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s36"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft August 2026 Patch Tuesday fixes 400 flaws, 3 zero-days",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-august-2026-patch-tuesday-fixes-400-flaws-3-zero-days/",
+      "publishedAt": "2026-08-11T18:08:50.000Z",
+      "excerpt": "Today is Microsoft's August 2026 Patch Tuesday, and with it comes security updates for a massive 400 flaws, including one actively exploited and two publicly disclosed zero-day vulnerabilities. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-august-2026-patch-tuesday-fixes-400-flaws-3-zero-days",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s37"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Windows 11 KB5121003 & KB5120240 cumulative updates released",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/windows-11-kb5121003-and-kb5120240-cumulative-updates-released/",
+      "publishedAt": "2026-08-11T17:38:42.000Z",
+      "excerpt": "Microsoft has released Windows 11 KB5121003 and KB5120240 cumulative updates for versions 25H2/24H2 and 23H2 to fix security vulnerabilities, bugs, and add new features. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/windows-11-kb5121003-and-kb5120240-cumulative-updates-released",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s38"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Adobe Urges Immediate Patching of Critical ColdFusion, Campaign Classic Flaws",
+      "url": "https://www.securityweek.com/adobe-urges-immediate-patching-of-critical-coldfusion-campaign-classic-flaws/",
+      "publishedAt": "2026-08-11T16:50:19.000Z",
+      "excerpt": "The security defects could be exploited for arbitrary code execution and denial-of-service. The post Adobe Urges Immediate Patching of Critical ColdFusion, Campaign Classic Flaws appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/adobe-urges-immediate-patching-of-critical-coldfusion-campaign-classic-flaws",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s39"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Researchers Disclose AI-Assisted SharePoint Exploit Chain Reaching Unauthenticated RCE",
+      "url": "https://thehackernews.com/2026/08/researchers-disclose-ai-assisted.html",
+      "publishedAt": "2026-08-11T16:47:44.000Z",
+      "excerpt": "Security researchers found a way to enter Microsoft SharePoint servers as any user, including an administrator, with no valid account. A significant part of the work that found it was done through an AI agent. The flaw, tracked as CVE-2026-55040 (CVSS 9.1), affects SharePoint Server Subscription Edition, SharePoint Server 2019, and SharePoint Server 2016. Microsoft's",
+      "canonicalUrl": "https://thehackernews.com/2026/08/researchers-disclose-ai-assisted.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-55040",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Weak authentication in Microsoft Office SharePoint allows an unauthorized attacker to bypass a security feature over a network.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.1,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+              "source": "secure@microsoft.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-1390"
+            ],
+            "published": "2026-07-14T18:18:15.413",
+            "lastModified": "2026-07-15T20:01:41.550",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-55040",
+                "source": "secure@microsoft.com",
+                "tags": [
+                  "Patch",
+                  "Vendor Advisory"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:microsoft:sharepoint_server:*:*:*:*:subscription:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5FA63EA8-B225-4E35-A6A3-DBDECF5AC4C8",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "16.0.19725.20434"
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:sharepoint_server:2016:*:*:*:enterprise:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F815EF1D-7B60-47BE-9AC2-2548F99F10E4",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:sharepoint_server:2019:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6122D014-5BF1-4AF4-8B4D-80205ED7785E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/08/researchers-disclose-ai-assisted.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.11",
+              "dateReleased": "2026-08-11T18:59:43.6861Z",
+              "retrievedAt": "2026-08-12T12:56:28.165Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-48362%2CCVE-2026-59310%2CCVE-2026-58231%2CCVE-2026-50656%2CCVE-2026-20349%2CCVE-2026-68820%2CCVE-2026-55040%2CCVE-2026-21655%2CCVE-2026-18844",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-55040",
+              "retrievedAt": "2026-08-12T12:56:28.165Z"
+            }
+          }
+        }
+      ],
+      "id": "s40"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "DeadLock Ransomware Uses Polygon Smart Contracts to Make Extortion Infra Harder to Disrupt",
+      "url": "https://thehackernews.com/2026/08/deadlock-ransomware-uses-polygon-smart.html",
+      "publishedAt": "2026-08-11T16:35:27.000Z",
+      "excerpt": "The ransomware group known as DeadLock has been observed using decentralized infrastructure to facilitate victim communications and data leak operations in a bid to improve operational resilience. \"Its recovery ecosystem combines the Session messaging network with blockchain-backed services that store and deliver resources used throughout the extortion process,\" the Microsoft Threat",
+      "canonicalUrl": "https://thehackernews.com/2026/08/deadlock-ransomware-uses-polygon-smart.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s41"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Wesco confirms security incident after ExfilSquad claims data theft",
+      "url": "https://www.bleepingcomputer.com/news/security/wesco-confirms-security-incident-after-exfilsquad-claims-data-theft/",
+      "publishedAt": "2026-08-11T15:59:35.000Z",
+      "excerpt": "Global supply chain and distribution giant Wesco has confirmed in a statement for BleepingComputer that it is investigating a cybersecurity incident. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/wesco-confirms-security-incident-after-exfilsquad-claims-data-theft",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s42"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Cyberattack on logistics giant Ceva hits retailers and Steam customers across Europe",
+      "url": "https://therecord.media/ceva-logistics-cyberattack-bol-steam-debijenkorf-ace-tate",
+      "publishedAt": "2026-08-11T15:43:45.000Z",
+      "excerpt": "Operations at eight European warehouses belonging to France's CEVA Logistics have reportedly been disrupted by a cyberattack, and several other companies are feeling the effects.",
+      "canonicalUrl": "https://therecord.media/ceva-logistics-cyberattack-bol-steam-debijenkorf-ace-tate",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s43"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Mozilla updates GPG signing key for Firefox releases after exposure",
+      "url": "https://www.bleepingcomputer.com/news/security/mozilla-updates-gpg-key-for-signing-firefox-thunderbird-releases-after-exposure/",
+      "publishedAt": "2026-08-11T13:20:28.000Z",
+      "excerpt": "Mozilla announced today that it updated the GPG key used to sign Firefox and Thunderbird releases after it was accidentally exposed on GitHub. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/mozilla-updates-gpg-key-for-signing-firefox-thunderbird-releases-after-exposure",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s44"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Vague Task, Total Access: When AI Delegation Becomes a Security Risk",
+      "url": "https://www.bleepingcomputer.com/news/security/vague-task-total-access-when-ai-delegation-becomes-a-security-risk/",
+      "publishedAt": "2026-08-11T13:15:24.000Z",
+      "excerpt": "AI agents can improvise beyond the intended scope of a task when they are given broad access to enterprise systems and data. Token Security explains why organizations need to define agent intent and continuously enforce permissions around what each agent was actually created to do. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/vague-task-total-access-when-ai-delegation-becomes-a-security-risk",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s45"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "DDoS attacks over 1 Tbps surged fivefold in the second quarter",
+      "url": "https://www.bleepingcomputer.com/news/security/ddos-attacks-over-1-tbps-surged-fivefold-in-the-second-quarter/",
+      "publishedAt": "2026-08-11T13:00:00.000Z",
+      "excerpt": "Cloudflare says it mitigated more than 800 network-layer distributed denial-of-service (DDoS) attacks exceeding 1 Tbps in the second quarter of the year. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/ddos-attacks-over-1-tbps-surged-fivefold-in-the-second-quarter",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s47"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Johnson Controls C-CURE 9000 and Victor application server (Update A)",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-204-01",
+      "publishedAt": "2026-08-11T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of these vulnerabilities could allow an attacker with network access to achieve remote code execution. The following versions of Johnson Controls C-CURE 9000 and Victor application server (Update A) are affected: C-CURE 9000 <=v3.10.1 (CVE-2026-21655) victor Application Server <=v4.10 (CVE-2026-21655) victor <=v7.0 (CVE-2026-21655) victor Web victor Web…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-204-01",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-21655",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Deserialization of untrusted data vulnerability in Johnson Control victor on Windows, Johnson Controls CCure 9000, and Johnson Controls Victor Application Server allows capec-586.\n\nThis issue affects victor: before 8.0; CCure 9000: before 3.2; Victor Application Server: before 4.1.",
+            "cvss": {
+              "version": "4.0",
+              "score": 8.7,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "productsecurity@jci.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-502"
+            ],
+            "published": "2026-07-23T21:17:03.810",
+            "lastModified": "2026-08-06T22:17:00.500",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://www.johnsoncontrols.com/trust-center/cybersecurity/security-advisories",
+                "source": "productsecurity@jci.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-204-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.11",
+              "dateReleased": "2026-08-11T18:59:43.6861Z",
+              "retrievedAt": "2026-08-12T12:56:28.165Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-48362%2CCVE-2026-59310%2CCVE-2026-58231%2CCVE-2026-50656%2CCVE-2026-20349%2CCVE-2026-68820%2CCVE-2026-55040%2CCVE-2026-21655%2CCVE-2026-18844",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-21655",
+              "retrievedAt": "2026-08-12T12:56:28.165Z"
+            }
+          }
+        }
+      ],
+      "id": "s48"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Pulsetto Vagus Nerve Stimulator",
+      "url": "https://www.cisa.gov/news-events/ics-medical-advisories/icsma-26-223-02",
+      "publishedAt": "2026-08-11T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of this vulnerability could allow an attacker to use hidden commands to disable electrical safety mechanisms or modify other stimulation output settings. The following versions of Pulsetto Vagus Nerve Stimulator are affected: Pulsetto Vagus Nerve Stimulator vers:all/* (CVE-2026-18844) CVSS Vendor Equipment Vulnerabilities v3 8.1 Pulsetto Pulsetto Vagus…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-medical-advisories/icsma-26-223-02",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-18844",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "The firmware of the Pulsetto Vagus Nerve Stimulator accepts several undisclosed commands over its Bluetooth Low Energy (BLE) interface. These commands are sent without authentication or encryption, and are never issued by the companion mobile application, yet are fully processed by the device when it is powered on.",
+            "cvss": {
+              "version": "4.0",
+              "score": 7.2,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "ics-cert@hq.dhs.gov",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-912"
+            ],
+            "published": "2026-08-11T20:17:37.277",
+            "lastModified": "2026-08-11T21:17:34.160",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://github.com/cisagov/CSAF/blob/develop/csaf_files/OT/white/2026/icsma-26-223-02.json",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              },
+              {
+                "url": "https://www.cisa.gov/news-events/ics-medical-advisories/icsma-26-223-02",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-medical-advisories/icsma-26-223-02",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.11",
+              "dateReleased": "2026-08-11T18:59:43.6861Z",
+              "retrievedAt": "2026-08-12T12:56:28.165Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-48362%2CCVE-2026-59310%2CCVE-2026-58231%2CCVE-2026-50656%2CCVE-2026-20349%2CCVE-2026-68820%2CCVE-2026-55040%2CCVE-2026-21655%2CCVE-2026-18844",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-18844",
+              "retrievedAt": "2026-08-12T12:56:28.165Z"
+            }
+          }
+        }
+      ],
+      "id": "s49"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Mira Hormone Monitor, Mira Android App",
+      "url": "https://www.cisa.gov/news-events/ics-medical-advisories/icsma-26-223-01",
+      "publishedAt": "2026-08-11T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of these vulnerabilities could allow an attacker to access unauthorized health profile information, make changes to health information, cause a denial-of-service condition, disclose session token information, and obtain control of user accounts. The following versions of Mira Hormone Monitor, Mira Android App are affected: Mira Monitor Firmware 1.7.1.47…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-medical-advisories/icsma-26-223-01",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s50"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 0,
+    "promptCacheMissTokens": 13340,
+    "outputTokens": 17199,
+    "estimatedCostUsd": 0.006683320000000001
+  }
+}
