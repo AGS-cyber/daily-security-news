@@ -1,5 +1,10 @@
 [
   {
+    "date": "2026-08-13",
+    "mode": "digest",
+    "count": 28
+  },
+  {
     "date": "2026-08-12",
     "mode": "article",
     "headline": "Zero-Day Driver, Firewall DoS, vCenter Exploits Lead a Heavy Patch Day",
