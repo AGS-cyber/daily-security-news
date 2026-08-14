@@ -1,0 +1,1138 @@
+{
+  "date": "2026-08-14",
+  "generatedAt": "2026-08-14T12:53:38.822Z",
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 225,
+    "published": 53
+  },
+  "mode": "article",
+  "headline": "Beyond the patch: active exploits, breach fallout, and hack-back",
+  "standfirst": "The day's most important stories center on vulnerabilities already being exploited in the wild, a cluster of SaaS and supply-chain breaches, a reminder that attribution requires rigor, and a significant shift in U.S. policy on private-sector hack-back operations.",
+  "bodyMarkdown": "## Actively exploited\n\nThe highest-priority item is the VMware vCenter vulnerability tracked as CVE-2026-59310 [[s24]]. It is a critical directory traversal in the Syslog server, rated 9.8, and the reporting describes an active campaign using it to drop a reverse SSH tool for persistence and remote access. Patching the hole is necessary but not sufficient: the backdoor is already on any box that was compromised, so defenders need to hunt for the reverse SSH utility, review recently modified accounts and keys, and treat any vCenter that was exposed as potentially compromised. The flaw's network reachability and lack of required privileges make it especially dangerous in environments where vCenter is reachable from less trusted networks.\n\nNext, Adobe Commerce CVE-2026-71362 [[s28]]. This is an incorrect authorization vulnerability, a CWE-863 privilege-escalation issue with a 9.1 CVSS score, and exploitation attempts were observed almost immediately after patches were released. No user interaction is required. For anyone running Adobe Commerce, the patch should be treated as an emergency change; the practical window between disclosure and exploitation has already closed for stores that waited. Check for unexpected admin accounts and privilege changes as part of the response, but the immediate action is deployment.\n\nGeoServer is the third active threat [[s13]]. Attackers are exploiting an unpatched zero-day described as an SQL injection that can escalate to remote code execution. With no patch available, the priority shifts to discovery and containment: inventory any internet-facing GeoServer instances, apply network restrictions or take them offline if they are not essential, and monitor for SQL injection or post-exploitation activity. This is a reminder that for vulnerabilities with no vendor fix, exposure detection is the control that matters. Together, these three cases show that the conventional assumption — patch promptly and move on — no longer holds; each of these required or requires active hunting, immediate deployment, or both.\n\n## Breaches\n\nThe RingCentral breach [[s7]] is a reminder that SaaS providers continue to be high-value targets. The ShinyHunters extortion group is behind the theft of personal information from 1.6 million accounts. For RingCentral customers, the practical assumption should be that data is already circulating; focus on credential reset, reviewing account recovery options, and watching for targeted phishing that uses the stolen information. For security teams generally, it also highlights that a compromise at a communications provider can have cascading effects into every business that relies on it, and that extortion-driven disclosure adds social-engineering risk on top of credential exposure.\n\nShell is investigating a potential incident after Clop claimed to have stolen 89GB of data [[s3]]. The claim fits a well-established pattern of mass exploitation of file-transfer vulnerabilities, and even while the investigation is unconfirmed, the response should already be running: assume the claim may be true, check for indicators related to known file-transfer exploitation, and rehearse the notification and forensic steps. In cases like this, waiting for confirmation costs time that could be used to limit damage.\n\nThe Beacon CRM breach [[s9]] shows how a single leaked secret can become a supply-chain event. More than 1,000 charities were affected after a compromised AWS key was exposed in publicly available JavaScript build artifacts. The key gave access to data that should have been protected. This is a case for rigorous secrets management: scan build outputs, rotate credentials regularly, and treat any key that appears in an artifact as compromised. The downstream impact across a thousand organizations shows why third-party risk is not just a vendor-management exercise; it is also an engineering discipline around how code is built and shipped.\n\n## Research\n\nThe story about the compromise of 2,500 organizations is a lesson in root-cause analysis [[s4]]. What initially looked like malicious LiteLLM packages turned out to be a flawed third-party scanner — Trivy — with over 95% of affected organizations exposed before the malicious packages were even published. The episode is a warning about jumping to conclusions based on timing or coincidental indicators. Defenders should verify the actual infection vector before attributing an incident; otherwise, remediation will target the wrong component and leave the real vulnerability in place.\n\n## Industry\n\nFinally, a major policy shift: the White House is directing the National Coordination Center to build a program that would let private security firms apply for approval to conduct offensive hack-back operations against foreign cybercriminal organizations [[s31]]. This reframes the role of private companies in active defense. It raises serious legal and operational questions — how targets are chosen and verified, what rules of engagement apply, how collateral damage is handled, and what accountability exists if an operation goes wrong. For security teams, it is also a signal that the line between defensive monitoring and offensive action is being redrawn, and that future incident response may include options that did not previously exist.",
+  "selected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Critical VMware vCenter RCE flaw exploited for reverse SSH access",
+      "url": "https://www.bleepingcomputer.com/news/security/critical-vmware-vcenter-rce-flaw-exploited-for-reverse-ssh-access/",
+      "publishedAt": "2026-08-13T16:40:23.000Z",
+      "excerpt": "A recently patched critical vulnerability (CVE-2026-59310) in VMware vCenter Syslog Server is being exploited in an active campaign to deploy a reverse SSH tool for persistence and remote access. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/critical-vmware-vcenter-rce-flaw-exploited-for-reverse-ssh-access",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-59310",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "VMware vCenter contains a directory traversal vulnerability in the Syslog server. A malicious actor with network access to vCenter may exploit this issue to execute arbitrary code.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "security@vmware.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-22"
+            ],
+            "published": "2026-07-30T13:16:53.993",
+            "lastModified": "2026-08-14T05:16:59.407",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://support.broadcom.com/web/ecx/support-content-notification/-/external/content/SecurityAdvisories/0/38017",
+                "source": "security@vmware.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "bleepingcomputer",
+                "url": "https://www.bleepingcomputer.com/news/security/critical-vmware-vcenter-rce-flaw-exploited-for-reverse-ssh-access/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.11",
+              "dateReleased": "2026-08-11T18:59:43.6861Z",
+              "retrievedAt": "2026-08-14T12:53:38.822Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-59310%2CCVE-2026-71362%2CCVE-2026-3014%2CCVE-2026-65309%2CCVE-2026-65310%2CCVE-2026-65311%2CCVE-2026-65313%2CCVE-2026-19188%2CCVE-2025-7639",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-59310",
+              "retrievedAt": "2026-08-14T12:53:38.822Z"
+            }
+          }
+        }
+      ],
+      "id": "s24",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "Critical RCE in VMware vCenter is under active exploitation, and patching alone may not remove existing backdoors, so defenders must hunt for the reverse SSH tool."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Adobe Commerce Bug Targeted Immediately After Disclosure",
+      "url": "https://www.securityweek.com/adobe-commerce-bug-targeted-immediately-after-disclosure/",
+      "publishedAt": "2026-08-13T14:17:44.000Z",
+      "excerpt": "The first exploitation attempts targeting CVE-2026-71362 were observed shortly after Adobe released patches. The post Adobe Commerce Bug Targeted Immediately After Disclosure appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/adobe-commerce-bug-targeted-immediately-after-disclosure",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-71362",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Adobe Commerce is affected by an Incorrect Authorization vulnerability that could result in privilege escalation. An attacker could leverage this vulnerability to gain elevated access to sensitive resources. Exploitation of this issue does not require user interaction.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.1,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+              "source": "psirt@adobe.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-863"
+            ],
+            "published": "2026-08-11T18:18:21.610",
+            "lastModified": "2026-08-12T21:03:43.743",
+            "vulnStatus": "Undergoing Analysis",
+            "references": [
+              {
+                "url": "https://helpx.adobe.com/security/products/magento/apsb26-92.html",
+                "source": "psirt@adobe.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/adobe-commerce-bug-targeted-immediately-after-disclosure/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.11",
+              "dateReleased": "2026-08-11T18:59:43.6861Z",
+              "retrievedAt": "2026-08-14T12:53:38.822Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-59310%2CCVE-2026-71362%2CCVE-2026-3014%2CCVE-2026-65309%2CCVE-2026-65310%2CCVE-2026-65311%2CCVE-2026-65313%2CCVE-2026-19188%2CCVE-2025-7639",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-71362",
+              "retrievedAt": "2026-08-14T12:53:38.822Z"
+            }
+          }
+        }
+      ],
+      "id": "s28",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "Adobe Commerce shops face immediate exploitation attempts after disclosure; apply the patch before attackers catch up."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Hackers Exploiting Unpatched GeoServer Zero-Day",
+      "url": "https://www.securityweek.com/hackers-exploiting-unpatched-geoserver-zero-day/",
+      "publishedAt": "2026-08-14T07:01:56.000Z",
+      "excerpt": "The security defect is described as an SQL injection that could allow attackers to achieve remote code execution. The post Hackers Exploiting Unpatched GeoServer Zero-Day appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/hackers-exploiting-unpatched-geoserver-zero-day",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s13",
+      "section": "exploited",
+      "rank": 3,
+      "angle": "Unpatched GeoServer instances are being hit by SQL injection-to-RCE attacks while no patch yet exists, making exposure detection urgent."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "RingCentral data breach exposed info of 1.6 million accounts",
+      "url": "https://www.bleepingcomputer.com/news/security/ringcentral-data-breach-exposed-info-of-16-million-accounts/",
+      "publishedAt": "2026-08-14T10:52:05.000Z",
+      "excerpt": "The ShinyHunters extortion group stole personal information from 1.6 million RingCentral accounts after hacking the company in July, according to the data breach notification service Have I Been Pwned. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/ringcentral-data-breach-exposed-info-of-16-million-accounts",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s7",
+      "section": "breaches",
+      "rank": 4,
+      "angle": "The ShinyHunters extortion group leaks 1.6 million RingCentral accounts, a reminder that SaaS providers remain a high-value target."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Shell investigates 'potential incident' after Clop data theft claims",
+      "url": "https://www.bleepingcomputer.com/news/security/shell-investigates-potential-incident-after-clop-data-theft-claims/",
+      "publishedAt": "2026-08-14T11:55:45.000Z",
+      "excerpt": "Oil giant Shell has confirmed it is investigating a potential security incident after the Clop ransomware gang claimed it stole 89GB of data. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/shell-investigates-potential-incident-after-clop-data-theft-claims",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s3",
+      "section": "breaches",
+      "rank": 5,
+      "angle": "Clop claims a major Shell data breach, highlighting the ongoing mass-exploitation of file-transfer vulnerabilities and the need for incident response readiness."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Over 1,000 Charities Hit by Beacon CRM Data Breach",
+      "url": "https://www.securityweek.com/over-1000-charities-hit-by-beacon-crm-data-breach/",
+      "publishedAt": "2026-08-14T09:20:28.000Z",
+      "excerpt": "The root cause of the incident is believed to be a compromised AWS access key that was exposed in publicly available JavaScript build artifacts. The post Over 1,000 Charities Hit by Beacon CRM Data Breach appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/over-1000-charities-hit-by-beacon-crm-data-breach",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s9",
+      "section": "breaches",
+      "rank": 6,
+      "angle": "A compromised AWS key exposed in JavaScript build artifacts led to a data breach affecting more than 1,000 charities, showing the supply-chain risk of leaked secrets."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Trivy, Not LiteLLM Behind the 2,500 Org Compromise",
+      "url": "https://www.securityweek.com/trivy-not-litellm-behind-the-2500-org-compromise/",
+      "publishedAt": "2026-08-14T11:35:23.000Z",
+      "excerpt": "Over 95% of the affected companies were exposed before the malicious LiteLLM packages were published. The post Trivy, Not LiteLLM Behind the 2,500 Org Compromise appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/trivy-not-litellm-behind-the-2500-org-compromise",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s4",
+      "section": "research",
+      "rank": 7,
+      "angle": "The true source of a compromise affecting 2,500 organizations was a flawed third-party scanner, not the suspected LiteLLM packages — a crucial lesson in root-cause analysis."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "White House taps security firms for offensive hack-back operations",
+      "url": "https://www.bleepingcomputer.com/news/security/white-house-taps-security-firms-for-offensive-hack-back-operations/",
+      "publishedAt": "2026-08-13T13:30:53.000Z",
+      "excerpt": "A new White House memo signed by U.S. President Donald Trump instructs the National Coordination Center (NCC) to establish a program that would allow private security companies to apply for approval to hack foreign cybercrime organizations. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/white-house-taps-security-firms-for-offensive-hack-back-operations",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s31",
+      "section": "industry",
+      "rank": 8,
+      "angle": "The U.S. is authorizing private security firms to hack back against cybercriminals, a major policy shift with serious legal and operational implications."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Cyera's Oasis Security Buy is All About AI Agent Control",
+      "url": "https://www.darkreading.com/identity-access-management-security/cyera-oasis-security-acquisition-ai-agent-control",
+      "publishedAt": "2026-08-14T12:17:21.000Z",
+      "excerpt": "The $1 billion deal aims to converge data security and identity into a single control plane for agents, with privileged access redefined around business context rather than static roles.",
+      "canonicalUrl": "https://darkreading.com/identity-access-management-security/cyera-oasis-security-acquisition-ai-agent-control",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "In Other News: Rapid7 Layoffs, Hacking a Boeing 737, Refrigeration System Vulnerabilities",
+      "url": "https://www.securityweek.com/in-other-news-rapid7-layoffs-hacking-a-boeing-737-refrigeration-system-vulnerabilities/",
+      "publishedAt": "2026-08-14T11:57:51.000Z",
+      "excerpt": "Noteworthy stories that might have slipped under the radar: government AI platform deal sparks outrage, North Korean IT worker breaches federal agency, DEF CON attendee blamed for Delta flight disruption. The post In Other News: Rapid7 Layoffs, Hacking a Boeing 737, Refrigeration System Vulnerabilities appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/in-other-news-rapid7-layoffs-hacking-a-boeing-737-refrigeration-system-vulnerabilities",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "krebs",
+      "sourceKind": "rss",
+      "title": "Who’s Tracking You? Use This New Service to Find Out",
+      "url": "https://krebsonsecurity.com/2026/08/whos-tracking-you-use-this-new-service-to-find-out/",
+      "publishedAt": "2026-08-14T11:24:35.000Z",
+      "excerpt": "It can be daunting to determine who's responsible for showing ads on the websites we visit, or who's harvesting data from the mobile apps we use every day. That information is already semi-public, but it is not easily parsed and traditionally much of it has remained walled away in the hands of large advertising platforms. Not anymore: A powerful and free new service called DecryptAds scrapes and…",
+      "canonicalUrl": "https://krebsonsecurity.com/2026/08/whos-tracking-you-use-this-new-service-to-find-out",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Google Cloud Sets Out Post-Quantum Roadmap With 2029 Readiness Goal",
+      "url": "https://www.securityweek.com/google-cloud-sets-out-post-quantum-roadmap-with-2029-readiness-goal/",
+      "publishedAt": "2026-08-14T11:00:00.000Z",
+      "excerpt": "Google Cloud outlines its roadmap to full post-quantum cryptography readiness, with key milestones targeted for 2027 and 2028. The post Google Cloud Sets Out Post-Quantum Roadmap With 2029 Readiness Goal appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/google-cloud-sets-out-post-quantum-roadmap-with-2029-readiness-goal",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "1.6 Million Likely Impacted by RingCentral Data Breach",
+      "url": "https://www.securityweek.com/1-6-million-likely-impacted-by-ringcentral-data-breach/",
+      "publishedAt": "2026-08-14T10:24:03.000Z",
+      "excerpt": "The hackers published the allegedly stolen information, including names, addresses, email addresses, and phone numbers. The post 1.6 Million Likely Impacted by RingCentral Data Breach appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/1-6-million-likely-impacted-by-ringcentral-data-breach",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "securelist",
+      "sourceKind": "rss",
+      "title": "APT group HoneyMyte upgrades CoolClient: the backdoor gets a kernel-level Windows rootkit",
+      "url": "https://securelist.com/honeymyte-coolclient-driver-rootkit/121028/",
+      "publishedAt": "2026-08-14T09:00:14.000Z",
+      "excerpt": "Our experts discovered a new CoolClient backdoor variant with a kernel-mode rootkit driver that hides malicious processes, files, and network connections from security tools and threat analysts.",
+      "canonicalUrl": "https://securelist.com/honeymyte-coolclient-driver-rootkit/121028",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Data analyst sent to prison for stealing data, extorting employer",
+      "url": "https://www.bleepingcomputer.com/news/security/data-analyst-sent-to-prison-for-stealing-data-extorting-employer/",
+      "publishedAt": "2026-08-14T08:27:18.000Z",
+      "excerpt": "A former data analyst contractor for Brightly Software has been sentenced to two years in prison for targeting his employer in a $2.5 million extortion scheme. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/data-analyst-sent-to-prison-for-stealing-data-extorting-employer",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "14,000 Trezor Customers Impacted by Data Breach at ShipMonk",
+      "url": "https://www.securityweek.com/14000-trezor-customers-impacted-by-data-breach-at-shipmonk/",
+      "publishedAt": "2026-08-14T08:16:00.000Z",
+      "excerpt": "Hackers stole the customers’ shipping information, including names, addresses, email addresses, and phone numbers. The post 14,000 Trezor Customers Impacted by Data Breach at ShipMonk appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/14000-trezor-customers-impacted-by-data-breach-at-shipmonk",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "AmnesiaStealer macOS Malware Steals Data, Controls Browser Sessions",
+      "url": "https://www.securityweek.com/amnesiastealer-macos-malware-steals-data-controls-browser-sessions/",
+      "publishedAt": "2026-08-14T06:41:43.000Z",
+      "excerpt": "The Rust-based macOS infostealer harvests users’ passwords, keychain information, Chromium-based browser data, and Safari cookies. The post AmnesiaStealer macOS Malware Steals Data, Controls Browser Sessions appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/amnesiastealer-macos-malware-steals-data-controls-browser-sessions",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s14"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Apple sends new ‘Threat Notification’ alerts over mercenary spyware attacks",
+      "url": "https://www.bleepingcomputer.com/news/apple/apple-sends-new-threat-notification-alerts-over-mercenary-spyware-attacks/",
+      "publishedAt": "2026-08-14T01:19:12.000Z",
+      "excerpt": "You're not alone if you just received an \"Apple Threat Notification\" saying it detected a \"mercenary spyware attack targeted at your iPhone.\" [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/apple/apple-sends-new-threat-notification-alerts-over-mercenary-spyware-attacks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Ukraine shuts down 94 fraudulent call centers, seize millions in cash",
+      "url": "https://www.bleepingcomputer.com/news/security/ukraine-shuts-down-94-fraudulent-call-centers-seize-millions-in-cash/",
+      "publishedAt": "2026-08-13T21:12:47.000Z",
+      "excerpt": "Authorities in Ukraine shut down 94 fraudulent call centers across the country that lured people into investment scams or tried to obtain access to bank accounts. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/ukraine-shuts-down-94-fraudulent-call-centers-seize-millions-in-cash",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Akira hackers disable EDR with Safe Mode, steal data but fail to encrypt",
+      "url": "https://www.bleepingcomputer.com/news/security/akira-hackers-disable-edr-with-safe-mode-steal-data-but-fail-to-encrypt/",
+      "publishedAt": "2026-08-13T20:47:02.000Z",
+      "excerpt": "An Akira ransomware affiliate disabled the endpoint detection and response (EDR) solution on a compromised system by restarting the machine into Safe Mode with Networking. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/akira-hackers-disable-edr-with-safe-mode-steal-data-but-fail-to-encrypt",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Global Threat Campaign Hits Critical VMware vCenter Flaw",
+      "url": "https://www.darkreading.com/vulnerabilities-threats/global-threat-campaign-critical-vmware-vcenter-flaw",
+      "publishedAt": "2026-08-13T20:45:17.000Z",
+      "excerpt": "Exploitation against CVE-2026–59310 began earlier this month, and patching the vulnerability may not be enough to fully mitigate the threat.",
+      "canonicalUrl": "https://darkreading.com/vulnerabilities-threats/global-threat-campaign-critical-vmware-vcenter-flaw",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s18"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers breach govt webmail while running parallel crypto fraud",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-breach-govt-webmail-while-running-parallel-crypto-fraud/",
+      "publishedAt": "2026-08-13T18:15:19.000Z",
+      "excerpt": "The Jewelbug hacker group has been carrying out espionage operations targeting governments and militaries while also engaging in cryptocurrency fraud. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-breach-govt-webmail-while-running-parallel-crypto-fraud",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s19"
+    },
+    {
+      "sourceId": "talos",
+      "sourceKind": "rss",
+      "title": "Curiouser and Curiouser",
+      "url": "https://blog.talosintelligence.com/curiouser-and-curiouser/",
+      "publishedAt": "2026-08-13T18:00:18.000Z",
+      "excerpt": "In this edition of the Threat Source newsletter, William reflects on the “Make Hazel a Hacker” segment in Beers with Talos, and how cybersecurity is a field where questions can lead to multiple correct answers.",
+      "canonicalUrl": "https://blog.talosintelligence.com/curiouser-and-curiouser",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft patches LegacyHive Windows zero-day vulnerability",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-patches-legacyhive-windows-zero-day-vulnerability/",
+      "publishedAt": "2026-08-13T17:46:20.000Z",
+      "excerpt": "Microsoft has released security patches to address a Windows zero-day vulnerability known as \"LegacyHive,\" disclosed after the July 2026 Patch Tuesday. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-patches-legacyhive-windows-zero-day-vulnerability",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s21"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "AI 'watermark removers' flood the web. Almost none can prove they work.",
+      "url": "https://www.bleepingcomputer.com/news/security/ai-watermark-removers-flood-the-web-almost-none-can-prove-they-work/",
+      "publishedAt": "2026-08-13T17:33:28.000Z",
+      "excerpt": "Multiple 'watermark removers' have surfaced days after Anthropic began watermarking text generated by Claude, including an open source project with over 4,500 GitHub stars and paid AI detection evasion services. None of the tools' claims about defeating the text watermark can be verified, as Anthropic has not released a detector. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/ai-watermark-removers-flood-the-web-almost-none-can-prove-they-work",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s22"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Flock tightens privacy controls amid scandals over officer abuse",
+      "url": "https://therecord.media/flock-safety-audit-assistance-police-departments",
+      "publishedAt": "2026-08-13T16:47:00.000Z",
+      "excerpt": "All Flock Safety customers will be required to adopt its \"Audit Assistance\" feature for tracking abnormal uses, and the company says it will hold license plate data for only seven days in most cases.",
+      "canonicalUrl": "https://therecord.media/flock-safety-audit-assistance-police-departments",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "New Mirai variant adds stealth capabilities to notorious botnet code",
+      "url": "https://therecord.media/new-mirai-variant-adds-stealth-to-botnet-code",
+      "publishedAt": "2026-08-13T15:52:00.000Z",
+      "excerpt": "Beyond Mirai’s usual functions, the new code features include encrypted communications with command-and-control servers and a “sniffer” that looks for default access credentials.",
+      "canonicalUrl": "https://therecord.media/new-mirai-variant-adds-stealth-to-botnet-code",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Trezor discloses data breach affecting nearly 14,000 customers",
+      "url": "https://www.bleepingcomputer.com/news/security/trezor-discloses-data-breach-affecting-nearly-14-000-customers/",
+      "publishedAt": "2026-08-13T15:13:19.000Z",
+      "excerpt": "Hardware wallet manufacturer Trezor disclosed a data breach affecting nearly 14,000 of its customers after ShipMonk, its shipping and logistics provider, was hacked [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/trezor-discloses-data-breach-affecting-nearly-14-000-customers",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Cybersecurity M&A Roundup: 21 Deals Announced in July 2026",
+      "url": "https://www.securityweek.com/cybersecurity-ma-roundup-21-deals-announced-in-july-2026/",
+      "publishedAt": "2026-08-13T14:41:44.000Z",
+      "excerpt": "Significant cybersecurity M&A deals announced by Barracuda, CrowdStrike, Cyera, Okta, Palo Alto Networks, and Qualcomm. The post Cybersecurity M&A Roundup: 21 Deals Announced in July 2026 appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/cybersecurity-ma-roundup-21-deals-announced-in-july-2026",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Who Vets AI’s Code? The Scale Challenge Facing Open Source Ingestion",
+      "url": "https://www.bleepingcomputer.com/news/security/who-vets-ais-code-the-scale-challenge-facing-open-source-ingestion/",
+      "publishedAt": "2026-08-13T14:00:10.000Z",
+      "excerpt": "AI coding tools can introduce unvetted or hallucinated open source dependencies faster than traditional security reviews can keep pace. ActiveState explains why organizations should govern packages at the point of selection, before they enter the development pipeline. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/who-vets-ais-code-the-scale-challenge-facing-open-source-ingestion",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s29"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Brazil orders Discord to suspend livestreaming after teen suicide",
+      "url": "https://therecord.media/discord-brazil-orders-suspension-livestreaming",
+      "publishedAt": "2026-08-13T13:37:32.000Z",
+      "excerpt": "Discord's Go Live feature contributed to a 13-year-old girl's death by suicide, according to Brazilian regulators, who told the company to suspend the streaming technology.",
+      "canonicalUrl": "https://therecord.media/discord-brazil-orders-suspension-livestreaming",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s30"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Trump taps cyber firms to go on offensive against criminals",
+      "url": "https://therecord.media/trump-cyber-crime-offensive",
+      "publishedAt": "2026-08-13T13:30:00.000Z",
+      "excerpt": "The Trump administration will allow private companies to launch attacks on cybercrime organizations, the White House announced.",
+      "canonicalUrl": "https://therecord.media/trump-cyber-crime-offensive",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s32"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Germany moves to give spy agencies hacking and sabotage powers",
+      "url": "https://therecord.media/germany-spy-agency-powers",
+      "publishedAt": "2026-08-13T12:45:00.000Z",
+      "excerpt": "Germany’s cabinet approved legislation that would let its intelligence agencies hack foreign systems, sabotage adversaries’ supply chains and feed false information to extremists inside Germany, in the biggest overhaul of the country’s spy laws of the postwar era.",
+      "canonicalUrl": "https://therecord.media/germany-spy-agency-powers",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s33"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Siemens Parasolid",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-225-10",
+      "publishedAt": "2026-08-13T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Parasolid is affected by an out of bounds read vulnerability that could be triggered when the application reads files in X_T format. This could allow an attacker to crash the application or execute arbitrary code. Siemens has released new versions for the affected products and recommends to update to the latest versions. The following versions of Siemens Parasolid are affected:…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-225-10",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s34"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Siemens License Server (SLS)",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-225-07",
+      "publishedAt": "2026-08-13T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Siemens License Server is affected by multiple vulnerabilities which could allow an attacker to elevate its privileges and read arbitrary files on the system. Siemens has released a new version for Siemens License Server (SLS) and recommends to update to the latest version. The following versions of Siemens License Server (SLS) are affected: Siemens License Server (SLS)…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-225-07",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s35"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Siemens Desigo DXR and PXC Controllers",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-225-08",
+      "publishedAt": "2026-08-13T12:00:00.000Z",
+      "excerpt": "View CSAF Summary A vulnerability in Desigo DXR and PXC controllers has been identified that could allow an attacker to cause denial of service conditions by sending malformed BACnet packets. Recovery requires a device reset or reboot to restore normal functionality. Siemens has released new versions for the affected products and recommends to update to the latest versions. The following versions…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-225-08",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s36"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Johnson Controls Metasys",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-225-14",
+      "publishedAt": "2026-08-13T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of this vulnerability could allow a low-privilege user or attacker to inject a persistent malicious payload via a crafted URL that executes in the context of other users' sessions, including administrators, potentially leading to session hijacking and unauthorized access. The following versions of Johnson Controls Metasys are affected: Metasys 12…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-225-14",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s37"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Siemens Siveillance Video",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-225-09",
+      "publishedAt": "2026-08-13T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Siveillance Video Management Servers contains a vulnerability that could allow a Remote Code Execution attack. Siemens has released new versions for the affected products and recommends to update to the latest versions. The following versions of Siemens Siveillance Video are affected: Siveillance Video V2023 R3 vers:intdot/<23.3.27 (CVE-2026-3014) Siveillance Video V2024 R1…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-225-09",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-3014",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Milestone\nhas released a new version of XProtect® (and several cumulative patch updates)\nwhich fix security vulnerability in Management Server API.\n\n\n\nThe vulnerability\ncauses users with edit permissions to the Management Server to be able to\nexecute arbitrary code in context of the Management Server Service.",
+            "cvss": {
+              "version": "4.0",
+              "score": 6.4,
+              "severity": "MEDIUM",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:L/VI:L/VA:L/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "cf45122d-9d50-442a-9b23-e05cde9943d8",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-78"
+            ],
+            "published": "2026-07-14T10:16:32.917",
+            "lastModified": "2026-08-11T13:18:47.727",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://doc.milestonesys.com/en-US/bundle/sec1504_latest/page/milestone_security_advisory_CVE-2026-3014_potential_remote_code_execution_by_admin_user_on_Management_Server.html",
+                "source": "cf45122d-9d50-442a-9b23-e05cde9943d8",
+                "tags": []
+              },
+              {
+                "url": "https://support.milestonesys.com/article/CVE-2026-3014-potential-remote-code-execution-by-admin-user-on-Management-Server",
+                "source": "cf45122d-9d50-442a-9b23-e05cde9943d8",
+                "tags": []
+              },
+              {
+                "url": "https://cert-portal.siemens.com/productcert/html/ssa-825228.html",
+                "source": "0b142b55-0307-4c5a-b3c9-f314f3fb7c5e",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-225-09",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.11",
+              "dateReleased": "2026-08-11T18:59:43.6861Z",
+              "retrievedAt": "2026-08-14T12:53:38.822Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-59310%2CCVE-2026-71362%2CCVE-2026-3014%2CCVE-2026-65309%2CCVE-2026-65310%2CCVE-2026-65311%2CCVE-2026-65313%2CCVE-2026-19188%2CCVE-2025-7639",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-3014",
+              "retrievedAt": "2026-08-14T12:53:38.822Z"
+            }
+          }
+        }
+      ],
+      "id": "s38"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Flow Neuroscience FL-100",
+      "url": "https://www.cisa.gov/news-events/ics-medical-advisories/icsma-26-225-01",
+      "publishedAt": "2026-08-13T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of this vulnerability could allow an attacker within Bluetooth range to manipulate brain stimulation parameters and override safety limits. The following versions of Flow Neuroscience FL-100 are affected: Flow Neuroscience FL-100 Halo Neuroscience FL-100 CVSS Vendor Equipment Vulnerabilities v3 8.1 Flow Neuroscience Flow Neuroscience FL-100 Use of…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-medical-advisories/icsma-26-225-01",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s39"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Siemens LOGO! Soft Comfort",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-225-13",
+      "publishedAt": "2026-08-13T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Siemens LOGO! Soft Comfort contains multiple vulnerabilities in its project-file encryption and password handling mechanisms. A local attacker could exploit these vulnerabilities to extract the master key, allowing them to decrypt project data or remove project passwords. The lack of password salting enables offline dictionary or brute-force attacks against the password hashes.…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-225-13",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s40"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "ANDRITZ HIPASE-250 and 250 SCALA",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-225-05",
+      "publishedAt": "2026-08-13T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of these vulnerabilities could allow an attacker to read data from the device or gain access to affected workstations. The following versions of ANDRITZ HIPASE-250 and 250 SCALA are affected: HIPASE-250 <=7.20 (CVE-2026-65309, CVE-2026-65310, CVE-2026-65311, CVE-2026-65313) 250 SCALA <=7.20 (CVE-2026-65309, CVE-2026-65310, CVE-2026-65311, CVE-2026-65313)…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-225-05",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-65309",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "ANDRITZ HIPASE-250 (formerly 250 SCALA) in affected versions stores\nand transmits user passwords using a reversible format instead of a\none-way password hash. This allows an attacker able to read the\ncredential store or capture network traffic to recover all stored\npasswords.",
+            "cvss": {
+              "version": "3.1",
+              "score": 7.5,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+              "source": "office@cyberdanube.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-257",
+              "CWE-327"
+            ],
+            "published": "2026-07-31T08:16:28.330",
+            "lastModified": "2026-07-31T17:16:34.640",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://www.andritz.com/",
+                "source": "office@cyberdanube.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-225-05",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.11",
+              "dateReleased": "2026-08-11T18:59:43.6861Z",
+              "retrievedAt": "2026-08-14T12:53:38.822Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-59310%2CCVE-2026-71362%2CCVE-2026-3014%2CCVE-2026-65309%2CCVE-2026-65310%2CCVE-2026-65311%2CCVE-2026-65313%2CCVE-2026-19188%2CCVE-2025-7639",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-65309",
+              "retrievedAt": "2026-08-14T12:53:38.822Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-65310",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "ANDRITZ HIPASE-250 (formerly 250 SCALA), in the default configuration\nof affected versions, exposes its data and configuration endpoint\nwithout any authentication and permissive CORS on every response. An\nunauthenticated attacker with network access can read live process\nvalues and server configuration.",
+            "cvss": {
+              "version": "3.1",
+              "score": 7.5,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+              "source": "office@cyberdanube.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-306",
+              "CWE-942"
+            ],
+            "published": "2026-07-31T09:16:58.447",
+            "lastModified": "2026-07-31T17:16:34.750",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://www.andritz.com/",
+                "source": "office@cyberdanube.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-225-05",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.11",
+              "dateReleased": "2026-08-11T18:59:43.6861Z",
+              "retrievedAt": "2026-08-14T12:53:38.822Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-59310%2CCVE-2026-71362%2CCVE-2026-3014%2CCVE-2026-65309%2CCVE-2026-65310%2CCVE-2026-65311%2CCVE-2026-65313%2CCVE-2026-19188%2CCVE-2025-7639",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-65310",
+              "retrievedAt": "2026-08-14T12:53:38.822Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-65311",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "The HTTP server component of ANDRITZ HIPASE-250 (formerly 250 SCALA)\nin affected versions exposes an undocumented endpoint that changes\nthe server's logging level and target without requiring\nauthentication. A remote, unauthenticated attacker with network\naccess to the service may suppress audit logging, potentially\nconcealing other activity on the system.",
+            "cvss": {
+              "version": "3.1",
+              "score": 5.3,
+              "severity": "MEDIUM",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+              "source": "office@cyberdanube.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-284",
+              "CWE-306",
+              "CWE-532"
+            ],
+            "published": "2026-07-31T09:16:58.960",
+            "lastModified": "2026-07-31T17:16:34.860",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://www.andritz.com/",
+                "source": "office@cyberdanube.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-225-05",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.11",
+              "dateReleased": "2026-08-11T18:59:43.6861Z",
+              "retrievedAt": "2026-08-14T12:53:38.822Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-59310%2CCVE-2026-71362%2CCVE-2026-3014%2CCVE-2026-65309%2CCVE-2026-65310%2CCVE-2026-65311%2CCVE-2026-65313%2CCVE-2026-19188%2CCVE-2025-7639",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-65311",
+              "retrievedAt": "2026-08-14T12:53:38.822Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-65313",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "A provisioning script used when installing HIPASE-250 (formerly 250\nSCALA) engineering workstations sets a fixed, hard-coded x11vnc\npassword. Because the same credential is applied to every workstation\nprovisioned this way, an attacker with adjacent-network access who\nknows the password can gain VNC access to affected workstations.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.1,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+              "source": "office@cyberdanube.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-798",
+              "CWE-1392"
+            ],
+            "published": "2026-07-31T09:16:59.090",
+            "lastModified": "2026-07-31T17:16:34.970",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://www.andritz.com/",
+                "source": "office@cyberdanube.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-225-05",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.11",
+              "dateReleased": "2026-08-11T18:59:43.6861Z",
+              "retrievedAt": "2026-08-14T12:53:38.822Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-59310%2CCVE-2026-71362%2CCVE-2026-3014%2CCVE-2026-65309%2CCVE-2026-65310%2CCVE-2026-65311%2CCVE-2026-65313%2CCVE-2026-19188%2CCVE-2025-7639",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-65313",
+              "retrievedAt": "2026-08-14T12:53:38.822Z"
+            }
+          }
+        }
+      ],
+      "id": "s41"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Siemens Solid Edge",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-225-12",
+      "publishedAt": "2026-08-13T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Solid Edge is affected by multiple file parsing vulnerabilities that could be triggered when the application reads specially crafted files in PAR, PSM or DFT format. This could allow an attacker to crash the application or execute arbitrary code. Siemens has released new versions for the affected products and recommends to update to the latest versions. The following versions of…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-225-12",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s42"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Siemens Simcenter Femap",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-225-11",
+      "publishedAt": "2026-08-13T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Simcenter Femap contains two file parsing vulnerabilities that could be triggered when the application reads files in BMP file format. If a user is tricked to open a malicious file with the affected application, this could lead the application to crash or potentially lead to arbitrary code execution. Siemens has released a new version for Simcenter Femap and recommends to update…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-225-11",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s43"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Haiwell IoT Cloud HMI Gateway",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-225-02",
+      "publishedAt": "2026-08-13T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of this vulnerability may allow an attacker to inject and execute arbitrary OS commands with root privileges. The following versions of Haiwell IoT Cloud HMI Gateway are affected: Haiwell IoT Cloud HMI Gateway 3.40.1.12 (CVE-2026-19188) CVSS Vendor Equipment Vulnerabilities v3 10 Haiwell Haiwell IoT Cloud HMI Gateway Improper Neutralization of Special…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-225-02",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-19188",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-225-02",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.11",
+              "dateReleased": "2026-08-11T18:59:43.6861Z",
+              "retrievedAt": "2026-08-14T12:53:38.822Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-59310%2CCVE-2026-71362%2CCVE-2026-3014%2CCVE-2026-65309%2CCVE-2026-65310%2CCVE-2026-65311%2CCVE-2026-65313%2CCVE-2026-19188%2CCVE-2025-7639",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-19188",
+              "retrievedAt": "2026-08-14T12:53:38.822Z"
+            }
+          }
+        }
+      ],
+      "id": "s44"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "AVEVA Enterprise SCADA",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-225-01",
+      "publishedAt": "2026-08-13T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of this vulnerability could allow an attacker to tamper with serialized data, potentially resulting in code execution during deserialization. The following versions of AVEVA Enterprise SCADA are affected: Enterprise SCADA 2025 (CVE-2025-7639) Enterprise SCADA >=2024| =2023| =2022| =2024| =2023| =2022| \"Mode\" setting from 'Binary Formatter' to 'Json'.…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-225-01",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2025-7639",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-225-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.11",
+              "dateReleased": "2026-08-11T18:59:43.6861Z",
+              "retrievedAt": "2026-08-14T12:53:38.822Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-59310%2CCVE-2026-71362%2CCVE-2026-3014%2CCVE-2026-65309%2CCVE-2026-65310%2CCVE-2026-65311%2CCVE-2026-65313%2CCVE-2026-19188%2CCVE-2025-7639",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2025-7639",
+              "retrievedAt": "2026-08-14T12:53:38.822Z"
+            }
+          }
+        }
+      ],
+      "id": "s45"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Hitachi Energy APM Edge Product",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-225-04",
+      "publishedAt": "2026-08-13T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Hitachi Energy is aware of Dirty Frag vulnerabilities that affect APM Edge product versions listed in this document. Successful exploitation of these vulnerabilities could result in impact on confidentiality, integrity and availability of the product. Please refer to the Recommended Immediate Actions for information about the mitigation/remediation. The following versions of…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-225-04",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s46"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "'Jewelbug' APT Balances State Espionage &amp; Cryptocurrency Theft",
+      "url": "https://www.darkreading.com/threat-intelligence/jewelbug-apt-state-espionage-cryptocurrency-theft",
+      "publishedAt": "2026-08-13T10:00:00.000Z",
+      "excerpt": "Researchers discovered hackers-for-hire performing cyber espionage and financially motivated heists from the same Web panel.",
+      "canonicalUrl": "https://darkreading.com/threat-intelligence/jewelbug-apt-state-espionage-cryptocurrency-theft",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s47"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Belgium's eID Authentication Opens Citizen Accounts to RCE",
+      "url": "https://www.darkreading.com/application-security/belgium-eid-authentication-citizen-accounts-rce",
+      "publishedAt": "2026-08-13T07:00:00.000Z",
+      "excerpt": "The trust framework underlying Belgium's electronic ID system was fully compromised by severe vulnerabilities in a key browser extension, showcasing bigger problems with extensions in general.",
+      "canonicalUrl": "https://darkreading.com/application-security/belgium-eid-authentication-citizen-accounts-rce",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s48"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Long-running Data Theft Campaign Targeting Salesforce, ServiceNow",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/long-running-data-theft-campaign-salesforce-servicenow",
+      "publishedAt": "2026-08-12T21:08:54.000Z",
+      "excerpt": "The \"City-Forum\" campaign has been active since at least March 2025 and has targeted organizations across multiple sectors with custom tooling.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/long-running-data-theft-campaign-salesforce-servicenow",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s49"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Walmart Takes a 'Trusted Agent' Approach to Purple Teaming",
+      "url": "https://www.darkreading.com/cybersecurity-operations/walmart-trusted-agent-approach-purple-teaming",
+      "publishedAt": "2026-08-12T16:28:04.000Z",
+      "excerpt": "Walmart colocates red and blue teams to build trust and improve security through collaborative purple teaming exercises",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/walmart-trusted-agent-approach-purple-teaming",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s50"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Ransomware Hits Colombian Justice Ministry Days Before Presidential Transition",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/ransomware-hits-colombian-justice-ministry-presidential-transition",
+      "publishedAt": "2026-08-12T14:00:00.000Z",
+      "excerpt": "Attackers continue to target critical infrastructure and government-linked organizations in the country, mirroring the increased activity across Latin America.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/ransomware-hits-colombian-justice-ministry-presidential-transition",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s51"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Siemens RUGGEDCOM APE1808",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-225-06",
+      "publishedAt": "2026-08-12T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Fortinet has published information on vulnerabilities in FortiOS. This advisory lists the related Siemens Industrial products. Siemens recommends to contact customer support for additional information, and follow Fortinet advisory for workarounds and mitigation measures. The following versions of Siemens RUGGEDCOM APE1808 are affected: RUGGEDCOM APE1808 vers:all/*…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-225-06",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s52"
+    },
+    {
+      "sourceId": "talos",
+      "sourceKind": "rss",
+      "title": "Microsoft Patch Tuesday for August 2026 — Snort rules and prominent vulnerabilities",
+      "url": "https://blog.talosintelligence.com/microsoft-patch-tuesday-for-august-2026/",
+      "publishedAt": "2026-08-11T22:21:02.000Z",
+      "excerpt": "Microsoft has released its monthly security update for August 2026, which includes 421 vulnerabilities affecting a range of products, including 62 that Microsoft marked as \"critical.\"",
+      "canonicalUrl": "https://blog.talosintelligence.com/microsoft-patch-tuesday-for-august-2026",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s53"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 0,
+    "promptCacheMissTokens": 10834,
+    "outputTokens": 13276,
+    "estimatedCostUsd": 0.005234040000000001
+  }
+}
