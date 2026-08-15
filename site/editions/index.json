@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-08-15",
+    "mode": "article",
+    "headline": "The headline",
+    "count": 11
+  },
+  {
     "date": "2026-08-14",
     "mode": "article",
     "headline": "Beyond the patch: active exploits, breach fallout, and hack-back",
