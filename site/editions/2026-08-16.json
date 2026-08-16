@@ -1,0 +1,42 @@
+{
+  "date": "2026-08-16",
+  "generatedAt": "2026-08-16T12:28:52.444Z",
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 225,
+    "published": 1
+  },
+  "mode": "article",
+  "headline": "Evooo1Bot turns router compromises into a SOCKS5 relay network",
+  "standfirst": "The lead story is an actively exploited Mirai-derived botnet that is compromising internet-facing gateway devices and repurposing them as SOCKS5 traffic relay nodes. Rather than being just another IoT DDoS swarm, Evooo1Bot points to an expansion of the DDoS-for-hire ecosystem, one in which routers become durable, reusable proxy infrastructure. The available intelligence describes a malware problem, not a single patchable bug, so the response has to start with device visibility and basic edge hardening.",
+  "bodyMarkdown": "## Actively exploited\n\nEvooo1Bot [[s1]] is a modular Linux botnet built on the Mirai lineage. Its current objective, according to the reporting, is to target internet-facing gateway devices and convert them into SOCKS5 traffic relay nodes. The easiest way to misread the story is to dismiss it as another Mirai variant adding a few thousand more nodes to a DDoS swarm. The architecture suggests something more interesting: a botnet that invests in SOCKS5 relays is not only trying to maximize attack bandwidth, it is building a resellable proxy layer that can hide the origin of malicious traffic and support more than one criminal service line. The emphasis on relay rather than flood implies the operators plan to use these routers for longer periods than a typical booter campaign.\n\nThat shift has real consequences for detection. DDoS attacks are loud. A router flooding a target tends to appear in flow records and interface counters. A router sitting on the network and occasionally forwarding proxied traffic is quiet. It can be used as a hop in a chain to reach command-and-control infrastructure, to relay an operator’s administrative traffic, or to serve as a node in a paid proxy service. By turning routers into general-purpose relays, Evooo1Bot [[s1]] blurs the distinction between a compromised edge device and an attacker’s control channel. The modular design reinforces the problem. The initial infection and the relay component can be swapped or updated independently, so the malware’s behavior on a given device can change over time, and defenders cannot assume a single signature or detection rule will hold.\n\nFor network defenders, the immediate practical question is how many internet-facing gateway devices you can actually account for. The router estate is often the least visible part of an infrastructure: devices are configured once, placed in service, and then ignored until a circuit fails. Evooo1Bot [[s1]] is a direct argument for changing that assumption. The exposure is not a single brand or product line in the initial report; it is any internet-facing gateway that can be reached and subverted. That includes devices that have remote management exposed, devices still using weak administrative credentials, and devices running firmware that will likely never receive another update. No specific vulnerability has been attached to this reporting, which is worth reading as a signal: this is a botnet that grows the way Mirai-family malware always has, by scanning for poorly protected edge devices and moving in. A patch-only playbook will not be enough.\n\nThe response should therefore be broader than chasing a CVE. Router owners should inventory every internet-facing gateway, audit for exposed administration interfaces and default credentials, and make sure management access is restricted to trusted sources. On the monitoring side, outbound connections initiated by the router itself that cannot be explained by NTP, DNS, or software update traffic deserve attention. New listening sockets, unexpected firewall rules, and configuration changes on edge devices should be treated with the same seriousness as suspicious behavior on a server. Central logging for gateways is often disabled by default, but enabling it now is a small step that can make the difference when an infection begins installing modules.\n\nThe bigger-picture takeaway is the one already visible in the DDoS-for-hire framing. The value of a router botnet is no longer just aggregate bandwidth. Evooo1Bot [[s1]] gives the criminal ecosystem a durable relay infrastructure that can be reused across attacks and for anonymizing the attackers’ own traffic. Every always-on router that joins this network becomes a potential hop for someone who does not want to expose real infrastructure. Defenders who can identify and remove those hops will be doing more than stopping one botnet; they will be making the broader ecosystem less dependable.",
+  "selected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "New Evooo1Bot Linux botnet turns routers into traffic relay nodes",
+      "url": "https://www.bleepingcomputer.com/news/security/new-evooo1bot-linux-botnet-turns-routers-into-traffic-relay-nodes/",
+      "publishedAt": "2026-08-15T14:14:38.000Z",
+      "excerpt": "A new Mirai-based modular Linux botnet malware called Evooo1Bot has been targeting internet-facing gateway devices, turning them into SOCKS5 traffic relay nodes. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/new-evooo1bot-linux-botnet-turns-routers-into-traffic-relay-nodes",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s1",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "New Mirai variant actively compromises routers to build a SOCKS5 proxy network, expanding the DDoS-for-hire ecosystem."
+    }
+  ],
+  "alsoCollected": [],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 768,
+    "promptCacheMissTokens": 705,
+    "outputTokens": 6919,
+    "estimatedCostUsd": 0.0020381704000000003
+  }
+}
