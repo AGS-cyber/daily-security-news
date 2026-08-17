@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-08-17",
+    "mode": "article",
+    "headline": "Enterprise Flaws Under Active Attack: SAP, VMware, macOS, and GeoServer Demand Urgent Action",
+    "count": 33
+  },
+  {
     "date": "2026-08-16",
     "mode": "article",
     "headline": "Evooo1Bot turns router compromises into a SOCKS5 relay network",
