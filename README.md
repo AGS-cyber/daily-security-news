@@ -157,13 +157,13 @@ docs/operations.md          running, deploying, debugging
 docs/vulnerability-intelligence.md  enrichment contract
 src/
   index.ts                  entry point — one run, one edition
-  config/                   sources, newsletter, vulnerability endpoints/cache
+  config/                   sources, vulnerability endpoints/cache
   collect/                  one module per source kind
   pipeline/                 normalize, dedupe, filter, select, write
   vulnerability/            extraction, clients, cache, enrichment, priority
   llm/client.ts             DeepSeek client + usage accounting
   render/                   edition JSON + HTML, and the terminal theme
-  store/                    seen and email-send ledgers
+  store/                    the seen ledger
 data/
   seen.json                 canonical-URL hashes → date first covered
   editions/YYYY-MM-DD.json  the record behind each page

@@ -45,18 +45,13 @@ import dev.dailysecuritynews.app.render.CitationResult
  * Every branch renders something. A blank screen is never an acceptable state
  * — `docs/app.md` §8 — and the three banners exist so a reader can tell a
  * partial or stale edition from a complete one without checking the site.
- *
- * [subscribe] is the sign-up block at the foot of the page, where the site's
- * `layout()` puts it. It appears only under a rendered edition: offering to
- * mail someone the daily edition on a screen that just failed to load one
- * reads as the app ignoring its own error.
  */
 @Composable
-fun EditionScreen(state: EditionState, onRetry: () -> Unit, subscribe: SubscribeSlot) {
+fun EditionScreen(state: EditionState, onRetry: () -> Unit) {
     when (state) {
         is EditionState.Loading -> LoadingBody("Loading the edition")
         is EditionState.Error -> ErrorBody(state.message, onRetry)
-        is EditionState.Ready -> ReadyBody(state, subscribe)
+        is EditionState.Ready -> ReadyBody(state)
     }
 }
 
@@ -102,7 +97,7 @@ internal fun ErrorBody(message: String, onRetry: () -> Unit) {
 }
 
 @Composable
-private fun ReadyBody(state: EditionState.Ready, subscribe: SubscribeSlot) {
+private fun ReadyBody(state: EditionState.Ready) {
     val edition = state.edition
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -170,8 +165,6 @@ private fun ReadyBody(state: EditionState.Ready, subscribe: SubscribeSlot) {
                 itemsIndexed(edition.items) { index, story -> StoryRow(index + 1, story) }
             }
         }
-
-        item { SubscribeBlock(subscribe) }
     }
 }
 

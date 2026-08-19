@@ -8,19 +8,16 @@ const CITATION = /\[\[([^\]]+)\]\]/g;
  * link because titles routinely contain `]`, `)` and `*`, which would corrupt
  * Markdown link syntax; `marked` passes inline HTML through unchanged.
  *
- * That pass-through is exactly why [linkStyle] exists. Because the anchor is
- * raw HTML, `marked` never routes it through a custom `link` renderer — so the
- * email renderer, which styles every element inline, cannot reach these
- * anchors any other way. The page passes nothing and gets the same markup it
- * always did; email passes its inline style.
+ * The anchor carries no style attribute. It used to take an optional one, for
+ * the email renderer that styled every element inline because `marked` never
+ * routes raw HTML through a custom `link` renderer. The page has always styled
+ * these from the stylesheet, and it is now the only reader.
  */
 export function substituteCitations(
   markdown: string,
   selected: (Item & Selection)[],
-  linkStyle?: string,
 ): string {
   const byId = new Map(selected.map((story) => [story.id, story]));
-  const style = linkStyle ? ` style="${escapeHtml(linkStyle)}"` : '';
 
   return markdown.replace(CITATION, (_match, rawId: string) => {
     const story = byId.get(rawId.trim());
@@ -28,6 +25,6 @@ export function substituteCitations(
     if (!story) {
       throw new Error(`citation [[${rawId}]] has no matching selected story`);
     }
-    return `<a href="${escapeHtml(story.url)}"${style}>${escapeHtml(story.title)}</a>`;
+    return `<a href="${escapeHtml(story.url)}">${escapeHtml(story.title)}</a>`;
   });
 }

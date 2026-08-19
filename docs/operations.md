@@ -7,9 +7,8 @@ need when it is 08:00 and the build is red.
 Repository: https://github.com/AGS-cyber/daily-security-news
 Live site: https://daily-security-news.vercel.app/ — Vercel, built from `main`
 on every push. The old GitHub Pages URL is retired.
-Newsletter: https://buttondown.com/AGS — Buttondown, free tier (100 subscribers).
 Android: https://github.com/AGS-cyber/daily-security-news/releases — latest is
-`app-v0.3.0`.
+`app-v0.4.0`.
 
 ## 0. Where things stand
 
@@ -17,23 +16,22 @@ A short, dated state-of-the-world, because the sections below explain *how*
 things work and not *what has actually happened yet*. Update it when one of
 these lines stops being true.
 
-**As of 2026-08-11:**
+**As of 2026-08-18:**
 
-- The pipeline has published daily since 2026-08-06. Five editions exist.
-- **The email edition is live but has never delivered to a human.** The
-  subscribe form is on every page and in the app, `BUTTONDOWN_API_KEY` is set,
-  and the cron send is armed — but the list has no confirmed subscribers, so
-  no send has yet had a recipient. Until one does, treat the whole path as
-  unexercised in production.
-- Consequently **three things have never been observed**, and each is a place
-  to look first if something seems wrong:
-  1. A real subscribe reaching Buttondown from either client.
-  2. The app's `Sent` banner wording (`app.md` §12).
-  3. An edition rendered by a real mail client rather than a browser. The
-     email uses inline styles and a table layout precisely because clients are
-     hostile, but nothing has confirmed the result in Outlook or Gmail. Use
-     `npm run email -- --dry-run` and an email-rendering tester before
-     assuming it is fine.
+- The pipeline has published daily since 2026-08-06 without missing a day.
+  Thirteen editions exist.
+- **The email edition was removed on 2026-08-18** (design §12). It never
+  delivered a single edition. `BUTTONDOWN_API_KEY` was stored empty on
+  2026-08-08, so all ten scheduled runs from 08-09 to 08-18 failed on the send
+  step while publishing the site correctly. The site and the app no longer ask
+  for an address, and there is no send step left to fail.
+  - **The previous version of this section said "`BUTTONDOWN_API_KEY` is
+    set".** It was, in the only sense `gh secret list` can show — the name
+    existed. That sentence is why nobody looked for ten days. When this file
+    claims a credential works, it should mean a run used it.
+  - The Buttondown account itself is outside this repository. Nothing here
+    touches it any more; deleting it, and any addresses it collected, is a
+    manual step for whoever owns the account.
 - Android `0.3.0` adds compact CISA KEV and NVD vulnerability intelligence to
   the briefing. **iOS still compiles but has never been run** — see
   `app.md` §7, which is emphatic that a build proves nothing about a screen.
@@ -50,62 +48,28 @@ npm test
 npm run typecheck
 ```
 
-Two operational credentials and one optional enrichment credential:
+One operational credential and one optional enrichment credential:
 
 ```sh
-gh secret set DEEPSEEK_API_KEY --repo AGS-cyber/daily-security-news
-gh secret set BUTTONDOWN_API_KEY --repo AGS-cyber/daily-security-news < key.txt
+gh secret set DEEPSEEK_API_KEY --repo AGS-cyber/daily-security-news < key.txt
 gh secret set NVD_API_KEY --repo AGS-cyber/daily-security-news < nvd-key.txt  # optional
 ```
+
+**Redirect from a file rather than pasting blind.** The paste prompt echoes
+nothing, so a paste that does not register still creates the secret with an
+empty value — which is exactly how the email send failed silently for ten days
+(§5, design §12).
 
 `NVD_API_KEY` raises the NVD API limit from 5 to 50 requests per rolling 30
 seconds. The pipeline batches up to 100 CVEs per request and remains functional
 without a key. An unset or empty optional key is omitted from the request; it is
 never written to a URL, log, cache, edition, or generated page.
 
-**They fail differently and the difference is deliberate.** A missing
-`DEEPSEEK_API_KEY` is a disclosed fallback and the build stays green. A missing
-`BUTTONDOWN_API_KEY` fails the run **red**, because a send has no degraded mode
-to fall back to (design §12). Set it before the next scheduled run, or expect a
-red check every morning with the site publishing correctly regardless.
-
-`BUTTONDOWN_API_KEY` comes from Buttondown → Settings → API. Scope it to the
-minimum the send actually uses — Buttondown's keys are per-category:
-
-| Category | Access | Why |
-|---|---|---|
-| **Emails** | **Read & write** | `POST /v1/emails` creates the edition |
-| **Sending** | **Enabled** | `status: about_to_send` needs it |
-| Subscribers | **None** | Subscribing uses the keyless endpoint, never this key |
-| Automations, Forms, Surveys, Settings, Styling | **None** | Unused. `Settings` in particular grants billing information |
-
-Those default to `Read` in the UI and must be turned down by hand. The point of
-`Subscribers: None` is that a key leaked from Actions **cannot read the
-subscriber list** — the only thing this key can do is publish an edition.
-
-### The username is the value nothing can check for you
-
-The account's **username must match `BUTTONDOWN_USERNAME` in
-`src/config/newsletter.ts`** — and its Kotlin restatement in
-`net/SubscribeRepository.kt`. It is baked into the subscribe form on every page
-and into the app binary, and a mismatch signs readers up to a different
-newsletter with nothing here able to detect it.
-
-It is **`AGS`**, upper case. Buttondown canonicalises the name and
-302-redirects `buttondown.com/ags` to `buttondown.com/AGS`. That matters
-because every HTTP client answers a 302 on a POST by re-issuing it as a GET
-with no body: the lower-case spelling would drop the address and land the
-reader on the archive page looking subscribed. Use the spelling the service
-redirects *to*.
-
-Verify a username before trusting it — a wrong one is a 404, not an error:
-
-```sh
-curl -sS -o /dev/null -w "%{http_code} %{redirect_url}\n" https://buttondown.com/AGS
-```
-
-`200` with no redirect is correct. `302` means it is not canonical. `404` means
-the account does not exist.
+A missing `DEEPSEEK_API_KEY` is a **disclosed fallback**, not a crash: the run
+publishes the chronological digest under a banner saying the article is
+missing, and the build stays green (§8). That is deliberate, and it is the only
+credential the daily run has left — nothing in the pipeline now fails red for
+want of a key.
 
 Locally, export `DEEPSEEK_API_KEY` in your shell. **Nothing breaks without
 it** — a missing key is treated as an LLM failure, so the run publishes the
@@ -141,7 +105,6 @@ expect to see until the secret is set.
 
 ```
 data/seen.json                canonical-URL hash → date first covered
-data/sent.json                date → {sentAt, emailId} for every edition mailed
 data/cache/vulnerability-intelligence.json  validated KEV/NVD cache
 data/editions/YYYY-MM-DD.json the full record behind that day's page
 site/index.html               today's edition
@@ -248,29 +211,6 @@ produces an unusually large edition — the cold-start behaviour in §3, not a
 fault. It also spends an LLM call and writes a *different* article from a
 different story set (see "A later re-run produces a smaller edition" in §5).
 If all you changed was presentation, you want `npm run rerender` instead.
-
-**Preview the email without sending one.** Free, offline, and the only sane way
-to iterate on the design — the send itself cannot be undone.
-
-```sh
-npm run email -- --dry-run
-```
-
-That writes `email-preview.html` (gitignored) and sends nothing. Open it, and
-paste it into an email-rendering tester if the change touched layout — a
-browser is a generous client and Outlook is not.
-
-**Mail an edition by hand.** Only needed when a scheduled send failed and you
-have fixed the cause:
-
-```sh
-npm run email                        # today's edition
-npm run email -- --date 2026-08-06   # a specific one
-```
-
-**Deliberately re-send a date.** There is no `--force`, on purpose: the guard
-should take an explicit act to defeat, not a flag that lives next to the normal
-command. Remove the date's entry from `data/sent.json` and run it again.
 
 **Inspect an edition without opening the HTML:**
 
@@ -416,6 +356,14 @@ takes the value from a blind paste that echoes nothing, so a paste that does
 not register still creates the secret. `gh secret list` only ever proves a
 secret exists — it never shows the value, so it cannot tell you this.
 
+**This happened twice, and the second time cost ten days.** `BUTTONDOWN_API_KEY`
+was stored empty on 2026-08-08 and every scheduled send from 08-09 to 08-18
+failed on it. The check was red every single morning and said exactly what was
+wrong; a daily red check on a step that cannot hurt the site is a notification
+people stop reading. The email edition was removed rather than repaired
+(design §12), so this failure mode now applies only to `DEEPSEEK_API_KEY` —
+where it stays green and merely produces a digest, which is harder to spot.
+
 **Diagnose from the run log,** which settles it in one line:
 
 ```sh
@@ -458,9 +406,9 @@ variable really is absent.
 
 ### The page renders but has lost its font, size and colour
 
-**Symptom:** an email (or any inline-styled markup) comes out in the browser's
-default serif at the default size, on the right background. Nothing errors and
-the HTML looks correct at a glance.
+**Symptom:** inline-styled markup comes out in the browser's default serif at
+the default size, on the right background. Nothing errors and the HTML looks
+correct at a glance.
 
 **Actual cause:** a **double quote inside a double-quoted `style="…"`
 attribute**. The attribute closes early and every declaration after that point
@@ -468,9 +416,11 @@ is discarded. The trigger here was the monospace font stack, which names
 `"SF Mono"` and `"DejaVu Sans Mono"`.
 
 **Fix, already in place:** `src/render/palette.ts` quotes family names with
-apostrophes. CSS accepts either, so one constant serves the `<style>` block and
-the inline attribute. `src/render/email.test.ts` asserts no `style` attribute
-contains a double quote.
+apostrophes. CSS accepts either, so one constant serves a `<style>` block and an
+inline attribute alike. The renderer that inlined styles — and the test that
+asserted no `style` attribute held a double quote — went with the email edition
+on 2026-08-18, so nothing in the tree inlines the stack today. The safe quoting
+stays: this is kept as a trap to recognise, not as a live defence.
 
 **Why it is written down:** this was invisible to a green test suite and to
 reading the source. It was found by opening the file and noticing the text was
@@ -543,10 +493,6 @@ as designed:
 | `DEEPSEEK_API_KEY` missing | Same as above — disclosed fallback | green |
 | `dedupe`, `render`, or `publish` fails | Run aborts, nothing deploys, yesterday's edition stays up | **red** |
 | `seen.json` is malformed | Throws — never silently reset, or everything republishes | **red** |
-| The email send fails, for any reason | Site is already published; nothing is mailed | **red** |
-| `BUTTONDOWN_API_KEY` missing or empty | Same — a send has no degraded mode (design §12) | **red** |
-| The edition was already mailed | Skipped and logged; `sent.json` did its job | green |
-| `sent.json` is malformed | Throws — a reset ledger would re-mail every edition | **red** |
 
 The rule behind the table: a thinner page is always disclosed, and a page never
 looks like a normal edition when it is not one. Silent degradation is the one
@@ -578,13 +524,6 @@ git fetch origin && git show --stat origin/main
 
 # Is the live site current?
 curl -sS https://daily-security-news.vercel.app/ | grep -oE '[0-9]+ stories[^<]*'
-
-# Was today's edition mailed, and which Buttondown email is it?
-node -e "console.log(require('./data/sent.json')['$(date -u +%F)'] ?? 'not sent')"
-
-# What Buttondown thinks it has sent — the other side of the ledger
-curl -sS -H "Authorization: Token $BUTTONDOWN_API_KEY" \
-  https://api.buttondown.com/v1/emails | head -c 600
 
 # Does the live site match what was committed? A green build is not a deploy.
 curl -sS https://daily-security-news.vercel.app/index.html | diff - site/index.html

@@ -2,5 +2,3 @@ node_modules/
 *.log
 .env
 .env.*
-# `npm run email -- --dry-run` output. A local preview, never the product.
-email-preview.html

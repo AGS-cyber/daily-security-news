@@ -8,9 +8,8 @@
   "scripts": {
     "start": "tsx src/index.ts",
     "rerender": "tsx src/rerender.ts",
-    "email": "tsx src/email.ts",
     "typecheck": "tsc --noEmit",
-    "test": "tsx --test src/pipeline/normalize.test.ts src/pipeline/dedupe.test.ts src/pipeline/filter.test.ts src/vulnerability/extract.test.ts src/vulnerability/http.test.ts src/vulnerability/kev.test.ts src/vulnerability/nvd.test.ts src/vulnerability/cache.test.ts src/vulnerability/enrich.test.ts src/vulnerability/priority.test.ts src/pipeline/select.test.ts src/pipeline/write.test.ts src/llm/client.test.ts src/render/citations.test.ts src/render/site.test.ts src/render/email.test.ts src/store/sent.test.ts"
+    "test": "tsx --test src/pipeline/normalize.test.ts src/pipeline/dedupe.test.ts src/pipeline/filter.test.ts src/vulnerability/extract.test.ts src/vulnerability/http.test.ts src/vulnerability/kev.test.ts src/vulnerability/nvd.test.ts src/vulnerability/cache.test.ts src/vulnerability/enrich.test.ts src/vulnerability/priority.test.ts src/pipeline/select.test.ts src/pipeline/write.test.ts src/llm/client.test.ts src/render/citations.test.ts src/render/site.test.ts"
   },
   "dependencies": {
     "marked": "^18.0.9",

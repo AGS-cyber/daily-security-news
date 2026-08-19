@@ -180,22 +180,18 @@ test('important selected vulnerabilities render as compact authoritative metadat
   });
 });
 
-test('every page carries the subscribe form, and it needs no JavaScript', async () => {
+test('no page asks for an email address, and none carries a script', async () => {
   await withDirs(async (dirs) => {
     const edition = articleEdition();
     await writeEdition(edition, dirs.editionsDir);
     await writeSite(edition, dirs);
 
-    // In layout(), so today's page, the dated page and the archive all have it.
+    // The subscribe form lived in layout(), so its removal has to hold for
+    // today's page, the dated page and the archive alike.
     for (const file of ['index.html', '2026-08-06.html', 'archive.html']) {
       const page = await readFile(join(dirs.siteDir, file), 'utf8');
-      assert.match(
-        page,
-        /<form method="post" action="https:\/\/buttondown\.com\/api\/emails\/embed-subscribe\//,
-        `${file} is missing the subscribe form`,
-      );
-      assert.match(page, /name="email"[^>]*required|required[^>]*name="email"/, file);
-      assert.match(page, /name="embed" value="1"/, file);
+      assert.doesNotMatch(page, /buttondown/i, `${file} still points at Buttondown`);
+      assert.doesNotMatch(page, /<form/i, `${file} still collects an address`);
       // The site has never shipped a script tag and this must not be the first.
       assert.doesNotMatch(page, /<script/i, `${file} gained a script tag`);
     }
@@ -208,7 +204,7 @@ test('every page carries the tab icon, inlined rather than fetched', async () =>
     await writeEdition(edition, dirs.editionsDir);
     await writeSite(edition, dirs);
 
-    // In layout(), like the subscribe form, so it reaches all three page kinds.
+    // In layout(), so it reaches all three page kinds.
     for (const file of ['index.html', '2026-08-06.html', 'archive.html']) {
       const page = await readFile(join(dirs.siteDir, file), 'utf8');
       const encoded = /<link rel="icon" type="image\/svg\+xml" href="data:image\/svg\+xml,([^"]+)">/

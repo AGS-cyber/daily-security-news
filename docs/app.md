@@ -11,10 +11,10 @@ today's article and the archive. **The website is unchanged and stays the
 primary product** — the app is a second reader over the same data, not a
 replacement and not a rewrite.
 
-Version 1 was **read-only**: fetch, display, cache for offline. It now has
-exactly one write — subscribing to the email edition (§12), which is neither
-"settings" nor "accounts" below: it posts an address to Buttondown and keeps
-nothing. Otherwise, deliberately out of scope, each its own later decision:
+The app is **read-only**: fetch, display, cache for offline. It briefly had one
+write — subscribing to the email edition — and 0.4.0 removed it along with the
+email edition itself (§12, `design.md` §12). Otherwise, deliberately out of
+scope, each its own later decision:
 
 - Push notifications. The obvious feature, and the one thing an app buys
   that a bookmark doesn't — but it needs a device-token registry (new
@@ -655,70 +655,33 @@ Both defects that reached the emulator were invisible to a green build: the
 wrapping brand and the detached cursor. §10's rule holds and keeps holding —
 a green Gradle run is evidence about the code and nothing about the screen.
 
-## 12. Subscribing to the email edition
+## 12. Subscribing — removed in 0.4.0
 
-The app's one write. `design.md` §12 covers the newsletter as a whole; this is
-the app's half of it.
+The app had exactly one write: a subscribe block at the foot of every rendered
+edition, posting an address to Buttondown's keyless embed endpoint. It shipped
+in 0.2.0 and was removed in **0.4.0 on 2026-08-18**, when the email edition was
+removed outright — `design.md` §12 has the full account, including the ten days
+of failed sends that preceded it.
 
-**It posts to the same keyless endpoint the website's form posts to**, as an
-ordinary `application/x-www-form-urlencoded` submission via Ktor's
-`submitForm`. That the endpoint needs no key is the reason the app can do this
-at all: an API key inside a shipped binary is an extracted API key, so a
-key-bearing endpoint would have meant a server of our own. No
-`ContentNegotiation` and no new dependency, honouring §9.
+Deleted with it: `ui/SubscribeBlock.kt`, `ui/SubscribeStore.kt`,
+`net/SubscribeRepository.kt`, `SubscribeStoreTest.kt`, and the `SubscribeSlot`
+wiring through `App.kt` and `EditionScreen.kt`. About 420 lines. The app is
+read-only again, as it was in 0.1.0.
 
-`SUBSCRIBE_URL` in `net/SubscribeRepository.kt` restates
-`src/config/newsletter.ts`. Nothing ties them together — the same
-hand-maintained mirror as the palette in §11, and the same answer: it is
-written down because no compiler tie is available.
+**Two things it taught are worth keeping, because neither is about email.**
 
-**`Load` is not reused, and should not be.** Its entire purpose is cache
-provenance: `Cached` carries a value *plus* the network error that made it a
-fallback, so a caller cannot render stale data without knowing it is stale. A
-POST has no cache and no fallback. Reusing it would add a case that can never
-occur, which is worse than a second small type.
+**A `Sent` state should not be called `Subscribed`.** The banner said "Check
+your inbox", not "Subscribed", because the list was double opt-in and nobody
+was subscribed until they followed a link. Any future confirmation flow inherits
+that rule: name the state after what actually happened, not after what the
+reader hopes happened.
 
-`SubscribeState` is `Idle`, `Submitting`, `Sent`, `Failed`. **`Idle` looks like
-the "fourth, blank case" §10 forbids and is not one.** That rule exists so a
-*failure* can never render as an empty screen. An empty form before the reader
-has typed anything is not a hidden failure; it is the screen's subject. The
-three post-submit outcomes remain exhaustive and all visible.
+**The app bar holds one action, and that was learned by breaking it.** The first
+version put an `[email]` action beside `[archive]`; two actions narrowed the
+title slot enough to wrap the 31-character brand lockup onto two lines on a
+1080px screen. The subscribe form moved to the foot of the edition and the
+lockup went back to one line. The one-action constraint outlives the feature
+that discovered it — §11 is where that now lives.
 
-`Sent` is deliberately not called `Subscribed`, and its banner says **"Check
-your inbox"** rather than claiming success. The list is double opt-in: nobody
-is subscribed until they follow the link, and a screen that says otherwise is
-lying about the one fact the reader needs.
-
-### It is not a screen, and that is the second design here
-
-The form lives at the foot of `EditionScreen`, which is where the site puts it
-— `layout()`, on every page, not in the nav. It is not a `Screen` destination
-and there is no `[subscribe]` button in the app bar.
-
-**That was arrived at by breaking it first.** The first version added a fourth
-destination with an `[email]` action beside `[archive]`. Two actions narrow the
-title slot enough that the 31-character brand lockup wraps onto two lines on a
-1080px screen — `root@sec:~$` alone above the name, which §11 calls the one
-arrangement a terminal never shows. The app bar holds one action. Treat that as
-a constraint, not a preference.
-
-The block renders only under a successfully loaded edition, never on the
-loading or error bodies: offering to mail someone the daily edition on a screen
-that just failed to load one reads as the app ignoring its own error.
-
-One `SubscribeStore` is held in `App` and passed down as a `SubscribeSlot`, so
-an address typed under today's edition is not lost by opening an archived one.
-
-### Verified on the emulator
-
-The block at the foot of the edition with its `## ` sigil, the note about the
-confirmation link, the outlined field, and the `subscribe` button. Submitting
-an empty field renders `[ !! ERROR ]` with the message verbatim and leaves the
-field in place to correct. The brand lockup is back on one line with
-`[archive]` beside it.
-
-**Not seen on a screen: the `Sent` banner's wording.** It needs a real accepted
-POST, and this was verified without sending anything to Buttondown. The
-`Banner` composable it uses is the same one the `[ NOTICE ]` citation banner
-already exercises, so the rendering is covered; the copy is not. Check it the
-first time a real address goes through.
+**Ktor stays a dependency.** `EditionRepository` needs it; only the
+`submitForm` call went. Nothing in the build files changed but the version.

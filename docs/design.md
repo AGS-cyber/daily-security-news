@@ -16,14 +16,11 @@ why.
 
 Non-goals: real-time alerting, a general RSS reader, user accounts.
 
-~~A newsletter service.~~ **Reversed 2026-08-07.** Readers can now receive the
-edition by email, from the site or the app — see §12. The reversal is narrow
-and the rest of the line still holds: the list lives at Buttondown, so this
-project gained a delivery channel, not accounts, not subscriber records, and
-not a second product. The word "newsletter" was doing two jobs in the original
-sentence — "we are not building list management" (still true) and "email is not
-a way to read this" (no longer true) — which is why it is struck out rather
-than quietly deleted.
+A newsletter service. **Reversed 2026-08-07, restored 2026-08-18.** For eleven
+days the site and the app offered to mail the edition; §12 records what that
+cost and why it is gone. Both turns stay on the record because the round trip
+is the useful part: the delivery channel was cheap to add and never once
+delivered, and the non-goal it contradicted was right the first time.
 
 ## 2. Deliverable
 
@@ -59,13 +56,14 @@ never touches a story's title, link, or timestamp. Styling is confined to the
 `CSS` constant and `layout()` in `render/html.ts`; no other module knows what
 the page looks like.
 
-**The email edition inverts that rule and only that rule** — see §12. Email
-clients strip generated content, so there the same characters are real markup.
-Everything else holds, including the part that matters most: the theme still
-never edits a story's title or an edition's prose.
+**The rule now has no exceptions.** The email edition was the one surface that
+inverted it — email clients strip generated content, so there the decorative
+characters had to be real markup — and it was removed on 2026-08-18 (§12). Every
+remaining surface keeps its sigils in CSS.
 
 **The colours live in `render/palette.ts`**, which `html.ts` interpolates into
-`:root` and `email.ts` inlines. One definition, two web-side consumers.
+`:root`. One definition, and since the email renderer went, one web-side
+consumer.
 
 **The app mirrors this palette rather than sharing it** — see `app.md` §11.
 Nothing ties the Kotlin copy to the TypeScript, so a colour changed there has
@@ -341,19 +339,15 @@ docs/app.md                 the native app, and its contract with site/
 docs/vulnerability-intelligence.md  enrichment contract
 src/
   index.ts                  entry point — one run, one article
-  email.ts                  entry point — mail one edition (§12)
-  config/                   source, newsletter and vulnerability configuration
+  config/                   source and vulnerability configuration
   collect/                  one module per source kind
   pipeline/                 normalize, dedupe, filter, select, write
   vulnerability/            extraction, KEV/NVD, cache, enrich, priority
   llm/client.ts             DeepSeek client + usage accounting
   render/                   article JSON + HTML
-  render/palette.ts         the colours, shared by the page and the email
-  render/email.ts           the edition as an HTML email (§12)
-  store/sent.ts             the send ledger
+  render/palette.ts         the colours, mirrored by hand into the app
 data/
   seen.json                 dedupe state, committed
-  sent.json                 which editions have been mailed, committed
   editions/YYYY-MM-DD.json  the record
   cache/vulnerability-intelligence.json  KEV/NVD cache, committed
 site/                       generated, served by Vercel
@@ -493,97 +487,67 @@ Decide before the layer that needs them; don't guess early.
   contract held (valid JSON, no invented citations). Six days to go.
 - Whether the archive needs search. Probably not at 365 pages; definitely not
   at 30.
-- **Whether the email edition should be its own thing.** It is currently the
-  page, restyled — same headline, same prose, same also-collected list. If
-  open rates say people read the email and not the site, the email becomes the
-  primary surface and its own editorial decisions follow. Nothing to decide
-  until there is a week of sends to look at.
+- ~~**Whether the email edition should be its own thing.**~~ Moot 2026-08-18:
+  the email edition was removed before a single send, so there were never any
+  open rates to decide it with (§12).
 
-## 12. The email edition
+## 12. The email edition, and why it is gone
 
-Added 2026-08-07, reversing half of §1's newsletter non-goal. Readers can
-receive the edition in their inbox instead of visiting the page.
+**Shipped 2026-08-07. Removed 2026-08-18, having delivered nothing to anybody.**
 
-**Buttondown holds the list, and that is the whole point of choosing it.** A
-subscriber list is personal data with obligations attached — confirmed opt-in,
-a working unsubscribe in every message, bounce and complaint handling, deletion
-on request — and none of it is work this project is equipped to do well. So it
-is not done here. Buttondown stores the subscribers, sends the confirmation,
-owns the unsubscribe link, and answers for the data. **No email address is
-stored in this repository, ever.**
+Readers could sign up from the foot of every page and from the bottom of an
+edition in the app. Buttondown held the list — a subscriber list is personal
+data with obligations attached, and none of that was ever going to be done
+here. The edition itself was rendered a second time by `render/email.ts`, with
+every style inlined, and POSTed to Buttondown after the publish commit.
 
-That also keeps §9 intact rather than amending it. There is no serverless
-function, no database, and no new credential on the serving side. Actions still
-computes; Vercel still serves static files.
+### What actually happened
 
-### Subscribing
+The send never worked once. `BUTTONDOWN_API_KEY` was stored on 2026-08-08 with
+an **empty value** — `gh secret set` takes its value from a blind paste, so a
+paste that does not register still creates the secret, and `gh secret list`
+only ever proves that a name exists. Every scheduled run from 2026-08-09 to
+2026-08-18 inclusive — ten of them — failed on the send step with
+`BUTTONDOWN_API_KEY is set but its value is empty`.
 
-Both clients POST to Buttondown's **keyless** embed endpoint —
-`buttondown.com/api/emails/embed-subscribe/<username>`, configured in
-`src/config/newsletter.ts`.
+**The architecture held up exactly as designed, and that is the interesting
+part.** The send sat after the publish commit, so all ten of those mornings
+published a correct edition to the web and deployed it; the only casualty was
+the check colour. §8's disclosure tiers were honoured — the failure was loud,
+specific, named its own cause, and cost the reader on the web nothing.
 
-Keyless is what makes one mechanism serve both. The website posts an ordinary
-`<form method="post">` — no JavaScript, and the site still has no `<script>`
-tag anywhere. The app posts the same form fields over Ktor. A key-bearing
-endpoint would have forced a proxy of our own for the web and would have been
-flatly unusable from the app, since a key inside a shipped binary is an
-extracted key.
+**What the design could not do was make anyone act on it.** A red check every
+single morning stops being a signal by about the third one. The failure was
+findable for ten days and went unread, which is a fact about notifications and
+not about error handling — and it is the reason this section exists rather than
+a one-line changelog entry.
 
-The form is rendered in `layout()`, so it appears on today's edition, every
-dated page and the archive from one place. **Changing it therefore needs
-`npm run rerender`** or past pages keep the old markup (operations.md §4).
+### Why removed rather than fixed
 
-### Rendering
+Re-setting the secret would have taken a minute. It was not worth it. The
+channel cost a second renderer, a send ledger, a keyless embed endpoint in two
+clients, a credential, ~420 lines of subscribe UI in the app, and a daily red
+check — carried across TypeScript, Kotlin and a hosted service — to deliver, in
+its entire lifetime, zero editions to zero readers. Nothing about the eleven
+days argued that email was how anyone wanted to read this.
 
-`src/render/email.ts`, and it deliberately does not reuse the page's `CSS`.
+The subscribe forms went with it, and that was not optional. A form that posts
+an address to a list nobody ever mails is `CLAUDE.md`'s last-ranked failure —
+silently degrading to look fine — and it is worse than the red check, because
+the reader cannot see it.
 
-Email clients strip `::before`/`::after`, custom properties, counters, flexbox
-and `position: fixed` — which is nearly every mechanism §2 relies on. So the
-email inlines a style on every element, and **the decorative characters become
-real markup**: `root@sec:~$`, the `$` sigil, `## `, `[01]`, `// `. §2 says
-those must never be markup, because the page has to read as prose with the
-stylesheet off. An email has no stylesheet to switch off. Same rule — the
-reader gets the terminal — reached the opposite way, because the medium is
-different. That is stated at the top of the module so it does not read as
-someone ignoring §2.
+### What went, and what stayed
 
-Dropped for the same reason: the scanline overlay (the only `position: fixed`
-selector) and the blinking cursor. The cursor renders static, which is what the
-site itself shows under `prefers-reduced-motion` — an email is permanently in
-that mode.
+Removed: `src/email.ts`, `src/render/email.ts`, `src/store/sent.ts`,
+`src/config/newsletter.ts`, the `email` script, both email steps in
+`daily.yml`, the subscribe form in `render/html.ts`, and the app's
+`SubscribeBlock`, `SubscribeStore` and `SubscribeRepository` (app 0.4.0).
 
-The colours are not duplicated. `src/render/palette.ts` holds them, `html.ts`
-interpolates them into `:root`, and `email.ts` inlines them. The Kotlin and
-Android-resource copies (`app.md` §11) are still hand-maintained, because no
-compiler tie crosses the three languages — three copies now, not four.
+Stayed, because they were never email-specific: `render/palette.ts` and the
+single-quoted font stack in it (operations.md §5 explains the double-quote bug
+that made the quoting load-bearing — the trap is retired, the safe form is
+kept), and the site's own record of every edition under `site/editions/`.
 
-> **One trap, found on screen and now guarded by a test.** The monospace stack
-> quotes its family names with **apostrophes**. A double quote inside a
-> double-quoted `style="…"` attribute closes the attribute at `"SF Mono"` and
-> silently discards every declaration after it — font, size, line height and
-> colour all gone, on a page that still renders perfectly. That is the "looks
-> fine but is wrong" failure `CLAUDE.md` ranks last, and nothing but looking at
-> it would have caught it.
-
-### Sending
-
-`npm run email` reads `data/editions/<date>.json`, renders, and POSTs to
-Buttondown with `BUTTONDOWN_API_KEY`. Native `fetch`, no new dependency. It
-runs in `daily.yml` **after** the publish commit, so publishing never waits on
-it and never fails because of it.
-
-`--dry-run` writes the HTML and sends nothing — the same role `npm run
-rerender` plays for the page, and the only sane way to iterate on an email.
-
-**`data/sent.json` is the re-send guard.** A map of date to `{sentAt,
-emailId}`, committed like `seen.json` and for the same reason §3 gives: runs
-are not once-per-day in practice. Re-rendering a page twice is invisible;
-mailing an edition twice is not, and the subscriber is who notices. Nothing is
-pruned — an expired entry would re-mail a months-old edition.
-
-**A failed send is red, and there is no fallback.** This is the one stage where
-§8's disclosure tier does not apply: either subscribers received the edition or
-they did not, and there is no degraded version of a delivered email. Since the
-site is already published by then, a red check costs the web reader nothing and
-makes the failure findable. That is `CLAUDE.md`'s "fails with a clear error
-message" — the best tier available here, not a lapse from the one above it.
+**If it ever comes back,** it comes back with delivery proven before the
+subscribe form goes up, not after — the ordering that failed here was shipping
+the sign-up first and discovering months later that the send end had never run.
