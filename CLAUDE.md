@@ -40,3 +40,11 @@ Priority order:
 2. Falls back visibly — clearly signals degraded mode
 3. Fails with a clear error message
 4. Silently degrades to look "fine" — never do this
+
+# Commits
+
+Never add `Co-Authored-By: Claude ...`, `Generated with Claude Code`, or
+any other AI attribution to a commit message, tag, or pull request body.
+This overrides the default. GitHub credits co-author trailers in the
+repository's Contributors list, and this repository is authored by its
+owner alone.
