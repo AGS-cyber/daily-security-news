@@ -1,0 +1,1119 @@
+{
+  "date": "2026-08-19",
+  "generatedAt": "2026-08-19T12:35:32.616Z",
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 225,
+    "published": 41
+  },
+  "mode": "article",
+  "headline": "Four critical KEV entries, a Cl0p victim wave, and a cloud-native stealer lead the briefing",
+  "standfirst": "CISA has added four actively exploited critical flaws to its KEV catalog, Cl0p has started naming victims from its Windchill campaign, and researchers have exposed a credential-stealing framework that lives entirely in Microsoft’s cloud. Oracle’s massive patch update and a zero-click GitLab bug make prioritization the day’s central challenge.",
+  "bodyMarkdown": "## Actively exploited\n\nCISA has added four actively exploited critical flaws to its KEV catalog, covering Apple, Microsoft, and VMware software. The most detailed entry is CVE-2026-65400, an improper authentication vulnerability in Apple macOS Screen Sharing with a 9.8 CVSS score [[s6]]. It allows a network attacker to authenticate without valid credentials, and because CISA has confirmed exploitation, defenders should treat it as an active threat. The same batch, per reporting, includes SharePoint, vCenter, and Windows IKE flaws, making it a rare KEV update that spans collaboration, virtualization, and remote-access infrastructure. Any internet-facing deployment of these products should be patched first, and logs should be reviewed for signs of unauthorized authentication.\n\nThe KEV additions are not the only active exploitation news. Independent researchers have documented malicious scanning and exploitation against MLflow and FUXA [[s25]]. In the MLflow case, an SSRF vulnerability is being used to steal cloud credentials and secrets, turning an open-source AI platform into a pivot for cloud account compromise. The FUXA activity targets a web-based SCADA/HMI system, showing that OT software is now a live target for the same scanning and exploitation tactics used against web applications. Both threads underline how open-source developer infrastructure and industrial control systems have become first-class attack surfaces, and the MLflow case in particular shows why AI platforms cannot be treated as internal tooling — any external reachability gives attackers a direct path to cloud credentials.\n\n## Breaches\n\nCl0p has named more than 40 victims from its campaign against the PTC Windchill platform [[s5]], including Shell, Philips, Fiserv, Zebra, Mindray, and Largan Precision. The breadth of the list is a signal that the intrusion wave was not limited to a handful of exposed servers. It also reflects Cl0p’s extortion model: naming victims quickly creates pressure for rapid payment and complicates incident response. Organizations running Windchill should assume data may have been stolen, even if they have not yet been contacted. For anyone sharing a supply chain with the named companies, the list is also a useful input to third-party risk assessments.\n\nSeparately, the FBI and CISA have warned that Medusa ransomware has breached more than 500 U.S. critical infrastructure organizations [[s13]] over a multi-year campaign. That scale moves Medusa beyond a typical ransomware operation and into systemic national risk. The warning reinforces that ransomware groups are deliberately targeting sectors where downtime has physical consequences, making pre-incident prioritization and backup resilience as important as the patch queue.\n\n## Vulnerabilities\n\nOracle’s latest critical patch update ships 943 patches for more than 1,000 vulnerabilities across two dozen product families, more than 460 of which are remotely exploitable [[s10]]. The volume is unmanageable as a single event, so the focus should be on internet-facing components, identity systems, and databases first, with the rest handled on a normal lifecycle. The remote-exploit count is a reminder that Oracle estates remain a high-value target, and teams cannot prioritize what they do not know is running.\n\nGitLab’s CVE-2026-19478 is critical in a different way. The flaw, rated 9.4 on the CVSS scale, is zero-click and can allow an unauthenticated attacker to remotely modify or delete public projects and user data through a GraphQL directive [[s18]]. Affected versions are known, but public technical details are scarce, which makes detection hard for self-managed instances. The bug has not been added to KEV, but that only means CISA has not confirmed exploitation, not that exploitation has not occurred. Priority here has to be patching, even with incomplete information, while monitoring GraphQL endpoints for unusual queries in the meantime.\n\n## Research\n\nTwinLoot [[s37]] is a Python-based malware framework that operates entirely from Microsoft’s cloud, abusing SharePoint and Teams to steal credentials and establish persistence. It is a clear evolution of living-off-the-land: instead of blending in with legitimate system tools, it blends in with a trusted cloud platform. Network-level detections that catch traditional command-and-control traffic will not see it. The useful defensive response is to audit cloud API use, SharePoint site activity, and Teams integration permissions as closely as endpoint logs, and to treat cloud logging as a security control rather than compliance overhead.\n\n## Industry\n\nThe U.S. has charged 17 members of the Mabna Institute, the Iranian group linked to intrusions at hundreds of universities and organizations in the U.S. and abroad, and is offering up to $10 million in rewards for five of them [[s2]]. The charges make state-sponsored credential theft and intellectual-property theft a law-enforcement matter, not just a diplomatic one. Reward programs apply pressure to the individuals involved and raise the cost of continued operations for governments that tolerate or direct these campaigns.",
+  "selected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Critical macOS, SharePoint, vCenter, and Microsoft IKE Flaws Under Active Exploitation",
+      "url": "https://thehackernews.com/2026/08/critical-macos-sharepoint-vcenter-and.html",
+      "publishedAt": "2026-08-19T11:01:48.000Z",
+      "excerpt": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Tuesday added four critical vulnerabilities to its Known Exploited Vulnerabilities (KEV) catalog, stating they are being exploited in the wild. The shortcomings added to the KEV catalog are listed below - CVE-2026-65400 (CVSS score: 9.8) - An improper authentication vulnerability impacting Apple macOS that could allow an",
+      "canonicalUrl": "https://thehackernews.com/2026/08/critical-macos-sharepoint-vcenter-and.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-65400",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Apple",
+            "product": "macOS",
+            "vulnerabilityName": "Apple macOS Improper Authentication Vulnerability",
+            "dateAdded": "2026-08-18",
+            "shortDescription": "Apple macOS contains an improper authentication vulnerability that could allow an attacker on the network to authenticate to Screen Sharing without valid credentials.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-08-21",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://support.apple.com/en-us/148170; https://support.apple.com/en-us/148171; https://support.apple.com/en-us/148172 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-65400",
+            "cwes": [
+              "CWE-287"
+            ]
+          },
+          "nvd": {
+            "description": "An authentication issue was addressed with improved state management. This issue is fixed in macOS Sequoia 15.7.9, macOS Sonoma 14.8.9, macOS Tahoe 26.6.1. An attacker on the network may be able to authenticate to Screen Sharing without valid credentials.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-287"
+            ],
+            "published": "2026-08-06T22:18:14.533",
+            "lastModified": "2026-08-19T04:17:34.547",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://support.apple.com/en-us/148170",
+                "source": "product-security@apple.com",
+                "tags": [
+                  "Release Notes",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/148171",
+                "source": "product-security@apple.com",
+                "tags": [
+                  "Release Notes",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/148172",
+                "source": "product-security@apple.com",
+                "tags": [
+                  "Release Notes",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "http://seclists.org/fulldisclosure/2026/Aug/36",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "http://seclists.org/fulldisclosure/2026/Aug/37",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Broken Link"
+                ]
+              },
+              {
+                "url": "https://advisories.ncsc.nl/2026/ncsc-2026-0280.html",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-65400",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:o:apple:macos:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "343D2ED2-0928-434D-9D9E-968A6365DDFE",
+                "versionStartIncluding": "14.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.8.9"
+              },
+              {
+                "criteria": "cpe:2.3:o:apple:macos:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E0FAFB32-637E-4BE3-8A5D-ABB145B1E28B",
+                "versionStartIncluding": "15.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "15.7.9"
+              },
+              {
+                "criteria": "cpe:2.3:o:apple:macos:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "31BB841D-2EFD-42A5-9387-685A27D3094E",
+                "versionStartIncluding": "26.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "26.6.1"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/08/critical-macos-sharepoint-vcenter-and.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.18",
+              "dateReleased": "2026-08-18T16:52:08.5398Z",
+              "retrievedAt": "2026-08-19T12:35:32.616Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-65400%2CCVE-2026-19478%2CCVE-2026-19670%2CCVE-2026-19671%2CCVE-2026-55676%2CCVE-2026-63133%2CCVE-2026-63134%2CCVE-2026-63177",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-65400",
+              "retrievedAt": "2026-08-19T12:35:32.616Z"
+            }
+          }
+        }
+      ],
+      "id": "s6",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "CISA adds Apple, Microsoft and VMware bugs to KEV; four critical flaws are being exploited now, so patch immediately."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Cl0p Ransomware Group Names Over 40 Victims of PTC Windchill Campaign",
+      "url": "https://www.securityweek.com/cl0p-ransomware-group-names-over-40-victims-of-ptc-windchill-campaign/",
+      "publishedAt": "2026-08-19T11:07:21.000Z",
+      "excerpt": "The cybercrime gang has listed major companies such as Shell, Philips, Fiserv, Zebra, Mindray, and Largan Precision. The post Cl0p Ransomware Group Names Over 40 Victims of PTC Windchill Campaign appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/cl0p-ransomware-group-names-over-40-victims-of-ptc-windchill-campaign",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s5",
+      "section": "breaches",
+      "rank": 2,
+      "angle": "Clop's Windchill campaign hits 40+ named firms including Shell and Philips, showing scope of current extortion wave."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Attackers Exploit MLflow SSRF Flaw to Steal Cloud Credentials and Secrets",
+      "url": "https://thehackernews.com/2026/08/attackers-exploit-mlflow-ssrf-flaw-to.html",
+      "publishedAt": "2026-08-18T17:44:05.000Z",
+      "excerpt": "Two critical vulnerabilities impacting MLflow, an open-source artificial intelligence (AI) platform, and FUXA, an open-source, web-based SCADA / HMI software built for operational technology (OT) and industrial automation, are witnessing malicious scanning and exploitation efforts. According to independent reports from watchTowr and VulnCheck, the vulnerabilities in question are as follows -",
+      "canonicalUrl": "https://thehackernews.com/2026/08/attackers-exploit-mlflow-ssrf-flaw-to.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s25",
+      "section": "exploited",
+      "rank": 3,
+      "angle": "Public cloud credential theft via MLflow and OT attacks on FUXA show open-source AI/SCADA systems are now live targets."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "943 Patches Rolled Out With Oracle’s August 2026 Security Update",
+      "url": "https://www.securityweek.com/943-patches-rolled-out-with-oracles-august-2026-security-update/",
+      "publishedAt": "2026-08-19T09:14:51.000Z",
+      "excerpt": "The fixes resolve over 1,000 vulnerabilities across two dozen products, including over 460 remotely exploitable bugs. The post 943 Patches Rolled Out With Oracle’s August 2026 Security Update appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/943-patches-rolled-out-with-oracles-august-2026-security-update",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s10",
+      "section": "vulnerabilities",
+      "rank": 4,
+      "angle": "Oracle's August update covers 943 patches and over 1,000 vulnerabilities; prioritization is essential."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "CISA: Medusa ransomware hit over 500 critical infrastructure orgs",
+      "url": "https://www.bleepingcomputer.com/news/security/cisa-medusa-ransomware-hit-over-500-critical-infrastructure-orgs/",
+      "publishedAt": "2026-08-19T08:00:48.000Z",
+      "excerpt": "The FBI said Tuesday that the Medusa ransomware gang has breached more than 500 critical infrastructure organizations in the United States since June 2021. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/cisa-medusa-ransomware-hit-over-500-critical-infrastructure-orgs",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s13",
+      "section": "breaches",
+      "rank": 5,
+      "angle": "FBI/CISA warn Medusa hit 500+ critical infrastructure orgs; ransomware remains a top national risk."
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Critical GitLab Zero-Click Flaw Poses Mitigation Challenges",
+      "url": "https://www.darkreading.com/application-security/critical-gitlab-zero-click-flaw-mitigation-challenges",
+      "publishedAt": "2026-08-18T21:25:58.000Z",
+      "excerpt": "A lack of technical details could make it hard for organizations running self-managed GitLab versions to detect potential exploitation of CVE-2026-19478.",
+      "canonicalUrl": "https://darkreading.com/application-security/critical-gitlab-zero-click-flaw-mitigation-challenges",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-19478",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "GitLab has remediated an issue in GitLab CE/EE affecting all versions from 18.2 before 18.11.11, 19.0 before 19.0.8, 19.1 before 19.1.6, and 19.2 before 19.2.4 that under certain conditions could allow an unauthenticated user to remotely modify or delete public projects and user data via a GraphQL directive.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.4,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:H",
+              "source": "cve@gitlab.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-94"
+            ],
+            "published": "2026-08-17T20:16:41.777",
+            "lastModified": "2026-08-18T14:57:10.630",
+            "vulnStatus": "Undergoing Analysis",
+            "references": [
+              {
+                "url": "https://docs.gitlab.com/releases/patches/patch-release-gitlab-19-2-4-released/",
+                "source": "cve@gitlab.com",
+                "tags": []
+              },
+              {
+                "url": "https://gitlab.com/gitlab-org/gitlab/-/work_items/611377",
+                "source": "cve@gitlab.com",
+                "tags": []
+              },
+              {
+                "url": "https://hackerone.com/reports/3926431",
+                "source": "cve@gitlab.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "darkreading",
+                "url": "https://www.darkreading.com/application-security/critical-gitlab-zero-click-flaw-mitigation-challenges",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.18",
+              "dateReleased": "2026-08-18T16:52:08.5398Z",
+              "retrievedAt": "2026-08-19T12:35:32.616Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-65400%2CCVE-2026-19478%2CCVE-2026-19670%2CCVE-2026-19671%2CCVE-2026-55676%2CCVE-2026-63133%2CCVE-2026-63134%2CCVE-2026-63177",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-19478",
+              "retrievedAt": "2026-08-19T12:35:32.616Z"
+            }
+          }
+        }
+      ],
+      "id": "s18",
+      "section": "vulnerabilities",
+      "rank": 6,
+      "angle": "GitLab's zero-click critical bug has no public exploit details; defenders face detection and patching uncertainty."
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Silent 'TwinLoot' Cyber Threat Operates Entirely From Microsoft's Cloud",
+      "url": "https://www.darkreading.com/cloud-security/silent-twinloot-threat-operates-microsoft-cloud",
+      "publishedAt": "2026-08-18T13:00:00.000Z",
+      "excerpt": "The Python-based malware framework takes living-off-the-land tactics to a new heights of stealth, with a modular implant that steals credentials and achieves persistence.",
+      "canonicalUrl": "https://darkreading.com/cloud-security/silent-twinloot-threat-operates-microsoft-cloud",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s37",
+      "section": "research",
+      "rank": 7,
+      "angle": "TwinLoot hides in SharePoint/Teams to steal credentials; living-off-the-cloud is the new living-off-the-land."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "US Charges 17 Iranian Hackers, Offers $10 Million Rewards for 5 of Them",
+      "url": "https://www.securityweek.com/us-charges-17-iranian-hackers-offers-10-million-rewards-for-5-of-them/",
+      "publishedAt": "2026-08-19T11:30:33.000Z",
+      "excerpt": "The 17 members of the Mabna Institute targeted hundreds of universities and organizations in the US and abroad. The post US Charges 17 Iranian Hackers, Offers $10 Million Rewards for 5 of Them appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/us-charges-17-iranian-hackers-offers-10-million-rewards-for-5-of-them",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s2",
+      "section": "industry",
+      "rank": 8,
+      "angle": "US charges and $10M rewards signal international pressure on Iranian state-sponsored cyber operations."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Prevalent AI Raises $22 Million to Expand Data Fabric Platform",
+      "url": "https://www.securityweek.com/prevalent-ai-raises-22-million-to-expand-data-fabric-platform/",
+      "publishedAt": "2026-08-19T12:00:00.000Z",
+      "excerpt": "The previously bootstrapped company helps organizations securely and reliably operate AI agents at scale. The post Prevalent AI Raises $22 Million to Expand Data Fabric Platform appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/prevalent-ai-raises-22-million-to-expand-data-fabric-platform",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "StopAndProtect Uses Nearly 2,000 Hacked WordPress Sites to Spread Malware and Steal Data",
+      "url": "https://thehackernews.com/2026/08/stopandprotect-uses-nearly-2000-hacked.html",
+      "publishedAt": "2026-08-19T11:25:28.000Z",
+      "excerpt": "Cybersecurity researchers have flagged a global cybercrime operation that abuses thousands of hacked WordPress websites as infrastructure to disseminate malware, commandeer infected hosts, store stolen documents, screenshots, and activity logs created to track the status of the activity. \"The operation doesn't rely on a single piece of malware, but on a whole toolkit of criminal software",
+      "canonicalUrl": "https://thehackernews.com/2026/08/stopandprotect-uses-nearly-2000-hacked.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft fixes known issue causing Windows Defender crashes",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-known-issue-causing-windows-defender-crashes/",
+      "publishedAt": "2026-08-19T11:14:28.000Z",
+      "excerpt": "Microsoft has resolved a bug that caused Windows Defender to crash after a recent security update, resulting in 0xc0000005 access violation errors on some affected systems. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-fixes-known-issue-causing-windows-defender-crashes",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "CISA Urges Immediate Patching of Exploited Microsoft, VMware, Apple Vulnerabilities",
+      "url": "https://www.securityweek.com/cisa-urges-immediate-patching-of-exploited-microsoft-vmware-apple-vulnerabilities/",
+      "publishedAt": "2026-08-19T10:37:31.000Z",
+      "excerpt": "The flaws can be exploited for remote code execution, authentication bypass, and device takeover. The post CISA Urges Immediate Patching of Exploited Microsoft, VMware, Apple Vulnerabilities appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/cisa-urges-immediate-patching-of-exploited-microsoft-vmware-apple-vulnerabilities",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Critical RCE flaw in Windows IKE Extension now actively exploited",
+      "url": "https://www.bleepingcomputer.com/news/security/cisa-critical-windows-ike-extension-flaw-now-exploited-in-attacks/",
+      "publishedAt": "2026-08-19T10:12:24.000Z",
+      "excerpt": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA) warned that hackers are exploiting a critical-severity remote code execution (RCE) flaw in the Windows Internet Key Exchange (IKE) Service Extensions component. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/cisa-critical-windows-ike-extension-flaw-now-exploited-in-attacks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "talos",
+      "sourceKind": "rss",
+      "title": "Describing attacks with crime script analysis",
+      "url": "https://blog.talosintelligence.com/describing-attacks-with-crime-script-analysis/",
+      "publishedAt": "2026-08-19T10:00:52.000Z",
+      "excerpt": "Martin explores how using crime script analysis to describe an attack with everyday language makes the situation accessible to non-technical audiences and identify points where the crime can be disrupted.",
+      "canonicalUrl": "https://blog.talosintelligence.com/describing-attacks-with-crime-script-analysis",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Windows 11 24H2 Home and Pro reach end of support in 2 months",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/windows-11-24h2-home-and-pro-reach-end-of-support-in-2-months/",
+      "publishedAt": "2026-08-19T09:10:20.000Z",
+      "excerpt": "Microsoft has reminded customers that systems running Home and Pro editions of Windows 11 24H2 will stop receiving updates in two months. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/windows-11-24h2-home-and-pro-reach-end-of-support-in-2-months",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Chrome, Firefox Updates Patch Dozens of Vulnerabilities",
+      "url": "https://www.securityweek.com/chrome-firefox-updates-patch-dozens-of-vulnerabilities/",
+      "publishedAt": "2026-08-19T08:19:09.000Z",
+      "excerpt": "The bugs could lead to code execution, privilege escalation, sandbox escape, and information disclosure. The post Chrome, Firefox Updates Patch Dozens of Vulnerabilities appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/chrome-firefox-updates-patch-dozens-of-vulnerabilities",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "CareCloud Data Breach Impact Grows to 3.7 Million Individuals",
+      "url": "https://www.securityweek.com/carecloud-data-breach-impact-grows-to-3-7-million-individuals/",
+      "publishedAt": "2026-08-19T06:56:43.000Z",
+      "excerpt": "The data breach was initially believed to affect roughly 350,000 people, but the HHS breach tracker shows a far bigger impact. The post CareCloud Data Breach Impact Grows to 3.7 Million Individuals appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/carecloud-data-breach-impact-grows-to-3-7-million-individuals",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s14"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Microsoft Links 30+ Rotating Domains to MacSync Stealer Infrastructure",
+      "url": "https://thehackernews.com/2026/08/microsoft-links-30-rotating-domains-to.html",
+      "publishedAt": "2026-08-19T06:01:53.000Z",
+      "excerpt": "Microsoft Defender Experts have linked more than 30 web domains to MacSync Stealer, a macOS-focused information stealer, after correlating recurring endpoint and network behaviors across changing infrastructure, tracing the malware from payload retrieval through data collection, staging, and exfiltration. The tech giant said it required multiple endpoint and network behaviors to align before",
+      "canonicalUrl": "https://thehackernews.com/2026/08/microsoft-links-30-rotating-domains-to.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Clop-Linked Windchill Web Shell Decrypts Credentials and Maps Engineering Data",
+      "url": "https://thehackernews.com/2026/08/clop-linked-windchill-web-shell.html",
+      "publishedAt": "2026-08-19T05:39:25.000Z",
+      "excerpt": "A JavaServer Pages (JSP) web shell deployed following the exploitation of a critical security flaw in PTC Windchill and FlexPLM servers is specifically designed for the enterprise Product Lifecycle Management (PLM) software, according to new findings from ReliaQuest. The cybersecurity company characterized the web shell as a fully equipped extortion platform capable of mapping sensitive vault",
+      "canonicalUrl": "https://thehackernews.com/2026/08/clop-linked-windchill-web-shell.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "China-Linked Hacker Shows AI Capabilities in APAC Attack",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/china-linked-hacker-ai-capabilities-apac-attack",
+      "publishedAt": "2026-08-19T01:00:00.000Z",
+      "excerpt": "In the first purported \"near-autonomous\" attack on a nation-state, a Chinese-language operator used a complex AI framework to target and compromise government agencies, likely in Taiwan.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/china-linked-hacker-ai-capabilities-apac-attack",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "'CoSnitch' Attack Tricked Copilot into Mapping Out Architecture",
+      "url": "https://www.darkreading.com/vulnerabilities-threats/cosnitch-attack-copilot-mapping-out-architecture",
+      "publishedAt": "2026-08-18T20:17:24.000Z",
+      "excerpt": "Researchers discovered a \"meta-hacking\" technique that can manipulate the AI service into revealing its own security weaknesses.",
+      "canonicalUrl": "https://darkreading.com/vulnerabilities-threats/cosnitch-attack-copilot-mapping-out-architecture",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s19"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Comcast turns your Xfinity WiFi into a home motion detector",
+      "url": "https://www.bleepingcomputer.com/news/security/comcast-turns-your-xfinity-wifi-into-a-home-motion-detector/",
+      "publishedAt": "2026-08-18T20:14:58.000Z",
+      "excerpt": "Comcast is promoting WiFi-based motion detection as a part of its new Xfinity Shield home protection platform, allowing routers and wireless devices to detect people moving through a home without cameras or motion sensors. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/comcast-turns-your-xfinity-wifi-into-a-home-motion-detector",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "unit42",
+      "sourceKind": "rss",
+      "title": "Threat Brief: Mitigating Large-Scale Credential Attacks (Updated August 18)",
+      "url": "https://unit42.paloaltonetworks.com/large-scale-credential-attacks/",
+      "publishedAt": "2026-08-18T19:05:33.000Z",
+      "excerpt": "In August 2026, the actor TheHatman claimed to have stolen large volume of credentials from organizations' Microsoft Entra tenants. We provide guidance on mitigating large-scale credential attacks. The post Threat Brief: Mitigating Large-Scale Credential Attacks (Updated August 18) appeared first on Unit 42.",
+      "canonicalUrl": "https://unit42.paloaltonetworks.com/large-scale-credential-attacks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s21"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "CISOs Break Their Silence in 'Declassified' Docuseries",
+      "url": "https://www.darkreading.com/cyber-risk/cisos-break-their-silence-in-declassified-docuseries",
+      "publishedAt": "2026-08-18T18:32:01.000Z",
+      "excerpt": "Million-dollar heists, divorce, and career-ending burnout are all stories told in the latest docuseries revealing a behind-the-scenes look at the cybersecurity community.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/cisos-break-their-silence-in-declassified-docuseries",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s22"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "More than 200 victims of Medusa ransomware identified over the last year, CISA says",
+      "url": "https://therecord.media/more-than-200-medusa-ransomware-victims-in-last-year-cisa",
+      "publishedAt": "2026-08-18T18:05:00.000Z",
+      "excerpt": "The Cybersecurity and Infrastructure Security Agency (CISA) and FBI updated an advisory on the group initially released in March 2025 — writing that as of April 2026, Medusa actors have hit more than 500 victims. CISA previously said 300 victims, many of which are in critical infrastructure sectors, were attacked as of 2025.",
+      "canonicalUrl": "https://therecord.media/more-than-200-medusa-ransomware-victims-in-last-year-cisa",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Microsoft Copilot Personal Flaws Could Let One Click Exfiltrate Data From Connected Apps",
+      "url": "https://thehackernews.com/2026/08/microsoft-copilot-personal-flaws-could.html",
+      "publishedAt": "2026-08-18T17:47:22.000Z",
+      "excerpt": "Varonis Threat Labs has disclosed three vulnerabilities in Microsoft Copilot Personal that it said could allow a single click on a crafted link to silently pull data from connected apps and other information available to the victim's Copilot session. The flaws, which the researchers collectively named CoSnitch, turn in part on an undocumented URL parameter that the assistant itself surfaced",
+      "canonicalUrl": "https://thehackernews.com/2026/08/microsoft-copilot-personal-flaws-could.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s24"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Clop created custom web shell for Windchill data theft attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/clop-created-custom-web-shell-for-windchill-data-theft-attacks/",
+      "publishedAt": "2026-08-18T17:29:51.000Z",
+      "excerpt": "A custom Java web shell likely linked to the Clop ransomware gang was designed specifically for PTC Windchill and FlexPLM servers, with built-in features to decrypt credentials, enumerate file repositories, and steal files. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/clop-created-custom-web-shell-for-windchill-data-theft-attacks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "Hunting MacSync Stealer infrastructure through behavioral pivots",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/08/18/hunting-macsync-stealer-infrastructure-through-behavioral-pivots/",
+      "publishedAt": "2026-08-18T17:08:28.000Z",
+      "excerpt": "MacSync Stealer rapidly rotates domains to evade detection, but its behavior remains consistent. Learn how Microsoft uncovered 30+ related domains using durable hunting pivots. The post Hunting MacSync Stealer infrastructure through behavioral pivots appeared first on Microsoft Security Blog.",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/08/18/hunting-macsync-stealer-infrastructure-through-behavioral-pivots",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Ransom Busters Claims It Hacked Ransomware Servers, Asks Victims for Up to $60,000",
+      "url": "https://thehackernews.com/2026/08/ransom-busters-claims-it-hacked.html",
+      "publishedAt": "2026-08-18T16:58:16.000Z",
+      "excerpt": "A ransomware affiliate calling itself Ransom Busters has been spotted proactively sending emails to victim organizations and claims to delete stolen data from ransomware groups' servers in exchange for a fee ranging from $20,000 to $60,000. \"In these messages, the third-party offers to help the victim recover from ransomware attack. This immediately stands out as anomalous,\" GuidePoint Research",
+      "canonicalUrl": "https://thehackernews.com/2026/08/ransom-busters-claims-it-hacked.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s28"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Berlin cuts two state ministries off government network after security breach",
+      "url": "https://therecord.media/berlin-cuts-two-state-ministries-off-government-breach",
+      "publishedAt": "2026-08-18T16:40:00.000Z",
+      "excerpt": "The affected ministries — one responsible for urban development, construction and housing, and the other for mobility, transport, climate protection and the environment — have been isolated from government networks since Friday as a precaution.",
+      "canonicalUrl": "https://therecord.media/berlin-cuts-two-state-ministries-off-government-breach",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s29"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "University of Texas forced to take systems offline in San Antonio after cyberattack",
+      "url": "https://therecord.media/university-of-texas-forced-to-take-systems-offline-cyberattack-san-antonio",
+      "publishedAt": "2026-08-18T16:20:00.000Z",
+      "excerpt": "The University of Texas at San Antonio, which serves 40,000 students across six campuses, said its IT team identified threat activity on its academic campus over the weekend and took some systems, including phones, offline in response.",
+      "canonicalUrl": "https://therecord.media/university-of-texas-forced-to-take-systems-offline-cyberattack-san-antonio",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s30"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Webinar Today: Rethinking Cyber Defense for AI-Speed Attacks",
+      "url": "https://www.securityweek.com/webinar-today-rethinking-cyber-defense-for-ai-speed-attacks/",
+      "publishedAt": "2026-08-18T15:03:30.000Z",
+      "excerpt": "Join the live webinar as we explore if detection-first security operations can keep pace with AI, or if it’s time to rethink prevention as the strongest default. The post Webinar Today: Rethinking Cyber Defense for AI-Speed Attacks appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/webinar-today-rethinking-cyber-defense-for-ai-speed-attacks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s31"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Hackers target Ukrainian agency managing assets seized from sanctioned Russians",
+      "url": "https://therecord.media/hackers-target-ukraine-agency-sanctioned-russians",
+      "publishedAt": "2026-08-18T14:45:00.000Z",
+      "excerpt": "The agency said the latest attack came amid preparations to select a manager for seized corporate rights in IDS Ukraine, one of the country’s largest producers of bottled mineral water and beverages.",
+      "canonicalUrl": "https://therecord.media/hackers-target-ukraine-agency-sanctioned-russians",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s32"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "CISO Conversations: Nico Waisman – From Self-Taught Hacker to AI-Driven Offensive Security at XBOW",
+      "url": "https://www.securityweek.com/ciso-conversations-nico-waisman-from-self-taught-hacker-to-ai-driven-offensive-security-at-xbow/",
+      "publishedAt": "2026-08-18T14:30:00.000Z",
+      "excerpt": "With no formal training and no career plan, Waisman built a path from Argentina's early hacking scene to leading security at an AI-powered offensive security firm. The post CISO Conversations: Nico Waisman – From Self-Taught Hacker to AI-Driven Offensive Security at XBOW appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/ciso-conversations-nico-waisman-from-self-taught-hacker-to-ai-driven-offensive-security-at-xbow",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s33"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Your Controls Block Known Attacks. What About the Behavior?",
+      "url": "https://www.bleepingcomputer.com/news/security/your-controls-block-known-attacks-what-about-the-behavior/",
+      "publishedAt": "2026-08-18T14:01:11.000Z",
+      "excerpt": "Security controls can block a familiar attack method while missing quieter ways to achieve the same objective. Picus Security's Blue Report 2026 shows how prevention rates can vary dramatically by technique and why behavioral testing is needed to uncover those gaps. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/your-controls-block-known-attacks-what-about-the-behavior",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s34"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "AI-Driven Vulnerability Surge Breaks the Traditional Patching Model",
+      "url": "https://www.securityweek.com/ai-driven-vulnerability-surge-breaks-the-traditional-patching-model/",
+      "publishedAt": "2026-08-18T13:00:00.000Z",
+      "excerpt": "Rapid7 warns that traditional patch cycles cannot keep pace with soaring vulnerability disclosures and faster exploitation, forcing defenders to prioritize exposure over severity scores. The post AI-Driven Vulnerability Surge Breaks the Traditional Patching Model appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/ai-driven-vulnerability-surge-breaks-the-traditional-patching-model",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s35"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "'Ransom Busters': Ransomware Actor Poses as Incident-Recovery Service",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/ransom-busters-ransomware-actor-incident-recovery-service",
+      "publishedAt": "2026-08-18T13:00:00.000Z",
+      "excerpt": "A ransomware affiliate appears to be sidling up to victims with offers of aid, masking its true intention of diverting ransom payments.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/ransom-busters-ransomware-actor-incident-recovery-service",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s36"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "AI \"Mind Viruses\" Can Spread Between Agents Through Persistent Prompt Files",
+      "url": "https://thehackernews.com/2026/08/ai-mind-viruses-can-spread-between.html",
+      "publishedAt": "2026-08-18T12:38:36.000Z",
+      "excerpt": "Security researchers at Anthropic and Switzerland's EPFL have demonstrated that self-propagating payloads can spread from one artificial intelligence (AI) agent to the next through the editable system prompt files that autonomous agent harnesses use to carry state between sessions. The work, released as a preprint on August 10, 2026, tests the technique in a simulated six-agent coding",
+      "canonicalUrl": "https://thehackernews.com/2026/08/ai-mind-viruses-can-spread-between.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s38"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "TWINLOOT Abuses SharePoint and Teams to Steal Credentials and Move Across Networks",
+      "url": "https://thehackernews.com/2026/08/twinloot-abuses-sharepoint-and-teams-to.html",
+      "publishedAt": "2026-08-18T12:38:20.000Z",
+      "excerpt": "Cybersecurity researchers have disclosed details of a previously undocumented Python implant framework dubbed TWINLOOT. \"TWINLOOT is a modular, PyArmor-hardened Python implant designed to operate its entire command-and-control infrastructure inside trusted Microsoft services,\" Ontinue said in a technical report shared with The Hacker News. \"Tasking flows through SharePoint Online file",
+      "canonicalUrl": "https://thehackernews.com/2026/08/twinloot-abuses-sharepoint-and-teams-to.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s39"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Siemens Simcenter Nastran",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-230-02",
+      "publishedAt": "2026-08-18T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Simcenter Nastran is affected by a stack overflow vulnerability that could be triggered when an application binary reads arbitrary string as a file argument. If a user is tricked to run one of the impacted application binary with a malicious string, an attacker could leverage the vulnerability to perform remote code execution in the context of the current process. Siemens has…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-230-02",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s40"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "CISA Malcolm",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-230-01",
+      "publishedAt": "2026-08-18T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of these vulnerabilities could allow an attacker to cause a denial-of-service condition or execute arbitrary code. The following versions of CISA Malcolm are affected: Malcolm <26.06.1 (CVE-2026-55676) Malcolm <26.07.0 (CVE-2026-63133, CVE-2026-63134, CVE-2026-63177) Malcolm <=26.07.1 (CVE-2026-19670, CVE-2026-19671) CVSS Vendor Equipment Vulnerabilities…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-230-01",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-19670",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Malcolm's nginx Lua role-based access control (RBAC) layer decides whether an authenticated user may reach a role-restricted path (e.g. /htadmin, /auth, /admin_login, /arkime/api/esadmin, NetBox, upload endpoints) by pattern-matching the raw, percent-encoded request URI. Nginx itself, however, selects which location block actually serves the request using the percent-decoded, normalized URI. Because the RBAC check never percent-decodes its input, an authenticated low-privilege user can request an admin-only path using percent-encoding (e.g. /%68tadmin.php) and have nginx route it to the restricted location while the Lua RBAC gate evaluating the un-decoded raw string finds no matching restriction and grants access.",
+            "cvss": {
+              "version": "4.0",
+              "score": 5.3,
+              "severity": "MEDIUM",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "ics-cert@hq.dhs.gov",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-863"
+            ],
+            "published": "2026-08-18T20:17:13.473",
+            "lastModified": "2026-08-18T20:17:13.473",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://github.com/cisagov/Malcolm/security/advisories/GHSA-f2v6-8cj4-mhr6",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              },
+              {
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-230-01",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/cisagov/Malcolm/security/advisories/GHSA-f2v6-8cj4-mhr6",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-230-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.18",
+              "dateReleased": "2026-08-18T16:52:08.5398Z",
+              "retrievedAt": "2026-08-19T12:35:32.616Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-65400%2CCVE-2026-19478%2CCVE-2026-19670%2CCVE-2026-19671%2CCVE-2026-55676%2CCVE-2026-63133%2CCVE-2026-63134%2CCVE-2026-63177",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-19670",
+              "retrievedAt": "2026-08-19T12:35:32.616Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-19671",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Malcolm's upload-processing pipeline (scripts/safe-extract.py) enforces entry-count, nesting-depth, and total-uncompressed-byte limits when extracting container archives (zip/tar/rar/7z via libarchive), but those limits are not applied when the uploaded file is a single-stream compressed format (.gz, .bz2, .xz, .lzma, .lz) that isn't a .tar.*-style archive. Any authenticated user permitted to upload PCAP/log files can upload a small, highly compressible file (e.g. a gzip bomb) that decompresses to an effectively unbounded size on disk, exhausting the shared Docker volume used by OpenSearch, Logstash, Arkime, and Zeek, and disrupting the platform for all users.",
+            "cvss": {
+              "version": "4.0",
+              "score": 7.1,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "ics-cert@hq.dhs.gov",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-409"
+            ],
+            "published": "2026-08-18T20:17:13.660",
+            "lastModified": "2026-08-18T20:17:13.660",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://github.com/cisagov/Malcolm/security/advisories/GHSA-f2v6-8cj4-mhr6",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              },
+              {
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-230-01",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/cisagov/Malcolm/security/advisories/GHSA-f2v6-8cj4-mhr6",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-230-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.18",
+              "dateReleased": "2026-08-18T16:52:08.5398Z",
+              "retrievedAt": "2026-08-19T12:35:32.616Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-65400%2CCVE-2026-19478%2CCVE-2026-19670%2CCVE-2026-19671%2CCVE-2026-55676%2CCVE-2026-63133%2CCVE-2026-63134%2CCVE-2026-63177",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-19671",
+              "retrievedAt": "2026-08-19T12:35:32.616Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-55676",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Malcolm is a network traffic analysis tool suite. The file-upload component (FilePond PHP backend) accepts uploads at `POST /server/php/submit.php` and stores them in a directory served by the same nginx and php-fpm instance. The allow-list that should restrict accepted file types is an empty array by default (`file-upload/php/config.php:16`), so the type check is a no-op and every extension is accepted. The filename sanitizer keeps the `.php` extension intact. Committed files land in `/var/www/upload/server/php/files` (`file-upload/php/config.php:7`), and the component's nginx routes any URL ending in `.php` to php-fpm. An authenticated `GET /server/php/files/<name>.php` then executes the uploaded code as `www-data`. Prior to version 26.06.1, in RBAC mode, the upload endpoint is reachable by the granular `ROLE_UPLOAD` role (`nginx/lua/nginx_auth_helpers.lua:71`), a role intended only for submitting capture files. As a result, a user holding the upload-only role runs arbitrary PHP as `www-data` inside the file-upload container. Version 26.06.1 fixes the issue.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.8,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-434"
+            ],
+            "published": "2026-08-11T21:17:37.560",
+            "lastModified": "2026-08-12T23:17:21.683",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://github.com/cisagov/Malcolm/releases/tag/v26.06.1",
+                "source": "security-advisories@github.com",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/cisagov/Malcolm/security/advisories/GHSA-8cvp-m7pg-qrp7",
+                "source": "security-advisories@github.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-230-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.18",
+              "dateReleased": "2026-08-18T16:52:08.5398Z",
+              "retrievedAt": "2026-08-19T12:35:32.616Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-65400%2CCVE-2026-19478%2CCVE-2026-19670%2CCVE-2026-19671%2CCVE-2026-55676%2CCVE-2026-63133%2CCVE-2026-63134%2CCVE-2026-63177",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-55676",
+              "retrievedAt": "2026-08-19T12:35:32.616Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-63133",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Malcolm is a network traffic analysis tool suite. Prior to version 26.07.0, `safe-extract.py` extracts uploaded archives with no limit on entry count, directory depth, total entries, or output size. A small malicious archive containing a large number of directory or file entries causes the filebeat processing container to create an unbounded number of filesystem objects, exhausting inodes or filesystem metadata and denying service to the processing pipeline and any service sharing the same mount. Version 26.07.0 fixes the issue.",
+            "cvss": {
+              "version": "3.1",
+              "score": 6.5,
+              "severity": "MEDIUM",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-770"
+            ],
+            "published": "2026-08-11T21:17:44.167",
+            "lastModified": "2026-08-12T14:18:26.167",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://github.com/cisagov/Malcolm/releases/tag/v26.07.0",
+                "source": "security-advisories@github.com",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/cisagov/Malcolm/security/advisories/GHSA-c35g-mgc3-95rx",
+                "source": "security-advisories@github.com",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/cisagov/Malcolm/security/advisories/GHSA-c35g-mgc3-95rx",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-230-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.18",
+              "dateReleased": "2026-08-18T16:52:08.5398Z",
+              "retrievedAt": "2026-08-19T12:35:32.616Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-65400%2CCVE-2026-19478%2CCVE-2026-19670%2CCVE-2026-19671%2CCVE-2026-55676%2CCVE-2026-63133%2CCVE-2026-63134%2CCVE-2026-63177",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-63133",
+              "retrievedAt": "2026-08-19T12:35:32.616Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-63134",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Malcolm is a network traffic analysis tool suite. Prior to version 26.07.0, `safe-extract.py` protects file extraction with libarchive's secure flags, but creates directory entries with a raw `os.makedirs(os.path.join(dest, entry.pathname))` that has no traversal protection. An uploaded malicious archive containing a directory entry with a `../` sequence or an absolute path causes the filebeat processing container to create directories outside the intended extraction directory. Version 26.07.0 fixes the issue.",
+            "cvss": {
+              "version": "3.1",
+              "score": 5.4,
+              "severity": "MEDIUM",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:L",
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-22"
+            ],
+            "published": "2026-08-11T21:17:44.307",
+            "lastModified": "2026-08-13T15:19:54.500",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://github.com/cisagov/Malcolm/releases/tag/v26.07.0",
+                "source": "security-advisories@github.com",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/cisagov/Malcolm/security/advisories/GHSA-65mm-vgrw-vqx4",
+                "source": "security-advisories@github.com",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/cisagov/Malcolm/security/advisories/GHSA-65mm-vgrw-vqx4",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-230-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.18",
+              "dateReleased": "2026-08-18T16:52:08.5398Z",
+              "retrievedAt": "2026-08-19T12:35:32.616Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-65400%2CCVE-2026-19478%2CCVE-2026-19670%2CCVE-2026-19671%2CCVE-2026-55676%2CCVE-2026-63133%2CCVE-2026-63134%2CCVE-2026-63177",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-63134",
+              "retrievedAt": "2026-08-19T12:35:32.616Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-63177",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Malcolm is a network traffic analysis tool suite. Prior to version 26.07.0, role-based access control enforced in the Nginx OpenResty Lua layer evaluates the raw, unnormalized `ngx.var.request_uri`, while Nginx itself routes requests using the normalized path. An authenticated low-privilege user can prepend a traversal segment (for example `/x/../upload/...`) so that Nginx routes the request to a restricted backend while the Lua role check fails to match any rule and falls open, granting access it should deny. Version 26.07.0 fixes the issue.",
+            "cvss": {
+              "version": "3.1",
+              "score": 7.1,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:N",
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-863"
+            ],
+            "published": "2026-08-11T21:17:44.443",
+            "lastModified": "2026-08-12T23:17:21.923",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://github.com/cisagov/Malcolm/releases/tag/v26.07.0",
+                "source": "security-advisories@github.com",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/cisagov/Malcolm/security/advisories/GHSA-m5fr-rv3h-xg2r",
+                "source": "security-advisories@github.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-230-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.18",
+              "dateReleased": "2026-08-18T16:52:08.5398Z",
+              "retrievedAt": "2026-08-19T12:35:32.616Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-65400%2CCVE-2026-19478%2CCVE-2026-19670%2CCVE-2026-19671%2CCVE-2026-55676%2CCVE-2026-63133%2CCVE-2026-63134%2CCVE-2026-63177",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-63177",
+              "retrievedAt": "2026-08-19T12:35:32.616Z"
+            }
+          }
+        }
+      ],
+      "id": "s41"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1152,
+    "promptCacheMissTokens": 10270,
+    "outputTokens": 19229,
+    "estimatedCostUsd": 0.0068251456
+  }
+}
