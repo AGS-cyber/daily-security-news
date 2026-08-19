@@ -37,15 +37,23 @@ sealed interface EditionState {
 /**
  * What the archive screen can be showing.
  *
- * An empty [Ready.editions] is deliberately not an [Error]: "nothing has been
+ * An empty [Ready.months] is deliberately not an [Error]: "nothing has been
  * published" is a fact about the archive, not a failure to load it, and the
  * screen says so in words.
+ *
+ * [Ready] carries the calendar rather than the index it was built from. The
+ * grid is the archive now, and holding both would be two versions of one
+ * truth for the screen to disagree with itself over.
  */
 sealed interface ArchiveState {
     data object Loading : ArchiveState
 
     data class Ready(
-        val editions: List<EditionSummary>,
+        val months: List<CalendarMonth>,
+        /** Editions across every month, for the screen's one-line summary. */
+        val editionCount: Int,
+        /** The newest edition's date — the one the Today screen is showing. */
+        val latest: String?,
         val fromCache: Boolean,
         val cacheReason: String?,
     ) : ArchiveState
@@ -114,14 +122,32 @@ class EditionsStore(private val repository: EditionRepository) {
             is Load.Failed -> ArchiveState.Error(
                 "Couldn't load the edition index: ${describe(load.cause)}",
             )
-            is Load.Fresh -> ArchiveState.Ready(load.value, fromCache = false, cacheReason = null)
-            is Load.Cached -> ArchiveState.Ready(
-                editions = load.value,
-                fromCache = true,
-                cacheReason = describe(load.cause),
-            )
+            is Load.Fresh -> calendar(load.value, cacheReason = null)
+            is Load.Cached -> calendar(load.value, cacheReason = describe(load.cause))
         }
     }
+
+    /**
+     * The index as a calendar, or the reason it could not be laid out.
+     *
+     * `calendarMonths` throws on a date it cannot place, which would otherwise
+     * crash the screen during composition. A date the site could not have
+     * generated is a broken contract exactly like a missing field, so it lands
+     * where every other broken contract lands: the error state, showing the
+     * message verbatim, with Retry.
+     */
+    private fun calendar(index: List<EditionSummary>, cacheReason: String?): ArchiveState =
+        try {
+            ArchiveState.Ready(
+                months = calendarMonths(index),
+                editionCount = index.size,
+                latest = index.maxOfOrNull { it.date },
+                fromCache = cacheReason != null,
+                cacheReason = cacheReason,
+            )
+        } catch (e: IllegalArgumentException) {
+            ArchiveState.Error("Couldn't read the edition index: ${describe(e)}")
+        }
 
     suspend fun openEdition(date: String) {
         viewed = EditionState.Loading

@@ -504,6 +504,38 @@ An empty archive is `Ready(emptyList())`, never `Error`. Nothing published
 yet is a fact about the archive, not a failure to load it, and the screen
 says so in a sentence.
 
+**The archive is a calendar, not a list of dates** (0.5.0). One grid per
+month, newest first, Monday first, drawn from the same
+`/editions/index.json` the site draws its own grid from — `design.md` §2 has
+why a calendar answers what a reader asks the archive and a list does not.
+`ui/Calendar.kt` is the Kotlin half of `src/render/calendar.ts`, and it is a
+**hand-maintained mirror with no compiler tie to the TypeScript**, the same
+drift risk §4 records for the models and §11 for the palette: nothing here
+fails to build when the site's grid changes. The two test files are the only
+thing keeping them agreeing, so both pin the weekday arithmetic to dates whose
+day of the week is a matter of record rather than to their own answer.
+
+The arithmetic is hand-rolled — days-from-civil, about ten lines — rather than
+taken from `kotlinx-datetime`. One function across three targets is a smaller
+thing to own than a new multiplatform artifact to resolve on all of them, which
+is the trap this module list already carries a scar from (`navigationevent-compose`,
+above). It is pure and not a composable, because a wrong weekday still draws a
+calendar that looks like a calendar; `CalendarTest` is where that is caught.
+
+`calendarMonths` **throws** on a date it cannot place. That would crash the
+screen during composition, so `EditionsStore` catches it and lands on
+`ArchiveState.Error` with the message verbatim and Retry — the same place
+every other broken contract lands. `ArchiveState.Ready` carries the months and
+a count rather than the index it was built from: the grid is the archive now,
+and holding both would be two versions of one truth for the screen to
+disagree with itself over.
+
+A day cell is square, so seven across any screen stay a grid rather than a row
+of slots, and a square cell clears 40dp on the narrowest supported phone. The
+day number is the only thing a cell can show, so the headline moves into the
+cell's `contentDescription` — where the site puts it too, as `aria-label`. A
+bare "6" tells a screen reader nothing.
+
 **Navigation is a sealed `Screen` and one `mutableStateOf`** — Today,
 Archive, Edition. A navigation library would be indirection bought for two
 transitions. The app-bar Back button and Android's system back share a
@@ -544,6 +576,13 @@ day's edition with **no** offline banner — `Fresh`, not `Cached`, which is
 the one thing the seeded run could never show. Citations render as links,
 the section headings still rank below the article headline, and back still
 walks Edition → Archive → Today → exit.
+
+Re-verified on 2026-08-18 for the calendar (0.5.0), again against the live
+endpoints with app data cleared first: the August grid rendered with the 1st
+in the Saturday column, 13 published days lit and the rest dim, the 13th in
+`link` blue as the one digest among twelve articles, and a dashed outline on
+the 18th — the edition Today was showing. Tapping the 13th opened that digest,
+degraded banner and all, and system back returned to the grid.
 
 One note for whoever automates this next: drive taps from the bounds in
 `uiautomator dump`, not from screenshot pixels, and treat a dump of a

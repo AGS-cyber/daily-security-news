@@ -28,7 +28,7 @@ A static site whose front page is today's article.
 
 - `site/index.html` — today's article.
 - `site/YYYY-MM-DD.html` — one page per past article.
-- `site/archive.html` — index of all past articles.
+- `site/archive.html` — every past edition, drawn as a calendar.
 - `data/editions/YYYY-MM-DD.json` — the structured record that produced the
   page: the article text, every story considered, and what was selected.
 - `site/editions/YYYY-MM-DD.json` — the same record as
@@ -64,6 +64,33 @@ remaining surface keeps its sigils in CSS.
 **The colours live in `render/palette.ts`**, which `html.ts` interpolates into
 `:root`. One definition, and since the email renderer went, one web-side
 consumer.
+
+**The archive is a calendar, not a list of dates.** One grid per month, newest
+month first, Monday first because the dates are UTC and this is a technical
+publication. The reason is what a reader actually asks the archive: not "what
+was the 42nd edition" but "what came out that week, and were there gaps". A
+list answers that one row at a time; a grid answers it at a glance, and a
+missed day is a hole you can see rather than an absence you have to notice.
+
+Two rules keep it from implying more than it knows. **Only a month holding an
+edition is drawn** — an empty grid for a month nothing was published in would
+be an assertion the archive cannot support. And **every day of a drawn month is
+drawn**, edition or not, so a quiet Sunday is a dim number in place rather than
+a row that silently is not there.
+
+The cost is real and worth naming: a day is a number, so the headline the list
+used to print is no longer on the page. It moves onto the day's link as
+`title` and `aria-label` — hover reveals it, a screen reader reads it — which
+keeps it reachable but no longer scannable. A grid of thirteen headlines was
+never scannable either once a year of them existed, which is the trade.
+
+The grid itself is a `<table>` with a `<caption>` and weekday `<th>`s, because
+a calendar *is* tabular data: with the stylesheet off it is still a labelled
+grid of days, which a `div` layout would not be. `render/calendar.ts` owns the
+arithmetic — which weekday a month opens on, how long February is — and
+nothing else knows it. That module throws on a date it cannot place rather
+than dropping the day, because a date the pipeline could not have produced is
+a broken record, and a broken record should stop the build.
 
 **The app mirrors this palette rather than sharing it** — see `app.md` §11.
 Nothing ties the Kotlin copy to the TypeScript, so a colour changed there has
@@ -345,6 +372,7 @@ src/
   vulnerability/            extraction, KEV/NVD, cache, enrich, priority
   llm/client.ts             DeepSeek client + usage accounting
   render/                   article JSON + HTML
+  render/calendar.ts        the archive index as month grids, mirrored in the app
   render/palette.ts         the colours, mirrored by hand into the app
 data/
   seen.json                 dedupe state, committed
@@ -486,7 +514,10 @@ Decide before the layer that needs them; don't guess early.
   guilty plea and a Spectre-v2 bypass — a defensible lead, and the prompt
   contract held (valid JSON, no invented citations). Six days to go.
 - Whether the archive needs search. Probably not at 365 pages; definitely not
-  at 30.
+  at 30. The calendar (§2) changes the shape of this question rather than
+  settling it: a year is twelve grids to scroll, so *finding a date* is
+  answered, and what a search would add is finding a **subject** — which is a
+  different feature, and one the archive index has no text to serve.
 - ~~**Whether the email edition should be its own thing.**~~ Moot 2026-08-18:
   the email edition was removed before a single send, so there were never any
   open rates to decide it with (§12).

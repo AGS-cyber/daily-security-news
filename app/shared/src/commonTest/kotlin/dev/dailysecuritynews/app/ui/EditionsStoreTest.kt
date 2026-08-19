@@ -175,8 +175,13 @@ class EditionsStoreTest {
         val store = store(engine(), fs())
         store.loadArchive()
         val ready = assertIs<ArchiveState.Ready>(store.archive)
-        assertEquals(1, ready.editions.size)
-        assertEquals("2026-08-06", ready.editions[0].date)
+        assertEquals(1, ready.editionCount)
+        assertEquals("2026-08-06", ready.latest)
+        // One edition, so one month, with that day carrying it.
+        val august = ready.months.single()
+        assertEquals(listOf(2026, 8), listOf(august.year, august.month))
+        val published = august.weeks.flatten().filterNotNull().filter { it.entry != null }
+        assertEquals(listOf("2026-08-06"), published.map { it.date })
         assertEquals(false, ready.fromCache)
         assertNull(ready.cacheReason)
     }
@@ -188,7 +193,7 @@ class EditionsStoreTest {
         val store = store(engine(failIndex = "network is down"), fs)
         store.loadArchive()
         val ready = assertIs<ArchiveState.Ready>(store.archive)
-        assertEquals(1, ready.editions.size)
+        assertEquals(1, ready.editionCount)
         assertEquals(true, ready.fromCache)
         assertTrue(
             ready.cacheReason!!.contains("network is down"),
@@ -213,7 +218,25 @@ class EditionsStoreTest {
         val store = store(engine(index = "[]"), fs())
         store.loadArchive()
         val ready = assertIs<ArchiveState.Ready>(store.archive)
-        assertEquals(emptyList(), ready.editions)
+        assertEquals(emptyList(), ready.months)
+        assertEquals(0, ready.editionCount)
+        assertNull(ready.latest)
+    }
+
+    /**
+     * A date the calendar cannot place is a broken contract like any other, and
+     * it must not crash the screen while it is being laid out.
+     */
+    @Test
+    fun anIndexDateTheCalendarCannotPlaceIsAnErrorNotACrash() = runTest {
+        val index = """[{"date":"2026-02-30","mode":"digest","count":3}]"""
+        val store = store(engine(index = index), fs())
+        store.loadArchive()
+        val error = assertIs<ArchiveState.Error>(store.archive)
+        assertTrue(
+            error.message.contains("no such day"),
+            "message was ${error.message}",
+        )
     }
 
     // --- opening an edition from the archive -------------------------------

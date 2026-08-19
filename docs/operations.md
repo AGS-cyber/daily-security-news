@@ -32,9 +32,12 @@ these lines stops being true.
   - The Buttondown account itself is outside this repository. Nothing here
     touches it any more; deleting it, and any addresses it collected, is a
     manual step for whoever owns the account.
-- Android `0.3.0` adds compact CISA KEV and NVD vulnerability intelligence to
-  the briefing. **iOS still compiles but has never been run** — see
-  `app.md` §7, which is emphatic that a build proves nothing about a screen.
+- Android `0.5.0` draws the archive as a calendar, the same grid the site now
+  draws (`design.md` §2, `app.md` §10). It follows `0.4.0`, which removed the
+  subscribe UI with the email edition, and `0.3.0`, which added compact CISA
+  KEV and NVD intelligence to the briefing. **iOS still compiles but has never
+  been run** — see `app.md` §7, which is emphatic that a build proves nothing
+  about a screen.
 
 ## 1. Setup
 
@@ -109,7 +112,7 @@ data/cache/vulnerability-intelligence.json  validated KEV/NVD cache
 data/editions/YYYY-MM-DD.json the full record behind that day's page
 site/index.html               today's edition
 site/YYYY-MM-DD.html          the same content, permanently addressed
-site/archive.html             index of every edition
+site/archive.html             every edition, as a month-by-month calendar
 site/editions/YYYY-MM-DD.json the same record as data/editions, also web-served
 site/editions/index.json      the archive index as JSON, also web-served
 ```
@@ -539,13 +542,13 @@ chosen commit into a downloadable APK, and the tag is how you choose it.
 grep -E 'versionCode|versionName' app/androidApp/build.gradle.kts
 
 # 2. Commit the bump, tag that commit, and push the tag. The tag is the trigger.
-git tag app-v0.4.0
-git push origin app-v0.4.0
+git tag app-v0.5.0
+git push origin app-v0.5.0
 
 # 3. Watch it, then check what actually got attached.
 gh run watch "$(gh run list --workflow=app-release.yml --limit 1 \
   --json databaseId --jq '.[0].databaseId')"
-gh release view app-v0.4.0
+gh release view app-v0.5.0
 ```
 
 **`versionCode` is not guarded by anything — remember it yourself.** The
@@ -554,13 +557,13 @@ that bumps the name and forgets the code builds, publishes, and looks
 completely correct. It is `versionCode` that Android compares to decide an
 install is an upgrade rather than a reinstall, so forgetting it is invisible
 until a user cannot upgrade. Both numbers move together, every time:
-0.1.0/1 → 0.2.0/2 → 0.3.0/3 → 0.4.0/4.
+0.1.0/1 → 0.2.0/2 → 0.3.0/3 → 0.4.0/4 → 0.5.0/5.
 
 Verify the number that actually shipped, from the published artifact rather
 than the build directory:
 
 ```sh
-gh release download app-v0.4.0 -D /tmp/rel --clobber
+gh release download app-v0.5.0 -D /tmp/rel --clobber
 sha256sum -c /tmp/rel/*.sha256
 "$ANDROID_HOME/build-tools/36.0.0/aapt2" dump badging /tmp/rel/*.apk | head -1
 ```

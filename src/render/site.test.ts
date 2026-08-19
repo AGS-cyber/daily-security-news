@@ -120,15 +120,29 @@ test('archive renders article and digest editions side by side', async () => {
   await withDirs(async (dirs) => {
     const older = digestEdition('2026-08-05');
     await writeEdition(older, dirs.editionsDir);
+    const july = digestEdition('2026-07-31');
+    await writeEdition(july, dirs.editionsDir);
     const article = articleEdition();
     await writeEdition(article, dirs.editionsDir);
     await writeSite(article, dirs);
 
     const archive = await readFile(join(dirs.siteDir, 'archive.html'), 'utf8');
+    // The calendar keeps each headline on its day, where the list used to
+    // print it: hidden from the grid, still reachable and still read aloud.
     assert.match(archive, /A quiet week ends loudly/);
-    assert.match(archive, /2026-08-05/);
-    // Newest first.
-    assert.ok(archive.indexOf('2026-08-06') < archive.indexOf('2026-08-05'));
+    assert.match(archive, /href="2026-08-05\.html"/);
+    // Days ascend inside a month, so it is the months that run newest first.
+    assert.match(archive, /<caption>August 2026/);
+    assert.match(archive, /<caption>July 2026/);
+    assert.ok(
+      archive.indexOf('<caption>August 2026') < archive.indexOf('<caption>July 2026'),
+      'the newest month should be the first grid on the page',
+    );
+    // A published day links; a day that published nothing is drawn and dimmed.
+    assert.doesNotMatch(archive, /href="2026-08-04\.html"/);
+    assert.match(archive, /<td class="off"><span>4<\/span><\/td>/);
+    // The newest edition is the one index.html carries, and is marked as such.
+    assert.match(archive, /<td class="on latest"><a class="article" href="2026-08-06\.html"/);
 
     // index.json is the same archive index as data, newest first.
     const index: unknown = JSON.parse(

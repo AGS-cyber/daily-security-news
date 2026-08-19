@@ -86,11 +86,23 @@ ol.stories > li { counter-increment: story; border-top: 1px solid var(--rule); p
 .article li::marker { color: var(--dim); }
 .also-heading { border-top: 1px solid var(--rule); margin-top: 2.75rem; padding-top: 1.5rem; }
 .also-heading::before { content: "## "; color: var(--dim); }
-ul.archive { list-style: none; margin: 0; padding: 0; }
-ul.archive li { border-top: 1px solid var(--rule); padding: .55rem 0;
-  display: flex; flex-wrap: wrap; gap: 0 1ch; }
-ul.archive li::before { content: "\203A"; color: var(--dim); }
-ul.archive .count { color: var(--muted); font-size: .9rem; }
+table.cal { border-collapse: collapse; table-layout: fixed; width: 100%; margin: 0 0 2.25rem; }
+table.cal caption { text-align: left; color: var(--bright); font-size: 1.05rem;
+  padding: 1.5rem 0 .6rem; }
+table.cal caption::before { content: "## "; color: var(--dim); }
+table.cal caption .count { color: var(--muted); font-size: .82rem; }
+table.cal th { font-weight: 400; font-size: .72rem; letter-spacing: .1em; color: var(--dim);
+  padding: .35rem 0; text-align: center; }
+table.cal th abbr { text-decoration: none; }
+table.cal td { border: 1px solid var(--rule); padding: 0; text-align: center; font-size: .9rem; }
+table.cal td.pad { border-color: transparent; }
+table.cal td span, table.cal td a { display: block; padding: .55rem 0; }
+table.cal td.off span { color: var(--dim); }
+table.cal td a { border-bottom: 0; }
+table.cal td a.article { color: var(--bright); font-weight: 700; }
+table.cal td.latest { outline: 1px dashed var(--dim); outline-offset: -3px; }
+table.cal td a:hover, table.cal td a:focus-visible { background: var(--link); color: var(--bg); }
+table.cal td a.article:hover, table.cal td a.article:focus-visible { background: var(--bright); }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
   padding-bottom: 3rem; color: var(--muted); font-size: .8rem; }
 footer::before { content: "// "; color: var(--dim); }

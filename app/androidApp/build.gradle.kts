@@ -15,8 +15,8 @@ android {
         // `versionCode` is what Android compares to decide an install is an
         // upgrade; `versionName` is what a human reads, and what the
         // `app-v*` tag must equal or `app-release.yml` refuses to publish.
-        versionCode = 4
-        versionName = "0.4.0"
+        versionCode = 5
+        versionName = "0.5.0"
     }
 
     packaging {

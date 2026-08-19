@@ -1,6 +1,12 @@
 import { marked } from 'marked';
 import { sources } from '../config/sources.js';
 import type { ArticleEdition, DegradedNotice, DigestEdition, Item } from '../types.js';
+import {
+  calendarMonths,
+  type ArchiveEntry,
+  type CalendarDay,
+  type CalendarMonth,
+} from './calendar.js';
 import { substituteCitations } from './citations.js';
 import { escapeHtml } from './escape.js';
 import { FAVICON_HREF } from './icon.js';
@@ -106,11 +112,23 @@ ol.stories > li { counter-increment: story; border-top: 1px solid var(--rule); p
 .article li::marker { color: var(--dim); }
 .also-heading { border-top: 1px solid var(--rule); margin-top: 2.75rem; padding-top: 1.5rem; }
 .also-heading::before { content: "## "; color: var(--dim); }
-ul.archive { list-style: none; margin: 0; padding: 0; }
-ul.archive li { border-top: 1px solid var(--rule); padding: .55rem 0;
-  display: flex; flex-wrap: wrap; gap: 0 1ch; }
-ul.archive li::before { content: "\\203A"; color: var(--dim); }
-ul.archive .count { color: var(--muted); font-size: .9rem; }
+table.cal { border-collapse: collapse; table-layout: fixed; width: 100%; margin: 0 0 2.25rem; }
+table.cal caption { text-align: left; color: var(--bright); font-size: 1.05rem;
+  padding: 1.5rem 0 .6rem; }
+table.cal caption::before { content: "## "; color: var(--dim); }
+table.cal caption .count { color: var(--muted); font-size: .82rem; }
+table.cal th { font-weight: 400; font-size: .72rem; letter-spacing: .1em; color: var(--dim);
+  padding: .35rem 0; text-align: center; }
+table.cal th abbr { text-decoration: none; }
+table.cal td { border: 1px solid var(--rule); padding: 0; text-align: center; font-size: .9rem; }
+table.cal td.pad { border-color: transparent; }
+table.cal td span, table.cal td a { display: block; padding: .55rem 0; }
+table.cal td.off span { color: var(--dim); }
+table.cal td a { border-bottom: 0; }
+table.cal td a.article { color: var(--bright); font-weight: 700; }
+table.cal td.latest { outline: 1px dashed var(--dim); outline-offset: -3px; }
+table.cal td a:hover, table.cal td a:focus-visible { background: var(--link); color: var(--bg); }
+table.cal td a.article:hover, table.cal td a.article:focus-visible { background: var(--bright); }
 footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
   padding-bottom: 3rem; color: var(--muted); font-size: .8rem; }
 footer::before { content: "// "; color: var(--dim); }
@@ -269,29 +287,87 @@ ${also}`,
   });
 }
 
-export type ArchiveEntry = {
-  date: string;
-  count: number;
-} & ({ mode: 'digest' } | { mode: 'article'; headline: string });
+/**
+ * Monday first: these dates are UTC and the publication is a technical one,
+ * so the week runs the ISO way rather than the American one.
+ */
+const WEEKDAYS: [short: string, long: string][] = [
+  ['Mo', 'Monday'],
+  ['Tu', 'Tuesday'],
+  ['We', 'Wednesday'],
+  ['Th', 'Thursday'],
+  ['Fr', 'Friday'],
+  ['Sa', 'Saturday'],
+  ['Su', 'Sunday'],
+];
+
+/**
+ * What a day's link says when it is hovered or read aloud.
+ *
+ * A grid of numbers is a worse index than a list of headlines unless the
+ * headline is still reachable, so it lives on the link itself rather than
+ * being dropped.
+ */
+function dayLabel(entry: ArchiveEntry): string {
+  const stories = `${entry.count} ${entry.count === 1 ? 'story' : 'stories'}`;
+  const what = entry.mode === 'article' ? entry.headline : 'Automated digest';
+  return `${formatDate(entry.date)} — ${what} · ${stories}`;
+}
+
+function dayCell(cell: CalendarDay | null, latest: string): string {
+  // Before the 1st or after the last: no day, so no number and no border.
+  if (cell === null) return '<td class="pad"></td>';
+  // A day that published nothing is drawn dim rather than omitted — a gap in
+  // the record should look like a gap.
+  if (cell.entry === null) return `<td class="off"><span>${cell.day}</span></td>`;
+
+  const label = escapeHtml(dayLabel(cell.entry));
+  const classes = ['on', cell.date === latest ? 'latest' : ''].filter(Boolean).join(' ');
+  return `<td class="${classes}"><a class="${cell.entry.mode}" href="${escapeHtml(cell.date)}.html" title="${label}" aria-label="${label}">${cell.day}</a></td>`;
+}
+
+/**
+ * One month as a table, because a calendar is tabular data: with the
+ * stylesheet off it is still a grid of days under weekday headings, which a
+ * `div` soup or a bare `ol` would not be.
+ */
+function monthTable(month: CalendarMonth, latest: string): string {
+  const head = WEEKDAYS.map(
+    ([short, long]) => `<th scope="col"><abbr title="${long}">${short}</abbr></th>`,
+  ).join('');
+  const rows = month.weeks
+    .map((week) => `<tr>${week.map((cell) => dayCell(cell, latest)).join('')}</tr>`)
+    .join('\n');
+  const editions = `${month.count} ${month.count === 1 ? 'edition' : 'editions'}`;
+
+  return `<table class="cal">
+<caption>${escapeHtml(MONTHS[month.month - 1]!)} ${month.year} <span class="count">${editions}</span></caption>
+<thead><tr>${head}</tr></thead>
+<tbody>
+${rows}
+</tbody>
+</table>`;
+}
 
 export function archivePage(entries: ArchiveEntry[]): string {
-  const list = entries.length
-    ? `<ul class="archive">
-${entries
-  .map((e) => {
-    const label =
-      e.mode === 'article'
-        ? escapeHtml(e.headline)
-        : `Daily digest — ${e.count} ${e.count === 1 ? 'story' : 'stories'}`;
-    return `<li><a href="${escapeHtml(e.date)}.html">${escapeHtml(formatDate(e.date))}</a> <span class="count">${label}</span></li>`;
-  })
-  .join('\n')}
-</ul>`
+  const months = calendarMonths(entries);
+  const dates = entries.map((e) => e.date).sort();
+  const latest = dates.at(-1) ?? '';
+
+  // A month is only drawn because it holds an edition, so months and entries
+  // are empty together and the summary line never has to describe nothing.
+  const summary = `${dates.length} ${dates.length === 1 ? 'edition' : 'editions'} · ${escapeHtml(formatDate(dates[0] ?? ''))} to ${escapeHtml(formatDate(latest))} · a bright day is a written article, a plain one an automated digest`;
+
+  const body = months.length
+    ? [
+        `<p class="summary">${summary}</p>`,
+        ...months.map((month) => monthTable(month, latest)),
+      ].join('\n')
     : `<p class="empty">No editions yet.</p>`;
 
   return layout({
     title: 'Archive — Daily Security News',
     generatedAt: new Date().toISOString(),
-    bodyHtml: `<h1>Archive</h1>\n${list}`,
+    bodyHtml: `<h1>Archive</h1>\n${body}`,
   });
 }

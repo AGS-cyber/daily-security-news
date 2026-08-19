@@ -1,7 +1,8 @@
 import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import type { Edition } from '../types.js';
-import { archivePage, articlePage, digestPage, type ArchiveEntry } from './html.js';
+import type { ArchiveEntry } from './calendar.js';
+import { archivePage, articlePage, digestPage } from './html.js';
 
 async function archiveEntries(editionsDir: string): Promise<ArchiveEntry[]> {
   const files = (await readdir(editionsDir)).filter((f) => f.endsWith('.json'));
