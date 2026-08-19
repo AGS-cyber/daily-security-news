@@ -539,13 +539,13 @@ chosen commit into a downloadable APK, and the tag is how you choose it.
 grep -E 'versionCode|versionName' app/androidApp/build.gradle.kts
 
 # 2. Commit the bump, tag that commit, and push the tag. The tag is the trigger.
-git tag app-v0.3.0
-git push origin app-v0.3.0
+git tag app-v0.4.0
+git push origin app-v0.4.0
 
 # 3. Watch it, then check what actually got attached.
 gh run watch "$(gh run list --workflow=app-release.yml --limit 1 \
   --json databaseId --jq '.[0].databaseId')"
-gh release view app-v0.3.0
+gh release view app-v0.4.0
 ```
 
 **`versionCode` is not guarded by anything — remember it yourself.** The
@@ -554,13 +554,13 @@ that bumps the name and forgets the code builds, publishes, and looks
 completely correct. It is `versionCode` that Android compares to decide an
 install is an upgrade rather than a reinstall, so forgetting it is invisible
 until a user cannot upgrade. Both numbers move together, every time:
-0.1.0/1 → 0.2.0/2 → 0.3.0/3.
+0.1.0/1 → 0.2.0/2 → 0.3.0/3 → 0.4.0/4.
 
 Verify the number that actually shipped, from the published artifact rather
 than the build directory:
 
 ```sh
-gh release download app-v0.3.0 -D /tmp/rel --clobber
+gh release download app-v0.4.0 -D /tmp/rel --clobber
 sha256sum -c /tmp/rel/*.sha256
 "$ANDROID_HOME/build-tools/36.0.0/aapt2" dump badging /tmp/rel/*.apk | head -1
 ```
