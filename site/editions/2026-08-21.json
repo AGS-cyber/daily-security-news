@@ -1,0 +1,814 @@
+{
+  "date": "2026-08-21",
+  "generatedAt": "2026-08-21T12:35:52.522Z",
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 225,
+    "published": 43
+  },
+  "mode": "article",
+  "headline": "Active Exploits, a Poisoned Build Chain, and a Sandbox Escape",
+  "standfirst": "A maximum-severity Entra ID flaw is already under exploitation with no customer patch to apply, and GitLab and Zimbra bugs are being attacked within days of disclosure. Elsewhere, a Rust crate compromise has turned routine builds into malware delivery events, and a critical sandbox escape threatens applications that isolate untrusted code. CISA is directing immediate TrueConf patches, and Cisco has fixed nine Crosswork and Secure Workload flaws, five at CVSS 10.0.",
+  "bodyMarkdown": "## Actively exploited\n\nThe lead story is CVE-2026-69836, a CVSS 10.0 remote code execution vulnerability in Microsoft Entra ID that Microsoft says has already been exploited in the wild [[s15]]. It is a deserialization flaw in the identity and access management service, and the unusual part is that Microsoft says no customer action is required. That leaves monitoring and awareness as the primary defenses, since there is no customer-applied patch to track. The vulnerability is not yet in CISA's Known Exploited Vulnerabilities catalog, so the in-the-wild signal is coming from the vendor's advisory rather than from a catalog listing.\n\nGitLab's CVE-2026-19478 is close behind. The CVSS 9.4 code injection flaw, reachable by an unauthenticated attacker through a GraphQL directive, can let an attacker modify or delete public projects and user data under certain conditions [[s14]]. Researchers report active exploitation within days of disclosure, and defenders should not wait for a KEV listing to treat it as urgent. The affected versions run from GitLab CE/EE 18.2 before 18.11.11 and the 19.0, 19.1, and 19.2 lines before 19.0.8, 19.1.6, and 19.2.4; the patched releases are the priority.\n\nCISA has directed immediate patching for TrueConf vulnerabilities that the Head Mare hacktivist group is exploiting to deploy the PhantomCore malware [[s13]]. The agency's urgency is warranted because these are not theoretical bugs: the attack group is already using them in active operations, so any organization exposing TrueConf endpoints should move remediation ahead of routine maintenance.\n\nZimbra adds another actively exploited target. CVE-2026-73570 is a CVSS 8.9 command injection vulnerability in Zimbra Collaboration before 10.1.20 that leads to unauthenticated remote code execution, but only when the optional zimbra-snmp package is installed and SNMP notifications are enabled; the attack arrives via specially crafted SMTP requests during SNMP notification processing [[s37]]. CERT Polska has confirmed in-the-wild exploitation, so real attackers have already worked out the conditional path. Organizations running Zimbra should verify whether the SNMP package is enabled and patch to 10.1.20 or later.\n\n## Research\n\nThe Rust supply-chain compromise shows how trust in a package registry can be weaponized. Compromised maintainer credentials published malicious versions of arrayref 0.3.10, internment 0.8.7, and append-only-vec 0.1.9, which have a combined 245 million downloads [[s17]]. The malicious releases pulled in a typosquatted dependency whose build script downloaded and executed a remote payload at compile time. That means every project that built against the poisoned versions became a potential malware distribution event, and the crates have now been removed from crates.io. The incident argues for treating build-time behavior as an attack surface and auditing dependencies for typosquatting and pre/post-build scripts.\n\n## Breaches\n\nThe SickKids disclosure shows how a third-party software flaw can put an organization's sensitive data at risk even when core systems are spared. Toronto's Hospital for Sick Children says the incident exposed personal information belonging to some current and former employees and job applicants [[s7]]. Clinical systems and patient records were not affected, which limits immediate patient-safety impact, but the breach still hits HR and operational data. For healthcare security teams, a vendor vulnerability in an administrative system can be as consequential as one in a clinical device.\n\n## Vulnerabilities\n\nA critical sandbox escape in isolated-vm is a serious problem for any application using the open-source library to run untrusted JavaScript. The flaw, tracked as GHSA-864f-rcv7-6rh4 and not yet assigned a CVE, affects all versions before and including 7.0.0 [[s34]]. Because isolated-vm's entire purpose is to contain untrusted code, an escape defeats the security model and can lead to remote code execution on the host. The library's popularity makes the exposure broader than it might otherwise be, and the missing CVE makes tracking harder, so teams should inventory where isolated-vm is used and treat the affected version range as critical.\n\nCisco's latest round of patches covers nine vulnerabilities in Crosswork and Secure Workload Software, five of them carrying CVSS scores of 10.0 [[s8]]. Four of the flaws affect Crosswork Data Gateway, Crosswork Network Controller, and Crosswork Planning regardless of device configuration, removing the usual configuration-based exposure arguments. These are management-plane platforms and therefore high-value targets. Organizations running any of these products should move the updates to the front of the queue.",
+  "selected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Microsoft Entra ID Flaw (CVSS 10.0) Exploited in Wild, Allows Remote Code Execution",
+      "url": "https://thehackernews.com/2026/08/microsoft-entra-id-flaw-cvss-100.html",
+      "publishedAt": "2026-08-21T06:06:11.000Z",
+      "excerpt": "Microsoft on Thursday warned of a maximum-severity security flaw in Entra ID that it said has been exploited in the wild, but noted that no customer action is required. The vulnerability, tracked as CVE-2026-69836 (CVSS score: 10.0), is a case of remote code execution impacting the tech giant's cloud-based identity and access management service. It was previously called Azure Active Directory",
+      "canonicalUrl": "https://thehackernews.com/2026/08/microsoft-entra-id-flaw-cvss-100.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-69836",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Deserialization of untrusted data in Microsoft Entra ID allows an unauthorized attacker to execute code over a network.",
+            "cvss": {
+              "version": "3.1",
+              "score": 10,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+              "source": "secure@microsoft.com",
+              "type": "Primary"
+            },
+            "cwes": [
+              "CWE-502"
+            ],
+            "published": "2026-08-20T22:18:00.740",
+            "lastModified": "2026-08-21T12:28:35.090",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-69836",
+                "source": "secure@microsoft.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/08/microsoft-entra-id-flaw-cvss-100.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.21",
+              "dateReleased": "2026-08-21T11:57:27.4632Z",
+              "retrievedAt": "2026-08-21T12:35:52.522Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-19478%2CCVE-2026-69836%2CCVE-2026-73570",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-69836",
+              "retrievedAt": "2026-08-21T12:35:52.522Z"
+            }
+          }
+        }
+      ],
+      "id": "s15",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "Maximum-severity Entra ID RCE is already being exploited in the wild; with no customer action available, awareness and monitoring are the only defenses."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "GitLab CVE-2026-19478 Comes Under Active Exploitation Within Days of Disclosure",
+      "url": "https://thehackernews.com/2026/08/gitlab-cve-2026-19478-comes-under.html",
+      "publishedAt": "2026-08-21T07:04:25.000Z",
+      "excerpt": "A newly disclosed security flaw in GitLab has come under active exploitation within days of public disclosure, according to watchTowr. The vulnerability in question is CVE-2026-19478 (CVSS score: 9.4), a case of code injection that allows an unauthenticated attacker to modify or delete publicly accessible GitLab projects and rewrite their data under certain conditions without requiring",
+      "canonicalUrl": "https://thehackernews.com/2026/08/gitlab-cve-2026-19478-comes-under.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-19478",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "GitLab has remediated an issue in GitLab CE/EE affecting all versions from 18.2 before 18.11.11, 19.0 before 19.0.8, 19.1 before 19.1.6, and 19.2 before 19.2.4 that under certain conditions could allow an unauthenticated user to remotely modify or delete public projects and user data via a GraphQL directive.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.4,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:H",
+              "source": "cve@gitlab.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-94"
+            ],
+            "published": "2026-08-17T20:16:41.777",
+            "lastModified": "2026-08-18T14:57:10.630",
+            "vulnStatus": "Undergoing Analysis",
+            "references": [
+              {
+                "url": "https://docs.gitlab.com/releases/patches/patch-release-gitlab-19-2-4-released/",
+                "source": "cve@gitlab.com",
+                "tags": []
+              },
+              {
+                "url": "https://gitlab.com/gitlab-org/gitlab/-/work_items/611377",
+                "source": "cve@gitlab.com",
+                "tags": []
+              },
+              {
+                "url": "https://hackerone.com/reports/3926431",
+                "source": "cve@gitlab.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/08/gitlab-cve-2026-19478-comes-under.html",
+                "field": "title"
+              },
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/08/gitlab-cve-2026-19478-comes-under.html",
+                "field": "excerpt"
+              },
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/08/gitlab-cve-2026-19478-comes-under.html",
+                "field": "url"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.21",
+              "dateReleased": "2026-08-21T11:57:27.4632Z",
+              "retrievedAt": "2026-08-21T12:35:52.522Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-19478%2CCVE-2026-69836%2CCVE-2026-73570",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-19478",
+              "retrievedAt": "2026-08-21T12:35:52.522Z"
+            }
+          }
+        }
+      ],
+      "id": "s14",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "GitLab's code-injection bug is under active attack within days of disclosure, threatening unauthenticated modification of public repositories."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "CISA Urges Immediate Patching of Exploited TrueConf Vulnerabilities",
+      "url": "https://www.securityweek.com/cisa-urges-immediate-patching-of-exploited-trueconf-vulnerabilities/",
+      "publishedAt": "2026-08-21T07:25:50.000Z",
+      "excerpt": "The Head Mare hacktivist group has been exploiting the bugs to deploy the PhantomCore malware. The post CISA Urges Immediate Patching of Exploited TrueConf Vulnerabilities appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/cisa-urges-immediate-patching-of-exploited-trueconf-vulnerabilities",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s13",
+      "section": "exploited",
+      "rank": 3,
+      "angle": "CISA-mandated patching of TrueConf underscores real-world attacks by Head Mare deploying PhantomCore."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Attackers Exploit Zimbra SNMP Flaw for Unauthenticated Remote Code Execution",
+      "url": "https://thehackernews.com/2026/08/attackers-exploit-zimbra-snmp-flaw-for.html",
+      "publishedAt": "2026-08-20T13:24:28.000Z",
+      "excerpt": "A now-patched security flaw impacting Zimbra Collaboration (ZCS) has come under active exploitation in the wild, according to the Polish Computer Emergency Response Team (CERT Polska). The vulnerability in question is CVE-2026-73570 (CVSS score: 8.9), which refers to a case of command injection that can lead to remote code execution. \"A remote code execution vulnerability exists in Zimbra",
+      "canonicalUrl": "https://thehackernews.com/2026/08/attackers-exploit-zimbra-snmp-flaw-for.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-73570",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "A remote code execution vulnerability exists in Zimbra Collaboration (ZCS) before 10.1.20 when the optional zimbra-snmp package is installed and SNMP notifications are enabled. Due to improper sanitization of untrusted input during SNMP notification processing, an unauthenticated attacker can send specially crafted SMTP requests that may result in execution of arbitrary operating system commands as the Zimbra user.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.9,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:L",
+              "source": "cve@mitre.org",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-78"
+            ],
+            "published": "2026-08-13T16:19:06.003",
+            "lastModified": "2026-08-14T05:17:00.340",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://wiki.zimbra.com/wiki/Security_Center",
+                "source": "cve@mitre.org",
+                "tags": []
+              },
+              {
+                "url": "https://wiki.zimbra.com/wiki/Zimbra_Security_Advisories",
+                "source": "cve@mitre.org",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/08/attackers-exploit-zimbra-snmp-flaw-for.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.21",
+              "dateReleased": "2026-08-21T11:57:27.4632Z",
+              "retrievedAt": "2026-08-21T12:35:52.522Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-19478%2CCVE-2026-69836%2CCVE-2026-73570",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-73570",
+              "retrievedAt": "2026-08-21T12:35:52.522Z"
+            }
+          }
+        }
+      ],
+      "id": "s37",
+      "section": "exploited",
+      "rank": 4,
+      "angle": "CERT Polska confirms Zimbra SNMP command injection is being exploited for unauthenticated RCE."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Rust Supply Chain Attack Puts Build-Time Malware in Crates with 245 Million Downloads",
+      "url": "https://thehackernews.com/2026/08/rust-supply-chain-attack-puts-build.html",
+      "publishedAt": "2026-08-20T20:22:35.000Z",
+      "excerpt": "The Rust Project has deleted malicious versions of three widely used Rust crates from crates.io after a compromised maintainer account published releases that added a typosquatted dependency whose build script downloaded and executed a remote payload during compilation. The affected releases are arrayref 0.3.10, internment 0.8.7, and append-only-vec 0.1.9, all published from the same owner",
+      "canonicalUrl": "https://thehackernews.com/2026/08/rust-supply-chain-attack-puts-build.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s17",
+      "section": "research",
+      "rank": 5,
+      "angle": "Compromised Rust crates with 245M combined downloads show supply-chain compromise can turn every build into a malware distribution event."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "SickKids data breach exposes employee and job applicant info",
+      "url": "https://www.bleepingcomputer.com/news/security/sickkids-data-breach-exposes-employee-and-job-applicant-info/",
+      "publishedAt": "2026-08-21T10:10:42.000Z",
+      "excerpt": "Toronto's Hospital for Sick Children (SickKids) says a cybersecurity incident exposed the personal information of some current and former employees and job applicants, stemming from a flaw in third-party software. Clinical systems and patient records were not affected. (264) [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/sickkids-data-breach-exposes-employee-and-job-applicant-info",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s7",
+      "section": "breaches",
+      "rank": 6,
+      "angle": "SickKids breach exposes employee and applicant data, a reminder that third-party software flaws can hit core hospital operations even when clinical systems are spared."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Isolated-vm Flaw Lets Sandboxed JavaScript Escape to Host for Potential RCE",
+      "url": "https://thehackernews.com/2026/08/isolated-vm-flaw-lets-sandboxed.html",
+      "publishedAt": "2026-08-20T13:48:24.000Z",
+      "excerpt": "Cybersecurity researchers have disclosed a critical security flaw in isolated-vm, a popular open-source sandbox with more than 2,900 stars and 190 forks on GitHub, that could allow attackers to escape the confines of the isolated environment. The vulnerability (\"GHSA-864f-rcv7-6rh4\"), which has yet to be assigned a CVE identifier, impacts all versions of the library before and including 7.0.0.",
+      "canonicalUrl": "https://thehackernews.com/2026/08/isolated-vm-flaw-lets-sandboxed.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s34",
+      "section": "vulnerabilities",
+      "rank": 7,
+      "angle": "Critical isolated-vm sandbox escape can lead to host RCE, putting any app relying on this popular open-source sandbox at risk."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Cisco Patches Nine Crosswork and Secure Workload Flaws, Five Scoring CVSS 10.0",
+      "url": "https://thehackernews.com/2026/08/cisco-patches-nine-crosswork-and-secure.html",
+      "publishedAt": "2026-08-21T10:03:11.000Z",
+      "excerpt": "Cisco has published another round of security updates for Crosswork platforms and Secure Workload Software as part of a continued comprehensive internal security review. Four of the security vulnerabilities affect Crosswork Data Gateway, Crosswork Network Controller, and Crosswork Planning, regardless of the device configuration. A brief description of each of the flaws is below -",
+      "canonicalUrl": "https://thehackernews.com/2026/08/cisco-patches-nine-crosswork-and-secure.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s8",
+      "section": "vulnerabilities",
+      "rank": 8,
+      "angle": "Five CVSS 10.0 flaws in Cisco Crosswork and Secure Workload demand urgent attention for organizations running these network management platforms."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Calling on Cyber Pros to Help Defend City Hall",
+      "url": "https://www.darkreading.com/cyber-risk/calling-on-cyber-pros-to-help-city-hall",
+      "publishedAt": "2026-08-21T14:00:00.000Z",
+      "excerpt": "Government agencies with smaller budgets need support — and here's how you can help.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/calling-on-cyber-pros-to-help-city-hall",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Critical Isolated-vm Vulnerability Leads to RCE on Host",
+      "url": "https://www.securityweek.com/critical-isolated-vm-vulnerability-leads-to-rce-on-host/",
+      "publishedAt": "2026-08-21T12:26:07.000Z",
+      "excerpt": "The type confusion bug can lead to V8 sandbox escape and control-flow hijacking of the host process. The post Critical Isolated-vm Vulnerability Leads to RCE on Host appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/critical-isolated-vm-vulnerability-leads-to-rce-on-host",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "CISA orders feds to patch actively exploited TrueConf Server flaws",
+      "url": "https://www.bleepingcomputer.com/news/security/cisa-orders-feds-to-patch-actively-exploited-trueconf-server-flaws/",
+      "publishedAt": "2026-08-21T12:25:33.000Z",
+      "excerpt": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA) ordered U.S. federal agencies to prioritize patching two actively exploited vulnerabilities in the TrueConf Server self-hosted communications platform. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/cisa-orders-feds-to-patch-actively-exploited-trueconf-server-flaws",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Wazuh and AI For Enhanced SOC Workflows",
+      "url": "https://thehackernews.com/2026/08/wazuh-and-ai-for-enhanced-soc-workflows.html",
+      "publishedAt": "2026-08-21T11:21:39.000Z",
+      "excerpt": "Artificial Intelligence (AI) has become one of this decade's defining technologies. From healthcare and finance to manufacturing and education, organizations increasingly rely on AI to automate repetitive tasks, uncover patterns hidden within large datasets, and support faster decision-making. Cybersecurity has experienced a similar transformation. While attackers employ AI to automate",
+      "canonicalUrl": "https://thehackernews.com/2026/08/wazuh-and-ai-for-enhanced-soc-workflows.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft warns of max severity Entra ID flaw exploited in attacks",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-warns-of-max-severity-entra-id-flaw-exploited-in-attacks/",
+      "publishedAt": "2026-08-21T11:04:10.000Z",
+      "excerpt": "Microsoft has patched a maximum-severity vulnerability in the Entra ID identity and access management (IAM) platform that has been exploited in attacks. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-warns-of-max-severity-entra-id-flaw-exploited-in-attacks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers abuse FTP server banners to deliver new Windows malware",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-abuse-ftp-server-banners-to-deliver-new-windows-malware/",
+      "publishedAt": "2026-08-21T11:00:00.000Z",
+      "excerpt": "Threat actors are abusing FTP banners to hide commands that deliver two previously undocumented remote access trojans named E4del and PINHOLE. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-abuse-ftp-server-banners-to-deliver-new-windows-malware",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Rust Supply Chain Attack Linked to North Korean Hackers",
+      "url": "https://www.securityweek.com/rust-supply-chain-attack-linked-to-north-korean-hackers/",
+      "publishedAt": "2026-08-21T09:23:18.000Z",
+      "excerpt": "Hackers pushed a poisoned arrayref version that added a dependency to fetch a malicious payload from a remote server. The post Rust Supply Chain Attack Linked to North Korean Hackers appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/rust-supply-chain-attack-linked-to-north-korean-hackers",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Contractors’ CMMC Confidence Rises as Ability to Prove It Falls Behind",
+      "url": "https://www.securityweek.com/contractors-cmmc-confidence-rises-as-ability-to-prove-it-falls-behind/",
+      "publishedAt": "2026-08-21T08:41:06.000Z",
+      "excerpt": "Two industry surveys released this week by Kiteworks and CyberSheath paint a consistent picture of the defense industrial base. The post Contractors’ CMMC Confidence Rises as Ability to Prove It Falls Behind appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/contractors-cmmc-confidence-rises-as-ability-to-prove-it-falls-behind",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Microsoft Rolls Out 22 Fresh Security Patches",
+      "url": "https://www.securityweek.com/microsoft-rolls-out-22-fresh-security-patches/",
+      "publishedAt": "2026-08-21T08:12:19.000Z",
+      "excerpt": "Most of the fixes resolve code execution, privilege escalation, and information disclosure vulnerabilities. The post Microsoft Rolls Out 22 Fresh Security Patches appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/microsoft-rolls-out-22-fresh-security-patches",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "securelist",
+      "sourceKind": "rss",
+      "title": "The invisible passenger in your car",
+      "url": "https://securelist.com/android-head-unit-malware/121106/",
+      "publishedAt": "2026-08-21T08:00:29.000Z",
+      "excerpt": "Kaspersky expert has discovered new Android malware designed to serve ads and build a proxy botnet. It's delivered through legitimate software for DoFun head units.",
+      "canonicalUrl": "https://securelist.com/android-head-unit-malware/121106",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "New CUSTODY Framework Constrains AI Agents Inside the Network",
+      "url": "https://www.darkreading.com/perimeter/new-custody-framework-constrains-ai-agents-inside-network",
+      "publishedAt": "2026-08-20T20:42:18.000Z",
+      "excerpt": "Enterprise cybersecurity expert Jake Williams joins the Dark Reading News Desk to explain why he decided to release his new agentic AI framework in the wake of the OpenAI attacks on Hugging Face.",
+      "canonicalUrl": "https://darkreading.com/perimeter/new-custody-framework-constrains-ai-agents-inside-network",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Suspected Russian Hackers Abuse Google OAuth and WhatsApp Linking to Hijack Accounts",
+      "url": "https://thehackernews.com/2026/08/suspected-russian-hackers-abuse-google.html",
+      "publishedAt": "2026-08-20T19:59:19.000Z",
+      "excerpt": "Three distinct suspected Russian cyber espionage threat clusters have been observed leveraging legitimate authentication flows to single out individuals working in academia, aerospace and defense, governments, and think tanks across Europe, as well as academia and think tanks within the U.S. These clusters include UNC6293, UNC7005, and UNC5976. \"These clusters engage in persistent, adaptive",
+      "canonicalUrl": "https://thehackernews.com/2026/08/suspected-russian-hackers-abuse-google.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s18"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "China’s ‘SilkParasite’ espionage operation targeting Central Asia with AI-assisted malware",
+      "url": "https://therecord.media/china-cyber-espionage-central-asia",
+      "publishedAt": "2026-08-20T19:30:00.000Z",
+      "excerpt": "Suspected military-grade hackers based in China used artificial intelligence to develop malware in a campaign to penetrate Central Asian governments.",
+      "canonicalUrl": "https://therecord.media/china-cyber-espionage-central-asia",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s19"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "What We Missed: Delta Flight Disrupted With Wi-Fi Hack",
+      "url": "https://www.darkreading.com/cyber-risk/delta-flight-disrupted-wi-fi-hack",
+      "publishedAt": "2026-08-20T19:11:15.000Z",
+      "excerpt": "In this video, Dark Reading editors discuss some of the news they didn't get a chance to cover, including some scary airplane security risks and the US government's newest \"hack back\" strategy.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/delta-flight-disrupted-wi-fi-hack",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "talos",
+      "sourceKind": "rss",
+      "title": "Is Cyber missing the Marque?",
+      "url": "https://blog.talosintelligence.com/is-cyber-missing-the-marque/",
+      "publishedAt": "2026-08-20T18:00:18.000Z",
+      "excerpt": "In this week's newsletter, new author Mick Baccio introduces himself and explores the operational and security implications of the new White House memorandum regarding private sector participation in government-authorized offensive cyber operations.",
+      "canonicalUrl": "https://blog.talosintelligence.com/is-cyber-missing-the-marque",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s21"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers poison arrayref Rust crate to push infostealer malware",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-poison-arrayref-rust-crate-to-push-infostealer-malware/",
+      "publishedAt": "2026-08-20T17:53:52.000Z",
+      "excerpt": "Hackers compromised the maintainer account behind the widely used Rust crate arrayref to introduce malware that executed on developers' systems during compilation. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-poison-arrayref-rust-crate-to-push-infostealer-malware",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s22"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "N-able Bug Exposes Password Vault Master Keys",
+      "url": "https://www.darkreading.com/vulnerabilities-threats/n-able-bug-password-vault-master-keys",
+      "publishedAt": "2026-08-20T17:39:24.000Z",
+      "excerpt": "The popular \"Passportal\" password manager, favored by MSPs and SMBs, remains risky even after its patch, thanks to its cloud-based design. Should these products stay away from the cloud entirely?",
+      "canonicalUrl": "https://darkreading.com/vulnerabilities-threats/n-able-bug-password-vault-master-keys",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Senators press TikTok over withholding of safety features for some users",
+      "url": "https://therecord.media/senators-press-tiktok-over-withholding-safety-features",
+      "publishedAt": "2026-08-20T17:33:00.000Z",
+      "excerpt": "In a letter on Wednesday, Sens. Marsha Blackburn (R-TN) and Richard Blumenthal (D-CT) criticized the company for having “knowingly withheld a critical safety measure for millions of American users.\"",
+      "canonicalUrl": "https://therecord.media/senators-press-tiktok-over-withholding-safety-features",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s24"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Money and Mindset: The Two Biggest Roadblocks to Cyber Policing",
+      "url": "https://www.darkreading.com/cybersecurity-operations/money-and-mindset-the-two-biggest-roadblocks-to-cyber-policing",
+      "publishedAt": "2026-08-20T17:32:51.000Z",
+      "excerpt": "Law enforcement training is not keeping pace with the volume and rapid evolution of cybercrimes, though officers really only need to learn the basics, but focus and budgets hinder progress.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/money-and-mindset-the-two-biggest-roadblocks-to-cyber-policing",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "ThreatsDay: Gogs 10.0 RCE, n8n Workflow-to-RCE, $10M Reward, GLM-5.3 AI Exploit, and More",
+      "url": "https://thehackernews.com/2026/08/threatsday-gogs-100-rce-n8n-workflow-to.html",
+      "publishedAt": "2026-08-20T17:23:48.000Z",
+      "excerpt": "A lot of this week’s trouble starts with something trusted doing exactly what it was allowed to do. Signed drivers get turned against defenses. Legitimate apps help malware blend in. A weak header check opens a path to code execution. Elsewhere, exposed systems, old bugs, odd hiding tricks, and AI-assisted exploit research keep lowering the effort needed to cause damage. Nothing here needs",
+      "canonicalUrl": "https://thehackernews.com/2026/08/threatsday-gogs-100-rce-n8n-workflow-to.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "AI-Generated Exploit Scripts Target Siemens S7 PLCs in U.S. Critical Infrastructure",
+      "url": "https://thehackernews.com/2026/08/ai-generated-exploit-scripts-target.html",
+      "publishedAt": "2026-08-20T16:59:44.000Z",
+      "excerpt": "The U.S. government on Wednesday warned of an \"active threat\" targeting critical infrastructure organizations in the country using artificial intelligence (AI)-generated exploit scripts. The activity is targeting Siemens S7 SeriesProgrammable Logic Controllers (PLCs) to conduct reconnaissance and capability development using AI-generated scripts disguised as legitimate monitoring tools. That",
+      "canonicalUrl": "https://thehackernews.com/2026/08/ai-generated-exploit-scripts-target.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Pakistan's Transparent Tribe Refreshes Toolset for Afghan Cyberattacks",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/pakistan-transparent-tribe-afghan-cyberattacks",
+      "publishedAt": "2026-08-20T14:59:22.000Z",
+      "excerpt": "A nation-state threat actor is picking on immature organizations run by the Taliban, but failing against more prepared government agencies in India.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/pakistan-transparent-tribe-afghan-cyberattacks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s28"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Hackers Target Zimbra Servers in Active Exploitation Campaign",
+      "url": "https://www.securityweek.com/hackers-target-zimbra-servers-in-active-exploitation-campaign/",
+      "publishedAt": "2026-08-20T14:50:49.000Z",
+      "excerpt": "Exploitation of the Zimbra Collaboration vulnerability CVE-2026-73570 has been observed by Poland’s CERT Polska. The post Hackers Target Zimbra Servers in Active Exploitation Campaign appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/hackers-target-zimbra-servers-in-active-exploitation-campaign",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-73570",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "A remote code execution vulnerability exists in Zimbra Collaboration (ZCS) before 10.1.20 when the optional zimbra-snmp package is installed and SNMP notifications are enabled. Due to improper sanitization of untrusted input during SNMP notification processing, an unauthenticated attacker can send specially crafted SMTP requests that may result in execution of arbitrary operating system commands as the Zimbra user.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.9,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:L",
+              "source": "cve@mitre.org",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-78"
+            ],
+            "published": "2026-08-13T16:19:06.003",
+            "lastModified": "2026-08-14T05:17:00.340",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://wiki.zimbra.com/wiki/Security_Center",
+                "source": "cve@mitre.org",
+                "tags": []
+              },
+              {
+                "url": "https://wiki.zimbra.com/wiki/Zimbra_Security_Advisories",
+                "source": "cve@mitre.org",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/hackers-target-zimbra-servers-in-active-exploitation-campaign/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.21",
+              "dateReleased": "2026-08-21T11:57:27.4632Z",
+              "retrievedAt": "2026-08-21T12:35:52.522Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-19478%2CCVE-2026-69836%2CCVE-2026-73570",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-73570",
+              "retrievedAt": "2026-08-21T12:35:52.522Z"
+            }
+          }
+        }
+      ],
+      "id": "s29"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Critical Elementor Pro bug exposes WordPress sites to RCE attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/critical-elementor-pro-bug-exposes-wordpress-sites-to-rce-attacks/",
+      "publishedAt": "2026-08-20T14:39:48.000Z",
+      "excerpt": "A critical vulnerability in the Elementor Pro WordPress plugin could allow attackers to upload executable files for remote code execution on the server. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/critical-elementor-pro-bug-exposes-wordpress-sites-to-rce-attacks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s30"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "New Cryptographic Context Injection Attack Could Let Web Pages Steal Grok Chat Data",
+      "url": "https://thehackernews.com/2026/08/new-cryptographic-context-injection.html",
+      "publishedAt": "2026-08-20T14:36:27.000Z",
+      "excerpt": "Adversa AI has disclosed an attack technique that it says can cause xAI's Grok chatbot to send a user's name, approximate location, subscription tier, and the prompts from the ongoing conversation to an attacker-controlled server after the user asks it to summarize an ordinary web page. The AI security company, which has codenamed the technique \"Cryptographic Context Injection,\" said the",
+      "canonicalUrl": "https://thehackernews.com/2026/08/new-cryptographic-context-injection.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s31"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Surveillance – Everything You Wanted to Know, But Were Afraid to Ask",
+      "url": "https://www.securityweek.com/surveillance-everything-you-wanted-to-know-but-were-afraid-to-ask/",
+      "publishedAt": "2026-08-20T14:30:00.000Z",
+      "excerpt": "We all know they’re watching us. But we don’t know who they are, nor why nor how they are doing it. The post Surveillance – Everything You Wanted to Know, But Were Afraid to Ask appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/surveillance-everything-you-wanted-to-know-but-were-afraid-to-ask",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s32"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "How MSPs can catch phishing attacks email filters miss",
+      "url": "https://www.bleepingcomputer.com/news/security/how-msps-can-catch-phishing-attacks-email-filters-miss/",
+      "publishedAt": "2026-08-20T14:01:11.000Z",
+      "excerpt": "AI is making phishing attacks more personalized, convincing, and difficult for traditional email filters to detect. Kaseya explains how MSPs can monitor identity, email, and endpoint activity to detect and contain attacks that make it past the inbox. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/how-msps-can-catch-phishing-attacks-email-filters-miss",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s33"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Critical NetScaler Flaw Can Bypass Authentication on Certain Gateway and AAA Servers",
+      "url": "https://thehackernews.com/2026/08/critical-netscaler-flaw-can-bypass.html",
+      "publishedAt": "2026-08-20T13:35:13.000Z",
+      "excerpt": "Citrix has released updates to address two security flaws impacting NetScaler ADC and NetScaler Gateway deployments, including a critical-severity authentication bypass vulnerability. According to the cloud computing and virtualization technology company, the issues affect customer-managed NetScaler ADC and NetScaler Gateway, including certain FIPS and NDcPP builds, as well as SecurAccess",
+      "canonicalUrl": "https://thehackernews.com/2026/08/critical-netscaler-flaw-can-bypass.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s35"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "'Grandoreiro' Malware Resurfaces With Mexico Campaign",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/grandoreiro-resurfaces-mexico-campaign",
+      "publishedAt": "2026-08-20T13:30:00.000Z",
+      "excerpt": "The banking Trojan, post-law enforcement takedown, is sprucing itself up with features that make detection and analysis harder.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/grandoreiro-resurfaces-mexico-campaign",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s36"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Threat Actor Hacks 14,000 IP Cameras in Ukraine and Russia",
+      "url": "https://www.securityweek.com/threat-actor-hacks-14000-ip-cameras-in-ukraine-and-russia/",
+      "publishedAt": "2026-08-20T13:16:35.000Z",
+      "excerpt": "Operation CameraSwarm targeted Dahua cameras across multiple countries, focusing on Russian and CIS telecom netblocks. The post Threat Actor Hacks 14,000 IP Cameras in Ukraine and Russia appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/threat-actor-hacks-14000-ip-cameras-in-ukraine-and-russia",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s38"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Zombie Card Attack Can Revive Expired Visa Cards for Contactless Payments",
+      "url": "https://thehackernews.com/2026/08/zombie-card-attack-can-revive-expired.html",
+      "publishedAt": "2026-08-20T12:01:24.000Z",
+      "excerpt": "Researchers at the University of Massachusetts Amherst have demonstrated an attack that revives expired Visa contactless credit cards for real in-store purchases by rewriting the expiration date a point-of-sale (POS) terminal reads over near-field communication (NFC), without breaking any of the card's cryptography. The attack, which the researchers named \"Zombie Card,\" requires physical",
+      "canonicalUrl": "https://thehackernews.com/2026/08/zombie-card-attack-can-revive-expired.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s39"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Johnson Controls Simplex Incident Manager",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-232-01",
+      "publishedAt": "2026-08-20T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of this vulnerability could allow a local attacker with low privileges to extract user credentials (passwords and authentication tokens) from system memory, potentially leading to unauthorized access to the application and connected systems. The following versions of Johnson Controls Simplex Incident Manager are affected: Simplex Incident Manager <=V2.01…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-232-01",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s40"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Why \"Shady AI\" is Security's Next Big Governance Problem",
+      "url": "https://thehackernews.com/2026/08/why-shady-ai-is-securitys-next-big.html",
+      "publishedAt": "2026-08-20T11:45:00.000Z",
+      "excerpt": "In March 2026, an internal AI agent at Meta triggered a “Sev 1” incident after sensitive company and user data was exposed to employees who weren’t authorized to access it. The incident began when a Meta employee posted a technical question on an internal forum. An engineer used an approved AI agent to analyze it, but the agent posted its response publicly without approval. The employee",
+      "canonicalUrl": "https://thehackernews.com/2026/08/why-shady-ai-is-securitys-next-big.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s41"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "CDN Tsunami Attack Abuses HTTP/3 Translation for Up to 350x DoS Amplification",
+      "url": "https://thehackernews.com/2026/08/cdn-tsunami-attack-abuses-http3.html",
+      "publishedAt": "2026-08-20T11:39:35.000Z",
+      "excerpt": "Cybersecurity researchers have disclosed two denial-of-service (DoS) attacks that exploit how major content delivery networks (CDNs) convert client-facing HTTP/3 traffic into HTTP/1.1 requests to the websites they front, amplifying a low-bandwidth request stream by up to 350x against the origin server. The attacks, collectively named \"CDN Tsunami,\" were evaluated against Alibaba, Baidu,",
+      "canonicalUrl": "https://thehackernews.com/2026/08/cdn-tsunami-attack-abuses-http3.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s42"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Manic Android Malware Exfiltrates Data From Offline Phones via Nearby Infected Devices",
+      "url": "https://thehackernews.com/2026/08/manic-android-malware-exfiltrates-data.html",
+      "publishedAt": "2026-08-20T11:26:08.000Z",
+      "excerpt": "A new Android threat codenamed Manic has been observed actively targeting Ukrainian banks, government and identity services, and messaging applications, as well as Russian and European financial institutions, global fintech and cryptocurrency services, and military-focused communications. \"Manic sits at the intersection of Android banking malware and mobile spyware, combining financial-fraud",
+      "canonicalUrl": "https://thehackernews.com/2026/08/manic-android-malware-exfiltrates-data.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s43"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1152,
+    "promptCacheMissTokens": 8426,
+    "outputTokens": 14892,
+    "estimatedCostUsd": 0.005352625600000001
+  }
+}

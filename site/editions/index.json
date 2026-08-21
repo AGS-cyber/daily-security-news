@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-08-21",
+    "mode": "article",
+    "headline": "Active Exploits, a Poisoned Build Chain, and a Sandbox Escape",
+    "count": 43
+  },
+  {
     "date": "2026-08-20",
     "mode": "article",
     "headline": "Active exploitations, a NetScaler warning, and a serverless isolation shock",
