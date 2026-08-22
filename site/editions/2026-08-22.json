@@ -1,0 +1,636 @@
+{
+  "date": "2026-08-22",
+  "generatedAt": "2026-08-22T12:28:19.561Z",
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 225,
+    "published": 22
+  },
+  "mode": "article",
+  "headline": "AI platforms and trusted components dominate the day's threat picture",
+  "standfirst": "The day's security picture has three threads: confirmed exploitation is landing on AI infrastructure, cloud credentials remain a persistent route into corporate accounts, and researchers keep finding ways to abuse trusted components, from boot-time drivers to npm packages.",
+  "bodyMarkdown": "## Actively exploited\n\nThe most urgent item is [[s22]], where CISA's Known Exploited Vulnerabilities catalog now covers three actively exploited flaws. Ray, the AI compute engine, has a critical pre-2.52.0 remote-code-execution hole reachable through a malicious website or malvertising. Its browser-attack guard is a User-Agent check that can be spoofed and combined with DNS rebinding, turning a developer who simply visits a page into a compromised build environment. MLflow, before 3.15.0, has an unauthenticated server-side request forgery: a webhook test endpoint validates the original URL but then follows redirects and re-resolves the hostname, opening a path to internal services and cloud metadata. Zimbra Collaboration Suite before 10.1.20 carries an OS command injection exploitable when the optional zimbra-snmp package is installed and SNMP notifications are enabled. The Zimbra entry needs more preconditions, but its KEV listing means attackers are already using it. For anyone running these components, the correct response is to treat them as actively targeted and patch.\n\n## Breaches\n\nRepeated victimization is the theme in [[s13]]. Toronto's Hospital for Sick Children disclosed another data theft, tied to a third-party application and involving employee data, after already absorbing a ransomware attack that disabled systems years ago. Attackers returning to a pediatric institution show that healthcare remains a favored target for its sensitive data and operational fragility.\n\nCloud credential hygiene is the blunt lesson in [[s9]]. More than 9,300 Amazon Web Services access keys exposed over about four years are still active and valid. That means full control over corporate accounts is sitting in logs, public repositories, or paste sites long after it should have been rotated. The problem is not the initial leak as much as the absence of detection and rotation.\n\n[[s19]] confirms a different kind of breach: Russian network monitoring vendor Microolap acknowledged an intrusion after pro-Ukraine group Black Spark claimed a month-long presence in its network and reached internal systems including the EtherSensor platform. A vendor whose product is network visibility losing control of its own network is both a reputation hit and a reminder that claims of long dwell time should be treated as credible until proven otherwise.\n\n## Research\n\n[[s10]] shows that Microsoft Defender's own signed Boot Time Removal Tool driver can be abused to perform arbitrary kernel-level file and registry operations on Windows 7 through 11 25H2. Because the driver is legitimately signed and already on disk, attackers do not need to import an external driver or exploit a software flaw. The practical risk is that security products can be deleted before the OS fully boots, leaving the system effectively blind. Defenders need boot-time visibility and should stop treating signed Microsoft binaries as automatically safe.\n\nThe npm supply chain continues to deliver working backdoors. [[s4]] reports 14 trojanized packages posing as calendar and streak utilities that drop RedC2 4.0, a Linux backdoor with AI-assisted command-and-control. As soon as the module loads, it finds a bundled binary, marks it executable, and launches it as a detached background process. A developer who installs a harmless-looking utility ends up with a persistent implant on a machine likely connected to source code and deployment pipelines.\n\nAI guardrails have a blind spot, as [[s15]] demonstrates. The \"Cryptographic Context Injection\" technique hides malicious instructions inside encrypted contexts and only decrypts them inside a trusted execution environment, so safety filters see only ciphertext. The technique bypasses guardrails in Grok and Gemini. The lesson is that prompt filtering cannot rely on inspecting input text that is opaque by design.\n\n## Industry\n\nThe day's most constructive item is [[s6]]. OWASP's new AI top-10 list and Universal Skill Format give security teams a common language for AI add-on and agentic-skill risk, replacing ad hoc assessments with a structured blueprint. A standard skill format is a small but useful step toward making AI security review repeatable, just as traditional top-10 lists made web application risk easier to communicate.",
+  "selected": [
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "CISA Adds One Known Exploited Vulnerability to Catalog",
+      "url": "https://www.cisa.gov/news-events/alerts/2026/08/17/cisa-adds-one-known-exploited-vulnerability-catalog",
+      "publishedAt": "2026-08-17T12:00:00.000Z",
+      "excerpt": "CISA has added one new vulnerability to its Known Exploited Vulnerabilities (KEV) Catalog, based on evidence of active exploitation. CVE-2025-62593 Ray-Project Ray Code Injection Vulnerability This type of vulnerability is a frequent attack vector for malicious cyber actors and poses significant risks to the federal enterprise. Binding Operational Directive (BOD) 26-04: Prioritizing Security…",
+      "canonicalUrl": "https://cisa.gov/news-events/alerts/2026/08/17/cisa-adds-one-known-exploited-vulnerability-catalog",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2025-62593",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Ray-Project",
+            "product": "Ray",
+            "vulnerabilityName": "Ray-Project Ray Code Injection Vulnerability",
+            "dateAdded": "2026-08-17",
+            "shortDescription": "Ray-Project Ray contains a code injection vulnerability that could allow remote code execution. Developers using Ray as a development tool may be exposed to this vulnerability exploitable through Firefox and Safari.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-08-20",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://github.com/ray-project/ray/security/advisories/GHSA-q279-jhrf-cc6v ; https://github.com/ray-project/ray/commit/70e7c72780bdec075dba6cad1afe0832772bfe09 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2025-62593",
+            "cwes": [
+              "CWE-94",
+              "CWE-352"
+            ]
+          },
+          "nvd": {
+            "description": "Ray is an AI compute engine. Prior to version 2.52.0, developers working with Ray as a development tool can be exploited via a critical RCE vulnerability exploitable via Firefox and Safari. This vulnerability is due to an insufficient guard against browser-based attacks, as the current defense uses the User-Agent header starting with the string \"Mozilla\" as a defense mechanism. This defense is insufficient as the fetch specification allows the User-Agent header to be modified. Combined with a DNS rebinding attack against the browser, and this vulnerability is exploitable against a developer running Ray who inadvertently visits a malicious website, or is served a malicious advertisement (malvertising). This issue has been patched in version 2.52.0.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.4,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-94",
+              "CWE-352"
+            ],
+            "published": "2025-11-26T23:15:47.927",
+            "lastModified": "2026-08-18T04:16:40.860",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://github.com/ray-project/ray/commit/70e7c72780bdec075dba6cad1afe0832772bfe09",
+                "source": "security-advisories@github.com",
+                "tags": [
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://github.com/ray-project/ray/security/advisories/GHSA-q279-jhrf-cc6v",
+                "source": "security-advisories@github.com",
+                "tags": [
+                  "Exploit",
+                  "Patch",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.bitsight.com/blog/rondodox-botnet-infrastructure-analysis",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2025-62593",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:anyscale:ray:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "EEAA235D-B305-4247-8840-CCABC90D54C1",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "2.52.0"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/08/17/cisa-adds-one-known-exploited-vulnerability-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.21",
+              "dateReleased": "2026-08-21T17:46:43.6019Z",
+              "retrievedAt": "2026-08-22T12:28:19.561Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2025-62593%2CCVE-2026-64849%2CCVE-2026-73570",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2025-62593",
+              "retrievedAt": "2026-08-22T12:28:19.561Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-64849",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "MLflow",
+            "product": "MLflow",
+            "vulnerabilityName": "MLflow Server-Side Request Forgery Vulnerability",
+            "dateAdded": "2026-08-19",
+            "shortDescription": "MLflow contains a server-side request forgery vulnerability that can allow attackers to reach internal or cloud metadata services and receive response_status and response_body.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-09-02",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://github.com/mlflow/mlflow/pull/24258 ; https://github.com/mlflow/mlflow/issues/24179 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-64849",
+            "cwes": [
+              "CWE-918"
+            ]
+          },
+          "nvd": {
+            "description": "MLflow is an open source AI engineering platform for agents, large language models, and machine learning models. Prior to 3.15.0, the unauthenticated POST /api/2.0/mlflow/webhooks/{id}/test endpoint calls _validate_webhook_url() in mlflow/utils/validation.py only for the original URL while mlflow/webhooks/delivery.py follows redirects and re-resolves the hostname without pinning the validated address, allowing attackers to reach internal or cloud metadata services and receive response_status and response_body. This issue is fixed in version 3.15.0.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.3,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:L/A:N",
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-918"
+            ],
+            "published": "2026-08-17T22:17:23.580",
+            "lastModified": "2026-08-20T19:16:57.867",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://github.com/mlflow/mlflow/commit/ba949522477cbd5915aa55d29b0cfad7d5ddf939",
+                "source": "security-advisories@github.com",
+                "tags": [
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://github.com/mlflow/mlflow/issues/24179",
+                "source": "security-advisories@github.com",
+                "tags": [
+                  "Exploit",
+                  "Issue Tracking",
+                  "Mitigation"
+                ]
+              },
+              {
+                "url": "https://github.com/mlflow/mlflow/pull/24258",
+                "source": "security-advisories@github.com",
+                "tags": [
+                  "Issue Tracking",
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://github.com/mlflow/mlflow/releases/tag/v3.15.0",
+                "source": "security-advisories@github.com",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://github.com/mlflow/mlflow/security/advisories/GHSA-7gwp-5pfp-969j",
+                "source": "security-advisories@github.com",
+                "tags": [
+                  "Exploit",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-64849",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:lfprojects:mlflow:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D762205E-C76F-495C-94C6-83DB1D4AF018",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "3.15.0"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/08/19/cisa-adds-one-known-exploited-vulnerability-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.21",
+              "dateReleased": "2026-08-21T17:46:43.6019Z",
+              "retrievedAt": "2026-08-22T12:28:19.561Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2025-62593%2CCVE-2026-64849%2CCVE-2026-73570",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-64849",
+              "retrievedAt": "2026-08-22T12:28:19.561Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-73570",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Synacor",
+            "product": "Zimbra Collaboration Suite (ZCS)",
+            "vulnerabilityName": "Zimbra Collaboration Suite (ZCS) OS Command Injection Vulnerability",
+            "dateAdded": "2026-08-21",
+            "shortDescription": "Zimbra Collaboration Suite (ZCS) contains an OS command injection vulnerability which could allow an unauthenticated attacker to send specially crafted SMTP requests that may result in execution of arbitrary operating system commands as the Zimbra user.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-08-24",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://wiki.zimbra.com/wiki/Zimbra_Security_Advisories ; https://blog.zimbra.com/2026/07/patch-release-update-zimbra-10-1-20/ ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-73570",
+            "cwes": [
+              "CWE-78"
+            ]
+          },
+          "nvd": {
+            "description": "A remote code execution vulnerability exists in Zimbra Collaboration (ZCS) before 10.1.20 when the optional zimbra-snmp package is installed and SNMP notifications are enabled. Due to improper sanitization of untrusted input during SNMP notification processing, an unauthenticated attacker can send specially crafted SMTP requests that may result in execution of arbitrary operating system commands as the Zimbra user.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.9,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:L",
+              "source": "cve@mitre.org",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-78"
+            ],
+            "published": "2026-08-13T16:19:06.003",
+            "lastModified": "2026-08-22T04:18:14.897",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://wiki.zimbra.com/wiki/Security_Center",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://wiki.zimbra.com/wiki/Zimbra_Security_Advisories",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://moje.cert.pl/komunikaty/2026/145/aktywnie-wykorzystywana-podatnosc-w-zimbra-collaboration-suite/",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-73570",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:synacor:zimbra_collaboration_suite:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2DA7AB29-C275-4B2D-AC7F-288B3121779F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "10.1.20"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/08/21/cisa-adds-one-known-exploited-vulnerability-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.21",
+              "dateReleased": "2026-08-21T17:46:43.6019Z",
+              "retrievedAt": "2026-08-22T12:28:19.561Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2025-62593%2CCVE-2026-64849%2CCVE-2026-73570",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-73570",
+              "retrievedAt": "2026-08-22T12:28:19.561Z"
+            }
+          }
+        }
+      ],
+      "id": "s22",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "CISA KEV adds Ray, MLflow, and Zimbra flaws—active exploitation of critical RCEs in AI and mail platforms; Ray alone can hit developers via a malicious website."
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Canada’s Hospital for Sick Children attacked by cybercriminals again as employee data stolen",
+      "url": "https://therecord.media/canada-hospital-for-sick-children-attacked-again-employee-data",
+      "publishedAt": "2026-08-21T15:00:00.000Z",
+      "excerpt": "The Hospital for Sick Children — which was hit in a ransomware incident in 2022 that disabled some of its systems — released a statement on Thursday warning of a data theft incident they believe is tied to a third-party software application.",
+      "canonicalUrl": "https://therecord.media/canada-hospital-for-sick-children-attacked-again-employee-data",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s13",
+      "section": "breaches",
+      "rank": 2,
+      "angle": "Toronto's Hospital for Sick Children hit again, with employee data stolen via a third-party app—pediatric care repeatedly targeted."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Microsoft Defender's Own Driver Can Be Weaponized to Delete Security Software at Boot",
+      "url": "https://thehackernews.com/2026/08/microsoft-defenders-own-driver-can-be.html",
+      "publishedAt": "2026-08-21T15:52:10.000Z",
+      "excerpt": "Check Point Research has disclosed a technique that uses Microsoft Defender's own legitimately signed boot-time remediation driver to perform arbitrary kernel-level file and registry operations on Windows systems ranging from Windows 7 through Windows 11 25H2, with no software flaw exploited and no driver imported from outside the machine. The driver, BTR.sys (Boot Time Removal Tool), is a",
+      "canonicalUrl": "https://thehackernews.com/2026/08/microsoft-defenders-own-driver-can-be.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s10",
+      "section": "research",
+      "rank": 3,
+      "angle": "Microsoft Defender's own signed boot-time driver can be abused to delete security software; no patch, no external driver—a powerful defense evasion."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "14 Trojanized npm Packages Drop RedC2 4.0 Linux Backdoor With AI-Assisted C2",
+      "url": "https://thehackernews.com/2026/08/14-trojanized-npm-packages-drop-redc2.html",
+      "publishedAt": "2026-08-21T18:53:00.000Z",
+      "excerpt": "Cybersecurity researchers have discovered a set of trojanized npm packages that masquerade as working calendar and streak utilities but are engineered to stealthily deliver an artificial intelligence (AI)-powered Linux implant dubbed RedC2 4.0. \"When the module loads, it locates the bundled binary, marks it executable, and launches it as a detached background process,\" TrendAI, Trend Micro's",
+      "canonicalUrl": "https://thehackernews.com/2026/08/14-trojanized-npm-packages-drop-redc2.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s4",
+      "section": "research",
+      "rank": 4,
+      "angle": "Trojanized npm packages drop RedC2 4.0, an AI-powered Linux backdoor, highlighting supply-chain risk in dev utilities."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hundreds of leaked AWS keys give full control over corporate accounts",
+      "url": "https://www.bleepingcomputer.com/news/security/hundreds-of-leaked-aws-keys-give-full-control-over-corporate-accounts/",
+      "publishedAt": "2026-08-21T15:55:15.000Z",
+      "excerpt": "More than 9,300 Amazon Web Services (AWS) access keys publicly exposed between August 2022 and August 2026 are still active and valid. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hundreds-of-leaked-aws-keys-give-full-control-over-corporate-accounts",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s9",
+      "section": "breaches",
+      "rank": 5,
+      "angle": "Over 9,300 active AWS keys leaked in four years grant full cloud account control; cloud credential hygiene remains an urgent fix."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Encrypted Prompts Bypass AI Safety Guardrails in Grok and Gemini",
+      "url": "https://www.securityweek.com/encrypted-prompts-bypass-ai-safety-guardrails-in-grok-and-gemini/",
+      "publishedAt": "2026-08-21T14:34:05.000Z",
+      "excerpt": "Researchers say the new ‘Cryptographic Context Injection’ technique conceals malicious instructions until they are decrypted inside a trusted execution environment. The post Encrypted Prompts Bypass AI Safety Guardrails in Grok and Gemini appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/encrypted-prompts-bypass-ai-safety-guardrails-in-grok-and-gemini",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s15",
+      "section": "research",
+      "rank": 6,
+      "angle": "'Cryptographic Context Injection' bypasses AI safety guardrails in Grok and Gemini by hiding malicious prompts inside encrypted contexts."
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Russian network monitoring firm confirms cyberattack claimed by pro-Ukraine hackers",
+      "url": "https://therecord.media/russian-network-monitoring-firm-confirms-cyberattack-claimed-by-pro-ukraine-group",
+      "publishedAt": "2026-08-21T13:55:00.000Z",
+      "excerpt": "The statement came a day after a hacking group calling itself Black Spark claimed it had spent more than a month inside Microolap’s network and gained access to its internal systems, including EtherSensor, the company's network traffic analysis platform.",
+      "canonicalUrl": "https://therecord.media/russian-network-monitoring-firm-confirms-cyberattack-claimed-by-pro-ukraine-group",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s19",
+      "section": "breaches",
+      "rank": 7,
+      "angle": "Russian network monitoring firm Microolap confirms a pro-Ukraine hack after Black Spark claimed a month-long intrusion into its EtherSensor platform."
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "OWASP Flags Top AI Skill Risks in New Security Blueprint",
+      "url": "https://www.darkreading.com/application-security/owasp-flags-top-ai-skill-risks-security-blueprint",
+      "publishedAt": "2026-08-21T17:36:53.000Z",
+      "excerpt": "The Open Worldwide Application Security Project has a brand-new top 10 security list tailored for the modern era, and it debuts a Universal Skill Format to add consistency and security to the AI add-ons.",
+      "canonicalUrl": "https://darkreading.com/application-security/owasp-flags-top-ai-skill-risks-security-blueprint",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s6",
+      "section": "industry",
+      "rank": 8,
+      "angle": "OWASP's new AI top-10 and Universal Skill Format give security teams a concrete blueprint for AI add-on risks."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Banking Trojans Manic, Grandoreiro, ToxicPanda 2.0 in the Spotlight",
+      "url": "https://www.securityweek.com/banking-trojans-manic-grandoreiro-toxicpanda-2-0-in-the-spotlight/",
+      "publishedAt": "2026-08-22T08:30:00.000Z",
+      "excerpt": "The spyware-equipped Manic, a persistent Grandoreiro campaign in Latin America and Europe, and an expanded ToxicPanda 2.0 malware. The post Banking Trojans Manic, Grandoreiro, ToxicPanda 2.0 in the Spotlight appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/banking-trojans-manic-grandoreiro-toxicpanda-2-0-in-the-spotlight",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "unit42",
+      "sourceKind": "rss",
+      "title": "Connecting the Dots: Securing the Overlooked Corners of the Software Development Lifecycle (SDLC) Supply Chain",
+      "url": "https://unit42.paloaltonetworks.com/sdlc-supply-chain/",
+      "publishedAt": "2026-08-21T23:00:21.000Z",
+      "excerpt": "Attackers are targeting CI/CD pipelines and developer tools instead of application code, requiring total SDLC visibility and strict security controls The post Connecting the Dots: Securing the Overlooked Corners of the Software Development Lifecycle (SDLC) Supply Chain appeared first on Unit 42.",
+      "canonicalUrl": "https://unit42.paloaltonetworks.com/sdlc-supply-chain",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Lawmakers call for investigation into impact of CISA staffing cuts",
+      "url": "https://therecord.media/lawmakers-call-for-investigation-into-impact-of-cisa-cuts",
+      "publishedAt": "2026-08-21T19:56:00.000Z",
+      "excerpt": "Lawmakers say little is known about how recent cuts have impacted CISA and how the knowledge that was lost has been replaced.",
+      "canonicalUrl": "https://therecord.media/lawmakers-call-for-investigation-into-impact-of-cisa-cuts",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "New SynkLoader malware pushed in Microsoft Teams phishing campaign",
+      "url": "https://www.bleepingcomputer.com/news/security/new-synkloader-malware-pushed-in-microsoft-teams-phishing-campaign/",
+      "publishedAt": "2026-08-21T18:01:30.000Z",
+      "excerpt": "A previously unknown malware family dubbed SynkLoader is being distributed in Microsoft Teams phishing campaigns to steal credentials via a fake lock screen. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/new-synkloader-malware-pushed-in-microsoft-teams-phishing-campaign",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Former NSA Director Paul Nakasone Launches National Security Advisory Firm",
+      "url": "https://www.securityweek.com/former-nsa-director-paul-nakasone-launches-national-security-advisory-firm/",
+      "publishedAt": "2026-08-21T16:27:52.000Z",
+      "excerpt": "The newly-formed Nakasone Group will counsel government leaders, corporations, prominent families, and other private clients confronting cybersecurity, geopolitical, and personal security risks. The post Former NSA Director Paul Nakasone Launches National Security Advisory Firm appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/former-nsa-director-paul-nakasone-launches-national-security-advisory-firm",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "U.S. Bank says breach claims related to fourth-party incident",
+      "url": "https://therecord.media/us-bank-says-breach-claims-related-to-fourth-party-incident",
+      "publishedAt": "2026-08-21T16:16:00.000Z",
+      "excerpt": "The bank said there is no evidence that its own systems, networks or data repositories were compromised.",
+      "canonicalUrl": "https://therecord.media/us-bank-says-breach-claims-related-to-fourth-party-incident",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Android Car Malware Spreads Through Built-In Updaters for Ad Fraud, Proxy Botnet",
+      "url": "https://thehackernews.com/2026/08/android-car-malware-spreads-through.html",
+      "publishedAt": "2026-08-21T15:41:44.000Z",
+      "excerpt": "Cybersecurity researchers have flagged a new malware family that's specifically designed to infect Android-based vehicle head unit firmware developed by DoFun. Kaspersky, which discovered the threat in June 2026, said the end goal of the malware is to serve a multi-stage downloader to enable ad fraud and creation of a proxy botnet. \"The malware spread through the built-in updaters of",
+      "canonicalUrl": "https://thehackernews.com/2026/08/android-car-malware-spreads-through.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "In Other News: Zombie Card Attack, T-Mobile Cut Cable to Stop Hackers, GitHub Denies AI Caused Bug",
+      "url": "https://www.securityweek.com/in-other-news-zombie-card-attack-t-mobile-cut-cable-to-stop-hackers-github-denies-ai-caused-bug/",
+      "publishedAt": "2026-08-21T15:11:16.000Z",
+      "excerpt": "Other noteworthy stories that might have slipped under the radar: Threema DDoS attack, Evooo1Bot Linux botnet, Crypto4A secures top-tier NIST certification. The post In Other News: Zombie Card Attack, T-Mobile Cut Cable to Stop Hackers, GitHub Denies AI Caused Bug appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/in-other-news-zombie-card-attack-t-mobile-cut-cable-to-stop-hackers-github-denies-ai-caused-bug",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft blames Windows gaming issues on RGB lighting devices",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-blames-windows-gaming-issues-on-rgb-lighting-devices/",
+      "publishedAt": "2026-08-21T14:54:49.000Z",
+      "excerpt": "Microsoft says ongoing issues causing games to crash or fail to launch after installing the August 2026 Windows updates may be caused by peripherals with RGB lighting. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-blames-windows-gaming-issues-on-rgb-lighting-devices",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s14"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "New Phishing Toolkit Uses Passkeys to Maintain Access After Password Resets",
+      "url": "https://www.securityweek.com/new-phishing-toolkit-uses-passkeys-to-maintain-access-after-password-resets/",
+      "publishedAt": "2026-08-21T14:22:06.000Z",
+      "excerpt": "Researchers say iAuthFlow V2 can register an attacker-controlled passkey, enabling persistent access even after passwords are changed and active sessions revoked. The post New Phishing Toolkit Uses Passkeys to Maintain Access After Password Resets appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/new-phishing-toolkit-uses-passkeys-to-maintain-access-after-password-resets",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Is Online Privacy Possible? How Digital Identities Can Help",
+      "url": "https://www.bleepingcomputer.com/news/security/is-online-privacy-possible-how-digital-identities-can-help/",
+      "publishedAt": "2026-08-21T14:00:10.000Z",
+      "excerpt": "Using the same email, phone number, payment method, and other identifiers makes it easier for data brokers and attackers to profile your activity. Anonyome Labs explains how separate digital personas can reduce correlation and limit the impact of breaches, spam, and identity theft. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/is-online-privacy-possible-how-digital-identities-can-help",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Calling on Cyber Pros to Help Defend City Hall",
+      "url": "https://www.darkreading.com/cyber-risk/cyber-pros-help-city-hall",
+      "publishedAt": "2026-08-21T14:00:00.000Z",
+      "excerpt": "Government agencies with smaller budgets need support — and here's how you can help.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/cyber-pros-help-city-hall",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s18"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft rolls out Classic Outlook theme for New Outlook users",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-rolls-out-classic-outlook-theme-for-new-outlook-users/",
+      "publishedAt": "2026-08-21T13:39:35.000Z",
+      "excerpt": "Microsoft has started rolling out a Classic Outlook theme for users of Outlook on the web and the New Outlook for Windows. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-rolls-out-classic-outlook-theme-for-new-outlook-users",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "OpenAI Adds Controls That Should've Been There Already",
+      "url": "https://www.darkreading.com/application-security/openai-adds-controls-already",
+      "publishedAt": "2026-08-21T13:30:00.000Z",
+      "excerpt": "The new AI security controls follow the Hugging Face incident last month, though many of these additions perhaps should have been in place prior to the frontier models escaping.",
+      "canonicalUrl": "https://darkreading.com/application-security/openai-adds-controls-already",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s21"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1152,
+    "promptCacheMissTokens": 7291,
+    "outputTokens": 17405,
+    "estimatedCostUsd": 0.005897365600000001
+  }
+}
