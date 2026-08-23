@@ -1,0 +1,108 @@
+{
+  "date": "2026-08-23",
+  "generatedAt": "2026-08-23T12:28:57.484Z",
+  "degraded": [
+    {
+      "stage": "collect",
+      "sourceId": "microsoft-security",
+      "message": "Microsoft Security could not be fetched: Status code 403"
+    }
+  ],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 11,
+    "collected": 220,
+    "normalized": 220,
+    "deduped": 215,
+    "published": 5
+  },
+  "mode": "article",
+  "headline": "Supply-chain hits, platform accountability, and protocol blind spots",
+  "standfirst": "A supply-chain compromise in an unexpected embedded corner, a landmark privacy settlement, and two research warnings about overlooked protocol surfaces: the day's stories are less about new zero-days than about the expanding map of what counts as an attack surface.",
+  "bodyMarkdown": "## Actively exploited\n\nThe Android ecosystem has another supply-chain problem, and this one is physical. Attackers have abused a legitimate device-update application to install malware on Android-based car head units, silently converting the compromised systems into nodes in a proxy botnet or using them for ad fraud. [[s2]] The mechanism is the most troubling part: because the payload arrives through an update channel users are conditioned to trust, the infection can be persistent and largely invisible. Car head units are embedded devices with long service lives, unusual network placement, and limited visibility, which makes them a useful hidden asset for an attacker who wants bandwidth or identity rather than personal data. The incident reinforces that supply-chain risk does not end at the data center. Any embedded device that accepts unattended updates is a candidate entry point, and that includes vehicle-adjacent hardware that defenders rarely instrument or patch with the same rigor as core infrastructure.\n\n## Industry\n\nThe U.S. government's long-running child privacy case against ByteDance's TikTok has ended in a large settlement. Under the agreement, TikTok will pay $400 million to resolve claims it violated U.S. child privacy laws. [[s1]] The structure is notable: $300 million is due immediately, while the remaining $100 million is contingent on the entry of an order vacating a prior consent decree. That deferred portion ties the settlement to the platform's history of formal privacy commitments and suggests the resolution is as much about legal precedent as about the specific conduct alleged. For security and privacy teams, the broader signal is enforcement posture. A settlement of this size in a case pursued by the federal government makes clear that platform data practices are now a material financial and regulatory risk, not just a reputational one.\n\nHardware vendors, meanwhile, are starting to build defenses against a threat that has not fully arrived. Companies are implementing post-quantum cryptography now in anticipation of future machines powerful enough to break current public-key algorithms. [[s5]] The urgency comes from the \"harvest now, decrypt later\" strategy: adversaries can collect encrypted traffic today and store it until quantum decryption becomes practical. Shipping PQC early is a way to close that window before it opens. But the migration is a multi-year engineering effort rather than a single algorithm swap. Crypto agility, hybrid transition modes, and long-lived hardware support are all part of the challenge. The good news is that the work is happening before a crisis; the cautionary note is that legacy systems will remain dependent on older algorithms for years, and every device without a cryptographic update path is a potential backlog item for the harvest-now, decrypt-later playbook.\n\n## Research\n\nOperational technology has a new attack-surface question. Research on the Time-Sensitive Networking protocol family shows that attacks against some unprotected TSN protocols could allow an adversary to disrupt or manipulate physical processes. [[s4]] TSN is gaining traction in industrial environments because it delivers deterministic, low-latency communication, but the research is a reminder that determinism and security are not interchangeable. The very properties that make TSN appealing for coordinating machinery also make it attractive to an attacker who wants to alter how that machinery behaves. As these standards move into wider adoption, the OT attack surface expands alongside the promise of performance gains. The answer is not necessarily to reject TSN, but to build segmentation, authentication, and integrity controls into the network architecture from the beginning. In OT, every protocol adoption decision is also a security architecture decision.\n\nThe second research item is closer to home for Windows administrators. Named pipes remain an overlooked interprocess communication mechanism, and weak access controls on them can expose privileged services to untrusted processes. [[s3]] Named pipes are a well-established feature, but they often do not receive the same scrutiny as network-facing endpoints. The practical mitigations are familiar: verify the endpoint on the other side of the pipe, authorize commands rather than trusting the caller, validate input strictly, and scope privileges narrowly. Applying those controls to named pipes specifically closes a gap that attackers have historically used for lateral movement and privilege escalation. The broader lesson is that operating systems are full of local communication channels that predate modern security models, and defenders should treat them with the same rigor as any externally reachable service.",
+  "selected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers infect Android car head units with proxy botnet malware",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-infect-android-car-head-units-with-proxy-botnet-malware/",
+      "publishedAt": "2026-08-22T14:14:24.000Z",
+      "excerpt": "A supply-chain attack targeting Android-based car head units is using a legitimate device-update app to spread malware that enlists compromised devices in a proxy botnet or uses them for ad fraud. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-infect-android-car-head-units-with-proxy-botnet-malware",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s2",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "Android car head units are being silently turned into proxy bots via a legitimate update app, highlighting supply-chain risks in embedded devices."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "TikTok Agrees to $400 Million Settlement in U.S. Child Privacy Lawsuit",
+      "url": "https://thehackernews.com/2026/08/tiktok-agrees-to-400-million-settlement.html",
+      "publishedAt": "2026-08-22T14:32:41.000Z",
+      "excerpt": "The U.S. Department of Justice (DoJ) announced on Friday that ByteDance-owned TikTok will pay $400 million to settle a 2024 lawsuit accusing the company of violating child privacy laws in the country. As part of the settlement, the social media platform will pay $300 million immediately, and an additional $100 million \"upon entry of an order vacating a prior consent decree entered against",
+      "canonicalUrl": "https://thehackernews.com/2026/08/tiktok-agrees-to-400-million-settlement.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s1",
+      "section": "industry",
+      "rank": 2,
+      "angle": "TikTok's $400 million DOJ settlement for child privacy violations signals a tougher U.S. enforcement posture toward platform data practices."
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "How an Emerging Industrial Protocol Family Could Put OT at Risk",
+      "url": "https://www.darkreading.com/ics-ot-security/how-emerging-industrial-protocol-family-put-ot-at-risk",
+      "publishedAt": "2026-08-21T20:24:42.000Z",
+      "excerpt": "New research shows how attacks against some unprotected TSN protocols could allow attackers to disrupt or manipulate physical processes",
+      "canonicalUrl": "https://darkreading.com/ics-ot-security/how-emerging-industrial-protocol-family-put-ot-at-risk",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s4",
+      "section": "research",
+      "rank": 3,
+      "angle": "Unprotected TSN protocols could let attackers manipulate industrial processes, widening the OT attack surface as these standards gain adoption."
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Hardware Makers Implement Post-Quantum Cryptography as Security Threats Near",
+      "url": "https://www.darkreading.com/cyber-risk/hardware-makers-implement-post-quantum-cryptography",
+      "publishedAt": "2026-08-21T13:10:33.000Z",
+      "excerpt": "The coming threat of super-powerful computers capable of cracking today’s algorithms requires upgrading encryption now. Tech companies have begun building defenses.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/hardware-makers-implement-post-quantum-cryptography",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s5",
+      "section": "industry",
+      "rank": 4,
+      "angle": "Hardware vendors shipping PQC now is a proactive step against tomorrow's decrypt-now-attack-later harvests, but migration will take years."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Named Pipes Under Attack: Securing Windows Interprocess Communication",
+      "url": "https://www.bleepingcomputer.com/news/security/named-pipes-under-attack-securing-windows-interprocess-communication/",
+      "publishedAt": "2026-08-22T13:00:09.000Z",
+      "excerpt": "Windows named pipes provide fast interprocess communication, but weak access controls can expose privileged services to untrusted processes. ThreatLocker explains how endpoint verification, command authorization, strict input validation, and narrowly scoped privileges can help secure named-pipe communication. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/named-pipes-under-attack-securing-windows-interprocess-communication",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s3",
+      "section": "research",
+      "rank": 5,
+      "angle": "Named pipes remain an overlooked Windows attack surface; endpoint verification and least privilege are practical mitigations."
+    }
+  ],
+  "alsoCollected": [],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1152,
+    "promptCacheMissTokens": 1279,
+    "outputTokens": 6318,
+    "estimatedCostUsd": 0.0019513256000000003
+  }
+}
