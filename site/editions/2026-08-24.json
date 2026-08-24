@@ -1,0 +1,323 @@
+{
+  "date": "2026-08-24",
+  "generatedAt": "2026-08-24T12:38:16.099Z",
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 225,
+    "published": 16
+  },
+  "mode": "article",
+  "headline": "Urgent patching, infrastructure attacks, and a $400M privacy settlement",
+  "standfirst": "Federal agencies are under a three-day order to patch an actively exploited Zimbra flaw, while a critical Keycloak bug could let unauthenticated attackers take over any account. The day's reporting also covers a UK power plant shut down by Iran-linked hackers, Android car systems turned into a proxy botnet, and a major financial firm caught in a targeted breach campaign.",
+  "bodyMarkdown": "## Actively exploited\n\nCISA's three-day patching mandate for Zimbra Collaboration Suite [[s8]] is the clearest signal yet that this is not a routine vulnerability notification. The agency has ordered U.S. government agencies to remediate an actively exploited ZCS flaw within three days, and while the order formally applies to federal networks, any organization running Zimbra should treat it as an immediate threat. The vulnerability puts email at direct risk, and active exploitation means attackers already have a working path into affected servers. CISA does not use that window lightly. Even for organizations outside federal scope, the mandate is a useful benchmark: if the bug is urgent enough for a three-day order, private-sector follow-through should happen on a similar timescale. If you have Zimbra in your environment, this is a stop-everything-and-patch moment.\n\n## Vulnerabilities\n\nRed Hat and the Keycloak project have patched a critical flaw in the identity and access management server, assigned CVE-2026-18963 [[s4]]. The vulnerability, rated 9.1 on the CVSS scale, lives in the reset-credentials flow of the keycloak-services component. An unauthenticated attacker can force a password reset for any user without requiring the email verification link, effectively letting the attacker set new credentials and take over the account. The flaw is a weak password-recovery mechanism (CWE-640), and the impact is the worst case for an IAM system: full account compromise from the internet, without authentication and with no user interaction. The CVE is not in CISA's Known Exploited Vulnerabilities catalog; that is not evidence that exploitation has not occurred. For organizations using Keycloak as their identity provider, this is effectively a master-key compromise. Deployments should be treated as a must-patch, especially if exposed or supporting privileged accounts.\n\n## Breaches\n\nThe most consequential incident in this section is the attack on a UK power plant by Iran-linked hackers [[s12]], which shut down operations for four days. This was not a data exfiltration exercise; it crossed into real-world operational disruption. The reporting raises concerns about the resilience of Britain's distributed energy infrastructure and the possibility of repeatable attacks. For anyone responsible for critical infrastructure, this is a reminder that attackers are willing to cross the threshold from theft to physical impact, and that smaller distributed generation assets may be softer targets than large central plants.\n\nApollo Global [[s9]] disclosed a data breach that exposed personal information at the private equity firm. The company appears to have been targeted as part of a campaign focusing on major financial companies, which adds a worrying pattern to what might otherwise be treated as an isolated incident. Financial firms should assume that targeted intrusion campaigns are working through a list of high-value institutions.\n\nAlso in the breach column, researchers have spotted malware infecting Android-based car systems and conscripting them into a proxy botnet [[s1]]. The vehicles become network nodes for relaying traffic, expanding the botnet economy to a class of connected devices that is not typically patched with the rigor of a server fleet. The long-term risk is that cars, like routers and cameras before them, become a permanent part of the attack surface.\n\n## Research\n\nOperation QUICSILVER [[s5]] is a China-nexus espionage campaign targeting Myanmar's government and IT sectors. The attackers use graduation ceremony invitation lures to deliver a Go backdoor called QUICAgent. Researchers assess with moderate confidence that the activity is the work of a China-nexus actor, and the targeting pattern suggests a deliberate collection effort against state and technology infrastructure rather than spray-and-pray malware distribution. The use of Go for the backdoor makes cross-platform deployment easier and complicates signature-based detection.\n\nUAT-10147 [[s14]] shows how AI is beginning to change the economics of server-side attacks. The Chinese-speaking cybercrime group is targeting Windows and Linux web servers across education, media, technology, and gaming, with most victims in Brazil, Bolivia, China, Canada, and Vietnam. The group deploys a toolset called SPECTRE that includes an EDR bypass and a Linux rootkit, and is using AI to scale attack operations. This is a useful reminder that AI-enabled attacks are not a future concern; they are already widening the blast radius of commodity intrusion campaigns.\n\n## Industry\n\nTikTok has reached a $400 million settlement with the U.S. Justice Department over children's privacy [[s13]], paying $300 million immediately and another $100 million after an order vacates the earlier consent decree against Musical.ly. The settlement is the latest sign that children's privacy enforcement is moving from warning letters to real financial consequences. For platforms that collect data on minors, the message is that children's privacy obligations are being enforced with the full weight of the federal government.",
+  "selected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "CISA orders urgent patching of actively exploited Zimbra flaw",
+      "url": "https://www.bleepingcomputer.com/news/security/cisa-orders-urgent-patching-of-actively-exploited-zimbra-flaw/",
+      "publishedAt": "2026-08-24T10:45:12.000Z",
+      "excerpt": "The Cybersecurity and Infrastructure Security Agency (CISA) has ordered U.S. government agencies to patch an actively exploited vulnerability in Zimbra Collaboration Suite (ZCS) within three days. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/cisa-orders-urgent-patching-of-actively-exploited-zimbra-flaw",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s8",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "CISA's three-day patching mandate underscores an actively exploited Zimbra flaw that puts federal and private-sector email at immediate risk."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Critical Keycloak Password Reset Flaw Could Let Unauthenticated Attackers Take Over Any Account",
+      "url": "https://thehackernews.com/2026/08/critical-keycloak-password-reset-flaw.html",
+      "publishedAt": "2026-08-24T11:56:34.000Z",
+      "excerpt": "Red Hat and the Keycloak project have released patches to address a critical security flaw in the open-source identity and access management server that could allow an unauthenticated remote attacker to take over any user account by forcing a password reset. The vulnerability, assigned the CVE identifier CVE-2026-18963, is rated 9.1 on the CVSS scoring system by Red Hat, which acts as",
+      "canonicalUrl": "https://thehackernews.com/2026/08/critical-keycloak-password-reset-flaw.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-18963",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "A flaw was found in the reset-credentials flow of the keycloak-services component, which is the core engine for identity and access management in Red Hat Build of Keycloak. The issue allows an unauthenticated attacker to force the password reset process for any user without needing to click the required email verification link. This can result in the attacker gaining full control over target user accounts by directly setting new credentials.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.1,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+              "source": "secalert@redhat.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-640"
+            ],
+            "published": "2026-08-18T17:16:57.083",
+            "lastModified": "2026-08-20T14:17:10.413",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:56519",
+                "source": "secalert@redhat.com",
+                "tags": []
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:56520",
+                "source": "secalert@redhat.com",
+                "tags": []
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:56523",
+                "source": "secalert@redhat.com",
+                "tags": []
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:56524",
+                "source": "secalert@redhat.com",
+                "tags": []
+              },
+              {
+                "url": "https://access.redhat.com/security/cve/CVE-2026-18963",
+                "source": "secalert@redhat.com",
+                "tags": []
+              },
+              {
+                "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2511595",
+                "source": "secalert@redhat.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/08/critical-keycloak-password-reset-flaw.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.21",
+              "dateReleased": "2026-08-21T17:46:43.6019Z",
+              "retrievedAt": "2026-08-24T12:38:16.099Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-18963",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-18963",
+              "retrievedAt": "2026-08-24T12:38:16.099Z"
+            }
+          }
+        }
+      ],
+      "id": "s4",
+      "section": "vulnerabilities",
+      "rank": 2,
+      "angle": "A critical Keycloak password-reset bypass could let unauthenticated attackers seize any account, making this a must-patch for IAM deployments."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Iran-Linked Hackers Shut Down UK Power Plant for Four Days",
+      "url": "https://www.securityweek.com/iran-linked-hackers-shut-down-uk-power-plant-for-four-days/",
+      "publishedAt": "2026-08-24T09:22:09.000Z",
+      "excerpt": "The attack caused real-world operational disruption and raised concerns about the resilience of Britain’s distributed energy infrastructure and the potential for repeatable attacks. The post Iran-Linked Hackers Shut Down UK Power Plant for Four Days appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/iran-linked-hackers-shut-down-uk-power-plant-for-four-days",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s12",
+      "section": "breaches",
+      "rank": 3,
+      "angle": "Iran-linked hackers caused real-world disruption at a UK power plant, showing critical infrastructure remains a live target for nation-state attacks."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Operation QUICSILVER Targets Myanmar Government and IT with QUICAgent Backdoor",
+      "url": "https://thehackernews.com/2026/08/operation-quicsilver-targets-myanmar.html",
+      "publishedAt": "2026-08-24T11:51:36.000Z",
+      "excerpt": "Cybersecurity researchers have flagged a cyber espionage campaign targeting Myanmar that uses graduation ceremony invitation lures to deliver a Go backdoor called QUICAgent. The campaign, codenamed Operation QUICSILVER, has been found to target government and information technology sectors, per Seqrite Labs. The activity is assessed to be the work of a China-nexus threat actor with moderate",
+      "canonicalUrl": "https://thehackernews.com/2026/08/operation-quicsilver-targets-myanmar.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s5",
+      "section": "research",
+      "rank": 4,
+      "angle": "Operation QUICSILVER reveals a China-nexus espionage campaign targeting Myanmar government and IT with a new Go backdoor."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "UAT-10147 Uses AI to Scale Server Attacks, Deploys SPECTRE With EDR Bypass and Linux Rootkit",
+      "url": "https://thehackernews.com/2026/08/uat-10147-uses-ai-to-scale-server.html",
+      "publishedAt": "2026-08-24T08:08:31.000Z",
+      "excerpt": "Cybersecurity researchers have disclosed details of a Chinese-speaking cybercrime group dubbed UAT-10147 that's targeting Windows and Linux web servers globally across the education, media, technology, and gaming sectors. The vast majority of the targets are located in Brazil, Bolivia, China, Canada, and Vietnam. Details of the threat activity came to light following the discovery of an open",
+      "canonicalUrl": "https://thehackernews.com/2026/08/uat-10147-uses-ai-to-scale-server.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s14",
+      "section": "research",
+      "rank": 5,
+      "angle": "UAT-10147 demonstrates how threat actors are leveraging AI to broaden server attacks and evade EDRs with a new Linux rootkit."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Personal Information Exposed in Apollo Global Data Breach",
+      "url": "https://www.securityweek.com/personal-information-exposed-in-apollo-global-data-breach/",
+      "publishedAt": "2026-08-24T10:08:42.000Z",
+      "excerpt": "The private equity firm appears to have been targeted as part of a campaign focusing on major financial companies. The post Personal Information Exposed in Apollo Global Data Breach appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/personal-information-exposed-in-apollo-global-data-breach",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s9",
+      "section": "breaches",
+      "rank": 6,
+      "angle": "Apollo Global's data breach exposes personal information at a major financial firm, part of a wider campaign on financial companies."
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Hackers infecting Android car systems to build proxy botnet",
+      "url": "https://therecord.media/android-botnet-china-hackers",
+      "publishedAt": "2026-08-24T12:15:00.000Z",
+      "excerpt": "A new strain of malware is being used to infect Android-based car systems, turning the devices into part of a botnet.",
+      "canonicalUrl": "https://therecord.media/android-botnet-china-hackers",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s1",
+      "section": "breaches",
+      "rank": 7,
+      "angle": "Android-based car systems are being conscripted into a proxy botnet, expanding the threat landscape to vehicles."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "TikTok Reaches $400 Million Settlement With US Justice Department Over Children’s Privacy",
+      "url": "https://www.securityweek.com/tiktok-reaches-400-million-settlement-with-us-justice-department-over-childrens-privacy/",
+      "publishedAt": "2026-08-24T09:11:11.000Z",
+      "excerpt": "TikTok will pay $300 million immediately and another $100 million after an order vacates an earlier consent decree against its predecessor company, Musical.ly. The post TikTok Reaches $400 Million Settlement With US Justice Department Over Children’s Privacy appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/tiktok-reaches-400-million-settlement-with-us-justice-department-over-childrens-privacy",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s13",
+      "section": "industry",
+      "rank": 8,
+      "angle": "TikTok's $400M settlement with the DOJ signals heightened enforcement of children's privacy laws against major tech platforms."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "91 Vulnerabilities Patched in Spring Application Framework",
+      "url": "https://www.securityweek.com/91-vulnerabilities-patched-in-spring-application-framework/",
+      "publishedAt": "2026-08-24T11:58:28.000Z",
+      "excerpt": "More than 200 vulnerabilities have been patched to date this year, compared to only 16 in 2025 and 22 in 2024. The post 91 Vulnerabilities Patched in Spring Application Framework appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/91-vulnerabilities-patched-in-spring-application-framework",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Shipping More AI Code Than You Can Secure? Watch How to Control Remediation Debt",
+      "url": "https://thehackernews.com/2026/08/shipping-more-ai-code-than-you-can.html",
+      "publishedAt": "2026-08-24T11:58:00.000Z",
+      "excerpt": "If your developers are using AI coding tools, you are probably already seeing the upside: faster development, more code, and less time spent on routine work. The harder part is what comes after. AI can also introduce open-source packages at a pace your security team was never built to handle. More dependencies mean more vulnerabilities to review, more remediation work, and a backlog that can",
+      "canonicalUrl": "https://thehackernews.com/2026/08/shipping-more-ai-code-than-you-can.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "The Outsized Shadow: Why 5% of AI Users Are Your Biggest Security Risk",
+      "url": "https://thehackernews.com/2026/08/the-outsized-shadow-why-5-of-ai-users.html",
+      "publishedAt": "2026-08-24T11:30:00.000Z",
+      "excerpt": "Big security risks come in small packages. While enterprise security teams focus on policing the proliferation of employees using ChatGPT and Claude for quick drafting tasks, a more urgent threat is posed by a handful of AI super-adopters who are quietly hardcoding unvetted tools into critical business operations. According to new research published by Akamai, the top 5% of enterprise power",
+      "canonicalUrl": "https://thehackernews.com/2026/08/the-outsized-shadow-why-5-of-ai-users.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Venezuelan Gets Record Federal Prison Term for ATM Jackpotting",
+      "url": "https://www.securityweek.com/venezuelan-gets-record-federal-prison-term-for-atm-jackpotting/",
+      "publishedAt": "2026-08-24T10:59:30.000Z",
+      "excerpt": "Juan Manuel Gouveia-Aguilera has been sentenced to 8 years in prison for his role in an ATM jackpotting scheme that caused millions in losses. The post Venezuelan Gets Record Federal Prison Term for ATM Jackpotting appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/venezuelan-gets-record-federal-prison-term-for-atm-jackpotting",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Rethinking Application Security for the AI Era",
+      "url": "https://www.securityweek.com/rethinking-application-security-for-the-ai-era/",
+      "publishedAt": "2026-08-24T10:00:00.000Z",
+      "excerpt": "As AI dramatically shortens the time from vulnerability disclosure to exploitation, enterprises must look beyond patching to reduce application risk. The post Rethinking Application Security for the AI Era appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/rethinking-application-security-for-the-ai-era",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft shares temporary fix for Windows 11 gaming issues",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-shares-temporary-fix-for-windows-11-gaming-issues/",
+      "publishedAt": "2026-08-24T09:42:05.000Z",
+      "excerpt": "Microsoft has shared a temporary fix for ongoing gaming issues caused by Windows 11 updates released during the August 2026 Patch Tuesday. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-shares-temporary-fix-for-windows-11-gaming-issues",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Anthropic Expands Mythos 5 Access to More Defenders, Unveils $35M Open Source Fund",
+      "url": "https://www.securityweek.com/anthropic-expands-mythos-5-access-to-more-defenders-unveils-35m-open-source-fund/",
+      "publishedAt": "2026-08-24T07:18:58.000Z",
+      "excerpt": "Claude Security, currently in public beta for Claude Enterprise customers, now runs codebase scans on Mythos 5. The post Anthropic Expands Mythos 5 Access to More Defenders, Unveils $35M Open Source Fund appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/anthropic-expands-mythos-5-access-to-more-defenders-unveils-35m-open-source-fund",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "ToxicPanda Android malware uses VPN permissions to block Google Play",
+      "url": "https://www.bleepingcomputer.com/news/security/toxicpanda-android-malware-uses-vpn-permissions-to-block-google-play/",
+      "publishedAt": "2026-08-23T14:23:46.000Z",
+      "excerpt": "The ToxicPanda Android malware has evolved with new malicious functionality, expanding its targeting to 349 applications and adding support for 167 remote commands. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/toxicpanda-android-malware-uses-vpn-permissions-to-block-google-play",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s16"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1152,
+    "promptCacheMissTokens": 3708,
+    "outputTokens": 13316,
+    "estimatedCostUsd": 0.004250825600000001
+  }
+}
