@@ -1,0 +1,946 @@
+{
+  "date": "2026-08-25",
+  "generatedAt": "2026-08-25T12:37:22.201Z",
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 224,
+    "published": 36
+  },
+  "mode": "article",
+  "headline": "A KEV-listed Oracle flaw, a fast-moving Zimbra campaign, and a surge of identity-focused attacks",
+  "standfirst": "Today's briefing leads with a maximum-severity Oracle WebLogic vulnerability that CISA has added to its Known Exploited Vulnerabilities catalog following confirmed exploitation, plus a wave of Zimbra server compromises that has already passed 270 victims. Elsewhere, WordPress authentication bypasses are under active probing, a phishing-as-a-service operation has targeted thousands of Microsoft 365 tenants, and two malware families are positioning themselves as access brokers for ransomware gangs. The day also brings state-sponsored activity against critical infrastructure, a global law-enforcement sweep, and a reminder that security vendors themselves can fall to social engineering.",
+  "bodyMarkdown": "## Actively exploited\n\nThe most urgent item is CVE-2026-21962, an improper access control flaw in Oracle HTTP Server and the Oracle WebLogic Server Proxy Plug-in that CISA has now confirmed as actively exploited [[s15]]. The vulnerability carries a perfect CVSS score of 10.0 and requires no authentication, no user interaction, and only network access via HTTP. Successful exploitation gives an attacker unauthorized access to critical data and the ability to create, delete, or modify it, with a scope change meaning the impact can extend beyond the affected component. Affected versions include Oracle HTTP Server and the WebLogic Server Proxy Plug-in on 12.2.1.4.0, 14.1.1.0.0, and 14.1.2.0.0; for IIS deployments, only the 12.2.1.4.0 plug-in is vulnerable. CISA's guidance directs organizations to apply mitigations per vendor instructions, follow applicable guidance for cloud services, or discontinue use of the product if mitigations are unavailable. This is not an edge case: with exploitation already observed, the presumption should be that exposed instances are at immediate risk.\n\nMeanwhile, attackers have already compromised more than 270 Zimbra Collaboration Suite servers in an ongoing remote code execution campaign [[s1]]. The attacks exploit a high-severity ZCS vulnerability, and the scale of confirmed compromise suggests the flaw is being chained quickly. Organizations running Zimbra should treat this as an active incident, not a patch-cycle item. Exposed instances need immediate triage for signs of post-exploitation activity before remediation, because a patch applied after the fact does not undo an established foothold.\n\n## Vulnerabilities\n\nWordPress sites using the miniOrange SAML 2.0 Single Sign On plugin are the target of active probing against two unauthenticated authentication bypasses [[s12]]. One of them, CVE-2026-61979, is an unauthenticated privilege escalation flaw carrying a CVSS score of 8.1 and affecting plugin versions up to and including 5.4.3. The vulnerability allows an attacker to sign in as any WordPress user, including an administrator, which is effectively full site takeover without valid credentials. The fact that attackers are already probing these flaws suggests weaponization is likely imminent, and site operators using the plugin should treat this as a priority upgrade rather than a routine maintenance release.\n\n## Research\n\nA long-running phishing-as-a-service campaign called Mirage2FA has hit roughly 4,500 companies across the US and EU, with Microsoft 365 accounts as the primary target [[s2]]. Research by ANY.RUN shows the service abuses legitimate Microsoft login flows and is capable of bypassing two-factor authentication, undermining the defense that most organizations rely on to catch credential phishing. The campaign's effectiveness is stark: 48% of targeted email addresses were potentially compromised, and the victim list skews heavily toward US-based organizations. This is a reminder that attacker tooling has matured beyond simple credential harvesting and now commoditizes the bypass of standard account protections.\n\nTwo newly detailed malware families are also worth attention [[s36]]. WordlistLoader is being distributed through ClearFake campaigns using ClickFix, the fake CAPTCHA technique that tricks users into running clipboard-pasted commands, and is used to deliver Amatera Stealer, also known as ACR Stealer or AcridRain Stealer. The second family, SynkLoader, takes a more direct approach by phishing Windows passwords from users. According to research from Gen Digital, both families appear designed to sell access to ransomware groups, meaning their infections are likely just the first stage of a more damaging incident. The combination of social engineering and loader infrastructure shows how initial access brokering continues to professionalize.\n\n## Industry\n\nThe US has sanctioned Iranian nationals over cyberattacks on critical infrastructure, acting shortly after reports emerged of an intrusion at a small power plant in the UK [[s16]]. The pairing of financial pressure and disclosed incidents is notable less for the novelty of the tactics than for the target selection. Attacks on power generation facilities, even small ones, signal that state-aligned actors are willing to cross the threshold into operational technology environments. Sanctions may raise the cost of participation, but they also confirm what defensive teams already feared: critical infrastructure remains a live battlefield.\n\nIn a separate development, law enforcement agencies from 22 countries identified 263 suspects and arrested 58 individuals linked to cybercrime networks coordinated by African crime groups [[s8]]. The operation is a meaningful step against the organized fraud ecosystems that have grown increasingly visible in global threat reporting. Arrests of this scale do not dismantle the entire economy, but they disrupt the coordinators and money movers who enable business email compromise and other scams. For defenders, the takeaway is that the human infrastructure behind these campaigns is becoming a target in its own right.\n\n## Breaches\n\nReliaQuest has confirmed that an intrusion by the ShinyHunters group began with a social engineering attack on a single employee [[s26]]. The attackers impersonated a member of the security team to gain the employee's trust, and although the company states the subsequent data-theft attempt failed, the breach is a useful case study in how even security vendors can be caught by the right pretext. ReliaQuest's business is protecting other organizations from precisely these tactics, and its own incident underscores that no amount of external vigilance eliminates the human factor. The lesson is not that security vendors are uniquely exposed; it is that every employee is a potential entry point, and the people most familiar with security operations may still be susceptible to a well-crafted impersonation.",
+  "selected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Actively Exploited Oracle WebLogic Flaw Lets Unauthenticated Attackers Access Critical Data",
+      "url": "https://thehackernews.com/2026/08/actively-exploited-oracle-weblogic-flaw.html",
+      "publishedAt": "2026-08-25T06:12:35.000Z",
+      "excerpt": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Monday added a maximum-severity security flaw impacting Oracle HTTP Server and Oracle WebLogic Server to its Known Exploited Vulnerabilities (KEV) catalog, citing evidence of active exploitation. The vulnerability, tracked as CVE-2026-21962 (CVSS score: 10.0), allows an unauthenticated attacker with network access via HTTP to",
+      "canonicalUrl": "https://thehackernews.com/2026/08/actively-exploited-oracle-weblogic-flaw.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-21962",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Oracle",
+            "product": "HTTP Server and Oracle Weblogic Server Proxy Plug-in",
+            "vulnerabilityName": "Oracle HTTP Server and Oracle Weblogic Server Proxy Plug-in Improper Access Control Vulnerability",
+            "dateAdded": "2026-08-24",
+            "shortDescription": "Oracle HTTP Server and Oracle Weblogic Server Proxy Plug-in contain an improper access control vulnerability that can result in unauthorized creation, deletion or modification access to critical data as well as unauthorized access to critical data or complete access to all Oracle HTTP Server and Oracle Weblogic Server Proxy Plug-in accessible data.",
+            "requiredAction": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
+            "dueDate": "2026-08-27",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://www.oracle.com/security-alerts/cpujan2026.html ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-21962",
+            "cwes": [
+              "CWE-284"
+            ]
+          },
+          "nvd": {
+            "description": "Vulnerability in the Oracle HTTP Server, Oracle Weblogic Server Proxy Plug-in product of Oracle Fusion Middleware (component: Weblogic Server Proxy Plug-in for Apache HTTP Server, Weblogic Server Proxy Plug-in for IIS).  Supported versions that are affected are 12.2.1.4.0, 14.1.1.0.0 and  14.1.2.0.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle HTTP Server, Oracle Weblogic Server Proxy Plug-in.  While the vulnerability is in Oracle HTTP Server, Oracle Weblogic Server Proxy Plug-in, attacks may significantly impact additional products (scope change).  Successful attacks of this vulnerability can result in  unauthorized creation, deletion or modification access to critical data or all Oracle HTTP Server, Oracle Weblogic Server Proxy Plug-in accessible data as well as  unauthorized access to critical data or complete access to all Oracle HTTP Server, Oracle Weblogic Server Proxy Plug-in accessible data. Note: Affected version for Weblogic Server Proxy Plug-in for IIS is 12.2.1.4.0 only. CVSS 3.1 Base Score 10.0 (Confidentiality and Integrity impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:N).",
+            "cvss": {
+              "version": "3.1",
+              "score": 10,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:N",
+              "source": "secalert_us@oracle.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-284"
+            ],
+            "published": "2026-01-20T22:15:59.110",
+            "lastModified": "2026-08-25T04:18:11.067",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://www.oracle.com/security-alerts/cpujan2026.html",
+                "source": "secalert_us@oracle.com",
+                "tags": [
+                  "Patch",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/Ashwesker/Ashwesker-CVE-2026-21962/issues/1",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Broken Link",
+                  "Not Applicable"
+                ]
+              },
+              {
+                "url": "https://web.archive.org/web/20260129165916/https://github.com/Ashwesker/Ashwesker-CVE-2026-21962/issues/1",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Issue Tracking"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-21962",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              },
+              {
+                "url": "https://x.com/0xacb/status/2015473216844620280",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Not Applicable"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:oracle:http_server:12.2.1.4.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "AD04BEE5-E9A8-4584-A68C-0195CE9C402C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:oracle:http_server:14.1.1.0.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "24404505-FD69-4844-8253-053776E1CC1D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:oracle:http_server:14.1.2.0.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "49A6B4CB-3C5C-446A-902D-3C4824CA24D0",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:oracle:weblogic_server_proxy_plug-in:12.2.1.4.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5E29C004-51D7-4BBE-B28A-EE6B7B10F89F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:oracle:weblogic_server_proxy_plug-in:14.1.1.0.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6E726C52-A697-4A3B-AA34-F88FF8FE5DEB",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:oracle:weblogic_server_proxy_plug-in:14.1.2.0.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A6C22A45-61D1-43D3-A187-993FBA4485F0",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/08/actively-exploited-oracle-weblogic-flaw.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.24",
+              "dateReleased": "2026-08-24T18:00:04.7056Z",
+              "retrievedAt": "2026-08-25T12:37:22.201Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-61979%2CCVE-2026-21962%2CCVE-2026-73570",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-21962",
+              "retrievedAt": "2026-08-25T12:37:22.201Z"
+            }
+          }
+        }
+      ],
+      "id": "s15",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "CISA added this max-severity WebLogic flaw to KEV after active exploitation; CVSS 10 with unauthenticated network access makes patching urgent."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers breached over 270 Zimbra servers in ongoing attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-breached-over-270-zimbra-servers-in-ongoing-attacks/",
+      "publishedAt": "2026-08-25T12:04:02.000Z",
+      "excerpt": "Threat actors have already compromised over 270 Zimbra instances in remote code execution attacks targeting a high-severity Zimbra Collaboration Suite (ZCS) vulnerability. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-breached-over-270-zimbra-servers-in-ongoing-attacks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s1",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "Over 270 Zimbra servers are already compromised in an ongoing RCE attack wave, demanding immediate triage of exposed instances."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Attackers Target miniOrange SAML Flaws That Can Grant WordPress Admin Access",
+      "url": "https://thehackernews.com/2026/08/attackers-target-miniorange-saml-flaws.html",
+      "publishedAt": "2026-08-25T08:34:07.000Z",
+      "excerpt": "Bad actors are attempting to exploit two severe unauthenticated authentication bypasses in the Xecurify miniOrange SAML 2.0 Single Sign On plugin that make it possible for an attacker to sign in as any WordPress user, including administrators. The vulnerabilities, as disclosed by Patchstack, are listed below - CVE-2026-61979 (CVSS score: 8.1) - An unauthenticated privilege escalation",
+      "canonicalUrl": "https://thehackernews.com/2026/08/attackers-target-miniorange-saml-flaws.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-61979",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Unauthenticated Privilege Escalation in SAML SP Single Sign On <= 5.4.3 versions.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.1,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "audit@patchstack.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-266"
+            ],
+            "published": "2026-08-13T14:17:03.463",
+            "lastModified": "2026-08-14T19:09:20.713",
+            "vulnStatus": "Deferred",
+            "references": [
+              {
+                "url": "https://patchstack.com/database/wordpress/plugin/miniorange-saml-20-single-sign-on/vulnerability/wordpress-saml-sp-single-sign-on-plugin-5-4-3-privilege-escalation-vulnerability?_s_id=cve",
+                "source": "audit@patchstack.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/08/attackers-target-miniorange-saml-flaws.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.24",
+              "dateReleased": "2026-08-24T18:00:04.7056Z",
+              "retrievedAt": "2026-08-25T12:37:22.201Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-61979%2CCVE-2026-21962%2CCVE-2026-73570",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-61979",
+              "retrievedAt": "2026-08-25T12:37:22.201Z"
+            }
+          }
+        }
+      ],
+      "id": "s12",
+      "section": "vulnerabilities",
+      "rank": 3,
+      "angle": "Attackers are actively probing two unauthenticated auth bypasses in the miniOrange WordPress SAML plugin, which can lead to full admin takeover."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Mirage2FA Surge Hits 4,500 US and EU Companies, Abusing Microsoft 365 Login Flows",
+      "url": "https://thehackernews.com/2026/08/mirage2fa-surge-hits-4500-us-and-eu.html",
+      "publishedAt": "2026-08-25T11:56:15.000Z",
+      "excerpt": "Thousands of companies have been affected by the Mirage2FA campaign from 2024 to 2026. The commercial phishing-as-a-service toolkit targets Microsoft 365 accounts by abusing legitimate login flows and bypassing two-factor authentication. According to ANY.RUN research, 48% of targeted email addresses were potentially compromised. Most of the affected companies are US-based. Mirage2FA Campaign",
+      "canonicalUrl": "https://thehackernews.com/2026/08/mirage2fa-surge-hits-4500-us-and-eu.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s2",
+      "section": "research",
+      "rank": 4,
+      "angle": "A phishing-as-a-service campaign hit 4,500 US and EU companies and potentially compromised nearly half of targeted Microsoft 365 accounts."
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "US sanctions Iranian cyber actors as UK discloses power plant attack",
+      "url": "https://therecord.media/iran-cyberattacks-us-uk",
+      "publishedAt": "2026-08-24T23:00:00.000Z",
+      "excerpt": "The U.S. sanctioned several Iranian nationals for cyberattacks on critical infrastructure just days after reports emerged of a cyber intrusion on a small power plant in the United Kingdom.",
+      "canonicalUrl": "https://therecord.media/iran-cyberattacks-us-uk",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s16",
+      "section": "industry",
+      "rank": 5,
+      "angle": "New US sanctions follow a reported UK power plant intrusion, highlighting state-sponsored attacks on critical infrastructure."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "ReliaQuest confirms failed data-theft attack after ShinyHunters breach",
+      "url": "https://www.bleepingcomputer.com/news/security/reliaquest-confirms-failed-data-theft-attack-after-shinyhunters-breach/",
+      "publishedAt": "2026-08-24T15:17:16.000Z",
+      "excerpt": "Cybersecurity company ReliaQuest has confirmed that one of its employees was targeted in a social engineering attack after hackers impersonated a member of the security team. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/reliaquest-confirms-failed-data-theft-attack-after-shinyhunters-breach",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s26",
+      "section": "breaches",
+      "rank": 6,
+      "angle": "ReliaQuest confirms a ShinyHunters intrusion via employee phishing, showing that even security vendors are vulnerable to social engineering."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "WordlistLoader Delivers Amatera via ClickFix, SynkLoader Phishes Windows Passwords",
+      "url": "https://thehackernews.com/2026/08/wordlistloader-delivers-amatera-via.html",
+      "publishedAt": "2026-08-24T12:35:36.000Z",
+      "excerpt": "Cybersecurity researchers have flagged two new malware families called WordlistLoader and SynkLoader that's used to deliver next-stage payloads and likely sell access to ransomware groups. According to findings from Gen Digital, WordlistLoader is being used to deliver Amatera Stealer (aka ACR Stealer or AcridRain Stealer) via ClearFake campaigns, which employ the ClickFix (aka FakeCaptcha)",
+      "canonicalUrl": "https://thehackernews.com/2026/08/wordlistloader-delivers-amatera-via.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s36",
+      "section": "research",
+      "rank": 7,
+      "angle": "Two newly detailed malware families use ClickFix and password-phishing tricks to deliver infostealers and sell access to ransomware groups."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Police arrests dozens of suspects in global cybercrime crackdown",
+      "url": "https://www.bleepingcomputer.com/news/security/police-arrests-dozens-of-suspects-in-global-cybercrime-crackdown/",
+      "publishedAt": "2026-08-25T10:53:20.000Z",
+      "excerpt": "Law enforcement agencies from 22 countries helped identify 263 suspects and arrested 58 individuals linked to cybercrime networks coordinated by African crime groups. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/police-arrests-dozens-of-suspects-in-global-cybercrime-crackdown",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s8",
+      "section": "industry",
+      "rank": 8,
+      "angle": "A 22-country operation arrested 58 suspects linked to African cybercrime networks, marking notable progress against coordinated global fraud."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "24 npm Packages Abuse unpkg Mirrors to Host Fake Cloudflare CAPTCHA Pages",
+      "url": "https://thehackernews.com/2026/08/24-npm-packages-abuse-unpkg-mirrors-to.html",
+      "publishedAt": "2026-08-25T11:52:43.000Z",
+      "excerpt": "Cybersecurity researchers have disclosed details of a new campaign that uses a cluster of 24 npm packages as free phishing infrastructure for redirecting to ClickFix-style fake CAPTCHA pages. \"While the malware is simply a single HTML page inside the npm package, and while downloading it wouldn't do harm, the threat actor’s use of npm isn't to infect developers who install it, but to use the",
+      "canonicalUrl": "https://thehackernews.com/2026/08/24-npm-packages-abuse-unpkg-mirrors-to.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Large DDoS attack knocks Norwegian public services offline",
+      "url": "https://therecord.media/norway-cyberattack-ddos-government",
+      "publishedAt": "2026-08-25T11:45:00.000Z",
+      "excerpt": "The Norwegian Digitalisation Agency said it was working with its IT partner to stabilize systems affected by a distributed denial-of-service attack, with some services gradually coming back online.",
+      "canonicalUrl": "https://therecord.media/norway-cyberattack-ddos-government",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "E4del and PINHOLE RATs Turn FTP Banners Into Dead Drops for Malware Commands",
+      "url": "https://thehackernews.com/2026/08/e4del-and-pinhole-rats-turn-ftp-banners.html",
+      "publishedAt": "2026-08-25T11:33:44.000Z",
+      "excerpt": "Cybersecurity researchers are calling attention to a new campaign that employs FTP banners as dead drop resolvers (DDRs) to deliver two previously unreported remote access trojans (RATs) tracked as E4del and PINHOLE. While threat actors are known to abuse legitimate services to point to additional command-and-control (C2) infrastructure and blend in with regular network traffic, the development",
+      "canonicalUrl": "https://thehackernews.com/2026/08/e4del-and-pinhole-rats-turn-ftp-banners.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "First Malware Built Specifically for Car Head Units Fuels Botnet",
+      "url": "https://www.securityweek.com/first-malware-built-specifically-for-car-head-units-fuels-botnet/",
+      "publishedAt": "2026-08-25T11:18:22.000Z",
+      "excerpt": "Kaspersky researchers have linked the malware to the BadBox botnet, which has ensnared millions of devices. The post First Malware Built Specifically for Car Head Units Fuels Botnet appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/first-malware-built-specifically-for-car-head-units-fuels-botnet",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Frontier AI: Vulnerability Management's Systemic Revolution",
+      "url": "https://thehackernews.com/2026/08/frontier-ai-vulnerability-managements.html",
+      "publishedAt": "2026-08-25T11:14:07.000Z",
+      "excerpt": "Vulnerability management has been a staple of security programs since the dawn of the cybersecurity discipline. The symbiotic relationship between vulnerability and patch management teams has also existed for that time and has gone through waves of contention and thankfulness. While this relationship required thoughtful care and feeding from both sides, both sides were aiming to work toward a",
+      "canonicalUrl": "https://thehackernews.com/2026/08/frontier-ai-vulnerability-managements.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "unit42",
+      "sourceKind": "rss",
+      "title": "The State of AI-Enabled Malware August 2026: From Brand Abuse to Agentic Execution",
+      "url": "https://unit42.paloaltonetworks.com/ai-enabled-malware-analysis/",
+      "publishedAt": "2026-08-25T10:00:57.000Z",
+      "excerpt": "Explore Unit 42 research on AI-enabled malware. Learn how existing behavioral detection and endpoint analytics stop AI-authored code before execution. The post The State of AI-Enabled Malware August 2026: From Brand Abuse to Agentic Execution appeared first on Unit 42.",
+      "canonicalUrl": "https://unit42.paloaltonetworks.com/ai-enabled-malware-analysis",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "talos",
+      "sourceKind": "rss",
+      "title": "The safety penalty: Reclaiming operational sovereignty in the age of AI",
+      "url": "https://blog.talosintelligence.com/the-safety-penalty-reclaiming-operational-sovereignty-in-the-age-of-ai/",
+      "publishedAt": "2026-08-25T10:00:22.000Z",
+      "excerpt": "As frontier AI models become increasingly restrictive, security teams are facing a \"safety penalty\" that hampers real-time incident response. Discover how organizations can move toward operational sovereignty to ensure their defensive AI keeps pace with unconstrained adversaries.",
+      "canonicalUrl": "https://blog.talosintelligence.com/the-safety-penalty-reclaiming-operational-sovereignty-in-the-age-of-ai",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Silent Patches Don’t Stop Attackers – They Blind Defenders",
+      "url": "https://www.securityweek.com/silent-patches-dont-stop-attackers-they-blind-defenders/",
+      "publishedAt": "2026-08-25T10:00:00.000Z",
+      "excerpt": "Silent patches can become exploit intelligence for attackers while leaving defenders without the context needed to prioritize risk. The post Silent Patches Don’t Stop Attackers – They Blind Defenders appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/silent-patches-dont-stop-attackers-they-blind-defenders",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Taiwan Charges 9 Over Illegal AI Server Exports to China, Including Nvidia and Super Micro Staff",
+      "url": "https://www.securityweek.com/taiwan-charges-9-over-illegal-ai-server-exports-to-china-including-nvidia-and-super-micro-staff/",
+      "publishedAt": "2026-08-25T08:30:00.000Z",
+      "excerpt": "AI infrastructure, including advanced semiconductors mostly made in Taiwan, has become a key point of competition between the U.S. and China. The post Taiwan Charges 9 Over Illegal AI Server Exports to China, Including Nvidia and Super Micro Staff appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/taiwan-charges-9-over-illegal-ai-server-exports-to-china-including-nvidia-and-super-micro-staff",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "CISA Warns of Exploited Oracle WebLogic Vulnerability",
+      "url": "https://www.securityweek.com/cisa-warns-of-exploited-oracle-weblogic-vulnerability/",
+      "publishedAt": "2026-08-25T07:46:34.000Z",
+      "excerpt": "The vulnerability is tracked as CVE-2026-21962 and it has been widely exploited by threat actors against WebLogic servers. The post CISA Warns of Exploited Oracle WebLogic Vulnerability appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/cisa-warns-of-exploited-oracle-weblogic-vulnerability",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-21962",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Oracle",
+            "product": "HTTP Server and Oracle Weblogic Server Proxy Plug-in",
+            "vulnerabilityName": "Oracle HTTP Server and Oracle Weblogic Server Proxy Plug-in Improper Access Control Vulnerability",
+            "dateAdded": "2026-08-24",
+            "shortDescription": "Oracle HTTP Server and Oracle Weblogic Server Proxy Plug-in contain an improper access control vulnerability that can result in unauthorized creation, deletion or modification access to critical data as well as unauthorized access to critical data or complete access to all Oracle HTTP Server and Oracle Weblogic Server Proxy Plug-in accessible data.",
+            "requiredAction": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
+            "dueDate": "2026-08-27",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://www.oracle.com/security-alerts/cpujan2026.html ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-21962",
+            "cwes": [
+              "CWE-284"
+            ]
+          },
+          "nvd": {
+            "description": "Vulnerability in the Oracle HTTP Server, Oracle Weblogic Server Proxy Plug-in product of Oracle Fusion Middleware (component: Weblogic Server Proxy Plug-in for Apache HTTP Server, Weblogic Server Proxy Plug-in for IIS).  Supported versions that are affected are 12.2.1.4.0, 14.1.1.0.0 and  14.1.2.0.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle HTTP Server, Oracle Weblogic Server Proxy Plug-in.  While the vulnerability is in Oracle HTTP Server, Oracle Weblogic Server Proxy Plug-in, attacks may significantly impact additional products (scope change).  Successful attacks of this vulnerability can result in  unauthorized creation, deletion or modification access to critical data or all Oracle HTTP Server, Oracle Weblogic Server Proxy Plug-in accessible data as well as  unauthorized access to critical data or complete access to all Oracle HTTP Server, Oracle Weblogic Server Proxy Plug-in accessible data. Note: Affected version for Weblogic Server Proxy Plug-in for IIS is 12.2.1.4.0 only. CVSS 3.1 Base Score 10.0 (Confidentiality and Integrity impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:N).",
+            "cvss": {
+              "version": "3.1",
+              "score": 10,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:N",
+              "source": "secalert_us@oracle.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-284"
+            ],
+            "published": "2026-01-20T22:15:59.110",
+            "lastModified": "2026-08-25T04:18:11.067",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://www.oracle.com/security-alerts/cpujan2026.html",
+                "source": "secalert_us@oracle.com",
+                "tags": [
+                  "Patch",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/Ashwesker/Ashwesker-CVE-2026-21962/issues/1",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Broken Link",
+                  "Not Applicable"
+                ]
+              },
+              {
+                "url": "https://web.archive.org/web/20260129165916/https://github.com/Ashwesker/Ashwesker-CVE-2026-21962/issues/1",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Issue Tracking"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-21962",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              },
+              {
+                "url": "https://x.com/0xacb/status/2015473216844620280",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Not Applicable"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:oracle:http_server:12.2.1.4.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "AD04BEE5-E9A8-4584-A68C-0195CE9C402C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:oracle:http_server:14.1.1.0.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "24404505-FD69-4844-8253-053776E1CC1D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:oracle:http_server:14.1.2.0.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "49A6B4CB-3C5C-446A-902D-3C4824CA24D0",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:oracle:weblogic_server_proxy_plug-in:12.2.1.4.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5E29C004-51D7-4BBE-B28A-EE6B7B10F89F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:oracle:weblogic_server_proxy_plug-in:14.1.1.0.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6E726C52-A697-4A3B-AA34-F88FF8FE5DEB",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:oracle:weblogic_server_proxy_plug-in:14.1.2.0.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A6C22A45-61D1-43D3-A187-993FBA4485F0",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/cisa-warns-of-exploited-oracle-weblogic-vulnerability/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.24",
+              "dateReleased": "2026-08-24T18:00:04.7056Z",
+              "retrievedAt": "2026-08-25T12:37:22.201Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-61979%2CCVE-2026-21962%2CCVE-2026-73570",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-21962",
+              "retrievedAt": "2026-08-25T12:37:22.201Z"
+            }
+          }
+        }
+      ],
+      "id": "s14"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Exploited Zimbra Flaw Highlights Shrinking Window to Patch",
+      "url": "https://www.darkreading.com/vulnerabilities-threats/zimbra-flaw-exploitation-shrinking-window-patch",
+      "publishedAt": "2026-08-24T21:46:55.000Z",
+      "excerpt": "CISA has issued a three-day deadline for agencies to patch a Zimbra security vulnerability, CVE-2026-73570, which allows full takeover of a user's communications.",
+      "canonicalUrl": "https://darkreading.com/vulnerabilities-threats/zimbra-flaw-exploitation-shrinking-window-patch",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-73570",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Synacor",
+            "product": "Zimbra Collaboration Suite (ZCS)",
+            "vulnerabilityName": "Zimbra Collaboration Suite (ZCS) OS Command Injection Vulnerability",
+            "dateAdded": "2026-08-21",
+            "shortDescription": "Zimbra Collaboration Suite (ZCS) contains an OS command injection vulnerability which could allow an unauthenticated attacker to send specially crafted SMTP requests that may result in execution of arbitrary operating system commands as the Zimbra user.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-08-24",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://wiki.zimbra.com/wiki/Zimbra_Security_Advisories ; https://blog.zimbra.com/2026/07/patch-release-update-zimbra-10-1-20/ ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-73570",
+            "cwes": [
+              "CWE-78"
+            ]
+          },
+          "nvd": {
+            "description": "A remote code execution vulnerability exists in Zimbra Collaboration (ZCS) before 10.1.20 when the optional zimbra-snmp package is installed and SNMP notifications are enabled. Due to improper sanitization of untrusted input during SNMP notification processing, an unauthenticated attacker can send specially crafted SMTP requests that may result in execution of arbitrary operating system commands as the Zimbra user.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.9,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:L",
+              "source": "cve@mitre.org",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-78"
+            ],
+            "published": "2026-08-13T16:19:06.003",
+            "lastModified": "2026-08-24T13:19:17.577",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://wiki.zimbra.com/wiki/Security_Center",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://wiki.zimbra.com/wiki/Zimbra_Security_Advisories",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://moje.cert.pl/komunikaty/2026/145/aktywnie-wykorzystywana-podatnosc-w-zimbra-collaboration-suite/",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-73570",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:synacor:zimbra_collaboration_suite:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2DA7AB29-C275-4B2D-AC7F-288B3121779F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "10.1.20"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "darkreading",
+                "url": "https://www.darkreading.com/vulnerabilities-threats/zimbra-flaw-exploitation-shrinking-window-patch",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.24",
+              "dateReleased": "2026-08-24T18:00:04.7056Z",
+              "retrievedAt": "2026-08-25T12:37:22.201Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-61979%2CCVE-2026-21962%2CCVE-2026-73570",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-73570",
+              "retrievedAt": "2026-08-25T12:37:22.201Z"
+            }
+          }
+        }
+      ],
+      "id": "s17"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Unpatched Calix flaw lets hackers bypass NAT to expose internal devices",
+      "url": "https://www.bleepingcomputer.com/news/security/unpatched-calix-flaw-lets-hackers-bypass-nat-to-expose-internal-devices/",
+      "publishedAt": "2026-08-24T21:14:30.000Z",
+      "excerpt": "An unpatched vulnerability in Calix GS7 XGS (GS5239XG) residential routers used by multiple U.S. broadband providers allows remote, unauthenticated attackers to create port-forwarding rules that can expose local network devices to the public internet. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/unpatched-calix-flaw-lets-hackers-bypass-nat-to-expose-internal-devices",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s18"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Foul Language: WordlistLoader Disguises Malware as Ordinary Text",
+      "url": "https://www.darkreading.com/data-privacy/wordlistloader-disguises-malware-ordinary-text",
+      "publishedAt": "2026-08-24T20:51:27.000Z",
+      "excerpt": "ClickFix-style threat campaigns are using a new trick to evade detection and deliver Amatera, an increasingly prevalent infostealer.",
+      "canonicalUrl": "https://darkreading.com/data-privacy/wordlistloader-disguises-malware-ordinary-text",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s19"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "New Zealand to pursue social media ban for children under 16",
+      "url": "https://therecord.media/new-zealand-to-pursue-social-media-ban-for-children",
+      "publishedAt": "2026-08-24T20:36:00.000Z",
+      "excerpt": "The legislation would mandate that high-risk social media platforms such as Instagram, TikTok, Snapchat and Facebook take “reasonable steps” to ensure users are over age 16 by using tools like facial age estimation, digital ID services, formal IDs and existing account information for verification.",
+      "canonicalUrl": "https://therecord.media/new-zealand-to-pursue-social-media-ban-for-children",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers target WordPress sites in miniOrange auth bypass attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-target-wordpress-sites-in-miniorange-auth-bypass-attacks/",
+      "publishedAt": "2026-08-24T19:26:32.000Z",
+      "excerpt": "Hackers are attempting to exploit two critical authentication bypass vulnerabilities in the miniOrange SAML 2.0 Single Sign On plugin for WordPress that can be used to forge SAML responses and log in as administrators. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-target-wordpress-sites-in-miniorange-auth-bypass-attacks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s21"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Indian man who fled US arrested on charges he helped scammers siphon $7.5 million from the elderly",
+      "url": "https://therecord.media/cyber-scam-indian-arrested",
+      "publishedAt": "2026-08-24T18:30:00.000Z",
+      "excerpt": "A Jersey City resident is facing charges for his alleged role as a money mule for overseas cyberscammers who stole millions from elderly New Yorkers.",
+      "canonicalUrl": "https://therecord.media/cyber-scam-indian-arrested",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s22"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "TikTok reaches $400M settlement with US over COPPA violations",
+      "url": "https://www.bleepingcomputer.com/news/legal/tiktok-reaches-400m-settlement-with-us-over-coppa-violations/",
+      "publishedAt": "2026-08-24T17:56:24.000Z",
+      "excerpt": "The U.S. Department of Justice announced a $400 million settlement with TikTok, ByteDance, and affiliated companies over allegations that they violated the Children's Online Privacy Protection Act (COPPA). [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/legal/tiktok-reaches-400m-settlement-with-us-over-coppa-violations",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Weedhack Malware Spreads via Fake Minecraft Clients and SEO Poisoning",
+      "url": "https://thehackernews.com/2026/08/weedhack-malware-spreads-via-fake.html",
+      "publishedAt": "2026-08-24T17:41:11.000Z",
+      "excerpt": "Cybersecurity researchers have found that several websites are still actively distributing a malware family known as Weedhack to gamers by masquerading as Minecraft clients. McAfee Labs said it detected and blocked more than 6,300 attempts to access malicious sites, adding that it found lookalike gaming websites designed to mimic legitimate projects, including branding, feature lists, FAQs,",
+      "canonicalUrl": "https://thehackernews.com/2026/08/weedhack-malware-spreads-via-fake.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s24"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "ReliaQuest Confirms ShinyHunters Hack, but Says Impact Was Limited",
+      "url": "https://www.securityweek.com/reliaquest-confirms-shinyhunters-hack-but-says-impact-was-limited/",
+      "publishedAt": "2026-08-24T17:38:21.000Z",
+      "excerpt": "A ReliaQuest employee fell victim to a phishing attack and the hackers gained access to a dashboard. The post ReliaQuest Confirms ShinyHunters Hack, but Says Impact Was Limited appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/reliaquest-confirms-shinyhunters-hack-but-says-impact-was-limited",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Tricky 'SynkLoader' Multitool May Herald Ransomware",
+      "url": "https://www.darkreading.com/threat-intelligence/tricky-synkloader-multitool-ransomware",
+      "publishedAt": "2026-08-24T15:02:32.000Z",
+      "excerpt": "An advanced, multilingual malware family brings back a trick from yesteryear — screen hijacking — for effective password theft, along with a slew of novel features.",
+      "canonicalUrl": "https://darkreading.com/threat-intelligence/tricky-synkloader-multitool-ransomware",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "ToxicPanda Banking Trojan Matures Into Enterprise Threat",
+      "url": "https://www.darkreading.com/mobile-security/toxicpanda-banking-trojan-matures-enterprise-threat",
+      "publishedAt": "2026-08-24T14:34:59.000Z",
+      "excerpt": "The latest version of the Android malware has new features that expand its global reach and put more than users' financial applications at risk.",
+      "canonicalUrl": "https://darkreading.com/mobile-security/toxicpanda-banking-trojan-matures-enterprise-threat",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s28"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "⚡ Weekly Recap: AI-Powered PLC Attacks, GitLab Attacks, Stripe Key Leaks and More",
+      "url": "https://thehackernews.com/2026/08/weekly-recap-ai-powered-plc-attacks.html",
+      "publishedAt": "2026-08-24T14:32:10.000Z",
+      "excerpt": "A package gets installed. A login prompt opens. A box sits exposed to the internet. Nothing looks unusual yet. That’s roughly the mood this week. Trusted tools turn hostile, old weak spots get fresh attention, AI makes exploit work cheaper, and researchers keep finding attacks that sound harder than they actually are. Plenty to clean up. Here’s the short version. ⚡ Threat of the Week U.S.",
+      "canonicalUrl": "https://thehackernews.com/2026/08/weekly-recap-ai-powered-plc-attacks.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s29"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft Teams now lets admins block external bots from meetings",
+      "url": "https://www.bleepingcomputer.com/news/security/microsoft-teams-now-lets-admins-block-external-bots-from-meetings/",
+      "publishedAt": "2026-08-24T14:00:19.000Z",
+      "excerpt": "Microsoft is rolling out a new Teams meeting protection policy that allows administrators to automatically block all identified external bots from joining Teams meetings. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/microsoft-teams-now-lets-admins-block-external-bots-from-meetings",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s30"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "South Korean startup platform breach exposes key management failures",
+      "url": "https://www.bleepingcomputer.com/news/security/south-korean-startup-platform-breach-exposes-key-management-failures/",
+      "publishedAt": "2026-08-24T14:00:10.000Z",
+      "excerpt": "A breach at South Korea's government-backed startup platform exposed encrypted personal data after an encryption key was included in an API. Penta Security explains why encryption keys must be securely managed and kept separate from the data they protect. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/south-korean-startup-platform-breach-exposes-key-management-failures",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s31"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Hired for One Job, Judged on Another: The CISO’s Real Problem",
+      "url": "https://www.securityweek.com/hired-for-one-job-judged-on-another-the-cisos-real-problem/",
+      "publishedAt": "2026-08-24T14:00:00.000Z",
+      "excerpt": "The skills that get a CISO hired are rarely the skills they are judged on later. Most security leaders are stuck in that gap. Closing it is the real job. The post Hired for One Job, Judged on Another: The CISO’s Real Problem appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/hired-for-one-job-judged-on-another-the-cisos-real-problem",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s32"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "The Vulnerability Gap: Why Discovery Is Outrunning Repair",
+      "url": "https://www.darkreading.com/cybersecurity-operations/vulnerability-gap-why-discovery-is-outrunning-repair",
+      "publishedAt": "2026-08-24T14:00:00.000Z",
+      "excerpt": "AI is discovering more vulnerabilities, faster, and under a tightening regulatory environment, making this an all-hands-on-deck moment for the cybersecurity community.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/vulnerability-gap-why-discovery-is-outrunning-repair",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s33"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Uber Fined Nearly $1 Billion by Dutch Regulators Over Automated Suspensions of Driver Accounts",
+      "url": "https://www.securityweek.com/uber-fined-nearly-1-billion-by-dutch-regulators-over-automated-suspensions-of-driver-accounts/",
+      "publishedAt": "2026-08-24T12:42:09.000Z",
+      "excerpt": "Dutch Data Protection Authority said it is imposing a fine of 825 million euros because Uber violated the EU’s General Data Protection Regulation. The post Uber Fined Nearly $1 Billion by Dutch Regulators Over Automated Suspensions of Driver Accounts appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/uber-fined-nearly-1-billion-by-dutch-regulators-over-automated-suspensions-of-driver-accounts",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s34"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft: August updates break printing, PDF export in WPF apps",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-august-updates-break-printing-pdf-export-in-wpf-apps/",
+      "publishedAt": "2026-08-24T12:40:21.000Z",
+      "excerpt": "Microsoft has confirmed that .NET Framework updates released as part of the August 2026 Patch Tuesday are breaking printing and PDF export in WPF applications. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-august-updates-break-printing-pdf-export-in-wpf-apps",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s35"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1152,
+    "promptCacheMissTokens": 10104,
+    "outputTokens": 11469,
+    "estimatedCostUsd": 0.0046291056
+  }
+}
