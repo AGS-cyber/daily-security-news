@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-08-26",
+    "mode": "article",
+    "headline": "Gitea RCE leads a day of urgent patches, novel research, and law-enforcement wins",
+    "count": 51
+  },
+  {
     "date": "2026-08-25",
     "mode": "article",
     "headline": "A KEV-listed Oracle flaw, a fast-moving Zimbra campaign, and a surge of identity-focused attacks",

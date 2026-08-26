@@ -1,0 +1,887 @@
+{
+  "date": "2026-08-26",
+  "generatedAt": "2026-08-26T12:40:49.530Z",
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 224,
+    "published": 51
+  },
+  "mode": "article",
+  "headline": "Gitea RCE leads a day of urgent patches, novel research, and law-enforcement wins",
+  "standfirst": "Today’s briefing is defined by one unambiguous priority: an actively exploited critical Gitea vulnerability has entered CISA’s known-exploited catalog, and every exposed instance should be treated as compromised until patched. That story anchors the day, but it is far from the only one worth your attention. Chrome shipped one of its largest patch waves ever, researchers exposed a backdoor that hides in memory until a single packet arrives, and international police action against West African cybercrime produced a major haul of arrests. Meanwhile, the healthcare sector adds another breach, an iPhone-focused phishing service commercializes passcode theft, and a pair of WordPress authentication bypasses create urgent risk for enterprise SSO deployments.",
+  "bodyMarkdown": "## Actively exploited\n\nAttackers are actively exploiting CVE-2026-60004, a critical remote code execution vulnerability in Gitea [[s17]]. The flaw carries a CVSS score of 9.8 and allows any user with ordinary write access to a repository to execute arbitrary shell commands on the underlying host. CISA has confirmed the vulnerability is under active exploitation and added it to the Known Exploited Vulnerabilities catalog, describing it as a code injection issue and assigning a required action with a short compliance deadline for federal agencies. For everyone else, the calculus is no different in practice: this is a confirmed, in-the-wild RCE in a widely deployed self-hosted Git platform, so the vendor’s patched versions should be applied immediately. Even if the exposed surface appears limited to authenticated users, the write-access precondition is often satisfied in real-world collaboration workflows, and the attacker behavior observed in the wild makes this a worst-case scenario for unpatched deployments.\n\n## Industry\n\nCISA is warning that more than 100 internet-exposed water systems were targeted in a coordinated wave of attacks, with the agency tying the activity to Iran-linked hackers [[s4]]. The guidance is blunt: critical infrastructure providers should eliminate unnecessary internet exposure rather than rely on perimeter defenses that are demonstrably failing. Water and wastewater systems have long been a soft target, and this campaign shows the threat is not theoretical. Operators should audit their OT and IT boundaries for unintended public-facing interfaces, apply vendor hardening guidance, and assume that visibility into these systems is an attacker priority.\n\nOn the enforcement side, INTERPOL’s Operation Jackal IV concluded an eight-month, 22-country push against West African organized crime, resulting in 58 arrests and the identification of 263 suspects [[s14]]. The operation specifically targeted networks such as Black Axe and affiliated groups that have become central players in global business-email compromise, romance scams, and phishing. The scale of this takedown is a useful reminder that the threat from these groups is not confined to one region; they operate across continents, and disrupting them requires the kind of sustained international coordination that this operation represents.\n\n## Vulnerabilities\n\nChrome 152 patches more than 300 vulnerabilities, a number that stands out even for a browser with Chrome’s attack surface [[s10]]. A substantial portion of the fixes came from Google’s own AI-driven discovery efforts, which is a welcome development in the race to find bugs before attackers do. The release is also a reminder that Chrome remains a high-value target, and the sheer volume of patches means organizations should treat this update as a priority. The fact that researchers are still independently finding high-severity flaws in Chromium suggests the browser will stay a hot spot for exploit development.\n\nWordPress sites using the MiniOrange SAML Single Sign On plugin are facing two distinct authentication issues [[s38]]. The more severe, CVE-2026-15981, is an unauthenticated authentication bypass rated 9.8 due to a loose boolean check on OpenSSL’s signature verification. A crafted SAMLResponse that triggers an OpenSSL error is treated as having a valid signature, allowing an attacker to log in as any WordPress user, including an administrator. The second flaw, CVE-2026-61979, is an unauthenticated privilege escalation rated 8.1 affecting earlier plugin versions. Given how commonly the MiniOrange SAML plugin is used in enterprise and government WordPress deployments, these are not just blog-park bugs; they are plausible entry points for full site compromise. Affected sites should move to patched versions without delay and audit for unexpected new admin accounts.\n\n## Breaches\n\nNutex Health has confirmed that it detected unauthorized access and data exfiltration, disclosing the incident to the SEC [[s15]]. The healthcare sector continues to be one of the most attractive targets for attackers, and this breach fits that pattern. While technical details remain thin, the confirmation of exfiltration means organizations should expect downstream effects, including potential regulatory scrutiny and fallout from stolen sensitive information. For security teams, the practical takeaway is that healthcare providers should assume breach-magnitude impacts and prioritize data-centric controls, not just network perimeter monitoring.\n\n## Research\n\nIndependent research has documented a previously unreported Windows backdoor called SLEEPWALKER that stays fully inert in memory until a specially crafted network packet reaches the machine [[s16]]. At that point, it executes commands written in a bespoke 23-instruction bytecode language of its own design. The sample is an unsigned 64-bit DLL built for side-loading, and the combination of dormancy and custom bytecode is a clever evasion technique designed to frustrate both dynamic analysis and signature-based detection. This is the kind of research that deserves attention because it shows attackers are willing to build bespoke, hard-to-analyze tooling for what appears to be targeted deployments.\n\nSeparately, researchers have detailed AnonyMousKIT, a phishing-as-a-service platform built to strip Apple’s Activation Lock from stolen iPhones [[s18]]. The service uses rented AI voice agents that call victims, impersonate Apple Support, and request the device passcode and 2FA codes. It is credit-metered, meaning users pay per completed call, and it drives lures across multiple channels. This turns a highly social-engineering-dependent crime into a scalable commercial operation, and it represents a meaningful evolution in the anti-theft bypass economy. For defenders, the takeaway is that voice-based phishing is no longer a human-only threat; AI-driven phone calls are now a commodity service that can be aimed at precisely the people most likely to panic and comply.",
+  "selected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Critical Gitea RCE Actively Exploited as Reported Attack Drops Miner-Like Payload",
+      "url": "https://thehackernews.com/2026/08/critical-gitea-rce-actively-exploited.html",
+      "publishedAt": "2026-08-26T06:27:07.000Z",
+      "excerpt": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Tuesday warned of active exploitation efforts targeting a recently patched critical security flaw impacting Gitea. The vulnerability in question is CVE-2026-60004 (CVSS score: 9.8), a case of remote code execution that allows an attacker with ordinary write access to a repository to execute arbitrary shell commands as the",
+      "canonicalUrl": "https://thehackernews.com/2026/08/critical-gitea-rce-actively-exploited.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-60004",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Gitea",
+            "product": "Gitea",
+            "vulnerabilityName": "Gitea Code Injection Vulnerability",
+            "dateAdded": "2026-08-25",
+            "shortDescription": "Gitea contains a code injection vulnerability that allows an attacker with repository write access to send a malicious patch to the diffpatch API endpoint to plant an executable Git hook and run shell commands as the Gitea service account.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-08-28",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://github.com/go-gitea/gitea/security/advisories/GHSA-rcr6-4jqh-j84m ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-60004",
+            "cwes": [
+              "CWE-94"
+            ]
+          },
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/08/critical-gitea-rce-actively-exploited.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.25",
+              "dateReleased": "2026-08-25T17:43:58.4301Z",
+              "retrievedAt": "2026-08-26T12:40:49.530Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-60004%2CCVE-2026-15981%2CCVE-2026-61979",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-60004",
+              "retrievedAt": "2026-08-26T12:40:49.530Z"
+            }
+          }
+        }
+      ],
+      "id": "s17",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "Critical Gitea RCE is being actively exploited and has been added to CISA KEV with a required action by August 28 – patch immediately."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "CISA: Over 100 Internet-Exposed Water Systems Targeted in July Cyberattacks",
+      "url": "https://www.securityweek.com/cisa-over-100-internet-exposed-water-systems-targeted-in-july-cyberattacks/",
+      "publishedAt": "2026-08-26T11:29:50.000Z",
+      "excerpt": "The agency has released guidance on reducing internet exposure in the wake of the recent Iran-linked hacker attacks. The post CISA: Over 100 Internet-Exposed Water Systems Targeted in July Cyberattacks appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/cisa-over-100-internet-exposed-water-systems-targeted-in-july-cyberattacks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s4",
+      "section": "industry",
+      "rank": 2,
+      "angle": "CISA warns that over 100 internet-exposed water systems were targeted in July, making it urgent to reduce internet exposure for critical infrastructure."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Chrome 152 Patches Over 300 Vulnerabilities",
+      "url": "https://www.securityweek.com/chrome-152-patches-over-300-vulnerabilities/",
+      "publishedAt": "2026-08-26T09:50:34.000Z",
+      "excerpt": "Most of the flaws were discovered by Google using AI, but researchers are still discovering high-value Chrome vulnerabilities. The post Chrome 152 Patches Over 300 Vulnerabilities appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/chrome-152-patches-over-300-vulnerabilities",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s10",
+      "section": "vulnerabilities",
+      "rank": 3,
+      "angle": "Chrome 152 fixes over 300 vulnerabilities, including many discovered by AI, in one of the most widely used browser targets."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Sensitive Information Exposed in Nutex Health Data Breach",
+      "url": "https://www.securityweek.com/sensitive-information-exposed-in-nutex-health-data-breach/",
+      "publishedAt": "2026-08-26T07:41:50.000Z",
+      "excerpt": "Nutex Health has informed the SEC that it recently detected unauthorized access and data exfiltration. The post Sensitive Information Exposed in Nutex Health Data Breach appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/sensitive-information-exposed-in-nutex-health-data-breach",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s15",
+      "section": "breaches",
+      "rank": 4,
+      "angle": "Nutex Health confirms sensitive data exfiltration, highlighting that healthcare continues to be a prime target for attackers."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "INTERPOL Operation Jackal IV Arrests 58, Identifies 263 in Global Cyber Fraud Crackdown",
+      "url": "https://thehackernews.com/2026/08/interpol-operation-jackal-iv-arrests-58.html",
+      "publishedAt": "2026-08-26T07:54:12.000Z",
+      "excerpt": "An eight-month INTERPOL operation targeting West African organized crime groups has led to arrests of 58 people and the identification of 263 suspects. \"The operation, which brought together 22 countries from six continents, is a response to the escalating global threat posed by West African criminal networks – such as the Black Axe and other similar groups,\" INTERPOL said. \"These groups are",
+      "canonicalUrl": "https://thehackernews.com/2026/08/interpol-operation-jackal-iv-arrests-58.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s14",
+      "section": "industry",
+      "rank": 5,
+      "angle": "Interpol's eight-month operation Jackal IV disrupts West African cybercrime networks like Black Axe, a major international law enforcement win."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Newly SLEEPWALKER Backdoor Waits for One Crafted Packet, Then Runs Its Own Bytecode",
+      "url": "https://thehackernews.com/2026/08/newly-sleepwalker-backdoor-waits-for.html",
+      "publishedAt": "2026-08-26T07:12:55.000Z",
+      "excerpt": "An independent malware researcher has documented a previously unreported Windows backdoor, dubbed SLEEPWALKER, that stays inert in memory until a specifically crafted network packet reaches the machine and then runs commands written in a 23-instruction language of its own design. The sample is an unsigned 64-bit Windows dynamic-link library (DLL) of 59,904 bytes, built to be side-loaded into&",
+      "canonicalUrl": "https://thehackernews.com/2026/08/newly-sleepwalker-backdoor-waits-for.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s16",
+      "section": "research",
+      "rank": 6,
+      "angle": "New SLEEPWALKER backdoor stays dormant until a crafted packet triggers its custom bytecode, showcasing a novel evasion technique."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Fake Apple Support AI Calls Target Stolen-Device Owners for Passcodes and 2FA Codes",
+      "url": "https://thehackernews.com/2026/08/fake-apple-support-ai-calls-target.html",
+      "publishedAt": "2026-08-26T05:47:28.000Z",
+      "excerpt": "Cybersecurity researchers have disclosed details of a phishing-as-a-service (PhaaS) platform built to strip Apple's Activation Lock from stolen devices, using rented AI voice agents that call theft victims posing as Apple Support and ask for their device passcode. SOCRadar Threat Research Unit (STRU) said the platform, which it tracks as AnonyMousKIT, is credit-metered and drives lures across",
+      "canonicalUrl": "https://thehackernews.com/2026/08/fake-apple-support-ai-calls-target.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s18",
+      "section": "research",
+      "rank": 7,
+      "angle": "AnonyMousKIT is a PhaaS platform abusing AI voice agents to phish iPhone passcodes and strip stolen devices – a dangerous service model."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "WordPress Websites Targeted via MiniOrange Plugin Vulnerabilities",
+      "url": "https://www.securityweek.com/wordpress-websites-targeted-via-miniorange-plugin-vulnerabilities/",
+      "publishedAt": "2026-08-25T13:33:12.000Z",
+      "excerpt": "CVE-2026-61979 and CVE-2026-15981 are authentication bypass vulnerabilities affecting the MiniOrange SAML 2.0 SSO plugin. The post WordPress Websites Targeted via MiniOrange Plugin Vulnerabilities appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/wordpress-websites-targeted-via-miniorange-plugin-vulnerabilities",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-15981",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "The SAML Single Sign On – SSO Login plugin for WordPress is vulnerable to Authentication Bypass in all versions up to, and including, 5.4.4. This is due to the mo_saml_validate_signature() function performing a loose boolean check on the raw tri-state integer returned by PHP's openssl_verify(), causing an error return value of -1 to be evaluated as truthy and therefore treated as a successful signature verification. This makes it possible for unauthenticated attackers to log in as any existing WordPress user, including administrators, by submitting a crafted SAMLResponse containing an attacker-controlled NameID and a deliberately malformed signature value that triggers an OpenSSL processing error — bypassing verification entirely and resulting in wp_set_auth_cookie() being called for the targeted account.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "security@wordfence.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-287"
+            ],
+            "published": "2026-07-23T21:17:03.220",
+            "lastModified": "2026-07-24T23:16:50.257",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://plugins.trac.wordpress.org/browser/miniorange-saml-20-single-sign-on/tags/5.4.4/class-mo-saml-login-validate.php#L118",
+                "source": "security@wordfence.com",
+                "tags": []
+              },
+              {
+                "url": "https://plugins.trac.wordpress.org/browser/miniorange-saml-20-single-sign-on/tags/5.4.4/class-mo-saml-login-validate.php#L541",
+                "source": "security@wordfence.com",
+                "tags": []
+              },
+              {
+                "url": "https://plugins.trac.wordpress.org/browser/miniorange-saml-20-single-sign-on/tags/5.4.4/class-mo-saml-utilities.php#L403",
+                "source": "security@wordfence.com",
+                "tags": []
+              },
+              {
+                "url": "https://plugins.trac.wordpress.org/browser/miniorange-saml-20-single-sign-on/tags/5.4.4/includes/lib/SAML2Core/class-mo-saml-xml-security-dsig.php#L938",
+                "source": "security@wordfence.com",
+                "tags": []
+              },
+              {
+                "url": "https://plugins.trac.wordpress.org/browser/miniorange-saml-20-single-sign-on/tags/5.4.4/includes/lib/SAML2Core/class-mo-saml-xml-security-key.php#L621",
+                "source": "security@wordfence.com",
+                "tags": []
+              },
+              {
+                "url": "https://plugins.trac.wordpress.org/changeset/3611421/miniorange-saml-20-single-sign-on",
+                "source": "security@wordfence.com",
+                "tags": []
+              },
+              {
+                "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/b412f60f-61ea-47b1-a3ef-17275f7951df?source=cve",
+                "source": "security@wordfence.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/wordpress-websites-targeted-via-miniorange-plugin-vulnerabilities/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.25",
+              "dateReleased": "2026-08-25T17:43:58.4301Z",
+              "retrievedAt": "2026-08-26T12:40:49.530Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-60004%2CCVE-2026-15981%2CCVE-2026-61979",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-15981",
+              "retrievedAt": "2026-08-26T12:40:49.530Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-61979",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Unauthenticated Privilege Escalation in SAML SP Single Sign On <= 5.4.3 versions.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.1,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "audit@patchstack.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-266"
+            ],
+            "published": "2026-08-13T14:17:03.463",
+            "lastModified": "2026-08-14T19:09:20.713",
+            "vulnStatus": "Deferred",
+            "references": [
+              {
+                "url": "https://patchstack.com/database/wordpress/plugin/miniorange-saml-20-single-sign-on/vulnerability/wordpress-saml-sp-single-sign-on-plugin-5-4-3-privilege-escalation-vulnerability?_s_id=cve",
+                "source": "audit@patchstack.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/wordpress-websites-targeted-via-miniorange-plugin-vulnerabilities/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.25",
+              "dateReleased": "2026-08-25T17:43:58.4301Z",
+              "retrievedAt": "2026-08-26T12:40:49.530Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-60004%2CCVE-2026-15981%2CCVE-2026-61979",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-61979",
+              "retrievedAt": "2026-08-26T12:40:49.530Z"
+            }
+          }
+        }
+      ],
+      "id": "s38",
+      "section": "vulnerabilities",
+      "rank": 8,
+      "angle": "Critical authentication bypasses in a popular WordPress SAML plugin put thousands of sites at risk; patch or apply mitigations without delay."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Adobe and Nvidia Patch Dozens of Vulnerabilities",
+      "url": "https://www.securityweek.com/adobe-and-nvidia-patch-dozens-of-vulnerabilities/",
+      "publishedAt": "2026-08-26T12:39:38.000Z",
+      "excerpt": "Adobe and Nvidia each publish several advisories, including ones that address critical vulnerabilities in their products. The post Adobe and Nvidia Patch Dozens of Vulnerabilities appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/adobe-and-nvidia-patch-dozens-of-vulnerabilities",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft tests new privacy controls for Windows 11 desktop apps",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-tests-new-privacy-controls-for-windows-11-desktop-apps/",
+      "publishedAt": "2026-08-26T12:06:28.000Z",
+      "excerpt": "Microsoft has begun testing new privacy controls that will let Windows 11 users choose which desktop applications can access their camera, microphone, and precise location. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-tests-new-privacy-controls-for-windows-11-desktop-apps",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Imagine the SOC Without a Queue: From Alert Backlog to AI Hypothesis Engine",
+      "url": "https://thehackernews.com/2026/08/imagine-soc-without-queue-from-alert.html",
+      "publishedAt": "2026-08-26T11:36:49.000Z",
+      "excerpt": "The SOC we've always known was built around a model that guarantees most of the alert queue will never receive analyst review. There's never time. In a traditional SOC, the typical progression follows a well-known pattern: an alert arrives; a detection engine assigns a severity score. The issue then waits for a human to decide if it should escalate to an investigation. Given the volume of",
+      "canonicalUrl": "https://thehackernews.com/2026/08/imagine-soc-without-queue-from-alert.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers now exploit critical Gitea flaw in code injection attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-now-exploit-critical-gitea-flaw-in-code-injection-attacks/",
+      "publishedAt": "2026-08-26T11:07:48.000Z",
+      "excerpt": "Attackers are now exploiting a critical-severity vulnerability in the Gitea self-hosted Git service, according to the U.S. Cybersecurity and Infrastructure Security Agency (CISA). [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-now-exploit-critical-gitea-flaw-in-code-injection-attacks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "The MFA Identity Trap: When Authentication Creates a False Sense of Security",
+      "url": "https://www.securityweek.com/the-mfa-identity-trap-when-authentication-creates-a-false-sense-of-security/",
+      "publishedAt": "2026-08-26T11:00:00.000Z",
+      "excerpt": "Organizations must distinguish identity verification, authentication and threat detection, or risk successfully authenticating the attackers they are trying to stop. The post The MFA Identity Trap: When Authentication Creates a False Sense of Security appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/the-mfa-identity-trap-when-authentication-creates-a-false-sense-of-security",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Claude Opus 4.6 Bypasses Gym Booking Limit, Cancels Other Users' Reservations in Tests",
+      "url": "https://thehackernews.com/2026/08/claude-opus-46-bypasses-gym-booking.html",
+      "publishedAt": "2026-08-26T10:27:23.000Z",
+      "excerpt": "Aikido Security has published research that recreates the Australian gym-booking incident in a synthetic environment, finding that Claude Opus 4.6, running on the OpenClaw agent harness, exploited a client-side-only booking restriction in 9 of 10 runs. The original incident was first reported by ABC News on August 10, based on chat logs and screenshots the user supplied. He had asked an",
+      "canonicalUrl": "https://thehackernews.com/2026/08/claude-opus-46-bypasses-gym-booking.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "talos",
+      "sourceKind": "rss",
+      "title": "Choose your fighter: Balancing competing requirements to select models for your AI SOC",
+      "url": "https://blog.talosintelligence.com/choose-your-fighter-balancing-competing-requirements-to-select-models-for-your-ai-soc/",
+      "publishedAt": "2026-08-26T10:00:05.000Z",
+      "excerpt": "Selecting a model for your security operations center (SOC) and digital forensics and incident response (DFIR) tasks is important, but selecting the best one is more involved than you might think. Here's how to choose.",
+      "canonicalUrl": "https://blog.talosintelligence.com/choose-your-fighter-balancing-competing-requirements-to-select-models-for-your-ai-soc",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "securelist",
+      "sourceKind": "rss",
+      "title": "Exploits and vulnerabilities in Q2 2026",
+      "url": "https://securelist.com/vulnerabilities-and-exploits-in-q2-2026/121091/",
+      "publishedAt": "2026-08-26T10:00:04.000Z",
+      "excerpt": "This report covers statistics on vulnerabilities, exploits, and C2 frameworks in Q2 2026. For the first time ever, we aggregate data on vulnerabilities in open-source AI agents and AI frameworks.",
+      "canonicalUrl": "https://securelist.com/vulnerabilities-and-exploits-in-q2-2026/121091",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "OpenAI Bans Russian ChatGPT Accounts Used to Run Influence Operation",
+      "url": "https://thehackernews.com/2026/08/openai-bans-russian-chatgpt-accounts.html",
+      "publishedAt": "2026-08-26T09:38:45.000Z",
+      "excerpt": "OpenAI on Tuesday said it banned a cluster of Russian ChatGPT accounts that used VPNs to bypass access restrictions and run an influence operation, which relied on its artificial intelligence (AI) tool to generate social media posts and comments that were shared on Substack, Telegram, X, Facebook and LinkedIn. The accounts \"were being used to promote the International Burke Institute (IBI), a",
+      "canonicalUrl": "https://thehackernews.com/2026/08/openai-bans-russian-chatgpt-accounts.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Interpol's Jackal IV Disrupts West African Crime Infrastructure",
+      "url": "https://www.darkreading.com/threat-intelligence/interpols-jackal-iv-west-african-crime-infrastructure",
+      "publishedAt": "2026-08-26T08:30:00.000Z",
+      "excerpt": "The international law enforcement operation focused on disrupting crime-as-a-service networks and infrastructure behind groups like Black Axe.",
+      "canonicalUrl": "https://darkreading.com/threat-intelligence/interpols-jackal-iv-west-african-crime-infrastructure",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Nigeria Looks to Sovereign Cloud for Cyber, National Security",
+      "url": "https://www.darkreading.com/cybersecurity-operations/nigeria-sovereign-cloud-cyber-national-security",
+      "publishedAt": "2026-08-26T08:00:00.000Z",
+      "excerpt": "The West African nation launched financing, procurement, and infrastructure policies to boost its sovereign cloud initiative and increase domestic technical knowledge.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/nigeria-sovereign-cloud-cyber-national-security",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "CISA Warns of Exploited Gitea Vulnerability",
+      "url": "https://www.securityweek.com/cisa-warns-of-exploited-gitea-vulnerability/",
+      "publishedAt": "2026-08-26T05:17:28.000Z",
+      "excerpt": "CVE-2026-60004 is a remote code execution vulnerability patched by Gitea developers in late July with the release of version 1.27.1. The post CISA Warns of Exploited Gitea Vulnerability appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/cisa-warns-of-exploited-gitea-vulnerability",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-60004",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Gitea",
+            "product": "Gitea",
+            "vulnerabilityName": "Gitea Code Injection Vulnerability",
+            "dateAdded": "2026-08-25",
+            "shortDescription": "Gitea contains a code injection vulnerability that allows an attacker with repository write access to send a malicious patch to the diffpatch API endpoint to plant an executable Git hook and run shell commands as the Gitea service account.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-08-28",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://github.com/go-gitea/gitea/security/advisories/GHSA-rcr6-4jqh-j84m ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-60004",
+            "cwes": [
+              "CWE-94"
+            ]
+          },
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/cisa-warns-of-exploited-gitea-vulnerability/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.25",
+              "dateReleased": "2026-08-25T17:43:58.4301Z",
+              "retrievedAt": "2026-08-26T12:40:49.530Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-60004%2CCVE-2026-15981%2CCVE-2026-61979",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-60004",
+              "retrievedAt": "2026-08-26T12:40:49.530Z"
+            }
+          }
+        }
+      ],
+      "id": "s19"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "LACMA data breach last year exposed social security and medical data",
+      "url": "https://www.bleepingcomputer.com/news/security/lacma-data-breach-last-year-exposed-social-security-and-medical-data/",
+      "publishedAt": "2026-08-25T21:58:14.000Z",
+      "excerpt": "The Los Angeles County Museum of Art (LACMA) has announced that a breach last year exposed customer and employee information. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/lacma-data-breach-last-year-exposed-social-security-and-medical-data",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers abuse npm mirrors to host phishing redirect pages",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-abuse-npm-mirrors-to-host-phishing-redirect-pages/",
+      "publishedAt": "2026-08-25T21:39:01.000Z",
+      "excerpt": "Threat actors are abusing npm and its mirrors to host malicious HTML pages that impersonate Cloudflare CAPTCHAs to redirect visitors to attacker-controlled websites. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-abuse-npm-mirrors-to-host-phishing-redirect-pages",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s21"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Hidden Prompts Trick AI Into False Email Summaries",
+      "url": "https://www.darkreading.com/cyber-risk/hidden-prompts-trick-ai-false-email-summaries",
+      "publishedAt": "2026-08-25T21:08:55.000Z",
+      "excerpt": "With some simple HTML that's invisible to users, attackers can manipulate AI-powered email summarizers into producing malicious information.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/hidden-prompts-trick-ai-false-email-summaries",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s22"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "58 arrested in international cybercrime crackdown",
+      "url": "https://therecord.media/58-arrested-international-cybercrime-crackdown-interpol",
+      "publishedAt": "2026-08-25T20:33:00.000Z",
+      "excerpt": "Interpol officials said it uncovered a crime-as-a-service network in Argentina run by 196 people that provided website domains and money laundering support to West African organized crime groups like Black Axe.",
+      "canonicalUrl": "https://therecord.media/58-arrested-international-cybercrime-crackdown-interpol",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "AnonyMousKIT PhaaS uses voice AI agents to phish iPhone passcodes",
+      "url": "https://www.bleepingcomputer.com/news/security/anonymouskit-phaas-uses-voice-ai-agents-to-phish-iphone-passcodes/",
+      "publishedAt": "2026-08-25T20:25:26.000Z",
+      "excerpt": "A newly uncovered phishing-as-a-service (PhaaS) platform called AnonyMousKIT automates the retrieval of codes used to unlock stolen Apple devices and disable the Activation Lock feature. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/anonymouskit-phaas-uses-voice-ai-agents-to-phish-iphone-passcodes",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s24"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Finding Nemo(Claw): Networking Issue Allows for LLM Poisoning in OpenClaw",
+      "url": "https://www.darkreading.com/cyber-risk/nemo-claw-networking-llm-poisoning-openclaw",
+      "publishedAt": "2026-08-25T19:50:16.000Z",
+      "excerpt": "Attackers can exploit a security bug in Nvidia's tool to gain unauthenticated access to the local model server through the Ollama API, paving the way for persistent AI agent corruption.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/nemo-claw-networking-llm-poisoning-openclaw",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Employee benefits platform Paylogix says hackers stole financial and health data",
+      "url": "https://therecord.media/paylogix-cyberattack-akira-ransomware",
+      "publishedAt": "2026-08-25T18:45:00.000Z",
+      "excerpt": "The benefits management firm Paylogix told regulators that hackers stole sensitive information on tens of thousands of people from its systems.",
+      "canonicalUrl": "https://therecord.media/paylogix-cyberattack-akira-ransomware",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "U.S. Sanctions Iran-Linked Hackers Behind Critical Infrastructure Breaches",
+      "url": "https://thehackernews.com/2026/08/us-sanctions-iran-linked-hackers-behind.html",
+      "publishedAt": "2026-08-25T18:17:17.000Z",
+      "excerpt": "The U.S. Department of the Treasury has announced fresh sanctions on Iranian cyber actors as part of what it called an \"unprecedented, whole-of-government, economic campaign\" against the nation and its enablers. \"We are launching an economic onslaught against Iran's financial connections around the globe. Our objective is to sever every economic lifeline that sustains this tyrannical regime",
+      "canonicalUrl": "https://thehackernews.com/2026/08/us-sanctions-iran-linked-hackers-behind.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Linux Foundation to Govern TRACE, an Open Standard for AI Runtime Attestation",
+      "url": "https://www.securityweek.com/linux-foundation-to-govern-trace-an-open-standard-for-ai-runtime-attestation/",
+      "publishedAt": "2026-08-25T16:23:45.000Z",
+      "excerpt": "TRACE was developed by AMD, Intel, Microsoft, OPAQUE, and TII and contributed to the Linux Foundation. The post Linux Foundation to Govern TRACE, an Open Standard for AI Runtime Attestation appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/linux-foundation-to-govern-trace-an-open-standard-for-ai-runtime-attestation",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s28"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "The patch window is collapsing: Why security needs a new control plane",
+      "url": "https://azure.microsoft.com/en-us/blog/the-patch-window-is-collapsing-why-security-needs-a-new-control-plane/",
+      "publishedAt": "2026-08-25T16:00:00.000Z",
+      "excerpt": "Organizations need protection that operates in the gap between discovery and remediation. The post The patch window is collapsing: Why security needs a new control plane appeared first on Microsoft Security Blog.",
+      "canonicalUrl": "https://azure.microsoft.com/en-us/blog/the-patch-window-is-collapsing-why-security-needs-a-new-control-plane",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s29"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Massive DDoS attack disrupts Norway’s government digital services",
+      "url": "https://www.bleepingcomputer.com/news/security/massive-ddos-attack-disrupts-norways-government-digital-services/",
+      "publishedAt": "2026-08-25T15:52:36.000Z",
+      "excerpt": "A large distributed denial-of-service (DDoS) attack has disrupted Norway's shared government digital infrastructure since Monday, affecting services used by the public sector. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/massive-ddos-attack-disrupts-norways-government-digital-services",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s30"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Is Cyber Facing an Affordability Crisis?",
+      "url": "https://www.darkreading.com/cybersecurity-operations/is-cyber-facing-an-affordability-crisis-",
+      "publishedAt": "2026-08-25T14:53:13.000Z",
+      "excerpt": "As breach costs reach record highs and defense spending nears $240 billion, small businesses are dangerously exposed, threatening supply chain security.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/is-cyber-facing-an-affordability-crisis-",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s31"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hospital operator Nutex Health says data stolen in cyberattack",
+      "url": "https://www.bleepingcomputer.com/news/security/hospital-operator-nutex-health-says-data-stolen-in-cyberattack/",
+      "publishedAt": "2026-08-25T14:44:16.000Z",
+      "excerpt": "Healthcare and services provider Nutex is investigating a data breach incident where an unauthorized third party exfiltrated information from company servers. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hospital-operator-nutex-health-says-data-stolen-in-cyberattack",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s32"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Alice Raises $140M to Expand AI Model Defenses and Enterprise Guardrails",
+      "url": "https://www.securityweek.com/alice-raises-140m-to-expand-ai-model-defenses-and-enterprise-guardrails/",
+      "publishedAt": "2026-08-25T14:11:59.000Z",
+      "excerpt": "The company, previously known as ActiveFence, has raised a total of $280 million from investors. The post Alice Raises $140M to Expand AI Model Defenses and Enterprise Guardrails appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/alice-raises-140m-to-expand-ai-model-defenses-and-enterprise-guardrails",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s33"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "A Malicious Webpage Could Poison Your Local AI Model Behind NVIDIA NemoClaw",
+      "url": "https://thehackernews.com/2026/08/a-malicious-webpage-could-poison-your.html",
+      "publishedAt": "2026-08-25T14:07:37.000Z",
+      "excerpt": "Oasis Security has disclosed a weakness in NVIDIA NemoClaw that could let an attacker-controlled webpage take unauthenticated control of the local Ollama instance serving an AI agent and plant hidden instructions inside the model itself. The findings were shared with The Hacker News ahead of publication, and the report says Oasis Security reported them to NVIDIA's Product Security Incident",
+      "canonicalUrl": "https://thehackernews.com/2026/08/a-malicious-webpage-could-poison-your.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s34"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "From Fake Workers to Account Recovery: The Growing Identity Verification Risk",
+      "url": "https://www.bleepingcomputer.com/news/security/from-fake-workers-to-account-recovery-the-growing-identity-verification-risk/",
+      "publishedAt": "2026-08-25T14:01:11.000Z",
+      "excerpt": "Attackers are increasingly targeting the processes used to establish or recover identity rather than attacking the login itself. Specops explains how stronger identity verification can help organizations prevent fake workers and social engineering attacks from gaining legitimate access. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/from-fake-workers-to-account-recovery-the-growing-identity-verification-risk",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s35"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Ukraine to give Britain access to battlefield data to train AI",
+      "url": "https://therecord.media/ukraine-uk-ai-drone-data",
+      "publishedAt": "2026-08-25T14:00:00.000Z",
+      "excerpt": "Ukraine will give Britain access to a vast trove of battlefield data collected during the war with Russia, allowing U.K. companies and researchers to use it to train and test artificial intelligence systems.",
+      "canonicalUrl": "https://therecord.media/ukraine-uk-ai-drone-data",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s36"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft PowerToys adds Alt+Tab-style switching for an app's windows",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-powertoys-adds-alt-plustab-style-switching-for-an-apps-windows/",
+      "publishedAt": "2026-08-25T13:51:58.000Z",
+      "excerpt": "Microsoft updated its Windows PowerToys toolset with a new utility dubbed \"Window Hopper\" that lets users switch between an app's windows more quickly. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-powertoys-adds-alt-plustab-style-switching-for-an-apps-windows",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s37"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "WhatsApp Adds Multiple Passkeys for Phishing-Resistant Sign-Ins Across iOS and Android",
+      "url": "https://thehackernews.com/2026/08/whatsapp-adds-multiple-passkeys-for.html",
+      "publishedAt": "2026-08-25T13:19:41.000Z",
+      "excerpt": "Meta on Tuesday announced a set of WhatsApp account security features, including support for multiple passkeys to a single account to help users with both iOS and Android devices sign into their accounts using the phishing-resistant method. The tech giant said more than 1 billion people use a passkey to log into WhatsApp. Support for passkeys was first introduced in Android in October 2023,",
+      "canonicalUrl": "https://thehackernews.com/2026/08/whatsapp-adds-multiple-passkeys-for.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s39"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "WhatsApp adds stronger two-step verification, multiple passkeys",
+      "url": "https://www.bleepingcomputer.com/news/security/whatsapp-adds-stronger-two-step-verification-multiple-passkeys/",
+      "publishedAt": "2026-08-25T13:00:00.000Z",
+      "excerpt": "WhatsApp has started rolling out several new account security features, including support for multiple passkeys and stronger two-step verification. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/whatsapp-adds-stronger-two-step-verification-multiple-passkeys",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s40"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "WhatsApp Adds Multiple Passkeys and Stronger 2SV in Account Security Update",
+      "url": "https://www.securityweek.com/whatsapp-adds-multiple-passkeys-and-stronger-2sv-in-account-security-update/",
+      "publishedAt": "2026-08-25T13:00:00.000Z",
+      "excerpt": "When Android users get a call from a non-contact, they will see more information about the caller, including their country. The post WhatsApp Adds Multiple Passkeys and Stronger 2SV in Account Security Update appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/whatsapp-adds-multiple-passkeys-and-stronger-2sv-in-account-security-update",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s41"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "UK government seeks powers to secretly block risky tech suppliers",
+      "url": "https://therecord.media/uk-technology-national-security",
+      "publishedAt": "2026-08-25T12:45:00.000Z",
+      "excerpt": "The British government is seeking new powers to ban certain technology vendors from supplying companies working in the country’s critical sectors — potentially doing so in secret.",
+      "canonicalUrl": "https://therecord.media/uk-technology-national-security",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s42"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Marimo Notebook Flaw Could Run MCP Commands Before Cells Execute in Edit Mode",
+      "url": "https://thehackernews.com/2026/08/marimo-notebook-flaw-could-run-mcp.html",
+      "publishedAt": "2026-08-25T12:43:51.000Z",
+      "excerpt": "Marimo has addressed a high-severity security flaw in its notebook software that allowed an attacker to execute an attacker-supplied Model Context Protocol (MCP) command in a specially crafted notebook, according to VulnCheck's CVE Numbering Authority (CNA) record. The CNA record says the command can run as a local subprocess when the notebook is opened in edit mode. The vulnerability, tracked",
+      "canonicalUrl": "https://thehackernews.com/2026/08/marimo-notebook-flaw-could-run-mcp.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s43"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Ebyte NE2-D11",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-237-06",
+      "publishedAt": "2026-08-25T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of these vulnerabilities could allow an attacker to gain unauthorized administrative access, disclose sensitive information, modify device configuration, hijack authenticated sessions, and disrupt device operation. The following versions of Ebyte NE2-D11 are affected: NE2-D11 Firmware FW-9167-0-11 CVSS Vendor Equipment Vulnerabilities v3 9.8 Ebyte Ebyte…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-237-06",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s44"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "A Tale of Two SOCs: Insights From Two Red Team Assessments",
+      "url": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa26-237a",
+      "publishedAt": "2026-08-25T12:00:00.000Z",
+      "excerpt": "Advisory at a Glance Title A Tale of Two SOCs: Insights From Two Red Team Assessments Original Publication August 25, 2026 Executive Summary The Cybersecurity and Infrastructure Security Agency (CISA) conducted simultaneous red team assessments at two organizations and observed different defensive outcomes. In both environments, the red team achieved full domain compromise and accessed sensitive…",
+      "canonicalUrl": "https://cisa.gov/news-events/cybersecurity-advisories/aa26-237a",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s45"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Rently Smart Home",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-237-01",
+      "publishedAt": "2026-08-25T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of this vulnerability could allow an attacker to access sensitive information and override user permissions. The following versions of Rently Smart Home are affected: Smart Home <=20.1.0 CVSS Vendor Equipment Vulnerabilities v3 8.1 Rently Rently Smart Home Insufficiently Protected Credentials Background Critical Infrastructure Sectors: Commercial…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-237-01",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s46"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "PayRange API",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-237-04",
+      "publishedAt": "2026-08-25T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of this vulnerability could allow a remote, authenticated or unauthenticated attacker to disclose sensitive information, arbitrarily modify the device to cause a denial of service, or alter a devices displayed image. The following versions of PayRange API are affected: PayRange API vers:all/* CVSS Vendor Equipment Vulnerabilities v3 8.8 PayRange PayRange…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-237-04",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s47"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Zoneminder",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-237-02",
+      "publishedAt": "2026-08-25T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of this vulnerability could result in full Remote Code Execution (RCE) as the web server user. The following versions of Zoneminder are affected: Zoneminder 1.37.48|1.38.3 CVSS Vendor Equipment Vulnerabilities v3 8.8 Zoneminder Zoneminder Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') Background Critical…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-237-02",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s48"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Siemens SIMATIC IoT2050 Advanced",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-237-03",
+      "publishedAt": "2026-08-25T12:00:00.000Z",
+      "excerpt": "View CSAF Summary SIMATIC IoT2050 Advanced devices running Industrial OS with Node-RED installed contain a missing authentication vulnerability in the Node-RED HTTP interface that could allow an unauthenticated remote attacker to create malicious flows and execute arbitrary code on the underlying server with maximum privileges. Siemens has released a new version for SIMATIC IoT2050 Advanced and…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-237-03",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s49"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "FURUNO FA-50 Class B AIS Transponder",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-237-07",
+      "publishedAt": "2026-08-25T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of these vulnerabilities could allow an attacker to alter device settings. The following versions of FURUNO FA-50 Class B AIS Transponder are affected: FURUNO FA-50 Class B AIS Transponder vers:all/* CVSS Vendor Equipment Vulnerabilities v3 9.1 FURUNO ELECTRIC CO.,LTD. FURUNO FA-50 Class B AIS Transponder Use of Hard-coded Credentials, Missing…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-237-07",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s50"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Bendix EC80 Brake ECU",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-237-05",
+      "publishedAt": "2026-08-25T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of these vulnerabilities could allow an attacker to cause the loss of ABS functions, steering assist, speedometer, shifting capabilities, or disable automatic traction control. The following versions of Bendix EC80 Brake ECU are affected: EC80ESP+ J1708 Z228999 EC80ESP+ 6S/6M Z228999 EC80ESP+ PLC Z228999 EC80ESP+ 2nd CAN Z228999 EC80ESP+ Integrated TPMS…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-237-05",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s51"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1152,
+    "promptCacheMissTokens": 9328,
+    "outputTokens": 10008,
+    "estimatedCostUsd": 0.004111385600000001
+  }
+}
