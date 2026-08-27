@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-08-27",
+    "mode": "article",
+    "headline": "Daily Security Briefing: KEV Additions, Zero-Day Print-Server Attacks, and a Multi-Million-Record Breach Wave",
+    "count": 68
+  },
+  {
     "date": "2026-08-26",
     "mode": "article",
     "headline": "Gitea RCE leads a day of urgent patches, novel research, and law-enforcement wins",
