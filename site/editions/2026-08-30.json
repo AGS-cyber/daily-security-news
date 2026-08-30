@@ -1,0 +1,179 @@
+{
+  "date": "2026-08-30",
+  "generatedAt": "2026-08-30T15:54:28.666Z",
+  "degraded": [
+    {
+      "stage": "normalize",
+      "message": "2 items were dropped as unparseable"
+    }
+  ],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 228,
+    "deduped": 220,
+    "published": 6
+  },
+  "mode": "article",
+  "headline": "Critical plugin flaws, airport data questions, and a new breed of ClickFix",
+  "standfirst": "The day's most urgent items span the full attack chain: unauthenticated WordPress plugin vulnerabilities that can hand over admin sessions, a disputed airport data breach with validated victim records, two active infostealer campaigns targeting browsers and AI sessions, and a ClickFix variant that moves the social-engineering payload from Run to Windows Terminal. Together they argue for a familiar discipline: patch the exposed edge, treat browser and AI session tokens as credentials, and assume unsanctioned installs are already malicious.",
+  "bodyMarkdown": "## Vulnerabilities\n\nThe top priority is a cluster of critical flaws in WordPress plugins and themes that can lead to authentication bypass, account takeover, and arbitrary code execution [[s6]]. The most dangerous is an authentication bypass in WPMU DEV Dashboard, tracked as CVE-2026-76581 with a CVSS score of 9.8. Affecting versions up to and including 5.0.1, the flaw stems from inconsistent HMAC message construction between two unauthenticated AJAX actions; an attacker can obtain a valid signature from one step and replay it into another, swapping the domain into the redirect field to get an authenticated administrator session. The underlying weakness is a cryptographic signature verification problem, and the unauthenticated nature of the attack is what makes it so dangerous: no credential or previous access is required.\n\nThe same disclosure round covers critical flaws in Avada, TranslatePress, Pods, and GiveWP. Specific details vary, but the collective risk is site takeover: an attacker who compromises any one of these components can typically move from code execution to server-level compromise. For WordPress administrators, the immediate action is to update all five components as soon as patches are available. The presence of a critical, network-exploitable authentication bypass should be enough to move this to emergency change management rather than the normal maintenance window.\n\n## Breaches\n\nA threat actor claiming responsibility for a Manchester Airports Group incident says it stole 86 GB of data, and at least one record in the sample has been validated as a real traveller's record [[s1]]. That sample reportedly includes detailed customer, booking, and travel information, going beyond what the airport operator initially acknowledged. The validated record matters because it shifts the question from whether the breach is real to whether the disclosure is complete.\n\nFor anyone affected or responsible for similar travel-related data, the immediate concerns are the usual ones: the data set is likely to appear in follow-on phishing and targeted social engineering, and any exposed booking or itinerary details can be used to make fraudulent confirmation messages more convincing. The larger lesson is about incident communication: if an attacker's sample contains more precise fields than the formal disclosure, the organisation should expect those details to be weighed against the official narrative.\n\n## Actively exploited\n\nAnthropic is warning that infostealer malware on users' PCs has been stealing active Claude login sessions, giving attackers access to accounts and letting them drain usage [[s2]]. This is a reminder that session tokens are now a first-class theft target: an infostealer can lift an authenticated session and bypass many of the friction controls that protect the login flow. Enabling multi-factor authentication is still worthwhile, but its value is limited if the stolen session remains valid. Users should also scan machines for infostealers, especially if they see signs of unusual usage on a Claude account.\n\nA separate campaign hit browsers directly: malicious extensions for Google Chrome and Microsoft Edge deployed a modular malware framework that stole cryptocurrency, browser data, and browser history, and in some cases injected ClickFix lures [[s3]]. The extension framework is notable because browser extensions sit inside the security boundary of the browser: they can read active site contexts, redirect transactions, and persist long after a credential rotation. Anyone who discovers an unauthorized extension should remove it immediately and rotate credentials from a clean device. The overlap with the ClickFix lure is also worth tying together: attackers are converging on the same social-engineering pattern across extensions, AI assistants, and terminal commands.\n\n## Research\n\nMicrosoft has documented a new ClickFix variant called TerminalFix that uses fake Cloudflare CAPTCHAs to push users toward Windows Terminal or PowerShell [[s4]]. Traditional ClickFix campaigns direct victims to the Windows Run dialog; TerminalFix instead asks users to paste commands into a full terminal window, where complex payloads are less likely to be questioned. The end result is a reverse-tunnel backdoor that gives the attacker remote access to the machine.\n\nThe shift from Run to Terminal is significant for defenders because it changes the tell users have been trained to spot. A CAPTCHA that asks the user to open Windows Terminal or PowerShell is always suspicious, and the appearance of a `powershell` or `curl` command under the guise of human verification should be a hard stop. For security teams, this is another reason to restrict script execution where possible and to make sure users know that no legitimate CAPTCHA will ever ask them to run a command.",
+  "selected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Five Critical WordPress Plugin and Theme Flaws Enable Site Takeover or RCE",
+      "url": "https://thehackernews.com/2026/08/five-critical-wordpress-plugin-and.html",
+      "publishedAt": "2026-08-29T16:25:03.000Z",
+      "excerpt": "Multiple critical security flaws have been disclosed in WordPress plugins and themes, including WPMU DEV Dashboard, Avada, TranslatePress, Pods, and GiveWP, that could lead to authentication bypass, account takeover, and arbitrary code execution. The vulnerabilities, according to Wordfence and Patchstack, are listed below - CVE-2026-76581 (CVSS score: 9.8) - An authentication bypass flaw in",
+      "canonicalUrl": "https://thehackernews.com/2026/08/five-critical-wordpress-plugin-and.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-76581",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "The WPMU DEV Dashboard plugin for WordPress is vulnerable to Authentication Bypass in all versions up to, and including, 5.0.1. This is due to inconsistent and ambiguous HMAC message construction between the unauthenticated `wdpsso_step1` and `wdpsso_step2` AJAX actions, where step 1 signs and discloses an unseparated concatenation of the token, state, redirect, and domain values, while step 2 verifies an unseparated concatenation that omits the domain field. This makes it possible for unauthenticated attackers, on sites connected to WPMU DEV with Hub SSO enabled and mapped to an administrator, to obtain a valid HMAC from step 1 and replay it to step 2 by moving the domain value into the redirect field, resulting in an authenticated administrator session.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "security@wordfence.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-347"
+            ],
+            "published": "2026-08-28T08:16:41.463",
+            "lastModified": "2026-08-28T20:19:54.767",
+            "vulnStatus": "Deferred",
+            "references": [
+              {
+                "url": "https://wpmudev.com/project/wpmu-dev-dashboard/",
+                "source": "security@wordfence.com",
+                "tags": []
+              },
+              {
+                "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/3d4321c8-15a4-46f5-9b0e-2098a7fcfb5b?source=cve",
+                "source": "security@wordfence.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/08/five-critical-wordpress-plugin-and.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.27",
+              "dateReleased": "2026-08-27T17:00:36.6632Z",
+              "retrievedAt": "2026-08-30T15:54:28.666Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-76581",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-76581",
+              "retrievedAt": "2026-08-30T15:54:28.666Z"
+            }
+          }
+        }
+      ],
+      "id": "s6",
+      "section": "vulnerabilities",
+      "rank": 1,
+      "angle": "Critical WordPress plugin flaws (CVE-2026-76581, CVSS 9.8) enable unauthenticated admin takeover; patch immediately."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "FulcrumSec claims Manchester Airports hack, theft of 86 GB of data",
+      "url": "https://www.bleepingcomputer.com/news/security/fulcrumsec-claims-manchester-airports-hack-theft-of-86-gb-of-data/",
+      "publishedAt": "2026-08-30T15:00:21.000Z",
+      "excerpt": "FulcrumSec claims it stole 86 GB of data from Manchester Airports Group. BleepingComputer validated one traveller's record, while samples revealed detailed customer, booking, and travel information beyond what MAG initially disclosed. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/fulcrumsec-claims-manchester-airports-hack-theft-of-86-gb-of-data",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s1",
+      "section": "breaches",
+      "rank": 2,
+      "angle": "Validated passenger data from 86 GB Manchester Airports breach raises questions about MAG's initial disclosure."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Anthropic warns infostealer malware is hijacking Claude sessions to drain usage",
+      "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/anthropic-warns-infostealer-malware-is-hijacking-claude-sessions-to-drain-usage/",
+      "publishedAt": "2026-08-30T14:30:25.000Z",
+      "excerpt": "Anthropic is warning some Claude users that infostealer malware on their PCs has stolen active Claude login sessions, allowing attackers to access accounts and consume their usage. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/artificial-intelligence/anthropic-warns-infostealer-malware-is-hijacking-claude-sessions-to-drain-usage",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s2",
+      "section": "exploited",
+      "rank": 3,
+      "angle": "Anthropic warns infostealers are draining Claude usage via stolen sessions; enable MFA and scan endpoints."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Chrome Web Store extensions caught stealing crypto, browser data",
+      "url": "https://www.bleepingcomputer.com/news/security/chrome-web-store-extensions-caught-stealing-crypto-browser-data/",
+      "publishedAt": "2026-08-30T14:17:44.000Z",
+      "excerpt": "Multiple extensions for Google Chrome and Microsoft Edge delivered a malware framework that deployed modules to steal cryptocurrency, sensitive data, and browser history, as well as inject ClickFix lures. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/chrome-web-store-extensions-caught-stealing-crypto-browser-data",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s3",
+      "section": "exploited",
+      "rank": 4,
+      "angle": "Malicious Chrome/Edge extensions stole crypto and browser data; remove unknown extensions and rotate credentials."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "TerminalFix Uses Fake Cloudflare CAPTCHAs to Deploy Reverse-Tunnel Backdoor",
+      "url": "https://thehackernews.com/2026/08/terminalfix-uses-fake-cloudflare.html",
+      "publishedAt": "2026-08-30T07:36:33.000Z",
+      "excerpt": "Microsoft has disclosed details of a new ClickFix variant, dubbed TerminalFix, that aims to trick users into running a malicious command in Windows Terminal or PowerShell. \"While traditional ClickFix campaigns direct victims to the Windows Run dialog, TerminalFix campaigns apply the same technique but direct users to Windows Terminal or PowerShell instead, increasing the likelihood that complex",
+      "canonicalUrl": "https://thehackernews.com/2026/08/terminalfix-uses-fake-cloudflare.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s4",
+      "section": "research",
+      "rank": 5,
+      "angle": "New TerminalFix ClickFix variant uses Windows Terminal to deploy reverse-tunnel backdoors; verify CAPTCHA prompts."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Anthropic is cutting Claude Code's current weekly limits by 17%",
+      "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/anthropic-is-cutting-claude-codes-current-weekly-limits-by-17-percent/",
+      "publishedAt": "2026-08-29T23:11:51.000Z",
+      "excerpt": "Anthropic is permanently increasing Claude Code's standard weekly usage limits by 25% for Pro, Max, Team, and seat-based Enterprise plans, but it's not as good as it sounds. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/artificial-intelligence/anthropic-is-cutting-claude-codes-current-weekly-limits-by-17-percent",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s5"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1152,
+    "promptCacheMissTokens": 2203,
+    "outputTokens": 11060,
+    "estimatedCostUsd": 0.0034084456000000006
+  }
+}
