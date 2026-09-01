@@ -1,0 +1,1751 @@
+{
+  "date": "2026-09-01",
+  "generatedAt": "2026-09-01T15:57:25.491Z",
+  "degraded": [
+    {
+      "stage": "normalize",
+      "message": "2 items were dropped as unparseable"
+    }
+  ],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 228,
+    "deduped": 222,
+    "published": 37
+  },
+  "mode": "article",
+  "headline": "Active exploitation, a 9.5M-record health breach, and a warning on frontier AI",
+  "standfirst": "The day’s most urgent news is concentrated in active exploitation: CISA has added two PaperCut flaws to its known-exploited catalog, JFrog Artifactory and a pair of critical application bugs are under attack, and defenders are also juggling a nine-figure health data breach, thousands of exposed Exchange servers, critical firewall patches, and a new social-engineering campaign that installs reverse tunnels. For enterprise teams, the through line is patch velocity: the vulnerabilities being exploited now include print-management servers, DevOps repositories, and AI workflow tooling, expanding the attack surface well beyond the usual suspects.",
+  "bodyMarkdown": "## Actively exploited\n\nPaperCut’s print-management servers have moved from “patch soon” to “patch now.” CISA has added both CVE-2026-81578 and CVE-2026-82078 to its known-exploited catalog, and the agency’s designation reflects active intrusions rather than theoretical risk [[s30]]. The first is an access-control flaw in the web management interface that lets unauthenticated remote requests modify system configuration before validation completes; the second is an unsafe dynamic class-loading issue in database connection utilities that can lead to arbitrary Java bytecode execution. Together they put internet-exposed PaperCut NG and MF installations in a dangerous position. Patched releases are identified in the 24.1.9, 25.0.12, and 26.0.4 lines, and while CISA’s requirement for federal agencies includes a specific remediation deadline, every organization running the affected versions should treat the active exploitation as a real incident trigger. The 9.4 CVSS score on the reflection flaw understates the practical risk because it assumes some configuration control; the login bypass is the part that makes that assumption less comforting.\n\nAlso under active attack is the critical authentication bypass in JFrog Artifactory, CVE-2026-82329 [[s21]]. The flaw, rated 9.8, allows an unauthenticated attacker to gain administrative privileges under default configuration. What makes this stand out is speed: exploitation reportedly started within days of disclosure, and Artifactory is widely used to store and distribute software artifacts, so full administrative compromise is not just a repository problem but a supply-chain trust problem. It has no KEV entry at this point, but the observed attacks make it a priority regardless.\n\nA broader credential-probing and command-and-control effort is abusing two more critical bugs, according to new research [[s28]]. CVE-2026-0768 in Langflow is a code-injection flaw in the validate endpoint that requires no authentication and executes Python as root, with a 9.8 CVSS score. In Ruby on Rails, CVE-2026-66066 is an Active Storage issue where unsafe libvips operations are not disabled for untrusted uploads, allowing an unauthenticated attacker to read arbitrary files accessible to the Rails process, including secrets and environment variables. The Rails advisory lists fixed versions in the 7.2.3.2, 8.0.5.1, and 8.1.3.1 trains. The fact that these two very different stacks are being hit at the same time is a reminder that attackers are systematically scanning for any critical authentication or input-handling flaw, rather than concentrating on a single vendor.\n\n## Breaches\n\nHealthcare remains a top target for data exfiltration. The Aesto Health breach hit the company’s AWS infrastructure, with attackers stealing personal and health information belonging to 9.5 million people [[s23]]. The scale puts it among the largest health-sector incidents in recent memory, and the location of the data in cloud storage rather than legacy on-prem systems complicates forensics and notification. For security teams in healthcare and adjacent industries, this is another sign that cloud misconfigurations and compromised cloud credentials are an efficient path to mass data theft.\n\n## Vulnerabilities\n\nThe exposure problem is not always a zero-day. Nearly 22,000 internet-reachable Microsoft Exchange servers remain unpatched against a high-severity authentication bypass that can let an attacker hijack every mailbox on the server [[s8]]. Exchange’s history of mass-exploited vulnerabilities means these unpatched servers are a standing invitation. The fix has been available, yet the exposure persists, suggesting asset owners are not treating Exchange as a product that requires aggressive lifecycle management.\n\nOn the positive side, WatchGuard has shipped patches for three critical remote code execution vulnerabilities in the iked process of Fireware OS, all exploitable by unauthenticated attackers [[s25]]. Firewalls are a natural target because they sit at the boundary between untrusted traffic and internal networks, and a successful remote code execution there gives attackers the same access as a VPN compromise. The patch should be treated as urgent, and not just for the firewall itself; the same appliance often controls tunnels into the rest of the environment.\n\n## Research\n\nA new campaign tracked as TerminalFix is giving the ClickFix trick a stronger foothold. Attackers are compromising legitimate websites and using fake Cloudflare CAPTCHA prompts to convince users to paste malicious PowerShell commands into Windows Terminal [[s37]]. Microsoft is warning of enterprise intrusions where the payloads deploy reverse tunnels, effectively punching a controlled outbound hole through perimeter defenses. This is a meaningful evolution of the social-engineering playbook because the prompt is designed to feel like an identity check, and the use of Windows Terminal makes the malicious step look like a normal response to a security prompt.\n\n## Industry\n\nFinally, the Financial Stability Board is pushing financial institutions to treat frontier AI as a systemic cyber risk. In a report framed by the board’s chair, the most immediate concern is not a single AI-powered attack but the concentration and correlation of AI dependence across the global financial system [[s11]]. The call for institutions and technology providers to prepare for severe scenarios involving simultaneous disruption across multiple firms or shared technology dependencies points to a growing recognition that resilience planning needs to account for common modes of failure, not just per-entity risk.",
+  "selected": [
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "PaperCut Exploitation Escalates to Active Intrusions",
+      "url": "https://www.securityweek.com/papercut-exploitation-escalates-to-active-intrusions/",
+      "publishedAt": "2026-09-01T05:27:18.000Z",
+      "excerpt": "CISA has added the vulnerabilities tracked as CVE-2026-82078 and CVE-2026-81578 to its KEV catalog. The post PaperCut Exploitation Escalates to Active Intrusions appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/papercut-exploitation-escalates-to-active-intrusions",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-81578",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "PaperCut",
+            "product": "NG/MF",
+            "vulnerabilityName": "PaperCut NG/MF Missing Authentication for Critical Function Vulnerability",
+            "dateAdded": "2026-08-31",
+            "shortDescription": "PaperCut NG/MF contains a missing authentication for critical function vulnerability which allows an unauthenticated remote attacker to modify certain system configurations. This vulnerability can be chained with CVE-2026-82078.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-09-14",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://www.papercut.com/kb/Main/security-bulletin-27-aug-2026-urgent-security-advisory/ ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-81578",
+            "cwes": [
+              "CWE-306"
+            ]
+          },
+          "nvd": {
+            "description": "An improper access control vulnerability exists in the web management interface of PaperCut MF and PaperCut NG. Under specific conditions, unauthenticated remote requests targeting administrative functions can trigger backend actions prior to the  completion of access validation checks. This allows an unauthenticated remote attacker to modify certain system configurations.",
+            "cvss": {
+              "version": "4.0",
+              "score": 8.8,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "eb41dac7-0af8-4f84-9f6d-0272772514f4",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-305"
+            ],
+            "published": "2026-08-28T16:18:29.600",
+            "lastModified": "2026-09-01T04:18:01.990",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://www.papercut.com/kb/Main/security-bulletin-27-aug-2026-urgent-security-advisory/",
+                "source": "eb41dac7-0af8-4f84-9f6d-0272772514f4",
+                "tags": [
+                  "Patch",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/rapid7/metasploit-framework/pull/21842",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Issue Tracking",
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-81578",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Patch",
+                  "Third Party Advisory",
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:papercut:papercut_mf:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F2AF3AB4-FD10-4DE1-B906-011F45948BD0",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "24.1.9"
+              },
+              {
+                "criteria": "cpe:2.3:a:papercut:papercut_mf:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8F6ED0B8-62DC-4CF9-9810-2CCB824FBCA8",
+                "versionStartIncluding": "25.0.2",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "25.0.12"
+              },
+              {
+                "criteria": "cpe:2.3:a:papercut:papercut_mf:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "51E91B81-E311-4BB9-A753-671F0C59E7F7",
+                "versionStartIncluding": "26.0.2",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "26.0.4"
+              },
+              {
+                "criteria": "cpe:2.3:a:papercut:papercut_ng:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "44FCDCDE-4126-4F4F-89FC-D44924F45C82",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "24.1.9"
+              },
+              {
+                "criteria": "cpe:2.3:a:papercut:papercut_ng:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9E727ABD-0007-424D-AB07-FB7816E43792",
+                "versionStartIncluding": "25.0.2",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "25.0.12"
+              },
+              {
+                "criteria": "cpe:2.3:a:papercut:papercut_ng:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3938B71A-CB14-4017-A037-7D5F08DAFB13",
+                "versionStartIncluding": "26.0.2",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "26.0.4"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/papercut-exploitation-escalates-to-active-intrusions/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.31",
+              "dateReleased": "2026-08-31T14:55:13.3856Z",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-0768%2CCVE-2026-9621%2CCVE-2026-9622%2CCVE-2026-9624%2CCVE-2026-9625%2CCVE-2025-12768%2CCVE-2026-12661%2CCVE-2021-42260%2CCVE-2026-9637%2CCVE-2026-9633%2CCVE-2026-16675%2CCVE-2026-82329%2CCVE-2026-66066%2CCVE-2026-81578%2CCVE-2026-82078",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-81578",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-82078",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "PaperCut",
+            "product": "NG/MF",
+            "vulnerabilityName": "PaperCut NG/MF Unsafe Reflection Vulnerability",
+            "dateAdded": "2026-08-31",
+            "shortDescription": "PaperCut NG/MF contains an unsafe reflection vulnerability that allows an attacker to manipulate system configuration parameters and execute arbitrary Java bytecode residing on the application classpath under the security context of the PaperCut server process. This vulnerability can be chained with CVE-2026-81578.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-09-14",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://www.papercut.com/kb/Main/security-bulletin-27-aug-2026-urgent-security-advisory/?lid=2oneu2wt0ct4 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-82078",
+            "cwes": [
+              "CWE-470"
+            ]
+          },
+          "nvd": {
+            "description": "An unsafe dynamic class loading vulnerability exists in the database connection utilities of PaperCut MF and PaperCut NG. The application instantiates database driver classes based on configurable driver names without validating against an allowlist of approved drivers. If an attacker can manipulate system configuration parameters, this enables the execution of arbitrary Java bytecode residing on the application classpath under the security context of the PaperCut server process.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.4,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "eb41dac7-0af8-4f84-9f6d-0272772514f4",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-470"
+            ],
+            "published": "2026-08-28T16:18:31.240",
+            "lastModified": "2026-09-01T04:18:02.160",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://www.papercut.com/kb/Main/security-bulletin-27-aug-2026-urgent-security-advisory/",
+                "source": "eb41dac7-0af8-4f84-9f6d-0272772514f4",
+                "tags": [
+                  "Patch",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/rapid7/metasploit-framework/pull/21842",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Issue Tracking",
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-82078",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Patch",
+                  "Third Party Advisory",
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:papercut:papercut_mf:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F2AF3AB4-FD10-4DE1-B906-011F45948BD0",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "24.1.9"
+              },
+              {
+                "criteria": "cpe:2.3:a:papercut:papercut_mf:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8F6ED0B8-62DC-4CF9-9810-2CCB824FBCA8",
+                "versionStartIncluding": "25.0.2",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "25.0.12"
+              },
+              {
+                "criteria": "cpe:2.3:a:papercut:papercut_mf:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "51E91B81-E311-4BB9-A753-671F0C59E7F7",
+                "versionStartIncluding": "26.0.2",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "26.0.4"
+              },
+              {
+                "criteria": "cpe:2.3:a:papercut:papercut_ng:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "44FCDCDE-4126-4F4F-89FC-D44924F45C82",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "24.1.9"
+              },
+              {
+                "criteria": "cpe:2.3:a:papercut:papercut_ng:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9E727ABD-0007-424D-AB07-FB7816E43792",
+                "versionStartIncluding": "25.0.2",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "25.0.12"
+              },
+              {
+                "criteria": "cpe:2.3:a:papercut:papercut_ng:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3938B71A-CB14-4017-A037-7D5F08DAFB13",
+                "versionStartIncluding": "26.0.2",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "26.0.4"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/papercut-exploitation-escalates-to-active-intrusions/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.31",
+              "dateReleased": "2026-08-31T14:55:13.3856Z",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-0768%2CCVE-2026-9621%2CCVE-2026-9622%2CCVE-2026-9624%2CCVE-2026-9625%2CCVE-2025-12768%2CCVE-2026-12661%2CCVE-2021-42260%2CCVE-2026-9637%2CCVE-2026-9633%2CCVE-2026-16675%2CCVE-2026-82329%2CCVE-2026-66066%2CCVE-2026-81578%2CCVE-2026-82078",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-82078",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            }
+          }
+        }
+      ],
+      "id": "s30",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "CISA adds PaperCut zero-days to KEV; active intrusions mean patching is now a compliance deadline."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Critical JFrog Artifactory Vulnerability Reportedly Exploited in the Wild",
+      "url": "https://www.securityweek.com/critical-jfrog-artifactory-vulnerability-reportedly-exploited-in-the-wild/",
+      "publishedAt": "2026-09-01T09:59:44.000Z",
+      "excerpt": "Exploitation of the authentication bypass vulnerability CVE-2026-82329 started just days after its public disclosure. The post Critical JFrog Artifactory Vulnerability Reportedly Exploited in the Wild appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/critical-jfrog-artifactory-vulnerability-reportedly-exploited-in-the-wild",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-82329",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "JFrog Artifactory contains an authentication weakness that, under default configuration, may allow an unauthenticated attacker with network access to obtain administrative privileges.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "reefs@jfrog.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-287"
+            ],
+            "published": "2026-08-28T20:20:21.293",
+            "lastModified": "2026-08-31T19:17:18.813",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://docs.jfrog.com/releases/docs/artifactory-self-managed-releases",
+                "source": "reefs@jfrog.com",
+                "tags": []
+              },
+              {
+                "url": "https://docs.jfrog.com/releases/docs/jfrog-security-advisories",
+                "source": "reefs@jfrog.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/critical-jfrog-artifactory-vulnerability-reportedly-exploited-in-the-wild/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.31",
+              "dateReleased": "2026-08-31T14:55:13.3856Z",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-0768%2CCVE-2026-9621%2CCVE-2026-9622%2CCVE-2026-9624%2CCVE-2026-9625%2CCVE-2025-12768%2CCVE-2026-12661%2CCVE-2021-42260%2CCVE-2026-9637%2CCVE-2026-9633%2CCVE-2026-16675%2CCVE-2026-82329%2CCVE-2026-66066%2CCVE-2026-81578%2CCVE-2026-82078",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-82329",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            }
+          }
+        }
+      ],
+      "id": "s21",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "Critical JFrog Artifactory bug exploited days after disclosure; widespread DevOps use raises exposure."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Attackers Exploit Critical Langflow and Rails Flaws in Credential-Probing and C2 Activity",
+      "url": "https://thehackernews.com/2026/09/attackers-exploit-critical-langflow-and.html",
+      "publishedAt": "2026-09-01T07:22:30.000Z",
+      "excerpt": "Threat actors are exploiting two critical flaws impacting Langflow and Ruby on Rails, according to new findings from VulnCheck. The vulnerabilities in question are listed below - CVE-2026-0768 (CVSS score: 9.8) - A lack of proper validation of a user-supplied input vulnerability that could be exploited to execute arbitrary Python code in the context of the root user. CVE-2026-66066 aka",
+      "canonicalUrl": "https://thehackernews.com/2026/09/attackers-exploit-critical-langflow-and.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-0768",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Langflow code Code Injection Remote Code Execution Vulnerability. This vulnerability allows remote attackers to execute arbitrary code on affected installations of Langflow. Authentication is not required to exploit this vulnerability.\n\nThe specific flaw exists within the handling of the code parameter provided to the validate endpoint. The issue results from the lack of proper validation of a user-supplied string before using it to execute Python code. An attacker can leverage this vulnerability to execute code in the context of root.\n. Was ZDI-CAN-27322.",
+            "cvss": {
+              "version": "3.0",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "zdi-disclosures@trendmicro.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-94"
+            ],
+            "published": "2026-01-23T04:16:03.800",
+            "lastModified": "2026-06-17T10:11:20.937",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://www.zerodayinitiative.com/advisories/ZDI-26-034/",
+                "source": "zdi-disclosures@trendmicro.com",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:langflow:langflow:1.4.2:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "81AAA7F9-843A-456C-89A1-B99D18AD4328",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/attackers-exploit-critical-langflow-and.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.31",
+              "dateReleased": "2026-08-31T14:55:13.3856Z",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-0768%2CCVE-2026-9621%2CCVE-2026-9622%2CCVE-2026-9624%2CCVE-2026-9625%2CCVE-2025-12768%2CCVE-2026-12661%2CCVE-2021-42260%2CCVE-2026-9637%2CCVE-2026-9633%2CCVE-2026-16675%2CCVE-2026-82329%2CCVE-2026-66066%2CCVE-2026-81578%2CCVE-2026-82078",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-0768",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-66066",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Action Pack is a framework for handling and responding to web requests. In versions prior to 7.2.3.2, 8.0.5.1 and 8.1.3.1, Active Storage does not disable libvips operations marked unsafe for untrusted content, allowing a crafted upload to invoke such an operation. Consuming applications are affected when configured to use libvips and accept image uploads from untrusted users. An unauthenticated attacker may exploit this behavior to read arbitrary files accessible to the Rails process, including environment variables and application secrets. Exposure of credentials such as secret_key_base or external-service tokens may enable remote code execution or lateral movement. This issue has been fixed in versions 7.2.3.2, 8.0.5.1 and 8.1.3.1.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.5,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-1188"
+            ],
+            "published": "2026-07-30T19:18:35.843",
+            "lastModified": "2026-08-05T15:17:03.507",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://github.com/rails/rails/commit/1c01bb587206ee6eb0e1179c2cef96a6a47acb1e",
+                "source": "security-advisories@github.com",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/rails/rails/commit/349e7a5d5b4b715af1e416db824f3c078a7d59e5",
+                "source": "security-advisories@github.com",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/rails/rails/commit/d79b7f4aa17dec8ce4960fef05733c8c0c7ef49a",
+                "source": "security-advisories@github.com",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/rails/rails/releases/tag/v7.2.3.2",
+                "source": "security-advisories@github.com",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/rails/rails/releases/tag/v8.0.5.1",
+                "source": "security-advisories@github.com",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/rails/rails/releases/tag/v8.1.3.1",
+                "source": "security-advisories@github.com",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/rails/rails/security/advisories/GHSA-xr9x-r78c-5hrm",
+                "source": "security-advisories@github.com",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/rubysec/ruby-advisory-db/blob/master/gems/activestorage/CVE-2026-66066.yml",
+                "source": "security-advisories@github.com",
+                "tags": []
+              },
+              {
+                "url": "https://thehackernews.com/2026/07/critical-rails-flaw-could-let.html",
+                "source": "security-advisories@github.com",
+                "tags": []
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/07/29/9",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": []
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/08/01/6",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": []
+              },
+              {
+                "url": "https://ethiack.com/info-hub/research/kindarails2shell-rails-rce-cve-2026-66066",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/rails/rails-forensics-CVE-2026-66066",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/attackers-exploit-critical-langflow-and.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.31",
+              "dateReleased": "2026-08-31T14:55:13.3856Z",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-0768%2CCVE-2026-9621%2CCVE-2026-9622%2CCVE-2026-9624%2CCVE-2026-9625%2CCVE-2025-12768%2CCVE-2026-12661%2CCVE-2021-42260%2CCVE-2026-9637%2CCVE-2026-9633%2CCVE-2026-16675%2CCVE-2026-82329%2CCVE-2026-66066%2CCVE-2026-81578%2CCVE-2026-82078",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-66066",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            }
+          }
+        }
+      ],
+      "id": "s28",
+      "section": "exploited",
+      "rank": 3,
+      "angle": "Langflow and Rails flaws actively exploited for credential probing and C2, signaling broad targeting."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "9.5 Million Impacted by Aesto Health Data Breach",
+      "url": "https://www.securityweek.com/9-5-million-impacted-by-aesto-health-data-breach/",
+      "publishedAt": "2026-09-01T09:09:34.000Z",
+      "excerpt": "Hackers stole personal and health information from the healthcare technology company’s AWS infrastructure. The post 9.5 Million Impacted by Aesto Health Data Breach appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/9-5-million-impacted-by-aesto-health-data-breach",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s23",
+      "section": "breaches",
+      "rank": 4,
+      "angle": "Healthcare tech breach exposes 9.5M records, among the largest health-data incidents this year."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Nearly 22,000 Microsoft Exchange servers vulnerable to hijack attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/nearly-22-000-microsoft-exchange-servers-vulnerable-to-hijack-attacks/",
+      "publishedAt": "2026-09-01T12:38:35.000Z",
+      "excerpt": "Nearly 22,000 Microsoft Exchange servers exposed online remain unpatched against a high-severity authentication bypass vulnerability that allows attackers to hijack all user mailboxes. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/nearly-22-000-microsoft-exchange-servers-vulnerable-to-hijack-attacks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s8",
+      "section": "vulnerabilities",
+      "rank": 5,
+      "angle": "22K internet-exposed Exchange servers remain unpatched against a mailbox-hijacking flaw."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "WatchGuard Patches Critical Vulnerabilities",
+      "url": "https://www.securityweek.com/watchguard-patches-critical-vulnerabilities/",
+      "publishedAt": "2026-09-01T08:50:04.000Z",
+      "excerpt": "Three critical issues in the Fireware OS iked process could allow unauthenticated attackers to execute arbitrary code remotely. The post WatchGuard Patches Critical Vulnerabilities appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/watchguard-patches-critical-vulnerabilities",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s25",
+      "section": "vulnerabilities",
+      "rank": 6,
+      "angle": "Critical Fireware RCEs patched; WatchGuard firewalls are high-value targets for network access."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft warns of TerminalFix attacks deploying reverse tunnels",
+      "url": "https://www.bleepingcomputer.com/news/security/microsoft-warns-of-terminalfix-attacks-deploying-reverse-tunnels/",
+      "publishedAt": "2026-08-31T18:51:04.000Z",
+      "excerpt": "A new ClickFix variant dubbed TerminalFix uses fake Cloudflare CAPTCHA prompts on compromised websites to trick victims into running malicious PowerShell commands in Windows Terminal. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/microsoft-warns-of-terminalfix-attacks-deploying-reverse-tunnels",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s37",
+      "section": "research",
+      "rank": 7,
+      "angle": "TerminalFix ClickFix variant uses reverse tunnels, with Microsoft warning of enterprise intrusions."
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Cyber risk from frontier AI poses ‘most immediate concern’ to global financial system, watchdog warns",
+      "url": "https://therecord.media/cyber-risk-from-frontier-ai-most-immediate-concern-to-global-finance",
+      "publishedAt": "2026-09-01T12:28:00.000Z",
+      "excerpt": "Andrew Bailey, chair of the Financial Stability Board, called on financial institutions and technology providers to “prepare for more severe scenarios involving simultaneous disruption across multiple firms or shared technology dependencies.”",
+      "canonicalUrl": "https://therecord.media/cyber-risk-from-frontier-ai-most-immediate-concern-to-global-finance",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s11",
+      "section": "industry",
+      "rank": 8,
+      "angle": "Financial Stability Board flags frontier AI as the most immediate cyber risk to global finance."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Healthcare facilities operator Nutex says patient, employee data stolen in August incident",
+      "url": "https://therecord.media/nutex-health-data-breach",
+      "publishedAt": "2026-09-01T15:31:00.000Z",
+      "excerpt": "Cybercriminals breached company data and made an extortion attempt with it, Houston-based Nutex Health said in a filing with federal regulators.",
+      "canonicalUrl": "https://therecord.media/nutex-health-data-breach",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers push malicious Virtualizor update in BGP hijacking attack",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-push-malicious-virtualizor-update-in-bgp-hijacking-attack/",
+      "publishedAt": "2026-09-01T14:45:06.000Z",
+      "excerpt": "Hackers delivered malicious updates to the Virtualizor VPS management software after hijacking BGP routing for its update infrastructure and redirecting update requests to malicious servers. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-push-malicious-virtualizor-update-in-bgp-hijacking-attack",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Novocure data breach affects more than 1,400 cancer patients",
+      "url": "https://www.bleepingcomputer.com/news/security/novocure-data-breach-affects-more-than-1-400-cancer-patients/",
+      "publishedAt": "2026-09-01T14:28:40.000Z",
+      "excerpt": "Healthtech company Novocure says the data of an undisclosed number of employees and more than 1,400 U.S. cancer patients has been exposed in a mid-August cyberattack. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/novocure-data-breach-affects-more-than-1-400-cancer-patients",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "13 Malicious Packagist Packages Target Unpatched iPhones to Steal Crypto Wallet Seeds",
+      "url": "https://thehackernews.com/2026/09/13-malicious-packagist-packages-target.html",
+      "publishedAt": "2026-09-01T14:07:20.000Z",
+      "excerpt": "Cybersecurity researchers have identified a set of 13 malicious Composer theme packages on Packagist that are designed to inject JavaScript into Vietnamese movie and comic streaming sites that install those libraries and initiate the deployment of spyware aimed at unpatched iOS devices. \"The injected code runs two operations against a site's visitors: a mobile ad-fraud and gambling-redirect",
+      "canonicalUrl": "https://thehackernews.com/2026/09/13-malicious-packagist-packages-target.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Why Even the Best Edge Security Still Misses High-Risk Sessions",
+      "url": "https://www.bleepingcomputer.com/news/security/why-even-the-best-edge-security-still-misses-high-risk-sessions/",
+      "publishedAt": "2026-09-01T14:01:11.000Z",
+      "excerpt": "Attackers can hide behind residential proxies, VPNs, and other infrastructure that makes malicious sessions appear legitimate to existing edge security controls. Spur explains how session enrichment adds data points that help organizations identify risky sessions and make stronger enforcement decisions. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/why-even-the-best-edge-security-still-misses-high-risk-sessions",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "ClickFix Campaign Compromises 31 Orgs, Abuses Polygon Blockchain",
+      "url": "https://www.darkreading.com/endpoint-security/clickfix-campaign-comprises-31-orgs-abuses-polygon-blockchain",
+      "publishedAt": "2026-09-01T13:56:42.000Z",
+      "excerpt": "The campaign uses EtherHiding to dynamically update its command-and-control server, abusing the blockchain as an attacker-controlled address book.",
+      "canonicalUrl": "https://darkreading.com/endpoint-security/clickfix-campaign-comprises-31-orgs-abuses-polygon-blockchain",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Iranian Hackers Pose as Recruiters to Deliver Cross-Platform RATs Through Coding Tests",
+      "url": "https://thehackernews.com/2026/09/iranian-hackers-pose-as-recruiters-to.html",
+      "publishedAt": "2026-09-01T13:08:58.000Z",
+      "excerpt": "The Iranian Nimbus Manticore hacking group has been attributed to two previously undocumented malware families that highlight the continued evolution of its toolset and likely expand its targeting footprint to infect Linux and Apple macOS systems using cross-platform remote access trojans (RATs) developed using Node.js and JavaScript. Russian cybersecurity company Kaspersky is tracking the",
+      "canonicalUrl": "https://thehackernews.com/2026/09/iranian-hackers-pose-as-recruiters-to.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Experiment: Porting a PLC Exploit With AI Takes Hours and Hundreds of Dollars",
+      "url": "https://www.securityweek.com/experiment-porting-a-plc-exploit-with-ai-takes-hours-and-hundreds-of-dollars/",
+      "publishedAt": "2026-09-01T12:37:15.000Z",
+      "excerpt": "Forescout researchers used Claude AI to port a remote code execution exploit between WAGO PLC models. The post Experiment: Porting a PLC Exploit With AI Takes Hours and Hundreds of Dollars appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/experiment-porting-a-plc-exploit-with-ai-takes-hours-and-hundreds-of-dollars",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Iranian cyber spies target aviation, fintech developers with new malware",
+      "url": "https://therecord.media/iranian-cyber-spies-target-aviation-fintech-new-malware",
+      "publishedAt": "2026-09-01T12:33:00.000Z",
+      "excerpt": "In a report published Tuesday, Kaspersky said it first discovered NodeRabbit on a system in Afghanistan and later identified variants on systems in Egypt and Ethiopia.",
+      "canonicalUrl": "https://therecord.media/iranian-cyber-spies-target-aviation-fintech-new-malware",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Hackers Start Exploiting Critical Langflow Vulnerability",
+      "url": "https://www.securityweek.com/hackers-start-exploiting-critical-langflow-vulnerability/",
+      "publishedAt": "2026-09-01T12:07:54.000Z",
+      "excerpt": "Tracked as CVE-2026-0768, the security defect allows unauthenticated attackers to execute arbitrary Python code remotely. The post Hackers Start Exploiting Critical Langflow Vulnerability appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/hackers-start-exploiting-critical-langflow-vulnerability",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-0768",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Langflow code Code Injection Remote Code Execution Vulnerability. This vulnerability allows remote attackers to execute arbitrary code on affected installations of Langflow. Authentication is not required to exploit this vulnerability.\n\nThe specific flaw exists within the handling of the code parameter provided to the validate endpoint. The issue results from the lack of proper validation of a user-supplied string before using it to execute Python code. An attacker can leverage this vulnerability to execute code in the context of root.\n. Was ZDI-CAN-27322.",
+            "cvss": {
+              "version": "3.0",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "zdi-disclosures@trendmicro.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-94"
+            ],
+            "published": "2026-01-23T04:16:03.800",
+            "lastModified": "2026-06-17T10:11:20.937",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://www.zerodayinitiative.com/advisories/ZDI-26-034/",
+                "source": "zdi-disclosures@trendmicro.com",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:langflow:langflow:1.4.2:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "81AAA7F9-843A-456C-89A1-B99D18AD4328",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/hackers-start-exploiting-critical-langflow-vulnerability/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.31",
+              "dateReleased": "2026-08-31T14:55:13.3856Z",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-0768%2CCVE-2026-9621%2CCVE-2026-9622%2CCVE-2026-9624%2CCVE-2026-9625%2CCVE-2025-12768%2CCVE-2026-12661%2CCVE-2021-42260%2CCVE-2026-9637%2CCVE-2026-9633%2CCVE-2026-16675%2CCVE-2026-82329%2CCVE-2026-66066%2CCVE-2026-81578%2CCVE-2026-82078",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-0768",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            }
+          }
+        }
+      ],
+      "id": "s12"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Rockwell Automation RSLinx Classic",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-244-01",
+      "publishedAt": "2026-09-01T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of these vulnerabilities could allow an attacker to cause a denial-of-service condition on the affected product. The following versions of Rockwell Automation RSLinx Classic are affected: RSLinx Classic <=4.50 (CVE-2026-9621, CVE-2026-9622, CVE-2026-9624, CVE-2026-9625) CVSS Vendor Equipment Vulnerabilities v3 8.6 Rockwell Automation Rockwell Automation…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-244-01",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-9621",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "A denial-of-service security issue exists within RSLinx® Classic. The security issue stems from improper handling of a malformed packet. A crafted CIP packet can cause the RSLinx® Classic service to crash, requiring a restart of the service to recover",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.2,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "PSIRT@rockwellautomation.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-190"
+            ],
+            "published": "2026-09-01T14:17:49.377",
+            "lastModified": "2026-09-01T14:17:49.377",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://www.rockwellautomation.com/en-us/trust-center/security-advisories/advisory.SD1794.html",
+                "source": "PSIRT@rockwellautomation.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-244-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.31",
+              "dateReleased": "2026-08-31T14:55:13.3856Z",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-0768%2CCVE-2026-9621%2CCVE-2026-9622%2CCVE-2026-9624%2CCVE-2026-9625%2CCVE-2025-12768%2CCVE-2026-12661%2CCVE-2021-42260%2CCVE-2026-9637%2CCVE-2026-9633%2CCVE-2026-16675%2CCVE-2026-82329%2CCVE-2026-66066%2CCVE-2026-81578%2CCVE-2026-82078",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-9621",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-9622",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "A denial-of-service security issue exists within RSLinx® Classic. A crafted CIP packet targeting the Forward Close service can cause the RSLinx® Classic service to crash, requiring a restart of the service to recover.",
+            "cvss": {
+              "version": "4.0",
+              "score": 8.7,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "PSIRT@rockwellautomation.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-191"
+            ],
+            "published": "2026-09-01T14:17:49.510",
+            "lastModified": "2026-09-01T14:17:49.510",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://www.rockwellautomation.com/en-us/trust-center/security-advisories/advisory.SD1794.html",
+                "source": "PSIRT@rockwellautomation.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-244-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.31",
+              "dateReleased": "2026-08-31T14:55:13.3856Z",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-0768%2CCVE-2026-9621%2CCVE-2026-9622%2CCVE-2026-9624%2CCVE-2026-9625%2CCVE-2025-12768%2CCVE-2026-12661%2CCVE-2021-42260%2CCVE-2026-9637%2CCVE-2026-9633%2CCVE-2026-16675%2CCVE-2026-82329%2CCVE-2026-66066%2CCVE-2026-81578%2CCVE-2026-82078",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-9622",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-9624",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "A denial-of-service security issue exists within RSLinx® Classic. A crafted CIP packet can cause the RSLinx® Classic service to crash due to insufficient data length validation, requiring a  restart of the service to recover.",
+            "cvss": {
+              "version": "4.0",
+              "score": 8.7,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "PSIRT@rockwellautomation.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-191"
+            ],
+            "published": "2026-09-01T14:17:49.633",
+            "lastModified": "2026-09-01T14:17:49.633",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://www.rockwellautomation.com/en-us/trust-center/security-advisories/advisory.SD1794.html",
+                "source": "PSIRT@rockwellautomation.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-244-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.31",
+              "dateReleased": "2026-08-31T14:55:13.3856Z",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-0768%2CCVE-2026-9621%2CCVE-2026-9622%2CCVE-2026-9624%2CCVE-2026-9625%2CCVE-2025-12768%2CCVE-2026-12661%2CCVE-2021-42260%2CCVE-2026-9637%2CCVE-2026-9633%2CCVE-2026-16675%2CCVE-2026-82329%2CCVE-2026-66066%2CCVE-2026-81578%2CCVE-2026-82078",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-9624",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-9625",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "A denial-of-service security issue exists within RSLinx® Classic. A crafted CIP packet with an oversized embedded message request can cause the RSLinx® Classic service to crash, requiring a restart of the service to recover.",
+            "cvss": {
+              "version": "4.0",
+              "score": 8.7,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "PSIRT@rockwellautomation.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-120"
+            ],
+            "published": "2026-09-01T14:17:49.767",
+            "lastModified": "2026-09-01T14:17:49.767",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://www.rockwellautomation.com/en-us/trust-center/security-advisories/advisory.SD1794.html",
+                "source": "PSIRT@rockwellautomation.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-244-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.31",
+              "dateReleased": "2026-08-31T14:55:13.3856Z",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-0768%2CCVE-2026-9621%2CCVE-2026-9622%2CCVE-2026-9624%2CCVE-2026-9625%2CCVE-2025-12768%2CCVE-2026-12661%2CCVE-2021-42260%2CCVE-2026-9637%2CCVE-2026-9633%2CCVE-2026-16675%2CCVE-2026-82329%2CCVE-2026-66066%2CCVE-2026-81578%2CCVE-2026-82078",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-9625",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            }
+          }
+        }
+      ],
+      "id": "s13"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Rockwell Automation Historian ME",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-244-06",
+      "publishedAt": "2026-09-01T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of these vulnerabilities could crash the device being accessed; an out-of-bounds write condition may allow remote code execution. The following versions of Rockwell Automation Historian ME are affected: Series B 5.202 (CVE-2025-12768, CVE-2026-12661) Series C 7.101 (CVE-2025-12768, CVE-2026-12661) CVSS Vendor Equipment Vulnerabilities v3 8 Rockwell…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-244-06",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2025-12768",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "A security issue exists within FactoryTalk® Historian Machine Edition. An attacker with low-level authentication could exploit this vulnerability to achieve remote code execution on the affected device.",
+            "cvss": {
+              "version": "4.0",
+              "score": 8.6,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "PSIRT@rockwellautomation.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-787"
+            ],
+            "published": "2026-09-01T14:17:23.980",
+            "lastModified": "2026-09-01T14:17:23.980",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://www.rockwellautomation.com/en-us/trust-center/security-advisories/advisory.SD1796.html",
+                "source": "PSIRT@rockwellautomation.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-244-06",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.31",
+              "dateReleased": "2026-08-31T14:55:13.3856Z",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-0768%2CCVE-2026-9621%2CCVE-2026-9622%2CCVE-2026-9624%2CCVE-2026-9625%2CCVE-2025-12768%2CCVE-2026-12661%2CCVE-2021-42260%2CCVE-2026-9637%2CCVE-2026-9633%2CCVE-2026-16675%2CCVE-2026-82329%2CCVE-2026-66066%2CCVE-2026-81578%2CCVE-2026-82078",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2025-12768",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-12661",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "A denial-of-service security issue exists within FactoryTalk® Historian Machine Edition.  A network adjacent attacker who is authenticated could send crafted requests to the web interface, resulting in buffer overflow conditions that may cause the device to crash and become unresponsive.",
+            "cvss": {
+              "version": "4.0",
+              "score": 4.8,
+              "severity": "MEDIUM",
+              "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:H/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "PSIRT@rockwellautomation.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-121"
+            ],
+            "published": "2026-09-01T14:17:24.133",
+            "lastModified": "2026-09-01T14:17:24.133",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://www.rockwellautomation.com/en-us/trust-center/security-advisories/advisory.SD1796.html",
+                "source": "PSIRT@rockwellautomation.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-244-06",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.31",
+              "dateReleased": "2026-08-31T14:55:13.3856Z",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-0768%2CCVE-2026-9621%2CCVE-2026-9622%2CCVE-2026-9624%2CCVE-2026-9625%2CCVE-2025-12768%2CCVE-2026-12661%2CCVE-2021-42260%2CCVE-2026-9637%2CCVE-2026-9633%2CCVE-2026-16675%2CCVE-2026-82329%2CCVE-2026-66066%2CCVE-2026-81578%2CCVE-2026-82078",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-12661",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            }
+          }
+        }
+      ],
+      "id": "s14"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Rockwell Automation ControlLogix, CompactLogix, CompactLogix 5480, GuardLogix, Compact GuardLogix",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-244-05",
+      "publishedAt": "2026-09-01T12:00:00.000Z",
+      "excerpt": "View CSAF Summary The following versions of Rockwell Automation ControlLogix, CompactLogix, CompactLogix 5480, GuardLogix, Compact GuardLogix are affected: ControlLogix 5580 <34.015, <35.014, <36.013, <37.011 (CVE-2021-42260, CVE-2021-42260, CVE-2021-42260, CVE-2021-42260) GuardLogix 5580 <34.015, <35.014, <36.013, <37.011 (CVE-2021-42260, CVE-2021-42260, CVE-2021-42260, CVE-2021-42260)…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-244-05",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2021-42260",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "TinyXML through 2.6.2 has an infinite loop in TiXmlParsingData::Stamp in tinyxmlparser.cpp via the TIXML_UTF_LEAD_0 case. It can be triggered by a crafted XML message and leads to a denial of service.",
+            "cvss": {
+              "version": "3.1",
+              "score": 7.5,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "source": "nvd@nist.gov",
+              "type": "Primary"
+            },
+            "cwes": [
+              "CWE-835"
+            ],
+            "published": "2021-10-11T20:15:07.433",
+            "lastModified": "2026-06-17T04:09:31.687",
+            "vulnStatus": "Modified",
+            "references": [
+              {
+                "url": "https://lists.debian.org/debian-lts-announce/2022/04/msg00019.html",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://lists.debian.org/debian-lts-announce/2022/09/msg00041.html",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/4QCR5PIOBGDIDS6SYRESTMDJSEDFSCOE/",
+                "source": "cve@mitre.org",
+                "tags": []
+              },
+              {
+                "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/HOMBSHRIW5Q34SQSXYURYAOYDZD2NQF6/",
+                "source": "cve@mitre.org",
+                "tags": []
+              },
+              {
+                "url": "https://sourceforge.net/p/tinyxml/bugs/141/",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Exploit",
+                  "Issue Tracking",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://lists.debian.org/debian-lts-announce/2022/04/msg00019.html",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://lists.debian.org/debian-lts-announce/2022/09/msg00041.html",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/4QCR5PIOBGDIDS6SYRESTMDJSEDFSCOE/",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": []
+              },
+              {
+                "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/HOMBSHRIW5Q34SQSXYURYAOYDZD2NQF6/",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": []
+              },
+              {
+                "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/4QCR5PIOBGDIDS6SYRESTMDJSEDFSCOE/",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": []
+              },
+              {
+                "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/HOMBSHRIW5Q34SQSXYURYAOYDZD2NQF6/",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": []
+              },
+              {
+                "url": "https://sourceforge.net/p/tinyxml/bugs/141/",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Exploit",
+                  "Issue Tracking",
+                  "Third Party Advisory"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:tinyxml_project:tinyxml:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9CE02F0C-889F-497F-A9F2-9F3129145ED5",
+                "versionStartIncluding": "2.3.2",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "2.6.2",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:tinyxml_project:tinyxml:2.3.0:beta:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A870DC76-AAB7-4571-A6EE-294FC0E4B919",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:tinyxml_project:tinyxml:2.3.1:beta:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "DAE75FD3-7682-40A3-92EF-BE6EBF157691",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:debian:debian_linux:9.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "DEECE5FC-CACF-4496-A3E7-164736409252",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "07B237A9-69A3-4A9C-9DA0-4E06BD37AE73",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-244-05",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.31",
+              "dateReleased": "2026-08-31T14:55:13.3856Z",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-0768%2CCVE-2026-9621%2CCVE-2026-9622%2CCVE-2026-9624%2CCVE-2026-9625%2CCVE-2025-12768%2CCVE-2026-12661%2CCVE-2021-42260%2CCVE-2026-9637%2CCVE-2026-9633%2CCVE-2026-16675%2CCVE-2026-82329%2CCVE-2026-66066%2CCVE-2026-81578%2CCVE-2026-82078",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2021-42260",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            }
+          }
+        }
+      ],
+      "id": "s15"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Rockwell Automation Logix Platform",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-244-03",
+      "publishedAt": "2026-09-01T12:00:00.000Z",
+      "excerpt": "View CSAF Summary The following versions of Rockwell Automation Logix Platform are affected: ControlLogix 5580 <=V33, V34.011-V34.014, V35.011-V35.013, V36.011-V36.012 (CVE-2026-9637, CVE-2026-9637, CVE-2026-9637, CVE-2026-9637) CompactLogix 5380 <=V33, V34.011-V34.014, V35.011-V35.013, V36.011-V36.012 (CVE-2026-9637, CVE-2026-9637, CVE-2026-9637, CVE-2026-9637) GuardLogix 5580 <=V33,…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-244-03",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-9637",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "A denial-of-service security issue exists in the affected Logix platforms listed in the table above. The security issue stems from improper validation of input length during CIP message processing. This can result in a major nonrecoverable fault (MNRF), requiring a power cycle to recover",
+            "cvss": {
+              "version": "4.0",
+              "score": 8.7,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "PSIRT@rockwellautomation.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-119"
+            ],
+            "published": "2026-09-01T14:17:50.157",
+            "lastModified": "2026-09-01T14:17:50.157",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://www.rockwellautomation.com/en-us/trust-center/security-advisories/advisory.SD1792.html",
+                "source": "PSIRT@rockwellautomation.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-244-03",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.31",
+              "dateReleased": "2026-08-31T14:55:13.3856Z",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-0768%2CCVE-2026-9621%2CCVE-2026-9622%2CCVE-2026-9624%2CCVE-2026-9625%2CCVE-2025-12768%2CCVE-2026-12661%2CCVE-2021-42260%2CCVE-2026-9637%2CCVE-2026-9633%2CCVE-2026-16675%2CCVE-2026-82329%2CCVE-2026-66066%2CCVE-2026-81578%2CCVE-2026-82078",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-9637",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            }
+          }
+        }
+      ],
+      "id": "s16"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Rockwell Automation Redundancy Module Configuration Tool",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-244-02",
+      "publishedAt": "2026-09-01T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of these vulnerabilities could allow for an attacker to escalate and execute processes with administrator privileges. The following versions of Rockwell Automation Redundancy Module Configuration Tool are affected: Redundancy Module Configuration Tool 10.00.00 (CVE-2026-9633) Redundancy Module Configuration Tool >=9.00.00| =9.00.00|<=10.00.00 Product…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-244-02",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-9633",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "A security issue exists within the Redundancy Module Configuration Tool. The RM3ConfigTool.exe binary searches directories in the system path for a required DLL, and one or more of these directories may be writable by standard (non-administrator) users due to incorrect default permissions. If a local attacker places a malicious DLL in such a directory and an administrator subsequently runs the tool, the malicious DLL is loaded into the elevated process and executes with Administrator/SYSTEM privileges.",
+            "cvss": {
+              "version": "4.0",
+              "score": 7,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "PSIRT@rockwellautomation.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-276"
+            ],
+            "published": "2026-09-01T14:17:49.893",
+            "lastModified": "2026-09-01T14:17:49.893",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://www.rockwellautomation.com/en-us/trust-center/security-advisories/advisory.SD1800.html",
+                "source": "PSIRT@rockwellautomation.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-244-02",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.31",
+              "dateReleased": "2026-08-31T14:55:13.3856Z",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-0768%2CCVE-2026-9621%2CCVE-2026-9622%2CCVE-2026-9624%2CCVE-2026-9625%2CCVE-2025-12768%2CCVE-2026-12661%2CCVE-2021-42260%2CCVE-2026-9637%2CCVE-2026-9633%2CCVE-2026-16675%2CCVE-2026-82329%2CCVE-2026-66066%2CCVE-2026-81578%2CCVE-2026-82078",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-9633",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            }
+          }
+        }
+      ],
+      "id": "s17"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Rockwell Automation FactoryTalk Activation Manager",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-244-04",
+      "publishedAt": "2026-09-01T12:00:00.000Z",
+      "excerpt": "View CSAF Summary The following versions of Rockwell Automation FactoryTalk Activation Manager are affected: FactoryTalk Activation Manager V5.02_and_below (CVE-2026-16675) CVSS Vendor Equipment Vulnerabilities v3 7.8 Rockwell Automation Rockwell Automation FactoryTalk Activation Manager Improper Restriction of Excessive Authentication Attempts Background Critical Infrastructure Sectors: Critical…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-244-04",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-16675",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "A privilege escalation security issue exists within FactoryTalk® Activation Manager. The security issue stems from custom actions in the installer that spawn visible console windows running with SYSTEM privileges during installation or repair operations. An authenticated attacker with Windows credentials could hijack these console windows to obtain a SYSTEM-level command prompt, allowing full access to all files, processes, and system resources.",
+            "cvss": {
+              "version": "4.0",
+              "score": 8.5,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "PSIRT@rockwellautomation.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-307"
+            ],
+            "published": "2026-09-01T14:17:25.437",
+            "lastModified": "2026-09-01T14:17:25.437",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://www.rockwellautomation.com/en-us/trust-center/security-advisories/advisory.SD1799.html",
+                "source": "PSIRT@rockwellautomation.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-244-04",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.08.31",
+              "dateReleased": "2026-08-31T14:55:13.3856Z",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-0768%2CCVE-2026-9621%2CCVE-2026-9622%2CCVE-2026-9624%2CCVE-2026-9625%2CCVE-2025-12768%2CCVE-2026-12661%2CCVE-2021-42260%2CCVE-2026-9637%2CCVE-2026-9633%2CCVE-2026-16675%2CCVE-2026-82329%2CCVE-2026-66066%2CCVE-2026-81578%2CCVE-2026-82078",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-16675",
+              "retrievedAt": "2026-09-01T15:57:25.491Z"
+            }
+          }
+        }
+      ],
+      "id": "s18"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Threat Actors Don’t Want Better Attacks. They Want Repeatable Ones",
+      "url": "https://thehackernews.com/2026/09/threat-actors-dont-want-better-attacks.html",
+      "publishedAt": "2026-09-01T11:30:00.000Z",
+      "excerpt": "The most common way into a company last year was to ask. A web page tells the visitor to prove they are not a robot. While they read the instructions, it quietly places a command on their clipboard. Then it talks them through opening a terminal and pasting it in. The technique is called ClickFix, and it was the most common initial access method Microsoft’s team observed last year, accounting",
+      "canonicalUrl": "https://thehackernews.com/2026/09/threat-actors-dont-want-better-attacks.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s19"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Ransomware Gang Claims Nutex Health Data Breach",
+      "url": "https://www.securityweek.com/ransomware-gang-claims-nutex-health-data-breach/",
+      "publishedAt": "2026-09-01T10:47:47.000Z",
+      "excerpt": "The company has notified the SEC that hackers accessed patient, employee, provider, business, and financial information. The post Ransomware Gang Claims Nutex Health Data Breach appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/ransomware-gang-claims-nutex-health-data-breach",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Five Venezuelans plead guilty to ATM jackpotting attacks in US",
+      "url": "https://www.bleepingcomputer.com/news/security/five-venezuelans-plead-guilty-to-atm-jackpotting-attacks-in-us/",
+      "publishedAt": "2026-09-01T09:15:07.000Z",
+      "excerpt": "Five Venezuelan nationals pleaded guilty to attempting to empty automated teller machines (ATMs) using malware in a series of ATM jackpotting attacks. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/five-venezuelans-plead-guilty-to-atm-jackpotting-attacks-in-us",
+      "alsoCoveredBy": [
+        {
+          "sourceId": "securityweek",
+          "name": "SecurityWeek",
+          "url": "https://www.securityweek.com/five-venezuelans-plead-guilty-in-us-court-to-atm-jackpotting/"
+        }
+      ],
+      "cves": [],
+      "id": "s22"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Attackers Steal METR API Key and Consume AI Credits Worth About $600,000",
+      "url": "https://thehackernews.com/2026/09/attackers-steal-metr-api-key-and.html",
+      "publishedAt": "2026-09-01T09:05:30.000Z",
+      "excerpt": "METR (short for Model Evaluation and Threat Research and pronounced \"Meter\"), a research non-profit that evaluates frontier artificial intelligence (AI) models for their ability to carry out long-horizon, agentic tasks, disclosed that it suffered \"two notable security incidents\" where external actors attempted to gain unauthorized access to its systems. No sensitive information is believed to",
+      "canonicalUrl": "https://thehackernews.com/2026/09/attackers-steal-metr-api-key-and.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s24"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Russia-Aligned UAC-0099 Plants Nuclear Weapon Prompt in Malware to Disrupt AI Analysis",
+      "url": "https://thehackernews.com/2026/09/russia-aligned-uac-0099-plants-nuclear.html",
+      "publishedAt": "2026-09-01T08:26:24.000Z",
+      "excerpt": "Cybersecurity researchers have disclosed a new technique dubbed GuardBreaker that's been put to use by a Russia-aligned threat actor known as UAC-0099 against a target in Ukraine with an aim to interfere with artificial intelligence (AI)-assisted analysis. The idea, ESET said in a series of posts on X, is to deliberately trip a large language model's (LLM) safety mechanisms and prevent its",
+      "canonicalUrl": "https://thehackernews.com/2026/09/russia-aligned-uac-0099-plants-nuclear.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Recently patched PaperCut zero-days used in data theft attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/recently-patched-papercut-zero-days-used-in-data-theft-attacks/",
+      "publishedAt": "2026-09-01T07:48:24.000Z",
+      "excerpt": "Two security vulnerabilities in the PaperCut NG and MF print management software, patched last week after being exploited as zero-days, are now being abused in data theft attacks. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/recently-patched-papercut-zero-days-used-in-data-theft-attacks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "securelist",
+      "sourceKind": "rss",
+      "title": "Mirage Kitten targeting aviation and FinTech sectors across the Middle East and Africa with a new malware set",
+      "url": "https://securelist.com/mirage-kitten-new-backdoors-noderabbit-pollcat/121244/",
+      "publishedAt": "2026-09-01T07:00:26.000Z",
+      "excerpt": "Kaspersky researchers have discovered new Mirage Kitten attacks using previously undocumented malware families: NodeRabbit in Node.js and PollCat in JavaScript.",
+      "canonicalUrl": "https://securelist.com/mirage-kitten-new-backdoors-noderabbit-pollcat/121244",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s29"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Anthropic Users Hit by Infostealer Attacks, Session Thefts",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/anthropic-users-infostealer-attacks-session-thefts",
+      "publishedAt": "2026-08-31T21:08:46.000Z",
+      "excerpt": "A threat actor used a variety of infostealers to collect session information and access Claude accounts belonging to an unknown number of users.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/anthropic-users-infostealer-attacks-session-thefts",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s31"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Cronos blockchain restarts after $74 million Tectonic exploit",
+      "url": "https://www.bleepingcomputer.com/news/security/cronos-blockchain-restarts-after-74-million-tectonic-exploit/",
+      "publishedAt": "2026-08-31T20:47:54.000Z",
+      "excerpt": "The Cronos blockchain network has resumed trading activity after a price-manipulation attack on the Tectonic cryptocurrency lending platform allowed an attacker to borrow $74 million. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/cronos-blockchain-restarts-after-74-million-tectonic-exploit",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s32"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Five plead guilty in latest federal ATM jackpotting case",
+      "url": "https://therecord.media/kansas-atm-jackpotting-guilty-pleas",
+      "publishedAt": "2026-08-31T20:31:00.000Z",
+      "excerpt": "Federal law enforcement continued to warn about ATM jackpotting gangs as it announced guilty pleas from five Venezuelan nationals.",
+      "canonicalUrl": "https://therecord.media/kansas-atm-jackpotting-guilty-pleas",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s33"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "'TerminalFix' Campaign Weaponizes PowerShell for Enterprise Attacks",
+      "url": "https://www.darkreading.com/threat-intelligence/terminalfix-campaign-weaponizes-powershell-enterprise-attacks",
+      "publishedAt": "2026-08-31T20:25:36.000Z",
+      "excerpt": "The ClickFix-style campaign features a sophisticated, multistage attack chain that includes reverse tunnels into victim organizations' networks.",
+      "canonicalUrl": "https://darkreading.com/threat-intelligence/terminalfix-campaign-weaponizes-powershell-enterprise-attacks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s34"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "The Guardrails Debate: Security Researcher Changes His Mind",
+      "url": "https://www.darkreading.com/cyber-risk/the-guardrails-debate-security-researcher-changes-his-mind",
+      "publishedAt": "2026-08-31T20:09:24.000Z",
+      "excerpt": "While guardrails are critical, as evidenced by recent high-profile incidents, defenders need help staying ahead of attackers who do not play by the rules.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/the-guardrails-debate-security-researcher-changes-his-mind",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s35"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Fraudsters steal $6 million from Tectonic crypto platform after inflating token price",
+      "url": "https://therecord.media/crypto-tectonic-hack-cronos",
+      "publishedAt": "2026-08-31T19:45:00.000Z",
+      "excerpt": "At least $6 million was stolen from crypto platform Tectonic after an attacker manipulated the price of the Tonic coin over the weekend.",
+      "canonicalUrl": "https://therecord.media/crypto-tectonic-hack-cronos",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s36"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 5248,
+    "promptCacheMissTokens": 11628,
+    "outputTokens": 18646,
+    "estimatedCostUsd": 0.0068634944
+  }
+}
