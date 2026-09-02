@@ -1,0 +1,1618 @@
+{
+  "date": "2026-09-02",
+  "generatedAt": "2026-09-02T15:50:19.379Z",
+  "degraded": [
+    {
+      "stage": "normalize",
+      "message": "2 items were dropped as unparseable"
+    }
+  ],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 228,
+    "deduped": 223,
+    "published": 47
+  },
+  "mode": "article",
+  "headline": "VPNs, app platforms, and PBXes are all under active attack",
+  "standfirst": "Today’s briefing is dominated by active exploitation in widely deployed infrastructure: a zero-day chain on SonicWall SMA1000 VPN appliances, token-forging attacks against JFrog Artifactory, secret theft through Langflow, and credential-free reverse shells on Sangoma Switchvox. Meanwhile, a hypervisor supply-chain compromise shows that a trusted update can still be the attack, and a two-decade-old botnet was forced to turn on itself.",
+  "bodyMarkdown": "## Actively exploited\n\nSonicWall has warned [[s32]] that two SMA1000 zero-days are already being chained in attacks. CVE-2026-83548 is a pre-authentication issue in the Work Place interface, a flaw that gives an unauthenticated remote attacker an unintended alternate path to sensitive functionality and carries a critical CVSS score. The second, CVE-2026-83549, is an OS command injection in the appliance Management Console. Chained together, they give an unauthenticated attacker a route to arbitrary command execution on a VPN edge device. That is the kind of foothold attackers historically use to move into the rest of the network, and the fact that exploitation is already happening makes this more urgent than a typical advisory. Neither CVE appears in CISA’s known exploited vulnerabilities catalog, but in this case the exploit reports themselves are the signal.\n\nJFrog Artifactory is next on the priority list [[s1]]. CVE-2026-82329 is an authentication bypass that, under default configuration, lets an unauthenticated attacker with network access obtain administrative privileges. The public description maps directly to what attackers are doing: forging tokens that grant admin access. The vulnerability was disclosed only days before the first exploitation reports, and the CVSS score of 9.8 reflects how little an attacker needs to do. Organizations running Artifactory should treat unexpected admin token creation as a possible indicator of compromise, and should assume that any instance with prior exposure may already be in someone else’s hands.\n\nThe active exploitation theme also reaches AI infrastructure. Langflow [[s45]] is being hit through CVE-2026-0768, an unauthenticated code injection flaw in the validate endpoint that allows remote code execution in the context of root. The observed attacks are not reconnaissance; they are stealing OpenAI and AWS keys. For any team using Langflow with connected cloud credentials, this is a direct financial risk as well as a data risk. A root-level compromise of an AI workflow engine means the secrets it can reach should be considered burned.\n\nVoIP systems are a less glamorous but equally exposed target [[s29]]. Sangoma Switchvox SMB Edition is under active attack via CVE-2026-9586, a critical unauthenticated SQL injection in the /pa endpoint. The flaw lets an attacker send a single crafted request to the backend PostgreSQL database and move from SQL injection to remote code execution, with no valid credentials required. Attackers are using it to drop reverse shells on internet-exposed systems. Switchvox deployments should be treated as high-value targets; the product handles internal communications, and a compromised PBX can become a silent eavesdropping point or a launching pad for further intrusion.\n\n## Breaches\n\nSupply-chain trust took another hit this week [[s7]]. A BGP hijack redirected update traffic for Softaculous, allowing attackers to deliver a malicious Virtualizor package to some installations. The update was accompanied by a valid TLS certificate, which means signature and certificate checks alone would not have saved a victim. The result was persistent root-level compromise of hypervisors, with one hosting provider reporting that five of the thirty-four hypervisors it checked had been rooted. When the hypervisor is compromised, every workload on it is suspect. This incident is a reminder that update integrity depends on the path as much as the certificate, and that routing-layer attacks can undermine software distribution channels even when the cryptography is sound.\n\nThe breach at the Philippines’ nuclear agency [[s33]] is less exotic but just as instructive. Attackers gained initial access by exploiting old, unpatched ownCloud vulnerabilities, then stole reactor databases, personnel records, and credential stores. No sophisticated zero-day was required; commodity flaws were enough. The damage was done because the target failed to patch known issues in an internet-facing component. For defenders, this is a case study in why vulnerability management is still the foundation of security, no matter how much attention the newest edge cases get.\n\n## Industry\n\nLaw enforcement may have written a new playbook for dismantling P2P botnets [[s30]]. The Sality botnet, which survived for more than two decades, was effectively neutralized when authorities from the United States, Bulgaria, Hungary, and Romania, working with CrowdStrike and the Shadowserver Foundation, turned its own peer-to-peer network against it. Instead of merely taking down command infrastructure, the operation cut off the botnet’s ability to distribute new payloads. That is a meaningful operational result: existing infections may remain, but the ability to refresh them with new malware has been disrupted. For defenders, it also shows the value of private-public cooperation in attacking the structural properties of criminal infrastructure.\n\n## Vulnerabilities\n\nFinally, researchers at Manifold Security have disclosed a class of flaws affecting multiple command-line AI coding agents, including Claude, Codex, and Cursor [[s4]]. Eight issues across seven tools let a malicious repository’s own Git configuration name a command that the agent executes on the developer’s machine. The command runs as the user and outside the agent’s sandbox, without an approval prompt. Four of the tools were still unpatched at publication. The exploitation requirement is minimal: a developer merely has to clone and work with an attacker-controlled repository, which is normal activity. This is a reminder that AI coding agents inherit the trust developers place in the repositories they open, and that sandboxing alone will not protect against repository-supplied configuration.",
+  "selected": [
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "SonicWall Warns of Two SMA1000 Zero-Days Exploited in Attacks",
+      "url": "https://www.securityweek.com/sonicwall-warns-of-two-sma1000-zero-days-exploited-in-attacks/",
+      "publishedAt": "2026-09-02T05:04:52.000Z",
+      "excerpt": "The vulnerabilities CVE-2026-83549 and CVE-2026-83548 can be chained for unauthenticated remote code execution. The post SonicWall Warns of Two SMA1000 Zero-Days Exploited in Attacks appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/sonicwall-warns-of-two-sma1000-zero-days-exploited-in-attacks",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-83548",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "A Pre-authentication SSRF vulnerability exists in the SMA1000 Appliance Work Place interface due to an unintended alternate access path. A remote unauthenticated attacker could potentially exploit this vulnerability to gain unauthorized access to sensitive functionality and perform unauthorized operations.",
+            "cvss": {
+              "version": "3.1",
+              "score": 10,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-441",
+              "CWE-918"
+            ],
+            "published": "2026-09-01T22:17:13.170",
+            "lastModified": "2026-09-02T14:17:16.017",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://psirt.global.sonicwall.com/vuln-detail/SNWLID-2026-0016",
+                "source": "PSIRT@sonicwall.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/sonicwall-warns-of-two-sma1000-zero-days-exploited-in-attacks/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.01",
+              "dateReleased": "2026-09-01T19:22:46.2162Z",
+              "retrievedAt": "2026-09-02T15:50:19.379Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-82329%2CCVE-2026-83548%2CCVE-2021-31886%2CCVE-2026-9586%2CCVE-2026-83549%2CCVE-2026-0768",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-83548",
+              "retrievedAt": "2026-09-02T15:50:19.379Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-83549",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Post-authentication Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') vulnerability has been identified in the SMA1000 Appliance Management Console (AMC) which in specific conditions could potentially enable a remote authenticated attacker as administrator to execute arbitrary OS commands, resulting in remote code execution.",
+            "cvss": {
+              "version": "3.1",
+              "score": 7.8,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-78"
+            ],
+            "published": "2026-09-01T22:17:13.290",
+            "lastModified": "2026-09-02T04:18:02.960",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://psirt.global.sonicwall.com/vuln-detail/SNWLID-2026-0016",
+                "source": "PSIRT@sonicwall.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/sonicwall-warns-of-two-sma1000-zero-days-exploited-in-attacks/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.01",
+              "dateReleased": "2026-09-01T19:22:46.2162Z",
+              "retrievedAt": "2026-09-02T15:50:19.379Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-82329%2CCVE-2026-83548%2CCVE-2021-31886%2CCVE-2026-9586%2CCVE-2026-83549%2CCVE-2026-0768",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-83549",
+              "retrievedAt": "2026-09-02T15:50:19.379Z"
+            }
+          }
+        }
+      ],
+      "id": "s32",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "Two SMA 1000 zero-days are being chained in attacks, giving unauthenticated attackers a path to remote code execution on VPN appliances."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers exploit critical JFrog Artifactory flaw to forge admin tokens",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-critical-jfrog-artifactory-flaw-to-forge-admin-tokens/",
+      "publishedAt": "2026-09-02T15:47:08.000Z",
+      "excerpt": "A critical authentication bypass vulnerability (CVE-2026-82329) in JFrog Artifactory is being exploited in attacks to create tokens that provide administrative access. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-exploit-critical-jfrog-artifactory-flaw-to-forge-admin-tokens",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-82329",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "JFrog Artifactory contains an authentication weakness that, under default configuration, may allow an unauthenticated attacker with network access to obtain administrative privileges.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "reefs@jfrog.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-287"
+            ],
+            "published": "2026-08-28T20:20:21.293",
+            "lastModified": "2026-08-31T19:17:18.813",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://docs.jfrog.com/releases/docs/artifactory-self-managed-releases",
+                "source": "reefs@jfrog.com",
+                "tags": []
+              },
+              {
+                "url": "https://docs.jfrog.com/releases/docs/jfrog-security-advisories",
+                "source": "reefs@jfrog.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "bleepingcomputer",
+                "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-critical-jfrog-artifactory-flaw-to-forge-admin-tokens/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.01",
+              "dateReleased": "2026-09-01T19:22:46.2162Z",
+              "retrievedAt": "2026-09-02T15:50:19.379Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-82329%2CCVE-2026-83548%2CCVE-2021-31886%2CCVE-2026-9586%2CCVE-2026-83549%2CCVE-2026-0768",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-82329",
+              "retrievedAt": "2026-09-02T15:50:19.379Z"
+            }
+          }
+        }
+      ],
+      "id": "s1",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "JFrog Artifactory's authentication bypass is being actively exploited to mint admin tokens just days after disclosure."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "BGP Hijack Delivers Malicious Virtualizor Update That Establishes Persistent Root Access",
+      "url": "https://thehackernews.com/2026/09/bgp-hijack-delivers-malicious.html",
+      "publishedAt": "2026-09-02T13:12:45.000Z",
+      "excerpt": "Virtualizor said hackers used a Border Gateway Protocol (BGP) hijack to divert Softaculous traffic. The hackers then used the diverted update traffic to deliver a malicious Virtualizor package to some installations. A hosting-provider account separately said 5 of its 34 checked Virtualizor hypervisors sustained root-level compromise. The incident window ran from approximately August 28 at 20:57",
+      "canonicalUrl": "https://thehackernews.com/2026/09/bgp-hijack-delivers-malicious.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s7",
+      "section": "breaches",
+      "rank": 3,
+      "angle": "A BGP hijack with a valid TLS certificate delivered a malicious Virtualizor update, leaving hypervisors root-compromised."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Critical Langflow flaw exploited to steal OpenAI and AWS keys",
+      "url": "https://www.bleepingcomputer.com/news/security/critical-langflow-flaw-exploited-to-steal-openai-and-aws-keys/",
+      "publishedAt": "2026-09-01T17:54:22.000Z",
+      "excerpt": "Threat actors are exploiting an unauthenticated remote code execution vulnerability (CVE-2026-0768) in Langflow, an open-source framework for building AI applications, to steal credentials, tokens, and keys. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/critical-langflow-flaw-exploited-to-steal-openai-and-aws-keys",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-0768",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Langflow code Code Injection Remote Code Execution Vulnerability. This vulnerability allows remote attackers to execute arbitrary code on affected installations of Langflow. Authentication is not required to exploit this vulnerability.\n\nThe specific flaw exists within the handling of the code parameter provided to the validate endpoint. The issue results from the lack of proper validation of a user-supplied string before using it to execute Python code. An attacker can leverage this vulnerability to execute code in the context of root.\n. Was ZDI-CAN-27322.",
+            "cvss": {
+              "version": "3.0",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "zdi-disclosures@trendmicro.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-94"
+            ],
+            "published": "2026-01-23T04:16:03.800",
+            "lastModified": "2026-06-17T10:11:20.937",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://www.zerodayinitiative.com/advisories/ZDI-26-034/",
+                "source": "zdi-disclosures@trendmicro.com",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:langflow:langflow:1.4.2:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "81AAA7F9-843A-456C-89A1-B99D18AD4328",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "bleepingcomputer",
+                "url": "https://www.bleepingcomputer.com/news/security/critical-langflow-flaw-exploited-to-steal-openai-and-aws-keys/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.01",
+              "dateReleased": "2026-09-01T19:22:46.2162Z",
+              "retrievedAt": "2026-09-02T15:50:19.379Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-82329%2CCVE-2026-83548%2CCVE-2021-31886%2CCVE-2026-9586%2CCVE-2026-83549%2CCVE-2026-0768",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-0768",
+              "retrievedAt": "2026-09-02T15:50:19.379Z"
+            }
+          }
+        }
+      ],
+      "id": "s45",
+      "section": "exploited",
+      "rank": 4,
+      "angle": "Langflow's unauthenticated RCE is being exploited to steal OpenAI and AWS keys, putting AI workflows at direct financial risk."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Attackers Exploit Critical Switchvox Flaw to Deploy Reverse Shells Without Credentials",
+      "url": "https://thehackernews.com/2026/09/attackers-exploit-critical-switchvox.html",
+      "publishedAt": "2026-09-02T07:08:50.000Z",
+      "excerpt": "Threat actors are exploiting a severe security vulnerability in Sangoma Switchvox, an enterprise VoIP platform, that could allow unauthenticated remote code execution. The vulnerability in question is CVE-2026-9586 (CVSS score: 9.3), a critical unauthenticated SQL injection vulnerability in Sangoma Switchvox SMB Edition 8.3 (104997) that can allow attackers to remotely execute arbitrary code as",
+      "canonicalUrl": "https://thehackernews.com/2026/09/attackers-exploit-critical-switchvox.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-9586",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "An unauthenticated SQL injection vulnerability exists in Sangoma Switchvox SMB Edition 8.3 (104997). The /pa endpoint processes XML content beginning with <PolycomIPPhone> and directly concatenates the user-controlled PhoneIP value into PostgreSQL queries without sanitization or parameterization. An unauthenticated remote attacker can execute arbitrary SQL statements against the backend PostgreSQL database using a single crafted request, including database operations and remote code execution.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.3,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "57dba5dd-1a03-47f6-8b36-e84e47d335d8",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-89"
+            ],
+            "published": "2026-07-17T17:17:18.150",
+            "lastModified": "2026-09-02T04:18:05.967",
+            "vulnStatus": "Deferred",
+            "references": [
+              {
+                "url": "https://labs.sra.io/posts/switchvox/",
+                "source": "57dba5dd-1a03-47f6-8b36-e84e47d335d8",
+                "tags": []
+              },
+              {
+                "url": "https://sangomakb.atlassian.net/wiki/spaces/Switchvox/pages/1802371073/Switchvox+-+Release+Notes+Version+8.4.0.2+July+14+2026",
+                "source": "57dba5dd-1a03-47f6-8b36-e84e47d335d8",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/attackers-exploit-critical-switchvox.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.01",
+              "dateReleased": "2026-09-01T19:22:46.2162Z",
+              "retrievedAt": "2026-09-02T15:50:19.379Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-82329%2CCVE-2026-83548%2CCVE-2021-31886%2CCVE-2026-9586%2CCVE-2026-83549%2CCVE-2026-0768",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-9586",
+              "retrievedAt": "2026-09-02T15:50:19.379Z"
+            }
+          }
+        }
+      ],
+      "id": "s29",
+      "section": "exploited",
+      "rank": 5,
+      "angle": "Sangoma Switchvox's critical SQL injection is under active attack to drop reverse shells without valid credentials."
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Old, Unpatched Flaws Give Attackers Access to Philippines Nuclear Agency",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/old-unpatched-flaws-attackers-philippines-nuclear-agency",
+      "publishedAt": "2026-09-02T01:00:00.000Z",
+      "excerpt": "Threat actors exploited commodity vulnerabilities in ownCloud to gain initial access, resulting in stolen reactor databases, personnel records, and credential stores.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/old-unpatched-flaws-attackers-philippines-nuclear-agency",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s33",
+      "section": "breaches",
+      "rank": 6,
+      "angle": "Unpatched ownCloud flaws led to theft of reactor databases and personnel records from the Philippines' nuclear agency."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Authorities Turn Sality's P2P Network Against Itself, Cutting Off New Malware Payloads",
+      "url": "https://thehackernews.com/2026/09/authorities-turn-salitys-p2p-network.html",
+      "publishedAt": "2026-09-02T06:56:30.000Z",
+      "excerpt": "The U.S. Department of Justice (DoJ) on Tuesday announced the takedown of a long-standing peer-to-peer (P2P) botnet known as Sality as part of a coordinated law enforcement operation. The effort was undertaken on August 31, 2026, by authorities from the U.S., Bulgaria, Hungary, and Romania, in collaboration with private industry partners CrowdStrike and the Shadowserver Foundation. To that",
+      "canonicalUrl": "https://thehackernews.com/2026/09/authorities-turn-salitys-p2p-network.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s30",
+      "section": "industry",
+      "rank": 7,
+      "angle": "Authorities dismantled the Sality botnet after 23 years by turning its P2P network against itself."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Malicious .git Configs Can Make Claude, Codex, Cursor, and Other AI Agents Run Attacker Code",
+      "url": "https://thehackernews.com/2026/09/malicious-git-configs-can-make-claude.html",
+      "publishedAt": "2026-09-02T14:06:59.000Z",
+      "excerpt": "Manifold Security has disclosed eight security flaws across seven command-line AI coding agents in which a repository's own Git configuration names a command that the agent runs on the developer's machine, four of them still unpatched at publication. The command executes as the user, outside the agent's sandbox and without an approval prompt, and exploitation requires the repository to arrive",
+      "canonicalUrl": "https://thehackernews.com/2026/09/malicious-git-configs-can-make-claude.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s4",
+      "section": "vulnerabilities",
+      "rank": 8,
+      "angle": "Malicious Git configurations can make AI coding agents run attacker code outside their sandboxes, and several tools remain unpatched."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "UK Moves to Block High-Risk Tech Suppliers From Critical Infrastructure",
+      "url": "https://www.securityweek.com/uk-moves-to-block-high-risk-tech-suppliers-from-critical-infrastructure/",
+      "publishedAt": "2026-09-02T15:45:08.000Z",
+      "excerpt": "Late amendments to the Cyber Security and Resilience Bill would give ministers new powers to restrict risky technology providers as supply chain attacks intensify. The post UK Moves to Block High-Risk Tech Suppliers From Critical Infrastructure appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/uk-moves-to-block-high-risk-tech-suppliers-from-critical-infrastructure",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "New pro-Ukraine hacker group targets Russian companies with custom ransomware",
+      "url": "https://therecord.media/new-pro-ukraine-hacker-group-custom-ransomware-russia",
+      "publishedAt": "2026-09-02T15:07:00.000Z",
+      "excerpt": "The group, which calls itself VantaCore, has targeted at least seven known victims, Russian cybersecurity firm F6 said in a report published this week.",
+      "canonicalUrl": "https://therecord.media/new-pro-ukraine-hacker-group-custom-ransomware-russia",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Ransomware protection for MSPs: A 6-point checklist for faster recovery",
+      "url": "https://www.bleepingcomputer.com/news/security/ransomware-protection-for-msps-a-6-point-checklist-for-faster-recovery/",
+      "publishedAt": "2026-09-02T14:02:12.000Z",
+      "excerpt": "Ransomware resilience requires more than backups or endpoint detection alone. Acronis outlines six capabilities MSPs should test across client environments, from reducing exposure and detecting attacks to preserving recovery points and restoring operations quickly. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/ransomware-protection-for-msps-a-6-point-checklist-for-faster-recovery",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Malicious Apache Modules Hijack Brazilian Government Site Traffic to Push Betting Pages",
+      "url": "https://thehackernews.com/2026/09/malicious-apache-modules-hijack.html",
+      "publishedAt": "2026-09-02T13:44:16.000Z",
+      "excerpt": "A Chinese-speaking cybercrime cluster known as Gambling Goblin has been observed installing malicious Apache modules on compromised web servers run by Brazilian government and educational institutions, and using them to divert visitors to attacker-controlled pages promoting online gambling and sports betting. Check Point Research said it has tracked the campaign since mid-2025. The modules",
+      "canonicalUrl": "https://thehackernews.com/2026/09/malicious-apache-modules-hijack.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Hackers expose donor data from Russian fundraisers for Ukrainians, political prisoners",
+      "url": "https://therecord.media/hackers-russia-fundraisers-ukraine",
+      "publishedAt": "2026-09-02T13:00:00.000Z",
+      "excerpt": "Hackers reportedly gained access to payment accounts used by two Russian fundraising projects supporting Ukrainians and political prisoners, exposing donor email addresses and limited payment card information.",
+      "canonicalUrl": "https://therecord.media/hackers-russia-fundraisers-ukraine",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Rockwell Automation Patches Over a Dozen Vulnerabilities Across Products",
+      "url": "https://www.securityweek.com/rockwell-automation-patches-over-a-dozen-vulnerabilities-across-products/",
+      "publishedAt": "2026-09-02T12:39:07.000Z",
+      "excerpt": "The industrial giant has released advisories for its RSLinx Classic, ArmorStart, ControlFLASH, FactoryTalk, and other products. The post Rockwell Automation Patches Over a Dozen Vulnerabilities Across Products appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/rockwell-automation-patches-over-a-dozen-vulnerabilities-across-products",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Dropbox accounts breached through Lenovo email verification flaw",
+      "url": "https://www.bleepingcomputer.com/news/security/dropbox-accounts-breached-through-lenovo-email-verification-flaw/",
+      "publishedAt": "2026-09-02T12:30:22.000Z",
+      "excerpt": "Dropbox is warning some users that an unauthorized party accessed their accounts by exploiting a flaw in Lenovo's email verification process to register fraudulent Lenovo IDs. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/dropbox-accounts-breached-through-lenovo-email-verification-flaw",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Meta Ads Push StreamRat Android Trojan That Can Gain Near-Complete Device Control",
+      "url": "https://thehackernews.com/2026/09/meta-ads-push-streamrat-android-trojan.html",
+      "publishedAt": "2026-09-02T12:22:02.000Z",
+      "excerpt": "Cybersecurity researchers have disclosed details of a new Android banking trojan called StreamRat that was promoted to Spanish-speaking users through a fake television-streaming campaign on Meta and can give operators near-complete control of infected devices. ThreatFabric said the campaign's advertisement focused on Spain and reached an estimated 570,950 Meta accounts in the European Union",
+      "canonicalUrl": "https://thehackernews.com/2026/09/meta-ads-push-streamrat-android-trojan.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Exploit Published for Fresh Cleo Harmony Vulnerability",
+      "url": "https://www.securityweek.com/exploit-published-for-fresh-cleo-harmony-vulnerability/",
+      "publishedAt": "2026-09-02T12:18:15.000Z",
+      "excerpt": "The security defect allows remote attackers to bypass authentication through argument bearer manipulation. The post Exploit Published for Fresh Cleo Harmony Vulnerability appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/exploit-published-for-fresh-cleo-harmony-vulnerability",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Sality, one of the longest-running botnets, finally gets disrupted",
+      "url": "https://therecord.media/sality-botnet-cyber-doj",
+      "publishedAt": "2026-09-02T12:15:00.000Z",
+      "excerpt": "U.S. and European authorities disrupted the long-running botnet Sality, turning the malware’s peer-to-peer architecture against itself to cut thousands of infected computers off from operators.",
+      "canonicalUrl": "https://therecord.media/sality-botnet-cyber-doj",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Communicating Under Pressure: Best Practices for Service Providers",
+      "url": "https://www.cisa.gov/resources-tools/resources/communicating-under-pressure-best-practices-service-providers",
+      "publishedAt": "2026-09-02T12:00:00.000Z",
+      "excerpt": "Developed by CISA, the Federal Bureau of Investigation, and international partners, this guidance describes how organizations can plan and execute clear, timely, accurate, and audience-appropriate communications during IT and operational technology (OT) outages. Whether caused by cyber threat actors, human error, equipment failure, or natural hazards, service outages can create disruption and…",
+      "canonicalUrl": "https://cisa.gov/resources-tools/resources/communicating-under-pressure-best-practices-service-providers",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s14"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Anthropic Details Response to Security Incidents, Unveils Enterprise Safeguards",
+      "url": "https://www.securityweek.com/anthropic-details-response-to-security-incidents-unveils-enterprise-safeguards/",
+      "publishedAt": "2026-09-02T11:48:31.000Z",
+      "excerpt": "Anthropic introduced Enterprise Frontier Safeguards (EFS), a system that combines zero data retention with automated monitoring for misuse. The post Anthropic Details Response to Security Incidents, Unveils Enterprise Safeguards appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/anthropic-details-response-to-security-incidents-unveils-enterprise-safeguards",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Malicious Virtualizor Update Served via BGP Hijacking",
+      "url": "https://www.securityweek.com/malicious-virtualizor-update-served-via-bgp-hijacking/",
+      "publishedAt": "2026-09-02T11:31:36.000Z",
+      "excerpt": "Using a technically valid TLS certificate for Softaculous’ domains, a threat actor diverted traffic to fake software updates. The post Malicious Virtualizor Update Served via BGP Hijacking appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/malicious-virtualizor-update-served-via-bgp-hijacking",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "How to Secure Enterprise AI: From Adoption to Incident Readiness",
+      "url": "https://thehackernews.com/2026/09/how-to-secure-enterprise-ai-from.html",
+      "publishedAt": "2026-09-02T11:30:00.000Z",
+      "excerpt": "The debate about whether AI delivers business value is over. The challenge now is implementing it at scale and securely across every function while meeting board-level pressure to move fast. Organizations must focus on adopting AI at business speed without losing control of cyber risk. Download the full eBook here. The Business Reality In Sygnia’s 2026 CISO Survey Report, which",
+      "canonicalUrl": "https://thehackernews.com/2026/09/how-to-secure-enterprise-ai-from.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Attackers Exploit Two SonicWall SMA 1000 Zero-Days That May Form an Attack Chain",
+      "url": "https://thehackernews.com/2026/09/attackers-exploit-two-sonicwall-sma.html",
+      "publishedAt": "2026-09-02T10:53:49.000Z",
+      "excerpt": "SonicWall has released security updates to address two security flaws impacting its Secure Mobile Access (SMA) 1000 series VPN appliances that have been exploited in zero-day attacks. The vulnerabilities, discovered internally by SonicWall's William Perry and Adam Babis, are listed below - CVE-2026-83548 (CVSS score: 10.0) - A pre-authentication SSRF vulnerability in the Appliance",
+      "canonicalUrl": "https://thehackernews.com/2026/09/attackers-exploit-two-sonicwall-sma.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-83548",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "A Pre-authentication SSRF vulnerability exists in the SMA1000 Appliance Work Place interface due to an unintended alternate access path. A remote unauthenticated attacker could potentially exploit this vulnerability to gain unauthorized access to sensitive functionality and perform unauthorized operations.",
+            "cvss": {
+              "version": "3.1",
+              "score": 10,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-441",
+              "CWE-918"
+            ],
+            "published": "2026-09-01T22:17:13.170",
+            "lastModified": "2026-09-02T14:17:16.017",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://psirt.global.sonicwall.com/vuln-detail/SNWLID-2026-0016",
+                "source": "PSIRT@sonicwall.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/attackers-exploit-two-sonicwall-sma.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.01",
+              "dateReleased": "2026-09-01T19:22:46.2162Z",
+              "retrievedAt": "2026-09-02T15:50:19.379Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-82329%2CCVE-2026-83548%2CCVE-2021-31886%2CCVE-2026-9586%2CCVE-2026-83549%2CCVE-2026-0768",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-83548",
+              "retrievedAt": "2026-09-02T15:50:19.379Z"
+            }
+          }
+        }
+      ],
+      "id": "s18"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "OpenAI’s Astra Crosses ‘Critical’ Cyber Threshold After Finding Zero-Days",
+      "url": "https://www.securityweek.com/openais-astra-becomes-first-model-to-cross-critical-cybersecurity-threshold/",
+      "publishedAt": "2026-09-02T10:38:13.000Z",
+      "excerpt": "The designation applies when a model can independently find and exploit zero-day vulnerabilities across many well-defended systems. The post OpenAI’s Astra Crosses ‘Critical’ Cyber Threshold After Finding Zero-Days appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/openais-astra-becomes-first-model-to-cross-critical-cybersecurity-threshold",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s19"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft Defender flags legitimate Google search links as malicious",
+      "url": "https://www.bleepingcomputer.com/news/security/microsoft-defender-flags-legitimate-google-search-links-as-malicious/",
+      "publishedAt": "2026-09-02T10:29:39.000Z",
+      "excerpt": "Microsoft is investigating an issue causing the Defender for Office 365 security software to mistakenly block access to legitimate Google search links. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/microsoft-defender-flags-legitimate-google-search-links-as-malicious",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "unit42",
+      "sourceKind": "rss",
+      "title": "An AI-Assisted Cyber Attack: Inside a Unit 42 Investigation",
+      "url": "https://unit42.paloaltonetworks.com/ai-assisted-cyber-attack-inside-a-unit-42-investigation/",
+      "publishedAt": "2026-09-02T10:00:46.000Z",
+      "excerpt": "Using autonomous AI agents, an attacker breached an enterprise network in a matter of hours. Understand how to address and defend against agentic attacks. The post An AI-Assisted Cyber Attack: Inside a Unit 42 Investigation appeared first on Unit 42.",
+      "canonicalUrl": "https://unit42.paloaltonetworks.com/ai-assisted-cyber-attack-inside-a-unit-42-investigation",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s21"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "GeoNetwork Fixes Unauthenticated RCE Chain Affecting Government Geoportal Backends",
+      "url": "https://thehackernews.com/2026/09/geonetwork-fixes-unauthenticated-rce.html",
+      "publishedAt": "2026-09-02T09:18:02.000Z",
+      "excerpt": "Two vulnerabilities in GeoNetwork can be chained to achieve unauthenticated remote code execution (RCE) on the open-source geospatial metadata catalog, which sits behind many government and agency geoportals. The project shipped fixes in versions 4.4.12 and 4.2.17 on July 8, 2026, and published the vulnerability details on August 31. GeoNetwork originated at the United Nations Food and",
+      "canonicalUrl": "https://thehackernews.com/2026/09/geonetwork-fixes-unauthenticated-rce.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s22"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Chrome and Firefox Updates Patch Dozens of Vulnerabilities",
+      "url": "https://www.securityweek.com/chrome-and-firefox-updates-patch-dozens-of-vulnerabilities/",
+      "publishedAt": "2026-09-02T09:12:29.000Z",
+      "excerpt": "The browser refreshes fix multiple use-after-free, sandbox escape, and privilege escalation bugs. The post Chrome and Firefox Updates Patch Dozens of Vulnerabilities appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/chrome-and-firefox-updates-patch-dozens-of-vulnerabilities",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Extradited Russian Hacker Faces Charges Over Excel Malware Campaign That Infected Thousands",
+      "url": "https://thehackernews.com/2026/09/extradited-russian-hacker-faces-charges.html",
+      "publishedAt": "2026-09-02T09:10:23.000Z",
+      "excerpt": "The U.S. Department of Justice (DoJ) has charged a Russian national, extradited from Cyprus on August 28, with using roughly 255 fake accounts on a freelance platform to send malware-laced Excel attachments to about 80,000 of its users in 2016 and 2017. Searzhudin Tamirlanovich Aktulaev, 40, was arrested in Cyprus in May 2025, the U.S. Attorney's Office for the Northern District of California",
+      "canonicalUrl": "https://thehackernews.com/2026/09/extradited-russian-hacker-faces-charges.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s24"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "US charges Russian for infecting 80,000 freelancers with malware",
+      "url": "https://www.bleepingcomputer.com/news/security/us-charges-russian-for-infecting-80-000-freelancers-with-malware/",
+      "publishedAt": "2026-09-02T09:06:48.000Z",
+      "excerpt": "A California federal grand jury has indicted a Russian national for his role in a phishing campaign that infected thousands of freelancers with TVRAT and DarkVNC malware. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/us-charges-russian-for-infecting-80-000-freelancers-with-malware",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "23-Year-Old Sality P2P Botnet Disrupted",
+      "url": "https://www.securityweek.com/23-year-old-sality-p2p-botnet-disrupted/",
+      "publishedAt": "2026-09-02T08:38:00.000Z",
+      "excerpt": "The shutdown operation involved peer list manipulation and Sality payload URL takedown. The post 23-Year-Old Sality P2P Botnet Disrupted appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/23-year-old-sality-p2p-botnet-disrupted",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Sality botnet infrastructure dismantled in joint global takedown",
+      "url": "https://www.bleepingcomputer.com/news/security/sality-botnet-infrastructure-dismantled-in-joint-global-takedown/",
+      "publishedAt": "2026-09-02T08:00:43.000Z",
+      "excerpt": "International law enforcement agencies and private partners have seized Sality malware infrastructure in a joint action aiming to disrupt and take down the peer-to-peer (P2P) botnet. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/sality-botnet-infrastructure-dismantled-in-joint-global-takedown",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Researchers Use Claude to Port Pre-Auth RCE Exploit From One PLC Model to Another",
+      "url": "https://thehackernews.com/2026/09/researchers-use-claude-to-port-pre-auth.html",
+      "publishedAt": "2026-09-02T07:47:13.000Z",
+      "excerpt": "Forescout Research - Vedere Labs said it used Anthropic's Claude to port a working pre-authentication remote code execution (RCE) exploit from one WAGO programmable logic controller (PLC) to another, executing attacker-supplied ARM shellcode on live hardware. The exploit targets CVE-2021-31886, a stack-based buffer overflow in the Nucleus FTP server's handling of the USER command",
+      "canonicalUrl": "https://thehackernews.com/2026/09/researchers-use-claude-to-port-pre-auth.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2021-31886",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "A vulnerability has been identified in APOGEE MBC (PPC) (BACnet) (All versions), APOGEE MBC (PPC) (P2 Ethernet) (All versions), APOGEE MEC (PPC) (BACnet) (All versions), APOGEE MEC (PPC) (P2 Ethernet) (All versions), APOGEE PXC Compact (BACnet) (All versions < V3.5.4), APOGEE PXC Compact (P2 Ethernet) (All versions < V2.8.19), APOGEE PXC Modular (BACnet) (All versions < V3.5.4), APOGEE PXC Modular (P2 Ethernet) (All versions < V2.8.19), Desigo PXC00-E.D (All versions >= V2.3 and < V6.30.016), Desigo PXC00-U (All versions >= V2.3 and < V6.30.016), Desigo PXC001-E.D (All versions >= V2.3 and < V6.30.016), Desigo PXC100-E.D (All versions >= V2.3 and < V6.30.016), Desigo PXC12-E.D (All versions >= V2.3 and < V6.30.016), Desigo PXC128-U (All versions >= V2.3 and < V6.30.016), Desigo PXC200-E.D (All versions >= V2.3 and < V6.30.016), Desigo PXC22-E.D (All versions >= V2.3 and < V6.30.016), Desigo PXC22.1-E.D (All versions >= V2.3 and < V6.30.016), Desigo PXC36.1-E.D (All versions >= V2.3 and < V6.30.016), Desigo PXC50-E.D (All versions >= V2.3 and < V6.30.016), Desigo PXC64-U (All versions >= V2.3 and < V6.30.016), Desigo PXM20-E (All versions >= V2.3 and < V6.30.016), Nucleus NET (All versions), Nucleus ReadyStart V3 (All versions < V2017.02.4), Nucleus Source Code (All versions), TALON TC Compact (BACnet) (All versions < V3.5.4), TALON TC Modular (BACnet) (All versions < V3.5.4). FTP server does not properly validate the length of the “USER” command, leading to stack-based buffer overflows. This may result in Denial-of-Service conditions and Remote Code Execution. (FSMD-2021-0010)",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "nvd@nist.gov",
+              "type": "Primary"
+            },
+            "cwes": [
+              "CWE-170",
+              "CWE-787"
+            ],
+            "published": "2021-11-09T12:15:09.540",
+            "lastModified": "2026-06-17T03:52:25.290",
+            "vulnStatus": "Modified",
+            "references": [
+              {
+                "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-044112.pdf",
+                "source": "productcert@siemens.com",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-114589.pdf",
+                "source": "productcert@siemens.com",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-044112.pdf",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-114589.pdf",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:siemens:nucleus_net:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7A987CFB-4A41-4F82-8C7F-31DE8F0650DE",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:nucleus_readystart_v3:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C2F36C9F-E4F4-4678-B82D-361F4818B66C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "2017.02.4"
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:nucleus_source_code:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "07DAF9C3-B56A-4F40-B90B-D0DE96869A44",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:siemens:apogee_modular_building_controller_firmware:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "60FAD4D8-54FA-4721-954E-4AD77020B189",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:siemens:apogee_modular_building_controller:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "B5F978E7-3DD9-4948-BFFB-E7273003477B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:siemens:apogee_modular_equiment_controller_firmware:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "ACCB699F-4F10-47BD-8890-047380972BE1",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:siemens:apogee_modular_equiment_controller:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "7945BF7D-AB3A-4285-9C58-D56149ADFC15",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:siemens:apogee_pxc_compact_firmware:*:*:*:*:p2_ethernet:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "DB03E262-4378-4E0F-9263-19D1392CCC8F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "2.8.19"
+              },
+              {
+                "criteria": "cpe:2.3:o:siemens:apogee_pxc_compact_firmware:*:*:*:*:bacnet:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C7F539A7-092A-452D-AAEF-A18CAB76EF39",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "3.5.4"
+              },
+              {
+                "criteria": "cpe:2.3:h:siemens:apogee_pxc_compact:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "8E2E8B0F-EBBC-4BCC-BE2A-20DCB506DF7F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:siemens:apogee_pxc_modular_firmware:*:*:*:*:p2_ethernet:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "32FAA115-303A-43BF-BB07-153269A82769",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "2.8.19"
+              },
+              {
+                "criteria": "cpe:2.3:o:siemens:apogee_pxc_modular_firmware:*:*:*:*:bacnet:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "AD5099CC-0908-4CB8-A152-869B1678F484",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "3.5.4"
+              },
+              {
+                "criteria": "cpe:2.3:h:siemens:apogee_pxc_modular:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "D9485F0B-03E0-4442-B615-2DA91AE1CD00",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:siemens:talon_tc_compact_firmware:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "46B9BC93-293E-4D1F-BA10-4E79DCF472FB",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "3.5.4"
+              },
+              {
+                "criteria": "cpe:2.3:h:siemens:talon_tc_compact:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "46D32EF0-8AEC-4594-8928-45F34DC60600",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:siemens:talon_tc_modular_firmware:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "90E02740-938E-421A-97F9-DAC9A96F048B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "3.5.4"
+              },
+              {
+                "criteria": "cpe:2.3:h:siemens:talon_tc_modular:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "00C647D8-1725-42FA-8042-6C413EE67573",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:siemens:desigo_pxc00-e.d_firmware:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7F55E48E-BFB9-436A-9586-696D910C0122",
+                "versionStartIncluding": "2.3",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.30.016"
+              },
+              {
+                "criteria": "cpe:2.3:h:siemens:desigo_pxc00-e.d:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "A1727849-2FD8-40A2-91D3-E0C9662B45BC",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:siemens:desigo_pxc00-u_firmware:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9B62759D-843B-48FC-82CB-1A8562C6BAFD",
+                "versionStartIncluding": "2.3",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.30.016"
+              },
+              {
+                "criteria": "cpe:2.3:h:siemens:desigo_pxc00-u:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "CD39D011-8AE2-46FE-9207-C110E2FBC07C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:siemens:desigo_pxc001-e.d_firmware:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A9FA1D60-CB76-4F9F-AF50-F044938E24F7",
+                "versionStartIncluding": "2.3",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.30.016"
+              },
+              {
+                "criteria": "cpe:2.3:h:siemens:desigo_pxc001-e.d:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "DCC50C13-FA05-4459-BA1E-482D886B842B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:siemens:desigo_pxc12-e.d_firmware:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E759F7F2-A0EA-4A93-9BE7-56754F3DB71E",
+                "versionStartIncluding": "2.3",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.30.016"
+              },
+              {
+                "criteria": "cpe:2.3:h:siemens:desigo_pxc12-e.d:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "DDA404C0-FD6D-47CC-950C-E5DCC993C8E6",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:siemens:desigo_pxc22-e.d_firmware:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "06588CEC-2291-4870-84D9-6A61614D954F",
+                "versionStartIncluding": "2.3",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.30.016"
+              },
+              {
+                "criteria": "cpe:2.3:h:siemens:desigo_pxc22-e.d:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "4A4D84CE-07AB-4305-9C48-54392772D4EB",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:siemens:desigo_pxc22.1-e.d_firmware:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "43E08A74-3DAF-4022-9FF2-9ADA4426161E",
+                "versionStartIncluding": "2.3",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.30.016"
+              },
+              {
+                "criteria": "cpe:2.3:h:siemens:desigo_pxc22.1-e.d:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "8E67F374-BF75-4334-A6D5-AB570E0A70D8",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:siemens:desigo_pxc36.1-e.d_firmware:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "875BF593-DC7B-4416-983D-E69C48F5F3EF",
+                "versionStartIncluding": "2.3",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.30.016"
+              },
+              {
+                "criteria": "cpe:2.3:h:siemens:desigo_pxc36.1-e.d:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "1CA7EF94-2EE2-4B53-A544-F675306DF84F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:siemens:desigo_pxc50-e.d_firmware:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "60970078-7799-458D-983C-AD012FFA4241",
+                "versionStartIncluding": "2.3",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.30.016"
+              },
+              {
+                "criteria": "cpe:2.3:h:siemens:desigo_pxc50-e.d:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "B73C4D39-A600-460B-A9A4-A954A58EDB17",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:siemens:desigo_pxc64-u_firmware:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "30E702A4-7D43-4277-9885-52AA26EB526B",
+                "versionStartIncluding": "2.3",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.30.016"
+              },
+              {
+                "criteria": "cpe:2.3:h:siemens:desigo_pxc64-u:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "88DBB445-0A82-4DE8-B2CB-0CDD06A7E413",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:siemens:desigo_pxc100-e.d_firmware:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "4D3E8389-DC09-4E20-9406-8AACE31E4503",
+                "versionStartIncluding": "2.3",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.30.016"
+              },
+              {
+                "criteria": "cpe:2.3:h:siemens:desigo_pxc100-e.d:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "C4EC2CE6-D918-4D78-A135-34E25C82E40B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:siemens:desigo_pxc128-u_firmware:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C5E933BA-6FBA-445C-AC3E-F866E606A34D",
+                "versionStartIncluding": "2.3",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.30.016"
+              },
+              {
+                "criteria": "cpe:2.3:h:siemens:desigo_pxc128-u:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "F7E1693F-D78F-4AC1-9304-3A5D64F5AEE2",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:siemens:desigo_pxc200-e.d_firmware:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "182DB746-FDA5-4856-BE6C-C84E0EFF7BFC",
+                "versionStartIncluding": "2.3",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.30.016"
+              },
+              {
+                "criteria": "cpe:2.3:h:siemens:desigo_pxc200-e.d:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "A602EDAE-72D4-4546-8C41-BBBECE2FD328",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:siemens:desigo_pxm20-e_firmware:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7A58E17E-5986-4EEF-93BF-0596AA1E7F46",
+                "versionStartIncluding": "2.3",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.30.016"
+              },
+              {
+                "criteria": "cpe:2.3:h:siemens:desigo_pxm20-e:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "3D7DD189-AEC3-4CB8-9337-876B8C8F2322",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/researchers-use-claude-to-port-pre-auth.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.01",
+              "dateReleased": "2026-09-01T19:22:46.2162Z",
+              "retrievedAt": "2026-09-02T15:50:19.379Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-82329%2CCVE-2026-83548%2CCVE-2021-31886%2CCVE-2026-9586%2CCVE-2026-83549%2CCVE-2026-0768",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2021-31886",
+              "retrievedAt": "2026-09-02T15:50:19.379Z"
+            }
+          }
+        }
+      ],
+      "id": "s28"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "SonicWall warns of actively exploited SMA1000 zero-day flaws",
+      "url": "https://www.bleepingcomputer.com/news/security/sonicwall-warns-of-actively-exploited-sma1000-zero-day-flaws/",
+      "publishedAt": "2026-09-02T06:39:29.000Z",
+      "excerpt": "SonicWall warned customers that threat actors are chaining two new SMA1000 zero-day vulnerabilities in remote code execution attacks. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/sonicwall-warns-of-actively-exploited-sma1000-zero-day-flaws",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s31"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "Counterfeit installers to system compromise: Tracking a deceptive software download campaign",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/09/01/counterfeit-installers-system-compromise-tracking-deceptive-software-download-campaign/",
+      "publishedAt": "2026-09-01T22:48:28.000Z",
+      "excerpt": "An active campaign is impersonating legitimate software vendors to deliver malware through look-alike download pages and regenerated installer archives. Microsoft Defender Experts shares observed attack techniques, Defender XDR detections, indicators of compromise, and practical mitigations to help organizations identify, block, and respond to this threat. The post Counterfeit installers to…",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/09/01/counterfeit-installers-system-compromise-tracking-deceptive-software-download-campaign",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s34"
+    },
+    {
+      "sourceId": "krebs",
+      "sourceKind": "rss",
+      "title": "FBI Probes Service Selling 153M+ Drivers Licenses",
+      "url": "https://krebsonsecurity.com/2026/09/fbi-probes-service-selling-153m-drivers-licenses/",
+      "publishedAt": "2026-09-01T22:40:28.000Z",
+      "excerpt": "A new identity theft service launched on the dark web this week is selling digital scans of more than 153 million drivers licenses from people in the United States and Canada. Based on interviews with individuals whose licenses are available for purchase on this service, it appears to be siphoning images collected by a widely-used identity verification company based in Louisiana. KrebsOnSecurity…",
+      "canonicalUrl": "https://krebsonsecurity.com/2026/09/fbi-probes-service-selling-153m-drivers-licenses",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s35"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Attackers Pounce on Critical Artifactory Bug Following Disclosure",
+      "url": "https://www.darkreading.com/application-security/attackers-pounce-critical-artifactory-flaw-disclosure",
+      "publishedAt": "2026-09-01T21:05:53.000Z",
+      "excerpt": "CVE-2026-82329 is an authentication bypass flaw in JFrog's repository manager that enables bad actors to gain admin-level access on affected systems.",
+      "canonicalUrl": "https://darkreading.com/application-security/attackers-pounce-critical-artifactory-flaw-disclosure",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-82329",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "JFrog Artifactory contains an authentication weakness that, under default configuration, may allow an unauthenticated attacker with network access to obtain administrative privileges.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "reefs@jfrog.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-287"
+            ],
+            "published": "2026-08-28T20:20:21.293",
+            "lastModified": "2026-08-31T19:17:18.813",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://docs.jfrog.com/releases/docs/artifactory-self-managed-releases",
+                "source": "reefs@jfrog.com",
+                "tags": []
+              },
+              {
+                "url": "https://docs.jfrog.com/releases/docs/jfrog-security-advisories",
+                "source": "reefs@jfrog.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "darkreading",
+                "url": "https://www.darkreading.com/application-security/attackers-pounce-critical-artifactory-flaw-disclosure",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.01",
+              "dateReleased": "2026-09-01T19:22:46.2162Z",
+              "retrievedAt": "2026-09-02T15:50:19.379Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-82329%2CCVE-2026-83548%2CCVE-2021-31886%2CCVE-2026-9586%2CCVE-2026-83549%2CCVE-2026-0768",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-82329",
+              "retrievedAt": "2026-09-02T15:50:19.379Z"
+            }
+          }
+        }
+      ],
+      "id": "s36"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Stronger Security Drives Ransomware Groups to Recruit From Within",
+      "url": "https://www.darkreading.com/cyber-risk/stronger-security-drives-ransomware-groups-to-recruit-from-within",
+      "publishedAt": "2026-09-01T21:03:19.000Z",
+      "excerpt": "Some security researchers have observed an uptick in insider-assisted ransomware attacks, but malicious insiders pose other threats that cost companies millions.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/stronger-security-drives-ransomware-groups-to-recruit-from-within",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s37"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers abuse Faronics Deploy admin tool to install ScreenConnect",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-abuse-faronics-deploy-admin-tool-to-install-screenconnect/",
+      "publishedAt": "2026-09-01T20:53:23.000Z",
+      "excerpt": "Phishing actors are abusing the legitimate Faronics Deploy endpoint-management platform to gain remote administrative control over victim computers and install the ScreenConnect remote support software. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-abuse-faronics-deploy-admin-tool-to-install-screenconnect",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s38"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Critical Langflow Vulnerability Exploited as Attacks on AI Platform Rise",
+      "url": "https://www.darkreading.com/vulnerabilities-threats/critical-langflow-flaw-exploited-attacks-rise",
+      "publishedAt": "2026-09-01T20:48:52.000Z",
+      "excerpt": "The attacks targeting CVE-2026-0768 are the latest threat against the low-code AI development platform, which is receiving more attention from adversaries this year.",
+      "canonicalUrl": "https://darkreading.com/vulnerabilities-threats/critical-langflow-flaw-exploited-attacks-rise",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-0768",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Langflow code Code Injection Remote Code Execution Vulnerability. This vulnerability allows remote attackers to execute arbitrary code on affected installations of Langflow. Authentication is not required to exploit this vulnerability.\n\nThe specific flaw exists within the handling of the code parameter provided to the validate endpoint. The issue results from the lack of proper validation of a user-supplied string before using it to execute Python code. An attacker can leverage this vulnerability to execute code in the context of root.\n. Was ZDI-CAN-27322.",
+            "cvss": {
+              "version": "3.0",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "zdi-disclosures@trendmicro.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-94"
+            ],
+            "published": "2026-01-23T04:16:03.800",
+            "lastModified": "2026-06-17T10:11:20.937",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://www.zerodayinitiative.com/advisories/ZDI-26-034/",
+                "source": "zdi-disclosures@trendmicro.com",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:langflow:langflow:1.4.2:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "81AAA7F9-843A-456C-89A1-B99D18AD4328",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "darkreading",
+                "url": "https://www.darkreading.com/vulnerabilities-threats/critical-langflow-flaw-exploited-attacks-rise",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.01",
+              "dateReleased": "2026-09-01T19:22:46.2162Z",
+              "retrievedAt": "2026-09-02T15:50:19.379Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-82329%2CCVE-2026-83548%2CCVE-2021-31886%2CCVE-2026-9586%2CCVE-2026-83549%2CCVE-2026-0768",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-0768",
+              "retrievedAt": "2026-09-02T15:50:19.379Z"
+            }
+          }
+        }
+      ],
+      "id": "s39"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "China's 'Fire Ant' campaign used compromised Cisco routers as platform for more attacks",
+      "url": "https://therecord.media/router-hacks-fire-ant-group-china",
+      "publishedAt": "2026-09-01T20:35:00.000Z",
+      "excerpt": "A hacking operation dubbed Fire Ant \"didn’t just compromise systems,\" according to researchers. \"It compromised the trust layer those systems depend on.\"",
+      "canonicalUrl": "https://therecord.media/router-hacks-fire-ant-group-china",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s40"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Palo Alto Networks Acquires AI Agent Platform Console",
+      "url": "https://www.securityweek.com/palo-alto-networks-acquires-ai-agent-platform-console/",
+      "publishedAt": "2026-09-01T20:29:42.000Z",
+      "excerpt": "The cybersecurity giant announced the acquisition alongside quarterly results showing a 34% increase in revenue and strong growth in next-generation security ARR. The post Palo Alto Networks Acquires AI Agent Platform Console appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/palo-alto-networks-acquires-ai-agent-platform-console",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s41"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "AI Model Evaluator METR Hit by Credential Theft, Probing",
+      "url": "https://www.darkreading.com/identity-access-management-security/ai-model-evaluator-metr-credential-theft-probing",
+      "publishedAt": "2026-09-01T20:13:09.000Z",
+      "excerpt": "In one attack, threat actors stole an API key that ultimately led to the consumption of $600,000 in public AI model credits for the security nonprofit.",
+      "canonicalUrl": "https://darkreading.com/identity-access-management-security/ai-model-evaluator-metr-credential-theft-probing",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s42"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Aesto Health says data breach affects over 9.5 million patients",
+      "url": "https://www.bleepingcomputer.com/news/security/aesto-health-says-data-breach-affects-over-95-million-patients/",
+      "publishedAt": "2026-09-01T19:28:17.000Z",
+      "excerpt": "Aesto LLC, operating as Aesto Health, disclosed that a data breach discovered recently affects more than 9.5 million individuals. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/aesto-health-says-data-breach-affects-over-95-million-patients",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s43"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "Cybersecurity IR Workshop: The workshop you shouldn’t miss",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/09/01/cybersecurity-ir-workshop-you-shouldnt-miss/",
+      "publishedAt": "2026-09-01T18:55:35.000Z",
+      "excerpt": "Cyber resilience starts before a crisis. Gain practical insights from DART to strengthen readiness and response. The post Cybersecurity IR Workshop: The workshop you shouldn’t miss appeared first on Microsoft Security Blog.",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/09/01/cybersecurity-ir-workshop-you-shouldnt-miss",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s44"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Attackers Exploit Critical JFrog Artifactory Flaw to Mint Admin Tokens Days After Disclosure",
+      "url": "https://thehackernews.com/2026/09/attackers-exploit-critical-jfrog.html",
+      "publishedAt": "2026-09-01T17:53:11.000Z",
+      "excerpt": "Threat actors are exploiting a newly patched critical security flaw impacting JFrog Artifactory merely days after public disclosure, according to watchTowr. The vulnerability in question is CVE-2026-82329 (CVSS score: 9.8), a case of authentication bypass that could lead to administrative access in Artifactory. \"JFrog Artifactory contains an authentication weakness that, under default",
+      "canonicalUrl": "https://thehackernews.com/2026/09/attackers-exploit-critical-jfrog.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-82329",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "JFrog Artifactory contains an authentication weakness that, under default configuration, may allow an unauthenticated attacker with network access to obtain administrative privileges.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "reefs@jfrog.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-287"
+            ],
+            "published": "2026-08-28T20:20:21.293",
+            "lastModified": "2026-08-31T19:17:18.813",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://docs.jfrog.com/releases/docs/artifactory-self-managed-releases",
+                "source": "reefs@jfrog.com",
+                "tags": []
+              },
+              {
+                "url": "https://docs.jfrog.com/releases/docs/jfrog-security-advisories",
+                "source": "reefs@jfrog.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/attackers-exploit-critical-jfrog.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.01",
+              "dateReleased": "2026-09-01T19:22:46.2162Z",
+              "retrievedAt": "2026-09-02T15:50:19.379Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-82329%2CCVE-2026-83548%2CCVE-2021-31886%2CCVE-2026-9586%2CCVE-2026-83549%2CCVE-2026-0768",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-82329",
+              "retrievedAt": "2026-09-02T15:50:19.379Z"
+            }
+          }
+        }
+      ],
+      "id": "s46"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Breeze Comet Executes Hundreds of Fraudulent Transactions via Brazilian Payment Systems",
+      "url": "https://thehackernews.com/2026/09/breeze-comet-executes-hundreds-of.html",
+      "publishedAt": "2026-09-01T17:19:24.000Z",
+      "excerpt": "Brazilian financial services, retail, and e-commerce organizations have become the target of a financially motivated threat actor dubbed Breeze Comet (formerly UNC5669) since 2024. Google Threat Intelligence Group (GTIG) and Mandiant teams described the threat actor as \"specializing in manipulating payment systems and banking software in Brazil to conduct fraudulent transfers.\" The adversary",
+      "canonicalUrl": "https://thehackernews.com/2026/09/breeze-comet-executes-hundreds-of.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s47"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1152,
+    "promptCacheMissTokens": 13512,
+    "outputTokens": 17467,
+    "estimatedCostUsd": 0.006785665599999999
+  }
+}
