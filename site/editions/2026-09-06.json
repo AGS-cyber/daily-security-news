@@ -1,0 +1,182 @@
+{
+  "date": "2026-09-06",
+  "generatedAt": "2026-09-06T14:48:00.389Z",
+  "degraded": [
+    {
+      "stage": "normalize",
+      "message": "2 items were dropped as unparseable"
+    }
+  ],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 228,
+    "deduped": 226,
+    "published": 8
+  },
+  "mode": "article",
+  "headline": "Zero-days in commerce and edge devices, a vendor breach, and an on-chain ClickFix operation",
+  "standfirst": "Two unpatched attack chains demand immediate mitigation today, one aimed at online storefronts and one at exposed router management interfaces. JetBrains is asking Cadence users to rotate credentials after its own environment was breached through TeamCity, and Trezor has revised the scope of a shipping-provider incident upward. The research pipeline also brings a critical VMware hypervisor flaw, blockchain-hosted ClickFix payloads, invisible-Unicode URL smuggling, and a stealer that leaves a crypto miner behind.",
+  "bodyMarkdown": "## Actively exploited\n\nStore operators should assume the worst: a newly reported flaw in Magento Open Source and Adobe Commerce is already being used to backdoor online shops, and the campaign surfaced before the vendor had a patch ready. The issue, named StyleSmuggler by the Dutch e-commerce security firm that discovered it, lets an attacker run malicious code on the store’s server without logging in. [[s4]] That means the abuse surface is not a misconfigured admin account or a stolen credential but a direct, pre-authentication code-execution hole in a platform that powers large parts of the retail web. For merchants running Magento or Adobe Commerce, the practical implication is that any internet-facing instance should be treated as potentially compromised until the flaw is closed and indicators are checked for backdoors.\n\nRouter defenders are facing a similarly direct threat, though with a different root cause. CERT Polska warns that MikroTik devices with their SSH remote-management service exposed to the internet are being taken over without authentication, giving attackers full administrative control of the router. [[s2]] The campaign is active and ongoing, and the absence of a clean one-line explanation should not reduce the urgency: management interfaces with no authentication requirement and internet reachability are effectively unlocked doors. Organisations running MikroTik equipment should immediately restrict SSH access to trusted networks, audit device configurations and user accounts, and assume that any router that was exposed may have been modified. Because routers sit at the network boundary, full control of one can mean redirected traffic, credential harvesting, and persistent access to everything behind it.\n\n## Breaches\n\nJetBrains has confirmed that unidentified attackers exploited a recently disclosed critical vulnerability in TeamCity to break into the company’s own Cadence environment. [[s5]] The incident exposed credentials and secrets tied to Cadence executions, including AWS credentials, and JetBrains is now instructing Cadence users to revoke or rotate anything that may have been used to run their workflows. The breach matters beyond the immediate credential rotation because it is a vendor self-compromise: the same CI/CD product JetBrains sells was the entry point into the infrastructure used to build and ship software. Users should treat JetBrains’ guidance as mandatory, not precautionary, and should audit any Cadence secrets, cloud keys, or deployment tokens that were active during the incident window.\n\nAnother breach notification is more about supply-chain data handling than software integrity. Trezor says an additional 67,000 U.S. customers were exposed in the breach at its shipping provider ShipMonk, bringing more personal data into an incident the company had previously suggested was limited in scope. [[s8]] The exposed records include names, email addresses, phone numbers, shipping addresses, and order numbers for customers whose data Trezor believed had been deleted. The security of the hardware wallets themselves is not affected, but the leaked information is ideal material for targeted phishing, social engineering, and account-recovery attacks. Anyone who ordered a Trezor through affected channels should be wary of unsolicited messages referencing order details and should not treat knowledge of a shipping address as proof that a sender is legitimate.\n\n## Vulnerabilities\n\nBroadcom has released updates for VMware Workstation and Fusion after fixing two flaws, including a critical integer-overflow vulnerability tracked as CVE-2026-59346 with a CVSS score of 9.3. [[s6]] An attacker with local, elevated privileges can exploit the bug to execute arbitrary code under certain conditions, and because Workstation and Fusion sit at the hypervisor boundary, the more worrying consequence is code execution on the host from inside a virtual machine. Hypervisor flaws of this kind deserve prompt patching even when no in-the-wild exploitation is confirmed, since they are routinely chained with guest-level compromise to escape sandboxes and reach the underlying operating system. Virtualisation admins should treat the update as priority work, especially in security-sensitive environments where untrusted code is run inside VMs.\n\n## Research\n\nA large-scale criminal operation has compromised more than 5,400 small-business websites to deliver ClickFix payloads, but with a twist designed to frustrate takedowns: the malicious payloads are stored in smart contracts on BNB Smart Chain. [[s7]] Hosting attack content on a blockchain makes the infrastructure significantly harder to dismantle than a conventional command-and-control domain, since the data lives on a distributed ledger rather than a single server. Website owners should check their sites for unexpected injected scripts, and defenders should treat blockchain-stored payloads as a growing evasion pattern rather than a one-off curiosity.\n\nPhishing continues to evolve in a lower-level way as well. Attackers are now using invisible Unicode characters to conceal malicious URLs from email security filters, a technique sometimes described as ASCII smuggling. [[s1]] The approach works because the characters are not visible when the message is rendered, allowing a link to look benign while pointing somewhere malicious. Filters that inspect the visible text, rather than the underlying character stream, can be bypassed, and users who read the email cannot easily see that the destination does not match its apparent target. This is another reminder that URL reputation and display-text checks are insufficient on their own; link analysis needs to account for what the human cannot see.\n\nFinally, Elastic Security Labs has documented four previously unreported modules associated with REVSTEALER, an emerging Windows information stealer. [[s3]] The modules — named ProManager, WinUpdate, SoftManager, and a fourth program — remain on the infected machine after the main stealer deletes itself, giving an infection a second life. One of the modules disables Windows Update and Microsoft Defender before running a cryptocurrency miner. That combination is particularly damaging because it removes the two mechanisms most likely to detect or remove the follow-on payload. Anyone investigating a suspected REVSTEALER infection should look beyond the original stealer binary and hunt for the lingering modules, since the machine may remain compromised and actively mined even after the initial malware file disappears.",
+  "selected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Unpatched Magento and Adobe Commerce Zero-Day Exploited to Backdoor Online Stores",
+      "url": "https://thehackernews.com/2026/09/unpatched-magento-and-adobe-commerce.html",
+      "publishedAt": "2026-09-05T20:14:47.000Z",
+      "excerpt": "Attackers are exploiting a new unpatched vulnerability in Magento Open Source and Adobe Commerce that lets them run malicious code on an online store's server without logging in, Dutch e-commerce security company Sansec said in an advisory published on September 5. Sansec, which discovered the flaw and named it StyleSmuggler, said attacks started on September 4. \"Sansec is",
+      "canonicalUrl": "https://thehackernews.com/2026/09/unpatched-magento-and-adobe-commerce.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s4",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "Unpatched zero-day is being actively exploited to backdoor Magento/Adobe Commerce online stores."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Attackers Breached JetBrains Cadence via Unpatched TeamCity, Extracting AWS Credentials",
+      "url": "https://thehackernews.com/2026/09/attackers-breached-jetbrains-cadence.html",
+      "publishedAt": "2026-09-05T16:52:33.000Z",
+      "excerpt": "JetBrains is urging Cadence users to revoke and rotate all credentials following a security incident last month in which unidentified threat actors exploited a recently disclosed critical vulnerability in TeamCity to breach its own environment. \"Cadence users should immediately revoke or rotate all credentials and secrets that may have been used to run their Cadence executions,\" JetBrains said.",
+      "canonicalUrl": "https://thehackernews.com/2026/09/attackers-breached-jetbrains-cadence.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s5",
+      "section": "breaches",
+      "rank": 2,
+      "angle": "JetBrains' own Cadence environment was breached via TeamCity, prompting urgent credential rotation."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Attackers Hijack MikroTik Routers Through Internet-Exposed SSH Without Authentication",
+      "url": "https://thehackernews.com/2026/09/attackers-hijack-mikrotik-routers.html",
+      "publishedAt": "2026-09-06T09:32:38.000Z",
+      "excerpt": "Attackers are exploiting MikroTik routers with their Secure Shell (SSH) remote-access service, which is reachable from the internet, to gain full administrative control without authentication, according to CERT Polska's attack warning, published on September 5. Successful attacks date to at least September 2. The Hacker News’s September 6 review of the warning found no victim count or",
+      "canonicalUrl": "https://thehackernews.com/2026/09/attackers-hijack-mikrotik-routers.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s2",
+      "section": "exploited",
+      "rank": 3,
+      "angle": "CERT Polska warns of ongoing attacks on internet-exposed MikroTik SSH giving full router control."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Critical VMware Workstation and Fusion Flaw Lets VM Admins Execute Host Code",
+      "url": "https://thehackernews.com/2026/09/critical-vmware-workstation-and-fusion.html",
+      "publishedAt": "2026-09-05T16:05:08.000Z",
+      "excerpt": "Broadcom has released security updates for two security flaws impacting VMware Workstation and Fusion, including one critical bug that could result in arbitrary code execution under certain conditions. The vulnerability, tracked as CVE-2026-59346 (CVSS score: 9.3), is an integer-overflow vulnerability that a local attacker with elevated privileges can exploit to run arbitrary code. \"A",
+      "canonicalUrl": "https://thehackernews.com/2026/09/critical-vmware-workstation-and-fusion.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-59346",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/critical-vmware-workstation-and-fusion.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.04",
+              "dateReleased": "2026-09-04T16:47:03.5197Z",
+              "retrievedAt": "2026-09-06T14:48:00.389Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-59346",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-59346",
+              "retrievedAt": "2026-09-06T14:48:00.389Z"
+            }
+          }
+        }
+      ],
+      "id": "s6",
+      "section": "vulnerabilities",
+      "rank": 4,
+      "angle": "Critical VMware Workstation/Fusion flaw (CVE-2026-59346, CVSS 9.3) allows VM-to-host code execution; security updates are out."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Over 5,400 hacked sites serve ClickFix payloads stored on the blockchain",
+      "url": "https://www.bleepingcomputer.com/news/security/over-5-400-hacked-sites-serve-clickfix-payloads-stored-on-the-blockchain/",
+      "publishedAt": "2026-09-05T14:29:13.000Z",
+      "excerpt": "A massive cybercriminal operation is leveraging thousands of compromised small-business websites to deliver ClickFix payloads stored in smart contracts on the BNB Smart Chain (BSC). [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/over-5-400-hacked-sites-serve-clickfix-payloads-stored-on-the-blockchain",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s7",
+      "section": "research",
+      "rank": 5,
+      "angle": "5,400+ hacked sites deliver ClickFix payloads stored in smart contracts to evade detection."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Trezor Says ShipMonk Breach Exposed 67,000 U.S. Customers' Data It Said Was Deleted",
+      "url": "https://thehackernews.com/2026/09/trezor-says-shipmonk-breach-exposed.html",
+      "publishedAt": "2026-09-05T14:17:02.000Z",
+      "excerpt": "Hardware wallet manufacturer Trezor on Friday disclosed that another 67,000 customers from the U.S. have been impacted in a breach at its shipping provider ShipMonk. The exposed information includes customer names, email addresses, phone numbers, shipping addresses, and order numbers between November 2019 and August 2021. The breach does not affect the security of the company's hardware wallets",
+      "canonicalUrl": "https://thehackernews.com/2026/09/trezor-says-shipmonk-breach-exposed.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s8",
+      "section": "breaches",
+      "rank": 6,
+      "angle": "Trezor reveals 67,000 more customer records exposed in ShipMonk breach, despite earlier deletion claims."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Attackers conceal phishing lures using invisible Unicode characters",
+      "url": "https://www.bleepingcomputer.com/news/security/attackers-conceal-phishing-lures-using-invisible-unicode-characters/",
+      "publishedAt": "2026-09-06T14:23:46.000Z",
+      "excerpt": "Threat actors have adopted the ASCII smuggling technique in phishing campaigns, using invisible Unicode characters to evade email security filters. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/attackers-conceal-phishing-lures-using-invisible-unicode-characters",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s1",
+      "section": "research",
+      "rank": 7,
+      "angle": "Phishers use invisible Unicode characters to hide malicious URLs from email security filters."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Four REVSTEALER-Linked Modules Disable Windows Update and Defender to Run a Crypto Miner",
+      "url": "https://thehackernews.com/2026/09/four-revstealer-linked-modules-disable.html",
+      "publishedAt": "2026-09-06T08:34:20.000Z",
+      "excerpt": "Elastic Security Labs has documented four previously unreported programs associated with REVSTEALER, an emerging Windows information stealer, that remain on an infected machine after the stealer deletes itself. One of them switches off Windows Update and Microsoft Defender before running a cryptocurrency miner. The company named the four programs ProManager, WinUpdate, SoftManager, and",
+      "canonicalUrl": "https://thehackernews.com/2026/09/four-revstealer-linked-modules-disable.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s3",
+      "section": "research",
+      "rank": 8,
+      "angle": "New REVSTEALER modules disable Windows Update and Defender, leaving victims with a crypto miner."
+    }
+  ],
+  "alsoCollected": [],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1152,
+    "promptCacheMissTokens": 2482,
+    "outputTokens": 12825,
+    "estimatedCostUsd": 0.0039417055999999995
+  }
+}
