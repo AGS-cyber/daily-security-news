@@ -1,0 +1,501 @@
+{
+  "date": "2026-09-08",
+  "generatedAt": "2026-09-08T15:51:59.167Z",
+  "degraded": [
+    {
+      "stage": "normalize",
+      "message": "2 items were dropped as unparseable"
+    }
+  ],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 228,
+    "deduped": 224,
+    "published": 28
+  },
+  "mode": "article",
+  "headline": "StyleSmuggler tops a briefing on exposed traveler data, a frozen Bitcoin sidechain, and agent-driven credential theft",
+  "standfirst": "A maximum-severity Adobe Commerce/Magento zero-day is under active exploitation with backdoors landing on e-commerce servers. Elsewhere, a Vietnam-linked travel database exposed hundreds of millions of records, the Liquid sidechain remains paused after a partial Bitcoin return, and new identity, kernel, messaging, and RMM vulnerabilities compete with real-world autonomous AI attacks for attention.",
+  "bodyMarkdown": "## Actively exploited\n\nThe day’s most urgent story is the StyleSmuggler zero-day in Adobe Commerce and Magento Open Source [[s24]]. Tracked as CVE-2026-75650 with a CVSS score of 10.0, the flaw is a template-engine injection issue that lets an unauthenticated attacker execute code in the context of the current user, with no user interaction required and a changed security scope. Sansec identified active exploitation before Adobe shipped a patch. The observed post-exploitation activity is what makes this stand out: attackers are dropping Rust-based backdoors and PHP web shells on online stores, a pattern that points to long-term access rather than a quick data grab. E-commerce platforms are a high-value target precisely because a single compromised storefront can feed fraud, credential phishing, and supply-chain abuse for months. The CVSS profile matches the real-world tradecraft: no authentication, no user click, and an easy path from template injection to arbitrary code.\n\n## Breaches\n\nAn exposed advance passenger information system linked to Vietnam shows what default credentials still cost [[s26]]. The database held 220 million passenger and crew records, including names, passport numbers, nationalities, dates of birth, and flight histories spanning nearly a decade. Researchers reached the system through a cloud-facing path protected by default credentials. The sheer volume matters less than the data type: passport numbers and travel patterns are durable identity assets, the kind of records that enable targeted fraud, border-hopping attempts, and social engineering long after the exposure is closed. Traveler databases also tend to cross borders and jurisdictions, which complicates notification and remediation. A system holding this much identity data should never have been one default login away from the internet.\n\nThe Liquid Network incident remains unresolved despite a surprising partial return [[s5]]. Whoever exploited an Elements bug to steal nearly 4,000 bitcoin sent back 3,400 of it the following day, leaving roughly 598.5 bitcoin, worth about $47 million, unreturned. Liquid is still paused, meaning holders cannot convert their L-BTC tokens back into real bitcoin. The pause protects users from further losses but also locks in collateral damage by freezing legitimate redemptions. Partial returns are difficult to interpret: they could reflect a ransom negotiation, a failed laundering attempt, or an attacker minimizing exposure. The remaining balance and the continued network freeze mean the underlying sidechain code has not yet been cleared for normal operation. For anyone relying on Bitcoin sidechains, this is a reminder that the security of the pegged asset depends on the correctness of the sidechain software, not just the integrity of the main chain.\n\n## Vulnerabilities\n\nFreeIPA is the trust anchor for many Linux domains, so a flaw chain that lets anonymous clients mint administrator credentials is about as bad as it gets [[s19]]. Red Hat warns that a client that has never logged in can create a Kerberos identity of its own choosing, end up in the administrators group, and produce reusable admin credentials. The attack depends on a second flaw in the 389 Directory Server software underlying FreeIPA’s LDAP store. The result is a complete collapse of domain trust: the attacker starts with no authenticated foothold and finishes with credentials that look legitimate and remain valid. Response cannot stop at patching the two flaws; administrators need to audit existing identities for unexpected administrators and rotate credentials that may have been minted through the chain.\n\nSAP’s latest batch of updates covers 20 vulnerabilities, and the one that deserves attention is OVERPASS, a maximum-severity memory corruption issue in the SAP Kernel [[s3]]. The flaw gives remote attackers both code execution and the ability to recover secrets. Kernel-level access in an SAP environment is not a single-system problem; SAP systems are usually the backbone of finance, logistics, and identity processes in large enterprises, so remote kernel compromise can quickly become enterprise-wide data exposure or fraud enablement.\n\nA proof-of-concept from security firm Calif shows a WeChat worm that takes over accounts through an incoming call on both iPhone and Android [[s17]]. The receiving user does not need to answer or touch the phone, but the caller must already be one of the target’s contacts. That contact requirement is real but not limiting: a worm that compromises one account inherits that account’s contact list and can use it to reach the next victim. Calif demonstrated propagation across three test phones. The attack has not been described as in-the-wild exploitation, but it is an unusually clean example of a zero-click messaging flaw with worm potential, and Tencent has been notified.\n\nThe N-able N-central zero-day patch is notable for what the vendor told administrators to do after updating [[s21]]. Deployment guidance is to check for unrecognized administrator accounts. N-central is a remote monitoring and management platform, so a malicious administrator account inside it is not just a tenant issue; it can become a route into every managed endpoint. The warning suggests the zero-day may have been used to establish persistence before the patch existed, and that a console-level account hunt should be part of the remediation process.\n\n## Research\n\nGoogle’s threat intelligence group is now documenting autonomous AI attacks as an operational reality rather than a demo [[s9]]. One financially motivated group used a multi-agent framework to harvest thousands of credentials in under six hours, and Google observes attackers with diverse motivations targeting proprietary AI systems. The scale and speed are new: this is not an AI generating a phishing email while a human does the rest. The full loop of reconnaissance, credential access, and payload delivery appears to have been delegated to coordinated agents. For defenders, the implication is that attack tempo—and the cost of experimentation—has shifted. Security teams need to assume that credential harvesting can now happen at machine speed, and that a single misconfiguration can be discovered and exploited in hours rather than days.",
+  "selected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Adobe Patches Magento Zero-Day Exploited to Deploy Rust Backdoor and PHP Web Shell",
+      "url": "https://thehackernews.com/2026/09/adobe-patches-magento-zero-day.html",
+      "publishedAt": "2026-09-08T09:13:47.000Z",
+      "excerpt": "Adobe on Monday released security patches to address a maximum-severity flaw impacting Adobe Commerce and Magento Open Source that has come under active exploitation in the wild. The vulnerability, now tracked as CVE-2026-75650 (CVSS score: 10.0), has been codenamed StyleSmuggler by Sansec, which discovered zero-day exploitation starting September 4, 2026. \"This update resolves a critical",
+      "canonicalUrl": "https://thehackernews.com/2026/09/adobe-patches-magento-zero-day.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-75650",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Adobe Commerce is affected by an Improper Neutralization of Special Elements Used in a Template Engine vulnerability that could result in arbitrary code execution in the context of the current user. An attacker could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction. Scope is changed.",
+            "cvss": {
+              "version": "3.1",
+              "score": 10,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+              "source": "psirt@adobe.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-1336"
+            ],
+            "published": "2026-09-07T21:17:30.863",
+            "lastModified": "2026-09-08T13:57:24.390",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://helpx.adobe.com/security/products/magento/apsb26-146.html",
+                "source": "psirt@adobe.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/adobe-patches-magento-zero-day.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.04",
+              "dateReleased": "2026-09-04T16:47:03.5197Z",
+              "retrievedAt": "2026-09-08T15:51:59.167Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-75650",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-75650",
+              "retrievedAt": "2026-09-08T15:51:59.167Z"
+            }
+          }
+        }
+      ],
+      "id": "s24",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "Max-severity Magento/Adobe Commerce zero-day is under active attack, with Rust backdoors and PHP web shells being deployed on e-commerce servers."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "220 million traveler records exposed in Vietnam-linked APIS leak",
+      "url": "https://www.bleepingcomputer.com/news/security/220-million-traveler-records-exposed-in-vietnam-linked-apis-leak/",
+      "publishedAt": "2026-09-08T07:35:50.000Z",
+      "excerpt": "Exclusive: An exposed Advance Passenger Information System (APIS) database held 220 million passenger and crew records containing names, passport numbers, dates of birth, nationalities, and flight details spanning 2017 to 2026. Researchers accessed the Vietnam-linked system through a cloud-based path using default credentials. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/220-million-traveler-records-exposed-in-vietnam-linked-apis-leak",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s26",
+      "section": "breaches",
+      "rank": 2,
+      "angle": "Default credentials exposed a Vietnam-linked APIS database holding 220 million traveler and crew records, including passports and flight details spanning almost a decade."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Liquid Hackers Return 3,400 Bitcoin Taken via Elements Bug, Still Holding $47M in BTC",
+      "url": "https://thehackernews.com/2026/09/liquid-hackers-return-3400-bitcoin.html",
+      "publishedAt": "2026-09-08T14:54:30.000Z",
+      "excerpt": "Whoever took nearly 4,000 bitcoin from the Liquid Network on Sunday, September 6, returned 3,400 of it the next day, Bitcoin's public record shows. About 598.5 bitcoin has not come back. Liquid is a Bitcoin sidechain that holds real bitcoin to back a token called L-BTC. The network is still paused, so holders cannot turn that token back into bitcoin. The 3,400 bitcoin was sent to a&",
+      "canonicalUrl": "https://thehackernews.com/2026/09/liquid-hackers-return-3400-bitcoin.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s5",
+      "section": "breaches",
+      "rank": 3,
+      "angle": "Most of the stolen Liquid Network bitcoin came back, but roughly 598.5 BTC is still in attacker hands and the sidechain remains paused."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "FreeIPA Flaw Chain Lets Anonymous Clients Create Reusable Administrator Credentials",
+      "url": "https://thehackernews.com/2026/09/freeipa-flaw-chain-lets-anonymous.html",
+      "publishedAt": "2026-09-08T11:22:07.000Z",
+      "excerpt": "A flaw in FreeIPA lets a client that has never logged in create a Kerberos identity of its own choosing in the directory and end up in the administrators group, Red Hat says. FreeIPA is the system that determines who may log in across a Linux domain and maintains all identities in a 389 Directory Server database accessed via LDAP. The attack needs a second flaw in that database software. The",
+      "canonicalUrl": "https://thehackernews.com/2026/09/freeipa-flaw-chain-lets-anonymous.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s19",
+      "section": "vulnerabilities",
+      "rank": 4,
+      "angle": "Red Hat warns a FreeIPA flaw chain lets anonymous clients mint reusable administrator credentials across Linux domains."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "SAP warns of maximum severity 'OVERPASS' kernel vulnerability",
+      "url": "https://www.bleepingcomputer.com/news/security/sap-warns-of-maximum-severity-overpass-kernel-vulnerability/",
+      "publishedAt": "2026-09-08T14:55:20.000Z",
+      "excerpt": "SAP has addressed 20 vulnerabilities across multiple products in its September 2026 security updates, including a maximum-severity memory corruption flaw in the SAP Kernel code. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/sap-warns-of-maximum-severity-overpass-kernel-vulnerability",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s3",
+      "section": "vulnerabilities",
+      "rank": 5,
+      "angle": "SAP's September updates tackle a maximum-severity kernel memory corruption flaw that can let remote attackers run commands and recover secrets."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "WeChat Zero-Click Worm Took Over Accounts on iPhone and Android via Incoming Calls",
+      "url": "https://thehackernews.com/2026/09/wechat-zero-click-worm-took-over.html",
+      "publishedAt": "2026-09-08T11:54:29.000Z",
+      "excerpt": "Researchers at the security firm Calif have built a worm that takes over a WeChat account via an incoming call and demonstrated it spreading among three test phones. The person being called does not have to answer or touch their phone for it to work, but the caller must already be one of their WeChat contacts. Calif reported the flaw to Tencent in July and says the company has since",
+      "canonicalUrl": "https://thehackernews.com/2026/09/wechat-zero-click-worm-took-over.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s17",
+      "section": "vulnerabilities",
+      "rank": 6,
+      "angle": "A new proof-of-concept shows an incoming call from a WeChat contact can take over accounts on iPhone and Android without any user interaction."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Autonomous AI Agents Compromise Thousands of Credentials in Under Six Hours",
+      "url": "https://thehackernews.com/2026/09/autonomous-ai-agents-compromise.html",
+      "publishedAt": "2026-09-08T13:48:16.000Z",
+      "excerpt": "Threat actors are continuing to leverage artificial intelligence (AI) to streamline their operations, with one financially motivated hacking group employing an autonomous, multi-agent attack framework to carry out a large-scale credential harvesting campaign within six hours. Google Threat Intelligence Group (GTIG) said it has observed attackers with diverse motivations targeting proprietary AI",
+      "canonicalUrl": "https://thehackernews.com/2026/09/autonomous-ai-agents-compromise.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s9",
+      "section": "research",
+      "rank": 7,
+      "angle": "Google threat researchers observed an autonomous multi-agent framework harvest thousands of credentials in under six hours, showing AI-driven attacks moving from theory to operations."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "N-able Patches Critical Zero-Day in N-central",
+      "url": "https://www.securityweek.com/n-able-patches-critical-zero-day-in-n-central/",
+      "publishedAt": "2026-09-08T10:37:58.000Z",
+      "excerpt": "Administrators are advised to check their deployments for newly created user accounts they don’t recognize. The post N-able Patches Critical Zero-Day in N-central appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/n-able-patches-critical-zero-day-in-n-central",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s21",
+      "section": "vulnerabilities",
+      "rank": 8,
+      "angle": "N-able's critical N-central zero-day patch is paired with a warning to hunt for unrecognized administrator accounts created in managed deployments."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "August updates trigger 0xc0000409 errors on Windows Server 2016",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/august-updates-trigger-0xc0000409-errors-on-windows-server-2016/",
+      "publishedAt": "2026-09-08T15:22:33.000Z",
+      "excerpt": "Microsoft says the August 2026 security update may trigger 0xc0000409 errors on Windows Server 2016 systems where the Compatibility Appraiser diagnostic service is enabled. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/august-updates-trigger-0xc0000409-errors-on-windows-server-2016",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Cylake Raises $245 Million Ahead of Cybersecurity Platform Beta",
+      "url": "https://www.securityweek.com/cylake-raises-245-million-ahead-of-cybersecurity-platform-beta/",
+      "publishedAt": "2026-09-08T15:21:01.000Z",
+      "excerpt": "The startup founded by Palo Alto Networks’ Nir Zuk has raised $290 million to build an AI-native security platform for highly regulated organizations that cannot rely on the public cloud. The post Cylake Raises $245 Million Ahead of Cybersecurity Platform Beta appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/cylake-raises-245-million-ahead-of-cybersecurity-platform-beta",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "SAP Patches Critical Extended Passport Processing Vulnerability",
+      "url": "https://www.securityweek.com/sap-patches-critical-extended-passport-processing-vulnerability/",
+      "publishedAt": "2026-09-08T14:55:06.000Z",
+      "excerpt": "Affecting the SAP kernel code, the flaw allows unauthenticated, remote attackers to run arbitrary commands, recover secrets, and modify data. The post SAP Patches Critical Extended Passport Processing Vulnerability appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/sap-patches-critical-extended-passport-processing-vulnerability",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "OpenAI says GPT-6 Astra can find zero-days, but is also harder to monitor",
+      "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/openai-says-gpt-6-astra-can-find-zero-days-but-is-also-harder-to-monitor/",
+      "publishedAt": "2026-09-08T14:40:32.000Z",
+      "excerpt": "OpenAI confirmed that GPT-6 Astra is the first model it has broadly deployed to reach the \"Critical level\" for cybersecurity capabilities. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/artificial-intelligence/openai-says-gpt-6-astra-can-find-zero-days-but-is-also-harder-to-monitor",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "ChatGPT Flaw Let a Planted Prompt Send a Victim's Gmail Data to Another Account",
+      "url": "https://thehackernews.com/2026/09/chatgpt-flaw-let-planted-prompt-send.html",
+      "publishedAt": "2026-09-08T14:19:17.000Z",
+      "excerpt": "Check Point Research said in a report published today that a single instruction planted in a ChatGPT conversation could cause ChatGPT to quietly work for an attacker while answering the user's question as usual. In the company's proof of concept, that hidden work read data from the user's connected Gmail account and passed it to a second ChatGPT account through a hidden channel",
+      "canonicalUrl": "https://thehackernews.com/2026/09/chatgpt-flaw-let-planted-prompt-send.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Where the backlash against Flock Safety is having the biggest impact",
+      "url": "https://therecord.media/flock-safety-backlash-places-with-biggest-impact",
+      "publishedAt": "2026-09-08T14:03:00.000Z",
+      "excerpt": "Two populous states and two large cities are among the U.S. jurisdictions where leaders have taken direct action to address criticisms of automated license plate readers (ALPRs).",
+      "canonicalUrl": "https://therecord.media/flock-safety-backlash-places-with-biggest-impact",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Adobe fixes critical Magento zero-day exploited to backdoor servers",
+      "url": "https://www.bleepingcomputer.com/news/security/adobe-fixes-critical-magento-zero-day-exploited-to-backdoor-servers/",
+      "publishedAt": "2026-09-08T13:34:47.000Z",
+      "excerpt": "Adobe has released an emergency fix for CVE-2026-75650, an actively exploited max-severity zero-day vulnerability dubbed StyleSmuggler, that impacts multiple versions of Magento and Adobe Commerce. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/adobe-fixes-critical-magento-zero-day-exploited-to-backdoor-servers",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-75650",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Adobe Commerce is affected by an Improper Neutralization of Special Elements Used in a Template Engine vulnerability that could result in arbitrary code execution in the context of the current user. An attacker could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction. Scope is changed.",
+            "cvss": {
+              "version": "3.1",
+              "score": 10,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+              "source": "psirt@adobe.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-1336"
+            ],
+            "published": "2026-09-07T21:17:30.863",
+            "lastModified": "2026-09-08T13:57:24.390",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://helpx.adobe.com/security/products/magento/apsb26-146.html",
+                "source": "psirt@adobe.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "bleepingcomputer",
+                "url": "https://www.bleepingcomputer.com/news/security/adobe-fixes-critical-magento-zero-day-exploited-to-backdoor-servers/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.04",
+              "dateReleased": "2026-09-04T16:47:03.5197Z",
+              "retrievedAt": "2026-09-08T15:51:59.167Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-75650",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-75650",
+              "retrievedAt": "2026-09-08T15:51:59.167Z"
+            }
+          }
+        }
+      ],
+      "id": "s10"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Party’s Over for Crypto Scammers Who Went on a Spending Spree After a $240 Million Bitcoin Theft",
+      "url": "https://www.securityweek.com/partys-over-for-crypto-scammers-who-went-on-a-spending-spree-after-a-240-million-bitcoin-theft/",
+      "publishedAt": "2026-09-08T13:00:00.000Z",
+      "excerpt": "The scammers purchased fleets of sports cars, flew on private jets, hired security guards and rented mansions in Miami and the Hamptons. The post Party’s Over for Crypto Scammers Who Went on a Spending Spree After a $240 Million Bitcoin Theft appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/partys-over-for-crypto-scammers-who-went-on-a-spending-spree-after-a-240-million-bitcoin-theft",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Webinar: The forgotten Google Workspace access that can lead to a breach",
+      "url": "https://www.bleepingcomputer.com/news/security/webinar-the-forgotten-google-workspace-access-that-can-lead-to-a-breach/",
+      "publishedAt": "2026-09-08T12:40:48.000Z",
+      "excerpt": "Third-party applications connected to Google Workspace can retain access long after their original purpose is forgotten. This webinar examines how overly permissive integrations contribute to breaches and which security controls can help fast-growing companies reduce their exposure. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/webinar-the-forgotten-google-workspace-access-that-can-lead-to-a-breach",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "French prosecutors confirm arrest of suspected ZeroBytes hacker behind tax cyberattack",
+      "url": "https://therecord.media/france-hacker-arrest-zerobytes",
+      "publishedAt": "2026-09-08T12:30:00.000Z",
+      "excerpt": "French authorities detained an 18-year-old suspected member of the ZeroBytes hacking group over cyberattacks against the country's tax authority and other organizations.",
+      "canonicalUrl": "https://therecord.media/france-hacker-arrest-zerobytes",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers build AI frameworks for widescale credential theft",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-build-ai-frameworks-for-widescale-credential-theft/",
+      "publishedAt": "2026-09-08T12:03:03.000Z",
+      "excerpt": "Threat actors are increasingly switching from AI-powered coding assistants to multi-agent frameworks that automate every stage of an attack. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-build-ai-frameworks-for-widescale-credential-theft",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s14"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Cyberattack encrypts systems at Bavarian municipal utility",
+      "url": "https://therecord.media/cyberattack-bavaria-germany-utility",
+      "publishedAt": "2026-09-08T12:00:00.000Z",
+      "excerpt": "A municipal utility in Bavaria is recovering from a cyberattack that encrypted its internal IT systems but did not affect water and electricity services.",
+      "canonicalUrl": "https://therecord.media/cyberattack-bavaria-germany-utility",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft: Windows Server 2025 changes causing app crashes",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-windows-server-2025-changes-may-cause-app-crashes/",
+      "publishedAt": "2026-09-08T11:57:51.000Z",
+      "excerpt": "Microsoft warned customers last week that they may experience application crashes on some Windows Server 2025 due to recent memory management changes. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-windows-server-2025-changes-may-cause-app-crashes",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "What It Took to Reach 1 Billion Build Manifests",
+      "url": "https://thehackernews.com/2026/09/what-it-took-to-reach-1-billion-build.html",
+      "publishedAt": "2026-09-08T11:49:02.000Z",
+      "excerpt": "In the last six months, Chainguard doubled its output from 500 million to more than 1 billion container build manifests. We also surpassed 3,000 unique container images and 675,000 image versions in our catalog. Those are the headline numbers, but I want to share what's actually behind them. The number itself is less interesting than the system that produced it, and why we had to fundamentally",
+      "canonicalUrl": "https://thehackernews.com/2026/09/what-it-took-to-reach-1-billion-build.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s18"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "MikroTik Patches Critical Flaws Chained to Hack Routers",
+      "url": "https://www.securityweek.com/mikrotik-patches-critical-flaws-chained-to-hack-routers/",
+      "publishedAt": "2026-09-08T11:15:00.000Z",
+      "excerpt": "Dubbed MikroTrick, the bugs allow attackers to bypass authentication, overwrite configuration files, and take over devices. The post MikroTik Patches Critical Flaws Chained to Hack Routers appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/mikrotik-patches-critical-flaws-chained-to-hack-routers",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "talos",
+      "sourceKind": "rss",
+      "title": "ClearFake WebDAV infection chain delivers Amatera stealer, ZigCryptoStealer, and NetSupport Manager",
+      "url": "https://blog.talosintelligence.com/clearfake-webdav-infection-chain/",
+      "publishedAt": "2026-09-08T10:01:07.000Z",
+      "excerpt": "We assess with moderate confidence that the attacks are not targeted at a particular organization, but are a part of a cryptocurrency and credentials-stealing operation using the Amatera stealer as the primary payload.",
+      "canonicalUrl": "https://blog.talosintelligence.com/clearfake-webdav-infection-chain",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s22"
+    },
+    {
+      "sourceId": "talos",
+      "sourceKind": "rss",
+      "title": "ClickFix moves into the browser: Cryptocurrency theft with Google-hosted C2",
+      "url": "https://blog.talosintelligence.com/clickfix-moves-into-the-browser/",
+      "publishedAt": "2026-09-08T10:00:38.000Z",
+      "excerpt": "Cisco Talos is tracking a cryptocurrency-stealing campaign that abuses the Google Visualization API for command and control (C2), retrieving obfuscated JavaScript from a publicly published Google Sheets document and injecting it into the victim's browser session.",
+      "canonicalUrl": "https://blog.talosintelligence.com/clickfix-moves-into-the-browser",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "BengalSEO Poisons Bing Search Results to Deliver MayaBot and Tech Support Scams",
+      "url": "https://thehackernews.com/2026/09/bengalseo-poisons-bing-search-results.html",
+      "publishedAt": "2026-09-08T08:43:51.000Z",
+      "excerpt": "Cybersecurity researchers have disclosed details of a sprawling search engine optimization (SEO) poisoning campaign that paves the way for malware deployment and tech support scams. The campaign, discovered by the DFIR Report in March 2026, has been codenamed BengalSEO. It has operated out of the Indian state of Rajasthan since at least 2015, driven by two IT service providers named WeConnect",
+      "canonicalUrl": "https://thehackernews.com/2026/09/bengalseo-poisons-bing-search-results.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Grindr to Pay £26 Million to Settle U.K. Claims Over HIV Status Data Sharing",
+      "url": "https://thehackernews.com/2026/09/grindr-to-pay-26-million-to-settle-uk.html",
+      "publishedAt": "2026-09-08T07:00:43.000Z",
+      "excerpt": "Online dating app Grindr has opted to pay £26 million ($35.1 million) to settle a lawsuit in the U.K. over allegations that it shared users' personal information, including their HIV status, with third-parties. Grindr, which is the largest LGBTQ+ dating app, was sued in April 2024, accusing it of violating U.K. privacy laws by sharing sensitive data for commercial purposes such as advertising.",
+      "canonicalUrl": "https://thehackernews.com/2026/09/grindr-to-pay-26-million-to-settle-uk.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "PEEP Turns Chrome and Edge Into Post-Compromise Backdoors for Host Command Execution",
+      "url": "https://thehackernews.com/2026/09/peep-turns-chrome-and-edge-into-post.html",
+      "publishedAt": "2026-09-07T18:12:09.000Z",
+      "excerpt": "Cybersecurity researchers have disclosed details of a complex Chromium-based post-exploitation toolkit called PEEP that masquerades as a bookmarks extension for the web browser. \"Requiring prior administrative or code execution access, its installer injects the extension directly into Chrome/Edge profiles, bypassing Web Store checks and user prompts by forging Chromium's own Secure Preferences",
+      "canonicalUrl": "https://thehackernews.com/2026/09/peep-turns-chrome-and-edge-into-post.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s28"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1152,
+    "promptCacheMissTokens": 5565,
+    "outputTokens": 18966,
+    "estimatedCostUsd": 0.006092805600000001
+  }
+}
