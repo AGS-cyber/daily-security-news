@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-09-10",
+    "mode": "article",
+    "headline": "A perfect-severity Cisco auth bypass, a record Patch Tuesday, and a Defender bug with no patch",
+    "count": 48
+  },
+  {
     "date": "2026-09-09",
     "mode": "article",
     "headline": "A record patch wave with clear priorities",
