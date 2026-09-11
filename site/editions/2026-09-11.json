@@ -1,0 +1,1384 @@
+{
+  "date": "2026-09-11",
+  "generatedAt": "2026-09-11T15:43:43.658Z",
+  "degraded": [
+    {
+      "stage": "normalize",
+      "message": "2 items were dropped as unparseable"
+    },
+    {
+      "stage": "select",
+      "message": "The written article could not be generated: select failed — select returned text that is not JSON: Expected ',' or '}' after property value in JSON at position 1300 (line 1 column 1301). This page is the chronological digest of everything collected instead."
+    }
+  ],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 228,
+    "deduped": 223,
+    "published": 40
+  },
+  "mode": "digest",
+  "items": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Claude Used to Automate Exploitation and Data Theft Across Multiple Victims",
+      "url": "https://thehackernews.com/2026/09/claude-used-to-automate-exploitation.html",
+      "publishedAt": "2026-09-11T14:29:47.000Z",
+      "excerpt": "Anthropic has warned that cybercriminals and state-sponsored hackers alike are using its Claude models for cyber attacks, weapons design, propaganda, and mass surveillance between December 2025 and August 2026. The threat actors, which the artificial intelligence (AI) company has branded Generative Threat Groups (GTGs), span state-sponsored groups, financially motivated criminals, commercial",
+      "canonicalUrl": "https://thehackernews.com/2026/09/claude-used-to-automate-exploitation.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "In Other News: InjectEave Attack, SIM Swapper Sentenced, Glasswing Findings Review",
+      "url": "https://www.securityweek.com/in-other-news-injecteave-attack-sim-swapper-sentenced-glasswing-findings-review/",
+      "publishedAt": "2026-09-11T14:19:18.000Z",
+      "excerpt": "Noteworthy stories that might have slipped under the radar: Invisible Unicode slips past phishing filters, US puts $10 million bounty on Iranian cyber official, military ties of Chinese hacking group QTFY. The post In Other News: InjectEave Attack, SIM Swapper Sentenced, Glasswing Findings Review appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/in-other-news-injecteave-attack-sim-swapper-sentenced-glasswing-findings-review",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Russian State-Sponsored Hackers Use Claude to Rebuild Malware After Detection",
+      "url": "https://thehackernews.com/2026/09/russian-state-sponsored-hackers-use.html",
+      "publishedAt": "2026-09-11T14:10:20.000Z",
+      "excerpt": "Anthropic on Thursday revealed it disrupted a campaign mounted by a Russian state-sponsored threat actor that abused Claude for developing an AI-assisted workflow to get ahead of the detection curve. The operation has been attributed to a cyber espionage group it calls GTG-20006 (where \"GTG\" stands for Generative Threat Group), which aligns with broader reporting linking the cluster to Midnight",
+      "canonicalUrl": "https://thehackernews.com/2026/09/russian-state-sponsored-hackers-use.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "How Threat Actors Are Turning Trusted AI Platforms Into an Attack Surface",
+      "url": "https://www.bleepingcomputer.com/news/security/how-threat-actors-are-turning-trusted-ai-platforms-into-an-attack-surface/",
+      "publishedAt": "2026-09-11T14:01:11.000Z",
+      "excerpt": "Threat actors are abusing trusted AI platforms to host malicious content, poison search results, and trick users into installing malware. Huntress examines campaigns targeting AI users through weaponized Claude Artifacts, shared AI conversations, sponsored search results, and ClickFix-style lures. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/how-threat-actors-are-turning-trusted-ai-platforms-into-an-attack-surface",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Trezor Says 347,000 Users Received Phishing Emails After Brevo Hack",
+      "url": "https://www.securityweek.com/trezor-says-347000-users-received-phishing-emails-after-brevo-hack/",
+      "publishedAt": "2026-09-11T12:48:04.000Z",
+      "excerpt": "Hackers compromised the Brevo marketing platform and used that access to send phishing emails to users of Trezor, BitBox, and CoinTracking. The post Trezor Says 347,000 Users Received Phishing Emails After Brevo Hack appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/trezor-says-347000-users-received-phishing-emails-after-brevo-hack",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Anthropic caught Russia-linked spies using Claude in hacking operations",
+      "url": "https://therecord.media/anthropic-russia-hackers-claude",
+      "publishedAt": "2026-09-11T12:45:00.000Z",
+      "excerpt": "Anthropic detected and disrupted a Russia-linked cyber-espionage group that used its AI tool Claude in a hacking campaign targeting more than 20 government, intelligence, diplomatic and defense organizations.",
+      "canonicalUrl": "https://therecord.media/anthropic-russia-hackers-claude",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Ukrainian hacker gets four years in US prison over Conti ransomware attacks",
+      "url": "https://therecord.media/conti-ransomware-ukraine-hacker",
+      "publishedAt": "2026-09-11T12:00:00.000Z",
+      "excerpt": "A Ukrainian national was sentenced to four years in a U.S. prison for his role in the notorious Conti ransomware operation, which targeted more than 1,000 victims worldwide before shutting down in 2022.",
+      "canonicalUrl": "https://therecord.media/conti-ransomware-ukraine-hacker",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Your Critical Vulnerabilities Might Not Be Your Biggest Risk",
+      "url": "https://thehackernews.com/2026/09/your-critical-vulnerabilities-might-not.html",
+      "publishedAt": "2026-09-11T11:30:00.000Z",
+      "excerpt": "Security teams have become exceptionally talented at finding vulnerabilities. Now, it’s time to turn our attention to optimizing the process for determining which of those vulnerabilities actually create a path to compromise. A critical vulnerability may look alarming on a scanner report, but if it sits behind strong segmentation, identity controls, and other defenses that prevent an attacker",
+      "canonicalUrl": "https://thehackernews.com/2026/09/your-critical-vulnerabilities-might-not.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Ukrainian Conti Ransomware Developer Sentenced to 4 Years in US Prison",
+      "url": "https://www.securityweek.com/ukrainian-conti-ransomware-developer-sentenced-to-4-years-in-us-prison/",
+      "publishedAt": "2026-09-11T11:29:09.000Z",
+      "excerpt": "Oleksii Oleksiyovych Lytvynenko has been sentenced to 4 years in prison after he was arrested in Ireland in 2023. The post Ukrainian Conti Ransomware Developer Sentenced to 4 Years in US Prison appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/ukrainian-conti-ransomware-developer-sentenced-to-4-years-in-us-prison",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "GitLab urges users to patch max severity path traversal flaw",
+      "url": "https://www.bleepingcomputer.com/news/security/gitlab-urges-users-to-patch-max-severity-path-traversal-flaw/",
+      "publishedAt": "2026-09-11T11:15:22.000Z",
+      "excerpt": "GitLab urged users on Thursday to patch their servers immediately against a maximum-severity path traversal vulnerability tracked as CVE-2026-85706. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/gitlab-urges-users-to-patch-max-severity-path-traversal-flaw",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-85706",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "bleepingcomputer",
+                "url": "https://www.bleepingcomputer.com/news/security/gitlab-urges-users-to-patch-max-severity-path-traversal-flaw/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.10",
+              "dateReleased": "2026-09-10T19:00:05.1949Z",
+              "retrievedAt": "2026-09-11T15:43:43.658Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-85706%2CCVE-2026-85102%2CCVE-2026-85103%2CCVE-2026-20079",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-85706",
+              "retrievedAt": "2026-09-11T15:43:43.658Z"
+            }
+          }
+        }
+      ],
+      "id": "s10"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Check Point Patches Critical VPN Vulnerabilities",
+      "url": "https://www.securityweek.com/check-point-patches-critical-vpn-vulnerabilities/",
+      "publishedAt": "2026-09-11T11:10:02.000Z",
+      "excerpt": "Tracked as CVE-2026-85102 and CVE-2026-85103, the flaws could be exploited for remote code execution. The post Check Point Patches Critical VPN Vulnerabilities appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/check-point-patches-critical-vpn-vulnerabilities",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-85102",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Improper certificate trust validation during VPN negotiation in Check Point Quantum Security Gateway may allow an unauthenticated remote attacker to execute arbitrary code on the Gateway.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "cve@checkpoint.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-295"
+            ],
+            "published": "2026-09-09T13:20:43.793",
+            "lastModified": "2026-09-10T04:18:18.243",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://support.checkpoint.com/results/sk/sk1000117",
+                "source": "cve@checkpoint.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/check-point-patches-critical-vpn-vulnerabilities/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.10",
+              "dateReleased": "2026-09-10T19:00:05.1949Z",
+              "retrievedAt": "2026-09-11T15:43:43.658Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-85706%2CCVE-2026-85102%2CCVE-2026-85103%2CCVE-2026-20079",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-85102",
+              "retrievedAt": "2026-09-11T15:43:43.658Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-85103",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "A heap-based buffer overflow in VPN certificate ASN.1 decoding may allow an unauthenticated remote attacker to execute arbitrary code on Check Point Quantum Security Management and Quantum Security Gateway systems.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "cve@checkpoint.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-122"
+            ],
+            "published": "2026-09-09T13:20:43.997",
+            "lastModified": "2026-09-10T04:18:18.390",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://support.checkpoint.com/results/sk/sk1000118",
+                "source": "cve@checkpoint.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/check-point-patches-critical-vpn-vulnerabilities/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.10",
+              "dateReleased": "2026-09-10T19:00:05.1949Z",
+              "retrievedAt": "2026-09-11T15:43:43.658Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-85706%2CCVE-2026-85102%2CCVE-2026-85103%2CCVE-2026-20079",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-85103",
+              "retrievedAt": "2026-09-11T15:43:43.658Z"
+            }
+          }
+        }
+      ],
+      "id": "s11"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Kiteworks Acquires Bonfy.AI to Fill the AI Gap in Data Governance",
+      "url": "https://www.securityweek.com/kiteworks-acquires-bonfy-ai-to-fill-the-ai-gap-in-data-governance/",
+      "publishedAt": "2026-09-11T10:56:16.000Z",
+      "excerpt": "Financials have not been disclosed, but the estimated cost is in the tens of millions of dollars. The post Kiteworks Acquires Bonfy.AI to Fill the AI Gap in Data Governance appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/kiteworks-acquires-bonfy-ai-to-fill-the-ai-gap-in-data-governance",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Surfshark Systems Targeted by Hackers",
+      "url": "https://www.securityweek.com/surfshark-systems-targeted-by-hackers/",
+      "publishedAt": "2026-09-11T09:41:03.000Z",
+      "excerpt": "A misconfigured test server containing engineering material, including internal configurations, was accessed by threat actors. The post Surfshark Systems Targeted by Hackers appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/surfshark-systems-targeted-by-hackers",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft fixes Teams, Outlook launch failures on ARM Windows PCs",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-teams-outlook-launch-failures-on-arm-windows-pcs/",
+      "publishedAt": "2026-09-11T09:39:37.000Z",
+      "excerpt": "Microsoft has fixed a bug that prevented Teams and Outlook from launching on ARM-based Windows devices after installing updates released since the August 2026 Patch Tuesday. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-fixes-teams-outlook-launch-failures-on-arm-windows-pcs",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s14"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Anthropic Says Russian Hackers Used Claude AI to Automate Malware Evasion",
+      "url": "https://www.securityweek.com/anthropic-says-russian-hackers-used-claude-ai-to-automate-malware-evasion/",
+      "publishedAt": "2026-09-11T08:47:07.000Z",
+      "excerpt": "Anthropic reveals how criminal groups are increasingly targeting AI vendors' own infrastructure, including to steal a pre-release Claude model. The post Anthropic Says Russian Hackers Used Claude AI to Automate Malware Evasion appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/anthropic-says-russian-hackers-used-claude-ai-to-automate-malware-evasion",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "PaperCut Flaws Exploited in AI-Powered Attacks",
+      "url": "https://www.securityweek.com/papercut-flaws-exploited-in-ai-powered-attacks/",
+      "publishedAt": "2026-09-11T08:18:23.000Z",
+      "excerpt": "A Russian threat actor used AI to build, test, and deploy exploits against hundreds of organizations worldwide. The post PaperCut Flaws Exploited in AI-Powered Attacks appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/papercut-flaws-exploited-in-ai-powered-attacks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Trezor: 347,000 users targeted in phishing attacks after Brevo breach",
+      "url": "https://www.bleepingcomputer.com/news/security/trezor-347-000-users-targeted-in-phishing-attacks-after-brevo-breach/",
+      "publishedAt": "2026-09-11T07:55:15.000Z",
+      "excerpt": "Trezor has revealed that phishing attacks against its customers earlier this week targeted 347,000 email addresses and affected 2,500 users who clicked an embedded malicious link. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/trezor-347-000-users-targeted-in-phishing-attacks-after-brevo-breach",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Attackers Chain JFrog Artifactory Flaws to Gain Admin Control and Plant Backdoors",
+      "url": "https://thehackernews.com/2026/09/attackers-chain-jfrog-artifactory-flaws.html",
+      "publishedAt": "2026-09-11T07:31:05.000Z",
+      "excerpt": "Attackers have chained two flaws in JFrog Artifactory, the repository that software build pipelines pull from, to take administrator control of self-hosted servers and plant backdoors, cloud security company Wiz said in a report. Wiz saw the attacks between August 15 and September 8. JFrog had fixed both flaws before then, so only servers that had not been updated were open to them.",
+      "canonicalUrl": "https://thehackernews.com/2026/09/attackers-chain-jfrog-artifactory-flaws.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s18"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "China-Linked UNC3569 Exploited Sogou Input Method Flaw to Deploy GRAYRABBIT Backdoor",
+      "url": "https://thehackernews.com/2026/09/china-linked-unc3569-exploited-sogou.html",
+      "publishedAt": "2026-09-11T07:14:09.000Z",
+      "excerpt": "A China-linked hacking group exploited a flaw in Sogou Input Method, one of the most widely used tools for typing Chinese characters on Windows, to install a backdoor on victims' computers, security company Gen Digital said in research published Thursday. The attack started with a crafted link and ended with the attacker able to do anything the logged-in user could do. Tencent, which owns",
+      "canonicalUrl": "https://thehackernews.com/2026/09/china-linked-unc3569-exploited-sogou.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s19"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Conti ransomware gang member sentenced to 4 years in prison",
+      "url": "https://www.bleepingcomputer.com/news/security/conti-ransomware-gang-member-sentenced-to-four-years-in-prison/",
+      "publishedAt": "2026-09-11T06:48:37.000Z",
+      "excerpt": "A Ukrainian national has been sentenced to four years in prison for his role in Conti ransomware attacks between 2021 and 2022. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/conti-ransomware-gang-member-sentenced-to-four-years-in-prison",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "PaperCut Replaces Emergency Patches With Fixes for Two Actively Exploited Flaws",
+      "url": "https://thehackernews.com/2026/09/papercut-replaces-emergency-patches.html",
+      "publishedAt": "2026-09-11T06:46:18.000Z",
+      "excerpt": "PaperCut on Thursday released a new security maintenance release that replaces all previously published emergency patches that were pushed to address two security flaws that have come under active exploitation. The software development company said PaperCut NG/MF versions 26.0.5, 25.0.13 and 24.1.10 are now available for customers to download. \"These are Regular Maintenance Releases (MR) that",
+      "canonicalUrl": "https://thehackernews.com/2026/09/papercut-replaces-emergency-patches.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s21"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Cisco FMC Flaws Exploited to Steal Credentials and Deploy Qilin Ransomware",
+      "url": "https://thehackernews.com/2026/09/cisco-fmc-flaws-exploited-to-steal.html",
+      "publishedAt": "2026-09-11T06:19:59.000Z",
+      "excerpt": "Cisco has revealed that three distinct threat clusters linked to ransomware and state-sponsored attacks have been exploiting two recently patched Secure Firewall Management Center (FMC) vulnerabilities. The attacks leverage CVE-2026-20079 (CVSS score: 10.0), an authentication bypass vulnerability in the web interface of FMC software that could allow an unauthenticated, remote attacker to bypass",
+      "canonicalUrl": "https://thehackernews.com/2026/09/cisco-fmc-flaws-exploited-to-steal.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-20079",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Cisco",
+            "product": "Secure Firewall Management Center (FMC) and Security Cloud Control (SCC) Firewall Management",
+            "vulnerabilityName": "Cisco Firewall Management Center Authentication Bypass Using an Alternate Path or Channel Vulnerability",
+            "dateAdded": "2026-09-09",
+            "shortDescription": "Cisco Secure Firewall Management Center (FMC) Software and Cisco Security Cloud Control (SCC) Firewall Management contain an authentication Bypass using an alternate path or channel vulnerability that could allow an unauthenticated, remote attacker to bypass authentication and execute script files on an affected device to obtain root access to the underlying operating system.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-09-12",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-onprem-fmc-authbypass-5JPp45V2 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-20079",
+            "cwes": [
+              "CWE-288"
+            ]
+          },
+          "nvd": {
+            "description": "A vulnerability in the web interface of Cisco Secure Firewall Management Center (FMC) Software could allow an unauthenticated, remote attacker to bypass authentication and execute script files on an affected device to obtain root access to the underlying operating system.&nbsp;\r\n\r\nThis vulnerability is due to an improper system process that is created at boot time. An attacker could exploit this vulnerability by sending crafted HTTP requests to an affected device. A successful exploit could allow the attacker to execute a variety of scripts and commands that allow&nbsp;root access to the device.&nbsp;",
+            "cvss": {
+              "version": "3.1",
+              "score": 10,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+              "source": "psirt@cisco.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-288"
+            ],
+            "published": "2026-03-04T18:16:24.230",
+            "lastModified": "2026-09-10T12:48:17.580",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-onprem-fmc-authbypass-5JPp45V2",
+                "source": "psirt@cisco.com",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "http://seclists.org/fulldisclosure/2026/Aug/80",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Exploit",
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://blog.talosintelligence.com/fmc-ongoing-exploitation/",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Exploit",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-20079",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.0.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "DFA94312-376E-4785-888F-3C07612E1DF7",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.0.0.1:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "29E73FBF-2579-4660-AFFA-7F9607004226",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.0.1:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "87FAAFFB-0589-441B-8289-8B8A6E18F705",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.0.1.1:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "73B92119-793D-4A43-A056-24DB6826E759",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.0.2:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "093A0BC2-037C-463F-AFC5-EF11C2954EAD",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.0.2.1:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C4F434FC-CAA4-4DBB-8094-C4ECC28B31E7",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.0.3:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "68C70BB3-33B3-4E7E-99D5-FF76D4ED96AE",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.0.4:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B881B8DF-A96D-4B64-B98A-71F0D3388641",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.0.5:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F6A97625-D39C-42D5-89E4-415A868A0972",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.0.6:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5E4D83B4-9697-4071-AC9F-7ADC86A6B529",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.0.6.1:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8F81F708-ACED-4E42-8CA9-116B5C4F5141",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.0.6.2:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3C86116B-8475-40A0-A507-D4A7947F5F2C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.0.6.3:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B98BFDB6-0884-4A5B-B2F6-102AE22665C9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.0.7:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "44D21149-BF7B-4188-A336-49AA5683BDC1",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.0.8:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "708A721E-11D2-4E9B-9F11-5B82F3FA742C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.0.8.1:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "943BDA7B-0E37-4914-B7B2-EDFD58FAF653",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.0.9:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E7B79D39-81E4-40B7-BB00-79F7B4F031F0",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.1.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A58A2DA5-3EE7-408D-AAFA-82330F0325B2",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.1.0.1:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7FA98EEC-2059-4CA9-92F1-72C1E0BB7EC6",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.1.0.2:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F4C51EE7-866B-410C-B75E-EF260D5062B0",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.1.0.3:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5F1FFD07-B874-4D3C-8E2C-9A204F1E994E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.2.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FB5ACB9E-86AF-4EC1-9F36-A202429CD0F4",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.2.0.1:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "AD1E4527-AAE2-4DA9-AFDA-6375839F7843",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.2.1:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2F0AF047-EAE9-4C77-BCEF-5CB26F84C742",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.2.2:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2ED03874-4071-4382-8A46-8B3A59E601FF",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.2.3:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "BF84E043-DF3C-4A95-8FDA-B0FDCD795377",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.2.3.1:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B9498087-9642-4A86-B3EE-1513C55A86E2",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.2.4:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "36C229AB-2851-48D4-815A-63AAB4462A24",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.2.4.1:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6DA4BCFC-8237-4F5C-9863-523EE7D8619B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.2.5:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "07693A92-7D84-45A1-ACD6-D83AE41D504B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.2.5.1:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2C78050A-A5FB-427B-BF0D-0353B240A4FF",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.2.5.2:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "85E76AE7-12AC-4419-AE66-43730B173B4E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.2.6:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "4D803EC9-26EE-4799-A435-C782C92739CF",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.2.7:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6EEF87CD-2335-4886-A65C-4E33775AEC52",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.2.8:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "953EB81A-1B53-4A57-9F59-D4A7D37E657E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.2.8.1:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1CB534BC-3E4D-4484-AFD0-69524B1F07F9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.2.9:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D6514BF0-5A21-4C3A-9D9D-49677D7A2409",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.2.10:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B291AF23-55FF-4F9A-87AC-76AA3BB3562F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.2.10.1:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "4170B357-C086-483A-BC6C-CB1391FA5831",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.2.10.2:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0B72005B-FBF0-4B0D-975B-178B511598B1",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.2.11:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FBA0C228-2C5F-49C9-BF09-64CB101E98E9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.3.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5D401072-6709-4921-8918-720F28D61E24",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.3.1:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C0EA3467-4205-4C41-AF24-689330F7396B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.3.1.1:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9BE94E38-5F29-4AE1-8129-7F7582C2CC75",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.3.1.2:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FEF603AD-D69B-4DD8-A7F4-6BEFD355EF29",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.4.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D6BD1665-7824-4D98-A930-432CBDA4EAD5",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.4.1:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F8056E69-22FA-4935-A576-916805D90C62",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.4.1.1:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6A80BBBE-DB5E-460A-8621-6E28D2BD6E44",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.4.2:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2B33F953-FEF3-4C46-A12A-2A42D8339D6E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.4.2.1:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B2C8DF03-2280-48B8-AC1E-4AAA31A36BDC",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.4.2.2:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A3CCC30D-FC39-4F59-B338-6753F6094387",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.4.2.3:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "DDE484EB-FFFF-4DBA-8C45-77635BEBCE32",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.4.2.4:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C663EDB2-E632-4915-BF37-EEE22FF26ED4",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.4.3:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "30F378A2-E599-44E7-B81F-845D84E0FDE8",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.4.4:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "366D966F-B60E-46B9-AD0C-D0C0692C984F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.4.5:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3A3E6840-7B1E-45F8-9527-3DB66A9267EF",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.4.6:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E62C082C-3F06-46D8-A385-6B939CF8559B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.4.7:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "095515F7-D0B2-40CA-AAEC-FDCFFE5AFE7A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.6.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FCBDBC61-B4B4-462F-B039-8F5C1B189AE2",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.6.1:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "73CB0C9D-263A-439C-BAF9-87D1EFE50184",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.6.2:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "DE58474E-D8D8-468D-9866-8C67607181E0",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.6.2.1:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "29F91F5E-7049-400A-9C39-B20A639DD61D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.6.3:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D71C054A-63FF-4858-A044-03FA72DA2C8D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.6.4:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "388E9714-FCB6-41DD-A5C4-19E73AF2FBCC",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.6.5:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A38DA9B3-B3DB-4574-A23C-D7794E5E7A25",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.7.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5BBDBCE8-CD5E-48BD-B61B-A36376C5A585",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.7.10:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D098596D-8156-4130-9180-A48D2ECB0910",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.7.10.1:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "34649064-8BCE-4A61-BA3A-17CBC4690C7E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.7.11:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9CE3E9B1-4817-4734-9EE9-E16698D3F709",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:7.7.12:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "AD7FFF13-B4DA-43AA-9A52-B2B6775A702C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:10.0.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "05AE4609-A851-4B64-8506-117B0F92F7A9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_management_center:10.0.1:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B676D865-367C-45B6-9A81-224914E0DE67",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/cisco-fmc-flaws-exploited-to-steal.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.10",
+              "dateReleased": "2026-09-10T19:00:05.1949Z",
+              "retrievedAt": "2026-09-11T15:43:43.658Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-85706%2CCVE-2026-85102%2CCVE-2026-85103%2CCVE-2026-20079",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-20079",
+              "retrievedAt": "2026-09-11T15:43:43.658Z"
+            }
+          }
+        }
+      ],
+      "id": "s22"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Indonesia Hit by Android Banking App-Cloning Campaign",
+      "url": "https://www.darkreading.com/mobile-security/indonesia-android-banking-app-cloning-campaign",
+      "publishedAt": "2026-09-11T01:00:00.000Z",
+      "excerpt": "The GoldFactory threat group exploits the Android Work Profile feature to deliver the Gigabud Trojan, while Mantax Otax spreads separately.",
+      "canonicalUrl": "https://darkreading.com/mobile-security/indonesia-android-banking-app-cloning-campaign",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "New Android malware encrypts files, steals data, and harasses victims",
+      "url": "https://www.bleepingcomputer.com/news/security/new-android-malware-encrypts-files-steals-data-and-harasses-victims/",
+      "publishedAt": "2026-09-10T21:40:43.000Z",
+      "excerpt": "A new Android malware strain called Mantax Otax combines ransomware and spyware capabilities to encrypt files, steal sensitive data, and spam and harass victims. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/new-android-malware-encrypts-files-steals-data-and-harasses-victims",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s24"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Treasury urges banks to file cyber scam reports, noting nearly $13 billion in losses since 2023",
+      "url": "https://therecord.media/treasury-urges-banks-report-cyber-scams",
+      "publishedAt": "2026-09-10T21:15:00.000Z",
+      "excerpt": "As the cyber scam industry expands globally, the U.S. government wants banks to share more information about what's happening to their customers.",
+      "canonicalUrl": "https://therecord.media/treasury-urges-banks-report-cyber-scams",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Voice Callers Exploit BYOD to Reach Microsoft 365, Corporate Data",
+      "url": "https://www.darkreading.com/threat-intelligence/voice-callers-exploit-byod-microsoft-365-corporate-data",
+      "publishedAt": "2026-09-10T20:36:03.000Z",
+      "excerpt": "Threat actors are leveraging Microsoft's Graph API to identify lucrative targets, then passing their access to extortion groups like ShinyHunters.",
+      "canonicalUrl": "https://darkreading.com/threat-intelligence/voice-callers-exploit-byod-microsoft-365-corporate-data",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "September Windows Server updates break Remote Desktop Services",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/september-windows-server-updates-break-remote-desktop-services/",
+      "publishedAt": "2026-09-10T20:34:37.000Z",
+      "excerpt": "Windows admins report that the September 2026 security updates are causing Remote Desktop Services (RDS) failures on Windows Server 2019, 2022, and 2025 servers, preventing users from connecting and, in some cases, requiring a hard reset to restore functionality. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/september-windows-server-updates-break-remote-desktop-services",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Mandiant Founder Kevin Mandia Joins Amazon Board",
+      "url": "https://www.securityweek.com/mandiant-founder-kevin-mandia-joins-amazon-board/",
+      "publishedAt": "2026-09-10T20:30:44.000Z",
+      "excerpt": "Mandiant founder and cybersecurity veteran brings more than 30 years of public and private sector experience to Amazon’s board. The post Mandiant Founder Kevin Mandia Joins Amazon Board appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/mandiant-founder-kevin-mandia-joins-amazon-board",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s28"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Surfshark VPN says hackers breached internal testing, proxy servers",
+      "url": "https://www.bleepingcomputer.com/news/security/surfshark-vpn-says-hackers-breached-internal-testing-proxy-servers/",
+      "publishedAt": "2026-09-10T19:15:07.000Z",
+      "excerpt": "Surfshark disclosed that hackers accessed one of its internal test servers after a configuration error exposed it to the internet. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/surfshark-vpn-says-hackers-breached-internal-testing-proxy-servers",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s29"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft Excel KB5002914 update breaks copy and paste for some users",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-excel-kb5002914-update-breaks-copy-and-paste-for-some-users/",
+      "publishedAt": "2026-09-10T19:07:33.000Z",
+      "excerpt": "Microsoft Excel users report that this week's KB5002914 Office security update is breaking copy-and-paste operations and formula dragging, with affected users saying that removing or rolling back the update restores normal functionality. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-excel-kb5002914-update-breaks-copy-and-paste-for-some-users",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s30"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "IDScan confirms breach after hackers offer 153 million driver’s license scans for sale",
+      "url": "https://therecord.media/idscan-data-breach-notice-drivers-licenses",
+      "publishedAt": "2026-09-10T18:55:00.000Z",
+      "excerpt": "A notice dated September 4 but not widely shared shows that IDScan acknowledged a data breach but did not specify how many people were affected.",
+      "canonicalUrl": "https://therecord.media/idscan-data-breach-notice-drivers-licenses",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s31"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Cyber Command turns to veteran of intelligence agencies for top AI role",
+      "url": "https://therecord.media/cyber-command-ai-leader-ronzelle-green",
+      "publishedAt": "2026-09-10T18:25:00.000Z",
+      "excerpt": "Ronzelle Green, most recently a senior official at the National Geospatial-Intelligence Agency, will be U.S. Cyber Command's chief AI officer.",
+      "canonicalUrl": "https://therecord.media/cyber-command-ai-leader-ronzelle-green",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s32"
+    },
+    {
+      "sourceId": "talos",
+      "sourceKind": "rss",
+      "title": "We've got one word for it, and it's usually the wrong one",
+      "url": "https://blog.talosintelligence.com/weve-got-one-word-for-it-and-its-usually-the-wrong-one/",
+      "publishedAt": "2026-09-10T18:00:15.000Z",
+      "excerpt": "In this week's Threat Source newsletter, Joe explores why the word \"burnout\" often fails to capture the true toll of working in the cybersecurity industry and why we need better language to address it.",
+      "canonicalUrl": "https://blog.talosintelligence.com/weve-got-one-word-for-it-and-its-usually-the-wrong-one",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s33"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "ThreatsDay: 200 Android Flaws, Browser-Built Phishing, 119K Scam Shops + 23 More Stories",
+      "url": "https://thehackernews.com/2026/09/threatsday-200-android-flaws-browser.html",
+      "publishedAt": "2026-09-10T17:47:38.000Z",
+      "excerpt": "A lot of this week’s security news has the same awkward answer to one question: “Why was that allowed to work?” An extension asks for access and takes too much. A trusted service becomes part of a phishing chain. An old bug still gets results. An exposed system stays exposed. A package looks useful right up until it isn’t. Different stories, same basic problem: the path in was often already",
+      "canonicalUrl": "https://thehackernews.com/2026/09/threatsday-200-android-flaws-browser.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s34"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "Protecting organizations from AI-assisted executive impersonation and invoice fraud",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/09/10/protecting-organizations-ai-assisted-executive-impersonation-invoice-fraud/",
+      "publishedAt": "2026-09-10T17:23:05.000Z",
+      "excerpt": "Microsoft examines an AI-assisted business email compromise campaign that used executive impersonation and fake invoices to target finance teams with ACH payment fraud. The post Protecting organizations from AI-assisted executive impersonation and invoice fraud appeared first on Microsoft Security Blog.",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/09/10/protecting-organizations-ai-assisted-executive-impersonation-invoice-fraud",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s35"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Cybersecurity M&A Roundup: 33 Deals Announced in August 2026",
+      "url": "https://www.securityweek.com/cybersecurity-ma-roundup-33-deals-announced-in-august-2026/",
+      "publishedAt": "2026-09-10T16:14:58.000Z",
+      "excerpt": "Significant cybersecurity M&A deals announced by Brinqa, Cribl, Echo, Fortinet, Kiteworks, Palo Alto Networks, and Visa. The post Cybersecurity M&A Roundup: 33 Deals Announced in August 2026 appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/cybersecurity-ma-roundup-33-deals-announced-in-august-2026",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s36"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "Detect and disrupt AI-themed attacks with Microsoft Defender",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/09/10/detect-and-disrupt-ai-themed-attacks-with-microsoft-defender/",
+      "publishedAt": "2026-09-10T16:00:00.000Z",
+      "excerpt": "See how Microsoft Defender detects and disrupts AI-themed phishing, malware, and multi-stage attacks across the attack chain. The post Detect and disrupt AI-themed attacks with Microsoft Defender appeared first on Microsoft Security Blog.",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/09/10/detect-and-disrupt-ai-themed-attacks-with-microsoft-defender",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s37"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "AI-powered attack exploited PaperCut flaws to hack 395 organizations",
+      "url": "https://www.bleepingcomputer.com/news/security/ai-powered-attack-exploited-papercut-flaws-to-hack-395-organizations/",
+      "publishedAt": "2026-09-10T15:55:56.000Z",
+      "excerpt": "A threat actor, likely Russian-speaking, used hundreds of AI agents to develop and launch a global exploitation campaign targeting vulnerable PaperCut NG/MF servers. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/ai-powered-attack-exploited-papercut-flaws-to-hack-395-organizations",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s38"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Cisco FMC flaws exploited by ransomware gang, state-sponsored hackers",
+      "url": "https://www.bleepingcomputer.com/news/security/cisco-fmc-flaws-exploited-by-ransomware-gang-state-sponsored-hackers/",
+      "publishedAt": "2026-09-10T15:43:58.000Z",
+      "excerpt": "Cisco Talos says two recently patched Secure Firewall Management Center (FMC) vulnerabilities have been exploited by three separate threat clusters linked to ransomware and state-sponsored attacks. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/cisco-fmc-flaws-exploited-by-ransomware-gang-state-sponsored-hackers",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s39"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Nightmare-Eclipse Strikes Again With 'ShieldCrash' Windows Exploit",
+      "url": "https://www.darkreading.com/vulnerabilities-threats/nightmare-eclipse-strikes-again-shieldcrash-windows-exploit",
+      "publishedAt": "2026-09-10T15:29:12.000Z",
+      "excerpt": "The disgruntled researcher continued their vendetta against Microsoft by publishing yet another zero-day exploit for Windows Defender.",
+      "canonicalUrl": "https://darkreading.com/vulnerabilities-threats/nightmare-eclipse-strikes-again-shieldcrash-windows-exploit",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s40"
+    }
+  ]
+}
