@@ -1,0 +1,481 @@
+{
+  "date": "2026-09-12",
+  "generatedAt": "2026-09-12T14:51:51.544Z",
+  "degraded": [
+    {
+      "stage": "normalize",
+      "message": "2 items were dropped as unparseable"
+    }
+  ],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 228,
+    "deduped": 222,
+    "published": 20
+  },
+  "mode": "article",
+  "headline": "A perfect 10 lands in KEV as Check Point defenders race a countdown",
+  "standfirst": "A maximum-severity GitLab path traversal is confirmed exploited, already in CISA's catalog, and being probed within hours of disclosure — a rare combination of pre-auth reach, maximum impact and observed activity. JFrog Artifactory flaws are being chained into Rust backdoors on self-hosted instances, while Dutch authorities warn that exploitation of two 9.8-rated Check Point VPN flaws is imminent rather than theoretical. Behind those: a state driver database breached with police credentials, passkey-themed phishing against Microsoft 365, an agentic AI campaign against a package registry, industrial-scale model distillation, and an exploit kit already chaining fresh zero-days.",
+  "bodyMarkdown": "## Actively exploited\n\nStart with [[s16]], because it is the least ambiguous story of the day. CVE-2026-85706 is a 10.0 — a path traversal (CWE-22) in the repository commits API that lets an unauthenticated attacker read arbitrary files from the GitLab server, the result of improper path confinement and missing authentication enforcement. The affected configurations are GitLab CE/EE from 18.7 before 19.1.8, 19.2 before 19.2.6, and 19.3 before 19.3.2. It is in CISA's KEV catalog as known-exploited, and the report describes in-the-wild probes landing within hours of disclosure. The CVSS vector is worth reading rather than skimming: scope-changed, confidentiality-high, integrity and availability unrated. That is a clean exfiltration primitive against a system whose filesystem is the family jewels — repositories, CI variables, runner tokens, deploy keys. CISA's required action, framed around BOD 26-04 with a due date a few days out, binds federal agencies; for everyone else the takeaway is tempo. Self-hosted GitLab is usually reachable, usually holds credentials with broad downstream reach, and rarely sits behind a WAF that understands this request shape. Patch, then rotate anything the process could read.\n\n[[s17]] is the sequel pattern: attackers chaining critical and high-severity Artifactory flaws to bypass authentication, escalate to administrative privileges, and drop a Rust backdoor on self-hosted servers. Note what is absent — no CVE identifiers or scoring accompanied this one, so treat the claims as source-reported rather than independently structured, and don't let anyone paraphrase it into a specific patched version. The architectural lesson holds regardless: an artifact repository is a trust root for your build pipeline, so admin access there is equivalent to write access to everything you ship.\n\n## Vulnerabilities\n\n[[s1]] gives defenders a genuine head start, and the emphasis is on *head start*: the Dutch national cyber security centre says exploitation of CVE-2026-85102 and CVE-2026-85103 is imminent. Both are 9.8, both unauthenticated and remotely reachable, both aimed at Check Point Quantum. CVE-2026-85102 is CWE-295 — improper certificate trust validation during VPN negotiation, permitting arbitrary code execution on the gateway. CVE-2026-85103 is CWE-122 — a heap-based buffer overflow in VPN certificate ASN.1 decoding, reaching both Quantum Security Management and Quantum Security Gateway. Neither appears in CISA's KEV catalog; that is a statement about catalog contents, not evidence that nobody has tried. Pre-auth remote code execution on a VPN concentrator remains the single highest-leverage target class in enterprise security, because the device is deliberately internet-facing and the exploit is a single packet. Warning of imminent exploitation is the rare case where you get to patch *before* the incident report.\n\n## Breaches\n\nTwo identity failures, different flavours. [[s9]] is the blunt one: Florida's driver database was breached using credentials belonging to a police department employee, exposing a large government identity dataset. The access path is the story — a trusted external party's account, no novel exploit required. Driver records are durable, non-rotatable, and useful for years. [[s13]] is the same theme with better tradecraft: Microsoft attributes passkey and single sign-on-themed social engineering to ShinyHunters, Helix and other extortion crews, used to compromise corporate accounts and lift data from Microsoft 365. Passkeys change the lure, not the objective; the winning move is still session or token theft after the user is talked past the prompt. If your passkey rollout didn't come with conditional access tightening and session-token revocation, you moved the lock and left the window.\n\n## Research\n\nTwo pieces worth your reading time for opposite reasons. [[s4]] ties the RubyGems campaign that achieved remote code execution on RubyDoc servers to a swarm of OpenAI agents, per a newly published research report. The interesting claim isn't the brand name on the model — it's tempo. If the campaign's discovery, payload iteration and targeting were machine-driven, the relevant control for maintainers is not better code review but tighter provenance and CI credentials: attacker throughput is now a variable. [[s2]] documents the BlueMoon exploit kit chaining recently disclosed Chrome and Windows zero-days, adopted in opportunistic, rushed deployments by multiple espionage-motivated actors. Rushed is the operative word: the gap between patch release and weaponisation has compressed to the point where \"we'll get to it in the next cycle\" is an exploit window, not a backlog decision.\n\n## Industry\n\nFinally, [[s18]]: Anthropic says it identified and disrupted industrial-scale distillation attacks against Claude run by seven China-based labs, naming Alibaba, Moonshot, DeepSeek, Z.ai (Zhipu) and MiniMax. Distillation is legitimate machine learning — a large model teaching a smaller one — so the objection is scale, consent and terms, not technique. For security teams, the significance is that model access logs have quietly become a first-class telemetry source. Query volume, prompt-pattern clustering and account-multiplicity detection are the API-abuse analogue of impossible travel, and most organisations already emit that data without anyone watching it.\n\nThe day's through-line: three of these stories are about systems that hold trust for everything downstream of them — a Git server, an artifact registry, a VPN gateway — and all three are internet-facing by design.",
+  "selected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "GitLab CVSS 10 File-Read Flaw Draws In-the-Wild Probes After Disclosure",
+      "url": "https://thehackernews.com/2026/09/gitlab-cvss-10-file-read-flaw-draws-in.html",
+      "publishedAt": "2026-09-11T16:30:18.000Z",
+      "excerpt": "GitLab has released patches to address multiple flaws, including a maximum-severity security vulnerability that has witnessed in-the-wild probes within hours of public disclosure. The vulnerability in question is CVE-2026-85706 (CVSS score: 10.0), a path traversal issue in the repository commits API that could allow an unauthenticated user to read arbitrary files from the GitLab server under",
+      "canonicalUrl": "https://thehackernews.com/2026/09/gitlab-cvss-10-file-read-flaw-draws-in.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-85706",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "GitLab",
+            "product": "Community Edition and Enterprise Edition",
+            "vulnerabilityName": "GitLab Community Edition and Enterprise Edition Path Traversal Vulnerability",
+            "dateAdded": "2026-09-11",
+            "shortDescription": "GitLab Community Edition and Enterprise Edition contains a path traversal vulnerability that allows an unauthenticated user to read arbitrary files due to an improper path confinement and missing authentication enforcement in the repository commits API.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-09-14",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://docs.gitlab.com/releases/patches/patch-release-gitlab-19-3-2-released/ ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-85706",
+            "cwes": [
+              "CWE-35"
+            ]
+          },
+          "nvd": {
+            "description": "GitLab has remediated an issue in GitLab CE/EE affecting all versions from 18.7 before 19.1.8, 19.2 before 19.2.6, and 19.3 before 19.3.2 that, under certain conditions, an unauthenticated user could have read arbitrary files from the GitLab server due to improper path confinement and missing authentication enforcement in the repository commits API.",
+            "cvss": {
+              "version": "3.1",
+              "score": 10,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:N",
+              "source": "cve@gitlab.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-22"
+            ],
+            "published": "2026-09-12T03:16:30.473",
+            "lastModified": "2026-09-12T11:16:33.373",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://gitlab.com/gitlab-org/gitlab/-/work_items/627748",
+                "source": "cve@gitlab.com",
+                "tags": []
+              },
+              {
+                "url": "https://hackerone.com/reports/3909881",
+                "source": "cve@gitlab.com",
+                "tags": []
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-85706",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/gitlab-cvss-10-file-read-flaw-draws-in.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.11",
+              "dateReleased": "2026-09-11T19:32:16.8993Z",
+              "retrievedAt": "2026-09-12T14:51:51.544Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-85102%2CCVE-2026-85103%2CCVE-2026-85706",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-85706",
+              "retrievedAt": "2026-09-12T14:51:51.544Z"
+            }
+          }
+        }
+      ],
+      "id": "s16",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "A maximum-severity GitLab path traversal is in CISA KEV and already being probed in the wild, making immediate patching of self-hosted servers critical."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Artifactory flaws chained in attacks deploying backdoor malware",
+      "url": "https://www.bleepingcomputer.com/news/security/artifactory-flaws-chained-in-attacks-deploying-backdoor-malware/",
+      "publishedAt": "2026-09-11T16:29:44.000Z",
+      "excerpt": "Threat actors are exploiting critical and high-severity vulnerabilities in JFrog Artifactory to bypass authentication, gain administrative privileges, and deploy a Rust backdoor on vulnerable self-hosted servers. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/artifactory-flaws-chained-in-attacks-deploying-backdoor-malware",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s17",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "Attackers are chaining JFrog Artifactory flaws to bypass authentication, gain admin access, and deploy a Rust backdoor on self-hosted servers."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Dutch NCSC: Critical Check Point VPN flaws exploitation is imminent",
+      "url": "https://www.bleepingcomputer.com/news/security/dutch-ncsc-critical-check-point-vpn-flaws-exploitation-is-imminent/",
+      "publishedAt": "2026-09-12T14:14:32.000Z",
+      "excerpt": "The Dutch Nationaal Cyber Security Centrum (NCSC) is warning of imminent exploitation of two critical flaws in Check Point VPN tracked as CVE-2026-85102 and CVE-2026-85103. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/dutch-ncsc-critical-check-point-vpn-flaws-exploitation-is-imminent",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-85102",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Improper certificate trust validation during VPN negotiation in Check Point Quantum Security Gateway may allow an unauthenticated remote attacker to execute arbitrary code on the Gateway.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "cve@checkpoint.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-295"
+            ],
+            "published": "2026-09-09T13:20:43.793",
+            "lastModified": "2026-09-10T04:18:18.243",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://support.checkpoint.com/results/sk/sk1000117",
+                "source": "cve@checkpoint.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "bleepingcomputer",
+                "url": "https://www.bleepingcomputer.com/news/security/dutch-ncsc-critical-check-point-vpn-flaws-exploitation-is-imminent/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.11",
+              "dateReleased": "2026-09-11T19:32:16.8993Z",
+              "retrievedAt": "2026-09-12T14:51:51.544Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-85102%2CCVE-2026-85103%2CCVE-2026-85706",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-85102",
+              "retrievedAt": "2026-09-12T14:51:51.544Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-85103",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "A heap-based buffer overflow in VPN certificate ASN.1 decoding may allow an unauthenticated remote attacker to execute arbitrary code on Check Point Quantum Security Management and Quantum Security Gateway systems.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "cve@checkpoint.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-122"
+            ],
+            "published": "2026-09-09T13:20:43.997",
+            "lastModified": "2026-09-10T04:18:18.390",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://support.checkpoint.com/results/sk/sk1000118",
+                "source": "cve@checkpoint.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "bleepingcomputer",
+                "url": "https://www.bleepingcomputer.com/news/security/dutch-ncsc-critical-check-point-vpn-flaws-exploitation-is-imminent/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.11",
+              "dateReleased": "2026-09-11T19:32:16.8993Z",
+              "retrievedAt": "2026-09-12T14:51:51.544Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-85102%2CCVE-2026-85103%2CCVE-2026-85706",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-85103",
+              "retrievedAt": "2026-09-12T14:51:51.544Z"
+            }
+          }
+        }
+      ],
+      "id": "s1",
+      "section": "vulnerabilities",
+      "rank": 3,
+      "angle": "Dutch NCSC warns exploitation of two critical Check Point VPN flaws is imminent, giving defenders a narrow window to patch before attacks begin."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Florida confirms DMV database breached via stolen police account",
+      "url": "https://www.bleepingcomputer.com/news/security/florida-confirms-dmv-database-breached-via-stolen-police-account/",
+      "publishedAt": "2026-09-11T19:00:29.000Z",
+      "excerpt": "The Florida Department of Highway Safety and Motor Vehicles (FLHSMV) has confirmed that its DAVID driver database suffered a data breach, saying the attackers gained access using credentials belonging to a police department employee. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/florida-confirms-dmv-database-breached-via-stolen-police-account",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s9",
+      "section": "breaches",
+      "rank": 4,
+      "angle": "Florida confirms its driver database was breached using stolen police credentials, exposing a large government data set and highlighting third-party access risks."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Passkey-themed phishing attacks lead to Microsoft 365 data theft",
+      "url": "https://www.bleepingcomputer.com/news/security/passkey-themed-phishing-attacks-lead-to-microsoft-365-data-theft/",
+      "publishedAt": "2026-09-11T17:26:50.000Z",
+      "excerpt": "Microsoft says threat actors linked to ShinyHunters, Helix, and other extortion gangs are using passkey and single sign-on-themed social engineering attacks to compromise corporate Microsoft accounts and steal data from Microsoft 365 services. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/passkey-themed-phishing-attacks-lead-to-microsoft-365-data-theft",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s13",
+      "section": "breaches",
+      "rank": 5,
+      "angle": "Extortion gangs are using passkey and SSO-themed phishing to steal Microsoft 365 data, a reminder that credential theft remains a primary intrusion vector."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "OpenAI Agents Linked to RubyGems Campaign That Gained RCE on RubyDoc Servers",
+      "url": "https://thehackernews.com/2026/09/openai-agents-linked-to-rubygems.html",
+      "publishedAt": "2026-09-12T09:07:56.000Z",
+      "excerpt": "The \"major malicious attack\" that targeted RubyGems in May 2026 was the work of a swarm of OpenAI agents, according to a new report published by researchers Spencer Kitts, Thomas Larsen, and Sydney Von Arx. On May 12, Maciej Mensfeld, senior product manager for software supply chain security at Mend.io, disclosed details of a coordinated cyber attack that targeted the package manager for the",
+      "canonicalUrl": "https://thehackernews.com/2026/09/openai-agents-linked-to-rubygems.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s4",
+      "section": "research",
+      "rank": 6,
+      "angle": "A new report ties an OpenAI agent swarm to the RubyGems campaign that gained RCE on RubyDoc servers, signaling AI-driven attacks are moving from theory to practice."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Anthropic Says Seven China-Based AI Labs Ran Industrial-Scale Claude Distillation Attacks",
+      "url": "https://thehackernews.com/2026/09/anthropic-says-seven-china-based-ai.html",
+      "publishedAt": "2026-09-11T16:15:29.000Z",
+      "excerpt": "Anthropic on Thursday said it identified and disrupted industrial-scale illicit distillation attacks against Claude from seven labs based in China, including Alibaba, Moonshot, DeepSeek, Z.ai (aka Zhipu), and MiniMax. Knowledge distillation by itself is a legitimate training method. It refers to a machine learning technique where a large, powerful AI model assumes the role of a \"teacher\" to",
+      "canonicalUrl": "https://thehackernews.com/2026/09/anthropic-says-seven-china-based-ai.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s18",
+      "section": "industry",
+      "rank": 7,
+      "angle": "Anthropic says seven China-based AI labs ran industrial-scale distillation attacks against Claude, underscoring the growing threat of AI model theft."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "BlueMoon Exploit Kit Chains Recent Chrome, Windows Zero-Days",
+      "url": "https://www.securityweek.com/bluemoon-exploit-kit-chains-recent-chrome-windows-zero-days/",
+      "publishedAt": "2026-09-12T11:10:00.000Z",
+      "excerpt": "Multiple espionage-motivated threat actors have adopted BlueMoon in opportunistic, rushed deployments. The post BlueMoon Exploit Kit Chains Recent Chrome, Windows Zero-Days appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/bluemoon-exploit-kit-chains-recent-chrome-windows-zero-days",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s2",
+      "section": "research",
+      "rank": 8,
+      "angle": "BlueMoon exploit kit is chaining recent Chrome and Windows zero-days in rushed espionage deployments, showing how quickly new vulnerabilities are weaponized."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "When the Whole Company Adopts AI: What It Does to Your SOC",
+      "url": "https://thehackernews.com/2026/09/when-whole-company-adopts-ai-what-it.html",
+      "publishedAt": "2026-09-12T10:24:44.000Z",
+      "excerpt": "Over the past year, we watched a new class of alert appear in enterprise security operations centers and grow faster than anything else in the stream: alerts that were triggered by AI tools and agents. Not attacks against AI, but the ordinary, everyday footprint of an organization using it, from developers running coding agents and non-technical staff signing consumer AI tools into corporate",
+      "canonicalUrl": "https://thehackernews.com/2026/09/when-whole-company-adopts-ai-what-it.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Users in Houthi-Held Yemen Tried to Develop Advanced Weapons With AI, Anthropic Says",
+      "url": "https://www.securityweek.com/users-in-houthi-held-yemen-tried-to-develop-advanced-weapons-with-ai-anthropic-says/",
+      "publishedAt": "2026-09-12T01:50:53.000Z",
+      "excerpt": "Anthropic said the users did not succeed in “fielding an operational device” but did carry out a failed test of a guided rocket. The post Users in Houthi-Held Yemen Tried to Develop Advanced Weapons With AI, Anthropic Says appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/users-in-houthi-held-yemen-tried-to-develop-advanced-weapons-with-ai-anthropic-says",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers abused Claude to extract secrets from 1.8M Android apps",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-abused-claude-to-extract-secrets-from-18m-android-apps/",
+      "publishedAt": "2026-09-11T20:19:09.000Z",
+      "excerpt": "Anthropic says multiple threat groups, including the financially motivated and state-sponsored espionage groups linked to Russia and China, tried to abuse its Claude AI model for malicious purposes. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-abused-claude-to-extract-secrets-from-18m-android-apps",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Florida says motor vehicle data breach tied to credentials stolen from officer’s personal device",
+      "url": "https://therecord.media/florida-shiny-hunters-motor-vehicle",
+      "publishedAt": "2026-09-11T20:00:00.000Z",
+      "excerpt": "The Florida Department of Motor Vehicles confirmed a data breach claimed by the cybercrime group ShinyHunters, saying it originated with the theft of credentials stored on a police officer's personal device.",
+      "canonicalUrl": "https://therecord.media/florida-shiny-hunters-motor-vehicle",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Threat Actor Generates 1M Personalized Fraud Emails in 3 Days",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/1m-personalized-fraud-emails-3-days",
+      "publishedAt": "2026-09-11T19:21:08.000Z",
+      "excerpt": "Cybercriminals behind malicious email campaigns no longer have to compromise volume for credibility, or vice versa, thanks to AI.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/1m-personalized-fraud-emails-3-days",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "CISA Calls for More Guidance, Less Spin, as Cyber Outages Escalate",
+      "url": "https://www.darkreading.com/cyber-risk/cisa-calls-for-more-guidance-less-spin-as-cyber-outages-escalate",
+      "publishedAt": "2026-09-11T18:44:03.000Z",
+      "excerpt": "A new joint government advisory signals a regulatory shift, pressing organizations to adopt more transparent breach notification and incident response protocols.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/cisa-calls-for-more-guidance-less-spin-as-cyber-outages-escalate",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Microsoft sees some new wrinkles in invoice-scam emails",
+      "url": "https://therecord.media/invoice-scam-emails-new-features-microsoft-researchers",
+      "publishedAt": "2026-09-11T18:40:00.000Z",
+      "excerpt": "Researchers analyzed a flood of fraudulent business emails and found that the threat actors had doubled-up on tactics to make them appear legitimate, including help from AI.",
+      "canonicalUrl": "https://therecord.media/invoice-scam-emails-new-features-microsoft-researchers",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Why AI Is So Good at Scamming Humans",
+      "url": "https://www.darkreading.com/cyber-risk/ai-scamming-humans",
+      "publishedAt": "2026-09-11T18:14:06.000Z",
+      "excerpt": "Fred Heiding of Menlo Park Intelligence talks with the Dark Reading News Desk about his research on frontier models, and their ability to influence human behavior and create emotional dependency.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/ai-scamming-humans",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Phishing Research Challenges Conventional Security Awareness Testing",
+      "url": "https://www.securityweek.com/phishing-research-challenges-conventional-security-awareness-testing/",
+      "publishedAt": "2026-09-11T17:23:36.000Z",
+      "excerpt": "Analysis of 2.47 million simulated attacks shows why organizations should measure credential leaks and reporting, not just clicks. The post Phishing Research Challenges Conventional Security Awareness Testing appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/phishing-research-challenges-conventional-security-awareness-testing",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s14"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "AI Governance Can't Wait",
+      "url": "https://www.darkreading.com/cyber-risk/ai-governance-cannot-wait",
+      "publishedAt": "2026-09-11T17:10:56.000Z",
+      "excerpt": "Adversaries can manipulate AI defensive reasoning to silently compromise target networks.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/ai-governance-cannot-wait",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "GitLab Vulnerability Exploited One Day After Disclosure",
+      "url": "https://www.securityweek.com/gitlab-vulnerability-exploited-one-day-after-disclosure/",
+      "publishedAt": "2026-09-11T16:11:08.000Z",
+      "excerpt": "The critical-severity path traversal flaw allows unauthenticated attackers to read arbitrary files from the GitLab server. The post GitLab Vulnerability Exploited One Day After Disclosure appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/gitlab-vulnerability-exploited-one-day-after-disclosure",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s19"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Papercut AI Swarm Attack Heralds Changes for Cyber Kill Chain",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/papercut-ai-swarm-attack-cyber-kill-chain",
+      "publishedAt": "2026-09-11T15:48:27.000Z",
+      "excerpt": "From creating lab environments for staging and testing agentic attacks to reconnaissance to lateral movement and exfiltration, the most innovative attackers are widely incorporating AI.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/papercut-ai-swarm-attack-cyber-kill-chain",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s20"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 3968,
+    "promptCacheMissTokens": 2286,
+    "outputTokens": 10336,
+    "estimatedCostUsd": 0.0032252304
+  }
+}
