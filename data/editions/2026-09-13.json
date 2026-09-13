@@ -1,0 +1,222 @@
+{
+  "date": "2026-09-13",
+  "generatedAt": "2026-09-13T15:29:26.074Z",
+  "degraded": [
+    {
+      "stage": "normalize",
+      "message": "2 items were dropped as unparseable"
+    }
+  ],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 228,
+    "deduped": 222,
+    "published": 4
+  },
+  "mode": "article",
+  "headline": "Five new KEV entries, and one loud absence from the catalog",
+  "standfirst": "CISA added five actively exploited flaws across JFrog Artifactory, ConnectWise ScreenConnect and MikroTik RouterOS to its Known Exploited Vulnerabilities catalog, while a China-aligned group's exploitation of a Tencent input-method bug went unlisted. Microsoft, meanwhile, documented passkey phishing and email-abuse campaigns, and Anthropic's chief executive argued the safety work is running behind the capability curve.",
+  "bodyMarkdown": "## Actively exploited\n\nThe KEV expansion is the day's most actionable item because of what it covers rather than how many entries it carries. [[s4]] bundles five flaws across three products that sit in very different, very privileged places: an artifact repository, a remote-support tool, and edge routing. CISA's addition is predicated on evidence of exploitation in the wild, so treat all three as live rather than theoretical.\n\nThe one entry with full intelligence attached is CVE-2026-42016, an incorrect authorization flaw in JFrog Artifactory Self Hosted before 7.133.11. The mechanism is worth internalising: the token check validates the signature and issuer but not the token's scope, so a low-privileged authenticated user can escalate — CWE-863, the same category that keeps producing privilege-boundary collapses in CI/CD infrastructure. NVD scores it 8.8, which understates the practical risk when the affected system is the place your build artifacts, dependencies and deployment credentials live. KEV listing obliges U.S. federal civilian agencies to apply vendor mitigations in line with the relevant binding operational directive, and the catalog entry explicitly permits discontinuing use of the product where mitigations aren't available — a reminder that Artifactory's blast radius justifies a hard decision rather than a scheduling argument. Ransomware campaign use is recorded as unknown. For everyone outside the federal scope, the deadline is not yours, but the reason for the listing is: ScreenConnect and RouterOS have both been entry points before, and this batch says they still are.\n\nSeparately, [[s1]] reports a China-aligned espionage group exploiting a critical flaw in Tencent's Sogou Input Method for Windows to deploy the GrayRabbit backdoor. The vulnerability, CVE-2026-51990, is absent from KEV — a confirmed catalog miss, which says something about listing lag rather than about whether exploitation is happening, since the reporting describes it in the wild. Input methods are an unusually attractive target: they see every keystroke, they run with user context, and they update through their own channels, which makes them a supply-chain foothold that no amount of network segmentation touches. If you permit third-party input methods on managed Windows endpoints, that is now a decision you should be able to defend.\n\n## Breaches\n\nMicrosoft's disclosure in [[s3]] is a useful corrective to the assumption that passkeys close the account-takeover problem. The passkey-themed campaign does not defeat the cryptography; it targets the human and process layer around enrollment and recovery, then moves to cloud data exfiltration once inside. That is the pattern to instrument for: unexpected authenticator or passkey enrollment, recovery-method changes, and consent grants arriving shortly after a helpdesk interaction. The second campaign is a different abuse of trust — more than a million financial-fraud emails sent in a three-day window by impersonating executives, riding on third-party email delivery infrastructure so the messages carry legitimate sending reputation and authentication. Both cases share a lesson: the controls teams have invested in are working as designed, and the attackers are routing around them through channels that were never in scope.\n\n## Industry\n\nAnthropic's Dario Amodei used [[s2]] to argue that the industry needs to give safety measures room to catch up, warning that within six to twelve months AI could direct a swarm of agents capable of seizing control of the internet. Read it as a governance argument from someone with a commercial stake in the outcome, but do not dismiss the operational half. Agentic tooling is arriving in enterprise environments with identities, credentials and API reach that most authorization models were never designed to bound. The questions worth asking now are unglamorous: what identity does an agent hold, what can it do without a human in the loop, and what does your audit trail actually record when it acts. Those answers are cheap to build today and expensive to retrofit.",
+  "selected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "CISA Adds 5 Actively Exploited Artifactory, ScreenConnect, and RouterOS Flaws to KEV",
+      "url": "https://thehackernews.com/2026/09/cisa-adds-5-actively-exploited.html",
+      "publishedAt": "2026-09-12T15:54:45.000Z",
+      "excerpt": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA) has added five security flaws impacting JFrog Artifactory, ConnectWise ScreenConnect, and MikroTik RouterOS to its Known Exploited Vulnerabilities (KEV) catalog, following reports of active exploitation in the wild. Details of the vulnerabilities are as follows - CVE-2026-42016 (CVSS score: 8.1) - An incorrect authorization",
+      "canonicalUrl": "https://thehackernews.com/2026/09/cisa-adds-5-actively-exploited.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-42016",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "JFrog",
+            "product": "Artifactory",
+            "vulnerabilityName": "JFrog Artifactory Incorrect Authorization Vulnerability",
+            "dateAdded": "2026-09-11",
+            "shortDescription": "JFrog Artifactory contains an incorrect authorization vulnerability that allows leads to privilege escalation attack due to a validation check of the token signature/issuer and not the token’s scope.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-09-25",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://docs.jfrog.com/releases/docs/jfrog-security-advisories ; https://docs.jfrog.com/releases/docs/artifactory-self-managed-releases ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-42016",
+            "cwes": [
+              "CWE-863"
+            ]
+          },
+          "nvd": {
+            "description": "JFrog Artifactory (Self Hosted) versions before 7.133.11 are vulnerable to a privilege escalation attack due to a validation check of the token signature/issuer and not the token’s scope.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.8,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+              "source": "nvd@nist.gov",
+              "type": "Primary"
+            },
+            "cwes": [
+              "CWE-863"
+            ],
+            "published": "2026-07-27T20:16:39.613",
+            "lastModified": "2026-09-12T04:16:32.483",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://docs.jfrog.com/releases/docs/artifactory-self-managed-releases",
+                "source": "reefs@jfrog.com",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://docs.jfrog.com/releases/docs/jfrog-security-advisories",
+                "source": "reefs@jfrog.com",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-42016",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              },
+              {
+                "url": "https://www.wiz.io/blog/artifactory-under-attack-in-the-wild-exploitation-of-cve-2026-42016-cve-2026-4201",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:jfrog:artifactory:*:*:*:*:*:-:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "817DC3BE-A8A2-42D7-9407-2BA24639E9A0",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "7.133.11"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/cisa-adds-5-actively-exploited.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.11",
+              "dateReleased": "2026-09-11T19:32:16.8993Z",
+              "retrievedAt": "2026-09-13T15:29:26.074Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-51990%2CCVE-2026-42016",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-42016",
+              "retrievedAt": "2026-09-13T15:29:26.074Z"
+            }
+          }
+        }
+      ],
+      "id": "s4",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "CISA's KEV expansion covers five actively exploited flaws in widely deployed enterprise tools, setting urgent patching deadlines for Artifactory, ScreenConnect, and RouterOS."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers exploit Tencent app flaw to deploy GrayRabbit malware",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-tencent-app-flaw-to-deploy-grayrabbit-malware/",
+      "publishedAt": "2026-09-13T14:26:32.000Z",
+      "excerpt": "Threat actors linked to a China-aligned espionage group are exploiting a critical vulnerability (CVE-2026-51990) in Tencent's Sogou Input Method for Windows to deploy the GrayRabbit backdoor. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-exploit-tencent-app-flaw-to-deploy-grayrabbit-malware",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-51990",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "bleepingcomputer",
+                "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-tencent-app-flaw-to-deploy-grayrabbit-malware/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.11",
+              "dateReleased": "2026-09-11T19:32:16.8993Z",
+              "retrievedAt": "2026-09-13T15:29:26.074Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-51990%2CCVE-2026-42016",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-51990",
+              "retrievedAt": "2026-09-13T15:29:26.074Z"
+            }
+          }
+        }
+      ],
+      "id": "s1",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "A China-aligned espionage group is exploiting a critical Tencent Sogou Input Method flaw to deploy GrayRabbit malware, highlighting targeted supply-chain risk."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Attackers Use Passkey Phishing to Hijack Microsoft Cloud Accounts and Exfiltrate Data",
+      "url": "https://thehackernews.com/2026/09/attackers-use-passkey-phishing-to.html",
+      "publishedAt": "2026-09-13T10:11:48.000Z",
+      "excerpt": "Microsoft has disclosed details of two campaigns in which threat actors are abusing third-party email delivery infrastructure to blast financial fraud scam messages and using passkey-themed social engineering to breach cloud environments. The first campaign, per the tech giant, involved sending over a million scam emails between August 3 and 5, 2026, by masquerading as chief executive officers",
+      "canonicalUrl": "https://thehackernews.com/2026/09/attackers-use-passkey-phishing-to.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s3",
+      "section": "breaches",
+      "rank": 3,
+      "angle": "Microsoft details passkey phishing and email-abuse campaigns that hijack cloud accounts and exfiltrate data, underscoring social-engineering gaps despite MFA."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Anthropic CEO Dario Amodei Says AI Industry Needs to Give Safety Measures Time to Catch Up",
+      "url": "https://www.securityweek.com/anthropic-ceo-dario-amodei-says-ai-industry-needs-to-give-safety-measures-time-to-catch-up/",
+      "publishedAt": "2026-09-13T13:27:25.000Z",
+      "excerpt": "Dario Amodei warned that within six to 12 months AI could be capable of leading a swarm of agents that could take over the entire internet. The post Anthropic CEO Dario Amodei Says AI Industry Needs to Give Safety Measures Time to Catch Up appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/anthropic-ceo-dario-amodei-says-ai-industry-needs-to-give-safety-measures-time-to-catch-up",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s2",
+      "section": "industry",
+      "rank": 4,
+      "angle": "Anthropic's CEO warns AI safety measures may lag capability, adding weight to policy and industry debates over AI risk governance."
+    }
+  ],
+  "alsoCollected": [],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 768,
+    "promptCacheMissTokens": 2639,
+    "outputTokens": 4800,
+    "estimatedCostUsd": 0.0017156104000000004
+  }
+}
