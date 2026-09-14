@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-09-14",
+    "mode": "article",
+    "headline": "Trusted plumbing takes the hits: a max-severity GitLab bug, worm-like ScreenConnect exploitation, and a supply-chain trifecta",
+    "count": 29
+  },
+  {
     "date": "2026-09-13",
     "mode": "article",
     "headline": "Five new KEV entries, and one loud absence from the catalog",
