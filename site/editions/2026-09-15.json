@@ -1,0 +1,974 @@
+{
+  "date": "2026-09-15",
+  "generatedAt": "2026-09-15T16:05:05.139Z",
+  "degraded": [
+    {
+      "stage": "normalize",
+      "message": "2 items were dropped as unparseable"
+    }
+  ],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 228,
+    "deduped": 220,
+    "published": 38
+  },
+  "mode": "article",
+  "headline": "Two 9.8s and a 10.0: this week's exploited flaws sit in the mail path and the code path",
+  "standfirst": "The highest-severity bugs of the week aren't hard to reach — they don't require credentials at all. A pair of maximum-scoring flaws in a widely deployed email gateway and in self-managed GitLab are both confirmed exploited and both in CISA's catalog, while ransomware crews joined a virtualization campaign and a Chinese APT chained browser and OS zero-days against civil society.",
+  "bodyMarkdown": "## Actively exploited\n\nStart with [[s26]]. CVE-2026-76461 is a 9.8 in Cisco AsyncOS for Secure Email Gateway, and the mechanics are what should worry you: it's a CWE-89 injection reachable through insufficient validation in the email parsing logic. An unauthenticated, remote attacker sends a crafted message containing malicious SQL, and the result is arbitrary command execution as root on the underlying operating system. No account, no interaction, no foothold required — the gateway that exists to sanitize inbound mail is itself the entry point. Affected builds include AsyncOS before 15.5.5-014, 16.0 before 16.0.4-302, and 16.5 before 16.5.0-780. It's in KEV, and the catalog entry carries a three-day remediation window for federal agencies — an unusually tight one, and a reasonable proxy for how urgently Cisco's own PSIRT treats it. If you run SEG at the perimeter, this is the top of today's list; the appliance's position in the mail path means compromise gives an attacker both root and a privileged vantage point inside the network.\n\n[[s32]] is the same story told about your source code. CVE-2026-85706 in GitLab CE/EE carries a CVSS of 10.0 and is also KEV-listed with the same three-day federal window. It's a CWE-22 path traversal: improper path confinement plus missing authentication enforcement in the repository commits API lets an unauthenticated user read arbitrary files from the server. The CVSS vector is worth reading closely — scope changed, confidentiality and integrity both high, availability unaffected. Quiet exfiltration, in other words, aimed at exactly the assets that hurt most: CI/CD variables, deploy keys, tokens, and the source itself. Affected ranges run from 18.7 up to before 19.1.8, 19.2 before 19.2.6, and 19.3 before 19.3.2. Anyone exposing a self-managed instance to the internet should assume secrets in reach of that API are burned.\n\nRansomware crews have now joined attacks exploiting a critical VMware vCenter RCE, per [[s13]]. CISA's warning matters less for novelty than for the shift in operator profile: this flaw has had a patch available for a while, and the arrival of extortion groups means the window for quiet patching is closing. Virtualization management planes are high-value, low-redundancy targets — encrypt or corrupt vCenter and you've taken the estate with it.\n\n[[s27]] describes a different kind of tradecraft. A China-linked cluster tracked as UTA0560 used spear-phishing against multiple NGOs, chaining recently patched Chrome and Windows flaws to deliver GRIMWEDGE, a JavaScript backdoor. The lesson is the chain, not either bug: a browser renderer flaw plus an OS privilege-escalation primitive turns a single click into a durable espionage implant, and NGOs remain a soft target with hard intelligence value.\n\n## Research\n\n[[s29]] is the one to watch rather than act on today. Sandworm is again spreading Cyclops Blink, an upgraded build of the botnet malware the FBI disrupted in 2022, and is doing so by chaining Cisco vulnerabilities. A rebuilt botnet built on router and edge-device implants is the harder problem of the two: those devices are rarely inventoried, rarely patched, and sit outside most endpoint telemetry. Treat this as a signal that the group is re-establishing long-haul access infrastructure, not as a single incident to close out.\n\n## Breaches\n\nTwo confirmed breaches round out the picture, and both are about third parties and utilities rather than exotic exploits. CenterPoint Energy confirmed a breach after a hacker leaked 7.5 million customer records, [[s3]] — a Texas utility, extortion-driven, and a reminder that critical-infrastructure operators now carry the same data-liability profile as retailers. Separately, Japan's Digital Agency says roughly 240,000 people had personal information stolen after attackers exploited a vulnerability in a VPN product, [[s16]]. That's the second story this week where the security control — email gateway, VPN concentrator — was the way in. Inventory the appliances you trust implicitly and check them against known-exploited lists before you do anything else.\n\n## Vulnerabilities\n\nFinally, [[s19]]: Apple shipped iOS 27 and macOS Golden Gate 27 with fixes for around 200 vulnerabilities, including kernel flaws enabling memory corruption, privilege escalation, system termination, and information leaks. No known exploitation, so this is routine hygiene rather than an emergency — but kernel privilege-escalation bugs are the second half of the chains described above, and update latency on Apple hardware in your fleet is the variable that decides whether the next browser zero-day stays a sandbox escape or becomes a full compromise.",
+  "selected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Cisco Secure Email Gateway Flaw Exploited in the Wild, Enables Root Command Execution",
+      "url": "https://thehackernews.com/2026/09/cisco-secure-email-gateway-flaw.html",
+      "publishedAt": "2026-09-15T06:11:11.000Z",
+      "excerpt": "Cisco has warned that a new critical vulnerability impacting AsyncOS Software for Cisco Secure Email Gateway has come under active exploitation in the wild. The vulnerability, tracked as CVE-2026-76461, carries a CVSS score of 9.8 out of a maximum of 10.0. It has been described as a case of insufficient validation in the email parsing logic that could allow an unauthenticated, remote attacker",
+      "canonicalUrl": "https://thehackernews.com/2026/09/cisco-secure-email-gateway-flaw.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-76461",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Cisco",
+            "product": "Secure Email Gateway",
+            "vulnerabilityName": "Cisco Secure Email Gateway SQL Injection Vulnerability",
+            "dateAdded": "2026-09-14",
+            "shortDescription": "Cisco AsyncOS software for Cisco Secure Email Gateway (SEG) contains a SQL injection vulnerability that could allow an unauthenticated, remote attacker to execute arbitrary commands with root privileges on the underlying operating system.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-09-17",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-esa-inj-2bLVGmhX ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-76461",
+            "cwes": [
+              "CWE-89"
+            ]
+          },
+          "nvd": {
+            "description": "A vulnerability in the email parsing of Cisco AsyncOS Software for Cisco Secure Email Gateway could allow an unauthenticated, remote attacker to execute arbitrary commands with root privileges on the underlying operating system.\r\n\r\nThis vulnerability is due to insufficient validation in the email parsing logic. An attacker could exploit this vulnerability by sending a crafted email message that contains malicious SQL statements through an affected device. A successful exploit could allow the attacker to execute arbitrary SQL statements, leading to command execution with root privileges on the underlying operating system.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "psirt@cisco.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-89"
+            ],
+            "published": "2026-09-14T17:17:51.113",
+            "lastModified": "2026-09-15T12:47:32.497",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-esa-inj-2bLVGmhX",
+                "source": "psirt@cisco.com",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-76461",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:o:cisco:asyncos:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E78A2134-478B-4F8A-AE74-C1D85C8426F5",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "15.5.5-014"
+              },
+              {
+                "criteria": "cpe:2.3:o:cisco:asyncos:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "930177FE-C639-42C2-ACB2-16DA3D1E4F1C",
+                "versionStartIncluding": "16.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "16.0.4-302"
+              },
+              {
+                "criteria": "cpe:2.3:o:cisco:asyncos:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "44348B0F-6723-4FC1-81CD-F204BBC15F76",
+                "versionStartIncluding": "16.5",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "16.5.0-780"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_email_gateway_virtual_appliance_c100v:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "5B6FBC8A-8187-4903-B786-6CF341C142B5",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_email_gateway_virtual_appliance_c300v:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "68864429-9730-43E9-96C3-20B9035BB291",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_email_gateway_virtual_appliance_c600v:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "B52D8B2B-E9AE-4B02-87BD-9CF9FA95906A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:cisco:secure_email_gateway_c195:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "7B1322B8-1CF9-4B17-9A58-38788051ED4F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:cisco:secure_email_gateway_c395:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "139A640B-1957-4953-AA88-9D373A5152D1",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:cisco:secure_email_gateway_c695:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "F08EA2AD-618B-4834-A52D-73F6A4502DF1",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/cisco-secure-email-gateway-flaw.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.14",
+              "dateReleased": "2026-09-14T19:00:02.426Z",
+              "retrievedAt": "2026-09-15T16:05:05.139Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-76461%2CCVE-2026-85706",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-76461",
+              "retrievedAt": "2026-09-15T16:05:05.139Z"
+            }
+          }
+        }
+      ],
+      "id": "s26",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "Cisco Secure Email Gateway CVE-2026-76461 (CVSS 9.8) is in CISA KEV and under active exploitation, allowing unauthenticated root command execution on a widely deployed email gateway."
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Maximum Severity GitLab Flaw Puts Supply Chains at Risk",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/maximum-severity-gitlab-flaw-supply-chains-risk",
+      "publishedAt": "2026-09-14T20:19:22.000Z",
+      "excerpt": "CVE-2026-85706 is a path traversal vulnerability with a 10 out of 10 CVSS score, affecting both GitLab Community Edition and Enterprise Edition instances.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/maximum-severity-gitlab-flaw-supply-chains-risk",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-85706",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "GitLab",
+            "product": "Community Edition and Enterprise Edition",
+            "vulnerabilityName": "GitLab Community Edition and Enterprise Edition Path Traversal Vulnerability",
+            "dateAdded": "2026-09-11",
+            "shortDescription": "GitLab Community Edition and Enterprise Edition contains a path traversal vulnerability that allows an unauthenticated user to read arbitrary files due to an improper path confinement and missing authentication enforcement in the repository commits API.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-09-14",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://docs.gitlab.com/releases/patches/patch-release-gitlab-19-3-2-released/ ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-85706",
+            "cwes": [
+              "CWE-35"
+            ]
+          },
+          "nvd": {
+            "description": "GitLab has remediated an issue in GitLab CE/EE affecting all versions from 18.7 before 19.1.8, 19.2 before 19.2.6, and 19.3 before 19.3.2 that, under certain conditions, an unauthenticated user could have read arbitrary files from the GitLab server due to improper path confinement and missing authentication enforcement in the repository commits API.",
+            "cvss": {
+              "version": "3.1",
+              "score": 10,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:N",
+              "source": "cve@gitlab.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-22"
+            ],
+            "published": "2026-09-12T03:16:30.473",
+            "lastModified": "2026-09-14T14:22:15.323",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://gitlab.com/gitlab-org/gitlab/-/work_items/627748",
+                "source": "cve@gitlab.com",
+                "tags": [
+                  "Broken Link"
+                ]
+              },
+              {
+                "url": "https://hackerone.com/reports/3909881",
+                "source": "cve@gitlab.com",
+                "tags": [
+                  "Permissions Required"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-85706",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory",
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:community:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8308AEE0-FFC1-48F0-8E66-E3D6E3EF301E",
+                "versionStartIncluding": "18.7.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.1.8"
+              },
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:enterprise:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D19F6592-4940-46BE-A140-BCD284B0EC37",
+                "versionStartIncluding": "18.7.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.1.8"
+              },
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:community:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "4A6AAECA-E557-43EF-B109-B92D1281E48B",
+                "versionStartIncluding": "19.2.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.2.6"
+              },
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:enterprise:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8598AF82-D212-4B5D-ABC3-C12C9B217BF3",
+                "versionStartIncluding": "19.2.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.2.6"
+              },
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:community:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "198FF0EF-1A45-484F-9268-F7821E006BA8",
+                "versionStartIncluding": "19.3.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.3.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:enterprise:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "03B1901F-AAF4-421E-B704-5345CB840DEF",
+                "versionStartIncluding": "19.3.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.3.2"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "darkreading",
+                "url": "https://www.darkreading.com/cyberattacks-data-breaches/maximum-severity-gitlab-flaw-supply-chains-risk",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.14",
+              "dateReleased": "2026-09-14T19:00:02.426Z",
+              "retrievedAt": "2026-09-15T16:05:05.139Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-76461%2CCVE-2026-85706",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-85706",
+              "retrievedAt": "2026-09-15T16:05:05.139Z"
+            }
+          }
+        }
+      ],
+      "id": "s32",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "GitLab CE/EE CVE-2026-85706 carries a 10.0 CVSS score and KEV status, with unauthenticated path traversal risking supply-chain secrets and source code exposure."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "CISA: Critical VMware RCE flaw now exploited by ransomware gangs",
+      "url": "https://www.bleepingcomputer.com/news/security/cisa-critical-vmware-vcenter-rce-flaw-now-exploited-by-ransomware-gangs/",
+      "publishedAt": "2026-09-15T12:16:32.000Z",
+      "excerpt": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA) warned security teams that ransomware gangs have now joined ongoing attacks exploiting a critical VMware vCenter vulnerability patched in July. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/cisa-critical-vmware-vcenter-rce-flaw-now-exploited-by-ransomware-gangs",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s13",
+      "section": "exploited",
+      "rank": 3,
+      "angle": "CISA warns ransomware gangs have joined attacks exploiting a critical VMware vCenter RCE patched in July, escalating urgency for unpatched virtualization infrastructure."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "China-Linked Hackers Exploit Chrome-Windows Zero-Day Chain to Deploy GRIMWEDGE",
+      "url": "https://thehackernews.com/2026/09/china-linked-hackers-exploit-chrome.html",
+      "publishedAt": "2026-09-15T05:31:05.000Z",
+      "excerpt": "A Chinese threat actor has been attributed to a spear-phishing campaign that exploits recently patched security flaws in Google Chrome and Microsoft Windows to deliver a malicious JavaScript backdoor called GRIMWEDGE. Volexity, which is tracking the threat cluster under the moniker UTA0560, said the activity targeted multiple non-governmental organizations (NGOs) on September 1, 2026. \"The",
+      "canonicalUrl": "https://thehackernews.com/2026/09/china-linked-hackers-exploit-chrome.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s27",
+      "section": "exploited",
+      "rank": 4,
+      "angle": "China-linked UTA0560 exploited a Chrome-Windows zero-day chain against NGOs to deploy the GRIMWEDGE JavaScript backdoor, showing state actors chaining flaws for espionage."
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "'Sandworm' Chains Cisco Vulnerabilities to Deploy Cyclops Blink",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/sandworm-chains-cisco-vulnerabilities-cyclops-blink",
+      "publishedAt": "2026-09-14T21:37:28.000Z",
+      "excerpt": "The notorious Russian threat group is spreading an upgraded version of the botnet malware, which the FBI disrupted in 2022.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/sandworm-chains-cisco-vulnerabilities-cyclops-blink",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s29",
+      "section": "research",
+      "rank": 5,
+      "angle": "Sandworm's renewed use of Cyclops Blink via Cisco vulnerabilities signals the Russian APT is rebuilding a botnet the FBI disrupted in 2022."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Texas Utility CenterPoint Energy Confirms Breach After Hacker Leaks Data",
+      "url": "https://www.securityweek.com/texas-utility-centerpoint-energy-confirms-breach-after-hacker-leaks-data/",
+      "publishedAt": "2026-09-15T15:30:24.000Z",
+      "excerpt": "A hacker claims to have stolen 7.5 million customer records after breaching the company’s systems. The post Texas Utility CenterPoint Energy Confirms Breach After Hacker Leaks Data appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/texas-utility-centerpoint-energy-confirms-breach-after-hacker-leaks-data",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s3",
+      "section": "breaches",
+      "rank": 6,
+      "angle": "CenterPoint Energy confirmed a breach after a hacker leaked 7.5 million customer records, highlighting critical infrastructure exposure to extortion."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "240,000 Hit by Data Breach at Japan’s Digital Agency",
+      "url": "https://www.securityweek.com/240000-hit-by-data-breach-at-japans-digital-agency/",
+      "publishedAt": "2026-09-15T11:45:31.000Z",
+      "excerpt": "Hackers exploited a vulnerability in a VPN product to steal the personal information of roughly 240,000 people. The post 240,000 Hit by Data Breach at Japan’s Digital Agency appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/240000-hit-by-data-breach-at-japans-digital-agency",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s16",
+      "section": "breaches",
+      "rank": 7,
+      "angle": "Japan's Digital Agency says a VPN flaw exposed 240,000 personnel records, underscoring third-party VPN risks in government networks."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Apple Patches 200 Vulnerabilities With New iOS 27, macOS Golden Gate 27 Releases",
+      "url": "https://www.securityweek.com/apple-patches-200-vulnerabilities-with-new-ios-27-macos-golden-gate-27-releases/",
+      "publishedAt": "2026-09-15T11:06:11.000Z",
+      "excerpt": "The updates resolve kernel vulnerabilities that could lead to memory corruption, privilege escalation, system termination, and information leaks. The post Apple Patches 200 Vulnerabilities With New iOS 27, macOS Golden Gate 27 Releases appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/apple-patches-200-vulnerabilities-with-new-ios-27-macos-golden-gate-27-releases",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s19",
+      "section": "vulnerabilities",
+      "rank": 8,
+      "angle": "Apple's iOS 27 and macOS Golden Gate 27 updates fix 200 vulnerabilities, including kernel flaws that enable privilege escalation and memory corruption."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "$1 Million Sandbox Challenge Uncovers Linux Kernel Flaws",
+      "url": "https://www.securityweek.com/1-million-sandbox-challenge-uncovers-linux-kernel-flaws/",
+      "publishedAt": "2026-09-15T16:00:00.000Z",
+      "excerpt": "AI-assisted researchers flooded Vercel with reports, forcing the company to automate vulnerability triage. The post $1 Million Sandbox Challenge Uncovers Linux Kernel Flaws appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/1-million-sandbox-challenge-uncovers-linux-kernel-flaws",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Exein Secures $270M at $1.7B Valuation for Physical AI Security",
+      "url": "https://www.securityweek.com/exein-secures-270m-at-1-7b-valuation-for-physical-ai-security/",
+      "publishedAt": "2026-09-15T15:45:13.000Z",
+      "excerpt": "The cybersecurity startup is building a proprietary foundation model and plans to accelerate global expansion. The post Exein Secures $270M at $1.7B Valuation for Physical AI Security appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/exein-secures-270m-at-1-7b-valuation-for-physical-ai-security",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Zelensky appoints former police chief to lead Ukraine’s cyber coordination center",
+      "url": "https://therecord.media/ukraine-cyber-coordination-center-ihor-klymenko",
+      "publishedAt": "2026-09-15T15:09:23.000Z",
+      "excerpt": "Ihor Klymenko, who has experience in law enforcement and as interior minister, will run Ukraine's National Cybersecurity Coordination Center.",
+      "canonicalUrl": "https://therecord.media/ukraine-cyber-coordination-center-ihor-klymenko",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "BambooToken malware controls Windows and Linux systems via MQTT",
+      "url": "https://www.bleepingcomputer.com/news/security/bambootoken-malware-controls-windows-and-linux-systems-via-mqtt/",
+      "publishedAt": "2026-09-15T15:00:00.000Z",
+      "excerpt": "A previously unknown malware framework called BambooToken, active since at least 2023, is now using the Message Queuing Telemetry Transport (MQTT) protocol to communicate with Windows and Linux systems. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/bambootoken-malware-controls-windows-and-linux-systems-via-mqtt",
+      "alsoCoveredBy": [
+        {
+          "sourceId": "thehackernews",
+          "name": "The Hacker News",
+          "url": "https://thehackernews.com/2026/09/bambootoken-malware-uses-mqtt-to.html"
+        }
+      ],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers target WordPress sites via third-party WooCommerce plugin",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-target-wordpress-sites-via-third-party-woocommerce-plugin/",
+      "publishedAt": "2026-09-15T14:45:10.000Z",
+      "excerpt": "Hackers are actively exploiting a critical vulnerability in the WooCommerce Wholesale Lead Capture premium plugin for WordPress to upload a PHP backdoor. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-target-wordpress-sites-via-third-party-woocommerce-plugin",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Electric and gas utility CenterPoint Energy warns of data breach after dark web post",
+      "url": "https://therecord.media/centerpoint-energy-data-breach",
+      "publishedAt": "2026-09-15T14:22:00.000Z",
+      "excerpt": "Houston-based CenterPoint Energy notified federal regulators about an incident that exposed some customer data on the dark web.",
+      "canonicalUrl": "https://therecord.media/centerpoint-energy-data-breach",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "What Zero-Day Response Should Be in the Post-Mythos Era",
+      "url": "https://www.bleepingcomputer.com/news/security/what-zero-day-response-should-be-in-the-post-mythos-era/",
+      "publishedAt": "2026-09-15T13:45:54.000Z",
+      "excerpt": "AI is shrinking the time between vulnerability disclosure and exploitation, leaving defenders less time to wait for patches or public exploits. Picus Security explains how exploitability validation, security control testing, and autonomous pentesting can help teams close exposure gaps before attackers arrive. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/what-zero-day-response-should-be-in-the-post-mythos-era",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Thai Broadband Provider Hacked via Fortinet Vulnerability",
+      "url": "https://www.securityweek.com/thai-broadband-provider-hacked-via-fortinet-vulnerability/",
+      "publishedAt": "2026-09-15T13:33:58.000Z",
+      "excerpt": "The hackers staged numerous scripts for reconnaissance and CVE probing, along with brute-force utilities and privilege escalation tools. The post Thai Broadband Provider Hacked via Fortinet Vulnerability appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/thai-broadband-provider-hacked-via-fortinet-vulnerability",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "China spy chief points at US AI models in cyber threat warning",
+      "url": "https://therecord.media/china-spy-chief-warns-of-us-ai-models",
+      "publishedAt": "2026-09-15T12:54:00.000Z",
+      "excerpt": "China's spy chief identified Anthropic’s Claude Mythos and OpenAI’s GPT-5.5-Cyber as signs of what he called a “disruptive upgrade” in cyber capabilities, increasing the speed and potential weaponization of vulnerability discovery and malware development.",
+      "canonicalUrl": "https://therecord.media/china-spy-chief-warns-of-us-ai-models",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "OpenAI Investigates Report Linking AI Agents to RubyGems Attack",
+      "url": "https://www.securityweek.com/openai-investigates-report-linking-ai-agents-to-rubygems-attack/",
+      "publishedAt": "2026-09-15T12:42:32.000Z",
+      "excerpt": "The incident occurred in May, when RubyGems maintainers suspended new account registrations due to what appeared like malicious activity. The post OpenAI Investigates Report Linking AI Agents to RubyGems Attack appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/openai-investigates-report-linking-ai-agents-to-rubygems-attack",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Manhattan DA takes down 12 AI deepfake porn sites",
+      "url": "https://therecord.media/manhattan-da-takes-down-12-ai-deepfake-porn-sites",
+      "publishedAt": "2026-09-15T12:42:00.000Z",
+      "excerpt": "Manhattan District Attorney Alvin Bragg held a press conference on Monday touting the takedown of the sites, which hosted AI-generated videos of more than 1,200 people. The sites allowed users to use the faces and bodies of real people to create illegal pornography.",
+      "canonicalUrl": "https://therecord.media/manhattan-da-takes-down-12-ai-deepfake-porn-sites",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Protecting Tokens and Assertions from Forgery, Theft, and Misuse: Implementation Recommendations for Agencies and Cloud Service Providers",
+      "url": "https://www.cisa.gov/resources-tools/resources/protecting-tokens-and-assertions-forgery-theft-and-misuse-implementation-recommendations-agencies",
+      "publishedAt": "2026-09-15T12:00:00.000Z",
+      "excerpt": "Developed by the National Institute of Standards and Technology (NIST) and CISA, this interagency report provides federal agencies and cloud service providers with guidelines to protect the identity assertions, access tokens, and cryptographic mechanisms that support modern authentication and authorization. As agencies adopt hybrid and multi-cloud environments, single sign-on, federation, and…",
+      "canonicalUrl": "https://cisa.gov/resources-tools/resources/protecting-tokens-and-assertions-forgery-theft-and-misuse-implementation-recommendations-agencies",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s14"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Human Attacker Exploits Marimo RCE, Reaches SSH Bastion in Eight Seconds",
+      "url": "https://thehackernews.com/2026/09/human-attacker-exploits-marimo-rce.html",
+      "publishedAt": "2026-09-15T11:52:28.000Z",
+      "excerpt": "With artificial intelligence (AI) shrinking the window between vulnerability discovery and exploitation and lowering the barrier to entry for bad actors, new findings from Sysdig show that skilled human operators can move just as swiftly after gaining initial access. In one instance highlighted by the cloud security company, the threat actor pivoted from a vulnerable Marimo notebook to an SSH",
+      "canonicalUrl": "https://thehackernews.com/2026/09/human-attacker-exploits-marimo-rce.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Attack Chains, Not Just Attack Surfaces: Why Testing Individual Techniques Misses the Point",
+      "url": "https://thehackernews.com/2026/09/attack-chains-not-just-attack-surfaces.html",
+      "publishedAt": "2026-09-15T11:26:36.000Z",
+      "excerpt": "Introduction Security teams have gotten pretty good at testing against what can hurt them. Can this EDR agent catch this payload? Will my organization fail the phishing simulation? Does this SIEM rule fire on this particular technique? And, in more mature organizations, this testing happens continuously rather than as a one-off exercise. But no matter how much you validate against these",
+      "canonicalUrl": "https://thehackernews.com/2026/09/attack-chains-not-just-attack-surfaces.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Mass-Scanning Campaign Exploits Vite Flaw to Extract Cloud Credentials From Exposed Dev Servers",
+      "url": "https://thehackernews.com/2026/09/mass-scanning-campaign-exploits-vite.html",
+      "publishedAt": "2026-09-15T11:12:32.000Z",
+      "excerpt": "Cybersecurity researchers have disclosed details of a mass-scanning campaign that has targeted Vite deployments siphon sensitive data. The first is an automated effort aimed at internet-exposed Vite development servers that's designed to steal cloud credentials, configurations from Amazon Web Services (AWS) and Microsoft Azure instances, and infrastructure state files, per F5 Labs. The",
+      "canonicalUrl": "https://thehackernews.com/2026/09/mass-scanning-campaign-exploits-vite.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s18"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Suspected Black Axe gang leaders face cybercrime charges in the US",
+      "url": "https://www.bleepingcomputer.com/news/security/black-axe-gang-members-extradited-to-us-face-cybercrime-charges/",
+      "publishedAt": "2026-09-15T09:50:25.000Z",
+      "excerpt": "Five alleged leaders of the Black Axe cybercrime syndicate, known for its involvement in global-scale cyber-enabled financial fraud, have been extradited to the United States to face wire fraud and money laundering charges. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/black-axe-gang-members-extradited-to-us-face-cybercrime-charges",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Microsoft AI Code of Conduct Sets Cyberattack Boundaries, Chain of Command, Safety Constraints",
+      "url": "https://www.securityweek.com/microsoft-ai-code-of-conduct-sets-cyberattack-boundaries-chain-of-command-safety-constraints/",
+      "publishedAt": "2026-09-15T09:40:25.000Z",
+      "excerpt": "The Humanist AI Code of Conduct draws a line between defensive cyber research and operational attack capability. The post Microsoft AI Code of Conduct Sets Cyberattack Boundaries, Chain of Command, Safety Constraints appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/microsoft-ai-code-of-conduct-sets-cyberattack-boundaries-chain-of-command-safety-constraints",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s21"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Hacked HBO Max Reddit Account Used for Malware Delivery via ClickFix Attack",
+      "url": "https://www.securityweek.com/hacked-hbo-reddit-account-used-for-malware-delivery-via-clickfix-attack/",
+      "publishedAt": "2026-09-15T09:09:00.000Z",
+      "excerpt": "Ads led to a ClickFix page designed to trick macOS and Windows users into installing malware. The post Hacked HBO Max Reddit Account Used for Malware Delivery via ClickFix Attack appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/hacked-hbo-reddit-account-used-for-malware-delivery-via-clickfix-attack",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s22"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft confirms KB5002914 Excel update breaks copy and paste",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-september-kb5002914-security-update-breaks-excel-copy-and-paste/",
+      "publishedAt": "2026-09-15T08:40:20.000Z",
+      "excerpt": "Microsoft has confirmed that copy and paste may silently fail for some Excel users after installing the September 2026 KB5002914 security update. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-september-kb5002914-security-update-breaks-excel-copy-and-paste",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Cisco patches Secure Email Gateway zero-day exploited in attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/new-cisco-secure-email-zero-day-exploited-to-execute-commands-as-root/",
+      "publishedAt": "2026-09-15T07:31:09.000Z",
+      "excerpt": "Cisco warned customers to patch a critical Secure Email Gateway zero-day security flaw that threat actors have been exploiting in attacks. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/new-cisco-secure-email-zero-day-exploited-to-execute-commands-as-root",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s24"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "LiteSpeed Enterprise Flaw Could Let One Hosting Account Gain Root Access on a Shared Server",
+      "url": "https://thehackernews.com/2026/09/litespeed-enterprise-flaw-could-let-one.html",
+      "publishedAt": "2026-09-15T06:52:16.000Z",
+      "excerpt": "A critical vulnerability in LiteSpeed Web Server Enterprise could let a low-privilege website user gain root access on a shared-hosting server, cPanel warned in an advisory published on September 14. On such servers, many customers' sites run on a single machine, and an attacker with one of those hosting accounts could exploit the flaw to access or alter other sites and the server itself,",
+      "canonicalUrl": "https://thehackernews.com/2026/09/litespeed-enterprise-flaw-could-let-one.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Root RCE Zero-Day in Cisco Secure Email Gateway Under Active Exploitation",
+      "url": "https://www.securityweek.com/root-rce-zero-day-in-cisco-secure-email-gateway-under-active-exploitation/",
+      "publishedAt": "2026-09-15T05:18:51.000Z",
+      "excerpt": "An unauthenticated attacker can exploit CVE-2026-76461 to execute arbitrary commands on the underlying OS with root privileges. The post Root RCE Zero-Day in Cisco Secure Email Gateway Under Active Exploitation appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/root-rce-zero-day-in-cisco-secure-email-gateway-under-active-exploitation",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-76461",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Cisco",
+            "product": "Secure Email Gateway",
+            "vulnerabilityName": "Cisco Secure Email Gateway SQL Injection Vulnerability",
+            "dateAdded": "2026-09-14",
+            "shortDescription": "Cisco AsyncOS software for Cisco Secure Email Gateway (SEG) contains a SQL injection vulnerability that could allow an unauthenticated, remote attacker to execute arbitrary commands with root privileges on the underlying operating system.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-09-17",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-esa-inj-2bLVGmhX ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-76461",
+            "cwes": [
+              "CWE-89"
+            ]
+          },
+          "nvd": {
+            "description": "A vulnerability in the email parsing of Cisco AsyncOS Software for Cisco Secure Email Gateway could allow an unauthenticated, remote attacker to execute arbitrary commands with root privileges on the underlying operating system.\r\n\r\nThis vulnerability is due to insufficient validation in the email parsing logic. An attacker could exploit this vulnerability by sending a crafted email message that contains malicious SQL statements through an affected device. A successful exploit could allow the attacker to execute arbitrary SQL statements, leading to command execution with root privileges on the underlying operating system.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "psirt@cisco.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-89"
+            ],
+            "published": "2026-09-14T17:17:51.113",
+            "lastModified": "2026-09-15T12:47:32.497",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-esa-inj-2bLVGmhX",
+                "source": "psirt@cisco.com",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-76461",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:o:cisco:asyncos:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E78A2134-478B-4F8A-AE74-C1D85C8426F5",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "15.5.5-014"
+              },
+              {
+                "criteria": "cpe:2.3:o:cisco:asyncos:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "930177FE-C639-42C2-ACB2-16DA3D1E4F1C",
+                "versionStartIncluding": "16.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "16.0.4-302"
+              },
+              {
+                "criteria": "cpe:2.3:o:cisco:asyncos:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "44348B0F-6723-4FC1-81CD-F204BBC15F76",
+                "versionStartIncluding": "16.5",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "16.5.0-780"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_email_gateway_virtual_appliance_c100v:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "5B6FBC8A-8187-4903-B786-6CF341C142B5",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_email_gateway_virtual_appliance_c300v:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "68864429-9730-43E9-96C3-20B9035BB291",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_email_gateway_virtual_appliance_c600v:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "B52D8B2B-E9AE-4B02-87BD-9CF9FA95906A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:cisco:secure_email_gateway_c195:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "7B1322B8-1CF9-4B17-9A58-38788051ED4F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:cisco:secure_email_gateway_c395:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "139A640B-1957-4953-AA88-9D373A5152D1",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:cisco:secure_email_gateway_c695:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "F08EA2AD-618B-4834-A52D-73F6A4502DF1",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/root-rce-zero-day-in-cisco-secure-email-gateway-under-active-exploitation/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.14",
+              "dateReleased": "2026-09-14T19:00:02.426Z",
+              "retrievedAt": "2026-09-15T16:05:05.139Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-76461%2CCVE-2026-85706",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-76461",
+              "retrievedAt": "2026-09-15T16:05:05.139Z"
+            }
+          }
+        }
+      ],
+      "id": "s28"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft releases emergency Windows updates to fix RDS failures",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-releases-emergency-windows-updates-to-fix-rds-failures/",
+      "publishedAt": "2026-09-14T20:52:18.000Z",
+      "excerpt": "Microsoft has released emergency out-of-band Windows updates to fix Remote Desktop Services failures caused by this month's security updates, along with Hyper-V and USB audio problems on some Windows versions. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-releases-emergency-windows-updates-to-fix-rds-failures",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s30"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Japan's Digital Agency says VPN flaw exposed 246,000 personnel records",
+      "url": "https://www.bleepingcomputer.com/news/security/japans-digital-agency-says-vpn-flaw-exposed-246-000-personnel-records/",
+      "publishedAt": "2026-09-14T20:36:02.000Z",
+      "excerpt": "Japan's Digital Agency has discovered a data breach that may have exposed around 246,000 record rows containing personal information of government employees. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/japans-digital-agency-says-vpn-flaw-exposed-246-000-personnel-records",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s31"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Homebrew 7.0.0 gets built-in GUI, better security controls",
+      "url": "https://www.bleepingcomputer.com/news/security/homebrew-700-gets-built-in-gui-better-security-controls/",
+      "publishedAt": "2026-09-14T19:51:04.000Z",
+      "excerpt": "Homebrew package manager version 7.0.0 has been released with a built-in vulnerability scanner, stronger security controls, and the full release of its native BrewUI graphical interface. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/homebrew-700-gets-built-in-gui-better-security-controls",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s33"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Members of ‘Black Axe’ cybercriminal group extradited from South Africa",
+      "url": "https://therecord.media/members-of-black-axe-cybercrime-group-extradited-south-africa",
+      "publishedAt": "2026-09-14T19:40:00.000Z",
+      "excerpt": "Prosecutors unsealed a 2021 indictment accusing the five men of conducting lucrative romance scams that stole thousands of dollars from more than 100 people.",
+      "canonicalUrl": "https://therecord.media/members-of-black-axe-cybercrime-group-extradited-south-africa",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s34"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Twitch extension with 30K installs exposes users’ OAuth tokens",
+      "url": "https://www.bleepingcomputer.com/news/security/twitch-extension-with-30k-installs-exposes-users-oauth-tokens/",
+      "publishedAt": "2026-09-14T19:03:51.000Z",
+      "excerpt": "A browser extension called Twitch Enhanced Viewer | JeetBot, available in the official Chrome and Firefox stores, sends users' Twitch OAuth session tokens to a commercial bot service. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/twitch-extension-with-30k-installs-exposes-users-oauth-tokens",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s35"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers hijack HBO Max Reddit account to push malware in ClickFix ads",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-hijack-hbo-max-reddit-account-to-push-malware-in-clickfix-ads/",
+      "publishedAt": "2026-09-14T18:34:16.000Z",
+      "excerpt": "Hackers compromised HBO Max's official Reddit account and used it to push malicious ads that launched ClickFix attacks to infect Windows and macOS devices with information-stealing malware. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-hijack-hbo-max-reddit-account-to-push-malware-in-clickfix-ads",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s36"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "3BB Attacker Used MeshCentral Backdoor for Root Access, Targeted Subscriber Credentials",
+      "url": "https://thehackernews.com/2026/09/3bb-attacker-used-meshcentral-backdoor.html",
+      "publishedAt": "2026-09-14T18:01:49.000Z",
+      "excerpt": "An attacker was operating inside the network of 3BB, one of Thailand's largest broadband providers, and maintained remote control of internal machines using a legitimate management tool called MeshCentral, threat intelligence firm Hunt.io said. The company uncovered the intrusion by examining a server the attacker had left open on the internet, which held the attacker's own tools and a list of",
+      "canonicalUrl": "https://thehackernews.com/2026/09/3bb-attacker-used-meshcentral-backdoor.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s37"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Telegram Desktop Flaw Lets Hidden JavaScript Exfiltrate Messages From HTML Exports",
+      "url": "https://thehackernews.com/2026/09/telegram-desktop-flaw-lets-hidden.html",
+      "publishedAt": "2026-09-14T17:58:16.000Z",
+      "excerpt": "A flaw in Telegram Desktop let a bot's message plant hidden JavaScript inside chats that users exported to HTML files, security researchers at ExPatch said in a writeup published on September 12. In Telegram, the message looked ordinary, with a link button, and the script ran only when someone opened the export file in a web browser. It could then copy every message in that file to",
+      "canonicalUrl": "https://thehackernews.com/2026/09/telegram-desktop-flaw-lets-hidden.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s38"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 768,
+    "promptCacheMissTokens": 12002,
+    "outputTokens": 9363,
+    "estimatedCostUsd": 0.0043040704
+  }
+}

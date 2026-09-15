@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-09-15",
+    "mode": "article",
+    "headline": "Two 9.8s and a 10.0: this week's exploited flaws sit in the mail path and the code path",
+    "count": 38
+  },
+  {
     "date": "2026-09-14",
     "mode": "article",
     "headline": "Trusted plumbing takes the hits: a max-severity GitLab bug, worm-like ScreenConnect exploitation, and a supply-chain trifecta",
