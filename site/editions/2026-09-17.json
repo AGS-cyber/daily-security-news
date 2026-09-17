@@ -1,0 +1,1690 @@
+{
+  "date": "2026-09-17",
+  "generatedAt": "2026-09-17T16:04:57.077Z",
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 222,
+    "published": 48
+  },
+  "mode": "article",
+  "headline": "A 10.0 Cisco auth bypass leads a day of three exploited flaws and two large breaches",
+  "standfirst": "Cisco's identity and access-control layer is under active attack via a maximum-severity authentication bypass, two more exploited flaws land on internet-facing infrastructure that rarely gets emergency maintenance, and Unbound's DNSSEC validator needs a patch before anyone controls a zone your resolver will query [[s28]] [[s46]] [[s42]] [[s11]]. Meanwhile two breaches — one enormous and quiet, one small and allegedly assisted from the inside — show the credential and identity layers are where the damage concentrates [[s26]] [[s4]].",
+  "bodyMarkdown": "## Actively exploited\n\nCVE-2026-76460 in Cisco Identity Services Engine is the day's least deferrable item. It scores 10.0, it's KEV-listed with confirmed exploitation, and the mechanism is as bad as the number suggests: CWE-648, incorrect use of privileged APIs, meaning an API endpoint fails to enforce authentication properly. A single crafted request, no credentials and no user interaction, bypasses the web-based management interface entirely — remote, network-reachable, with scope changed across confidentiality, integrity and availability [[s28]]. ISE is where network access control, posture assessment and identity policy live, so a bypass is not one compromised appliance; it is a foothold with a view of who and what is allowed on the network. NVD's configuration data marks vulnerable builds across both the 3.1.0 and 3.2.0 trees, patches included, so \"we're on a current patch level for our branch\" is not an answer. CISA's required action directs federal agencies to apply vendor mitigations under its risk-based patching guidance, with a due date that governs those agencies rather than everyone — but a 10.0 with confirmed in-the-wild exploitation is an out-of-band change window whatever your compliance regime says.\n\nThe second exploited flaw is a reminder that severity scores understate blast radius. CVE-2026-87886 in Acronis Backup for cPanel and WHM is only a 7.8 — local privilege escalation from insecure default file permissions — but it is KEV-listed, confirmed exploited, and sits on shared hosting control panels where one local escalation crosses every tenant on the box [[s46]]. Named for incorrect default permissions, this is not a subtle bug requiring unusual configuration; it is the kind of thing that gets swept up in post-exploitation playbooks. If you run cPanel/WHM at any scale, treat this as an inventory problem before a patching problem: you cannot patch plugins you don't know are installed.\n\nThen there is Issabel. CVE-2026-89026 is a hard-coded HS256 JWT signing key in the pbxapi index.php file, identical across every installation, so anyone can mint a valid bearer token, call the manager originate endpoint with the System application parameter, and get Asterisk to execute arbitrary OS commands as the Asterisk user [[s42]]. It scores 9.8 under CVSS v3.1 and 9.3 under v4.0, exploitation has been observed in the wild, and the fix is a commit rather than a version bump — meaning release-note-driven patch programs will miss it. The interesting datapoint is the catalog: this CVE has a confirmed KEV miss despite observed exploitation. KEV remains a floor for prioritisation, not a ceiling, and this is the case to cite next time someone argues that only catalogued bugs get worked.\n\n## Vulnerabilities\n\nUnbound carries a critical heap overflow in its DNSSEC validator, CWE-122, affecting every release up to and including 1.26.0 and fixed in 1.26.1 [[s11]]. The trigger is elegant: a DNSKEY with an owner compression pointer into its own RDATA overflows the digest buffer, and since the digested data is attacker-controlled, remote code execution — not just the denial of service you'd first assume — is on the table. CVSS v4.0 puts it at 9.1. No exploitation has been reported and there's no KEV entry, but neither fact is reassurance: a recursive resolver queries hostile zones constantly as a normal part of its job, which means the precondition of \"attacker controls a zone\" is satisfied by default for anyone on the internet. Check what's serving DNS recursion inside your perimeter and in your container platforms, not just your managed resolvers.\n\n## Breaches\n\nThe Gyazo disclosure is a credential event disguised as an image-hosting incident: roughly 23.62 million user records including email addresses and password hashes, plus about 490 million image metadata records — largely historical uploads rather than recent ones — containing the IDs that make up Gyazo image links [[s26]]. The hashes are the immediate operational problem: reset, monitor for reuse, and expect stuffing attempts against unrelated services. The metadata is the slower one — link IDs enable correlation and enumeration of years-old content that users assumed was either gone or unguessable.\n\nRevolut's case is the opposite shape and more instructive. Customer information was allegedly handed to attackers impersonating an Italian government agency over roughly five months, touching 680 high-profile accounts, with a $3M ransom demand attached [[s4]]. Five months is not a control failure, it is a process failure: a request channel that produces data for months without triggering a second look. The 680-account targeting suggests the attackers knew what they wanted before they started asking.\n\n## Research\n\nFamousSparrow's new SparroWocky backdoor extends China-aligned espionage across multiple Latin American countries, with activity tracked for more than a year [[s18]]. It's a modular C++ implant, which matters less for detection than for tempo: modular tradecraft means the operators can swap loaders and capabilities without re-registering infrastructure signatures, so signature-based hunting ages badly. If you have Latin American operations, subsidiaries or partners, this is a region worth adding to your collection priorities.\n\n## Industry\n\nThe seizure of NightmareStresser's two domains disrupts a DDoS-for-hire operation tied to hundreds of thousands of attacks [[s30]]. Seizures of this kind are worth noting for what they do and don't do: they remove a storefront and its payment flow, inconvenience the operators and generate usable intelligence, but the customer base and capability persist and migrate to the next booter within weeks. The durable effect is the pressure on the operators, not a reduction in attack volume.",
+  "selected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Cisco Warns of New Zero-Day ISE Auth Bypass (CVSS 10.0) Exploited in Active Attacks",
+      "url": "https://thehackernews.com/2026/09/cisco-warns-of-new-zero-day-ise-auth.html",
+      "publishedAt": "2026-09-17T06:39:40.000Z",
+      "excerpt": "Cisco has warned of a fresh maximum-severity security flaw impacting Identity Services Engine (ISE) that has come under active exploitation. The vulnerability, tracked as CVE-2026-76460 (CVSS score: 10.0), could allow an unauthenticated, remote attacker to bypass authentication. \"This vulnerability is due to insufficient authentication control on an API endpoint,\" Cisco said. \"An attacker",
+      "canonicalUrl": "https://thehackernews.com/2026/09/cisco-warns-of-new-zero-day-ise-auth.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-76460",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Cisco",
+            "product": "Identity Services Engine",
+            "vulnerabilityName": "Cisco Identity Services Engine Incorrect Use of Privileged APIs Vulnerability",
+            "dateAdded": "2026-09-16",
+            "shortDescription": "Cisco Identity Services Engine (ISE) and Cisco ISE Passive Identity Connector (ISE-PIC) contain an incorrect use of privileged APIs vulnerability that could allow an unauthenticated, remote attacker to gain unauthorized access to the affected device by bypassing the web-based management interface.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-09-19",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ISE-ABP-VNSW7Tn5 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-76460",
+            "cwes": [
+              "CWE-648"
+            ]
+          },
+          "nvd": {
+            "description": "A vulnerability in an API of Cisco Identity Services Engine (ISE) could allow an unauthenticated, remote attacker to bypass authentication.\r\n\r\nThis vulnerability is due to insufficient authentication control on an API endpoint. An attacker could exploit this vulnerability by sending a crafted request to an affected API endpoint. A successful exploit could allow the attacker to gain unauthorized access to the affected device by bypassing the web-based management interface.",
+            "cvss": {
+              "version": "3.1",
+              "score": 10,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+              "source": "psirt@cisco.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-648"
+            ],
+            "published": "2026-09-16T21:17:21.430",
+            "lastModified": "2026-09-17T12:46:31.670",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ISE-ABP-VNSW7Tn5",
+                "source": "psirt@cisco.com",
+                "tags": [
+                  "Mitigation",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-76460",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.1.0:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7A789B44-7E6C-4FE9-BD40-702A871AB8AC",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.1.0:patch1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "93920663-445E-4456-A905-81CEC6CA1833",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.1.0:patch10:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "DF9CCBFA-0004-48F7-B142-6FDD4B3E1081",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.1.0:patch11:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C91717BE-76EF-410C-970D-01C5FDC52A0B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.1.0:patch2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "33DA5BB8-4CFE-44BD-9CEB-BC26577E8477",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.1.0:patch3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D3AEFA85-66B5-4145-A4AD-96D1FF86B46D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.1.0:patch4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7A6A0697-6A9E-48EF-82D8-36C75E0CDFDC",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.1.0:patch5:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E939B65A-7912-4C36-8799-03A1526D7BD3",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.1.0:patch6:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "833B438F-0869-4C0D-9952-750C00702E8D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.1.0:patch7:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E8B2588D-01F9-450B-B2E3-ADC4125E354E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.1.0:patch8:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E41016C0-19E6-4BCC-A8DD-F6C9A2B0003E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.1.0:patch9:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "654E946A-07C5-4036-BC54-85EF42B808DD",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.2.0:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7932D5D5-83E1-4BEF-845A-D0783D4BB750",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.2.0:patch1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1B818846-4A6E-4256-B344-281E8C786C43",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.2.0:patch10:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1EEC9040-9BD3-43D0-A33E-1EBD941EB65F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.2.0:patch2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A44858A2-922A-425A-8B38-0C47DB911A3C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.2.0:patch3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "53484A32-757B-42F8-B655-554C34222060",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.2.0:patch4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0CCAC61F-C273-49B3-A631-31D3AE3EB148",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.2.0:patch5:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "51AEFCE6-FB4A-4B1C-A23D-83CC3CF3FBBD",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.2.0:patch6:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B452B4F0-8510-475E-9AE8-B48FABB4D7D3",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.2.0:patch7:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5733512D-12B5-4098-AF90-9D68217FAC27",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.2.0:patch8:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "4ED98020-7BAF-4E5E-8B7B-22537200C283",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.2.0:patch9:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "4C6839DC-F3A2-4133-BF60-2E678E6DD4A4",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.3.0:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F1B9C2C1-59A4-49A0-9B74-83CCB063E55D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.3.0:patch1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "DFD29A0B-0D75-4EAB-BCE0-79450EC75DD0",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.3.0:patch10:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "43F3A55D-D4FC-4D93-9513-94B64B21A2B4",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.3.0:patch11:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F0F60A00-E952-400A-B553-BE96E7FF746F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.3.0:patch2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E6C94CC4-CC08-4DAF-A606-FDAFC92720A9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.3.0:patch3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "BB069EA3-7B8C-42B5-8035-2EE5ED3F56E4",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.3.0:patch4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FF8B81A6-BF44-4E5F-B167-39F61DDCA026",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.3.0:patch5:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "56E0F0EC-3E66-4866-89F5-89B331F3F517",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.3.0:patch6:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2E3E8937-2859-4A2A-91C0-05F674EF0466",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.3.0:patch7:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D4B14684-EB9E-405B-85FA-B62E57CB292C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.3.0:patch8:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "22B752D1-9E8F-4FB7-8EEB-F9234492372B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.3.0:patch9:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "85A1CC7D-FE54-4AC0-B98F-972C4B1F3189",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.4.0:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D23905E0-E525-49B1-8E5F-4EB42D186768",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.4.0:patch1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "74509498-38EF-4345-9583-CEF5C26CA1D8",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.4.0:patch2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "CD05FF93-7B8C-4283-9DB7-E03FE98FAADF",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.4.0:patch3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0F9B6A8E-E773-44A3-9266-878F0C58EB41",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.4.0:patch4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D3727619-E0CA-4CA9-BE35-0C732BCF1741",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.4.0:patch5:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2CFB7565-3930-409C-B5DB-CE77E6ED7C42",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.4.0:patch6:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A388D916-D6A1-4D3A-A48A-A150F387B755",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.5.0:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2610FD35-BC4B-41B7-9C92-E6E5264FEE54",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.5.0:patch1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3FEE4377-B238-4442-9892-28CECFB2319E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.5.0:patch2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6598563B-7E32-43FB-96A7-88C53E4CE226",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine:3.5.0:patch3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "719C8E82-269D-4F21-B2B4-4CD3033A17F9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.1.0:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "006E0D77-534C-447F-8E97-EC0AB906D978",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.1.0:patch1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "AC07A742-D194-425C-945C-3977E96B61B8",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.1.0:patch10:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "00D4B446-EDCE-41DC-A03B-97D8A371B0D9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.1.0:patch11:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "BE3B2985-AC34-4628-8564-517C48B9F475",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.1.0:patch2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "97787372-9A0D-4916-A7A2-19237B84419F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.1.0:patch3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2E2D9D7C-A36E-489D-A2E1-ACE9E9C399BD",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.1.0:patch4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3ABA57DA-78C9-489B-88E5-6E5275E53388",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.1.0:patch5:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2ABFB0CE-60CF-4969-A91E-186F457C8014",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.1.0:patch6:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B8CF7EF0-FBAA-47C7-8386-F67264CA8D0E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.1.0:patch7:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5F08ACD7-2867-428A-966C-6509283FCA10",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.1.0:patch8:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B365970F-9239-45F8-80C6-DA426FCA2E32",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.1.0:patch9:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5A66142F-712F-4EFA-9FC4-E499D3015DD2",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.2.0:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "50D8B7DD-14A8-4C67-8B32-E1F9C7D9C01E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.2.0:patch1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "CB65DFF8-33D8-4840-8A63-7C4797FF0B51",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.2.0:patch10:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9CAAF565-E1CF-4002-B91C-290ECAB2F16A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.2.0:patch2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "890FDA62-DED9-401B-9D44-26F3624118CD",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.2.0:patch3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "604079BA-78F5-4D20-AF27-E7A9A899DA0C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.2.0:patch4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "25344C6F-8EB6-4709-A51B-DCA26AA885E3",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.2.0:patch5:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "51DE5AD0-5DFA-460D-B22D-0F5E367A9A28",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.2.0:patch6:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "683F2E87-9759-4A98-B7C9-489E74837D59",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.2.0:patch7:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "22BF8687-84E4-4609-8100-FD2408DF3247",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.2.0:patch8:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "19F88640-BC3E-42D2-ADDC-59114974103C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.2.0:patch9:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "40A94055-EF01-4799-813D-7BFFDD13C685",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.3.0:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3CA3315D-8A45-43F4-A0F0-094D325F285B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.3.0:patch1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B3736136-9FD8-4B12-B119-EA15201224D9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.3.0:patch10:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FB15AE6D-F4EF-40AD-A88E-D22612AEF2A4",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.3.0:patch11:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "25B8E5EB-393A-40E8-9A0D-465ECCC2A4B8",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.3.0:patch2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "654ED77E-22D3-4E76-9E6D-B1581F5982F0",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.3.0:patch3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A0648EE9-F042-479F-9AAB-C6B5DBC46511",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.3.0:patch4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "83F3BA58-4F38-41C8-956F-38A2F44EECE4",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.3.0:patch5:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6C30FA1D-91E2-48C5-B181-A88FDF668278",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.3.0:patch6:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "768215B1-80B7-40FF-8772-BA4C0B3913F5",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.3.0:patch7:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "40239DA8-43B6-466B-85B0-6D644D7027D1",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.3.0:patch8:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9118B7ED-E678-47C3-9D17-F522D9362B2F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.3.0:patch9:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C2ED3257-CB9D-4FD5-A482-3648CF292128",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.4.0:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "CC0525FD-C4D7-4B48-BF35-1791391AB148",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.4.0:patch1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "68C96F6B-51EE-4D03-9598-CBFD16DA22EF",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.4.0:patch2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "62F25185-D19E-4EC5-8A68-7AB669B76E90",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.4.0:patch3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C457D2EC-FB63-49B7-A90E-CE67ED763BAE",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.4.0:patch4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6566330F-A048-44A1-9821-7A5844C82CEC",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.4.0:patch5:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1154F196-2CB3-4AC2-BE00-11A8942EA999",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.4.0:patch6:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7E30ECF6-5B1D-4280-AA02-123153E68F28",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.5.0:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2A7003EB-C578-4C02-B768-F8C4C8421382",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.5.0:patch1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "16B32F60-CEB7-4816-AA7C-3130D1053DC5",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.5.0:patch2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "755761D7-8DDD-4219-8E37-FA535757710A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:identity_services_engine_passive_identity_connector:3.5.0:patch3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "656248A2-92B4-40B8-8D81-1135A4F35D20",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/cisco-warns-of-new-zero-day-ise-auth.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.16",
+              "dateReleased": "2026-09-16T18:47:50.6796Z",
+              "retrievedAt": "2026-09-17T16:04:57.077Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-81642%2CCVE-2026-76460%2CCVE-2026-89026%2CCVE-2026-87886",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-76460",
+              "retrievedAt": "2026-09-17T16:04:57.077Z"
+            }
+          }
+        }
+      ],
+      "id": "s28",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "Cisco ISE authentication bypass (CVE-2026-76460, CVSS 10.0) is in CISA KEV and under active exploitation, putting enterprise network access control at immediate risk."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Acronis cPanel Backup Plugin Vulnerability Exploited in Targeted Attacks",
+      "url": "https://thehackernews.com/2026/09/acronis-cpanel-backup-plugin.html",
+      "publishedAt": "2026-09-16T11:08:54.000Z",
+      "excerpt": "Acronis has warned that a high-severity security flaw in its Backup plugin for cPanel and Web Host Manager (WHM) deployments has been exploited in the wild. The vulnerability, tracked as CVE-2026-87886 (CVSS score: 7.8), is described as a case of local privilege escalation due to insecure file permissions. It affects the following versions - Acronis Backup plugin for cPanel & WHM (Linux",
+      "canonicalUrl": "https://thehackernews.com/2026/09/acronis-cpanel-backup-plugin.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-87886",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Acronis",
+            "product": "Backup",
+            "vulnerabilityName": "Acronis Backup Incorrect Default Permissions Vulnerability",
+            "dateAdded": "2026-09-16",
+            "shortDescription": "Acronis Backup plugin for cPanel & WHM and extension for Plesk contains an incorrect default permissions vulnerability that could allow for privilege escalation.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-09-19",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://security-advisory.acronis.com/advisories/SEC-10986 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-87886",
+            "cwes": [
+              "CWE-276"
+            ]
+          },
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/acronis-cpanel-backup-plugin.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.16",
+              "dateReleased": "2026-09-16T18:47:50.6796Z",
+              "retrievedAt": "2026-09-17T16:04:57.077Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-81642%2CCVE-2026-76460%2CCVE-2026-89026%2CCVE-2026-87886",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-87886",
+              "retrievedAt": "2026-09-17T16:04:57.077Z"
+            }
+          }
+        }
+      ],
+      "id": "s46",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "Acronis Backup plugin for cPanel/WHM (CVE-2026-87886) is confirmed exploited and in CISA KEV, requiring urgent patching of hosting control panels."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Attackers Exploit Issabel Framework Flaw Enabling Unauthenticated OS Command Execution",
+      "url": "https://thehackernews.com/2026/09/attackers-exploit-issabel-framework.html",
+      "publishedAt": "2026-09-16T15:50:59.000Z",
+      "excerpt": "A critical security flaw in Issabel Framework, a web-based framework for the open-source unified communications PBX software, has come under active exploitation. The vulnerability in question is CVE-2026-89026 (CVSS v3.1 score: 9.8/CVSS v4.0 score: 9.3), which can allow an unauthenticated remote attacker to execute arbitrary operating system (OS) commands by taking advantage of a hard-coded",
+      "canonicalUrl": "https://thehackernews.com/2026/09/attackers-exploit-issabel-framework.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-89026",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "The Issabel Framework, the web framework supporting Issabel PBX software, before commit b97dbaf contains a hard-coded HS256 JWT signing key in the pbxapi index.php file that is identical across every installation, allowing unauthenticated remote attackers to forge valid bearer tokens. Attackers can use the forged token to call the manager originate endpoint with the System application parameter, causing Asterisk to execute arbitrary OS commands as the Asterisk user. Exploitation evidence was first observed by the Shadowserver Foundation on 2026-09-09.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.3,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "disclosure@vulncheck.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-321"
+            ],
+            "published": "2026-09-15T17:17:33.510",
+            "lastModified": "2026-09-15T17:17:33.510",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://github.com/IssabelFoundation/framework/commit/b97dbaf0b71c1c36f841e672b664afbeb02773bd",
+                "source": "disclosure@vulncheck.com",
+                "tags": []
+              },
+              {
+                "url": "https://www.vulncheck.com/advisories/issabel-pbx-hard-coded-jwt-key-rce-via-pbxapi-manager-originate",
+                "source": "disclosure@vulncheck.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/attackers-exploit-issabel-framework.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.16",
+              "dateReleased": "2026-09-16T18:47:50.6796Z",
+              "retrievedAt": "2026-09-17T16:04:57.077Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-81642%2CCVE-2026-76460%2CCVE-2026-89026%2CCVE-2026-87886",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-89026",
+              "retrievedAt": "2026-09-17T16:04:57.077Z"
+            }
+          }
+        }
+      ],
+      "id": "s42",
+      "section": "exploited",
+      "rank": 3,
+      "angle": "Issabel Framework hard-coded JWT key (CVE-2026-89026) is being exploited for unauthenticated OS command execution on exposed PBX systems."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Critical Unbound DNSSEC Validator Flaw Could Allow RCE via a Malicious DNS Zone",
+      "url": "https://thehackernews.com/2026/09/critical-unbound-dnssec-validator-flaw.html",
+      "publishedAt": "2026-09-17T12:30:00.000Z",
+      "excerpt": "Every release of the Unbound DNS resolver before 1.26.1 has a critical heap overflow in its DNSSEC validator, maintainer NLnet Labs said in an advisory on Wednesday. An attacker who controls a malicious zone and queries a vulnerable resolver can trigger it, enabling remote code execution. Unbound 1.26.1, released the same day, fixes the bug, tracked as CVE-2026-81642, along with",
+      "canonicalUrl": "https://thehackernews.com/2026/09/critical-unbound-dnssec-validator-flaw.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-81642",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "In NLnet Labs Unbound up to and including 1.26.0, a vulnerability was found in the DNSSEC validator that enables denial of service and possible remote code execution as a result of digesting DNSKEYs. A DNSKEY with an owner compression pointer to its own RDATA can overflow the digest buffer. Remote code execution is possible through attacker controlled data. An adversary can exploit the vulnerability by controlling a malicious zone and querying a vulnerable Unbound.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.1,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:Red",
+              "source": "sep@nlnetlabs.nl",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-122"
+            ],
+            "published": "2026-09-16T09:17:06.320",
+            "lastModified": "2026-09-16T19:41:10.423",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://www.nlnetlabs.nl/downloads/unbound/CVE-2026-81642.txt",
+                "source": "sep@nlnetlabs.nl",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/critical-unbound-dnssec-validator-flaw.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.16",
+              "dateReleased": "2026-09-16T18:47:50.6796Z",
+              "retrievedAt": "2026-09-17T16:04:57.077Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-81642%2CCVE-2026-76460%2CCVE-2026-89026%2CCVE-2026-87886",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-81642",
+              "retrievedAt": "2026-09-17T16:04:57.077Z"
+            }
+          }
+        }
+      ],
+      "id": "s11",
+      "section": "vulnerabilities",
+      "rank": 4,
+      "angle": "Critical heap overflow in Unbound's DNSSEC validator (CVE-2026-81642) allows RCE via a malicious DNS zone, with a fix available in 1.26.1 but no exploitation reported yet."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Gyazo Breach Exposes 23.62 Million User Records and 490 Million Image Metadata Records",
+      "url": "https://thehackernews.com/2026/09/gyazo-breach-exposes-2362-million-user.html",
+      "publishedAt": "2026-09-17T07:30:01.000Z",
+      "excerpt": "A security breach at Gyazo, Helpfeel's image-sharing service, exposed about 23.62 million user records, including email addresses and password hashes, the Kyoto-based company said in a notice published Wednesday. It also exposed about 490 million image metadata records, mostly for images from January 2019 or earlier, including the IDs that make up Gyazo image links. Helpfeel said",
+      "canonicalUrl": "https://thehackernews.com/2026/09/gyazo-breach-exposes-2362-million-user.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s26",
+      "section": "breaches",
+      "rank": 5,
+      "angle": "Gyazo breach exposed 23.62 million user records and 490 million image metadata records, creating a vast credential-hash and account-recovery risk."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Revolut Data Breach: 5 Months, 680 High-Profile Accounts, $3M Ransom",
+      "url": "https://www.securityweek.com/revolut-data-breach-5-months-680-high-profile-accounts-3m-ransom/",
+      "publishedAt": "2026-09-17T13:57:41.000Z",
+      "excerpt": "Revolut allegedly fed customer information to hackers impersonating an Italian government agency for five months. The post Revolut Data Breach: 5 Months, 680 High-Profile Accounts, $3M Ransom appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/revolut-data-breach-5-months-680-high-profile-accounts-3m-ransom",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s4",
+      "section": "breaches",
+      "rank": 6,
+      "angle": "Revolut allegedly fed customer data to hackers impersonating an Italian government agency for five months, with a $3M ransom demand highlighting deep social-engineering and insider risk."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "China-Aligned FamousSparrow Deploys SparroWocky Backdoor Across Latin America",
+      "url": "https://thehackernews.com/2026/09/china-aligned-famoussparrow-deploys.html",
+      "publishedAt": "2026-09-17T10:05:45.000Z",
+      "excerpt": "The China-aligned state-sponsored threat actor known as FamousSparrow has been observed deploying a previously unreported backdoor called SparroWocky in attacks targeting multiple countries in Latin America since at least August 2025. \"SparroWocky is a modular, C++ backdoor,\" ESET security researchers Alexandre Côté Cyr and Romain Dumont said in a technical report shared with The Hacker News",
+      "canonicalUrl": "https://thehackernews.com/2026/09/china-aligned-famoussparrow-deploys.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s18",
+      "section": "research",
+      "rank": 7,
+      "angle": "FamousSparrow's new SparroWocky backdoor expands China-aligned espionage across Latin America with modular C++ tradecraft."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "U.S. Seizes NightmareStresser Domains Linked to Hundreds of Thousands of DDoS Attacks",
+      "url": "https://thehackernews.com/2026/09/us-seizes-nightmarestresser-domains.html",
+      "publishedAt": "2026-09-17T05:13:46.000Z",
+      "excerpt": "The U.S. Department of Justice (DoJ) on Tuesday announced the court-authorized seizure of internet domains associated with a distributed denial-of-service (DDoS)-for-hire service known as NightmareStresser. The domains in question are: nightmare-stresser[.]com and nightmarestresser[.]org. Visitors to the site are now greeted by a seizure banner that states - \"This domain has been seized by the",
+      "canonicalUrl": "https://thehackernews.com/2026/09/us-seizes-nightmarestresser-domains.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s30",
+      "section": "industry",
+      "rank": 8,
+      "angle": "DOJ seizure of NightmareStresser domains disrupts a long-running DDoS-for-hire service linked to hundreds of thousands of attacks."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "OpenAI Says Its Models Searched GitHub for Leaked API Keys During Training",
+      "url": "https://www.securityweek.com/openai-says-its-models-hunted-github-for-leaked-api-keys-during-training/",
+      "publishedAt": "2026-09-17T15:45:29.000Z",
+      "excerpt": "OpenAI published a framework for disclosing model misalignment alongside six reports describing problematic behavior. The post OpenAI Says Its Models Searched GitHub for Leaked API Keys During Training appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/openai-says-its-models-hunted-github-for-leaked-api-keys-during-training",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "CISA Retires Weekly Vulnerability Bulletin in Risk-Based Pivot",
+      "url": "https://www.securityweek.com/cisa-retires-weekly-vulnerability-bulletin-in-risk-based-pivot/",
+      "publishedAt": "2026-09-17T14:28:00.000Z",
+      "excerpt": "The decision follows BOD 26-04, which directs federal organizations to prioritize vulnerabilities based on real-world risk. The post CISA Retires Weekly Vulnerability Bulletin in Risk-Based Pivot appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/cisa-retires-weekly-vulnerability-bulletin-in-risk-based-pivot",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "What Recent AI-Powered Attacks Mean for Your Identity Security",
+      "url": "https://www.bleepingcomputer.com/news/security/what-recent-ai-powered-attacks-mean-for-your-identity-security/",
+      "publishedAt": "2026-09-17T14:01:11.000Z",
+      "excerpt": "AI is making credential theft faster and easier to scale, giving attackers more opportunities to abuse valid identities. Specops explains why identity security must go beyond successful authentication by verifying that both the user and the device requesting access can be trusted. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/what-recent-ai-powered-attacks-mean-for-your-identity-security",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Hackers claim breach of Russian election systems days before parliamentary vote",
+      "url": "https://therecord.media/russia-election-hackers-breach",
+      "publishedAt": "2026-09-17T13:45:00.000Z",
+      "excerpt": "An anonymous hacking group claimed to have broken into computer systems connected to Russia’s election infrastructure just days before the country begins voting for a new parliament.",
+      "canonicalUrl": "https://therecord.media/russia-election-hackers-breach",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Congress eyes new support for Cyber Command after recent suicide deaths",
+      "url": "https://therecord.media/congress-eyes-support-for-cyber-command-suicide-deaths",
+      "publishedAt": "2026-09-17T13:32:00.000Z",
+      "excerpt": "Congressional sources say they view the deaths of U.S. Cyber Command personnel as an inflection point, especially as the Pentagon’s appetite for cyber capabilities grows following successful contributions to high-profile missions against Iran and Venezuela.",
+      "canonicalUrl": "https://therecord.media/congress-eyes-support-for-cyber-command-suicide-deaths",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Windows 11 24H2 Home and Pro reach end of support in October",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/windows-11-24h2-home-and-pro-reach-end-of-support-in-october/",
+      "publishedAt": "2026-09-17T13:09:09.000Z",
+      "excerpt": "Microsoft reminded customers this week that devices running Windows 11 24H2 Home and Pro editions will stop receiving updates next month. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/windows-11-24h2-home-and-pro-reach-end-of-support-in-october",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "securelist",
+      "sourceKind": "rss",
+      "title": "The Odyssey and trojans again: MovieReaper attacks users in multiple countries via compromised torrents",
+      "url": "https://securelist.com/moviereaper-malware-torrent-odyssey-solana/121344/",
+      "publishedAt": "2026-09-17T13:00:53.000Z",
+      "excerpt": "Kaspersky experts have discovered a new MovieReaper campaign. The multi-stage Trojan spreads through movie torrents, such as \"The Odyssey,\" and uses the Solana blockchain to hide its C2 infrastructure.",
+      "canonicalUrl": "https://securelist.com/moviereaper-malware-torrent-odyssey-solana/121344",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Comp AI Raises $34 Million for AI-Native Compliance and Security",
+      "url": "https://www.securityweek.com/comp-ai-raises-34-million-for-ai-native-compliance-and-security/",
+      "publishedAt": "2026-09-17T13:00:00.000Z",
+      "excerpt": "The company plans to expand into continuous cybersecurity, offering security testing across applications and infrastructure. The post Comp AI Raises $34 Million for AI-Native Compliance and Security appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/comp-ai-raises-34-million-for-ai-native-compliance-and-security",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "ISC Patches 14 Vulnerabilities in BIND 9 Security Update",
+      "url": "https://www.securityweek.com/isc-patches-14-vulnerabilities-in-bind-9-security-update/",
+      "publishedAt": "2026-09-17T12:39:28.000Z",
+      "excerpt": "Attackers could exploit the flaws to increase resource usage, trigger an unexpected program exit, or terminate the named process. The post ISC Patches 14 Vulnerabilities in BIND 9 Security Update appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/isc-patches-14-vulnerabilities-in-bind-9-security-update",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Ransomware Attacks on Manufacturers Surge as Supply Chain Risk Grows",
+      "url": "https://www.securityweek.com/ransomware-attacks-on-manufacturers-surge-as-supply-chain-risk-grows/",
+      "publishedAt": "2026-09-17T12:29:53.000Z",
+      "excerpt": "Research shows attacks on manufacturers rose 40% in early 2026, as ransomware groups increasingly exploit the supply-chain disruption caused by operational shutdowns. The post Ransomware Attacks on Manufacturers Surge as Supply Chain Risk Grows appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/ransomware-attacks-on-manufacturers-surge-as-supply-chain-risk-grows",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Cisco Fixes Dozens of Flaws Across FMC, ISE and Nexus Dashboard",
+      "url": "https://www.securityweek.com/cisco-fixes-dozens-of-flaws-across-fmc-ise-and-nexus-dashboard/",
+      "publishedAt": "2026-09-17T12:17:40.000Z",
+      "excerpt": "The vulnerabilities may lead to root access, command execution, bypasses, SQL injection, and remote code execution. The post Cisco Fixes Dozens of Flaws Across FMC, ISE and Nexus Dashboard appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/cisco-fixes-dozens-of-flaws-across-fmc-ise-and-nexus-dashboard",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Israeli contractor BlackCore trained Angolan officials in online influence operations",
+      "url": "https://therecord.media/angola-israel-influence-operations-blackcore",
+      "publishedAt": "2026-09-17T12:15:00.000Z",
+      "excerpt": "An Israeli influence-for-hire company trained Angolan government officials to run online influence operations, including by creating fake social media personas and media outlets, researchers found.",
+      "canonicalUrl": "https://therecord.media/angola-israel-influence-operations-blackcore",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s14"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Can You Prove a New CVE Is Exploitable Before Attackers Do? Learn How in This Webinar",
+      "url": "https://thehackernews.com/2026/09/can-you-prove-new-cve-is-exploitable.html",
+      "publishedAt": "2026-09-17T11:50:00.000Z",
+      "excerpt": "A new CVE drops. Your scanner finds it. The severity score looks ugly. But that still does not answer the question that matters: Can it actually be exploited in your environment? Mythos-class AI is compressing the time between disclosure and working exploitation, while many security programs still validate risk on weekly or quarterly cycles. The dangerous gap is no longer just technical. It is",
+      "canonicalUrl": "https://thehackernews.com/2026/09/can-you-prove-new-cve-is-exploitable.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "US takes down NightmareStresser DDoS-for-hire platform",
+      "url": "https://www.bleepingcomputer.com/news/security/fbi-seizes-nightmarestresser-service-linked-to-thousands-of-ddos-attacks/",
+      "publishedAt": "2026-09-17T11:33:35.000Z",
+      "excerpt": "The U.S. Federal Bureau of Investigation (FBI) seized the domains used by NightmareStresser, one of the world's longest-running distributed denial-of-service (DDoS) platforms. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/fbi-seizes-nightmarestresser-service-linked-to-thousands-of-ddos-attacks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "CISO's Expert Guide to Agentic Pentesting for Websites",
+      "url": "https://thehackernews.com/2026/09/cisos-expert-guide-to-agentic.html",
+      "publishedAt": "2026-09-17T10:50:53.000Z",
+      "excerpt": "Attackers now weaponize new vulnerabilities in about five days (Mandiant, part of Google Cloud). The median organization takes 43 days to patch one (Verizon DBIR 2026). A new free guide explains how autonomous AI agents are closing that gap, and what security leaders must demand before pointing one at production. TL;DR Exploitation is now the front door. It starts 31% of breaches (Verizon DBIR",
+      "canonicalUrl": "https://thehackernews.com/2026/09/cisos-expert-guide-to-agentic.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "talos",
+      "sourceKind": "rss",
+      "title": "Ransomware incidents in Japan in the first half of 2026: Investigation of The Gentlemen’s infrastructure and evidence of Qilin's AI use",
+      "url": "https://blog.talosintelligence.com/ransomware-incidents-in-japan-in-the-first-half-of-2026/",
+      "publishedAt": "2026-09-17T10:00:43.000Z",
+      "excerpt": "Ransomware incidents in Japan rose 4.7% year over year. The Gentlemen was the most active group, with leak-site listings more than doubling from January to July. Qilin ranked second and appeared to use AI, while SMEs with capital under JPY 1 billion represented 80% of victims.",
+      "canonicalUrl": "https://blog.talosintelligence.com/ransomware-incidents-in-japan-in-the-first-half-of-2026",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s19"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "OpenAI Reveals Six Model Incidents Involving Hidden Failures and Unauthorized Uploads",
+      "url": "https://thehackernews.com/2026/09/openai-reveals-six-model-incidents.html",
+      "publishedAt": "2026-09-17T09:53:38.000Z",
+      "excerpt": "OpenAI on Wednesday disclosed six new instances of \"unexpected or concerning model behavior\" that took place over the past six months, while sharing a new framework for reporting, tracking, investigating, and disclosing model misalignment in a bid to improve transparency. \"As AI systems grow more advanced and more widely deployed, we need to build a broader and better-informed consensus on the",
+      "canonicalUrl": "https://thehackernews.com/2026/09/openai-reveals-six-model-incidents.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Chinese hackers use SparroWocky malware in govt espionage attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/chinese-hackers-use-sparrowocky-malware-in-govt-espionage-attacks/",
+      "publishedAt": "2026-09-17T09:00:00.000Z",
+      "excerpt": "The China-linked espionage group FamousSparrow has been using a new backdoor named SparroWocky in attacks on government organizations in Latin America. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/chinese-hackers-use-sparrowocky-malware-in-govt-espionage-attacks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s21"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft shares workaround for Windows domain login issues",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-releases-workaround-for-windows-domain-login-authentication-issues/",
+      "publishedAt": "2026-09-17T08:24:48.000Z",
+      "excerpt": "Microsoft shared a temporary fix on Wednesday for a known issue that prevents Windows 11 users from logging in with valid domain credentials after installing the September 2026 security updates. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-releases-workaround-for-windows-domain-login-authentication-issues",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s22"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "BIND 9 Update Fixes 14 Flaws, Including an Unauthenticated Crash Over DNS-over-HTTPS",
+      "url": "https://thehackernews.com/2026/09/bind-9-update-fixes-14-flaws-including.html",
+      "publishedAt": "2026-09-17T08:00:29.000Z",
+      "excerpt": "The Internet Systems Consortium (ISC) has released BIND 9.20.29 and 9.21.26 to fix fourteen security flaws it disclosed on 16 September in BIND 9, its open-source DNS server software. One of them affects any BIND server that answers DNS-over-HTTPS (DoH). A sender with no credentials can crash the server process, named, with a single request that carries an invalid SIG",
+      "canonicalUrl": "https://thehackernews.com/2026/09/bind-9-update-fixes-14-flaws-including.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "CISA Releases Cyber Decoy Guidance to Strengthen Critical Infrastructure Defenses",
+      "url": "https://www.securityweek.com/cisa-releases-guidance-on-deploying-cyber-decoys/",
+      "publishedAt": "2026-09-17T07:53:43.000Z",
+      "excerpt": "Complementing Zero Trust models, decoys enable organizations to detect, observe, and block malicious activity in their environments. The post CISA Releases Cyber Decoy Guidance to Strengthen Critical Infrastructure Defenses appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/cisa-releases-guidance-on-deploying-cyber-decoys",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s24"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "AI Agents Can Retrain Own Models Mid-Task, Leaking Secrets and Erasing Refusals",
+      "url": "https://www.securityweek.com/ai-agents-can-retrain-own-models-mid-task-leaking-secrets-and-erasing-refusals/",
+      "publishedAt": "2026-09-17T07:41:29.000Z",
+      "excerpt": "New research from Irregular shows AI agents can retrain and redeploy their own underlying models during routine maintenance tasks. The post AI Agents Can Retrain Own Models Mid-Task, Leaking Secrets and Erasing Refusals appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/ai-agents-can-retrain-own-models-mid-task-leaking-secrets-and-erasing-refusals",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Cisco warns of max severity ISE zero-day exploited in attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/cisco-warns-of-identity-service-engine-zero-day-exploited-in-attacks/",
+      "publishedAt": "2026-09-17T07:20:54.000Z",
+      "excerpt": "Cisco has released security updates to address a maximum-severity Identity Services Engine vulnerability that attackers are actively exploiting in the wild. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/cisco-warns-of-identity-service-engine-zero-day-exploited-in-attacks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Active Exploitation Triggers Emergency Patch for Cisco ISE Zero-Day",
+      "url": "https://www.securityweek.com/active-exploitation-triggers-emergency-patch-for-cisco-ise-zero-day/",
+      "publishedAt": "2026-09-17T06:19:52.000Z",
+      "excerpt": "Remote, unauthenticated attackers can exploit the vulnerability to bypass authentication via crafted requests. The post Active Exploitation Triggers Emergency Patch for Cisco ISE Zero-Day appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/active-exploitation-triggers-emergency-patch-for-cisco-ise-zero-day",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s29"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Anthropic wants Claude to analyze your bank account and financial data",
+      "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/anthropic-wants-claude-to-analyze-your-bank-account-and-financial-data/",
+      "publishedAt": "2026-09-17T00:35:48.000Z",
+      "excerpt": "Anthropic is testing a new personal finance feature called \"Claude Money\" that will allow you to connect your bank accounts directly to Claude and \"understand your money.\" [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/artificial-intelligence/anthropic-wants-claude-to-analyze-your-bank-account-and-financial-data",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s31"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "AI Security Spending Jumps as Fear Outpaces Proof of Value",
+      "url": "https://www.darkreading.com/cybersecurity-operations/ai-security-spending-jumps-fear-outpaces-proof-value",
+      "publishedAt": "2026-09-16T21:26:55.000Z",
+      "excerpt": "CISOs are not waiting for AI to prove its cybersecurity value before investing in the technology. Is it the right move?",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/ai-security-spending-jumps-fear-outpaces-proof-value",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s32"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Key lawmaker suggests action on AI safety legislation will wait until 2027",
+      "url": "https://therecord.media/frontier-act-ai-bill-house-brett-guthrie",
+      "publishedAt": "2026-09-16T21:07:00.000Z",
+      "excerpt": "“It's really complicated, and I wouldn't want to do something in a lame duck session to do it quickly and not get it right,” said House Energy and Commerce Chairman Brett Guthrie about the FRONTIER Act.",
+      "canonicalUrl": "https://therecord.media/frontier-act-ai-bill-house-brett-guthrie",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s33"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Windows 11 KB5124008 update breaks domain trust for some users",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/windows-11-kb5124008-update-breaks-domain-trust-for-some-users/",
+      "publishedAt": "2026-09-16T20:39:29.000Z",
+      "excerpt": "Microsoft is investigating reports that the Windows 11 KB5124008 security update is breaking domain trust relationships on some enterprise systems, preventing users from logging in with valid domain credentials. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/windows-11-kb5124008-update-breaks-domain-trust-for-some-users",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s34"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Iranian hackers use CHOSEN BRICK Windows malware to spy on targets",
+      "url": "https://www.bleepingcomputer.com/news/security/iranian-hackers-use-chosen-brick-windows-malware-to-spy-on-targets/",
+      "publishedAt": "2026-09-16T20:24:55.000Z",
+      "excerpt": "Government agencies are warning that Iranian state-linked hackers are using a Windows malware strain named CHOSEN BRICK to target dissidents, activists, and journalists worldwide. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/iranian-hackers-use-chosen-brick-windows-malware-to-spy-on-targets",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s35"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Malware bypasses browser checks to force install Chrome, Edge extensions",
+      "url": "https://www.bleepingcomputer.com/news/security/malware-bypasses-browser-checks-to-force-install-chrome-edge-extensions/",
+      "publishedAt": "2026-09-16T18:50:53.000Z",
+      "excerpt": "A banking malware operation active since mid-2025 has been using a toolkit named KREMLIN to install malicious Chrome and Edge extensions that steal credentials, session tokens, and sensitive data. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/malware-bypasses-browser-checks-to-force-install-chrome-edge-extensions",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s36"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Coast Guard, FBI boarded tanker after attack by ‘foreign cyber actors’",
+      "url": "https://therecord.media/oil-tanker-cyberattack-coast-guard-fbi",
+      "publishedAt": "2026-09-16T18:46:00.000Z",
+      "excerpt": "U.S. personnel boarded an oil tanker in the Gulf of Mexico to “ensure integrity of the vessel’s operational and information technology systems,\" after an apparent cyberattack, the U.S. Coast Guard said.",
+      "canonicalUrl": "https://therecord.media/oil-tanker-cyberattack-coast-guard-fbi",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s37"
+    },
+    {
+      "sourceId": "krebs",
+      "sourceKind": "rss",
+      "title": "Data Broker Radaris Loses Domains in Privacy Fight",
+      "url": "https://krebsonsecurity.com/2026/09/data-broker-radaris-loses-domains-in-privacy-fight/",
+      "publishedAt": "2026-09-16T18:14:22.000Z",
+      "excerpt": "The consumer data broker Radaris.com has long had a reputation for ignoring requests to remove personal information from its vast empire of people-search services online. That reputation caught up with the company recently in a lawsuit alleging Radaris violated a New Jersey privacy law that provides for hefty fines against data brokers that publish personal information on state law enforcement…",
+      "canonicalUrl": "https://krebsonsecurity.com/2026/09/data-broker-radaris-loses-domains-in-privacy-fight",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s38"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Fighting Your Dragons Through Tough Tech Times",
+      "url": "https://www.darkreading.com/cybersecurity-careers/finding-hope-brutal-job-market",
+      "publishedAt": "2026-09-16T18:00:54.000Z",
+      "excerpt": "Cybersecurity industry veteran Hal Pomeranz gives a pep talk on career anxiety and self-doubt and shares how to build meaningful connections during historical tech industry downturns.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-careers/finding-hope-brutal-job-market",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s39"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Spain's data agency gets first report of AI-powered data breach",
+      "url": "https://www.bleepingcomputer.com/news/security/spains-data-agency-gets-first-report-of-ai-powered-data-breach/",
+      "publishedAt": "2026-09-16T17:26:41.000Z",
+      "excerpt": "The Spanish Data Protection Agency (AEPD) was notified of an attack allegedly carried out with an AI agent powered by a known large language model (LLM). [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/spains-data-agency-gets-first-report-of-ai-powered-data-breach",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s40"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "BragJack Attack Can Turn a Browser's Agentic AI Against It",
+      "url": "https://www.darkreading.com/endpoint-security/bragjack-browser-agentic-ai",
+      "publishedAt": "2026-09-16T16:43:37.000Z",
+      "excerpt": "A new type of attack hijacks the AI assistant built directly into various browsers to access sensitive information, execute malicious actions, and exfiltrate data.",
+      "canonicalUrl": "https://darkreading.com/endpoint-security/bragjack-browser-agentic-ai",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s41"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Three Threat Groups Target Russian Enterprises With Backdoors, Ransomware, and Wipers",
+      "url": "https://thehackernews.com/2026/09/three-threat-groups-target-russian.html",
+      "publishedAt": "2026-09-16T15:27:49.000Z",
+      "excerpt": "Enterprises in Russia have emerged as the target of three threat activity clusters tracked as NightEagle, Hacking Cat, and Toy Ghouls, according to multiple reports from Kaspersky. The cybersecurity vendor said it has identified attacks mounted by NightEagle (aka APT-Q-95), a threat actor known to be active since at least 2023, that involve new techniques for persistence and lateral movement.",
+      "canonicalUrl": "https://thehackernews.com/2026/09/three-threat-groups-target-russian.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s43"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "One Extension Could Hijack AI Assistants Across Chrome, Comet, Edge, Opera Neon and Claude",
+      "url": "https://thehackernews.com/2026/09/one-extension-could-hijack-ai.html",
+      "publishedAt": "2026-09-16T14:36:44.000Z",
+      "excerpt": "Security researchers at Forever Security have shown that one ordinary browser extension could take control of the AI assistants built into five Chromium-based products: Gemini Live in Chrome, Perplexity Comet, Microsoft Edge, Opera Neon and the Claude in Chrome extension. Once the extension was installed, it could access each product's built-in AI with a single click. On Comet, Edge,",
+      "canonicalUrl": "https://thehackernews.com/2026/09/one-extension-could-hijack-ai.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s44"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Using Cyber Decoys to Strengthen Detection and Response",
+      "url": "https://www.cisa.gov/resources-tools/resources/using-cyber-decoys-strengthen-detection-and-response",
+      "publishedAt": "2026-09-16T12:00:00.000Z",
+      "excerpt": "CISA developed this guidance to help defensive teams at varying levels of cybersecurity maturity plan and implement cyber decoy strategies that strengthen their detection and response capabilities. Many organizations struggle to detect adversaries who use legitimate credentials, native tools, and living off the land (LOTL) techniques to conduct discovery, move laterally, and access data. Cyber…",
+      "canonicalUrl": "https://cisa.gov/resources-tools/resources/using-cyber-decoys-strengthen-detection-and-response",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s45"
+    },
+    {
+      "sourceId": "securelist",
+      "sourceKind": "rss",
+      "title": "NightEagle targets Russian companies",
+      "url": "https://securelist.com/tr/nighteagle-apt-ghostcontainer-and-tunneling/121323/",
+      "publishedAt": "2026-09-16T10:00:11.000Z",
+      "excerpt": "Kaspersky GERT experts have uncovered a new campaign by the NightEagle APT, featuring the GhostContainer backdoor and tools hosted on GitHub. The group is also exploiting vulnerabilities in Active Directory and RDP.",
+      "canonicalUrl": "https://securelist.com/tr/nighteagle-apt-ghostcontainer-and-tunneling/121323",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s47"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "BambooToken Malware Uses MQTT to Control Windows and Linux Systems",
+      "url": "https://thehackernews.com/2026/09/bambootoken-malware-uses-mqtt-to.html",
+      "publishedAt": "2026-09-15T15:23:19.000Z",
+      "excerpt": "Cybersecurity researchers have disclosed details of a multi-platform campaign that uses the Message Queueing Telemetry Transport (MQTT) protocol as a communication channel to control Windows and Linux systems. The emerging malware family, codenamed BambooToken, is assessed to be active since at least February 2023 and put to use in attacks targeting organizations across Asia and South America.",
+      "canonicalUrl": "https://thehackernews.com/2026/09/bambootoken-malware-uses-mqtt-to.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s48"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 768,
+    "promptCacheMissTokens": 14503,
+    "outputTokens": 5875,
+    "estimatedCostUsd": 0.0036775704
+  }
+}

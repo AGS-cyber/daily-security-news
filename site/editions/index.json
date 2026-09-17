@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-09-17",
+    "mode": "article",
+    "headline": "A 10.0 Cisco auth bypass leads a day of three exploited flaws and two large breaches",
+    "count": 48
+  },
+  {
     "date": "2026-09-16",
     "mode": "article",
     "headline": "Four flaws already under exploitation, and two pipelines that gave way",
