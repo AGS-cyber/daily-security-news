@@ -1,0 +1,937 @@
+{
+  "date": "2026-09-18",
+  "generatedAt": "2026-09-18T15:40:56.812Z",
+  "degraded": [
+    {
+      "stage": "normalize",
+      "message": "1 items were dropped as unparseable"
+    }
+  ],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 229,
+    "deduped": 222,
+    "published": 50
+  },
+  "mode": "article",
+  "headline": "An exploited RCE, a CVSS 10.0, and pinned plugins that aren't",
+  "standfirst": "An unauthenticated RCE in Orkes Conductor is already being used against exposed instances, Microsoft shipped a maximum-severity fix for Azure AI Foundry, and Check Point's management plane needed a root-level patch. Meanwhile two breaches show how a single ancillary service becomes the entry point, and a long-running DDoS-for-hire operation went dark.",
+  "bodyMarkdown": "## Actively exploited\n\nThe lead story is the one with a clock on it. An unauthenticated remote code execution flaw in Orkes Conductor, CVE-2026-58138, is being used in attacks, and the vulnerable window covers every release from 3.21.21 up to but not including 3.30.2 [[s21]]. The mechanics are worth understanding because they generalise: attackers submit inline workflow definitions containing malicious JavaScript or Python expressions to the workflow API before authenticating, and the engine evaluates them. The NVD description pins the root cause on unsandboxed GraalVM evaluators configured with HostAccess.ALL or allowAllAccess(true), reachable through the INLINE, LAMBDA, DO_WHILE and SWITCH task types, with code injection (CWE-94) as the assigned weakness [[s21]]. From there, arbitrary system commands follow via Java reflection or direct subprocess calls. The CVSS 4.0 base score is 9.3, critical, with no privileges or user interaction required [[s21]].\n\nIf you run Conductor, the immediate work is inventory, not analysis: anything internet-exposed below 3.30.2 is the priority, and the upgrade path is unambiguous. The broader lesson is that orchestration engines which evaluate expressions are code-execution surfaces by design, and \"workflow definition\" is just a payload format. If you can't patch today, removing authenticated-before-evaluation assumptions from your exposure model matters more than tuning the WAF.\n\n## Vulnerabilities\n\nMicrosoft's fix for CVE-2026-85889 in Azure AI Foundry is a CVSS 3.1 score of 10.0, arising from a missing authentication check for a critical function (CWE-306) that lets an unauthorized attacker elevate privileges over the network [[s8]]. Microsoft's position is that no customer action is required, and for the platform itself that may well be true. The reason a 10.0 still deserves your attention is pattern-matching: an unauthenticated, privilege-granting function reachable over the network is rarely the only one, and the same architectural mistake tends to appear in adjacent internal tooling. Treat this as a prompt to enumerate which of your own privileged functions are reachable pre-authentication, and to confirm you have telemetry that would show abuse before a patch landed.\n\nCheck Point's problem is more directly actionable for anyone with its gear in the enforcement path. A critical flaw in the Security Management and Log Servers allows an attacker with no credentials to run code as root on those servers over the network [[s33]]. That matters because the management server holds firewall policy and administrator access — root there is effectively control of the estate's enforcement layer, not just another box. Check Point has pushed a fix through its LivePatch channel and says it has no indication the flaw has been exploited [[s33]]. No CVE identifier was supplied with the story, so track it by vendor advisory and patch channel rather than by ID. Prioritise any deployment where the management interface is reachable from untrusted networks.\n\nPlugin4Shell is the quiet one that will outlast the rest. A flaw across four widely used AI coding agents lets whoever controls a plugin's code repository swap the plugin an agent installs for a malicious one, even when the agent pinned that plugin to a specific reviewed version [[s13]]. Air Security reported it; Anthropic has patched Claude Code 2.1.179 and OpenAI has patched Codex 0.146.0, while GitHub Copilot has no fix [[s13]]. The word \"pinned\" doing no work here is the story. Treat agent plugin sources with the same suspicion you apply to package registries: provenance, review, and an inventory of what each agent has actually pulled and executed.\n\n## Breaches\n\nTwo incidents, one shape. Gyazo maker Helpfeel disclosed that 23 million user records were compromised after an attacker exploited a vulnerability in its image upload server to gain unauthorized access [[s11]]. A screenshot service is not a crown-jewel system, which is exactly why it's a good entry point — nobody was watching it the way they watch the identity provider. Ask which of your services exists purely to accept user files, and whether anyone would notice it being used as a pivot.\n\nThe Brevo incident is the third-party script problem at scale: attackers used a compromised Cloudflare API key to deploy a Cloudflare worker that injected malicious scripts into roughly 100,000 websites [[s18]]. The victims' own code was fine; their vendor's key wasn't. Controls that actually help here are key scoping and rotation, content security policy strict enough to break unexpected injections, and monitoring that alerts when what your site serves changes without a deploy. Assume your marketing, analytics and support vendors are all writing into your pages.\n\n## Research\n\nRatHat, a new Android malware family, is worth a look less for its current capability than for its direction [[s28]]. It pairs an AI-powered subsystem that helps operators remotely navigate a compromised device with a shell maintained over ADB that survives uninstall [[s28]]. Both halves lower the barrier: the AI component reduces the skill needed to operate an infected handset, and ADB-based persistence defeats the uninstall reflex users have been taught. For defenders on mobile, the practical takeaway is that \"reinstall the app\" is no longer a remediation step, and device-level monitoring needs to survive it.\n\n## Industry\n\nAn international operation has disrupted NightmareStresser, one of the longest-running DDoS-for-hire services in the world and active since at least 2022 [[s16]]. Removing booter capacity raises the cost of entry for the low end of DDoS — the kind that arrives because someone was annoyed, not because anyone mapped your network. Expect displacement rather than elimination: capacity moves, brands rebrand. The useful check is whether your volumetric and application-layer defences have been exercised this year, because the demand doesn't disappear when a service does.",
+  "selected": [
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Critical Orkes Conductor Vulnerability Exploited in Attacks",
+      "url": "https://www.securityweek.com/critical-orkes-conductor-vulnerability-exploited-in-attacks/",
+      "publishedAt": "2026-09-18T08:42:18.000Z",
+      "excerpt": "CVE-2026-58138 is an unauthenticated remote code execution vulnerability that attackers can exploit via inline workflow definitions. The post Critical Orkes Conductor Vulnerability Exploited in Attacks appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/critical-orkes-conductor-vulnerability-exploited-in-attacks",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-58138",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Orkes Conductor 3.21.21 before 3.30.2 contains an unauthenticated remote code execution vulnerability that allows remote attackers to execute arbitrary OS commands by submitting inline workflow definitions containing malicious JavaScript or Python expressions to the workflow API endpoint prior to authentication. Attackers can exploit unsandboxed GraalVM evaluators configured with HostAccess.ALL or allowAllAccess(true) through INLINE, LAMBDA, DO_WHILE, and SWITCH task types to invoke arbitrary system commands via Java reflection or direct subprocess calls.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.3,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "disclosure@vulncheck.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-94"
+            ],
+            "published": "2026-06-30T19:17:00.520",
+            "lastModified": "2026-07-14T22:17:26.797",
+            "vulnStatus": "Deferred",
+            "references": [
+              {
+                "url": "https://github.com/conductor-oss/conductor/commit/87a7d96aabbb706d6e84f812b93da5165028d18f",
+                "source": "disclosure@vulncheck.com",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/conductor-oss/conductor/commit/c691e35e768caeb802c9f06ecdd9674c80081af1",
+                "source": "disclosure@vulncheck.com",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/conductor-oss/conductor/releases/tag/v3.30.2",
+                "source": "disclosure@vulncheck.com",
+                "tags": []
+              },
+              {
+                "url": "https://www.cve.org/CVERecord?id=CVE-2025-26074",
+                "source": "disclosure@vulncheck.com",
+                "tags": []
+              },
+              {
+                "url": "https://www.vulncheck.com/advisories/orkes-conductor-unauthenticated-rce-via-graalvm-script-evaluators",
+                "source": "disclosure@vulncheck.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/critical-orkes-conductor-vulnerability-exploited-in-attacks/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.18",
+              "dateReleased": "2026-09-18T13:49:41.7236Z",
+              "retrievedAt": "2026-09-18T15:40:56.812Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-85889%2CCVE-2026-58138%2CCVE-2026-77179%2CCVE-2026-77960%2CCVE-2026-86520%2CCVE-2026-86689",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-58138",
+              "retrievedAt": "2026-09-18T15:40:56.812Z"
+            }
+          }
+        }
+      ],
+      "id": "s21",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "An unauthenticated RCE in Orkes Conductor (CVE-2026-58138) is already being used in attacks, so any internet-exposed instance below 3.30.2 is urgent today."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Microsoft Patches CVSS 10.0 Azure AI Foundry Flaw Enabling Unauthorized Privilege Escalation",
+      "url": "https://thehackernews.com/2026/09/microsoft-patches-cvss-100-azure-ai.html",
+      "publishedAt": "2026-09-18T12:47:04.000Z",
+      "excerpt": "Microsoft has released fixes for a maximum-severity security flaw in Azure AI Foundry that could be exploited to achieve privilege escalation. No customer action is required. The vulnerability, tracked as CVE-2026-85889, carries a CVSS score of 10.0. \"Missing authentication for critical function in Azure AI Foundry allows an unauthorized attacker to elevate privileges over a network,\"",
+      "canonicalUrl": "https://thehackernews.com/2026/09/microsoft-patches-cvss-100-azure-ai.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-85889",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Missing authentication for critical function in Azure AI Foundry allows an unauthorized attacker to elevate privileges over a network.",
+            "cvss": {
+              "version": "3.1",
+              "score": 10,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+              "source": "secure@microsoft.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-306"
+            ],
+            "published": "2026-09-17T23:18:53.217",
+            "lastModified": "2026-09-18T15:17:15.040",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-85889",
+                "source": "secure@microsoft.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/microsoft-patches-cvss-100-azure-ai.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.18",
+              "dateReleased": "2026-09-18T13:49:41.7236Z",
+              "retrievedAt": "2026-09-18T15:40:56.812Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-85889%2CCVE-2026-58138%2CCVE-2026-77179%2CCVE-2026-77960%2CCVE-2026-86520%2CCVE-2026-86689",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-85889",
+              "retrievedAt": "2026-09-18T15:40:56.812Z"
+            }
+          }
+        }
+      ],
+      "id": "s8",
+      "section": "vulnerabilities",
+      "rank": 2,
+      "angle": "A CVSS 10.0 missing-authentication flaw in Azure AI Foundry (CVE-2026-85889) is the kind of maximum-severity cloud/AI bug that forces defenders to check what else exposes privileged functions."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "23 Million User Records Compromised in Gyazo Data Breach",
+      "url": "https://www.securityweek.com/23-million-user-records-compromised-in-gyazo-data-breach/",
+      "publishedAt": "2026-09-18T11:38:40.000Z",
+      "excerpt": "Gyazo maker Helpfeel said the attacker exploited a vulnerability in its image upload server to gain unauthorized access. The post 23 Million User Records Compromised in Gyazo Data Breach appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/23-million-user-records-compromised-in-gyazo-data-breach",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s11",
+      "section": "breaches",
+      "rank": 3,
+      "angle": "23 million Gyazo user records were exposed via a flaw in the image upload server, showing how a single ancillary service can become the breach entry point."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Brevo Supply Chain Attack Injects Malware Into 100,000 Websites",
+      "url": "https://www.securityweek.com/brevo-supply-chain-attack-injects-malware-into-100000-websites/",
+      "publishedAt": "2026-09-18T09:46:57.000Z",
+      "excerpt": "Hackers used a compromised API key to deploy a Cloudflare worker that injected malicious scripts. The post Brevo Supply Chain Attack Injects Malware Into 100,000 Websites appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/brevo-supply-chain-attack-injects-malware-into-100000-websites",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s18",
+      "section": "breaches",
+      "rank": 4,
+      "angle": "A stolen Cloudflare API key let attackers push malicious scripts into roughly 100,000 websites, a stark reminder of third-party script supply-chain exposure."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Critical Check Point Management Flaw Lets Unauthenticated Attackers Run Code as Root",
+      "url": "https://thehackernews.com/2026/09/critical-check-point-management-server.html",
+      "publishedAt": "2026-09-17T18:08:28.000Z",
+      "excerpt": "A critical vulnerability in Check Point's Security Management and Log Servers could allow an attacker without login credentials to run code as root on those servers over the network. The Security Management Server is the system that controls firewall policy and administrator access. Check Point has released a fix through its LivePatch update channel and says it has no indication that the flaw",
+      "canonicalUrl": "https://thehackernews.com/2026/09/critical-check-point-management-server.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s33",
+      "section": "vulnerabilities",
+      "rank": 5,
+      "angle": "Check Point's Security Management and Log Servers control firewall policy, so an unauthenticated root RCE there is high-value for attackers; a LivePatch fix is out and Check Point says it has no evidence of exploitation."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Plugin4Shell Lets Repository Owners Swap Pinned Plugin Code Across Four AI Coding Agents",
+      "url": "https://thehackernews.com/2026/09/plugin4shell-lets-repository-owners.html",
+      "publishedAt": "2026-09-18T11:01:01.000Z",
+      "excerpt": "A flaw in four widely used AI coding agents lets someone who controls a plugin's code repository swap the plugin an agent installs for a malicious one, even when the agent locked that plugin to a specific reviewed version, security firm Air Security said on Thursday. The firm said Anthropic has patched the flaw in Claude Code 2.1.179 and OpenAI in Codex 0.146.0, that GitHub Copilot has no",
+      "canonicalUrl": "https://thehackernews.com/2026/09/plugin4shell-lets-repository-owners.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s13",
+      "section": "vulnerabilities",
+      "rank": 6,
+      "angle": "Plugin4Shell shows pinned plugin versions are not immutable across four AI coding agents, with fixes for Claude Code 2.1.179 and Codex 0.146.0 while GitHub Copilot has no fix."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "New RatHat Android malware uses AI to automate device control",
+      "url": "https://www.bleepingcomputer.com/news/security/new-rathat-android-malware-uses-ai-to-automate-device-control/",
+      "publishedAt": "2026-09-17T21:50:26.000Z",
+      "excerpt": "A new Android malware called RatHat has been discovered, targeting users with an AI-powered subsystem that helps operators remotely navigate compromised devices. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/new-rathat-android-malware-uses-ai-to-automate-device-control",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s28",
+      "section": "research",
+      "rank": 7,
+      "angle": "RatHat keeps a shell via ADB even after uninstall and adds an AI subsystem to drive the device, a concrete look at where Android malware tooling is heading."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "NightmareStresser DDoS Service Disrupted in International Operation",
+      "url": "https://www.securityweek.com/nightmarestresser-ddos-service-disrupted-in-international-operation/",
+      "publishedAt": "2026-09-18T10:12:33.000Z",
+      "excerpt": "Active since at least 2022, NightmareStresser was one of the longest-running DDoS-for-hire services in the world. The post NightmareStresser DDoS Service Disrupted in International Operation appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/nightmarestresser-ddos-service-disrupted-in-international-operation",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s16",
+      "section": "industry",
+      "rank": 8,
+      "angle": "An international operation against NightmareStresser removes one of the longest-running DDoS-for-hire services, tightening access to cheap booter capacity."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Fake LastPass Authenticator GitHub repos push new Rapuncel infostealer",
+      "url": "https://www.bleepingcomputer.com/news/security/fake-lastpass-authenticator-github-repos-push-new-rapuncel-infostealer/",
+      "publishedAt": "2026-09-18T15:19:06.000Z",
+      "excerpt": "An ongoing malware campaign uses SEO-optimized GitHub repositories to impersonate well-known software firms to push a previously undocumented information stealer called Rapuncel. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/fake-lastpass-authenticator-github-repos-push-new-rapuncel-infostealer",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Nations take action on North Korean IT workers after UN report",
+      "url": "https://therecord.media/nations-take-action-on-north-korean-it-worker-schemes",
+      "publishedAt": "2026-09-18T14:29:00.000Z",
+      "excerpt": "A report published Wednesday said that as of July, Vietnam, Laos, Pakistan and Argentina took meaningful steps to respond to allegations involving North Korea listed in an October study.",
+      "canonicalUrl": "https://therecord.media/nations-take-action-on-north-korean-it-worker-schemes",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "In Other News: Ransomware Developer Sentenced, Plugin4Shell AI Attack, Critical SAP Flaw",
+      "url": "https://www.securityweek.com/in-other-news-ransomware-developer-sentenced-plugin4shell-ai-attack-critical-sap-flaw/",
+      "publishedAt": "2026-09-18T14:25:00.000Z",
+      "excerpt": "Noteworthy stories that might have slipped under the radar: Mandiant's 2026 AI risk report, PhantomRaven malware used by bug bounty hunter, WordPress plugin bug exploited. The post In Other News: Ransomware Developer Sentenced, Plugin4Shell AI Attack, Critical SAP Flaw appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/in-other-news-ransomware-developer-sentenced-plugin4shell-ai-attack-critical-sap-flaw",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Secure enterprise sharing with access reviews for Microsoft 365",
+      "url": "https://www.bleepingcomputer.com/news/security/secure-enterprise-sharing-with-access-reviews-for-microsoft-365/",
+      "publishedAt": "2026-09-18T14:00:10.000Z",
+      "excerpt": "Microsoft 365 makes sharing files easy, but access can remain long after its original purpose has ended, leaving organizations with little visibility into who can still reach sensitive data. tenfold Software explains how centralized access governance and owner-driven reviews can help identify and remove unnecessary access. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/secure-enterprise-sharing-with-access-reviews-for-microsoft-365",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft Teams will let admins block custom file extensions",
+      "url": "https://www.bleepingcomputer.com/news/security/microsoft-teams-will-let-admins-block-custom-file-extensions/",
+      "publishedAt": "2026-09-18T13:58:40.000Z",
+      "excerpt": "Microsoft Teams will soon let administrators tweak the list of file extensions commonly associated with security threats to meet their company's security requirements. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/microsoft-teams-will-let-admins-block-custom-file-extensions",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Hacking group ‘NightEagle’ targeting China’s high-tech sector expands operations to Russia",
+      "url": "https://therecord.media/hacking-group-nighteagle-expands-russia-china",
+      "publishedAt": "2026-09-18T13:24:00.000Z",
+      "excerpt": "Over the past year, Russian cybersecurity firm Kaspersky said it investigated several incidents involving the group at Russian businesses.",
+      "canonicalUrl": "https://therecord.media/hacking-group-nighteagle-expands-russia-china",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Webinar: Which Google Workspace security controls actually matter?",
+      "url": "https://www.bleepingcomputer.com/news/security/webinar-which-google-workspace-security-controls-actually-matter/",
+      "publishedAt": "2026-09-18T13:10:19.000Z",
+      "excerpt": "Fast-growing companies face countless recommendations for securing Google Workspace, but not every control provides the same value. This webinar examines real-world breaches to explore which security controls matter most, which may be overrated, and where lean security teams should focus their resources. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/webinar-which-google-workspace-security-controls-actually-matter",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "AI-Built Exploit and Sign-In Flaw Opened Path to Internal OpenAI Code",
+      "url": "https://www.securityweek.com/ai-built-exploit-and-sign-in-flaw-opened-path-to-internal-openai-code/",
+      "publishedAt": "2026-09-18T12:45:24.000Z",
+      "excerpt": "Hacktron researchers earned a bug bounty after demonstrating access to OpenAI employee accounts. The post AI-Built Exploit and Sign-In Flaw Opened Path to Internal OpenAI Code appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/ai-built-exploit-and-sign-in-flaw-opened-path-to-internal-openai-code",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft fixes bug behind ‘Defender Antivirus is turned off’ alerts",
+      "url": "https://www.bleepingcomputer.com/news/security/microsoft-fixes-bug-behind-defender-antivirus-is-turned-off-alerts/",
+      "publishedAt": "2026-09-18T12:16:32.000Z",
+      "excerpt": "Microsoft has resolved a known issue that causes incorrect alerts warning that Defender Antivirus was turned off after installing recent updates. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/microsoft-fixes-bug-behind-defender-antivirus-is-turned-off-alerts",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "An Abandoned CDN Domain Was Re-Registered. Thousands of Sites Still Call It.",
+      "url": "https://thehackernews.com/2026/09/an-abandoned-cdn-domain-was-re.html",
+      "publishedAt": "2026-09-18T11:01:16.000Z",
+      "excerpt": "In July 2025, someone registered a domain that used to belong to a content delivery network. The CDN had been wound down years earlier, and the domain it served assets from was allowed to expire. What it had not lost were its callers. Thousands of websites, code repositories, and documentation pages still carry hard-coded references to hostnames beneath it. The new owner holds",
+      "canonicalUrl": "https://thehackernews.com/2026/09/an-abandoned-cdn-domain-was-re.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Microsoft Patches 18 Vulnerabilities in AI, Cloud Products",
+      "url": "https://www.securityweek.com/microsoft-patches-18-vulnerabilities-in-ai-cloud-products/",
+      "publishedAt": "2026-09-18T10:57:03.000Z",
+      "excerpt": "Microsoft fixed vulnerabilities across Azure and AI-branded products, with privilege escalation flaws accounting for the majority. The post Microsoft Patches 18 Vulnerabilities in AI, Cloud Products appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/microsoft-patches-18-vulnerabilities-in-ai-cloud-products",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s14"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "WeaselBiscuit Stealer Spreads via 13 npm Packages to Harvest Chrome Extension Storage",
+      "url": "https://thehackernews.com/2026/09/weaselbiscuit-stealer-spreads-via-13.html",
+      "publishedAt": "2026-09-18T10:40:06.000Z",
+      "excerpt": "Cybersecurity researchers have discovered a cluster of 13 npm packages that have been found to deliver a previously undocumented JavaScript stealer codenamed WeaselBiscuit. The new malware family, per OpenSourceMalware, exhibits functional overlaps with two malware strains associated with the Democratic People's Republic of Korea's (DPRK) Contagious Interview campaign: BeaverTail and",
+      "canonicalUrl": "https://thehackernews.com/2026/09/weaselbiscuit-stealer-spreads-via-13.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "unit42",
+      "sourceKind": "rss",
+      "title": "A Vault with a Heap-View: The Uncomfortable Space Between AgentCore Harness and Identity",
+      "url": "https://unit42.paloaltonetworks.com/securing-aws-agentcore-harness-credentials/",
+      "publishedAt": "2026-09-18T10:00:36.000Z",
+      "excerpt": "Analysis of how default configurations in AWS AgentCore Harness allow prompt injection to exfiltrate credentials, and key steps to secure your agents. The post A Vault with a Heap-View: The Uncomfortable Space Between AgentCore Harness and Identity appeared first on Unit 42.",
+      "canonicalUrl": "https://unit42.paloaltonetworks.com/securing-aws-agentcore-harness-credentials",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "New Check Point flaw lets hackers execute code with root privileges",
+      "url": "https://www.bleepingcomputer.com/news/security/check-point-warns-critical-flaw-lets-hackers-execute-code-as-root/",
+      "publishedAt": "2026-09-18T09:34:33.000Z",
+      "excerpt": "Check Point Software has released security updates to address a critical vulnerability that can let attackers execute code with root privileges on management systems. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/check-point-warns-critical-flaw-lets-hackers-execute-code-as-root",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s19"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Claimed Bug Bounty Hunter Likely Used LLM to Build PhantomRaven npm Stealer",
+      "url": "https://thehackernews.com/2026/09/claimed-bug-bounty-hunter-likely-used.html",
+      "publishedAt": "2026-09-18T09:18:03.000Z",
+      "excerpt": "A financially motivated threat actor has been linked to the development and distribution of a JavaScript (JS)-based information stealer known as PhantomRaven via the npm package registry. \"The developer likely wrote the malware using a large language model (LLM), an assessment made with high confidence based on verbose comments, placeholder code, and statistical token-analysis patterns,\"",
+      "canonicalUrl": "https://thehackernews.com/2026/09/claimed-bug-bounty-hunter-likely-used.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft fixes broken copy and paste for Excel 2016 users",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-broken-copy-and-paste-for-excel-2016-users/",
+      "publishedAt": "2026-09-18T07:35:31.000Z",
+      "excerpt": "Microsoft has fixed a known issue that causes copy-and-paste failures for some Excel users after installing the September 2026 KB5002914 security update. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-fixes-broken-copy-and-paste-for-excel-2016-users",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s22"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "MIND Secures $72 Million for AI-Powered DLP",
+      "url": "https://www.securityweek.com/mind-secures-72-million-for-ai-powered-dlp/",
+      "publishedAt": "2026-09-18T07:25:27.000Z",
+      "excerpt": "The company will use the funding to accelerate platform development and expand its presence in key enterprise markets. The post MIND Secures $72 Million for AI-Powered DLP appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/mind-secures-72-million-for-ai-powered-dlp",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Check Point, Kaspersky, Tanium Patch Product Vulnerabilities",
+      "url": "https://www.securityweek.com/check-point-kaspersky-tanium-patch-product-vulnerabilities/",
+      "publishedAt": "2026-09-18T07:14:04.000Z",
+      "excerpt": "Check Point Security Management and Log Servers are affected by a critical vulnerability that can allow remote code execution with root privileges. The post Check Point, Kaspersky, Tanium Patch Product Vulnerabilities appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/check-point-kaspersky-tanium-patch-product-vulnerabilities",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s24"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "AI Agent Breaches Spanish Organization, Modifies Personal Data",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/ai-agent-breaches-spanish-organization-personal-data",
+      "publishedAt": "2026-09-18T07:00:00.000Z",
+      "excerpt": "AI-driven cyberattacks used to be exotic. Soon, it'll be odd if threat actors aren't using agents to do all of their bidding.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/ai-agent-breaches-spanish-organization-personal-data",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "RatHat Android Malware Abuses ADB to Retain Shell Access After Uninstall",
+      "url": "https://thehackernews.com/2026/09/rathat-android-malware-abuses-adb-to.html",
+      "publishedAt": "2026-09-18T06:17:25.000Z",
+      "excerpt": "Cybersecurity researchers have flagged a new Android malware called RatHat that's assessed to be operated by China-based threat actors and features an artificial intelligence (AI)-powered system to navigate and control compromised devices. \"Distributed primarily via targeted smishing (SMS/text phishing) and malvertising campaigns leading to deceptive third-party download portals, RatHat uses",
+      "canonicalUrl": "https://thehackernews.com/2026/09/rathat-android-malware-abuses-adb-to.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "unit42",
+      "sourceKind": "rss",
+      "title": "Inside the Modern SOC: Defending the Cross-Environment Pivot",
+      "url": "https://unit42.paloaltonetworks.com/soc-cross-environment-pivot/",
+      "publishedAt": "2026-09-17T22:00:33.000Z",
+      "excerpt": "Cross-environment attacks demand a new approach to security operations. Learn how Unit 42 Managed XSIAM helps SOC teams investigate complete attack paths. The post Inside the Modern SOC: Defending the Cross-Environment Pivot appeared first on Unit 42.",
+      "canonicalUrl": "https://unit42.paloaltonetworks.com/soc-cross-environment-pivot",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "CISA Ditches Weekly Vulnerability Roundups for Risk-Based Focus",
+      "url": "https://www.darkreading.com/cyber-risk/cisa-ditches-weekly-vuln-roundups-risk-based-focus",
+      "publishedAt": "2026-09-17T21:23:50.000Z",
+      "excerpt": "The move is consistent with the agency's advice on the need for organizations to prioritize the vulnerabilities that actually matter.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/cisa-ditches-weekly-vuln-roundups-risk-based-focus",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s29"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "European Commission set to push social media restrictions, safety requirements into law",
+      "url": "https://therecord.media/european-commission-set-to-push-social-media-kids-restrictions-into-law",
+      "publishedAt": "2026-09-17T20:36:00.000Z",
+      "excerpt": "The proposal, known as the EU KIDS Act, would block social media platforms from offering accounts to children younger than 13 and establish a bloc-wide minimum age of 15 for account creation.",
+      "canonicalUrl": "https://therecord.media/european-commission-set-to-push-social-media-kids-restrictions-into-law",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s30"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "China's FamousSparrow APT Spies on US Politics in Latin America",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/china-famoussparrow-spies-latin-america",
+      "publishedAt": "2026-09-17T19:15:38.000Z",
+      "excerpt": "Amid the US and China's fight for eco-colonial influence in Latin America, a stealthy backdoor has taken flight.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/china-famoussparrow-spies-latin-america",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s31"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "OpenAI details more cases of AI agents taking unauthorized actions",
+      "url": "https://www.bleepingcomputer.com/news/security/openai-details-more-cases-of-ai-agents-taking-unauthorized-actions/",
+      "publishedAt": "2026-09-17T18:55:12.000Z",
+      "excerpt": "OpenAI has presented new examples of what they call \"AI model misalignment\" from the past six months, including unauthorized file uploads, following self-generated instructions, hiding mistakes, and leveraging exposed API keys. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/openai-details-more-cases-of-ai-agents-taking-unauthorized-actions",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s32"
+    },
+    {
+      "sourceId": "talos",
+      "sourceKind": "rss",
+      "title": "Should you care about an “AI slowdown?”",
+      "url": "https://blog.talosintelligence.com/should-you-care-about-an-ai-slowdown/",
+      "publishedAt": "2026-09-17T18:00:23.000Z",
+      "excerpt": "In this week's Threat Source, David talks about why focusing on your security basics is still your best bet, even in a world with rapid AI advancements.",
+      "canonicalUrl": "https://blog.talosintelligence.com/should-you-care-about-an-ai-slowdown",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s34"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "ThreatsDay: Self-Rewriting Agents, 800+ Flaws Patched, Insider SIM Swaps and 22 More New Stories",
+      "url": "https://thehackernews.com/2026/09/threatsday-self-rewriting-agents-800.html",
+      "publishedAt": "2026-09-17T17:32:22.000Z",
+      "excerpt": "Attackers keep finding new keys. The funny part is that defenders keep inventing where to store them. This week, those keys sit in AI tools, exposed services, old bugs, weak logins, and software sold like a monthly subscription. Some attacks use new tricks. Others just reuse what was already lying around. Both work often enough. So the threat landscape is not getting cleaner. It is just",
+      "canonicalUrl": "https://thehackernews.com/2026/09/threatsday-self-rewriting-agents-800.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s35"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Brevo supply-chain attack injected ClickFix scripts on customer sites",
+      "url": "https://www.bleepingcomputer.com/news/security/brevo-supply-chain-attack-injected-clickfix-scripts-on-customer-sites/",
+      "publishedAt": "2026-09-17T17:11:34.000Z",
+      "excerpt": "Brevo confirmed that attackers stole a Cloudflare API key and used it to inject malicious ClickFix scripts into its websites and JavaScript files embedded on customer sites to distribute malware. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/brevo-supply-chain-attack-injected-clickfix-scripts-on-customer-sites",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s36"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Cyberattacks on Two Oil Tankers Prompt Coast Guard, FBI to Board Vessels",
+      "url": "https://www.securityweek.com/cyberattacks-on-two-oil-tankers-prompt-coast-guard-fbi-to-board-vessels/",
+      "publishedAt": "2026-09-17T17:09:40.000Z",
+      "excerpt": "The Coast Guard confirmed evidence of malicious cyber activity on the VL Prosperity, but has not attributed the attack to Iran. The post Cyberattacks on Two Oil Tankers Prompt Coast Guard, FBI to Board Vessels appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/cyberattacks-on-two-oil-tankers-prompt-coast-guard-fbi-to-board-vessels",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s37"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "From guidance to action: Security fundamentals that materially reduce risk",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/09/17/from-guidance-to-action-security-fundamentals-that-materially-reduce-risk/",
+      "publishedAt": "2026-09-17T17:00:00.000Z",
+      "excerpt": "AI has made fundamental changes to the operating environment for cybersecurity. Explore exposure management guidance on recommended controls and take action and stay ahead of cyberthreats. The post From guidance to action: Security fundamentals that materially reduce risk appeared first on Microsoft Security Blog.",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/09/17/from-guidance-to-action-security-fundamentals-that-materially-reduce-risk",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s38"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "China’s FamousSparrow hackers target Latin America with new backdoor",
+      "url": "https://therecord.media/china-hackers-latin-america-espionage",
+      "publishedAt": "2026-09-17T16:30:00.000Z",
+      "excerpt": "Alleged Chinese hackers are breaking into government agencies across Latin America using a new backdoor that researchers are calling “SparroWocky.”",
+      "canonicalUrl": "https://therecord.media/china-hackers-latin-america-espionage",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s39"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "Improving email security outcomes with real-world Microsoft Defender insights",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/09/17/improving-email-security-outcomes-with-real-world-microsoft-defender-insights/",
+      "publishedAt": "2026-09-17T16:00:00.000Z",
+      "excerpt": "The latest email security benchmarking reports show strong Microsoft Defender performance across pre-delivery and post-delivery scenarios and reveal where threats and defenses continue to evolve. The post Improving email security outcomes with real-world Microsoft Defender insights appeared first on Microsoft Security Blog.",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/09/17/improving-email-security-outcomes-with-real-world-microsoft-defender-insights",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s40"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Critical Docker Sandboxes Flaw Lets Malicious Guest Code Read and Modify macOS Host Files",
+      "url": "https://thehackernews.com/2026/09/critical-docker-sandboxes-flaw-lets.html",
+      "publishedAt": "2026-09-17T15:37:56.000Z",
+      "excerpt": "Malicious code running inside a Docker Sandboxes virtual machine on macOS could escape the project directory shared into it and read or change files anywhere else on the host, Docker warns in a security announcement on September 15. The escape runs with the rights of the host account that runs the virtual machine. The flaw, CVE-2026-77179, is rated Critical, affects versions",
+      "canonicalUrl": "https://thehackernews.com/2026/09/critical-docker-sandboxes-flaw-lets.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-77179",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "On macOS, the virtio-fs host server used by Docker Sandboxes improperly follows symlinks when reopening an unlinked file from a stored path. A malicious guest can replace a parent directory with a symlink, escape the shared workspace, and read or modify arbitrary host files as the VMM user, potentially achieving host code execution.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.4,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "security@docker.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-59"
+            ],
+            "published": "2026-09-15T14:17:11.273",
+            "lastModified": "2026-09-16T20:38:33.883",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://docs.docker.com/ai/sandboxes/",
+                "source": "security@docker.com",
+                "tags": []
+              },
+              {
+                "url": "https://docs.docker.com/ai/sandboxes/security/isolation/",
+                "source": "security@docker.com",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/docker/sbx-releases/releases/tag/v0.42.0",
+                "source": "security@docker.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/critical-docker-sandboxes-flaw-lets.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.18",
+              "dateReleased": "2026-09-18T13:49:41.7236Z",
+              "retrievedAt": "2026-09-18T15:40:56.812Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-85889%2CCVE-2026-58138%2CCVE-2026-77179%2CCVE-2026-77960%2CCVE-2026-86520%2CCVE-2026-86689",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-77179",
+              "retrievedAt": "2026-09-18T15:40:56.812Z"
+            }
+          }
+        }
+      ],
+      "id": "s41"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Iran-Linked Handala Hack Tied to HEAVYGRAM Telegram Backdoor That Can Steal Passwords",
+      "url": "https://thehackernews.com/2026/09/iran-linked-handala-hack-tied-to.html",
+      "publishedAt": "2026-09-17T14:03:13.000Z",
+      "excerpt": "The Iran-linked \"hacktivist\" persona known as Handala Hack has been attributed to a Telegram-based surveillance backdoor called HEAVYGRAM and a Delphi-based utility known as CRUDEEXCLUDE. \"HEAVYGRAM offers builtin commands supporting remote command execution, system, network and process information discovery, data and Telegram session files exfiltration, screenshot capture, DLL sideloading,",
+      "canonicalUrl": "https://thehackernews.com/2026/09/iran-linked-handala-hack-tied-to.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s42"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Schneider Electric PowerChute Serial Shutdown",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-260-07",
+      "publishedAt": "2026-09-17T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Schneider Electric is aware of vulnerabilities in its PowerChute Serial Shutdown product. The PowerChute Serial Shutdown product is a UPS management software enabling graceful system shutdown and energy management capabilities for desktops, servers and workstations. Failure to apply the remediation provided below may risk improper authentication validation which could result in…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-260-07",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s43"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Mitsubishi Electric CC-Link IE TSN Communication Protocol (Update A)",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-211-07",
+      "publishedAt": "2026-09-17T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of this vulnerability could allow an attacker with access to the same network segment to tamper with communication data in the affected product by sending specially crafted packets under specific timing conditions. This could allow the attacker to cause a denial-of-service (DoS) condition in the affected product by interfering with its control function or…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-211-07",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s44"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Mitsubishi Electric GX Works3 and Motion Control Settings",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-260-02",
+      "publishedAt": "2026-09-17T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of this vulnerability could allow a local attacker to successfully authenticate even with an invalid block password by executing the affected product and modify part of the executable module in memory, and thereby allows the attacker to view, tamper with, destroy, or delete control programs. The following versions of Mitsubishi Electric GX Works3 and…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-260-02",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s45"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Hitachi Energy FACTS Control Platform (FCP)",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-260-03",
+      "publishedAt": "2026-09-17T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Hitachi Energy is aware of vulnerabilities that affect the FACTS Control systems with GWS component listed in this document. An attacker exploiting these vulnerabilities can cause impact on confidentiality, integrity and availability of the product. Following FACTS Control systems with GWS component deployed from year 2020 onwards are likely affected by the above…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-260-03",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s46"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Schneider Electric NetBotz 5 750/755",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-260-05",
+      "publishedAt": "2026-09-17T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Schneider Electric is aware of multiple vulnerabilities in its NetBotz 5 – 750/755 products.The NetBotz 5 – 750/755 products are security and environmental monitors providing temperature, humidity, leak, smoke, vibration, door contact, and video monitoring capabilities. Failure to apply the remediation provided below may risk arbitrary or remote code execution over the local…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-260-05",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s47"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Bransys ELD",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-260-01",
+      "publishedAt": "2026-09-17T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of these vulnerabilities could allow unauthorized access to telemetry data and firmware. The following versions of Bransys ELD are affected: Android <11.00.00 (CVE-2026-86520, CVE-2026-86689, CVE-2026-77960) iOS <1.1.54 (CVE-2026-86520, CVE-2026-86689, CVE-2026-77960) CVSS Vendor Equipment Vulnerabilities v3 7.5 Bransys Bransys ELD Use of Hard-coded…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-260-01",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-77960",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-260-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.18",
+              "dateReleased": "2026-09-18T13:49:41.7236Z",
+              "retrievedAt": "2026-09-18T15:40:56.812Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-85889%2CCVE-2026-58138%2CCVE-2026-77179%2CCVE-2026-77960%2CCVE-2026-86520%2CCVE-2026-86689",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-77960",
+              "retrievedAt": "2026-09-18T15:40:56.812Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-86520",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-260-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.18",
+              "dateReleased": "2026-09-18T13:49:41.7236Z",
+              "retrievedAt": "2026-09-18T15:40:56.812Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-85889%2CCVE-2026-58138%2CCVE-2026-77179%2CCVE-2026-77960%2CCVE-2026-86520%2CCVE-2026-86689",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-86520",
+              "retrievedAt": "2026-09-18T15:40:56.812Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-86689",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-260-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.18",
+              "dateReleased": "2026-09-18T13:49:41.7236Z",
+              "retrievedAt": "2026-09-18T15:40:56.812Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-85889%2CCVE-2026-58138%2CCVE-2026-77179%2CCVE-2026-77960%2CCVE-2026-86520%2CCVE-2026-86689",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-86689",
+              "retrievedAt": "2026-09-18T15:40:56.812Z"
+            }
+          }
+        }
+      ],
+      "id": "s48"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Schneider Electric Modicon M340 Controller and Communication Modules",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-260-04",
+      "publishedAt": "2026-09-17T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Schneider Electric is aware of a vulnerability in its Modicon M340 https://www.se.com/ww/en/product-range/1468-modicon-m340-pac/, BMXNOR0200H https://www.se.com/us/en/product/BMXNOR0200H/communication-module-modicon-m340-iec-608705101-104-dnp3-for-severe-environments/: Modicon M340 X80 Ethernet Communication Modules, BMXNGD0100…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-260-04",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s49"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "ABB Ability Edgenius",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-260-06",
+      "publishedAt": "2026-09-17T12:00:00.000Z",
+      "excerpt": "View CSAF Summary ABB is aware of public reports of a vulnerability CVE‑2026‑31431 (Copy Fail) in the product versions listed as affected in the advisory. An update is available that resolves a publicly reported vulnerability. CVE‑2026‑31431 (Copy Fail) is a Linux kernel vulnerability that may allow a locally authenticated user or compromised container workload to gain elevated (root) privileges…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-260-06",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s50"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 768,
+    "promptCacheMissTokens": 9441,
+    "outputTokens": 6766,
+    "estimatedCostUsd": 0.0032183704
+  }
+}

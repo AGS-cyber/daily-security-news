@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-09-18",
+    "mode": "article",
+    "headline": "An exploited RCE, a CVSS 10.0, and pinned plugins that aren't",
+    "count": 50
+  },
+  {
     "date": "2026-09-17",
     "mode": "article",
     "headline": "A 10.0 Cisco auth bypass leads a day of three exploited flaws and two large breaches",
