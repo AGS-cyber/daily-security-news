@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-09-20",
+    "mode": "article",
+    "headline": "Trust boundaries, not payloads, are the story",
+    "count": 3
+  },
+  {
     "date": "2026-09-19",
     "mode": "article",
     "headline": "A maximum-severity identity bypass leads a day of confirmed exploitation",

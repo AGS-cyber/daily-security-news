@@ -1,0 +1,77 @@
+{
+  "date": "2026-09-20",
+  "generatedAt": "2026-09-20T15:17:35.813Z",
+  "degraded": [
+    {
+      "stage": "normalize",
+      "message": "1 items were dropped as unparseable"
+    }
+  ],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 229,
+    "deduped": 222,
+    "published": 3
+  },
+  "mode": "article",
+  "headline": "Trust boundaries, not payloads, are the story",
+  "standfirst": "Three stories today, and they share a shape: each one is about where a trust boundary is actually drawn versus where everyone assumed it was. A package that looks clean at install time and turns hostile at runtime, an AI coding agent that can be talked out of its own sandbox, and a novelty hotline that collects biometrics on the way in and hasn't said much about what happens to them on the way out.",
+  "bodyMarkdown": "## Research\n\nStart with [[s1]], because it is the one that invalidates a control you may have already shipped. The campaign around the `indexed-btree` package hides its payload in the package's ordinary runtime behavior rather than in an install script. That distinction matters more than it sounds. For several years, the standard defensive posture against malicious npm packages has been to suppress lifecycle scripts — block `postinstall`, audit `preinstall`, run installs with scripts disabled, and flag packages that invoke a shell during setup. That posture is now demonstrably insufficient. A package whose malicious logic only executes when its exported functions are actually called is invisible to install-time gating, because at install time it does nothing wrong. It survives `--ignore-scripts`, it survives a static scan of `package.json`, and it very likely survives a reputation score built on historical version behavior, since the earlier versions of a package like this can be entirely benign.\n\nThe deterministic vulnerability fields supplied with this story are empty — no CVE, no CVSS, no KEV entry — and that is the correct read rather than a gap in the data. This is malware distribution, not a vulnerability in a product, so there is no patch that closes it and no catalog that lists it. Which means the useful response is not \"check your scanner's signature feed\" but \"assume the install-time gate is one layer, not the layer.\" Concretely: runtime behavioral monitoring for node processes that make unexpected outbound connections, egress allowlisting so a compromised dependency cannot reach a collection endpoint, lockfiles pinned to integrity hashes, and a build pipeline that treats a dependency's first few invocations as untrusted. The uncomfortable part is that legitimate libraries also make network calls and spawn subprocesses, so the detection problem is genuinely about context and destination, not about the presence of a syscall. If your supply-chain program's summary slide says \"install scripts disabled,\" that slide is now wrong.\n\n## Vulnerabilities\n\n[[s2]] is a different flavor of the same theme. Researchers found two ways out of the OpenAI Codex sandbox, and at least one of them worked from what was described as its most restrictive mode, ending in command execution on the developer's own machine rather than inside the confined environment. Both issues are patched. There is no CVE in the supplied intelligence, so there is no version-scoped advisory handle to bolt onto a vulnerability management workflow here; treat this as a vendor-patched hardening item and verify your tooling version directly rather than waiting for a scanner to find it.\n\nThe significance is not the specific escape. It is that AI coding agents have quietly been granted a combination of capabilities that no other developer tool has held at once: the ability to read and write files across a working tree, to execute arbitrary shell commands, and to maintain outbound network access — all driven by text that may originate from an untrusted repository, a dependency's README, a fetched web page, or a prompt injection buried in a file the agent was asked to summarize. A sandbox is the only thing standing between that text and your laptop or your build runner. Sandboxes that are documented as \"most restrictive\" and then found to be escapable twice are not a reason to abandon the tool, but they are a reason to stop treating the agent's confinement as a security control you can rely on and start treating it as one defensive layer among several.\n\nPractically, that means: don't run coding agents with credentials they don't need, especially cloud keys and package-publish tokens; prefer ephemeral, disposable environments over the developer's primary workstation; keep network egress from the agent's process narrow; and log the commands it actually runs, since that log is often the only evidence you'll have. Approval prompts feel like control but decay into reflexive clicking within a week, so they should not be load-bearing. Agents are now part of your endpoint attack surface, and they should be inventoried like it.\n\n## Industry\n\n[[s3]] looks like a light item and isn't. A viral AI personality's video-call service performs a face scan on every caller, ostensibly as an 18-plus age check, and infers callers' moods during the conversation. The service is scheduled to shut down permanently, which is exactly what makes the privacy questions sharper rather than softer. Age assurance by facial estimation and continuous emotional inference are both biometric processing, and both typically attract heightened legal treatment in jurisdictions that have special categories for biometric and emotional data. Mood inference in particular is the kind of derived data that is easy to collect and hard to defend, because it is an inference about a person's internal state generated without their meaningful input and stored in a form that is difficult to contest.\n\nTwo security-relevant points. First, a face scan is an irrevocable credential. Unlike a password, a biometric template cannot be rotated after a breach, so the question \"what is the retention period, and what happens to templates when the operator winds down\" should be answered before enrollment, not after. A service that is going dark on a fixed schedule is precisely the case where users should demand a deletion commitment in writing, because there is no ongoing relationship left to enforce it. Second, this normalizes the pattern. When a novelty hotline can face-scan every caller as a throwaway age gate and infer emotion as a feature, that expectation migrates into products that are not novelties — hiring tools, proctoring, retail analytics, and anything with a camera and a login. The precedent is set by the gimmick long before the regulated deployment arrives. Nobody needs to be told that a password can be phished. They do need to be told that a selfie can be.",
+  "selected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Malicious npm packages evade install-script defenses at runtime",
+      "url": "https://www.bleepingcomputer.com/news/security/malicious-npm-packages-evade-install-script-defenses-at-runtime/",
+      "publishedAt": "2026-09-20T14:11:21.000Z",
+      "excerpt": "An ongoing npm malware campaign involving the 'indexed-btree' package shows how threat actors bypass supply chain defenses by hiding malicious code in a package's normal runtime behavior rather than in installation scripts. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/malicious-npm-packages-evade-install-script-defenses-at-runtime",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s1",
+      "section": "research",
+      "rank": 1,
+      "angle": "Malicious npm packages that hide payloads in runtime behavior show supply-chain defenses focused on install scripts are insufficient."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Researchers escape OpenAI Codex sandbox to run commands on host",
+      "url": "https://www.bleepingcomputer.com/news/security/researchers-escape-openai-codex-sandbox-to-run-commands-on-host/",
+      "publishedAt": "2026-09-20T12:00:00.000Z",
+      "excerpt": "Researchers escaped OpenAI's Codex sandbox two ways, one running commands on a developer's machine from its most locked-down mode. OpenAI has patched both. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/researchers-escape-openai-codex-sandbox-to-run-commands-on-host",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s2",
+      "section": "vulnerabilities",
+      "rank": 2,
+      "angle": "A patched sandbox escape in OpenAI Codex highlights how AI coding agents can become a path to host compromise."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Viral AI actress' hotline face-scans every caller, watches their mood",
+      "url": "https://www.bleepingcomputer.com/news/security/viral-ai-actress-hotline-face-scans-every-caller-watches-their-mood/",
+      "publishedAt": "2026-09-19T11:38:20.000Z",
+      "excerpt": "AI actress Tilly Norwood went viral after glitching into Chinese on Piers Morgan Uncensored last night. Her \"Talking Tilly\" video call service face-scans every caller for an 18+ age check, senses callers' moods during calls, and shuts down permanently on September 27. We tried it and read the fine print. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/viral-ai-actress-hotline-face-scans-every-caller-watches-their-mood",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s3",
+      "section": "industry",
+      "rank": 3,
+      "angle": "A viral AI hotline normalizes face scanning and mood inference, raising privacy questions beyond conventional security coverage."
+    }
+  ],
+  "alsoCollected": [],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 768,
+    "promptCacheMissTokens": 1110,
+    "outputTokens": 4522,
+    "estimatedCostUsd": 0.0014237104000000003
+  }
+}
