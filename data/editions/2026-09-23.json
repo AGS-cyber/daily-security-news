@@ -1,0 +1,1451 @@
+{
+  "date": "2026-09-23",
+  "generatedAt": "2026-09-23T15:57:27.592Z",
+  "degraded": [
+    {
+      "stage": "normalize",
+      "message": "1 items were dropped as unparseable"
+    }
+  ],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 229,
+    "deduped": 222,
+    "published": 52
+  },
+  "mode": "article",
+  "headline": "Four zero-days under live exploitation, and an extortion claim aimed at the FBI",
+  "standfirst": "The day's agenda is set by vendors shipping emergency fixes for flaws attackers already have working. Check Point and F5 both pushed hotfixes for KEV-listed bugs in exactly the kind of infrastructure that sits in front of everything else, a Chinese actor is running a full browser-to-kernel chain against Chrome and Windows, and Arista is patching a VeloCloud Orchestrator zero-day. Ubuntu still has not shipped the upstream fix for a container escape with public exploit code, cPanel handed any hosting tenant a path to root, and ShinyHunters claims it reached FBI systems through PeopleSoft. Microsoft, meanwhile, has dismantled a phishing-as-a-service operation behind roughly 12,000 inbox compromises.",
+  "bodyMarkdown": "## Actively exploited\n\nThe lead is Check Point's Management Server. CVE-2026-93616 is a path-traversal and file-upload flaw in the CWE-22 family that lets an unauthenticated attacker upload and execute arbitrary scripts on the management server itself — CVSS 9.8, and reachable over the network with no privileges and no user interaction. It is in CISA's catalog, which means exploitation is confirmed rather than theorised, and the required action is to apply mitigations per vendor instructions under federal patch guidance, with a remediation deadline only days out for federal agencies. That deadline is not a universal one, but the practical reading is the same for everyone: hotfix [[s48]] now, and check for the uploaded scripts afterward, because the exploitation window predates the fix.\n\nF5 has the same shape of problem in BIG-IP APM. CVE-2026-94127 is a heap-based buffer overflow (CWE-122) that yields unauthenticated remote code execution when an APM access policy and an OAuth profile are configured on a virtual server — CVSS 4.0 base of 9.3, and present in Appliance mode too. The configuration caveat matters and cuts both ways: APM used strictly as an OAuth client or resource server is not affected, which should shrink the panic list, but that list is precisely the identity infrastructure nobody wants to take offline. Affected ranges include 17.0.0 through 17.1.3, 17.5.0 through 17.5.1, and 21.1.0. It is KEV-listed as exploited, and this is a data-plane issue with no control-plane exposure, so your internet-facing APM virtual servers are the ones to inventory first [[s24]].\n\nThe most interesting attack of the day is the exploit chain attributed to a Chinese actor tracked as UTA0565. It strings together three separately KEV-listed bugs: two Chrome V8 flaws, a type confusion (CWE-843, CVSS 8.8) and an out-of-bounds write (CWE-787, CVSS 8.8), both reachable from a crafted HTML page inside the sandbox, then a Windows ALPC heap-based buffer overflow (CWE-122) rated 7.8 that elevates privileges locally. Delivered through fake websites and observed being used as zero-days, the chain ends in CLEANGULP malware. Two of the three bugs are already past their federal remediation deadlines, which tells you how quickly this campaign moved from disclosure to weaponisation [[s25]].\n\nLess metadata, same urgency: Arista has released patches for a VeloCloud Orchestrator zero-day that is being actively exploited, affecting on-prem VCO deployments. No CVE identifier or scoring was included in what we have, so treat the operator guidance as the authority — if you run VCO On-Prem, this is an immediate action item rather than a scheduled one [[s11]].\n\n## Breaches\n\nShinyHunters says it breached FBI systems by way of a new Oracle PeopleSoft zero-day, reaching internal services and exfiltrating data on employees and job applicants, and is threatening to leak it. Nothing here is confirmed by the bureau, and extortion gangs routinely overstate what they hold — but PeopleSoft sits in HR and applicant-tracking estates at large organisations everywhere, so the interesting question is not whether the claim is accurate. It is whether your PeopleSoft exposure matches the one being described, and whether a zero-day that never reaches a vendor advisory is now your problem [[s40]].\n\n## Vulnerabilities\n\nA public exploit now exists for CVE-2026-80521, a use-after-free in the Linux kernel's AF_UNIX socket subsystem that escapes a container and lands root on the host. It carries a CVSS of 7.8 and was fixed upstream in the kernel, but Ubuntu has not shipped that fix for its 26.04, 24.04, or 22.04 LTS releases — so the distro packages many of you are actually running remain exposed to working exploit code. KEV does not list it, and absence from that catalog proves nothing either way; the operative fact is a public exploit plus an unpatched distribution [[s19]].\n\ncPanel's pair of bugs deserve attention from anyone renting or reselling shared hosting. A flaw in its CalDAV and CardDAV service lets anyone holding a cPanel account execute code as root and take full control of the server, which turns tenant isolation into a fiction. A second bug in the WP Toolkit plugin lets an account holder modify databases belonging to other accounts — quieter, but the same boundary failure. Fixed versions are out for both; the risk concentrates in providers who patch on their own leisurely schedule rather than their customers' [[s13]].\n\n## Industry\n\nMicrosoft has taken down EvilTokens, a device-code phishing service tied to roughly 12,000 inbox compromises, acting under court authorisation with support from Health-ISAC and a set of technology and threat-intelligence partners. The detail worth internalising is the operational one: device-code phishing abuses a legitimate OAuth flow, so there is no malware to detect and no patch to apply — only conditional-access policy, sign-in log review, and a hard look at which applications in your tenant still permit device-code authentication [[s46]].",
+  "selected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Check Point warns of Management Server zero-day exploited in attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/check-point-patches-management-server-zero-day-exploited-in-attacks/",
+      "publishedAt": "2026-09-22T16:32:47.000Z",
+      "excerpt": "Check Point Software released emergency hotfixes to address a critical Security Management Server vulnerability that could let attackers run arbitrary scripts. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/check-point-patches-management-server-zero-day-exploited-in-attacks",
+      "alsoCoveredBy": [
+        {
+          "sourceId": "thehackernews",
+          "name": "The Hacker News",
+          "url": "https://thehackernews.com/2026/09/check-point-warns-of-management-server.html"
+        },
+        {
+          "sourceId": "securityweek",
+          "name": "SecurityWeek",
+          "url": "https://www.securityweek.com/check-point-patches-exploited-management-server-zero-day/"
+        }
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-93616",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Check Point",
+            "product": "Multiple Products",
+            "vulnerabilityName": "Check Point Multiple Products Path Traversal Vulnerability",
+            "dateAdded": "2026-09-22",
+            "shortDescription": "Check Point Security Management Server, Multi-Domain Security Management Server, Log Server, Multi-Domain Log Server, and SmartEvent contain a path traversal vulnerability that allows an unauthenticated attacker to upload and execute arbitrary scripts.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-09-25",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://support.checkpoint.com/results/sk/sk1000171/ ; ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-93616",
+            "cwes": [
+              "CWE-22"
+            ]
+          },
+          "nvd": {
+            "description": "A directory traversal and file upload vulnerability allows an unauthenticated attacker to upload and execute arbitrary scripts on Check Point Management Server.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "cve@checkpoint.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-22"
+            ],
+            "published": "2026-09-22T13:17:11.963",
+            "lastModified": "2026-09-23T04:17:57.453",
+            "vulnStatus": "Undergoing Analysis",
+            "references": [
+              {
+                "url": "https://support.checkpoint.com/results/sk/sk1000171",
+                "source": "cve@checkpoint.com",
+                "tags": []
+              },
+              {
+                "url": "https://blog.checkpoint.com/security/security-advisory-action-required-active-exploitation-of-cve-2026-85102-and-a-management-pre-authentication-vulnerability-cve-2026-93616/",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": []
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-93616",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/check-point-warns-of-management-server.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.23",
+              "dateReleased": "2026-09-23T12:51:35.821Z",
+              "retrievedAt": "2026-09-23T15:57:27.592Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-80521%2CCVE-2026-94127%2CCVE-2026-85046%2CCVE-2026-85880%2CCVE-2026-87491%2CCVE-2026-90898%2CCVE-2026-93616",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-93616",
+              "retrievedAt": "2026-09-23T15:57:27.592Z"
+            }
+          }
+        }
+      ],
+      "id": "s48",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "An unauthenticated path-traversal and file-upload flaw lets attackers run arbitrary scripts on Check Point Management Server; it is KEV-listed with a September 25 remediation deadline, so emergency hotfixes are urgent."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "F5 Patches Critical BIG-IP APM Zero-Day Exploited for Unauthenticated RCE on OAuth Servers",
+      "url": "https://thehackernews.com/2026/09/f5-patches-critical-big-ip-apm-zero-day.html",
+      "publishedAt": "2026-09-23T08:29:48.000Z",
+      "excerpt": "Attackers are exploiting a critical flaw in F5 BIG-IP Access Policy Manager (APM) that lets them run code on a BIG-IP system without logging in, F5 says. The flaw, CVE-2026-94127, affects only systems in which APM serves as an OAuth authorization server, issuing access tokens to applications. F5 disclosed it in an advisory on September 22 and has released engineering hotfixes.",
+      "canonicalUrl": "https://thehackernews.com/2026/09/f5-patches-critical-big-ip-apm-zero-day.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-94127",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "F5",
+            "product": "BIG-IP APM",
+            "vulnerabilityName": "F5 BIG-IP APM Heap-based Buffer Overflow Vulnerability",
+            "dateAdded": "2026-09-22",
+            "shortDescription": "F5 BIG-IP APM contains a heap-based buffer overflow vulnerability when access policy and an OAuth profile are configured on a virtual server. This vulnerability could allow an unauthenticated attacker to perform remote code execution.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-09-25",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "For temporary mitigation to allow for proactive forensic triage, apply the vendor-provided iRule. Once completed, install the final vendor patch as soon as possible. For more information please see: https://my.f5.com/manage/s/article/K000162605 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-94127",
+            "cwes": [
+              "CWE-122"
+            ]
+          },
+          "nvd": {
+            "description": "When a BIG-IP APM access policy and an OAuth profile are configured on a virtual server, specific malicious traffic can lead to remote code execution (RCE). This vulnerability is only present when BIG-IP APM is configured as an OAuth Authorization Server. Deployments using APM strictly as an OAuth Client / Resource Server (without OAuth authorization server profiles configured) are not affected by this vulnerability.\n\nImpact:\nThis vulnerability allows an unauthenticated attacker to perform remote code execution. The BIG-IP system in Appliance mode is also vulnerable. This is a data plane issue; there is no control plane exposure.\n\n \n\n\nNote: Software versions which have reached End of Technical Support (EoTS) are not evaluated.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.3,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "f5sirt@f5.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-122"
+            ],
+            "published": "2026-09-22T15:17:24.313",
+            "lastModified": "2026-09-23T14:32:07.910",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://my.f5.com/manage/s/article/K000162605",
+                "source": "f5sirt@f5.com",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-94127",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:f5:big-ip_access_policy_manager:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E2AC01C3-F47E-4F42-A4EB-90DE63C834CC",
+                "versionStartIncluding": "17.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "17.1.3",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:f5:big-ip_access_policy_manager:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "BD71EC53-8ABC-410F-B031-0B3288D2E8DF",
+                "versionStartIncluding": "17.5.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "17.5.1",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:f5:big-ip_access_policy_manager:21.1.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8D26D424-54C1-4B2C-BBB8-C79E925BED7F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/f5-patches-critical-big-ip-apm-zero-day.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.23",
+              "dateReleased": "2026-09-23T12:51:35.821Z",
+              "retrievedAt": "2026-09-23T15:57:27.592Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-80521%2CCVE-2026-94127%2CCVE-2026-85046%2CCVE-2026-85880%2CCVE-2026-87491%2CCVE-2026-90898%2CCVE-2026-93616",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-94127",
+              "retrievedAt": "2026-09-23T15:57:27.592Z"
+            }
+          }
+        }
+      ],
+      "id": "s24",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "Unauthenticated RCE in F5 BIG-IP APM when it serves as an OAuth authorization server is KEV-listed and exploited in the wild, so hotfixes belong on internet-facing systems now."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Chinese Hackers Exploit Chrome-Windows Zero-Day Chain to Deploy CLEANGULP Malware",
+      "url": "https://thehackernews.com/2026/09/chinese-hackers-exploit-chrome-windows.html",
+      "publishedAt": "2026-09-23T08:29:24.000Z",
+      "excerpt": "A Chinese threat actor codenamed UTA0565 has been observed exploiting the recently disclosed Google Chrome-Microsoft Windows exploit chain as zero-days through fake websites. The attacks, detected on September 3 and 4, 2026, involved the chaining of two vulnerabilities in Chrome (CVE-2026-85046, CVE-2026-87491) and one impacting Windows Advanced Local Procedure Call (CVE-2026-85880) to break",
+      "canonicalUrl": "https://thehackernews.com/2026/09/chinese-hackers-exploit-chrome-windows.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-85046",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Google",
+            "product": "Chromium V8",
+            "vulnerabilityName": "Google Chromium V8 Type Confusion Vulnerability",
+            "dateAdded": "2026-09-04",
+            "shortDescription": "Google Chromium V8 contains a type confusion vulnerability that allows a remote attacker to execute arbitrary code inside the sandbox via a crafted HTML page. This vulnerability could affect multiple web browsers that utilize Chromium, including, but not limited to, Google Chrome, Microsoft Edge, and Opera.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-09-18",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://chromereleases.googleblog.com/2026/09/stable-channel-update-for-desktop_01882797386.html ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-85046",
+            "cwes": [
+              "CWE-843"
+            ]
+          },
+          "nvd": {
+            "description": "Type confusion in V8 in Google Chrome prior to 152.0.7977.82 allowed a remote attacker to execute arbitrary code inside the sandbox via a crafted HTML page. (Chromium security severity: High)",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.8,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-843"
+            ],
+            "published": "2026-09-03T20:17:24.210",
+            "lastModified": "2026-09-21T13:17:10.970",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://chromereleases.googleblog.com/2026/09/stable-channel-update-for-desktop_01882797386.html",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Release Notes",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://issues.chromium.org/issues/542403045",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Permissions Required"
+                ]
+              },
+              {
+                "url": "https://github.com/Serotav/Writeups/blob/77556c57999805fa7815a114da51d91cf24fbea9/v8/When_Sorting_Leads_To_Confusion.md",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Exploit",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/v8/v8/commit/e0562d87ad9c17042b581582c99237d798572e67",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://news.ycombinator.com/item?id=49570669",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Issue Tracking",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://serotav.github.io/Writeups/v8/when-sorting-leads-to-confusion/",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Exploit",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-85046",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:google:chrome:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E7133861-8AAD-49BB-9137-9D737B466E1E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "152.0.7977.82"
+              },
+              {
+                "criteria": "cpe:2.3:a:google:v8:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "62F85713-22F2-43E2-B84B-F4E9E0B56490",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "15.3.48"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/chinese-hackers-exploit-chrome-windows.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.23",
+              "dateReleased": "2026-09-23T12:51:35.821Z",
+              "retrievedAt": "2026-09-23T15:57:27.592Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-80521%2CCVE-2026-94127%2CCVE-2026-85046%2CCVE-2026-85880%2CCVE-2026-87491%2CCVE-2026-90898%2CCVE-2026-93616",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-85046",
+              "retrievedAt": "2026-09-23T15:57:27.592Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-85880",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Microsoft",
+            "product": "Windows",
+            "vulnerabilityName": "Microsoft Windows Heap-Based Buffer Overflow Vulnerability",
+            "dateAdded": "2026-09-08",
+            "shortDescription": "Microsoft Windows Advanced Local Procedure Call contains a heap-based buffer overflow vulnerability that allows an attacker to elevate privileges locally.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-09-22",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://msrc.microsoft.com/update-guide/en-US/vulnerability/CVE-2026-85880 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-85880",
+            "cwes": [
+              "CWE-122",
+              "CWE-908"
+            ]
+          },
+          "nvd": {
+            "description": "Heap-based buffer overflow in Windows ALPC allows an authorized attacker to elevate privileges locally.",
+            "cvss": {
+              "version": "3.1",
+              "score": 7.8,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+              "source": "secure@microsoft.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-122",
+              "CWE-908"
+            ],
+            "published": "2026-09-08T18:21:14.087",
+            "lastModified": "2026-09-09T05:18:19.193",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-85880",
+                "source": "secure@microsoft.com",
+                "tags": [
+                  "Patch",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-85880",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:o:microsoft:windows_10_1607:*:*:*:*:*:*:x64:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F5BC051B-C14F-43DF-B3A2-A32EE0DDC142",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "10.0.14393.9512"
+              },
+              {
+                "criteria": "cpe:2.3:o:microsoft:windows_10_1607:*:*:*:*:*:*:x86:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D8DA8FA6-35F6-4E0F-A9C0-37CB88186C5B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "10.0.14393.9512"
+              },
+              {
+                "criteria": "cpe:2.3:o:microsoft:windows_10_1809:*:*:*:*:*:*:x64:*",
+                "vulnerable": true,
+                "matchCriteriaId": "81786843-7838-4C74-AEA6-E64B6B354387",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "10.0.17763.9245"
+              },
+              {
+                "criteria": "cpe:2.3:o:microsoft:windows_10_1809:*:*:*:*:*:*:x86:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D5E29D31-09E1-4C19-AAB0-191AA960C778",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "10.0.17763.9245"
+              },
+              {
+                "criteria": "cpe:2.3:o:microsoft:windows_10_21h2:*:*:*:*:*:*:arm64:*",
+                "vulnerable": true,
+                "matchCriteriaId": "26BFC889-B503-48BF-9D82-5B3043D9A6B3",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "10.0.19044.7725"
+              },
+              {
+                "criteria": "cpe:2.3:o:microsoft:windows_10_21h2:*:*:*:*:*:*:x64:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E6F2C029-D78A-4FAA-B2E8-FD79C2CABC32",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "10.0.19044.7725"
+              },
+              {
+                "criteria": "cpe:2.3:o:microsoft:windows_10_21h2:*:*:*:*:*:*:x86:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0B423BD2-DDDC-4869-9B98-3275F53B92F1",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "10.0.19044.7725"
+              },
+              {
+                "criteria": "cpe:2.3:o:microsoft:windows_10_22h2:*:*:*:*:*:*:arm64:*",
+                "vulnerable": true,
+                "matchCriteriaId": "254EF7C4-707D-4480-BC27-56F64175A9AD",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "10.0.19045.7725"
+              },
+              {
+                "criteria": "cpe:2.3:o:microsoft:windows_10_22h2:*:*:*:*:*:*:x64:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B318C958-84F6-4E33-A95C-6E95C7E286EB",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "10.0.19045.7725"
+              },
+              {
+                "criteria": "cpe:2.3:o:microsoft:windows_10_22h2:*:*:*:*:*:*:x86:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9828DC67-F252-4E2B-AFE9-C404BAF414E0",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "10.0.19045.7725"
+              },
+              {
+                "criteria": "cpe:2.3:o:microsoft:windows_server_2012:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A7DF96F8-BA6A-4780-9CA3-F719B3F81074",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:microsoft:windows_server_2012:r2:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "DB18C4CE-5917-401E-ACF7-2747084FD36E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:microsoft:windows_server_2016:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C7CF508B-369A-4854-97BF-EE90E0A5BF7B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "10.0.14393.9512"
+              },
+              {
+                "criteria": "cpe:2.3:o:microsoft:windows_server_2019:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "14138B1B-9554-4B1D-84C6-485FB9763DA4",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "10.0.17763.9245"
+              },
+              {
+                "criteria": "cpe:2.3:o:microsoft:windows_server_2022:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "496A12F9-40BF-4A40-948B-BDB1C5D17DCB",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "10.0.20348.5622"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/chinese-hackers-exploit-chrome-windows.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.23",
+              "dateReleased": "2026-09-23T12:51:35.821Z",
+              "retrievedAt": "2026-09-23T15:57:27.592Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-80521%2CCVE-2026-94127%2CCVE-2026-85046%2CCVE-2026-85880%2CCVE-2026-87491%2CCVE-2026-90898%2CCVE-2026-93616",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-85880",
+              "retrievedAt": "2026-09-23T15:57:27.592Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-87491",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Google",
+            "product": "Chromium V8",
+            "vulnerabilityName": "Google Chromium V8 Out of Bounds Write Vulnerability",
+            "dateAdded": "2026-09-09",
+            "shortDescription": "Google Chromium V8 contains an out of bounds write vulnerability that allows a remote attacker to execute arbitrary code inside the sandbox via a crafted HTML page. This vulnerability could affect multiple web browsers that utilize Chromium, including, but not limited to, Google Chrome, Microsoft Edge, and Opera.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-09-23",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://chromereleases.googleblog.com/2026/09/stable-channel-update-for-desktop_0808145027.html ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-87491 ",
+            "cwes": [
+              "CWE-787"
+            ]
+          },
+          "nvd": {
+            "description": "Out of bounds write in V8 in Google Chrome prior to 153.0.8010.36 allowed a remote attacker to execute arbitrary code inside the sandbox via a crafted HTML page. (Chromium security severity: Medium)",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.8,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-787"
+            ],
+            "published": "2026-09-09T01:17:05.887",
+            "lastModified": "2026-09-21T13:17:11.283",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://chromereleases.googleblog.com/2026/09/stable-channel-update-for-desktop_0808145027.html",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Release Notes",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://issues.chromium.org/issues/543557673",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Permissions Required"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-87491",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:google:chrome:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7BC1B89D-DEB1-48BD-8602-0869B89600FD",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "153.0.8010.36"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/chinese-hackers-exploit-chrome-windows.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.23",
+              "dateReleased": "2026-09-23T12:51:35.821Z",
+              "retrievedAt": "2026-09-23T15:57:27.592Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-80521%2CCVE-2026-94127%2CCVE-2026-85046%2CCVE-2026-85880%2CCVE-2026-87491%2CCVE-2026-90898%2CCVE-2026-93616",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-87491",
+              "retrievedAt": "2026-09-23T15:57:27.592Z"
+            }
+          }
+        }
+      ],
+      "id": "s25",
+      "section": "exploited",
+      "rank": 3,
+      "angle": "Chinese actor UTA0565 chained three KEV-listed Chrome and Windows zero-days to deliver CLEANGULP through fake sites, a live browser-to-kernel exploit chain."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Arista patches actively exploited VeloCloud Orchestrator zero-day",
+      "url": "https://www.bleepingcomputer.com/news/security/arista-patches-actively-exploited-velocloud-orchestrator-zero-day/",
+      "publishedAt": "2026-09-23T12:29:53.000Z",
+      "excerpt": "Arista Networks has released security patches for a zero-day flaw that is being actively exploited and affects VeloCloud Orchestrator (VCO) On-Prem deployments. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/arista-patches-actively-exploited-velocloud-orchestrator-zero-day",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s11",
+      "section": "exploited",
+      "rank": 4,
+      "angle": "Arista's VeloCloud Orchestrator On-Prem zero-day is being actively exploited, so on-prem VCO operators should treat patching as immediate."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "ShinyHunters claims FBI hack, data theft in PeopleSoft zero-day breach",
+      "url": "https://www.bleepingcomputer.com/news/security/shinyhunters-claims-fbi-hack-data-theft-in-peoplesoft-zero-day-breach/",
+      "publishedAt": "2026-09-22T19:13:29.000Z",
+      "excerpt": "The ShinyHunters extortion gang claims it breached FBI systems using a new Oracle PeopleSoft zero-day vulnerability, gaining access to internal services and stealing sensitive data on employees and job applicants. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/shinyhunters-claims-fbi-hack-data-theft-in-peoplesoft-zero-day-breach",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s40",
+      "section": "breaches",
+      "rank": 5,
+      "angle": "ShinyHunters claims it breached FBI systems through an Oracle PeopleSoft zero-day and threatens to leak agent and applicant data, an unconfirmed but high-stakes extortion escalation."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Exploit Released for Unpatched Ubuntu Linux Flaw Enabling Host-Root Container Escape",
+      "url": "https://thehackernews.com/2026/09/exploit-released-for-unpatched-ubuntu.html",
+      "publishedAt": "2026-09-23T11:12:18.000Z",
+      "excerpt": "A use-after-free in the Linux kernel's AF_UNIX socket subsystem can be used to escape a container and gain root on the host, security firm DepthFirst said in research published September 22. The flaw, tracked as CVE-2026-80521 (CVSS score: 7.8), was fixed upstream on August 6, but Ubuntu has not shipped the patch for its 26.04, 24.04, or 22.04 LTS releases. DepthFirst",
+      "canonicalUrl": "https://thehackernews.com/2026/09/exploit-released-for-unpatched-ubuntu.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-80521",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "In the Linux kernel, the following vulnerability has been resolved:\n\naf_unix: Unlink scc_entry in unix_del_edge().\n\nKyle Zeng reported that GC could free a dead SCC partially.\n\nThe scenario is as follows:\n\n   1) Create two SCCs:\n\n       X -.   A <-> B\n       ^--'\n\n   2) Run the following concurrently:\n\n      2-1) send() sk-B to sk-B from sk-X\n      2-2) close() both A and B\n\nAt 2-1), there is a small window where unix_add_edges()\npublishes a new edge (B <-> B) to GC but its skb is not queued\nby skb_queue_tail().\n\nIf 2-2) completes before skb_queue_tail() and GC is triggered,\nit judges A <-> B as dead, but B is not freed because GC cannot\ncollect the not-yet-queued skb holding the B <-> B edge.\n\n       X -.   A <-> B -. This edge is visible\n       ^--'         ^..'  but skb is not\n\nThis itself is not a problem since the next GC run will judge\nB as dead as well and free it finally.\n\n       X -.   A <.> B -.\n       ^--'         ^--'\n\nHowever, X's SCC forces the next GC to call unix_walk_scc_fast(),\nand it iterates over A through B's scc_entry.\n\nLet's unlink scc_entry before freeing the vertex in unix_del_edge().",
+            "cvss": {
+              "version": "3.1",
+              "score": 7.8,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+              "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+              "type": "Secondary"
+            },
+            "cwes": [],
+            "published": "2026-08-26T15:17:05.677",
+            "lastModified": "2026-09-21T14:17:20.193",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://git.kernel.org/stable/c/1293fd69a50d188a5788b08ba3741a3e86be1608",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/594d905195024b228c962627ae5ae7c17bd582a4",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/e3702470ced94fad74d71e2232f022d2eb752a6d",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/fe198b077864feafd4aa4b33b1a5ce26f50195a2",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/exploit-released-for-unpatched-ubuntu.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.23",
+              "dateReleased": "2026-09-23T12:51:35.821Z",
+              "retrievedAt": "2026-09-23T15:57:27.592Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-80521%2CCVE-2026-94127%2CCVE-2026-85046%2CCVE-2026-85880%2CCVE-2026-87491%2CCVE-2026-90898%2CCVE-2026-93616",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-80521",
+              "retrievedAt": "2026-09-23T15:57:27.592Z"
+            }
+          }
+        }
+      ],
+      "id": "s19",
+      "section": "vulnerabilities",
+      "rank": 6,
+      "angle": "A public exploit for CVE-2026-80521 escapes containers to host root, and Ubuntu has still not shipped the upstream fix for its 26.04, 24.04, or 22.04 LTS releases."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "New cPanel Flaw Lets a Hosting Account Run Code as Root, Take Full Server Control",
+      "url": "https://thehackernews.com/2026/09/new-cpanel-flaw-lets-hosting-account_0272795595.html",
+      "publishedAt": "2026-09-23T12:16:00.000Z",
+      "excerpt": "A flaw in cPanel's CalDAV and CardDAV service lets anyone with a cPanel hosting account run code as root and take \"full control of the server,\" the company said on September 22. A second bug in the WP Toolkit plugin, used to install and manage WordPress sites, allows an account holder to change databases that belong to other accounts. cPanel has released fixed versions for both,",
+      "canonicalUrl": "https://thehackernews.com/2026/09/new-cpanel-flaw-lets-hosting-account_0272795595.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s13",
+      "section": "vulnerabilities",
+      "rank": 7,
+      "angle": "Any cPanel hosting account can use the CalDAV/CardDAV flaw to run code as root and seize the server, so shared-hosting providers need the fixed versions immediately."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Microsoft Takes Down EvilTokens Device-Code Phishing Service Tied to 12,000 Inbox Compromises",
+      "url": "https://thehackernews.com/2026/09/microsoft-takes-down-eviltokens-device.html",
+      "publishedAt": "2026-09-22T17:03:31.000Z",
+      "excerpt": "Microsoft on Tuesday announced the takedown of the EvilTokens device code phishing service that it said used artificial intelligence (AI) \"at every step of the attack chain.\" The action, carried out with authorization from the U.S. District Court for the Eastern District of Virginia, involved the efforts of Health-ISAC, alongside Cloudflare, Coinbase, OpenAI, Railway, SpyCloud, The Shadowserver",
+      "canonicalUrl": "https://thehackernews.com/2026/09/microsoft-takes-down-eviltokens-device.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s46",
+      "section": "industry",
+      "rank": 8,
+      "angle": "Microsoft's court-authorized disruption of the EvilTokens phishing-as-a-service platform, tied to roughly 12,000 inbox compromises, removes a top device-code phishing enabler."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "UAE, Saudi Arabia Face Onslaught of Increasingly Complex Cyberattacks",
+      "url": "https://www.darkreading.com/threat-intelligence/uae-saudi-arabia-face-onslaught-of-increasingly-sophisticated-automated-cyberattacks",
+      "publishedAt": "2026-09-23T16:01:00.000Z",
+      "excerpt": "The United Arab Emirates and Kingdom of Saudi Arabia together absorbed 50% of all cyberattacks recorded across the Gulf region in the first half of 2026.",
+      "canonicalUrl": "https://darkreading.com/threat-intelligence/uae-saudi-arabia-face-onslaught-of-increasingly-sophisticated-automated-cyberattacks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Ryuk ransomware operator gets 2-year sentence after extorting victims for $1.2 million",
+      "url": "https://therecord.media/ransomware-ryuk-sentenced-DOJ",
+      "publishedAt": "2026-09-23T15:30:00.000Z",
+      "excerpt": "An Armenian national and member of the Ryuk ransomware gang was sentenced to two years in federal prison for his role in launching attacks.",
+      "canonicalUrl": "https://therecord.media/ransomware-ryuk-sentenced-DOJ",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Attackers Manipulate AI Chatbots in Mass Disinformation, Phishing Campaign",
+      "url": "https://www.darkreading.com/threat-intelligence/attackers-manipulate-ai-chatbots-mass-disinformation-phishing-campaign",
+      "publishedAt": "2026-09-23T14:47:09.000Z",
+      "excerpt": "Threat actors are poisoning ChatGPT, Gemini, and Google AI Overview answers by seeding the Web with malicious links and data and then optimizing the content.",
+      "canonicalUrl": "https://darkreading.com/threat-intelligence/attackers-manipulate-ai-chatbots-mass-disinformation-phishing-campaign",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "InfraTrust report warns network management systems under attack",
+      "url": "https://www.bleepingcomputer.com/news/security/infratrust-report-warns-network-management-systems-under-attack/",
+      "publishedAt": "2026-09-23T14:35:26.000Z",
+      "excerpt": "Attackers are increasingly targeting the management systems used to control enterprise infrastructure, with several critical vulnerabilities actively exploited before or shortly after vendors disclosed them. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/infratrust-report-warns-network-management-systems-under-attack",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "FBI investigating alleged ShinyHunters breach of its jobs site",
+      "url": "https://therecord.media/fbi-investigating-alleged-shinyhunters-job-site-breach",
+      "publishedAt": "2026-09-23T14:22:00.000Z",
+      "excerpt": "The ShinyHunters cybercriminal organization on Tuesday replaced agency images on the FBIjobs.gov site with a photo of a Pokemon that has become the group’s defacto mascot.",
+      "canonicalUrl": "https://therecord.media/fbi-investigating-alleged-shinyhunters-job-site-breach",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "This Windows Malware is Built to Let Up to Four AI Models Vote on Its Next Move",
+      "url": "https://thehackernews.com/2026/09/windows-malware-is-built-to-let-up-to.html",
+      "publishedAt": "2026-09-23T14:17:58.000Z",
+      "excerpt": "A Windows malware called CLOSEDQUORUM is built to take orders from a vote of up to four AI models instead of an attacker's server, Cisco Talos said on September 22. The models can choose to steal Windows credentials, saved browser passwords, and crypto wallet data. Talos has not seen this setup work from start to finish, and the public version of the malware does not work as it is.",
+      "canonicalUrl": "https://thehackernews.com/2026/09/windows-malware-is-built-to-let-up-to.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "How One Kubernetes YAML Can Hand Over a GCP Organization",
+      "url": "https://www.bleepingcomputer.com/news/security/how-one-kubernetes-yaml-can-hand-over-a-gcp-organization/",
+      "publishedAt": "2026-09-23T14:01:11.000Z",
+      "excerpt": "A Kubernetes user with limited permissions can potentially gain control of an entire Google Cloud organization by exploiting the authority granted to Google Kubernetes Config Connector. Varonis explains how this confused deputy problem can turn a single Kubernetes YAML file into a path to organization-wide privilege escalation. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/how-one-kubernetes-yaml-can-hand-over-a-gcp-organization",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Compromised MemTensor Packages Deliver sckit Credential Stealer via npm and PyPI",
+      "url": "https://thehackernews.com/2026/09/compromised-memtensor-packages-deliver.html",
+      "publishedAt": "2026-09-23T13:52:46.000Z",
+      "excerpt": "Unknown threat actors have managed to compromise two legitimate MemTensor packages across the npm and Python Package Index (PyPI) repositories to push a platform-specific Go-based implant dubbed sckit designed for Windows, Linux, and macOS. According to reports from Aikido, SafeDep, Socket, and StepSecurity, the libraries in question below - @memtensor/memos-cloud-openclaw-plugin versions",
+      "canonicalUrl": "https://thehackernews.com/2026/09/compromised-memtensor-packages-deliver.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Latvia arrests suspected hacker for electronics repair company breach",
+      "url": "https://therecord.media/latvia-hacker-arrest-cyberattack",
+      "publishedAt": "2026-09-23T12:45:00.000Z",
+      "excerpt": "Latvian police arrested a 23-year-old man suspected of hacking at least two companies, stealing personal information and attempting to extort money from the victims.",
+      "canonicalUrl": "https://therecord.media/latvia-hacker-arrest-cyberattack",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Burnham announces plan for new UK center to fight disinformation",
+      "url": "https://therecord.media/uk-disinformation-russia-center",
+      "publishedAt": "2026-09-23T12:30:00.000Z",
+      "excerpt": "The United Kingdom will create a new national center \"to detect, attribute and disrupt” hostile state disinformation, Prime Minister Andy Burnham announced at the United Nations General Assembly.",
+      "canonicalUrl": "https://therecord.media/uk-disinformation-russia-center",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Honeywell: OT Security Teams Embrace AI, but Autonomy Still Rare",
+      "url": "https://www.securityweek.com/honeywell-ot-security-teams-embrace-ai-but-autonomy-still-rare/",
+      "publishedAt": "2026-09-23T12:17:28.000Z",
+      "excerpt": "Only 21% of industrial security leaders report a complete OT asset inventory, even as 88% call their programs mature. The post Honeywell: OT Security Teams Embrace AI, but Autonomy Still Rare appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/honeywell-ot-security-teams-embrace-ai-but-autonomy-still-rare",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "545 Hackers Tested It First. Now XRanges for AI Scores Your Security Agent",
+      "url": "https://thehackernews.com/2026/09/545-hackers-tested-it-first-now-xranges.html",
+      "publishedAt": "2026-09-23T11:47:19.000Z",
+      "excerpt": "Autonomous security agents are getting good at finding bugs. Nobody has a good way to measure how good. Point one at a realistic target and what comes back is a report the agent wrote about itself: confident prose, a list of findings, and no way to tell which of them happened. Someone with a security background then sits down and checks every claim against the target. Which findings are real,",
+      "canonicalUrl": "https://thehackernews.com/2026/09/545-hackers-tested-it-first-now-xranges.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s14"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Anthropic and OpenAI Models Still Attempt Restricted Actions in Safety Tests",
+      "url": "https://thehackernews.com/2026/09/anthropic-and-openai-models-still.html",
+      "publishedAt": "2026-09-23T11:47:13.000Z",
+      "excerpt": "Anthropic and OpenAI on Tuesday announced new models, with both artificial intelligence (AI) companies noting that they are continuing to invest in improving alignment to combat risky behavior. Opus 5.5, per Anthropic, is a \"major step up from Opus 5,\" and \"achieves the best scores of any model to date on our automated behavioral audit, our alignment suite that tests Claude across thousands",
+      "canonicalUrl": "https://thehackernews.com/2026/09/anthropic-and-openai-models-still.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Adobe Patches Critical Flaws in Connect, AEM Forms",
+      "url": "https://www.securityweek.com/adobe-patches-critical-flaws-in-connect-aem-forms/",
+      "publishedAt": "2026-09-23T11:40:59.000Z",
+      "excerpt": "The nine critical security defects could be exploited for arbitrary code execution and privilege escalation. The post Adobe Patches Critical Flaws in Connect, AEM Forms appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/adobe-patches-critical-flaws-in-connect-aem-forms",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "AI-Powered Phishing Platform EvilTokens Disrupted by Microsoft",
+      "url": "https://www.securityweek.com/ai-powered-phishing-platform-eviltokens-disrupted-by-microsoft/",
+      "publishedAt": "2026-09-23T11:23:30.000Z",
+      "excerpt": "The cybercrime platform leveraged AI at every step of the attack chain, including writing social engineering messages and deciding targets. The post AI-Powered Phishing Platform EvilTokens Disrupted by Microsoft appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/ai-powered-phishing-platform-eviltokens-disrupted-by-microsoft",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft: September Windows updates break Always On VPN connections",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-september-2026-windows-updates-break-always-on-vpn-connections/",
+      "publishedAt": "2026-09-23T11:18:13.000Z",
+      "excerpt": "Microsoft warned that the September 2026 security updates may also break Always On VPN connections on some Windows 11 systems. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-september-2026-windows-updates-break-always-on-vpn-connections",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s18"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Chrome 154 Patches 108 Vulnerabilities",
+      "url": "https://www.securityweek.com/chrome-154-patches-108-vulnerabilities/",
+      "publishedAt": "2026-09-23T10:36:07.000Z",
+      "excerpt": "The browser update resolves several critical-severity memory safety and memory corruption flaws. The post Chrome 154 Patches 108 Vulnerabilities appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/chrome-154-patches-108-vulnerabilities",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "A Look at AI Doomsday Scenarios That Researchers Say Could Put Humanity at Risk",
+      "url": "https://www.securityweek.com/a-look-at-ai-doomsday-scenarios-that-researchers-say-could-put-humanity-at-risk/",
+      "publishedAt": "2026-09-23T10:20:36.000Z",
+      "excerpt": "Debates over the plausibility of these doomsday scenarios have heated up since several executives endorsed slowing the technology’s development for safety reasons. The post A Look at AI Doomsday Scenarios That Researchers Say Could Put Humanity at Risk appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/a-look-at-ai-doomsday-scenarios-that-researchers-say-could-put-humanity-at-risk",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s21"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Outerlimit Raises $16 Million to Stop Rogue AI Agents From Causing Harm",
+      "url": "https://www.securityweek.com/outerlimit-raises-16-million-to-stop-rogue-ai-agents-from-causing-harm/",
+      "publishedAt": "2026-09-23T10:00:00.000Z",
+      "excerpt": "Emerging from stealth with $16 million in pre-seed funding, Outerlimit offers a decentralized authorization layer designed to discover, observe, and block harmful autonomous AI actions. The post Outerlimit Raises $16 Million to Stop Rogue AI Agents From Causing Harm appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/outerlimit-raises-16-million-to-stop-rogue-ai-agents-from-causing-harm",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s22"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Arista Urges Immediate Patching of Exploited VCO Zero-Day",
+      "url": "https://www.securityweek.com/arista-urges-immediate-patching-of-exploited-vco-zero-day/",
+      "publishedAt": "2026-09-23T08:33:06.000Z",
+      "excerpt": "Remote attackers could trigger the critical-severity flaw to access privileged internal functionality. The post Arista Urges Immediate Patching of Exploited VCO Zero-Day appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/arista-urges-immediate-patching-of-exploited-vco-zero-day",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Ryuk ransomware member sentenced to 24 months in prison",
+      "url": "https://www.bleepingcomputer.com/news/security/ryuk-ransomware-member-sentenced-to-24-months-in-prison/",
+      "publishedAt": "2026-09-23T08:20:05.000Z",
+      "excerpt": "An Armenian man was sentenced to 24 months in prison and 3 years of supervised release for hacking U.S. companies and encrypting their systems in Ryuk ransomware attacks. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/ryuk-ransomware-member-sentenced-to-24-months-in-prison",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Critical F5 BIG-IP Vulnerability Exploited as Zero-Day",
+      "url": "https://www.securityweek.com/critical-f5-big-ip-vulnerability-exploited-as-zero-day/",
+      "publishedAt": "2026-09-23T07:34:18.000Z",
+      "excerpt": "Unauthenticated attackers could send malicious traffic to BIG-IP to achieve remote code execution. The post Critical F5 BIG-IP Vulnerability Exploited as Zero-Day appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/critical-f5-big-ip-vulnerability-exploited-as-zero-day",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "F5 patches BIG-IP APM zero-day flaw exploited in RCE attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/f5-warns-of-big-ip-apm-remote-code-execution-zero-day-exploited-in-attacks/",
+      "publishedAt": "2026-09-23T07:17:23.000Z",
+      "excerpt": "F5 has released security updates to address a critical BIG-IP APM zero-day vulnerability being exploited in remote code execution attacks. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/f5-warns-of-big-ip-apm-remote-code-execution-zero-day-exploited-in-attacks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s28"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "ShinyHunters Claims FBI Hack, Demands Retraction of Threat Report",
+      "url": "https://www.securityweek.com/shinyhunters-claims-fbi-hack-demands-retraction-of-threat-report/",
+      "publishedAt": "2026-09-23T07:13:49.000Z",
+      "excerpt": "The cybercrime group is unhappy with its description in an FBI report and threatens to leak stolen information. The post ShinyHunters Claims FBI Hack, Demands Retraction of Threat Report appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/shinyhunters-claims-fbi-hack-demands-retraction-of-threat-report",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s29"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Critical Next.js ImageResponse Flaw Can Lead to Server Code Execution via Crafted SVG Input",
+      "url": "https://thehackernews.com/2026/09/critical-nextjs-imageresponse-flaw-can.html",
+      "publishedAt": "2026-09-23T07:04:40.000Z",
+      "excerpt": "A new security vulnerability in Next.js could allow attackers to run code on a server via ImageResponse, the feature that generates Open Graph and other social preview images, Vercel said. The risk applies when an app puts values an attacker controls, such as text read from the request URL, into the image. Vercel, which develops Next.js, fixed the flaw on September 22 in version",
+      "canonicalUrl": "https://thehackernews.com/2026/09/critical-nextjs-imageresponse-flaw-can.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s30"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "ShinyHunters Claims FBI Breach, Says It Stole Data on Agents and Job Applicants",
+      "url": "https://thehackernews.com/2026/09/shinyhunters-claims-fbi-breach-says-it.html",
+      "publishedAt": "2026-09-23T05:30:09.000Z",
+      "excerpt": "The cyber extortion group known as ShinyHunters on Tuesday claimed it had breached the U.S. Federal Bureau of Investigation and stolen data belonging to current and former employees at the agency. \"We have compromised the FBI. We hold very sensitive data on almost ALL FBI Agents and individuals who filed an application with the FBI for a job,\" the group said in a statement posted on their dark",
+      "canonicalUrl": "https://thehackernews.com/2026/09/shinyhunters-claims-fbi-breach-says-it.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s31"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Rogue external MFA providers can steal passwords during logins",
+      "url": "https://www.bleepingcomputer.com/news/security/rogue-external-mfa-providers-can-steal-passwords-during-logins/",
+      "publishedAt": "2026-09-22T21:45:45.000Z",
+      "excerpt": "Security researchers developed an attack that lets hackers with privileged access register a rogue external MFA provider that steals users' passwords during legitimate login attempts. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/rogue-external-mfa-providers-can-steal-passwords-during-logins",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s32"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Sweden fines Miljödata $183,000 over breach affecting 2.2 million",
+      "url": "https://www.bleepingcomputer.com/news/security/sweden-fines-milj-data-183-000-over-breach-affecting-22-million/",
+      "publishedAt": "2026-09-22T21:40:37.000Z",
+      "excerpt": "Sweden's data privacy regulator, IMY, has imposed a $183,000 (SEK 1.8 million) fine on IT systems provider Miljödata for inadequate security measures leading to a breach in August 2025 affecting 2.2 million people. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/sweden-fines-milj-data-183-000-over-breach-affecting-22-million",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s33"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Relays Are Masking Chinese Access to Frontier AI Models in the US",
+      "url": "https://www.darkreading.com/cyber-risk/relays-masking-chinese-access-frontier-ai-models",
+      "publishedAt": "2026-09-22T21:12:37.000Z",
+      "excerpt": "More than 80,000 AI relay servers are helping users in China mask their identities while they access cutting-edge large language models (LLMs), probably to clone them.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/relays-masking-chinese-access-frontier-ai-models",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s34"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "How the CISO-CMO Alliance Builds Trust Before Crisis Strikes",
+      "url": "https://www.darkreading.com/cybersecurity-operations/how-ciso-cmo-alliance-builds-trust-before-crisis",
+      "publishedAt": "2026-09-22T20:55:53.000Z",
+      "excerpt": "Cybersecurity and brand reputation are inextricably linked. Security and marketing leaders who establish regular touchpoints, develop joint crisis communications plans, and translate security risks into their brand impact position their organizations to significantly outperform those treating security as an operational IT concern.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/how-ciso-cmo-alliance-builds-trust-before-crisis",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s35"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Chinese hackers exploit WordPress, Zyxel flaws to steal govt data",
+      "url": "https://www.bleepingcomputer.com/news/security/chinese-hackers-exploit-multiple-technologies-to-steal-govt-data/",
+      "publishedAt": "2026-09-22T20:35:24.000Z",
+      "excerpt": "A Chinese-speaking threat actor has been exploiting vulnerabilities in ZyXEL GS1900 Smart Managed Switches and WordPress to steal sensitive data from 996 devices and more than 18,500 records stored in backend databases. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/chinese-hackers-exploit-multiple-technologies-to-steal-govt-data",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s36"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Microsoft Disrupts EvilTokens Device Code Phishing Service",
+      "url": "https://www.darkreading.com/identity-access-management-security/microsoft-disrupts-eviltokens-device-code-phishing-service",
+      "publishedAt": "2026-09-22T20:02:02.000Z",
+      "excerpt": "Microsoft seized 50 websites and disabled more than 150 domains as part of a coordinated disruption effort against a phishing-as-a-service platform targeting Microsoft 365 accounts.",
+      "canonicalUrl": "https://darkreading.com/identity-access-management-security/microsoft-disrupts-eviltokens-device-code-phishing-service",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s37"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Deception by Design: CISA's Guide to Tricking Cybercriminals",
+      "url": "https://www.darkreading.com/cybersecurity-operations/deception-by-design-cisa-s-guide-to-tricking-cybercriminals",
+      "publishedAt": "2026-09-22T19:59:24.000Z",
+      "excerpt": "The Cybersecurity and Infrastructure Security Agency (CISA) is going old school to help organizations with limited resources set traps for hackers.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/deception-by-design-cisa-s-guide-to-tricking-cybercriminals",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s38"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Canadian regulator opens probe of IDScan for allegedly violating data privacy laws",
+      "url": "https://therecord.media/canadian-regulator-opens-probe-of-idscan-following-data-breach",
+      "publishedAt": "2026-09-22T19:52:00.000Z",
+      "excerpt": "The investigation, announced Monday, will probe IDScan’s security practices and whether victim notifications were adequate under Canada’s federal private-sector privacy law, the regulator said in a press release.",
+      "canonicalUrl": "https://therecord.media/canadian-regulator-opens-probe-of-idscan-following-data-breach",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s39"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "New ClosedQuorum Windows malware uses AI for attack decisions",
+      "url": "https://www.bleepingcomputer.com/news/security/new-closedquorum-windows-malware-uses-ai-for-attack-decisions/",
+      "publishedAt": "2026-09-22T18:04:39.000Z",
+      "excerpt": "A new Windows malware named ClosedQuorum uses Google Gemini, DeepSeek, Qwen, and Mistral AI models to autonomously determine the actions to take during post-compromise stages of an attack. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/new-closedquorum-windows-malware-uses-ai-for-attack-decisions",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s41"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "WordPress Issues Patch for Critical Flaw That Can Enable Code Execution on Some Servers",
+      "url": "https://thehackernews.com/2026/09/wordpress-issues-patch-for-critical.html",
+      "publishedAt": "2026-09-22T18:03:10.000Z",
+      "excerpt": "WordPress has fixed a critical flaw in its core software that lets an attacker with no account make a site load a PHP file from outside its theme folders. On some servers, that can go further, allowing the attacker to run their own code. The fix shipped on September 22 in WordPress 7.1.2, with fixes for every branch the project still supports, back to 4.7, and WordPress is telling site owners",
+      "canonicalUrl": "https://thehackernews.com/2026/09/wordpress-issues-patch-for-critical.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s42"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Malicious npm Package Poses as Twilio Bug-Bounty Probe, Can Exfiltrate Credentials",
+      "url": "https://thehackernews.com/2026/09/malicious-npm-package-poses-as-twilio.html",
+      "publishedAt": "2026-09-22T17:58:15.000Z",
+      "excerpt": "Cybersecurity researchers have disclosed details of a malicious npm package named \"tw-pkgprobe-7731\" that masquerades as a security tool targeting developers integrating Twilio into their applications, while stealthily attempting to harvest sensitive data. The package, named \"tw-pkgprobe-7731,\" was first uploaded to the npm registry in mid-August 2026 by an npm account named \"twdepprobe7731.\"",
+      "canonicalUrl": "https://thehackernews.com/2026/09/malicious-npm-package-poses-as-twilio.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s43"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Reducing shadow IT visibility gaps with Wazuh",
+      "url": "https://www.bleepingcomputer.com/news/security/reducing-shadow-it-visibility-gaps-with-wazuh/",
+      "publishedAt": "2026-09-22T17:17:41.000Z",
+      "excerpt": "Shadow IT can leave security teams unaware of unmanaged endpoints, unauthorized software, and other assets that fall outside existing monitoring. Wazuh explains how endpoint inventory, agentless monitoring, and centralized analysis can help organizations identify and reduce these visibility gaps. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/reducing-shadow-it-visibility-gaps-with-wazuh",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s44"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Amid Ongoing Rogue Incidents, Debate Over AI Safety Gets Real",
+      "url": "https://www.darkreading.com/cyber-risk/rogue-incidents-debate-ai-safety-gets-real",
+      "publishedAt": "2026-09-22T17:12:26.000Z",
+      "excerpt": "As more reports of misalignment incidents underscore AI risks, large AI labs, regular businesses, and even nations are searching for better ways to keep control and be secure.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/rogue-incidents-debate-ai-safety-gets-real",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s45"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Critical Bifrost AI Gateway Flaw Lets Attackers Run Commands Without Credentials",
+      "url": "https://thehackernews.com/2026/09/critical-bifrost-ai-gateway-flaw-lets.html",
+      "publishedAt": "2026-09-22T16:41:12.000Z",
+      "excerpt": "A critical vulnerability in Bifrost, an open-source AI gateway that routes requests to more than 20 LLM providers, allows an unauthenticated attacker to run arbitrary commands on the gateway server with a single HTTP request. The flaw, tracked as CVE-2026-90898 (CVSS score: 9.8), affects all versions of the Bifrost HTTP transport before 2.1.0 when management authentication is",
+      "canonicalUrl": "https://thehackernews.com/2026/09/critical-bifrost-ai-gateway-flaw-lets.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-90898",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Bifrost registers MCP clients through its management API. A stdio client is a command plus args. Bifrost starts that program in the gateway the moment the client is added. No MCP handshake required.\n\n\n\nThe default is governance.auth_config.is_enabled=false. Auth off means every caller is a local admin. One unauthenticated POST /api/mcp/client is enough to run a program as the Bifrost process user (appuser on the official image).\n\n\n\n transports/v2.1.0 refuses an unauthenticated stdio registration with 403. transports/v2.0.0 still allows it.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "reefs@jfrog.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-284",
+              "CWE-306"
+            ],
+            "published": "2026-09-14T11:17:08.237",
+            "lastModified": "2026-09-18T19:31:11.370",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://github.com/maximhq/bifrost",
+                "source": "reefs@jfrog.com",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/maximhq/bifrost/commit/12e170352bd25eab1ae9ba16611f1797d1fd8fdc",
+                "source": "reefs@jfrog.com",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/maximhq/bifrost/pull/6757",
+                "source": "reefs@jfrog.com",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/maximhq/bifrost/releases/tag/transports/v2.1.0",
+                "source": "reefs@jfrog.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/critical-bifrost-ai-gateway-flaw-lets.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.23",
+              "dateReleased": "2026-09-23T12:51:35.821Z",
+              "retrievedAt": "2026-09-23T15:57:27.592Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-80521%2CCVE-2026-94127%2CCVE-2026-85046%2CCVE-2026-85880%2CCVE-2026-87491%2CCVE-2026-90898%2CCVE-2026-93616",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-90898",
+              "retrievedAt": "2026-09-23T15:57:27.592Z"
+            }
+          }
+        }
+      ],
+      "id": "s47"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Researcher Drops BigDiskBuster Zero-Day PoC That Blocks Microsoft Defender Updates",
+      "url": "https://thehackernews.com/2026/09/researcher-drops-bigdiskbuster-zero-day.html",
+      "publishedAt": "2026-09-22T16:14:04.000Z",
+      "excerpt": "A zero-day proof-of-concept tool that stops Microsoft Defender from installing platform and signature updates by filling all available disk space was published on GitHub on September 19. The tool, called BigDiskBuster, has no patch, no CVE, and no Microsoft advisory. Its author, Abdelhamid Naceri, is a former Microsoft security researcher whose earlier Defender exploits were used in",
+      "canonicalUrl": "https://thehackernews.com/2026/09/researcher-drops-bigdiskbuster-zero-day.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s49"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "Unmasking EvilTokens: Getting to the root of device code phishing",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/09/22/unmasking-eviltokens-getting-to-the-root-of-device-code-phishing/",
+      "publishedAt": "2026-09-22T15:00:00.000Z",
+      "excerpt": "EvilTokens has quickly become one of the top PhaaS platforms, enabling device code phishing attacks through AI-assisted lures, automated infrastructure, and token theft. In collaboration with partners, Microsoft Digital Crimes Unit (DCU) facilitated a disruption of EvilTokens infrastructure and operations. The post Unmasking EvilTokens: Getting to the root of device code phishing appeared first…",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/09/22/unmasking-eviltokens-getting-to-the-root-of-device-code-phishing",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s50"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Shai-Hulud Attack Nips Cyber-Firm CrowdSec's GitHub Data",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/shai-hulud-attack-cyber-firm-crowdsec-github-data",
+      "publishedAt": "2026-09-22T10:22:37.000Z",
+      "excerpt": "Threat actors stole the contents of 170 private repositories using an OAuth token stolen from a former employee's computer through the TanStack npm supply chain attack.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/shai-hulud-attack-cyber-firm-crowdsec-github-data",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s51"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Google Fined €403 Million Over GDPR Violations Tied to Location Data",
+      "url": "https://thehackernews.com/2026/09/google-fined-403-million-over-gdpr.html",
+      "publishedAt": "2026-09-21T16:57:31.000Z",
+      "excerpt": "Google has been fined €403 million for breaking the EU's data protection law, the GDPR, in the way three of its features handled people's location data from May 2018 to February 2020. Ireland's Data Protection Commission (DPC), Google's lead regulator in the EU, also ordered the company to make its processing comply with the law within 6 months. The DPC has not said publicly which",
+      "canonicalUrl": "https://thehackernews.com/2026/09/google-fined-403-million-over-gdpr.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s52"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 768,
+    "promptCacheMissTokens": 18004,
+    "outputTokens": 7245,
+    "estimatedCostUsd": 0.004551310400000001
+  }
+}
