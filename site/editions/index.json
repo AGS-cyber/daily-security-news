@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-09-25",
+    "mode": "article",
+    "headline": "Two KEV additions, an eight-figure exchange heist, and a root bug that won't die",
+    "count": 40
+  },
+  {
     "date": "2026-09-24",
     "mode": "article",
     "headline": "Two Check Point zero-days, a router takeover chain, and a WordPress scramble",
