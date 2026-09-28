@@ -1,0 +1,2284 @@
+{
+  "date": "2026-09-28",
+  "generatedAt": "2026-09-28T19:07:58.110Z",
+  "degraded": [
+    {
+      "stage": "normalize",
+      "message": "1 items were dropped as unparseable"
+    }
+  ],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 229,
+    "deduped": 222,
+    "published": 36
+  },
+  "mode": "article",
+  "headline": "Citrix zero-days land while two very different credential stories explain the rest of the day",
+  "standfirst": "Two NetScaler flaws are under confirmed exploitation and the remaining six flaws in the same advisory are one patch away from being equally urgent; a crypto exchange loses $388M through a vendor in its own security stack; and an extortion crew re-tools against a PeopleSoft flaw that was already known to be exploited in ransomware campaigns. Cloud identities and browser extensions round out a day where the access path, not the payload, was the story.",
+  "bodyMarkdown": "## Actively exploited\n\nCitrix disclosed eight vulnerabilities across NetScaler ADC and NetScaler Gateway, and CISA has added [[s35]]'s CVE-2026-88771 and CVE-2026-88772 to the Known Exploited Vulnerabilities catalog on confirmed in-the-wild exploitation, with a compressed federal remediation window attached. Both carry a CVSS 4.0 score of 9.5. CVE-2026-88771 is an improper input validation flaw (CWE-20) that lets an unauthenticated attacker execute arbitrary commands; CVE-2026-88772 is a memory buffer restriction failure (CWE-119) leading to remote code execution or denial of service. Affected configurations span ADC and Gateway before 14.1-73.37 and 13.1-64.23, including the FIPS and NDcPP builds — which is the part that trips up teams who upgrade the mainline appliance and forget the hardened variant running the same exposed VIP.\n\nThe mistake to avoid is patching the two KEV entries and stopping there. The same advisory carries a 9.3 request-smuggling flaw (CWE-444), three memory-overflow issues at 8.8, and a 7.0 policy bypass, none of which appear in KEV. A confirmed catalog miss is not evidence that exploitation hasn't happened, and an internet-facing ADC is exactly the asset where an attacker chains a smuggling primitive into something worse. Treat the whole set as one remediation unit, and assume any appliance that has been internet-exposed since the disclosure warrants a forensics pass rather than just a reboot into a new build.\n\nThe second live campaign is [[s24]]: ShinyHunters has modified its exploit against Oracle PeopleSoft CVE-2026-35273 and is running a fresh extortion wave. That flaw is already in KEV with known ransomware campaign use, a CVSS 3.1 base score of 9.8, and a missing-authentication-for-critical-function weakness (CWE-306) affecting PeopleTools 8.61 and 8.62 — unauthenticated network access over HTTP is enough for full takeover. The detail that matters defensively is \"modified exploit.\" When an operator changes tooling mid-campaign, signature and IOC-based detections built for the first wave degrade, so detection should lean on behavior around the PeopleSoft web tier: unexpected POSTs to update-related components, new administrative accounts, and outbound traffic from the middleware host. If PeopleSoft is internet-facing and unpatched, that is not a backlog item.\n\n## Breaches\n\n[[s4]] is the day's most instructive loss. Bitget attributes the theft of roughly $388 million to a vulnerability in a third-party security product the exchange relied on, which the attacker used to obtain high-level internal credentials and then issue fraudulent withdrawal commands to the wallet system. No CVE is attached, and that absence is itself the finding: this was a privilege-path failure, not a patch-management failure. Any vendor sitting inside your trust boundary with the ability to read secrets or broker authentication is a credential source, and the blast radius of that vendor's flaw is whatever those credentials can reach. For exchanges and anyone else holding custodial assets, the control that would have helped is not another scanner — it is scoping, segregating, and rate-limiting the authority that internal credentials carry into withdrawal and signing paths.\n\n[[s29]] describes the cloud-native version of the same problem. Microsoft tracks JadePuffer, also called Storm-3168, orchestrating destructive actions inside an Azure environment using compromised service principals over an intrusion lasting about eighteen hours. Service principals are non-human identities: frequently over-permissioned, rarely rotated, and outside the reach of phishing-resistant MFA. An attacker who lands one inherits its role assignments immediately, and the destruction phase can begin without any interactive logon to alert on. Enumerate service principals with owner or contributor rights, look for credential additions and role-assignment changes, and treat Azure Activity and Entra audit logs as your primary detection surface here, not endpoint telemetry.\n\n[[s8]] is a reminder that marketplace approval is not a security control. A purported ad-blocker with millions of installs and a store listing is alleged to be exfiltrating reams of sensitive data while benefiting from platform approval despite earlier researcher warnings. Browser extensions run with the user's session, read what the user reads, and are almost never inventoried. If you cannot produce a list of extensions installed across the fleet, you cannot assess this exposure at all.\n\n## Industry\n\n[[s7]] moves platform accountability from regulator to jury: a New Mexico jury found Facebook violated the law nearly 44 million times over misrepresentations about its data privacy practices. For security leaders the implication is narrower than the headline and more uncomfortable — public statements about how data is collected, protected, and shared are now litigable artifacts. Marketing language, privacy policies, and trust-center claims all deserve the same review as a disclosure filing, because the gap between the claim and the practice is precisely what gets measured per user, per violation.\n\n## Research\n\nTwo research pieces are worth an analyst's time for opposite reasons. [[s15]] unpacks NeedyMantis, a modular post-compromise malware framework built from custom loaders, encrypted archives, and extensible components designed to hold long-term access and support follow-on operations. That structure is the point: encrypted archives and swappable components defeat static indicators, so hunting should target loader behavior and archive handling rather than hashes. Assume that where NeedyMantis is present, the initial access is old and the operator intends to stay.\n\n[[s5]] shows how cheap the other end of the market has become. RatHat operators build and publish an Android banking trojan, then control infected phones from a web console, tallying nearly a hundred console deployments in a malware-as-a-service model where each customer runs a separate copy. The novelty is the triage layer: Gemini is used to rank victims by value, which turns a blunt collection tool into a prioritized target list for follow-on fraud. Mobile remains the least-instrumented endpoint in most enterprises, and this is what industrializing that blind spot looks like.",
+  "selected": [
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Critical Zero-Day Vulnerabilities Exploited in Citrix NetScaler ADC, Gateway",
+      "url": "https://www.cisa.gov/news-events/alerts/2026/09/27/critical-zero-day-vulnerabilities-exploited-citrix-netscaler-adc-gateway",
+      "publishedAt": "2026-09-27T12:00:00.000Z",
+      "excerpt": "CISA is amplifying Citrix’s disclosure of eight new vulnerabilities affecting Citrix NetScaler ADC and Citrix NetScaler Gateway products: CVE-2026-88771, CVE-2026-88772, CVE-2026-88773, CVE-2026-88774, CVE-2026-88775, CVE-2026-88776, CVE-2026-88777, and CVE-2026-88778. CISA has added CVE-2026-88771 and CVE-2026-88772 to its Known Exploited Vulnerabilities (KEV) Catalog. Both are critical,…",
+      "canonicalUrl": "https://cisa.gov/news-events/alerts/2026/09/27/critical-zero-day-vulnerabilities-exploited-citrix-netscaler-adc-gateway",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-88771",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Citrix",
+            "product": "NetScaler",
+            "vulnerabilityName": "Citrix NetScaler Improper Input Validation Vulnerability",
+            "dateAdded": "2026-09-27",
+            "shortDescription": "Citrix NetScaler ADC and NetScaler Gateway contain an improper input validation vulnerability that could allow an unauthenticated attacker to execute arbitrary commands.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-09-30",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "Running the provided IOCs in the NetScaler console may help identify indicators of exploitation. Customers must conduct forensic triage as directed by BOD 26‑04 and follow Citrix’s published guidance for mitigations. For more information, please see: https://community.citrix.com/techzone-blogs/110_security-updates/netscaler-adc-and-netscaler-gateway-security-bulletin-for-cve-2026-88771-through-cve-2026-88778 ; https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697096 ; https://support.citrix.com/external/article/CTX694799/steps-to-take-if-netscaler-adc-is-suspec.html ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-88772",
+            "cwes": [
+              "CWE-119"
+            ]
+          },
+          "nvd": {
+            "description": "Improper input validation vulnerability in Citrix NetScaler ADC and Citrix NetScaler Gateway.\n\nThis issue affects ADC: before 14.1-73.37, before 13.1-64.23, before 14.1-73.37 FIPS, and before 13.1.37.279 FIPS and NDcPP; Gateway: before 14.1-73.37 and before 13.1-64.23 leading to an unauthenticated attacker to execute arbitrary commands.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.5,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-20"
+            ],
+            "published": "2026-09-27T17:16:56.260",
+            "lastModified": "2026-09-28T13:17:25.027",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697096",
+                "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-88771",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6BC2D462-9ABE-4024-8E46-8D265C0B19FB",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2DB314FE-3886-4ABD-A820-B8A70EBB23A6",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:ndcpp:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FCFFA1B3-87CE-4CC8-990E-D3CE0B55CD45",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1CA9588A-E3EB-44FC-9515-6EB89BB8C1D6",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "046FF602-D956-4961-89BF-2041A3590004",
+                "versionStartIncluding": "14.1-66.68",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "14.1-73.37",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3286D2C3-EA7E-4D9C-95DE-05D462DC8B1B",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C77243A7-1FDB-4557-88BE-EDF3BAA56A81",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/09/27/critical-zero-day-vulnerabilities-exploited-citrix-netscaler-adc-gateway",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.27",
+              "dateReleased": "2026-09-27T21:30:35.5521Z",
+              "retrievedAt": "2026-09-28T19:07:58.110Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-88771%2CCVE-2026-88772%2CCVE-2026-35273%2CCVE-2026-88773%2CCVE-2026-88774%2CCVE-2026-88775%2CCVE-2026-88776%2CCVE-2026-88777%2CCVE-2026-88778",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-88771",
+              "retrievedAt": "2026-09-28T19:07:58.110Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-88772",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Citrix",
+            "product": "NetScaler",
+            "vulnerabilityName": "Citrix NetScaler Improper Restriction of Operations within the Bounds of a Memory Buffer Vulnerability",
+            "dateAdded": "2026-09-27",
+            "shortDescription": "Citrix NetScaler ADC and NetScaler Gateway contain an improper restriction of operations within the bounds of a memory buffer vulnerability that could allow for remote code execution or denial of service",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-09-30",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "Running the provided IOCs in the NetScaler console may help identify indicators of exploitation. Customers must conduct forensic triage as directed by BOD 26‑04 and follow Citrix’s published guidance for mitigations. For more information, please see: https://community.citrix.com/techzone-blogs/110_security-updates/netscaler-adc-and-netscaler-gateway-security-bulletin-for-cve-2026-88771-through-cve-2026-88778 ; https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697096 ; https://support.citrix.com/external/article/CTX694799/steps-to-take-if-netscaler-adc-is-suspec.html ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-88772",
+            "cwes": [
+              "CWE-119"
+            ]
+          },
+          "nvd": {
+            "description": "Vulnerability in Citrix NetScaler ADC and Citrix NetScaler Gateway.\n\nThis issue affects ADC: before 14.1-73.37, before 13.1-64.23, before 14.1-73.37 FIPS, and before 13.1.37.279 FIPS and NDcPP; Gateway: before 14.1-73.37 and before 13.1-64.23 leading to Remote Code Execution or Denial of Service",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.5,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-119"
+            ],
+            "published": "2026-09-27T17:16:56.390",
+            "lastModified": "2026-09-28T12:26:47.670",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697096&articleTitle=Citrix_NetScaler_ADC_and_Citrix_NetScaler_Gateway_Security_Bulletin_for_CVE_2026_88771_CVE_2026_88772_CVE_2026_88773_CVE_2026_88774_CVE_2026_88775_CVE_2026_88776_CVE_2026_88777_and_CVE_2026_88778",
+                "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-88772",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6BC2D462-9ABE-4024-8E46-8D265C0B19FB",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2DB314FE-3886-4ABD-A820-B8A70EBB23A6",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:ndcpp:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FCFFA1B3-87CE-4CC8-990E-D3CE0B55CD45",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1CA9588A-E3EB-44FC-9515-6EB89BB8C1D6",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "046FF602-D956-4961-89BF-2041A3590004",
+                "versionStartIncluding": "14.1-66.68",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "14.1-73.37",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3286D2C3-EA7E-4D9C-95DE-05D462DC8B1B",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C77243A7-1FDB-4557-88BE-EDF3BAA56A81",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/09/27/critical-zero-day-vulnerabilities-exploited-citrix-netscaler-adc-gateway",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.27",
+              "dateReleased": "2026-09-27T21:30:35.5521Z",
+              "retrievedAt": "2026-09-28T19:07:58.110Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-88771%2CCVE-2026-88772%2CCVE-2026-35273%2CCVE-2026-88773%2CCVE-2026-88774%2CCVE-2026-88775%2CCVE-2026-88776%2CCVE-2026-88777%2CCVE-2026-88778",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-88772",
+              "retrievedAt": "2026-09-28T19:07:58.110Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-88773",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Inconsistent interpretation of HTTP requests ('HTTP Request/Response smuggling') vulnerability in Citrix NetScaler ADC and Citrix NetScaler Gateway.\n\nThis issue affects ADC: before 14.1-73.37, before 13.1-64.23, before 14.1-73.37 FIPS, and before 13.1-37.279 and NDcPP; Gateway: before 14.1-73.37 FIPS and before 13.1-64.23.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.3,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-444"
+            ],
+            "published": "2026-09-27T17:16:56.507",
+            "lastModified": "2026-09-28T14:27:13.743",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697096",
+                "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6BC2D462-9ABE-4024-8E46-8D265C0B19FB",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2DB314FE-3886-4ABD-A820-B8A70EBB23A6",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:ndcpp:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FCFFA1B3-87CE-4CC8-990E-D3CE0B55CD45",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1CA9588A-E3EB-44FC-9515-6EB89BB8C1D6",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "046FF602-D956-4961-89BF-2041A3590004",
+                "versionStartIncluding": "14.1-66.68",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "14.1-73.37",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3286D2C3-EA7E-4D9C-95DE-05D462DC8B1B",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C77243A7-1FDB-4557-88BE-EDF3BAA56A81",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/09/27/critical-zero-day-vulnerabilities-exploited-citrix-netscaler-adc-gateway",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.27",
+              "dateReleased": "2026-09-27T21:30:35.5521Z",
+              "retrievedAt": "2026-09-28T19:07:58.110Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-88771%2CCVE-2026-88772%2CCVE-2026-35273%2CCVE-2026-88773%2CCVE-2026-88774%2CCVE-2026-88775%2CCVE-2026-88776%2CCVE-2026-88777%2CCVE-2026-88778",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-88773",
+              "retrievedAt": "2026-09-28T19:07:58.110Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-88774",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Vulnerability in Citrix NetScaler ADC and Citrix NetScaler Gateway.\n\nThis issue affects ADC: before 14.1-73.37, before 13.1-64.23, before 14.1-73.37 FIPS, and before 13.1.37.279 FIPS and NDcPP; Gateway: before 14.1-73.37 and before 13.1-64.23 leading to a feature policy bypass due to improper HTTP URL based expression usage.",
+            "cvss": {
+              "version": "4.0",
+              "score": 7,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:L/VI:L/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+              "type": "Secondary"
+            },
+            "cwes": [],
+            "published": "2026-09-27T17:16:56.633",
+            "lastModified": "2026-09-28T14:25:55.873",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697096&articleTitle=Citrix_NetScaler_ADC_and_Citrix_NetScaler_Gateway_Security_Bulletin_for_CVE_2026_88771_CVE_2026_88772_CVE_2026_88773_CVE_2026_88774_CVE_2026_88775_CVE_2026_88776_CVE_2026_88777_and_CVE_2026_88778",
+                "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6BC2D462-9ABE-4024-8E46-8D265C0B19FB",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2DB314FE-3886-4ABD-A820-B8A70EBB23A6",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:ndcpp:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FCFFA1B3-87CE-4CC8-990E-D3CE0B55CD45",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1CA9588A-E3EB-44FC-9515-6EB89BB8C1D6",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "046FF602-D956-4961-89BF-2041A3590004",
+                "versionStartIncluding": "14.1-66.68",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "14.1-73.37",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3286D2C3-EA7E-4D9C-95DE-05D462DC8B1B",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C77243A7-1FDB-4557-88BE-EDF3BAA56A81",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/09/27/critical-zero-day-vulnerabilities-exploited-citrix-netscaler-adc-gateway",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.27",
+              "dateReleased": "2026-09-27T21:30:35.5521Z",
+              "retrievedAt": "2026-09-28T19:07:58.110Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-88771%2CCVE-2026-88772%2CCVE-2026-35273%2CCVE-2026-88773%2CCVE-2026-88774%2CCVE-2026-88775%2CCVE-2026-88776%2CCVE-2026-88777%2CCVE-2026-88778",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-88774",
+              "retrievedAt": "2026-09-28T19:07:58.110Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-88775",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Memory overflow vulnerability in Citrix NetScaler ADC and Citrix NetScaler Gateway.\n\nThis issue affects ADC: before 14.1-73.37, before 13.1-64.23, before 14.1-73.37 FIPS, and before 13.1.37.279 FIPS and NDcPP; Gateway: before 14.1-73.37 and before 13.1-64.23 leading Memory overflow vulnerability leading to unpredictable or erroneous behavior or Denial of Service",
+            "cvss": {
+              "version": "4.0",
+              "score": 8.8,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-120"
+            ],
+            "published": "2026-09-27T17:16:56.750",
+            "lastModified": "2026-09-28T14:26:21.610",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697096&articleTitle=Citrix_NetScaler_ADC_and_Citrix_NetScaler_Gateway_Security_Bulletin_for_CVE_2026_88771_CVE_2026_88772_CVE_2026_88773_CVE_2026_88774_CVE_2026_88775_CVE_2026_88776_CVE_2026_88777_and_CVE_2026_88778",
+                "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6BC2D462-9ABE-4024-8E46-8D265C0B19FB",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2DB314FE-3886-4ABD-A820-B8A70EBB23A6",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:ndcpp:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FCFFA1B3-87CE-4CC8-990E-D3CE0B55CD45",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1CA9588A-E3EB-44FC-9515-6EB89BB8C1D6",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "046FF602-D956-4961-89BF-2041A3590004",
+                "versionStartIncluding": "14.1-66.68",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "14.1-73.37",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3286D2C3-EA7E-4D9C-95DE-05D462DC8B1B",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C77243A7-1FDB-4557-88BE-EDF3BAA56A81",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/09/27/critical-zero-day-vulnerabilities-exploited-citrix-netscaler-adc-gateway",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.27",
+              "dateReleased": "2026-09-27T21:30:35.5521Z",
+              "retrievedAt": "2026-09-28T19:07:58.110Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-88771%2CCVE-2026-88772%2CCVE-2026-35273%2CCVE-2026-88773%2CCVE-2026-88774%2CCVE-2026-88775%2CCVE-2026-88776%2CCVE-2026-88777%2CCVE-2026-88778",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-88775",
+              "retrievedAt": "2026-09-28T19:07:58.110Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-88776",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Memory overflow vulnerability vulnerability in Citrix NetScaler ADC and Citrix NetScaler Gateway.\nThis issue affects ADC: before 14.1-73.37, before 13.1-64.23, before 14.1-73.37 FIPS, and before 13.1.37.279 FIPS and NDcPP; Gateway: before 14.1-73.37 and before 13.1-64.23  leading to unpredictable or erroneous behavior or Denial of Service",
+            "cvss": {
+              "version": "4.0",
+              "score": 8.8,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-119"
+            ],
+            "published": "2026-09-27T17:16:56.870",
+            "lastModified": "2026-09-28T18:09:52.120",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697096",
+                "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6BC2D462-9ABE-4024-8E46-8D265C0B19FB",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2DB314FE-3886-4ABD-A820-B8A70EBB23A6",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:ndcpp:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FCFFA1B3-87CE-4CC8-990E-D3CE0B55CD45",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1CA9588A-E3EB-44FC-9515-6EB89BB8C1D6",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "046FF602-D956-4961-89BF-2041A3590004",
+                "versionStartIncluding": "14.1-66.68",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "14.1-73.37",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3286D2C3-EA7E-4D9C-95DE-05D462DC8B1B",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C77243A7-1FDB-4557-88BE-EDF3BAA56A81",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/09/27/critical-zero-day-vulnerabilities-exploited-citrix-netscaler-adc-gateway",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.27",
+              "dateReleased": "2026-09-27T21:30:35.5521Z",
+              "retrievedAt": "2026-09-28T19:07:58.110Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-88771%2CCVE-2026-88772%2CCVE-2026-35273%2CCVE-2026-88773%2CCVE-2026-88774%2CCVE-2026-88775%2CCVE-2026-88776%2CCVE-2026-88777%2CCVE-2026-88778",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-88776",
+              "retrievedAt": "2026-09-28T19:07:58.110Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-88777",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Memory overflow vulnerability vulnerability in Citrix NetScaler ADC and Citrix NetScaler Gateway.\n\nThis issue affects ADC: before 14.1-73.37, before 13.1-64.23, before 14.1-73.37 FIPS, and before 13.1.37.279 FIPS and NDcPP; Gateway: before 14.1-73.37 and before 13.1-64.23  leading to unpredictable or erroneous behavior or Denial of Service",
+            "cvss": {
+              "version": "4.0",
+              "score": 8.8,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-119"
+            ],
+            "published": "2026-09-27T17:16:56.990",
+            "lastModified": "2026-09-28T18:12:31.173",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697096&articleTitle=Citrix_NetScaler_ADC_and_Citrix_NetScaler_Gateway_Security_Bulletin_for_CVE_2026_88771_CVE_2026_88772_CVE_2026_88773_CVE_2026_88774_CVE_2026_88775_CVE_2026_88776_CVE_2026_88777_and_CVE_2026_88778",
+                "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6BC2D462-9ABE-4024-8E46-8D265C0B19FB",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2DB314FE-3886-4ABD-A820-B8A70EBB23A6",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:ndcpp:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FCFFA1B3-87CE-4CC8-990E-D3CE0B55CD45",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1CA9588A-E3EB-44FC-9515-6EB89BB8C1D6",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "046FF602-D956-4961-89BF-2041A3590004",
+                "versionStartIncluding": "14.1-66.68",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "14.1-73.37",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3286D2C3-EA7E-4D9C-95DE-05D462DC8B1B",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C77243A7-1FDB-4557-88BE-EDF3BAA56A81",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/09/27/critical-zero-day-vulnerabilities-exploited-citrix-netscaler-adc-gateway",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.27",
+              "dateReleased": "2026-09-27T21:30:35.5521Z",
+              "retrievedAt": "2026-09-28T19:07:58.110Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-88771%2CCVE-2026-88772%2CCVE-2026-35273%2CCVE-2026-88773%2CCVE-2026-88774%2CCVE-2026-88775%2CCVE-2026-88776%2CCVE-2026-88777%2CCVE-2026-88778",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-88777",
+              "retrievedAt": "2026-09-28T19:07:58.110Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-88778",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Predictable exact value from previous values vulnerability in Citrix NetScaler ADC and Citrix NetScaler Gateway.\n\nThis issue affects ADC: before 14.1-73.37, before 13.1-64.23, before 14.1-73.37 FIPS, and before 13.1.37.279 FIPS and NDcPP; Gateway: before 14.1-73.37 and before 13.1-64.23.",
+            "cvss": {
+              "version": "4.0",
+              "score": 8.8,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:H/VA:H/SC:L/SI:L/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-342"
+            ],
+            "published": "2026-09-27T17:16:57.110",
+            "lastModified": "2026-09-28T18:19:33.703",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697096",
+                "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6BC2D462-9ABE-4024-8E46-8D265C0B19FB",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2DB314FE-3886-4ABD-A820-B8A70EBB23A6",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:ndcpp:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FCFFA1B3-87CE-4CC8-990E-D3CE0B55CD45",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1CA9588A-E3EB-44FC-9515-6EB89BB8C1D6",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "046FF602-D956-4961-89BF-2041A3590004",
+                "versionStartIncluding": "14.1-66.68",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "14.1-73.37",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3286D2C3-EA7E-4D9C-95DE-05D462DC8B1B",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C77243A7-1FDB-4557-88BE-EDF3BAA56A81",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/09/27/critical-zero-day-vulnerabilities-exploited-citrix-netscaler-adc-gateway",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.27",
+              "dateReleased": "2026-09-27T21:30:35.5521Z",
+              "retrievedAt": "2026-09-28T19:07:58.110Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-88771%2CCVE-2026-88772%2CCVE-2026-35273%2CCVE-2026-88773%2CCVE-2026-88774%2CCVE-2026-88775%2CCVE-2026-88776%2CCVE-2026-88777%2CCVE-2026-88778",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-88778",
+              "retrievedAt": "2026-09-28T19:07:58.110Z"
+            }
+          }
+        }
+      ],
+      "id": "s35",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "CISA is amplifying Citrix's disclosure of eight NetScaler ADC/Gateway flaws and has added CVE-2026-88771 and CVE-2026-88772 to KEV on confirmed in-the-wild exploitation, with a federal remediation deadline of September 30 — unpatched internet-facing appliances are today's top defensive priority."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Bitget Says Attacker Exploited Third-Party Security Product Flaw to Steal $388M",
+      "url": "https://thehackernews.com/2026/09/bitget-says-attacker-exploited-third.html",
+      "publishedAt": "2026-09-28T17:42:18.000Z",
+      "excerpt": "The attacker who stole about $388 million from the cryptocurrency exchange Bitget gained access through a vulnerability in a third-party security product the exchange used, Bitget said on Monday. The attacker exploited the flaw to obtain high-level internal credentials and then, on September 24, used them to send fraudulent withdrawal commands to Bitget's wallet system. Exchanges keep most",
+      "canonicalUrl": "https://thehackernews.com/2026/09/bitget-says-attacker-exploited-third.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s4",
+      "section": "breaches",
+      "rank": 2,
+      "angle": "A $388 million theft traced to a flaw in a third-party security product shows how a single vendor-side credential compromise can hand attackers the keys to a crypto exchange's wallet system."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Google Warns of ShinyHunters’ Fresh Oracle PeopleSoft Campaign",
+      "url": "https://www.securityweek.com/google-warns-of-shinyhunters-fresh-oracle-peoplesoft-campaign/",
+      "publishedAt": "2026-09-28T10:56:46.000Z",
+      "excerpt": "The extortion group has modified its exploit in new attacks targeting the PeopleSoft vulnerability CVE-2026-35273. The post Google Warns of ShinyHunters’ Fresh Oracle PeopleSoft Campaign appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/google-warns-of-shinyhunters-fresh-oracle-peoplesoft-campaign",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-35273",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Oracle",
+            "product": " PeopleSoft Enterprise PeopleTools",
+            "vulnerabilityName": "Oracle PeopleSoft Enterprise PeopleTools Missing Authentication for Critical Function Vulnerability",
+            "dateAdded": "2026-06-12",
+            "shortDescription": "Oracle PeopleSoft Enterprise PeopleTools contains a missing authentication for critical function vulnerability which could allow an unauthenticated attacker to obtain takeover of PeopleSoft Enterprise PeopleTools.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-06-15",
+            "knownRansomwareCampaignUse": "Known",
+            "notes": "https://www.oracle.com/security-alerts/alert-cve-2026-35273.html ; https://support.oracle.com/signin/ ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-35273",
+            "cwes": [
+              "CWE-306"
+            ]
+          },
+          "nvd": {
+            "description": "Vulnerability in the PeopleSoft Enterprise PeopleTools product of Oracle PeopleSoft (component: Updates Environment Management). Supported versions that are affected are 8.61 and 8.62. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise PeopleSoft Enterprise PeopleTools. Successful attacks of this vulnerability can result in takeover of PeopleSoft Enterprise PeopleTools. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts). CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "secalert_us@oracle.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-306"
+            ],
+            "published": "2026-06-11T04:16:53.680",
+            "lastModified": "2026-07-23T09:10:00.113",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://www.oracle.com/security-alerts/alert-cve-2026-35273.html",
+                "source": "secalert_us@oracle.com",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-35273",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory",
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:oracle:peoplesoft_enterprise_peopletools:8.61:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "18F15FC6-947A-462A-8329-C52907799A7C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:oracle:peoplesoft_enterprise_peopletools:8.62:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FF0E4EFC-096B-4861-8D55-D8DAA37A21E9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/google-warns-of-shinyhunters-fresh-oracle-peoplesoft-campaign/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.27",
+              "dateReleased": "2026-09-27T21:30:35.5521Z",
+              "retrievedAt": "2026-09-28T19:07:58.110Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-88771%2CCVE-2026-88772%2CCVE-2026-35273%2CCVE-2026-88773%2CCVE-2026-88774%2CCVE-2026-88775%2CCVE-2026-88776%2CCVE-2026-88777%2CCVE-2026-88778",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-35273",
+              "retrievedAt": "2026-09-28T19:07:58.110Z"
+            }
+          }
+        }
+      ],
+      "id": "s24",
+      "section": "exploited",
+      "rank": 3,
+      "angle": "ShinyHunters has modified its exploit for PeopleSoft CVE-2026-35273 in a fresh extortion campaign, and the flaw is already in KEV with known ransomware use — organizations running affected PeopleTools versions should treat this as live activity."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "JADEPUFFER-Linked Attackers Used Compromised Service Principals to Delete Azure Resources",
+      "url": "https://thehackernews.com/2026/09/jadepuffer-linked-attackers-used.html",
+      "publishedAt": "2026-09-28T09:08:21.000Z",
+      "excerpt": "The threat actor known as JADEPUFFER has been observed orchestrating destructive actions within a Microsoft Azure environment using compromised service principals. Microsoft, which is tracking the activity under the name Storm-3168, has called it an evolution of the threat actor's tradecraft. The attack took place in early June 2026 over a period of about 18 hours. \"The destructive operations",
+      "canonicalUrl": "https://thehackernews.com/2026/09/jadepuffer-linked-attackers-used.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s29",
+      "section": "breaches",
+      "rank": 4,
+      "angle": "Microsoft's Storm-3168 tracking shows JadePuffer escalating from credential theft to destructive action through compromised Azure service principals over an 18-hour intrusion, a template for agent-driven cloud attacks."
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Chrome Store Hosts 'Poper Blocker' Spyware Downloaded by Millions",
+      "url": "https://www.darkreading.com/application-security/chrome-store-poper-blocker-spyware-downloaded-millions",
+      "publishedAt": "2026-09-28T16:51:25.000Z",
+      "excerpt": "A purported ad-blocker exfiltrates reams of sensitive information and benefits from having Google's stamp of approval despite researcher warnings.",
+      "canonicalUrl": "https://darkreading.com/application-security/chrome-store-poper-blocker-spyware-downloaded-millions",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s8",
+      "section": "breaches",
+      "rank": 5,
+      "angle": "A Chrome extension with millions of installs allegedly exfiltrating sensitive data while keeping Google's store approval underscores how little marketplace vetting can be trusted for browser add-ons."
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "New Mexico jury finds Meta deceived consumers about data privacy practices",
+      "url": "https://therecord.media/facebook-new-mexico-privacy",
+      "publishedAt": "2026-09-28T17:15:00.000Z",
+      "excerpt": "A New Mexico jury found Facebook violated the law nearly 44 million times by lying to consumers about its data privacy practices.",
+      "canonicalUrl": "https://therecord.media/facebook-new-mexico-privacy",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s7",
+      "section": "industry",
+      "rank": 6,
+      "angle": "A New Mexico jury finding that Facebook violated the law nearly 44 million times over its data-privacy claims opens a fresh legal front on platform accountability for privacy misrepresentations."
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "NeedyMantis: Unpacking a post-compromise malware family used in targeted operations",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/09/28/needymantis-unpacking-a-post-compromise-malware-family-used-in-targeted-operations/",
+      "publishedAt": "2026-09-28T15:00:00.000Z",
+      "excerpt": "Microsoft Threat Intelligence identified NeedyMantis, a modular post-compromise malware framework used in targeted intrusions that combines custom loaders, encrypted archives, and extensible components to maintain long-term access and support follow-on operations. The post NeedyMantis: Unpacking a post-compromise malware family used in targeted operations appeared first on Microsoft Security Blog.",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/09/28/needymantis-unpacking-a-post-compromise-malware-family-used-in-targeted-operations",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s15",
+      "section": "research",
+      "rank": 7,
+      "angle": "Microsoft's NeedyMantis write-up details a modular post-compromise framework — custom loaders, encrypted archives, extensible components — giving defenders concrete artifacts to hunt in targeted intrusions."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "RatHat Android Malware Console Uses Gemini to Identify Higher-Value Victims",
+      "url": "https://thehackernews.com/2026/09/rathat-android-malware-console-uses.html",
+      "publishedAt": "2026-09-28T17:38:33.000Z",
+      "excerpt": "RatHat's operators build and publish the Android banking trojan and control infected phones from a web console, according to security company Cleafy. Cleafy has traced nearly 100 deployments of that console since April 2026. It said this fits a malware-as-a-service model, in which each customer runs a separate copy. The console stores what the malware collects from each phone,",
+      "canonicalUrl": "https://thehackernews.com/2026/09/rathat-android-malware-console-uses.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s5",
+      "section": "research",
+      "rank": 8,
+      "angle": "RatHat's console-driven, malware-as-a-service model — including Gemini used to rank victims by value — illustrates how cheaply Android banking fraud is being industrialized."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Misconfigured Supabase apps expose data in over 16,000 databases",
+      "url": "https://www.bleepingcomputer.com/news/security/misconfigured-supabase-apps-expose-data-in-over-16-000-databases/",
+      "publishedAt": "2026-09-28T18:50:59.000Z",
+      "excerpt": "Researchers found more than 16,000 misconfigured Supabase databases exposing readable tables with personally identifiable information, passwords, or authentication tokens. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/misconfigured-supabase-apps-expose-data-in-over-16-000-databases",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "AI Agents Are Privileged Users; Who Is Auditing Their Access?",
+      "url": "https://www.darkreading.com/vulnerabilities-threats/ai-agents-are-privileged-users-who-is-auditing-their-access",
+      "publishedAt": "2026-09-28T18:44:22.000Z",
+      "excerpt": "Enterprises regularly rigorously monitor human employees, while autonomous AI agents quietly operate with broad privileges that could turn them into the next generation of insider threats.",
+      "canonicalUrl": "https://darkreading.com/vulnerabilities-threats/ai-agents-are-privileged-users-who-is-auditing-their-access",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "IAM for AI agents: A Practical Enterprise Framework",
+      "url": "https://thehackernews.com/2026/09/iam-for-ai-agent.html",
+      "publishedAt": "2026-09-28T18:20:38.000Z",
+      "excerpt": "What is IAM for AI agents? AI agents authenticate, invoke tools, and act across enterprise systems with delegated authority. IAM for AI Agents is the identity-control architecture that governs those actors. This guide covers the limits of conventional provisioning, the components that matter, how to evaluate framework choices, and what runtime evidence proves an agent behaved as intended.",
+      "canonicalUrl": "https://thehackernews.com/2026/09/iam-for-ai-agent.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Modulate Raises $25 Million to Advance Deepfake Detection",
+      "url": "https://www.securityweek.com/modulate-raises-25-million-to-advance-deepfake-detection/",
+      "publishedAt": "2026-09-28T17:30:00.000Z",
+      "excerpt": "The misuse and abuse of AI-generated voice is growing. Modulate’s intention is to allow real time detection and intervention. The post Modulate Raises $25 Million to Advance Deepfake Detection appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/modulate-raises-25-million-to-advance-deepfake-detection",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "US, UK warn of exploited Citrix NetScaler zero-day bugs",
+      "url": "https://therecord.media/us-uk-warn-of-citrix-netscaler-zero-day-bug",
+      "publishedAt": "2026-09-28T16:19:00.000Z",
+      "excerpt": "Incident responders began warning of potential vulnerabilities in NetScaler Gateway products on Saturday before cybersecurity agencies in the Netherlands, U.S. and U.K. released advisories on Sunday confirming vulnerabilities. Citrix itself confirmed eight new vulnerabilities.",
+      "canonicalUrl": "https://therecord.media/us-uk-warn-of-citrix-netscaler-zero-day-bug",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "JadePuffer agentic AI attacks target Azure, destroy cloud resources",
+      "url": "https://www.bleepingcomputer.com/news/security/jadepuffer-agentic-ai-attacks-target-azure-destroy-cloud-resources/",
+      "publishedAt": "2026-09-28T15:49:27.000Z",
+      "excerpt": "The JadePuffer ransomware operator is targeting Azure tenants with agent-driven attacks that conduct reconnaissance, steal credentials, and destroy core components. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/jadepuffer-agentic-ai-attacks-target-azure-destroy-cloud-resources",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "JadePuffer AI Actor Compromises Azure Tenant in Destructive Cloud Attack",
+      "url": "https://www.darkreading.com/cloud-security/jadepuffer-ai-actor-azure-tenant-destructive-cloud-attack",
+      "publishedAt": "2026-09-28T15:33:21.000Z",
+      "excerpt": "The \"agentic threat actor\" may have used exposed credentials to access resources and delete cloud-based storage, applications, and databases.",
+      "canonicalUrl": "https://darkreading.com/cloud-security/jadepuffer-ai-actor-azure-tenant-destructive-cloud-attack",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Call for Presentations Open for 2026 CISO Forum Virtual Summit",
+      "url": "https://www.securityweek.com/call-for-presentations-open-for-2026-ciso-forum-virtual-summit/",
+      "publishedAt": "2026-09-28T15:15:00.000Z",
+      "excerpt": "SecurityWeek seeks original, vendor-neutral presentations that help cybersecurity leaders navigate emerging threats, strengthen resilience, and address the strategic challenges facing today’s enterprise security programs. The post Call for Presentations Open for 2026 CISO Forum Virtual Summit appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/call-for-presentations-open-for-2026-ciso-forum-virtual-summit",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "krebs",
+      "sourceKind": "rss",
+      "title": "Dutch Police Arrest ‘Reformed’ Hacker in Shiny Hunters Investigation",
+      "url": "https://krebsonsecurity.com/2026/09/dutch-police-arrest-reformed-hacker-in-shiny-hunters-investigation/",
+      "publishedAt": "2026-09-28T15:08:57.000Z",
+      "excerpt": "Authorities in the Netherlands have arrested a 23-year-old convicted cybercriminal on suspicion of aiding in data thefts and extortions by the prolific hacker group ShinyHunters. In the days immediately following the suspect's arrest, remaining ShinyHunters members dramatically escalated their attacks, stealing highly sensitive data from the FBI and extorting the Russian ransomware group Cl0p.",
+      "canonicalUrl": "https://krebsonsecurity.com/2026/09/dutch-police-arrest-reformed-hacker-in-shiny-hunters-investigation",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "unit42",
+      "sourceKind": "rss",
+      "title": "Threat Brief: NetScaler Zero Days CVE-2026-88771 and CVE-2026-88772 Exploited in the Wild",
+      "url": "https://unit42.paloaltonetworks.com/netscaler-zero-days-exploited/",
+      "publishedAt": "2026-09-28T15:02:04.000Z",
+      "excerpt": "Unit 42 is aware of possible 0-day activity against NetScaler devices. Citrix reports CVE-2026-88771, CVE-2026-88772 have been exploited in the wild. The post Threat Brief: NetScaler Zero Days CVE-2026-88771 and CVE-2026-88772 Exploited in the Wild appeared first on Unit 42.",
+      "canonicalUrl": "https://unit42.paloaltonetworks.com/netscaler-zero-days-exploited",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-88771",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Citrix",
+            "product": "NetScaler",
+            "vulnerabilityName": "Citrix NetScaler Improper Input Validation Vulnerability",
+            "dateAdded": "2026-09-27",
+            "shortDescription": "Citrix NetScaler ADC and NetScaler Gateway contain an improper input validation vulnerability that could allow an unauthenticated attacker to execute arbitrary commands.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-09-30",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "Running the provided IOCs in the NetScaler console may help identify indicators of exploitation. Customers must conduct forensic triage as directed by BOD 26‑04 and follow Citrix’s published guidance for mitigations. For more information, please see: https://community.citrix.com/techzone-blogs/110_security-updates/netscaler-adc-and-netscaler-gateway-security-bulletin-for-cve-2026-88771-through-cve-2026-88778 ; https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697096 ; https://support.citrix.com/external/article/CTX694799/steps-to-take-if-netscaler-adc-is-suspec.html ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-88772",
+            "cwes": [
+              "CWE-119"
+            ]
+          },
+          "nvd": {
+            "description": "Improper input validation vulnerability in Citrix NetScaler ADC and Citrix NetScaler Gateway.\n\nThis issue affects ADC: before 14.1-73.37, before 13.1-64.23, before 14.1-73.37 FIPS, and before 13.1.37.279 FIPS and NDcPP; Gateway: before 14.1-73.37 and before 13.1-64.23 leading to an unauthenticated attacker to execute arbitrary commands.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.5,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-20"
+            ],
+            "published": "2026-09-27T17:16:56.260",
+            "lastModified": "2026-09-28T13:17:25.027",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697096",
+                "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-88771",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6BC2D462-9ABE-4024-8E46-8D265C0B19FB",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2DB314FE-3886-4ABD-A820-B8A70EBB23A6",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:ndcpp:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FCFFA1B3-87CE-4CC8-990E-D3CE0B55CD45",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1CA9588A-E3EB-44FC-9515-6EB89BB8C1D6",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "046FF602-D956-4961-89BF-2041A3590004",
+                "versionStartIncluding": "14.1-66.68",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "14.1-73.37",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3286D2C3-EA7E-4D9C-95DE-05D462DC8B1B",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C77243A7-1FDB-4557-88BE-EDF3BAA56A81",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "unit42",
+                "url": "https://unit42.paloaltonetworks.com/netscaler-zero-days-exploited/",
+                "field": "title"
+              },
+              {
+                "sourceId": "unit42",
+                "url": "https://unit42.paloaltonetworks.com/netscaler-zero-days-exploited/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.27",
+              "dateReleased": "2026-09-27T21:30:35.5521Z",
+              "retrievedAt": "2026-09-28T19:07:58.110Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-88771%2CCVE-2026-88772%2CCVE-2026-35273%2CCVE-2026-88773%2CCVE-2026-88774%2CCVE-2026-88775%2CCVE-2026-88776%2CCVE-2026-88777%2CCVE-2026-88778",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-88771",
+              "retrievedAt": "2026-09-28T19:07:58.110Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-88772",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Citrix",
+            "product": "NetScaler",
+            "vulnerabilityName": "Citrix NetScaler Improper Restriction of Operations within the Bounds of a Memory Buffer Vulnerability",
+            "dateAdded": "2026-09-27",
+            "shortDescription": "Citrix NetScaler ADC and NetScaler Gateway contain an improper restriction of operations within the bounds of a memory buffer vulnerability that could allow for remote code execution or denial of service",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-09-30",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "Running the provided IOCs in the NetScaler console may help identify indicators of exploitation. Customers must conduct forensic triage as directed by BOD 26‑04 and follow Citrix’s published guidance for mitigations. For more information, please see: https://community.citrix.com/techzone-blogs/110_security-updates/netscaler-adc-and-netscaler-gateway-security-bulletin-for-cve-2026-88771-through-cve-2026-88778 ; https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697096 ; https://support.citrix.com/external/article/CTX694799/steps-to-take-if-netscaler-adc-is-suspec.html ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-88772",
+            "cwes": [
+              "CWE-119"
+            ]
+          },
+          "nvd": {
+            "description": "Vulnerability in Citrix NetScaler ADC and Citrix NetScaler Gateway.\n\nThis issue affects ADC: before 14.1-73.37, before 13.1-64.23, before 14.1-73.37 FIPS, and before 13.1.37.279 FIPS and NDcPP; Gateway: before 14.1-73.37 and before 13.1-64.23 leading to Remote Code Execution or Denial of Service",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.5,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-119"
+            ],
+            "published": "2026-09-27T17:16:56.390",
+            "lastModified": "2026-09-28T12:26:47.670",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697096&articleTitle=Citrix_NetScaler_ADC_and_Citrix_NetScaler_Gateway_Security_Bulletin_for_CVE_2026_88771_CVE_2026_88772_CVE_2026_88773_CVE_2026_88774_CVE_2026_88775_CVE_2026_88776_CVE_2026_88777_and_CVE_2026_88778",
+                "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-88772",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6BC2D462-9ABE-4024-8E46-8D265C0B19FB",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2DB314FE-3886-4ABD-A820-B8A70EBB23A6",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:ndcpp:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FCFFA1B3-87CE-4CC8-990E-D3CE0B55CD45",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1CA9588A-E3EB-44FC-9515-6EB89BB8C1D6",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "046FF602-D956-4961-89BF-2041A3590004",
+                "versionStartIncluding": "14.1-66.68",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "14.1-73.37",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3286D2C3-EA7E-4D9C-95DE-05D462DC8B1B",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C77243A7-1FDB-4557-88BE-EDF3BAA56A81",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "unit42",
+                "url": "https://unit42.paloaltonetworks.com/netscaler-zero-days-exploited/",
+                "field": "title"
+              },
+              {
+                "sourceId": "unit42",
+                "url": "https://unit42.paloaltonetworks.com/netscaler-zero-days-exploited/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.27",
+              "dateReleased": "2026-09-27T21:30:35.5521Z",
+              "retrievedAt": "2026-09-28T19:07:58.110Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-88771%2CCVE-2026-88772%2CCVE-2026-35273%2CCVE-2026-88773%2CCVE-2026-88774%2CCVE-2026-88775%2CCVE-2026-88776%2CCVE-2026-88777%2CCVE-2026-88778",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-88772",
+              "retrievedAt": "2026-09-28T19:07:58.110Z"
+            }
+          }
+        }
+      ],
+      "id": "s14"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "⚡ Weekly Recap: $387M Crypto Hack, Citrix Exploits, AI Agents Go Off-Script, and More Threats",
+      "url": "https://thehackernews.com/2026/09/weekly-recap-387m-crypto-hack-citrix.html",
+      "publishedAt": "2026-09-28T14:00:53.000Z",
+      "excerpt": "A domain used as harmless placeholder text showed up in roughly 1,700 repositories. Then somebody registered it and started serving malicious lures. That is the kind of week this was: forgotten assumptions turning into live attack surface. Elsewhere, weak service accounts, old bugs, exposed systems, phishing kits, and strangely easy exploit paths kept doing useful work for attackers. Nothing",
+      "canonicalUrl": "https://thehackernews.com/2026/09/weekly-recap-387m-crypto-hack-citrix.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "80,000+ Organizations Had AI Logins Stolen: From Shadow AI to LLMjacking",
+      "url": "https://www.bleepingcomputer.com/news/security/80-000-plus-organizations-had-ai-logins-stolen-from-shadow-ai-to-llmjacking/",
+      "publishedAt": "2026-09-28T14:00:10.000Z",
+      "excerpt": "Infostealer logs exposed AI account credentials and sessions tied to more than 80,000 corporate domains, creating risks ranging from stolen conversations to LLMjacking. SOCRadar examines the growing market for stolen AI logins and how organizations can identify their exposure. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/80-000-plus-organizations-had-ai-logins-stolen-from-shadow-ai-to-llmjacking",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Cyberattack on Polish medical software provider exposes patient data",
+      "url": "https://therecord.media/poland-cyberattack-medical-medyc",
+      "publishedAt": "2026-09-28T13:30:00.000Z",
+      "excerpt": "Hackers stole personal data from a Polish healthcare software provider in the latest cyberattack to hit the country’s medical sector in recent months.",
+      "canonicalUrl": "https://therecord.media/poland-cyberattack-medical-medyc",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s18"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Former US soldier gets nearly six-year sentence for hacking, extorting telecoms",
+      "url": "https://therecord.media/hacker-telecom-army-sentenced",
+      "publishedAt": "2026-09-28T12:45:00.000Z",
+      "excerpt": "A former soldier in the U.S. Army was sentenced to more than five years in federal prison after pleading guilty to hacking into several telecommunications companies and leaking sensitive records.",
+      "canonicalUrl": "https://therecord.media/hacker-telecom-army-sentenced",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s19"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Prison Sentence for Former US Soldier Who Hacked AT&T and Verizon",
+      "url": "https://www.securityweek.com/prison-sentence-for-former-us-soldier-who-hacked-att-and-verizon/",
+      "publishedAt": "2026-09-28T12:36:16.000Z",
+      "excerpt": "Cameron John Wagenius was sentenced to 70 months in prison for stealing information from the wireless carriers. The post Prison Sentence for Former US Soldier Who Hacked AT&T and Verizon appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/prison-sentence-for-former-us-soldier-who-hacked-att-and-verizon",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Webinar: How to Govern AI Agents, Reduce Excessive Access, and Control Shadow AI",
+      "url": "https://thehackernews.com/2026/09/webinar-how-to-govern-ai-agents-reduce.html",
+      "publishedAt": "2026-09-28T11:58:00.000Z",
+      "excerpt": "AI agents are moving into production faster than security teams can govern them. They are connecting to apps, handling data, calling APIs, and acting across business systems—often without the same controls applied to human users. According to Okta’s Global CISO Insights 2026 report, only 47% of CISOs are confident they can identify every AI agent in their environment. Even among those who feel",
+      "canonicalUrl": "https://thehackernews.com/2026/09/webinar-how-to-govern-ai-agents-reduce.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s21"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Carbonato Botnet Compromises Docker Hosts to Deploy Telegram-Controlled Hermes AI Agent",
+      "url": "https://thehackernews.com/2026/09/carbonato-botnet-compromises-docker.html",
+      "publishedAt": "2026-09-28T11:46:00.000Z",
+      "excerpt": "Cybersecurity researchers have disclosed details of a new botnet malware called Carbonato that's targeting exposed Docker daemons to deploy an open-source artificial intelligence (AI) agent framework called Hermes Agent. \"The implant installs the framework unchanged, then overwrites its SOUL.md persona file,\" ThreatDown said. \"The 39-line prompt directs it to execute tasks received through",
+      "canonicalUrl": "https://thehackernews.com/2026/09/carbonato-botnet-compromises-docker.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s22"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "DC Health Agency Exposes 400,000 Beneficiary Records",
+      "url": "https://www.securityweek.com/dc-health-agency-exposes-400000-beneficiary-records/",
+      "publishedAt": "2026-09-28T11:29:29.000Z",
+      "excerpt": "The Medicaid IDs and other information of Medicaid and DC Healthcare Alliance beneficiaries were exposed. The post DC Health Agency Exposes 400,000 Beneficiary Records appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/dc-health-agency-exposes-400000-beneficiary-records",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "New Mexico Jury Finds Facebook Liable for Deceiving Users About Privacy Protections",
+      "url": "https://www.securityweek.com/new-mexico-jury-finds-facebook-liable-for-deceiving-users-about-privacy-protections/",
+      "publishedAt": "2026-09-28T10:40:01.000Z",
+      "excerpt": "A New Mexico jury has found Facebook liable for deceiving users about privacy protections on the platform. The post New Mexico Jury Finds Facebook Liable for Deceiving Users About Privacy Protections appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/new-mexico-jury-finds-facebook-liable-for-deceiving-users-about-privacy-protections",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Nvidia Unveils AI Agent Safety Platform With Hardware-Based Watchdog",
+      "url": "https://www.securityweek.com/nvidia-unveils-ai-agent-safety-platform-with-hardware-based-watchdog/",
+      "publishedAt": "2026-09-28T10:27:01.000Z",
+      "excerpt": "The platform combines open source software and a reference system design to keep AI agents within set boundaries. The post Nvidia Unveils AI Agent Safety Platform With Hardware-Based Watchdog appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/nvidia-unveils-ai-agent-safety-platform-with-hardware-based-watchdog",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Kiteworks Urges Server Shutdown, Finds Advanced Forms Vulnerability",
+      "url": "https://www.securityweek.com/kiteworks-urges-server-shutdown-finds-advanced-forms-vulnerability/",
+      "publishedAt": "2026-09-28T09:44:27.000Z",
+      "excerpt": "The company says the measure was precautionary and that it has no evidence of Kiteworks or customer systems being compromised. The post Kiteworks Urges Server Shutdown, Finds Advanced Forms Vulnerability appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/kiteworks-urges-server-shutdown-finds-advanced-forms-vulnerability",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Bitget resumes Bitcoin withdrawals after $387.5 million crypto heist",
+      "url": "https://www.bleepingcomputer.com/news/security/bitget-resumes-bitcoin-withdrawals-after-3875-million-crypto-heist/",
+      "publishedAt": "2026-09-28T09:25:29.000Z",
+      "excerpt": "Cryptocurrency exchange Bitget has resumed Bitcoin withdrawals suspended after suspected North Korean hackers breached its systems last week and stole over $350 million. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/bitget-resumes-bitcoin-withdrawals-after-3875-million-crypto-heist",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s28"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "US soldier gets 70 months in prison for extorting 10 tech, telecom firms",
+      "url": "https://www.bleepingcomputer.com/news/security/us-soldier-gets-70-months-in-prison-for-extorting-10-tech-telecom-firms/",
+      "publishedAt": "2026-09-28T07:30:15.000Z",
+      "excerpt": "A former U.S. Army soldier has been sentenced to 70 months in prison for hacking and extorting at least 10 U.S. technology and telecommunications companies between April 2023 and December 2024. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/us-soldier-gets-70-months-in-prison-for-extorting-10-tech-telecom-firms",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s30"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Citrix Confirms 2 NetScaler Zero-Days After Admins Pulled the Plug",
+      "url": "https://www.securityweek.com/citrix-confirms-2-netscaler-zero-days-after-admins-pulled-the-plug/",
+      "publishedAt": "2026-09-28T07:29:51.000Z",
+      "excerpt": "Citrix has released patches for the critical NetScaler vulnerabilities tracked as CVE-2026-88771 and CVE-2026-88772. The post Citrix Confirms 2 NetScaler Zero-Days After Admins Pulled the Plug appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/citrix-confirms-2-netscaler-zero-days-after-admins-pulled-the-plug",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-88771",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Citrix",
+            "product": "NetScaler",
+            "vulnerabilityName": "Citrix NetScaler Improper Input Validation Vulnerability",
+            "dateAdded": "2026-09-27",
+            "shortDescription": "Citrix NetScaler ADC and NetScaler Gateway contain an improper input validation vulnerability that could allow an unauthenticated attacker to execute arbitrary commands.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-09-30",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "Running the provided IOCs in the NetScaler console may help identify indicators of exploitation. Customers must conduct forensic triage as directed by BOD 26‑04 and follow Citrix’s published guidance for mitigations. For more information, please see: https://community.citrix.com/techzone-blogs/110_security-updates/netscaler-adc-and-netscaler-gateway-security-bulletin-for-cve-2026-88771-through-cve-2026-88778 ; https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697096 ; https://support.citrix.com/external/article/CTX694799/steps-to-take-if-netscaler-adc-is-suspec.html ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-88772",
+            "cwes": [
+              "CWE-119"
+            ]
+          },
+          "nvd": {
+            "description": "Improper input validation vulnerability in Citrix NetScaler ADC and Citrix NetScaler Gateway.\n\nThis issue affects ADC: before 14.1-73.37, before 13.1-64.23, before 14.1-73.37 FIPS, and before 13.1.37.279 FIPS and NDcPP; Gateway: before 14.1-73.37 and before 13.1-64.23 leading to an unauthenticated attacker to execute arbitrary commands.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.5,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-20"
+            ],
+            "published": "2026-09-27T17:16:56.260",
+            "lastModified": "2026-09-28T13:17:25.027",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697096",
+                "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-88771",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6BC2D462-9ABE-4024-8E46-8D265C0B19FB",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2DB314FE-3886-4ABD-A820-B8A70EBB23A6",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:ndcpp:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FCFFA1B3-87CE-4CC8-990E-D3CE0B55CD45",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1CA9588A-E3EB-44FC-9515-6EB89BB8C1D6",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "046FF602-D956-4961-89BF-2041A3590004",
+                "versionStartIncluding": "14.1-66.68",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "14.1-73.37",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3286D2C3-EA7E-4D9C-95DE-05D462DC8B1B",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C77243A7-1FDB-4557-88BE-EDF3BAA56A81",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/citrix-confirms-2-netscaler-zero-days-after-admins-pulled-the-plug/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.27",
+              "dateReleased": "2026-09-27T21:30:35.5521Z",
+              "retrievedAt": "2026-09-28T19:07:58.110Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-88771%2CCVE-2026-88772%2CCVE-2026-35273%2CCVE-2026-88773%2CCVE-2026-88774%2CCVE-2026-88775%2CCVE-2026-88776%2CCVE-2026-88777%2CCVE-2026-88778",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-88771",
+              "retrievedAt": "2026-09-28T19:07:58.110Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-88772",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Citrix",
+            "product": "NetScaler",
+            "vulnerabilityName": "Citrix NetScaler Improper Restriction of Operations within the Bounds of a Memory Buffer Vulnerability",
+            "dateAdded": "2026-09-27",
+            "shortDescription": "Citrix NetScaler ADC and NetScaler Gateway contain an improper restriction of operations within the bounds of a memory buffer vulnerability that could allow for remote code execution or denial of service",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-09-30",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "Running the provided IOCs in the NetScaler console may help identify indicators of exploitation. Customers must conduct forensic triage as directed by BOD 26‑04 and follow Citrix’s published guidance for mitigations. For more information, please see: https://community.citrix.com/techzone-blogs/110_security-updates/netscaler-adc-and-netscaler-gateway-security-bulletin-for-cve-2026-88771-through-cve-2026-88778 ; https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697096 ; https://support.citrix.com/external/article/CTX694799/steps-to-take-if-netscaler-adc-is-suspec.html ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-88772",
+            "cwes": [
+              "CWE-119"
+            ]
+          },
+          "nvd": {
+            "description": "Vulnerability in Citrix NetScaler ADC and Citrix NetScaler Gateway.\n\nThis issue affects ADC: before 14.1-73.37, before 13.1-64.23, before 14.1-73.37 FIPS, and before 13.1.37.279 FIPS and NDcPP; Gateway: before 14.1-73.37 and before 13.1-64.23 leading to Remote Code Execution or Denial of Service",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.5,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-119"
+            ],
+            "published": "2026-09-27T17:16:56.390",
+            "lastModified": "2026-09-28T12:26:47.670",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697096&articleTitle=Citrix_NetScaler_ADC_and_Citrix_NetScaler_Gateway_Security_Bulletin_for_CVE_2026_88771_CVE_2026_88772_CVE_2026_88773_CVE_2026_88774_CVE_2026_88775_CVE_2026_88776_CVE_2026_88777_and_CVE_2026_88778",
+                "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-88772",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6BC2D462-9ABE-4024-8E46-8D265C0B19FB",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2DB314FE-3886-4ABD-A820-B8A70EBB23A6",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:ndcpp:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FCFFA1B3-87CE-4CC8-990E-D3CE0B55CD45",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1CA9588A-E3EB-44FC-9515-6EB89BB8C1D6",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "046FF602-D956-4961-89BF-2041A3590004",
+                "versionStartIncluding": "14.1-66.68",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "14.1-73.37",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3286D2C3-EA7E-4D9C-95DE-05D462DC8B1B",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C77243A7-1FDB-4557-88BE-EDF3BAA56A81",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/citrix-confirms-2-netscaler-zero-days-after-admins-pulled-the-plug/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.27",
+              "dateReleased": "2026-09-27T21:30:35.5521Z",
+              "retrievedAt": "2026-09-28T19:07:58.110Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-88771%2CCVE-2026-88772%2CCVE-2026-35273%2CCVE-2026-88773%2CCVE-2026-88774%2CCVE-2026-88775%2CCVE-2026-88776%2CCVE-2026-88777%2CCVE-2026-88778",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-88772",
+              "retrievedAt": "2026-09-28T19:07:58.110Z"
+            }
+          }
+        }
+      ],
+      "id": "s31"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "CISA Says Attackers Are Exploiting Two Critical Citrix NetScaler Flaws Globally",
+      "url": "https://thehackernews.com/2026/09/cisa-says-attackers-are-exploiting-two.html",
+      "publishedAt": "2026-09-28T07:21:49.000Z",
+      "excerpt": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Sunday added two critical Citrix NetScaler ADC and Gateway flaws to its Known Exploited Vulnerabilities (KEV) catalog, following reports of active exploitation. The vulnerabilities are listed below - CVE-2026-88771 (CVSS score: 9.5) - An improper input validation vulnerability that could allow an unauthenticated attacker to",
+      "canonicalUrl": "https://thehackernews.com/2026/09/cisa-says-attackers-are-exploiting-two.html",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-88771",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Citrix",
+            "product": "NetScaler",
+            "vulnerabilityName": "Citrix NetScaler Improper Input Validation Vulnerability",
+            "dateAdded": "2026-09-27",
+            "shortDescription": "Citrix NetScaler ADC and NetScaler Gateway contain an improper input validation vulnerability that could allow an unauthenticated attacker to execute arbitrary commands.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-09-30",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "Running the provided IOCs in the NetScaler console may help identify indicators of exploitation. Customers must conduct forensic triage as directed by BOD 26‑04 and follow Citrix’s published guidance for mitigations. For more information, please see: https://community.citrix.com/techzone-blogs/110_security-updates/netscaler-adc-and-netscaler-gateway-security-bulletin-for-cve-2026-88771-through-cve-2026-88778 ; https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697096 ; https://support.citrix.com/external/article/CTX694799/steps-to-take-if-netscaler-adc-is-suspec.html ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-88772",
+            "cwes": [
+              "CWE-119"
+            ]
+          },
+          "nvd": {
+            "description": "Improper input validation vulnerability in Citrix NetScaler ADC and Citrix NetScaler Gateway.\n\nThis issue affects ADC: before 14.1-73.37, before 13.1-64.23, before 14.1-73.37 FIPS, and before 13.1.37.279 FIPS and NDcPP; Gateway: before 14.1-73.37 and before 13.1-64.23 leading to an unauthenticated attacker to execute arbitrary commands.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.5,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-20"
+            ],
+            "published": "2026-09-27T17:16:56.260",
+            "lastModified": "2026-09-28T13:17:25.027",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697096",
+                "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-88771",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6BC2D462-9ABE-4024-8E46-8D265C0B19FB",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2DB314FE-3886-4ABD-A820-B8A70EBB23A6",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:ndcpp:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FCFFA1B3-87CE-4CC8-990E-D3CE0B55CD45",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1CA9588A-E3EB-44FC-9515-6EB89BB8C1D6",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "046FF602-D956-4961-89BF-2041A3590004",
+                "versionStartIncluding": "14.1-66.68",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "14.1-73.37",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3286D2C3-EA7E-4D9C-95DE-05D462DC8B1B",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C77243A7-1FDB-4557-88BE-EDF3BAA56A81",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/cisa-says-attackers-are-exploiting-two.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.27",
+              "dateReleased": "2026-09-27T21:30:35.5521Z",
+              "retrievedAt": "2026-09-28T19:07:58.110Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-88771%2CCVE-2026-88772%2CCVE-2026-35273%2CCVE-2026-88773%2CCVE-2026-88774%2CCVE-2026-88775%2CCVE-2026-88776%2CCVE-2026-88777%2CCVE-2026-88778",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-88771",
+              "retrievedAt": "2026-09-28T19:07:58.110Z"
+            }
+          }
+        }
+      ],
+      "id": "s32"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "CISA orders feds to patch exploited Citrix flaws by Wednesday",
+      "url": "https://www.bleepingcomputer.com/news/security/cisa-orders-feds-to-patch-exploited-citrix-flaws-by-wednesday/",
+      "publishedAt": "2026-09-28T06:24:19.000Z",
+      "excerpt": "The Cybersecurity and Infrastructure Security Agency (CISA) has ordered U.S. government agencies over the weekend to secure their systems against attacks exploiting two critical Citrix NetScaler vulnerabilities. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/cisa-orders-feds-to-patch-exploited-citrix-flaws-by-wednesday",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s33"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "OpenAI is preparing “o,” an always-on ChatGPT assistant that could handle email",
+      "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/openai-is-preparing-o-an-always-on-chatgpt-assistant-that-could-handle-email/",
+      "publishedAt": "2026-09-27T23:40:39.000Z",
+      "excerpt": "OpenAI is testing a new always-on assistant called \"o\", and references to the unannounced feature briefly showed up on the company's website. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/artificial-intelligence/openai-is-preparing-o-an-always-on-chatgpt-assistant-that-could-handle-email",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s34"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Why the CISO-CFO Relationship Is a Key to Cybersecurity Success",
+      "url": "https://www.darkreading.com/cyber-risk/how-to-manage-ciso-cfo-relationship-cybersecurity-success",
+      "publishedAt": "2026-09-25T20:28:10.000Z",
+      "excerpt": "Organizations where CISOs and CFOs align on cybersecurity strategy to protect assets, manage risk, and enable business growth are better prepared to face today's threat landscape.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/how-to-manage-ciso-cfo-relationship-cybersecurity-success",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s36"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 768,
+    "promptCacheMissTokens": 32210,
+    "outputTokens": 6734,
+    "estimatedCostUsd": 0.006397070400000001
+  }
+}

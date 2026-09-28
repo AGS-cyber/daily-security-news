@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-09-28",
+    "mode": "article",
+    "headline": "Citrix zero-days land while two very different credential stories explain the rest of the day",
+    "count": 36
+  },
+  {
     "date": "2026-09-27",
     "mode": "article",
     "headline": "Unpatched Citrix zero-days lead a day of live exploitation",
