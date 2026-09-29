@@ -1,0 +1,1414 @@
+{
+  "date": "2026-09-29",
+  "generatedAt": "2026-09-29T17:29:47.241Z",
+  "degraded": [
+    {
+      "stage": "normalize",
+      "message": "1 items were dropped as unparseable"
+    }
+  ],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 229,
+    "deduped": 221,
+    "published": 46
+  },
+  "mode": "article",
+  "headline": "Apple's zero-day sets the tone on a day of edge-device and supply-chain exposure",
+  "standfirst": "An out-of-bounds write in CoreGraphics is now confirmed exploited and sitting in CISA's catalog, ShinyHunters is turning an Oracle mitigation into an intrusion path, two NetScaler zero-days arrive simultaneously, and a Pentagon personnel agency has exposed records for three million people. The research queue is no quieter: a China-linked framework and a fresh Spectre variant both landed.",
+  "bodyMarkdown": "## Actively exploited\n\nThe lead is the one most readers can act on without new tooling. Apple's CoreGraphics out-of-bounds write, tracked as CVE-2026-86950, is a CWE-787 write with a CVSS 3.1 base of 8.8 — the vector is network-reachable, low-complexity, no privileges, but requires user interaction, which is exactly what you'd expect from a flaw that triggers on processing a maliciously crafted file [[s45]]. That interaction requirement keeps it out of wormable territory, but it also means the exploitation surface is every file-parsing path on the device: mail attachments, downloads, previews, anything that hands a document to the graphics stack. The fix set is iOS 26.7.1, iPadOS 26.7.1, macOS Sequoia 15.8.1, and macOS Tahoe 26.7.1, and per the NVD-derived configuration data the vulnerable ranges are everything below those versions, with the Tahoe branch covering 26.0 up to but not including 26.7.1. Apple says it is aware of a report that the issue may have been exploited in an extremely sophisticated attack against specific targeted individuals, and CISA has added it to KEV, with a remediation requirement scoped to federal agencies under BOD 26-04 and a compressed deadline. Don't universalise that deadline, but do treat the KEV listing as the reason to stop treating this as a routine point release. The uncomfortable part for enterprise fleets is the \"older versions\" framing in the vendor advisory: the devices most likely to be stranded on the vulnerable builds are the ones nobody is managing.\n\nThe second exploited story is the one with no patch to point at. Researchers say ShinyHunters is exploiting workarounds for a flaw in a widely deployed Oracle product line, the same group that recently claimed credit for the intrusion at the FBI's jobs site [[s44]]. Read the framing carefully: workarounds, not fixes. That usually means an internet-facing enterprise application — HR, finance, campus administration — where the vendor's guidance is a configuration change, and where the operational reality is that the system is three versions behind and owned by a business unit rather than a security team. There is no CVE supplied for this one, so there is no KEV entry and no NVD record to lean on; the intelligence here is adversary attribution and targeting, not vulnerability detail. For defenders, the actionable takeaway is the group, not the bug. ShinyHunters has demonstrated it will sit in enterprise SaaS and packaged applications and monetise the data rather than the encryption, and that changes what your detection programme should be looking at — bulk reads against personnel and finance tables, unusual API sessions, new OAuth grants — far more than it changes your patch queue.\n\n## Vulnerabilities\n\nTwo new critical zero-days in NetScaler products, both landing in default configurations, amount to a skeleton key into customer networks [[s10]]. The default-configuration detail is the part that should drive decisions: exposure is not limited to organisations that enabled an optional component or a non-standard listener, which removes the \"that's not us\" escape hatch that absorbs most of these announcements. If you run NetScaler, this is a weekend-shifting event, and the priority is inventory and exposure mapping before anything else.\n\nThe MikroTik story is a different shape of risk — not confirmed exploited, but a strong candidate for mass exploitation. CVE-2026-84411 carries a vendor CVSS of 9.8 across RouterOS before 7.24, an integer underflow that can yield remote code execution or denial of service [[s21]]. The flaw is not present in CISA's KEV catalog, and NVD enrichment is unavailable for it, so the vendor advisory is your source of truth — and a confirmed catalog miss is not evidence that nobody is trying. RouterOS sits on the edge at small and mid-sized organisations, ISPs, and industrial sites, which is precisely the population least likely to have a change-control process fast enough for a 9.8. Expect scanning within days and exploit code not long after.\n\n## Breaches\n\nThe larger of the two breaches is a federal one: records for three million people exposed at the Defense Manpower Data Center, which maintains personnel records across the Department of Defense [[s18]]. Scale aside, the significance is the data class. Personnel files are the raw material for identity fraud, benefits fraud, and very effective social engineering against people with clearances, and the downstream harm curve runs for years. This is also a supply-chain story about consolidation — a single centre holding records for millions is a single point of failure with an unusually attractive payoff.\n\nThe more novel breach is small and, in the long run, more interesting. An automated AI agent breached the Dutch Institute for Vulnerability Disclosure, which described the incident as loud and very, very messy [[s6]]. A vulnerability-disclosure nonprofit is exactly the wrong-shaped target for a conventional criminal — there is no revenue there — which suggests the operator was testing capability rather than chasing data. Messy or not, this is an early real-world data point for agentic offensive operations: fast, automated, and indifferent to whether the target is worth robbing.\n\n## Research\n\nMicrosoft's writeup on NeedyMantis describes a previously unidentified malware framework used by a China-based actor in targeted intrusions, giving long-term access across telecommunications, universities, medical, and government-related organisations [[s7]]. The toolset being new matters more than the actor being known. Attribution is a comfortable frame; a fresh framework with a persistence story built into it means your existing indicators mostly don't apply, and the sectors named are the ones with long dwell times and complex supply relationships.\n\nFinally, a reminder that hardware-level side channels are not a solved problem. A new Spectre v2 variant, Branch Target Reuse, recovers root password hashes on Intel systems running Linux in roughly three to five minutes on average [[s2]]. That figure is the headline. Defences against speculative-execution attacks across Intel, AMD, and Arm remain partial, and when a variant can extract credential material from kernel memory in minutes, the argument for treating side-channel mitigation as permanently unfinished — rather than as a task you close out — gets stronger.",
+  "selected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Apple Patches CoreGraphics Flaw Possibly Exploited in Targeted Attacks",
+      "url": "https://thehackernews.com/2026/09/apple-patches-coregraphics-flaw.html",
+      "publishedAt": "2026-09-28T19:18:01.000Z",
+      "excerpt": "Apple has released security updates to address a vulnerability in older versions of iOS, iPadOS, and macOS that it said may have been exploited in targeted attacks. The vulnerability, tracked as CVE-2026-86950, refers to an out-of-bounds write impacting the CoreGraphics component that could lead to arbitrary code execution when processing a maliciously crafted file. The iPhone maker said the",
+      "canonicalUrl": "https://thehackernews.com/2026/09/apple-patches-coregraphics-flaw.html",
+      "alsoCoveredBy": [
+        {
+          "sourceId": "bleepingcomputer",
+          "name": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/apple-patches-coregraphics-zero-day-flaw-exploited-in-attacks/"
+        }
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-86950",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Apple",
+            "product": "Multiple Products",
+            "vulnerabilityName": "Apple Multiple Products Out-of-Bounds Write Vulnerability",
+            "dateAdded": "2026-09-29",
+            "shortDescription": "Apple iOS, macOS, and iPadOS contain an out-of-bounds write vulnerability in CoreGraphics that may lead to arbitrary code execution.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-10-02",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://support.apple.com/en-us/149226 ; https://support.apple.com/en-us/149228 ; https://support.apple.com/en-us/149229 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-86950",
+            "cwes": [
+              "CWE-787"
+            ]
+          },
+          "nvd": {
+            "description": "An out-of-bounds write issue was addressed with improved bounds checking. This issue is fixed in iOS 26.7.1 and iPadOS 26.7.1, macOS Sequoia 15.8.1, macOS Tahoe 26.7.1. Processing a maliciously crafted file may lead to arbitrary code execution. Apple is aware of a report that this issue may have been exploited in an extremely sophisticated attack against specific targeted individuals on versions of iOS before iOS 27.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.8,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-787"
+            ],
+            "published": "2026-09-28T20:17:11.193",
+            "lastModified": "2026-09-29T16:08:12.807",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://support.apple.com/en-us/149226",
+                "source": "product-security@apple.com",
+                "tags": [
+                  "Release Notes",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/149228",
+                "source": "product-security@apple.com",
+                "tags": [
+                  "Release Notes",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/149229",
+                "source": "product-security@apple.com",
+                "tags": [
+                  "Release Notes",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "http://seclists.org/fulldisclosure/2026/Sep/89",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://seclists.org/fulldisclosure/2026/Sep/90",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://seclists.org/fulldisclosure/2026/Sep/91",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-86950",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:o:apple:ipados:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E820C7A6-6EBE-46FC-A3A0-E2329DED12E7",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "26.7.1"
+              },
+              {
+                "criteria": "cpe:2.3:o:apple:iphone_os:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FF3A9F40-6FE0-4D54-AC00-27228E5F329C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "26.7.1"
+              },
+              {
+                "criteria": "cpe:2.3:o:apple:macos:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "77C881FE-1FF0-4D7A-9E5A-9E7FC6BBA3B8",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "15.8.1"
+              },
+              {
+                "criteria": "cpe:2.3:o:apple:macos:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "810BEE78-D6FB-416D-B719-A7639184DEAA",
+                "versionStartIncluding": "26.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "26.7.1"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/apple-patches-coregraphics-flaw.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.29",
+              "dateReleased": "2026-09-29T13:51:33.3852Z",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-96274%2CCVE-2026-84411%2CCVE-2026-22755%2CCVE-2026-100291%2CCVE-2026-100292%2CCVE-2026-100293%2CCVE-2026-100294%2CCVE-2026-94204%2CCVE-2026-96587%2CCVE-2026-63713%2CCVE-2026-68068%2CCVE-2026-68954%2CCVE-2026-69662%2CCVE-2026-70356%2CCVE-2026-71189%2CCVE-2026-71302%2CCVE-2026-71379%2CCVE-2026-72507%2CCVE-2026-72510%2CCVE-2026-84409%2CCVE-2026-91191%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-86950",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            }
+          }
+        }
+      ],
+      "id": "s45",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "Apple's CoreGraphics out-of-bounds write is now in CISA's KEV after being used in targeted attacks, making prompt iOS, iPadOS, and macOS patching urgent."
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "ShinyHunters exploiting workarounds for Oracle PeopleSoft bug, Mandiant warns",
+      "url": "https://therecord.media/shinyhunters-cyberattacks-oracle-mandiant",
+      "publishedAt": "2026-09-28T19:30:00.000Z",
+      "excerpt": "A vulnerability in a popular line of products from Oracle is being used in a new campaign by the prolific ShinyHunters hacking group, which recently claimed credit for an attack on the FBI’s jobs site.",
+      "canonicalUrl": "https://therecord.media/shinyhunters-cyberattacks-oracle-mandiant",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s44",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "Mandiant says ShinyHunters is exploiting workarounds for an Oracle PeopleSoft flaw, linking the group behind the FBI jobs-site attack to active enterprise intrusions."
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Dual NetScaler Zero-Days Trigger Chaos for Citrix Customers",
+      "url": "https://www.darkreading.com/vulnerabilities-threats/netscaler-zero-days-chaos-citrix",
+      "publishedAt": "2026-09-29T14:19:43.000Z",
+      "excerpt": "The critical vulnerabilities, which impact default configurations of NetScaler products, essentially give attackers a skeleton key to customers' networks.",
+      "canonicalUrl": "https://darkreading.com/vulnerabilities-threats/netscaler-zero-days-chaos-citrix",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s10",
+      "section": "vulnerabilities",
+      "rank": 3,
+      "angle": "Two critical NetScaler zero-days in default configurations amount to a skeleton key into customer networks, demanding emergency action from Citrix admins."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Pentagon Personnel Agency Data Breach Impacts 3 Million People",
+      "url": "https://www.securityweek.com/pentagon-personnel-agency-data-breach-impacts-3-million-people/",
+      "publishedAt": "2026-09-29T12:25:12.000Z",
+      "excerpt": "The data breach affects the Defense Manpower Data Center (DMDC), which maintains personnel records for the Department of Defense. The post Pentagon Personnel Agency Data Breach Impacts 3 Million People appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/pentagon-personnel-agency-data-breach-impacts-3-million-people",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s18",
+      "section": "breaches",
+      "rank": 4,
+      "angle": "A breach at the Pentagon's Defense Manpower Data Center exposes personnel records for 3 million people, a major federal privacy and supply-chain event."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Automated AI agent used to breach cybersecurity nonprofit DIVD",
+      "url": "https://www.bleepingcomputer.com/news/security/automated-ai-agent-used-to-breach-cybersecurity-nonprofit-divd/",
+      "publishedAt": "2026-09-29T15:39:19.000Z",
+      "excerpt": "The Dutch Institute for Vulnerability Disclosure (DIVD) suffered an AI-driven cyberattack that the organization described as \"loud and very, very messy.\" [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/automated-ai-agent-used-to-breach-cybersecurity-nonprofit-divd",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s6",
+      "section": "breaches",
+      "rank": 5,
+      "angle": "An automated AI agent breached vulnerability-disclosure nonprofit DIVD, an early real-world case of agentic offensive operations."
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "'NeedyMantis' Provides Long-Term Access to Compromised Networks",
+      "url": "https://www.darkreading.com/threat-intelligence/needymantis-long-term-access-compromised-networks",
+      "publishedAt": "2026-09-29T15:12:39.000Z",
+      "excerpt": "Microsoft observed a China-based actor using a previously unidentified malware framework in targeted intrusions against telcos, universities, medical, and government-related organizations.",
+      "canonicalUrl": "https://darkreading.com/threat-intelligence/needymantis-long-term-access-compromised-networks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s7",
+      "section": "research",
+      "rank": 6,
+      "angle": "Microsoft's look at the China-linked NeedyMantis framework shows a previously unseen toolset giving long-term access across telcos, universities, and government targets."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "New Spectre v2 attack variant leaks Linux root password hash in minutes",
+      "url": "https://www.bleepingcomputer.com/news/security/new-spectre-v2-attack-variant-leaks-linux-root-password-hash-in-minutes/",
+      "publishedAt": "2026-09-29T17:10:11.000Z",
+      "excerpt": "A new Branch Target Reuse (BTR) attack has been devised that can recover root password hashes on Intel computers running Linux in 3-5 minutes on average. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/new-spectre-v2-attack-variant-leaks-linux-root-password-hash-in-minutes",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s2",
+      "section": "research",
+      "rank": 7,
+      "angle": "A new Spectre v2 Branch Target Reuse variant recovers Linux root password hashes in minutes, showing side-channel defenses on Intel, AMD, and Arm remain incomplete."
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "MikroTik RouterOS",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-272-06",
+      "publishedAt": "2026-09-29T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of this vulnerability could allow an attacker to achieve remote code execution or cause a denial of service. The following versions of MikroTik RouterOS are affected: RouterOS <7.24 (CVE-2026-84411) CVSS Vendor Equipment Vulnerabilities v3 9.8 MikroTik MikroTik RouterOS Integer Underflow (Wrap or Wraparound) Background Critical Infrastructure Sectors:…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-272-06",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-84411",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-272-06",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.29",
+              "dateReleased": "2026-09-29T13:51:33.3852Z",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-96274%2CCVE-2026-84411%2CCVE-2026-22755%2CCVE-2026-100291%2CCVE-2026-100292%2CCVE-2026-100293%2CCVE-2026-100294%2CCVE-2026-94204%2CCVE-2026-96587%2CCVE-2026-63713%2CCVE-2026-68068%2CCVE-2026-68954%2CCVE-2026-69662%2CCVE-2026-70356%2CCVE-2026-71189%2CCVE-2026-71302%2CCVE-2026-71379%2CCVE-2026-72507%2CCVE-2026-72510%2CCVE-2026-84409%2CCVE-2026-91191%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-84411",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            }
+          }
+        }
+      ],
+      "id": "s21",
+      "section": "vulnerabilities",
+      "rank": 8,
+      "angle": "A 9.8-severity remote code execution flaw in widely deployed MikroTik RouterOS edge devices is a prime candidate for mass exploitation."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "DARPA Selects Xint to Use AI in Securing Military Messaging Apps",
+      "url": "https://www.securityweek.com/darpa-selects-xint-to-use-ai-in-securing-military-messaging-apps/",
+      "publishedAt": "2026-09-29T17:24:04.000Z",
+      "excerpt": "The AIxCC competition winner will analyze messaging app code and compiled binaries for vulnerabilities, with technology that could also help commercial customers secure their software. The post DARPA Selects Xint to Use AI in Securing Military Messaging Apps appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/darpa-selects-xint-to-use-ai-in-securing-military-messaging-apps",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Cloudflare Announces Public Certificate Authority for the Post-Quantum Web",
+      "url": "https://www.darkreading.com/cloud-security/cloudflare-announces-public-certificate-authority-post-quantum-web",
+      "publishedAt": "2026-09-29T17:02:16.000Z",
+      "excerpt": "Automated certificates for everyone, built for today, and hardened for the era of quantum computing.",
+      "canonicalUrl": "https://darkreading.com/cloud-security/cloudflare-announces-public-certificate-authority-post-quantum-web",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "New Spectre-v2 BTR Attack Leaks Linux Memory Despite Existing Defenses",
+      "url": "https://thehackernews.com/2026/09/new-spectre-v2-btr-attack-leaks-linux.html",
+      "publishedAt": "2026-09-29T17:00:00.000Z",
+      "excerpt": "A group of academics from VUSec and Scuola Superiore Sant'Anna have disclosed details of a new Spectre CPU vulnerability variant that affects Just-In-Time (JIT) engines present in web browsers, language runtimes, and the operating system kernel, across multiple CPU vendors. The new Spectre-v2 variant has been codenamed Branch Target Reuse (BTR). \"The key insight is that, while modern CPUs",
+      "canonicalUrl": "https://thehackernews.com/2026/09/new-spectre-v2-btr-attack-leaks-linux.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "New Spectre v2 Variant Exposes Intel, AMD, Arm CPUs to Data Leaks",
+      "url": "https://www.securityweek.com/new-spectre-v2-variant-exposes-intel-amd-arm-cpus-to-data-leaks/",
+      "publishedAt": "2026-09-29T17:00:00.000Z",
+      "excerpt": "Branch Target Reuse (BTR) is a new Spectre v2 attack targeting JIT compilers in web browsers, language runtimes, and the operating system kernel The post New Spectre v2 Variant Exposes Intel, AMD, Arm CPUs to Data Leaks appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/new-spectre-v2-variant-exposes-intel-amd-arm-cpus-to-data-leaks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "Star Blizzard refines phishing and malware delivery with the RedFlick technique",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/09/29/star-blizzard-refines-phishing-and-malware-delivery-with-the-redflick-technique/",
+      "publishedAt": "2026-09-29T15:00:00.000Z",
+      "excerpt": "Since January 2026, Microsoft has observed Russian state threat actor Star Blizzard evolve their detection evasion capabilities through large-scale phishing campaigns, the use of accounts on compromised websites, and a novel malware delivery technique, tracked by Microsoft as “RedFlick”. The post Star Blizzard refines phishing and malware delivery with the RedFlick technique appeared first on…",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/09/29/star-blizzard-refines-phishing-and-malware-delivery-with-the-redflick-technique",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "RemoteThreat Launches With $7 Million for Offensive Operations Platform",
+      "url": "https://www.securityweek.com/remotethreat-launches-with-7-million-for-offensive-operations-platform/",
+      "publishedAt": "2026-09-29T14:38:07.000Z",
+      "excerpt": "The company emerged from stealth mode with pre-seed funding from Osage University Partners and DataTribe. The post RemoteThreat Launches With $7 Million for Offensive Operations Platform appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/remotethreat-launches-with-7-million-for-offensive-operations-platform",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Kiteworks Fixes Critical Flaw Found During Nine-Hour Precautionary Shutdown",
+      "url": "https://thehackernews.com/2026/09/kiteworks-fixes-critical-flaw-found.html",
+      "publishedAt": "2026-09-29T14:13:20.000Z",
+      "excerpt": "Kiteworks on Monday said it worked with federal intelligence authorities over the weekend as it identified and addressed a critical security vulnerability during the scheduled precautionary shutdown. \"During the shutdown, this activity led to the discovery of a previously unknown critical vulnerability confined to a capability that is enabled for less than 1% of the customer base,\" the company",
+      "canonicalUrl": "https://thehackernews.com/2026/09/kiteworks-fixes-critical-flaw-found.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Catch threats before they escalate with real-time Identity Telemetry",
+      "url": "https://www.bleepingcomputer.com/news/security/catch-threats-before-they-escalate-with-real-time-identity-telemetry/",
+      "publishedAt": "2026-09-29T14:01:11.000Z",
+      "excerpt": "Identity governance helps control who should have access, but periodic reviews alone may not reveal attacks as they happen. tenfold Software explains how real-time identity telemetry can help security teams investigate suspicious activity before it escalates. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/catch-threats-before-they-escalate-with-real-time-identity-telemetry",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "101 Malicious npm Packages Add Developers' WhatsApp Accounts to Groups Without Consent",
+      "url": "https://thehackernews.com/2026/09/101-malicious-npm-packages-add.html",
+      "publishedAt": "2026-09-29T13:45:10.000Z",
+      "excerpt": "Cybersecurity researchers have identified a cluster of 101 npm packages that are used to trap developers into a WhatsApp group subscriber campaign dubbed PhantomSub. \"The malicious packages abuse the 'Baileys' WhatsApp open source project to add the victims to groups without their consent,\" OX Security researchers Nir Zadok, Moshe Siman Tov Bustan, and Vitalii Chepurko said in a technical",
+      "canonicalUrl": "https://thehackernews.com/2026/09/101-malicious-npm-packages-add.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Reco Raises $55 Million for Agentic Security",
+      "url": "https://www.securityweek.com/reco-raises-55-million-for-agentic-security/",
+      "publishedAt": "2026-09-29T13:20:53.000Z",
+      "excerpt": "The company will use the funds to expand its sales, partnerships, channels, and customer support teams. The post Reco Raises $55 Million for Agentic Security appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/reco-raises-55-million-for-agentic-security",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s14"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Hackers Use ChatGPT Custom GPTs in ClickFix Attacks",
+      "url": "https://www.securityweek.com/hackers-use-chatgpt-custom-gpts-in-clickfix-attacks/",
+      "publishedAt": "2026-09-29T13:03:35.000Z",
+      "excerpt": "The personalized versions of ChatGPT were used to impersonate legitimate products and trick users into executing PowerShell commands. The post Hackers Use ChatGPT Custom GPTs in ClickFix Attacks appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/hackers-use-chatgpt-custom-gpts-in-clickfix-attacks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Russian pizza chain with 1,500 locations confirms cyberattack following hacker claims",
+      "url": "https://therecord.media/russian-pizza-chain-dodo-confirms-data-breach",
+      "publishedAt": "2026-09-29T12:34:00.000Z",
+      "excerpt": "According to Dodo Pizza, the potentially compromised information included customers’ names, addresses, email addresses, phone numbers, dates of birth and order details.",
+      "canonicalUrl": "https://therecord.media/russian-pizza-chain-dodo-confirms-data-breach",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Arizona Supreme Court says hackers stole residents’ personal data",
+      "url": "https://therecord.media/arizona-supreme-court-says-hackers-stole-data",
+      "publishedAt": "2026-09-29T12:27:00.000Z",
+      "excerpt": "A spokesperson for the court system told Recorded Future News that the incident did not involve ransomware and the hackers have not issued ransom demands for the stolen data as of Monday.",
+      "canonicalUrl": "https://therecord.media/arizona-supreme-court-says-hackers-stole-data",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Rig Security Emerges From Stealth With $12M to Tackle Agentic AI Identity Risks",
+      "url": "https://www.securityweek.com/rig-security-emerges-from-stealth-with-12m-to-tackle-agentic-ai-identity-risks/",
+      "publishedAt": "2026-09-29T12:00:00.000Z",
+      "excerpt": "Rig provides an identity dependencies graph to distinguish between legitimate users and rogue AI agents The post Rig Security Emerges From Stealth With $12M to Tackle Agentic AI Identity Risks appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/rig-security-emerges-from-stealth-with-12m-to-tackle-agentic-ai-identity-risks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s19"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Baicells Nova 430H",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-272-04",
+      "publishedAt": "2026-09-29T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of this vulnerability could allow an attacker to inject malformed messages which may lead to a denial-of-service condition. The following versions of Baicells Nova 430H are affected: Nova 430H eNodeB (model pBS3101SH) <=BaiBLQ_3.0.12 (CVE-2026-96274) CVSS Vendor Equipment Vulnerabilities v3 7.4 Baicells Technologies Baicells Nova 430H Uncaught Exception…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-272-04",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-96274",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-272-04",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.29",
+              "dateReleased": "2026-09-29T13:51:33.3852Z",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-96274%2CCVE-2026-84411%2CCVE-2026-22755%2CCVE-2026-100291%2CCVE-2026-100292%2CCVE-2026-100293%2CCVE-2026-100294%2CCVE-2026-94204%2CCVE-2026-96587%2CCVE-2026-63713%2CCVE-2026-68068%2CCVE-2026-68954%2CCVE-2026-69662%2CCVE-2026-70356%2CCVE-2026-71189%2CCVE-2026-71302%2CCVE-2026-71379%2CCVE-2026-72507%2CCVE-2026-72510%2CCVE-2026-84409%2CCVE-2026-91191%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-96274",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            }
+          }
+        }
+      ],
+      "id": "s20"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "VIVOTEK Camera Firmware",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-272-03",
+      "publishedAt": "2026-09-29T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of this vulnerability may allow attackers to achieve remote command execution on affected devices, potentially with root privileges, leading to full compromise of the camera system. The following versions of VIVOTEK Camera Firmware are affected: V Series model_FD9187 (CVE-2026-22755) V Series model_FD9189 (CVE-2026-22755) V Series model_FD9365…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-272-03",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-22755",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Improper Neutralization of Special Elements used in a Command ('Command Injection') vulnerability in Vivotek Affected device model numbers are FD8365, FD8365v2, FD9165, FD9171, FD9187, FD9189, FD9365, FD9371, FD9381, FD9387, FD9389, FD9391,FE9180,FE9181, FE9191, FE9381, FE9382, FE9391, FE9582, IB9365, IB93587LPR, IB9371,IB9381, IB9387, IB9389, IB939,IP9165,IP9171, IP9172, IP9181, IP9191, IT9389, MA9321, MA9322, MS9321, MS9390, TB9330 (Firmware modules) allows OS Command Injection.This issue affects Affected device model numbers are FD8365, FD8365v2, FD9165, FD9171, FD9187, FD9189, FD9365, FD9371, FD9381, FD9387, FD9389, FD9391,FE9180,FE9181, FE9191, FE9381, FE9382, FE9391, FE9582, IB9365, IB93587LPR, IB9371,IB9381, IB9387, IB9389, IB939,IP9165,IP9171, IP9172, IP9181, IP9191, IT9389, MA9321, MA9322, MS9321, MS9390, TB9330: 0100a, 0106a, 0106b, 0107a, 0107b_1, 0109a, 0112a, 0113a, 0113d, 0117b, 0119e, 0120b, 0121, 0121d, 0121d_48573_1, 0122e, 0124d_48573_1, 012501, 012502, 0125c.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.3,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:X/V:X/RE:X/U:Amber",
+              "source": "larry0@me.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-77"
+            ],
+            "published": "2026-01-13T15:16:01.193",
+            "lastModified": "2026-06-17T10:20:22.553",
+            "vulnStatus": "Deferred",
+            "references": [
+              {
+                "url": "http://www.vapidlabs.com/advisory.php?v=220",
+                "source": "larry0@me.com",
+                "tags": []
+              },
+              {
+                "url": "https://www.akamai.com/blog/security-research/command-injection-vivotek-legacy-firmware-need-to-know",
+                "source": "larry0@me.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-272-03",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.29",
+              "dateReleased": "2026-09-29T13:51:33.3852Z",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-96274%2CCVE-2026-84411%2CCVE-2026-22755%2CCVE-2026-100291%2CCVE-2026-100292%2CCVE-2026-100293%2CCVE-2026-100294%2CCVE-2026-94204%2CCVE-2026-96587%2CCVE-2026-63713%2CCVE-2026-68068%2CCVE-2026-68954%2CCVE-2026-69662%2CCVE-2026-70356%2CCVE-2026-71189%2CCVE-2026-71302%2CCVE-2026-71379%2CCVE-2026-72507%2CCVE-2026-72510%2CCVE-2026-84409%2CCVE-2026-91191%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-22755",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            }
+          }
+        }
+      ],
+      "id": "s22"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Anjvision YSSD-RTMP-H5",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-272-05",
+      "publishedAt": "2026-09-29T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of these vulnerabilities could allow an attacker to access sensitive information, access user accounts, execute OS-level commands, or take full control over the device. The following versions of Anjvision YSSD-RTMP-H5 are affected: YSSD-RTMP-H5 firmware 3.3.2.4_build_2024-12-26 (CVE-2026-100291, CVE-2026-100292, CVE-2026-100293, CVE-2026-100294,…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-272-05",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-100291",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-272-05",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.29",
+              "dateReleased": "2026-09-29T13:51:33.3852Z",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-96274%2CCVE-2026-84411%2CCVE-2026-22755%2CCVE-2026-100291%2CCVE-2026-100292%2CCVE-2026-100293%2CCVE-2026-100294%2CCVE-2026-94204%2CCVE-2026-96587%2CCVE-2026-63713%2CCVE-2026-68068%2CCVE-2026-68954%2CCVE-2026-69662%2CCVE-2026-70356%2CCVE-2026-71189%2CCVE-2026-71302%2CCVE-2026-71379%2CCVE-2026-72507%2CCVE-2026-72510%2CCVE-2026-84409%2CCVE-2026-91191%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-100291",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-100292",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-272-05",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.29",
+              "dateReleased": "2026-09-29T13:51:33.3852Z",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-96274%2CCVE-2026-84411%2CCVE-2026-22755%2CCVE-2026-100291%2CCVE-2026-100292%2CCVE-2026-100293%2CCVE-2026-100294%2CCVE-2026-94204%2CCVE-2026-96587%2CCVE-2026-63713%2CCVE-2026-68068%2CCVE-2026-68954%2CCVE-2026-69662%2CCVE-2026-70356%2CCVE-2026-71189%2CCVE-2026-71302%2CCVE-2026-71379%2CCVE-2026-72507%2CCVE-2026-72510%2CCVE-2026-84409%2CCVE-2026-91191%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-100292",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-100293",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-272-05",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.29",
+              "dateReleased": "2026-09-29T13:51:33.3852Z",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-96274%2CCVE-2026-84411%2CCVE-2026-22755%2CCVE-2026-100291%2CCVE-2026-100292%2CCVE-2026-100293%2CCVE-2026-100294%2CCVE-2026-94204%2CCVE-2026-96587%2CCVE-2026-63713%2CCVE-2026-68068%2CCVE-2026-68954%2CCVE-2026-69662%2CCVE-2026-70356%2CCVE-2026-71189%2CCVE-2026-71302%2CCVE-2026-71379%2CCVE-2026-72507%2CCVE-2026-72510%2CCVE-2026-84409%2CCVE-2026-91191%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-100293",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-100294",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-272-05",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.29",
+              "dateReleased": "2026-09-29T13:51:33.3852Z",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-96274%2CCVE-2026-84411%2CCVE-2026-22755%2CCVE-2026-100291%2CCVE-2026-100292%2CCVE-2026-100293%2CCVE-2026-100294%2CCVE-2026-94204%2CCVE-2026-96587%2CCVE-2026-63713%2CCVE-2026-68068%2CCVE-2026-68954%2CCVE-2026-69662%2CCVE-2026-70356%2CCVE-2026-71189%2CCVE-2026-71302%2CCVE-2026-71379%2CCVE-2026-72507%2CCVE-2026-72510%2CCVE-2026-84409%2CCVE-2026-91191%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-100294",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            }
+          }
+        }
+      ],
+      "id": "s23"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Viidure Dashcam Android Application",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-272-07",
+      "publishedAt": "2026-09-29T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of these vulnerabilities could allow attackers to access, modify, or delete sensitive user data and critical system files, potentially compromising the operation of the entire platform. The following versions of Viidure Dashcam Android Application are affected: Dashcam Android Application <=3.3.1.260403 (CVE-2026-94204, CVE-2026-96587) CVSS Vendor…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-272-07",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-94204",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-272-07",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.29",
+              "dateReleased": "2026-09-29T13:51:33.3852Z",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-96274%2CCVE-2026-84411%2CCVE-2026-22755%2CCVE-2026-100291%2CCVE-2026-100292%2CCVE-2026-100293%2CCVE-2026-100294%2CCVE-2026-94204%2CCVE-2026-96587%2CCVE-2026-63713%2CCVE-2026-68068%2CCVE-2026-68954%2CCVE-2026-69662%2CCVE-2026-70356%2CCVE-2026-71189%2CCVE-2026-71302%2CCVE-2026-71379%2CCVE-2026-72507%2CCVE-2026-72510%2CCVE-2026-84409%2CCVE-2026-91191%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-94204",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-96587",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-272-07",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.29",
+              "dateReleased": "2026-09-29T13:51:33.3852Z",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-96274%2CCVE-2026-84411%2CCVE-2026-22755%2CCVE-2026-100291%2CCVE-2026-100292%2CCVE-2026-100293%2CCVE-2026-100294%2CCVE-2026-94204%2CCVE-2026-96587%2CCVE-2026-63713%2CCVE-2026-68068%2CCVE-2026-68954%2CCVE-2026-69662%2CCVE-2026-70356%2CCVE-2026-71189%2CCVE-2026-71302%2CCVE-2026-71379%2CCVE-2026-72507%2CCVE-2026-72510%2CCVE-2026-84409%2CCVE-2026-91191%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-96587",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            }
+          }
+        }
+      ],
+      "id": "s24"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Toptech TMS7 and TopHAT",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-272-02",
+      "publishedAt": "2026-09-29T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of these vulnerabilities could allow an attacker to access critical data or execute arbitrary code. The following versions of Toptech TMS7 and TopHAT are affected: TMS7 7.6.3 (CVE-2026-71379, CVE-2026-70356, CVE-2026-72510, CVE-2026-63713, CVE-2026-68954, CVE-2026-68068, CVE-2026-72507, CVE-2026-71302, CVE-2026-69662, CVE-2026-71189) TopHAT 7.6.3…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-272-02",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-63713",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-272-02",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.29",
+              "dateReleased": "2026-09-29T13:51:33.3852Z",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-96274%2CCVE-2026-84411%2CCVE-2026-22755%2CCVE-2026-100291%2CCVE-2026-100292%2CCVE-2026-100293%2CCVE-2026-100294%2CCVE-2026-94204%2CCVE-2026-96587%2CCVE-2026-63713%2CCVE-2026-68068%2CCVE-2026-68954%2CCVE-2026-69662%2CCVE-2026-70356%2CCVE-2026-71189%2CCVE-2026-71302%2CCVE-2026-71379%2CCVE-2026-72507%2CCVE-2026-72510%2CCVE-2026-84409%2CCVE-2026-91191%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-63713",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-68068",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-272-02",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.29",
+              "dateReleased": "2026-09-29T13:51:33.3852Z",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-96274%2CCVE-2026-84411%2CCVE-2026-22755%2CCVE-2026-100291%2CCVE-2026-100292%2CCVE-2026-100293%2CCVE-2026-100294%2CCVE-2026-94204%2CCVE-2026-96587%2CCVE-2026-63713%2CCVE-2026-68068%2CCVE-2026-68954%2CCVE-2026-69662%2CCVE-2026-70356%2CCVE-2026-71189%2CCVE-2026-71302%2CCVE-2026-71379%2CCVE-2026-72507%2CCVE-2026-72510%2CCVE-2026-84409%2CCVE-2026-91191%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-68068",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-68954",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-272-02",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.29",
+              "dateReleased": "2026-09-29T13:51:33.3852Z",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-96274%2CCVE-2026-84411%2CCVE-2026-22755%2CCVE-2026-100291%2CCVE-2026-100292%2CCVE-2026-100293%2CCVE-2026-100294%2CCVE-2026-94204%2CCVE-2026-96587%2CCVE-2026-63713%2CCVE-2026-68068%2CCVE-2026-68954%2CCVE-2026-69662%2CCVE-2026-70356%2CCVE-2026-71189%2CCVE-2026-71302%2CCVE-2026-71379%2CCVE-2026-72507%2CCVE-2026-72510%2CCVE-2026-84409%2CCVE-2026-91191%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-68954",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-69662",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-272-02",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.29",
+              "dateReleased": "2026-09-29T13:51:33.3852Z",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-96274%2CCVE-2026-84411%2CCVE-2026-22755%2CCVE-2026-100291%2CCVE-2026-100292%2CCVE-2026-100293%2CCVE-2026-100294%2CCVE-2026-94204%2CCVE-2026-96587%2CCVE-2026-63713%2CCVE-2026-68068%2CCVE-2026-68954%2CCVE-2026-69662%2CCVE-2026-70356%2CCVE-2026-71189%2CCVE-2026-71302%2CCVE-2026-71379%2CCVE-2026-72507%2CCVE-2026-72510%2CCVE-2026-84409%2CCVE-2026-91191%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-69662",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-70356",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-272-02",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.29",
+              "dateReleased": "2026-09-29T13:51:33.3852Z",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-96274%2CCVE-2026-84411%2CCVE-2026-22755%2CCVE-2026-100291%2CCVE-2026-100292%2CCVE-2026-100293%2CCVE-2026-100294%2CCVE-2026-94204%2CCVE-2026-96587%2CCVE-2026-63713%2CCVE-2026-68068%2CCVE-2026-68954%2CCVE-2026-69662%2CCVE-2026-70356%2CCVE-2026-71189%2CCVE-2026-71302%2CCVE-2026-71379%2CCVE-2026-72507%2CCVE-2026-72510%2CCVE-2026-84409%2CCVE-2026-91191%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-70356",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-71189",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-272-02",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.29",
+              "dateReleased": "2026-09-29T13:51:33.3852Z",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-96274%2CCVE-2026-84411%2CCVE-2026-22755%2CCVE-2026-100291%2CCVE-2026-100292%2CCVE-2026-100293%2CCVE-2026-100294%2CCVE-2026-94204%2CCVE-2026-96587%2CCVE-2026-63713%2CCVE-2026-68068%2CCVE-2026-68954%2CCVE-2026-69662%2CCVE-2026-70356%2CCVE-2026-71189%2CCVE-2026-71302%2CCVE-2026-71379%2CCVE-2026-72507%2CCVE-2026-72510%2CCVE-2026-84409%2CCVE-2026-91191%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-71189",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-71302",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-272-02",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.29",
+              "dateReleased": "2026-09-29T13:51:33.3852Z",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-96274%2CCVE-2026-84411%2CCVE-2026-22755%2CCVE-2026-100291%2CCVE-2026-100292%2CCVE-2026-100293%2CCVE-2026-100294%2CCVE-2026-94204%2CCVE-2026-96587%2CCVE-2026-63713%2CCVE-2026-68068%2CCVE-2026-68954%2CCVE-2026-69662%2CCVE-2026-70356%2CCVE-2026-71189%2CCVE-2026-71302%2CCVE-2026-71379%2CCVE-2026-72507%2CCVE-2026-72510%2CCVE-2026-84409%2CCVE-2026-91191%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-71302",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-71379",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-272-02",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.29",
+              "dateReleased": "2026-09-29T13:51:33.3852Z",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-96274%2CCVE-2026-84411%2CCVE-2026-22755%2CCVE-2026-100291%2CCVE-2026-100292%2CCVE-2026-100293%2CCVE-2026-100294%2CCVE-2026-94204%2CCVE-2026-96587%2CCVE-2026-63713%2CCVE-2026-68068%2CCVE-2026-68954%2CCVE-2026-69662%2CCVE-2026-70356%2CCVE-2026-71189%2CCVE-2026-71302%2CCVE-2026-71379%2CCVE-2026-72507%2CCVE-2026-72510%2CCVE-2026-84409%2CCVE-2026-91191%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-71379",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-72507",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-272-02",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.29",
+              "dateReleased": "2026-09-29T13:51:33.3852Z",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-96274%2CCVE-2026-84411%2CCVE-2026-22755%2CCVE-2026-100291%2CCVE-2026-100292%2CCVE-2026-100293%2CCVE-2026-100294%2CCVE-2026-94204%2CCVE-2026-96587%2CCVE-2026-63713%2CCVE-2026-68068%2CCVE-2026-68954%2CCVE-2026-69662%2CCVE-2026-70356%2CCVE-2026-71189%2CCVE-2026-71302%2CCVE-2026-71379%2CCVE-2026-72507%2CCVE-2026-72510%2CCVE-2026-84409%2CCVE-2026-91191%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-72507",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-72510",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-272-02",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.29",
+              "dateReleased": "2026-09-29T13:51:33.3852Z",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-96274%2CCVE-2026-84411%2CCVE-2026-22755%2CCVE-2026-100291%2CCVE-2026-100292%2CCVE-2026-100293%2CCVE-2026-100294%2CCVE-2026-94204%2CCVE-2026-96587%2CCVE-2026-63713%2CCVE-2026-68068%2CCVE-2026-68954%2CCVE-2026-69662%2CCVE-2026-70356%2CCVE-2026-71189%2CCVE-2026-71302%2CCVE-2026-71379%2CCVE-2026-72507%2CCVE-2026-72510%2CCVE-2026-84409%2CCVE-2026-91191%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-72510",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            }
+          }
+        }
+      ],
+      "id": "s25"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Lantronix G520 Series Cellular Gateway",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-272-01",
+      "publishedAt": "2026-09-29T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of these vulnerabilities could allow an attacker to replace software and execute arbitrary code with root privileges. The following versions of Lantronix G520 Series Cellular Gateway are affected: G520 Series 2.6.0.4R6_stable (CVE-2026-84409, CVE-2026-91191) CVSS Vendor Equipment Vulnerabilities v3 7.5 Lantronix Lantronix G520 Series Cellular Gateway…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-272-01",
+      "alsoCoveredBy": [],
+      "cves": [
+        {
+          "id": "CVE-2026-84409",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-272-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.29",
+              "dateReleased": "2026-09-29T13:51:33.3852Z",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-96274%2CCVE-2026-84411%2CCVE-2026-22755%2CCVE-2026-100291%2CCVE-2026-100292%2CCVE-2026-100293%2CCVE-2026-100294%2CCVE-2026-94204%2CCVE-2026-96587%2CCVE-2026-63713%2CCVE-2026-68068%2CCVE-2026-68954%2CCVE-2026-69662%2CCVE-2026-70356%2CCVE-2026-71189%2CCVE-2026-71302%2CCVE-2026-71379%2CCVE-2026-72507%2CCVE-2026-72510%2CCVE-2026-84409%2CCVE-2026-91191%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-84409",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-91191",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-272-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.29",
+              "dateReleased": "2026-09-29T13:51:33.3852Z",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-96274%2CCVE-2026-84411%2CCVE-2026-22755%2CCVE-2026-100291%2CCVE-2026-100292%2CCVE-2026-100293%2CCVE-2026-100294%2CCVE-2026-94204%2CCVE-2026-96587%2CCVE-2026-63713%2CCVE-2026-68068%2CCVE-2026-68954%2CCVE-2026-69662%2CCVE-2026-70356%2CCVE-2026-71189%2CCVE-2026-71302%2CCVE-2026-71379%2CCVE-2026-72507%2CCVE-2026-72510%2CCVE-2026-84409%2CCVE-2026-91191%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-91191",
+              "retrievedAt": "2026-09-29T17:29:47.241Z"
+            }
+          }
+        }
+      ],
+      "id": "s26"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Vietnamese man charged in $16 million 'pig butchering' crypto scam",
+      "url": "https://www.bleepingcomputer.com/news/security/vietnamese-man-charged-in-16-million-pig-butchering-crypto-scam/",
+      "publishedAt": "2026-09-29T11:41:53.000Z",
+      "excerpt": "A Vietnamese national was charged with money laundering for his role in a massive \"pig butchering\" scam, which defrauded a victim out of $16 million worth of cryptocurrency. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/vietnamese-man-charged-in-16-million-pig-butchering-crypto-scam",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Four Cyber Threats Harboring Big Plans for the Future",
+      "url": "https://www.securityweek.com/four-cyber-threats-harboring-big-plans-for-the-future/",
+      "publishedAt": "2026-09-29T11:30:00.000Z",
+      "excerpt": "- AI, supply-chain exposure, quantum computing and geopolitical conflict are testing security programs. Preparing for disruption must become part of day-to-day operations. The post Four Cyber Threats Harboring Big Plans for the Future appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/four-cyber-threats-harboring-big-plans-for-the-future",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s28"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "OpenAI Calls Off GPT-6.1 Astra Launch, Details Safety Cases for Frontier Training",
+      "url": "https://www.securityweek.com/openai-calls-off-gpt-6-1-astra-launch-details-safety-cases-for-frontier-training/",
+      "publishedAt": "2026-09-29T11:15:59.000Z",
+      "excerpt": "The GPT-6.1 Astra model was slated to debut in ChatGPT and Codex in October, but it fell short of expectations. The post OpenAI Calls Off GPT-6.1 Astra Launch, Details Safety Cases for Frontier Training appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/openai-calls-off-gpt-6-1-astra-launch-details-safety-cases-for-frontier-training",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s29"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Dutch Police Arrest Convicted Hacker in ShinyHunters Investigation",
+      "url": "https://www.securityweek.com/dutch-police-arrest-convicted-hacker-in-shinyhunters-investigation/",
+      "publishedAt": "2026-09-29T11:01:55.000Z",
+      "excerpt": "Pepijn van der Stap was convicted in 2023 for hacking multiple organizations, stealing their data, and extorting them. The post Dutch Police Arrest Convicted Hacker in ShinyHunters Investigation appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/dutch-police-arrest-convicted-hacker-in-shinyhunters-investigation",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s30"
+    },
+    {
+      "sourceId": "unit42",
+      "sourceKind": "rss",
+      "title": "OperTraitors: How Kubernetes Operators Betray Your Security Posture",
+      "url": "https://unit42.paloaltonetworks.com/agentic-ai-kubernetes-operator-risks/",
+      "publishedAt": "2026-09-29T10:00:48.000Z",
+      "excerpt": "We introduce OperTraitor, a tool to audit privileges of Kubernetes operators, identify excessive RBAC risks, and secure non-human identities. The post OperTraitors: How Kubernetes Operators Betray Your Security Posture appeared first on Unit 42.",
+      "canonicalUrl": "https://unit42.paloaltonetworks.com/agentic-ai-kubernetes-operator-risks",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s31"
+    },
+    {
+      "sourceId": "talos",
+      "sourceKind": "rss",
+      "title": "Securing the keys to the kingdom: Announcing Executive Threat Detection",
+      "url": "https://blog.talosintelligence.com/securing-the-keys-to-the-kingdom-announcing-executive-threat-detection/",
+      "publishedAt": "2026-09-29T10:00:36.000Z",
+      "excerpt": "This new proactive service joins the suite of retainer offerings to provide dedicated, intelligence-led hunting specifically for your organization’s most high-value IT assets.",
+      "canonicalUrl": "https://blog.talosintelligence.com/securing-the-keys-to-the-kingdom-announcing-executive-threat-detection",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s32"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Kiteworks patches critical flaw, brings customer systems online",
+      "url": "https://www.bleepingcomputer.com/news/security/kiteworks-lifts-shutdown-warning-after-patching-critical-flaw/",
+      "publishedAt": "2026-09-29T09:04:06.000Z",
+      "excerpt": "American tech company Kiteworks has lifted a precautionary advisory asking customers to shut down systems after patching a critical vulnerability. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/kiteworks-lifts-shutdown-warning-after-patching-critical-flaw",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s33"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Dutch Police Arrest 24-Year-Old Amsterdam Man in ShinyHunters Investigation",
+      "url": "https://thehackernews.com/2026/09/dutch-police-arrest-24-year-old.html",
+      "publishedAt": "2026-09-29T08:35:10.000Z",
+      "excerpt": "Dutch authorities have confirmed that they arrested a 24-year-old man from Amsterdam in connection with the ShinyHunters group. \"It is true that this month a 24-year-old man from Amsterdam was arrested in an investigation into the hacker group ShinyHunters,\" the Politie Landelijke Opsporing en Interventies said in an X post Monday. Police said the individual is expected to appear before the",
+      "canonicalUrl": "https://thehackernews.com/2026/09/dutch-police-arrest-24-year-old.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s34"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Official MCP Python SDK Flaw Can Let Malicious Servers Steal OAuth Credentials",
+      "url": "https://thehackernews.com/2026/09/official-mcp-python-sdk-flaw-can-let.html",
+      "publishedAt": "2026-09-29T06:08:25.000Z",
+      "excerpt": "A malicious MCP server could trick an application built on the official MCP Python SDK into handing over the OAuth credentials it uses to log in to a real service, the SDK's maintainers said in a security advisory. Affected versions sent the client secret, the authorization code, and the PKCE proof key to a token endpoint the attacker controlled. The fix is in versions 1.30.0 and",
+      "canonicalUrl": "https://thehackernews.com/2026/09/official-mcp-python-sdk-flaw-can-let.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s35"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "OpenAI Shelves GPT-6.1 Astra After Tests Find Deception and Unauthorized Actions",
+      "url": "https://thehackernews.com/2026/09/openai-shelves-gpt-61-astra-after-tests.html",
+      "publishedAt": "2026-09-29T05:12:32.000Z",
+      "excerpt": "OpenAI on Monday shelved plans to release GPT-6.1 Astra, a next-generation artificial intelligence (AI) model that was planned for an October launch, after it failed internal safety and alignment audits. The development was first reported by The Wall Street Journal. The move \"marks a rare case of a major AI developer ditching a new release because of safety concerns,\" the news publication said.",
+      "canonicalUrl": "https://thehackernews.com/2026/09/openai-shelves-gpt-61-astra-after-tests.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s36"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "OpenAI Pauses Tool Use After Agent Bypasses Internet Controls to Reach External Chatbot",
+      "url": "https://thehackernews.com/2026/09/openai-pauses-tool-use-after-agent.html",
+      "publishedAt": "2026-09-29T04:45:20.000Z",
+      "excerpt": "OpenAI said it has made the decision to pause training of its most powerful models after one of its agents during reinforcement learning (RL) training contacted an external chatbot by exploiting a loophole in its internet-access restrictions. \"An agent attempting to complete a search-based training task queried a public chatbot service through a gap in our internet-access restrictions:",
+      "canonicalUrl": "https://thehackernews.com/2026/09/openai-pauses-tool-use-after-agent.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s37"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Nvidia Launches AI Agent Safety Platform to Prevent Rogue Activities",
+      "url": "https://www.darkreading.com/cyber-risk/nvidia-launches-ai-agent-safety-platform-prevent-rogue-activities",
+      "publishedAt": "2026-09-28T22:02:46.000Z",
+      "excerpt": "The Open Agent Safety Platform relies on both hardware and software components to monitor agent activities and quarantine unruly agents before they cause harm.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/nvidia-launches-ai-agent-safety-platform-prevent-rogue-activities",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s38"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "One Packet Can Crash OT Servers in Industrial Sectors",
+      "url": "https://www.darkreading.com/ics-ot-security/one-packet-crash-servers-tdengine",
+      "publishedAt": "2026-09-28T21:13:04.000Z",
+      "excerpt": "A high-severity zero-day vulnerability affects the TDengine time-series database used across industrial, IoT, energy, and automotive environments.",
+      "canonicalUrl": "https://darkreading.com/ics-ot-security/one-packet-crash-servers-tdengine",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s39"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Japan's Keio confirms ransomware attack disrupted business systems",
+      "url": "https://www.bleepingcomputer.com/news/security/japans-keio-confirms-ransomware-attack-disrupted-business-systems/",
+      "publishedAt": "2026-09-28T20:56:47.000Z",
+      "excerpt": "Keio Corporation (Keio), a major private railway operator in Japan, said its network was hit by a ransomware attack over the weekend, disrupting some of its business systems. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/japans-keio-confirms-ransomware-attack-disrupted-business-systems",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s40"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Times Car confirms data breach affecting 6.6 million user accounts",
+      "url": "https://www.bleepingcomputer.com/news/security/times-car-confirms-data-breach-affecting-66-million-user-accounts/",
+      "publishedAt": "2026-09-28T20:31:16.000Z",
+      "excerpt": "Japanese car-sharing service Times Car has confirmed that approximately 6.6 million user accounts were compromised in a cyberattack disclosed late last week. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/times-car-confirms-data-breach-affecting-66-million-user-accounts",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s41"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Carbonato Botnet Puts an AI Agent on Hacked Docker Hosts",
+      "url": "https://www.darkreading.com/identity-access-management-security/carbonato-botnet-ai-agent-hacked-docker-hosts",
+      "publishedAt": "2026-09-28T20:23:58.000Z",
+      "excerpt": "The botnet uses the open source Hermes Agent AI framework to execute commands via Telegram and steal AI API keys from exposed Docker hosts.",
+      "canonicalUrl": "https://darkreading.com/identity-access-management-security/carbonato-botnet-ai-agent-hacked-docker-hosts",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s42"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Dutch police confirm arrest in ShinyHunters hacking investigation",
+      "url": "https://www.bleepingcomputer.com/news/security/dutch-police-confirm-arrest-in-shinyhunters-hacking-investigation/",
+      "publishedAt": "2026-09-28T19:49:10.000Z",
+      "excerpt": "Dutch police have confirmed that a 24-year-old Amsterdam man arrested earlier this month was detained as part of an investigation into the ShinyHunters hacking group. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/dutch-police-confirm-arrest-in-shinyhunters-hacking-investigation",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s43"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Hackers Use NeedyMantis to Maintain Long-Term Access in Breached Networks",
+      "url": "https://thehackernews.com/2026/09/hackers-use-needymantis-to-maintain.html",
+      "publishedAt": "2026-09-28T18:35:42.000Z",
+      "excerpt": "Hackers have used a malware family called NeedyMantis to maintain long-term access to networks they had already breached, Microsoft said in a technical analysis. The malware has been seen in a small number of targeted intrusions at telecommunications organizations, universities, medical nonprofits, intergovernmental organizations, and government contractors. Its use goes back to at least",
+      "canonicalUrl": "https://thehackernews.com/2026/09/hackers-use-needymantis-to-maintain.html",
+      "alsoCoveredBy": [],
+      "cves": [],
+      "id": "s46"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 768,
+    "promptCacheMissTokens": 10768,
+    "outputTokens": 5512,
+    "estimatedCostUsd": 0.0030530304
+  }
+}
