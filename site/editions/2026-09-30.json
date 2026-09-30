@@ -1,0 +1,1719 @@
+{
+  "date": "2026-09-30",
+  "generatedAt": "2026-09-30T17:28:10.229Z",
+  "normalizationExclusions": [
+    {
+      "sourceId": "darkreading",
+      "title": "[Virtual Event] Cybersecurity Outlook 2027",
+      "url": "https://www.darkreading.com/events/virtual-event-cybersecurity-outlook-2027",
+      "publishedAt": "2026-12-03T16:00:00.000Z",
+      "reason": "future_event",
+      "observedAt": "2026-09-30T17:28:10.229Z"
+    }
+  ],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 229,
+    "deduped": 221,
+    "published": 46
+  },
+  "mode": "article",
+  "headline": "Four zero-days in the wild and a security stack under attack",
+  "standfirst": "Today's editorial list is dominated by confirmed exploitation: critical, unauthenticated flaws in Cisco's SD-WAN management plane, Citrix NetScaler edge appliances, Apple's client platforms, and internet-facing Zimbra mail servers. All four carry CISA KEV entries and vendor-confirmed or reported in-the-wild use. Below that, two breaches — one a nine-figure crypto theft blamed on a third-party security product — and two research items on espionage phishing and malware delivery through a trusted AI platform.",
+  "bodyMarkdown": "## Actively exploited\n\nCisco's Catalyst SD-WAN Manager carries the day's highest score: CVE-2026-76504 is a 9.8 CVSS 3.1 flaw in API session authentication management, caused by improper handling of URI encoding in an HTTP request, letting an unauthenticated remote attacker bypass an authentication rule and reach the API as the admin user (CWE-177) [[s5]]. CISA has confirmed active exploitation; its required action is to apply mitigations per vendor instructions. Network teams should treat the management plane itself as the incident, not just the edge.\n\nCitrix NetScaler is next, with two exploited flaws in the same KEV batch [[s12]]. CVE-2026-88771 is an improper input validation bug (CWE-20) in NetScaler ADC and Gateway, rated 9.5 under CVSS 4.0 and described as allowing an unauthenticated attacker to execute arbitrary commands. CVE-2026-88772, also 9.5, is a memory-buffer flaw (CWE-119) leading to remote code execution or denial of service. Both affect ADC and Gateway before 14.1-73.37 and 13.1-64.23, including FIPS and NDcPP builds. The reported campaigns ran for weeks against government and finance victims — long dwell time on an appliance that terminates trust for everything behind it.\n\nApple's CVE-2026-86950 is a lower-scoring but tightly targeted out-of-bounds write (CWE-787, 8.8 CVSS) [[s32]]. Processing a maliciously crafted file can yield arbitrary code execution; Apple says it is aware of a report that the issue may have been exploited in an extremely sophisticated attack against specific targeted individuals on iOS before iOS 27. Fixes are in iOS and iPadOS 26.7.1 and in macOS Sequoia 15.8.1 and macOS Tahoe 26.7.1. Merchants of spyware, not mass criminals, is the safe read — but the affected populations are the ones who cannot wait for a patch cycle.\n\nZimbra rounds out the section: CVE-2026-73570 is an unauthenticated OS command injection (CWE-78, 8.9) in ZCS before 10.1.20, exploitable when the optional zimbra-snmp package is installed and SNMP notifications are enabled, via crafted SMTP requests that can execute commands as the Zimbra user [[s9]]. Microsoft's write-up covers observed attack paths, detection opportunities and mitigation guidance — useful because the precondition means not every deployment is exposed.\n\n**Analysis.** The common thread is pre-authentication access to systems that broker trust. KEV inclusion across all four confirms exploitation is real, not theoretical; two of the entries list ransomware campaign use as unknown, which is an absence of data rather than an absence of risk.\n\n## Breaches\n\nBitget says attackers who took $387.5 million breached its systems by exploiting a zero-day in third-party security products [[s19]]. The figure and the vector are the story; the unstated part is which product, which matters enormously to anyone else running it.\n\nSouth Africa is seeking outside help after an attack on air traffic control, with a ransomware toolkit found installed on at least one operational network [[s26]]. No CVE data accompanies either story.\n\n## Research\n\nMicrosoft attributes a phishing campaign using fake event invitations to Russia's Star Blizzard, targeting people and organizations tied to Ukraine and affecting more than 100 organizations since January, mostly in the U.S. and U.K. [[s45]]. At least one computer was infected and a Windows backdoor was delivered. The reported breach count is not established in what we have.\n\nChatGPT Custom GPTs are being abused to pose as legitimate product offerings and funnel victims to malicious sites that use ClickFix lures to deliver a remote access trojan, observed by Huntress [[s4]]. The angle worth taking seriously: the lure now inherits the reputation of the AI platform hosting it, so user education built on \"is this a known brand\" no longer holds.",
+  "selected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Cisco warns of new SD-WAN zero-day exploited in attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/cisco-warns-of-new-sd-wan-authentication-bypass-zero-day-exploited-in-attacks/",
+      "publishedAt": "2026-09-30T14:46:40.000Z",
+      "excerpt": "Cisco released security updates to address a critical zero-day in the Catalyst SD-WAN Manager (tracked as CVE-2026-76504) that attackers are actively exploiting to escalate to admin privileges. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/cisco-warns-of-new-sd-wan-authentication-bypass-zero-day-exploited-in-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/cisco-warns-of-new-sd-wan-authentication-bypass-zero-day-exploited-in-attacks"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-76504",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Cisco",
+            "product": "Catalyst SD-WAN Manager",
+            "vulnerabilityName": "Cisco Catalyst SD-WAN Manager Hex Encoding Vulnerability",
+            "dateAdded": "2026-09-30",
+            "shortDescription": "Cisco Catalyst SD-WAN Manager contains a hex encoding vulnerability that could allow an unauthenticated, remote attacker to access an affected system with privileges of the admin user due to improper handling of URI encoding in an HTTP request.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-10-03",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-webauth-xr8beuuU ; ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-76504",
+            "cwes": [
+              "CWE-177"
+            ]
+          },
+          "nvd": {
+            "description": "A vulnerability in the API session-based authentication management of Cisco Catalyst SD-WAN Manager could allow an unauthenticated, remote attacker to access an affected system with privileges of the admin user.\r\n\r\nThis vulnerability is due to improper handling of URI encoding in an HTTP request, which allows the request to bypass an authentication rule that is intended to restrict access to a specific API endpoint. An attacker could exploit this vulnerability by sending a crafted HTTP request to the API of the affected system. A successful exploit could allow the attacker to bypass authentication and gain access to the API as the admin user.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "psirt@cisco.com",
+              "type": "Primary"
+            },
+            "cwes": [
+              "CWE-177"
+            ],
+            "published": "2026-09-30T13:17:20.247",
+            "lastModified": "2026-09-30T13:17:20.247",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-webauth-xr8beuuU",
+                "source": "psirt@cisco.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "bleepingcomputer",
+                "url": "https://www.bleepingcomputer.com/news/security/cisco-warns-of-new-sd-wan-authentication-bypass-zero-day-exploited-in-attacks/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.30",
+              "dateReleased": "2026-09-30T16:59:23.0688Z",
+              "retrievedAt": "2026-09-30T17:28:10.229Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-76504%2CCVE-2026-73570%2CCVE-2026-88771%2CCVE-2026-88772%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-76504",
+              "retrievedAt": "2026-09-30T17:28:10.229Z"
+            }
+          }
+        }
+      ],
+      "id": "s5",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "Cisco's Catalyst SD-WAN Manager zero-day CVE-2026-76504 is in CISA KEV as actively exploited, carries a 9.8 CVSS, and lets unauthenticated attackers into the API as admin with no workaround — patch immediately."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Government, Finance Orgs Targeted in Weeks-Long NetScaler Zero-Day Attacks",
+      "url": "https://www.securityweek.com/government-finance-orgs-targeted-in-weeks-long-netscaler-zero-day-attacks/",
+      "publishedAt": "2026-09-30T12:48:20.000Z",
+      "excerpt": "Several security firms have confirmed seeing exploitation of the NetScaler vulnerabilities CVE-2026-88771 and CVE-2026-88772. The post Government, Finance Orgs Targeted in Weeks-Long NetScaler Zero-Day Attacks appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/government-finance-orgs-targeted-in-weeks-long-netscaler-zero-day-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/government-finance-orgs-targeted-in-weeks-long-netscaler-zero-day-attacks"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-88771",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Citrix",
+            "product": "NetScaler",
+            "vulnerabilityName": "Citrix NetScaler Improper Input Validation Vulnerability",
+            "dateAdded": "2026-09-27",
+            "shortDescription": "Citrix NetScaler ADC and NetScaler Gateway contain an improper input validation vulnerability that could allow an unauthenticated attacker to execute arbitrary commands.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-09-30",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "Running the provided IOCs in the NetScaler console may help identify indicators of exploitation. Customers must conduct forensic triage as directed by BOD 26‑04 and follow Citrix’s published guidance for mitigations. For more information, please see: https://community.citrix.com/techzone-blogs/110_security-updates/netscaler-adc-and-netscaler-gateway-security-bulletin-for-cve-2026-88771-through-cve-2026-88778 ; https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697096 ; https://support.citrix.com/external/article/CTX694799/steps-to-take-if-netscaler-adc-is-suspec.html ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-88772",
+            "cwes": [
+              "CWE-119"
+            ]
+          },
+          "nvd": {
+            "description": "Improper input validation vulnerability in Citrix NetScaler ADC and Citrix NetScaler Gateway.\n\nThis issue affects ADC: before 14.1-73.37, before 13.1-64.23, before 14.1-73.37 FIPS, and before 13.1.37.279 FIPS and NDcPP; Gateway: before 14.1-73.37 and before 13.1-64.23 leading to an unauthenticated attacker to execute arbitrary commands.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.5,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-20"
+            ],
+            "published": "2026-09-27T17:16:56.260",
+            "lastModified": "2026-09-29T04:18:01.603",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697096",
+                "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-88771",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6BC2D462-9ABE-4024-8E46-8D265C0B19FB",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2DB314FE-3886-4ABD-A820-B8A70EBB23A6",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:ndcpp:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FCFFA1B3-87CE-4CC8-990E-D3CE0B55CD45",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1CA9588A-E3EB-44FC-9515-6EB89BB8C1D6",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "046FF602-D956-4961-89BF-2041A3590004",
+                "versionStartIncluding": "14.1-66.68",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "14.1-73.37",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3286D2C3-EA7E-4D9C-95DE-05D462DC8B1B",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C77243A7-1FDB-4557-88BE-EDF3BAA56A81",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/government-finance-orgs-targeted-in-weeks-long-netscaler-zero-day-attacks/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.30",
+              "dateReleased": "2026-09-30T16:59:23.0688Z",
+              "retrievedAt": "2026-09-30T17:28:10.229Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-76504%2CCVE-2026-73570%2CCVE-2026-88771%2CCVE-2026-88772%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-88771",
+              "retrievedAt": "2026-09-30T17:28:10.229Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-88772",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Citrix",
+            "product": "NetScaler",
+            "vulnerabilityName": "Citrix NetScaler Improper Restriction of Operations within the Bounds of a Memory Buffer Vulnerability",
+            "dateAdded": "2026-09-27",
+            "shortDescription": "Citrix NetScaler ADC and NetScaler Gateway contain an improper restriction of operations within the bounds of a memory buffer vulnerability that could allow for remote code execution or denial of service",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-09-30",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "Running the provided IOCs in the NetScaler console may help identify indicators of exploitation. Customers must conduct forensic triage as directed by BOD 26‑04 and follow Citrix’s published guidance for mitigations. For more information, please see: https://community.citrix.com/techzone-blogs/110_security-updates/netscaler-adc-and-netscaler-gateway-security-bulletin-for-cve-2026-88771-through-cve-2026-88778 ; https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697096 ; https://support.citrix.com/external/article/CTX694799/steps-to-take-if-netscaler-adc-is-suspec.html ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-88772",
+            "cwes": [
+              "CWE-119"
+            ]
+          },
+          "nvd": {
+            "description": "Vulnerability in Citrix NetScaler ADC and Citrix NetScaler Gateway.\n\nThis issue affects ADC: before 14.1-73.37, before 13.1-64.23, before 14.1-73.37 FIPS, and before 13.1.37.279 FIPS and NDcPP; Gateway: before 14.1-73.37 and before 13.1-64.23 leading to Remote Code Execution or Denial of Service",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.5,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-119"
+            ],
+            "published": "2026-09-27T17:16:56.390",
+            "lastModified": "2026-09-28T12:26:47.670",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697096&articleTitle=Citrix_NetScaler_ADC_and_Citrix_NetScaler_Gateway_Security_Bulletin_for_CVE_2026_88771_CVE_2026_88772_CVE_2026_88773_CVE_2026_88774_CVE_2026_88775_CVE_2026_88776_CVE_2026_88777_and_CVE_2026_88778",
+                "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-88772",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6BC2D462-9ABE-4024-8E46-8D265C0B19FB",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2DB314FE-3886-4ABD-A820-B8A70EBB23A6",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:ndcpp:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FCFFA1B3-87CE-4CC8-990E-D3CE0B55CD45",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1CA9588A-E3EB-44FC-9515-6EB89BB8C1D6",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "046FF602-D956-4961-89BF-2041A3590004",
+                "versionStartIncluding": "14.1-66.68",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "14.1-73.37",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3286D2C3-EA7E-4D9C-95DE-05D462DC8B1B",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C77243A7-1FDB-4557-88BE-EDF3BAA56A81",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/government-finance-orgs-targeted-in-weeks-long-netscaler-zero-day-attacks/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.30",
+              "dateReleased": "2026-09-30T16:59:23.0688Z",
+              "retrievedAt": "2026-09-30T17:28:10.229Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-76504%2CCVE-2026-73570%2CCVE-2026-88771%2CCVE-2026-88772%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-88772",
+              "retrievedAt": "2026-09-30T17:28:10.229Z"
+            }
+          }
+        }
+      ],
+      "id": "s12",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "Weeks-long exploitation of NetScaler CVE-2026-88771 and CVE-2026-88772 against government and finance victims shows a critical edge-appliance flaw escalating into sustained intrusions."
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Apple Zero-Day Vulnerability Weaponized in Targeted Attacks",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/apple-zero-day-vulnerability-weaponized-targeted-attacks",
+      "publishedAt": "2026-09-29T21:31:29.000Z",
+      "excerpt": "Attackers are exploiting CVE-2026-86950, an out-of-bounds write flaw, in an extremely sophisticated fashion, according to Apple.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/apple-zero-day-vulnerability-weaponized-targeted-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyberattacks-data-breaches/apple-zero-day-vulnerability-weaponized-targeted-attacks"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-86950",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Apple",
+            "product": "Multiple Products",
+            "vulnerabilityName": "Apple Multiple Products Out-of-Bounds Write Vulnerability",
+            "dateAdded": "2026-09-29",
+            "shortDescription": "Apple iOS, macOS, and iPadOS contain an out-of-bounds write vulnerability in CoreGraphics that may lead to arbitrary code execution.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-10-02",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://support.apple.com/en-us/149226 ; https://support.apple.com/en-us/149228 ; https://support.apple.com/en-us/149229 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-86950",
+            "cwes": [
+              "CWE-787"
+            ]
+          },
+          "nvd": {
+            "description": "An out-of-bounds write issue was addressed with improved bounds checking. This issue is fixed in iOS 26.7.1 and iPadOS 26.7.1, macOS Sequoia 15.8.1, macOS Tahoe 26.7.1. Processing a maliciously crafted file may lead to arbitrary code execution. Apple is aware of a report that this issue may have been exploited in an extremely sophisticated attack against specific targeted individuals on versions of iOS before iOS 27.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.8,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-787"
+            ],
+            "published": "2026-09-28T20:17:11.193",
+            "lastModified": "2026-09-30T04:18:33.497",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://support.apple.com/en-us/149226",
+                "source": "product-security@apple.com",
+                "tags": [
+                  "Release Notes",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/149228",
+                "source": "product-security@apple.com",
+                "tags": [
+                  "Release Notes",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/149229",
+                "source": "product-security@apple.com",
+                "tags": [
+                  "Release Notes",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "http://seclists.org/fulldisclosure/2026/Sep/89",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://seclists.org/fulldisclosure/2026/Sep/90",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://seclists.org/fulldisclosure/2026/Sep/91",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-86950",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:o:apple:ipados:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E820C7A6-6EBE-46FC-A3A0-E2329DED12E7",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "26.7.1"
+              },
+              {
+                "criteria": "cpe:2.3:o:apple:iphone_os:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FF3A9F40-6FE0-4D54-AC00-27228E5F329C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "26.7.1"
+              },
+              {
+                "criteria": "cpe:2.3:o:apple:macos:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "77C881FE-1FF0-4D7A-9E5A-9E7FC6BBA3B8",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "15.8.1"
+              },
+              {
+                "criteria": "cpe:2.3:o:apple:macos:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "810BEE78-D6FB-416D-B719-A7639184DEAA",
+                "versionStartIncluding": "26.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "26.7.1"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "darkreading",
+                "url": "https://www.darkreading.com/cyberattacks-data-breaches/apple-zero-day-vulnerability-weaponized-targeted-attacks",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.30",
+              "dateReleased": "2026-09-30T16:59:23.0688Z",
+              "retrievedAt": "2026-09-30T17:28:10.229Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-76504%2CCVE-2026-73570%2CCVE-2026-88771%2CCVE-2026-88772%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-86950",
+              "retrievedAt": "2026-09-30T17:28:10.229Z"
+            }
+          }
+        }
+      ],
+      "id": "s32",
+      "section": "exploited",
+      "rank": 3,
+      "angle": "Apple's CVE-2026-86950 out-of-bounds write is confirmed exploited in an extremely sophisticated targeted attack, making iOS, iPadOS and macOS patching urgent."
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "Unauthenticated command injection on internet-facing mail servers: tracking CVE-2026-73570",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/09/30/unauthenticated-command-injection-on-internet-facing-mail-servers-tracking-cve-2026-73570/",
+      "publishedAt": "2026-09-30T14:00:00.000Z",
+      "excerpt": "Microsoft Threat Intelligence examines CVE-2026-73570 exploitation in Zimbra, including observed attack paths, detection opportunities, and mitigation guidance. The post Unauthenticated command injection on internet-facing mail servers: tracking CVE-2026-73570 appeared first on Microsoft Security Blog.",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/09/30/unauthenticated-command-injection-on-internet-facing-mail-servers-tracking-cve-2026-73570",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://microsoft.com/en-us/security/blog/2026/09/30/unauthenticated-command-injection-on-internet-facing-mail-servers-tracking-cve-2026-73570"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-73570",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Synacor",
+            "product": "Zimbra Collaboration Suite (ZCS)",
+            "vulnerabilityName": "Zimbra Collaboration Suite (ZCS) OS Command Injection Vulnerability",
+            "dateAdded": "2026-08-21",
+            "shortDescription": "Zimbra Collaboration Suite (ZCS) contains an OS command injection vulnerability which could allow an unauthenticated attacker to send specially crafted SMTP requests that may result in execution of arbitrary operating system commands as the Zimbra user.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-08-24",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://wiki.zimbra.com/wiki/Zimbra_Security_Advisories ; https://blog.zimbra.com/2026/07/patch-release-update-zimbra-10-1-20/ ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-73570",
+            "cwes": [
+              "CWE-78"
+            ]
+          },
+          "nvd": {
+            "description": "A remote code execution vulnerability exists in Zimbra Collaboration (ZCS) before 10.1.20 when the optional zimbra-snmp package is installed and SNMP notifications are enabled. Due to improper sanitization of untrusted input during SNMP notification processing, an unauthenticated attacker can send specially crafted SMTP requests that may result in execution of arbitrary operating system commands as the Zimbra user.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.9,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:L",
+              "source": "cve@mitre.org",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-78"
+            ],
+            "published": "2026-08-13T16:19:06.003",
+            "lastModified": "2026-08-24T13:19:17.577",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://wiki.zimbra.com/wiki/Security_Center",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://wiki.zimbra.com/wiki/Zimbra_Security_Advisories",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://moje.cert.pl/komunikaty/2026/145/aktywnie-wykorzystywana-podatnosc-w-zimbra-collaboration-suite/",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-73570",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:synacor:zimbra_collaboration_suite:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2DA7AB29-C275-4B2D-AC7F-288B3121779F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "10.1.20"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "microsoft-security",
+                "url": "https://www.microsoft.com/en-us/security/blog/2026/09/30/unauthenticated-command-injection-on-internet-facing-mail-servers-tracking-cve-2026-73570/",
+                "field": "title"
+              },
+              {
+                "sourceId": "microsoft-security",
+                "url": "https://www.microsoft.com/en-us/security/blog/2026/09/30/unauthenticated-command-injection-on-internet-facing-mail-servers-tracking-cve-2026-73570/",
+                "field": "excerpt"
+              },
+              {
+                "sourceId": "microsoft-security",
+                "url": "https://www.microsoft.com/en-us/security/blog/2026/09/30/unauthenticated-command-injection-on-internet-facing-mail-servers-tracking-cve-2026-73570/",
+                "field": "url"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.30",
+              "dateReleased": "2026-09-30T16:59:23.0688Z",
+              "retrievedAt": "2026-09-30T17:28:10.229Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-76504%2CCVE-2026-73570%2CCVE-2026-88771%2CCVE-2026-88772%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-73570",
+              "retrievedAt": "2026-09-30T17:28:10.229Z"
+            }
+          }
+        }
+      ],
+      "id": "s9",
+      "section": "exploited",
+      "rank": 4,
+      "angle": "Microsoft lays out real-world exploitation of Zimbra CVE-2026-73570, an unauthenticated command injection hitting internet-facing mail servers, with detection and mitigation guidance."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Bitget hacked via zero-day in third-party security products",
+      "url": "https://www.bleepingcomputer.com/news/security/bitget-hacked-via-zero-day-in-third-party-security-products/",
+      "publishedAt": "2026-09-30T11:11:46.000Z",
+      "excerpt": "Cryptocurrency exchange Bitget revealed today that attackers who stole $387.5 million last week breached its systems after exploiting a zero-day flaw in third-party security products. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/bitget-hacked-via-zero-day-in-third-party-security-products",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/bitget-hacked-via-zero-day-in-third-party-security-products"
+      ],
+      "cves": [],
+      "id": "s19",
+      "section": "breaches",
+      "rank": 5,
+      "angle": "Bitget attributing its $387.5 million loss to a zero-day in third-party security products shows the security stack itself is now prime attack surface."
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "South Africa Seeks Help After Cyberattack Targets Air Traffic Control",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/south-africa-help-cyberattack-air-traffic-control",
+      "publishedAt": "2026-09-30T07:00:00.000Z",
+      "excerpt": "As aviation infrastructure suffers more cyberattacks, air traffic systems are the latest target, with a ransomware toolkit installed on at least one operational network.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/south-africa-help-cyberattack-air-traffic-control",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyberattacks-data-breaches/south-africa-help-cyberattack-air-traffic-control"
+      ],
+      "cves": [],
+      "id": "s26",
+      "section": "breaches",
+      "rank": 6,
+      "angle": "A ransomware toolkit found on an operational air traffic control network underscores that aviation infrastructure remains an exposed and attractive target."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Russia's Star Blizzard Targets 100+ Organizations With Fake Event Invites to Deliver Backdoor",
+      "url": "https://thehackernews.com/2026/09/russias-star-blizzard-targets-100.html",
+      "publishedAt": "2026-09-29T17:20:08.000Z",
+      "excerpt": "Russian state hackers known as Star Blizzard have been using fake event invitations to trick people into installing a backdoor on their Windows computers, according to Microsoft. The campaigns, aimed at people and organizations tied to Ukraine, have affected more than 100 organizations since January, mostly in the U.S. and U.K. At least one computer was infected, but the number of breached",
+      "canonicalUrl": "https://thehackernews.com/2026/09/russias-star-blizzard-targets-100.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/09/russias-star-blizzard-targets-100.html"
+      ],
+      "cves": [],
+      "id": "s45",
+      "section": "research",
+      "rank": 7,
+      "angle": "Microsoft ties Star Blizzard's fake event-invite phishing to more than 100 organizations tied to Ukraine, showing the group's persistent espionage reach."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Attackers Abuse ChatGPT Custom GPTs to Deliver RAT via ClickFix Lures",
+      "url": "https://thehackernews.com/2026/09/attackers-abuse-chatgpt-custom-gpts-to.html",
+      "publishedAt": "2026-09-30T15:00:15.000Z",
+      "excerpt": "Threat actors are abusing ChatGPT Custom GPTs to disguise them as legitimate product offerings and direct unsuspecting victims to malicious sites that employ ClickFix lures to deliver malware. Huntress, which observed the activity in late September 2026, said it marks the abuse of yet another feature in trusted artificial intelligence (AI) platforms. Prior campaigns have weaponized shared",
+      "canonicalUrl": "https://thehackernews.com/2026/09/attackers-abuse-chatgpt-custom-gpts-to.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/09/attackers-abuse-chatgpt-custom-gpts-to.html"
+      ],
+      "cves": [],
+      "id": "s4",
+      "section": "research",
+      "rank": 8,
+      "angle": "Abuse of ChatGPT Custom GPTs to funnel victims into ClickFix lures and RAT delivery shows trusted AI platforms are becoming a malware distribution channel."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "CISA warns of critical pre-auth RCE flaw in MikroTik RouterOS",
+      "url": "https://www.bleepingcomputer.com/news/security/cisa-warns-of-critical-pre-auth-rce-flaw-in-mikrotik-routeros/",
+      "publishedAt": "2026-09-30T15:49:29.000Z",
+      "excerpt": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA) is warning of a new critical vulnerability in MikroTik RouterOS that could lead to remote code execution or cause a denial-of-service condition. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/cisa-warns-of-critical-pre-auth-rce-flaw-in-mikrotik-routeros",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/cisa-warns-of-critical-pre-auth-rce-flaw-in-mikrotik-routeros"
+      ],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Cisco Warns of Attackers Exploiting Critical Authentication Bypass in SD-WAN Manager",
+      "url": "https://thehackernews.com/2026/09/cisco-warns-of-attackers-exploiting.html",
+      "publishedAt": "2026-09-30T15:24:54.000Z",
+      "excerpt": "Attackers are exploiting a new critical zero-day flaw in Cisco Catalyst SD-WAN Manager, the system companies use to manage their Cisco SD-WAN networks, Cisco said in an advisory on September 30. The flaw, CVE-2026-76504, could allow a remote attacker with no login access to use the Manager's API as the admin user. Fixed releases are available, and there is no workaround. It carries a",
+      "canonicalUrl": "https://thehackernews.com/2026/09/cisco-warns-of-attackers-exploiting.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/09/cisco-warns-of-attackers-exploiting.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-76504",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Cisco",
+            "product": "Catalyst SD-WAN Manager",
+            "vulnerabilityName": "Cisco Catalyst SD-WAN Manager Hex Encoding Vulnerability",
+            "dateAdded": "2026-09-30",
+            "shortDescription": "Cisco Catalyst SD-WAN Manager contains a hex encoding vulnerability that could allow an unauthenticated, remote attacker to access an affected system with privileges of the admin user due to improper handling of URI encoding in an HTTP request.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-10-03",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-webauth-xr8beuuU ; ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-76504",
+            "cwes": [
+              "CWE-177"
+            ]
+          },
+          "nvd": {
+            "description": "A vulnerability in the API session-based authentication management of Cisco Catalyst SD-WAN Manager could allow an unauthenticated, remote attacker to access an affected system with privileges of the admin user.\r\n\r\nThis vulnerability is due to improper handling of URI encoding in an HTTP request, which allows the request to bypass an authentication rule that is intended to restrict access to a specific API endpoint. An attacker could exploit this vulnerability by sending a crafted HTTP request to the API of the affected system. A successful exploit could allow the attacker to bypass authentication and gain access to the API as the admin user.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "psirt@cisco.com",
+              "type": "Primary"
+            },
+            "cwes": [
+              "CWE-177"
+            ],
+            "published": "2026-09-30T13:17:20.247",
+            "lastModified": "2026-09-30T13:17:20.247",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-webauth-xr8beuuU",
+                "source": "psirt@cisco.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/cisco-warns-of-attackers-exploiting.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.30",
+              "dateReleased": "2026-09-30T16:59:23.0688Z",
+              "retrievedAt": "2026-09-30T17:28:10.229Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-76504%2CCVE-2026-73570%2CCVE-2026-88771%2CCVE-2026-88772%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-76504",
+              "retrievedAt": "2026-09-30T17:28:10.229Z"
+            }
+          }
+        }
+      ],
+      "id": "s2"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Russia's Star Blizzard Ditches ClickFix to Widen Phishing Net",
+      "url": "https://www.darkreading.com/threat-intelligence/russia-star-blizzard-apt-ditches-clickfix-widen-phishing-net",
+      "publishedAt": "2026-09-30T15:02:25.000Z",
+      "excerpt": "The APT actor is using a new tactic, dubbed \"RedFlick,\" against Ukrainian-linked targets such as NGOs, think tanks, and journalists to deploy its CosmicPulse backdoor.",
+      "canonicalUrl": "https://darkreading.com/threat-intelligence/russia-star-blizzard-apt-ditches-clickfix-widen-phishing-net",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/threat-intelligence/russia-star-blizzard-apt-ditches-clickfix-widen-phishing-net"
+      ],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Google: AI Is Changing the Pace and Profile of Vulnerability Discovery",
+      "url": "https://www.securityweek.com/google-ai-is-changing-the-pace-and-profile-of-vulnerability-discovery/",
+      "publishedAt": "2026-09-30T14:05:58.000Z",
+      "excerpt": "Google’s analysis found that AI-discovered vulnerabilities are more likely to enable remote code execution. The post Google: AI Is Changing the Pace and Profile of Vulnerability Discovery appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/google-ai-is-changing-the-pace-and-profile-of-vulnerability-discovery",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/google-ai-is-changing-the-pace-and-profile-of-vulnerability-discovery"
+      ],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "AI's Third Wave: Coworkers Break the Security Model That Worked for Agents",
+      "url": "https://www.bleepingcomputer.com/news/security/ais-third-wave-coworkers-break-the-security-model-that-worked-for-agents/",
+      "publishedAt": "2026-09-30T14:01:11.000Z",
+      "excerpt": "Persistent AI coworkers may operate continuously with standing access, creating identity risks that existing security models were not designed to handle. Token Security explains why these agents need their own identities, owners, scoped permissions, and lifecycle controls. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/ais-third-wave-coworkers-break-the-security-model-that-worked-for-agents",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/ais-third-wave-coworkers-break-the-security-model-that-worked-for-agents"
+      ],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Mobile malware warning from Ukrainian researchers includes iPhone exploit kit",
+      "url": "https://therecord.media/ukraine-ssscip-mobile-malware-warning-ios-android",
+      "publishedAt": "2026-09-30T14:00:00.000Z",
+      "excerpt": "'Hit and run' iPhone malware known as DarkSword is part of a wave of Russian attacks on iOS and Android devices, according to Ukraine's SSSCIP.",
+      "canonicalUrl": "https://therecord.media/ukraine-ssscip-mobile-malware-warning-ios-android",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/ukraine-ssscip-mobile-malware-warning-ios-android"
+      ],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft to block Entra ID script injection attacks starting October",
+      "url": "https://www.bleepingcomputer.com/news/security/microsoft-to-block-entra-id-script-injection-attacks-starting-october/",
+      "publishedAt": "2026-09-30T13:37:15.000Z",
+      "excerpt": "Microsoft has reminded customers that the Entra ID authentication system will get better protection against external script injection attacks starting next month. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/microsoft-to-block-entra-id-script-injection-attacks-starting-october",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/microsoft-to-block-entra-id-script-injection-attacks-starting-october"
+      ],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "WatchGuard Patches Critical Fireware OS Code Injection Vulnerability",
+      "url": "https://www.securityweek.com/watchguard-patches-critical-fireware-os-code-injection-vulnerability/",
+      "publishedAt": "2026-09-30T13:16:56.000Z",
+      "excerpt": "WatchGuard has rolled out patches for 15 code execution, DoS, authorization, and path traversal bugs in Fireware OS. The post WatchGuard Patches Critical Fireware OS Code Injection Vulnerability appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/watchguard-patches-critical-fireware-os-code-injection-vulnerability",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/watchguard-patches-critical-fireware-os-code-injection-vulnerability"
+      ],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "TeamViewer urges users to patch severe flaws “as soon as possible”",
+      "url": "https://www.bleepingcomputer.com/news/security/teamviewer-urges-users-to-patch-severe-flaws-as-soon-as-possible/",
+      "publishedAt": "2026-09-30T12:25:10.000Z",
+      "excerpt": "Remote access software company TeamViewer warned customers on Tuesday to immediately patch a set of high-severity vulnerabilities affecting its client and host software. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/teamviewer-urges-users-to-patch-severe-flaws-as-soon-as-possible",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/teamviewer-urges-users-to-patch-severe-flaws-as-soon-as-possible"
+      ],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Chrome, Firefox Updates Patch Over 100 Vulnerabilities",
+      "url": "https://www.securityweek.com/chrome-firefox-updates-patch-over-100-vulnerabilities/",
+      "publishedAt": "2026-09-30T12:16:52.000Z",
+      "excerpt": "Some of the flaws could allow remote attackers to execute arbitrary code or escape the browser sandbox. The post Chrome, Firefox Updates Patch Over 100 Vulnerabilities appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/chrome-firefox-updates-patch-over-100-vulnerabilities",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/chrome-firefox-updates-patch-over-100-vulnerabilities"
+      ],
+      "cves": [],
+      "id": "s14"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Russian FSB-linked hackers scale up phishing attacks against Ukraine supporters",
+      "url": "https://therecord.media/russia-hackers-ukraine-blizzard",
+      "publishedAt": "2026-09-30T12:00:00.000Z",
+      "excerpt": "The Russian state-backed hacking group Star Blizzard has expanded its phishing operations this year, using a new technique that makes it easier to infect victims with malware.",
+      "canonicalUrl": "https://therecord.media/russia-hackers-ukraine-blizzard",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/russia-hackers-ukraine-blizzard"
+      ],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Know Your Enemy: Browser-Based Attack Techniques in 2026",
+      "url": "https://thehackernews.com/2026/09/know-your-enemy-browser-based-attack.html",
+      "publishedAt": "2026-09-30T11:58:00.000Z",
+      "excerpt": "Given that the browser is where business apps are accessed and used, it makes sense that attacks are happening there too. Most breaches today begin in a browser session. Often, they never leave it, with the entire attack chain from initial access to exfiltration playing out in the browser. Here are the six most dangerous techniques that should be on every security team's radar in 2026. 1.",
+      "canonicalUrl": "https://thehackernews.com/2026/09/know-your-enemy-browser-based-attack.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/09/know-your-enemy-browser-based-attack.html"
+      ],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "AI Coding Agents Exposed 13,000 Internal Images, Including Billing Records, on GitHub",
+      "url": "https://thehackernews.com/2026/09/ai-coding-agents-exposed-13000-internal.html",
+      "publishedAt": "2026-09-30T11:30:00.000Z",
+      "excerpt": "AI coding agents asked to share screenshots of code changes for review have put internal company images in public GitHub repositories, security company Glow said. Its researchers found more than 13,000 internal images from developers at over 300 organizations, including customer billing records and screens of features not yet released. In most cases, they sat under developers' personal accounts",
+      "canonicalUrl": "https://thehackernews.com/2026/09/ai-coding-agents-exposed-13000-internal.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/09/ai-coding-agents-exposed-13000-internal.html"
+      ],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Anthropic Flags AI Agent Liability Risks as OpenAI Faces Hacking Lawsuit",
+      "url": "https://www.securityweek.com/anthropic-flags-ai-agent-liability-risks-as-openai-faces-hacking-lawsuit/",
+      "publishedAt": "2026-09-30T11:19:00.000Z",
+      "excerpt": "Attacks by autonomous AI agents are moving out of the lab and into the courtroom, raising unsettled questions about who is liable for what agents do. The post Anthropic Flags AI Agent Liability Risks as OpenAI Faces Hacking Lawsuit appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/anthropic-flags-ai-agent-liability-risks-as-openai-faces-hacking-lawsuit",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/anthropic-flags-ai-agent-liability-risks-as-openai-faces-hacking-lawsuit"
+      ],
+      "cves": [],
+      "id": "s18"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Russian APT Star Blizzard Uses ‘RedFlick’ Infection Chain in Recent Attacks",
+      "url": "https://www.securityweek.com/russian-apt-star-blizzard-uses-redflick-infection-chain-in-recent-attacks/",
+      "publishedAt": "2026-09-30T10:59:30.000Z",
+      "excerpt": "The state-sponsored group has launched larger-scale phishing campaigns to deploy the CosmicPulse backdoor. The post Russian APT Star Blizzard Uses ‘RedFlick’ Infection Chain in Recent Attacks appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/russian-apt-star-blizzard-uses-redflick-infection-chain-in-recent-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/russian-apt-star-blizzard-uses-redflick-infection-chain-in-recent-attacks"
+      ],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "US-Focused CSuite Phishing Steals Microsoft 365 Sessions and Deploys RMM Tools for Remote Access",
+      "url": "https://thehackernews.com/2026/09/us-focused-csuite-phishing-steals.html",
+      "publishedAt": "2026-09-30T10:45:00.000Z",
+      "excerpt": "ANY.RUN researchers traced a US-focused CSuite phishing campaign across 351 sandbox analyses, with 51% of submissions coming from the United States. Technology, manufacturing, government, and consulting organizations showed the highest exposure. By combining Microsoft 365 session theft with remote-access tool deployment, CSuite can turn a phishing incident into broader account compromise, fraud",
+      "canonicalUrl": "https://thehackernews.com/2026/09/us-focused-csuite-phishing-steals.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/09/us-focused-csuite-phishing-steals.html"
+      ],
+      "cves": [],
+      "id": "s21"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "ShinyHunters Defiant After FBI Calls on Members to Come Forward",
+      "url": "https://www.securityweek.com/shinyhunters-defiant-after-fbi-calls-on-members-to-come-forward/",
+      "publishedAt": "2026-09-30T10:20:02.000Z",
+      "excerpt": "In the wake of a suspected leader’s arrest, ShinyHunters says it never intended to publish data stolen from the FBI. The post ShinyHunters Defiant After FBI Calls on Members to Come Forward appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/shinyhunters-defiant-after-fbi-calls-on-members-to-come-forward",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/shinyhunters-defiant-after-fbi-calls-on-members-to-come-forward"
+      ],
+      "cves": [],
+      "id": "s22"
+    },
+    {
+      "sourceId": "talos",
+      "sourceKind": "rss",
+      "title": "China-nexus UAT-11587 targets government and policy organizations across Asia with Antino backdoor",
+      "url": "https://blog.talosintelligence.com/china-nexus-uat-11587-targets-government-and-policy-organizations-across-asia-with-antino-backdoor/",
+      "publishedAt": "2026-09-30T10:00:01.000Z",
+      "excerpt": "Cisco Talos uncovered a cluster of activity we track as UAT-11587 targeting government and policy organizations across Asia, including in Taiwan, India, the Philippines, and Cambodia, to deliver a previously undocumented backdoor referred to as “Antino” in developer artifacts.",
+      "canonicalUrl": "https://blog.talosintelligence.com/china-nexus-uat-11587-targets-government-and-policy-organizations-across-asia-with-antino-backdoor",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://blog.talosintelligence.com/china-nexus-uat-11587-targets-government-and-policy-organizations-across-asia-with-antino-backdoor"
+      ],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Attackers Exploit NetScaler Flaw for Root Access, Deploy WHIPSHOT and SLAPSHOT",
+      "url": "https://thehackernews.com/2026/09/attackers-exploit-netscaler-flaw-for.html",
+      "publishedAt": "2026-09-30T08:24:35.000Z",
+      "excerpt": "Unknown threat actors have been observed exploiting a newly patched security flaw in Citrix NetScaler ADC and NetScaler Gateway appliances to target organizations in North America and Europe. The activity, observed by Mandiant Consulting and Google Threat Intelligence Group (GTIG) in September 2026, has targeted government, financial services, technology, education, and legal and professional",
+      "canonicalUrl": "https://thehackernews.com/2026/09/attackers-exploit-netscaler-flaw-for.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/09/attackers-exploit-netscaler-flaw-for.html"
+      ],
+      "cves": [],
+      "id": "s24"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "OpenSSL Fixes High-Severity DTLS Flaw That Can Leak Heap Memory Unencrypted",
+      "url": "https://thehackernews.com/2026/09/openssl-fixes-high-severity-dtls-flaw.html",
+      "publishedAt": "2026-09-30T08:09:28.000Z",
+      "excerpt": "A High-severity OpenSSL flaw can leak heap memory to the other side of a DTLS connection or crash the program, OpenSSL said on September 29 as it released fixes. DTLS, the TLS variant used for UDP traffic, resends a handshake message if no reply arrives before the timer expires. The leak or crash can happen when such a resend starts while a larger handshake message is stuck part-way",
+      "canonicalUrl": "https://thehackernews.com/2026/09/openssl-fixes-high-severity-dtls-flaw.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/09/openssl-fixes-high-severity-dtls-flaw.html"
+      ],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "High-Severity Vulnerabilities Patched in OpenSSL, WolfSSL",
+      "url": "https://www.securityweek.com/high-severity-vulnerabilities-patched-in-openssl-wolfssl/",
+      "publishedAt": "2026-09-30T06:55:50.000Z",
+      "excerpt": "Roughly a dozen vulnerabilities have been patched in each of the open source cryptographic libraries. The post High-Severity Vulnerabilities Patched in OpenSSL, WolfSSL appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/high-severity-vulnerabilities-patched-in-openssl-wolfssl",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/high-severity-vulnerabilities-patched-in-openssl-wolfssl"
+      ],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Citrix NetScaler CVE-2026-88772 Exploit Details Show Pre-Auth Path to Shellcode Execution",
+      "url": "https://thehackernews.com/2026/09/citrix-netscaler-cve-2026-88772-exploit.html",
+      "publishedAt": "2026-09-30T05:30:30.000Z",
+      "excerpt": "Cybersecurity researchers have disclosed technical details of a recently patched critical security flaw in Citrix NetScaler ADC and Gateway that has come under active exploitation in the wild. The vulnerability, tracked as CVE-2026-88772 (CVSS score: 9.5), has been described as a memory overflow bug in the Datagram Transport Layer Security (DTLS) protocol handling that's rooted in the NetScaler",
+      "canonicalUrl": "https://thehackernews.com/2026/09/citrix-netscaler-cve-2026-88772-exploit.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/09/citrix-netscaler-cve-2026-88772-exploit.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-88772",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Citrix",
+            "product": "NetScaler",
+            "vulnerabilityName": "Citrix NetScaler Improper Restriction of Operations within the Bounds of a Memory Buffer Vulnerability",
+            "dateAdded": "2026-09-27",
+            "shortDescription": "Citrix NetScaler ADC and NetScaler Gateway contain an improper restriction of operations within the bounds of a memory buffer vulnerability that could allow for remote code execution or denial of service",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-09-30",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "Running the provided IOCs in the NetScaler console may help identify indicators of exploitation. Customers must conduct forensic triage as directed by BOD 26‑04 and follow Citrix’s published guidance for mitigations. For more information, please see: https://community.citrix.com/techzone-blogs/110_security-updates/netscaler-adc-and-netscaler-gateway-security-bulletin-for-cve-2026-88771-through-cve-2026-88778 ; https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697096 ; https://support.citrix.com/external/article/CTX694799/steps-to-take-if-netscaler-adc-is-suspec.html ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-88772",
+            "cwes": [
+              "CWE-119"
+            ]
+          },
+          "nvd": {
+            "description": "Vulnerability in Citrix NetScaler ADC and Citrix NetScaler Gateway.\n\nThis issue affects ADC: before 14.1-73.37, before 13.1-64.23, before 14.1-73.37 FIPS, and before 13.1.37.279 FIPS and NDcPP; Gateway: before 14.1-73.37 and before 13.1-64.23 leading to Remote Code Execution or Denial of Service",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.5,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-119"
+            ],
+            "published": "2026-09-27T17:16:56.390",
+            "lastModified": "2026-09-28T12:26:47.670",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697096&articleTitle=Citrix_NetScaler_ADC_and_Citrix_NetScaler_Gateway_Security_Bulletin_for_CVE_2026_88771_CVE_2026_88772_CVE_2026_88773_CVE_2026_88774_CVE_2026_88775_CVE_2026_88776_CVE_2026_88777_and_CVE_2026_88778",
+                "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-88772",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6BC2D462-9ABE-4024-8E46-8D265C0B19FB",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2DB314FE-3886-4ABD-A820-B8A70EBB23A6",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:ndcpp:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FCFFA1B3-87CE-4CC8-990E-D3CE0B55CD45",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1CA9588A-E3EB-44FC-9515-6EB89BB8C1D6",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "046FF602-D956-4961-89BF-2041A3590004",
+                "versionStartIncluding": "14.1-66.68",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "14.1-73.37",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3286D2C3-EA7E-4D9C-95DE-05D462DC8B1B",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C77243A7-1FDB-4557-88BE-EDF3BAA56A81",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/citrix-netscaler-cve-2026-88772-exploit.html",
+                "field": "title"
+              },
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/citrix-netscaler-cve-2026-88772-exploit.html",
+                "field": "excerpt"
+              },
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/09/citrix-netscaler-cve-2026-88772-exploit.html",
+                "field": "url"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.30",
+              "dateReleased": "2026-09-30T16:59:23.0688Z",
+              "retrievedAt": "2026-09-30T17:28:10.229Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-76504%2CCVE-2026-73570%2CCVE-2026-88771%2CCVE-2026-88772%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-88772",
+              "retrievedAt": "2026-09-30T17:28:10.229Z"
+            }
+          }
+        }
+      ],
+      "id": "s28"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Trump Says Top Tech Firms Have Signed Accord to ‘Self-Police’ AI Development",
+      "url": "https://www.securityweek.com/trump-says-top-tech-firms-have-signed-accord-to-self-police-ai-development/",
+      "publishedAt": "2026-09-30T01:48:21.000Z",
+      "excerpt": "The accord opened the door to future regulation but focused on four voluntary steps for the companies to take. The post Trump Says Top Tech Firms Have Signed Accord to ‘Self-Police’ AI Development appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/trump-says-top-tech-firms-have-signed-accord-to-self-police-ai-development",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/trump-says-top-tech-firms-have-signed-accord-to-self-police-ai-development"
+      ],
+      "cves": [],
+      "id": "s29"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft is rolling out Linux container support to WSL",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-is-rolling-out-linux-container-support-to-wsl/",
+      "publishedAt": "2026-09-30T00:40:57.000Z",
+      "excerpt": "Microsoft is taking Windows Subsystem for Linux beyond just running Linux distributions, as WSL Containers is now generally available. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-is-rolling-out-linux-container-support-to-wsl",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/microsoft/microsoft-is-rolling-out-linux-container-support-to-wsl"
+      ],
+      "cves": [],
+      "id": "s30"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "Phishing Abuses RMM Tools for Persistent Access",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/09/29/phishing-abuses-rmm-tools-persistent-access/",
+      "publishedAt": "2026-09-29T21:39:27.000Z",
+      "excerpt": "Microsoft observed phishing campaigns that abused MSP360 RMM to deploy ScreenConnect, creating redundant remote-access channels for follow-on activity The post Phishing Abuses RMM Tools for Persistent Access appeared first on Microsoft Security Blog.",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/09/29/phishing-abuses-rmm-tools-persistent-access",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://microsoft.com/en-us/security/blog/2026/09/29/phishing-abuses-rmm-tools-persistent-access"
+      ],
+      "cves": [],
+      "id": "s31"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Signal adds encypted local backup support to iOS, desktop apps",
+      "url": "https://www.bleepingcomputer.com/news/security/signal-adds-encypted-local-backup-support-to-ios-desktop-apps/",
+      "publishedAt": "2026-09-29T21:30:08.000Z",
+      "excerpt": "Signal, the secure messaging app, released version 8.30, completing the rollout of its secure backups feature across all supported operating systems (Android, iOS, Linux, macOS, and Windows). [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/signal-adds-encypted-local-backup-support-to-ios-desktop-apps",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/signal-adds-encypted-local-backup-support-to-ios-desktop-apps"
+      ],
+      "cves": [],
+      "id": "s33"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Unsloth Studio Flaw Turns Routine Model Inspection Into Code Execution",
+      "url": "https://www.darkreading.com/application-security/unsloth-studio-flaw-model-inspection-code-execution",
+      "publishedAt": "2026-09-29T21:08:42.000Z",
+      "excerpt": "A patched Unsloth Studio vulnerability allows malicious AI models to execute arbitrary Python code during inspection, via the trust_remote_code setting.",
+      "canonicalUrl": "https://darkreading.com/application-security/unsloth-studio-flaw-model-inspection-code-execution",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/application-security/unsloth-studio-flaw-model-inspection-code-execution"
+      ],
+      "cves": [],
+      "id": "s34"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "US Air Force members given over 6 years in prison for cyber theft of more than $2 million",
+      "url": "https://therecord.media/us-air-force-members-given-6-year-sentence-cyber",
+      "publishedAt": "2026-09-29T21:01:00.000Z",
+      "excerpt": "According to court documents, both men pleaded guilty to wire fraud, identity theft and access device fraud charges in June.",
+      "canonicalUrl": "https://therecord.media/us-air-force-members-given-6-year-sentence-cyber",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/us-air-force-members-given-6-year-sentence-cyber"
+      ],
+      "cves": [],
+      "id": "s35"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Custom ChatGPTs push ClickFix attacks to deploy RAT malware",
+      "url": "https://www.bleepingcomputer.com/news/security/custom-chatgpts-push-clickfix-attacks-to-deploy-rat-malware/",
+      "publishedAt": "2026-09-29T20:59:39.000Z",
+      "excerpt": "Custom variants of OpenAI's ChatGPT promoted in sponsored Google results are directing unsuspecting users to malicious sites that use ClickFix attacks to deliver malware. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/custom-chatgpts-push-clickfix-attacks-to-deploy-rat-malware",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/custom-chatgpts-push-clickfix-attacks-to-deploy-rat-malware"
+      ],
+      "cves": [],
+      "id": "s36"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Controversial spyware firm Paragon to go public by end of year",
+      "url": "https://therecord.media/controversial-spyware-firm-paragon-to-go-public",
+      "publishedAt": "2026-09-29T20:35:00.000Z",
+      "excerpt": "The company plans to close the deal around the end of the year at which point Paragon will begin trading on Nasdaq under the REDLattice umbrella.",
+      "canonicalUrl": "https://therecord.media/controversial-spyware-firm-paragon-to-go-public",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/controversial-spyware-firm-paragon-to-go-public"
+      ],
+      "cves": [],
+      "id": "s37"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "OpenAI CEO Announces New AI Agent and Avoids Mention of Security Concerns at Developer Conference",
+      "url": "https://www.securityweek.com/openai-ceo-announces-new-ai-agent-and-avoids-mention-of-security-concerns-at-developer-conference/",
+      "publishedAt": "2026-09-29T20:14:44.000Z",
+      "excerpt": "Altman made a slew of product announcements and updates, including the company’s new agents, called Dots. The post OpenAI CEO Announces New AI Agent and Avoids Mention of Security Concerns at Developer Conference appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/openai-ceo-announces-new-ai-agent-and-avoids-mention-of-security-concerns-at-developer-conference",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/openai-ceo-announces-new-ai-agent-and-avoids-mention-of-security-concerns-at-developer-conference"
+      ],
+      "cves": [],
+      "id": "s38"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "FBI tells ShinyHunters members to turn themselves in after recent arrest",
+      "url": "https://www.bleepingcomputer.com/news/security/fbi-tells-shinyhunters-members-to-turn-themselves-in-after-recent-arrest/",
+      "publishedAt": "2026-09-29T20:09:55.000Z",
+      "excerpt": "The FBI is warning members of the ShinyHunters extortion group to turn themselves in after Dutch police arrested a man the bureau described as one of the group's alleged leaders. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/fbi-tells-shinyhunters-members-to-turn-themselves-in-after-recent-arrest",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/fbi-tells-shinyhunters-members-to-turn-themselves-in-after-recent-arrest"
+      ],
+      "cves": [],
+      "id": "s39"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "OpenAI apologizes for agents breaching Australian government websites without authorization",
+      "url": "https://therecord.media/openai-apologizes-australia-medicare-breach",
+      "publishedAt": "2026-09-29T19:48:00.000Z",
+      "excerpt": "The artificial intelligence giant acknowledged it botched its response to the incidents and should have done more to promptly notify and work with the Australian government in the days after it discovered the breaches.",
+      "canonicalUrl": "https://therecord.media/openai-apologizes-australia-medicare-breach",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/openai-apologizes-australia-medicare-breach"
+      ],
+      "cves": [],
+      "id": "s40"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers exploit Citrix NetScaler zero-day to deploy web shells",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-citrix-netscaler-zero-day-to-deploy-web-shells/",
+      "publishedAt": "2026-09-29T18:37:12.000Z",
+      "excerpt": "Cybersecurity firms say attackers exploited the Citrix NetScaler CVE-2026-88772 zero-day to deploy custom web shells and tunneling malware, gain root access, steal credentials, and spread into internal networks. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-exploit-citrix-netscaler-zero-day-to-deploy-web-shells",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/hackers-exploit-citrix-netscaler-zero-day-to-deploy-web-shells"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-88772",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Citrix",
+            "product": "NetScaler",
+            "vulnerabilityName": "Citrix NetScaler Improper Restriction of Operations within the Bounds of a Memory Buffer Vulnerability",
+            "dateAdded": "2026-09-27",
+            "shortDescription": "Citrix NetScaler ADC and NetScaler Gateway contain an improper restriction of operations within the bounds of a memory buffer vulnerability that could allow for remote code execution or denial of service",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-09-30",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "Running the provided IOCs in the NetScaler console may help identify indicators of exploitation. Customers must conduct forensic triage as directed by BOD 26‑04 and follow Citrix’s published guidance for mitigations. For more information, please see: https://community.citrix.com/techzone-blogs/110_security-updates/netscaler-adc-and-netscaler-gateway-security-bulletin-for-cve-2026-88771-through-cve-2026-88778 ; https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697096 ; https://support.citrix.com/external/article/CTX694799/steps-to-take-if-netscaler-adc-is-suspec.html ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-88772",
+            "cwes": [
+              "CWE-119"
+            ]
+          },
+          "nvd": {
+            "description": "Vulnerability in Citrix NetScaler ADC and Citrix NetScaler Gateway.\n\nThis issue affects ADC: before 14.1-73.37, before 13.1-64.23, before 14.1-73.37 FIPS, and before 13.1.37.279 FIPS and NDcPP; Gateway: before 14.1-73.37 and before 13.1-64.23 leading to Remote Code Execution or Denial of Service",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.5,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-119"
+            ],
+            "published": "2026-09-27T17:16:56.390",
+            "lastModified": "2026-09-28T12:26:47.670",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697096&articleTitle=Citrix_NetScaler_ADC_and_Citrix_NetScaler_Gateway_Security_Bulletin_for_CVE_2026_88771_CVE_2026_88772_CVE_2026_88773_CVE_2026_88774_CVE_2026_88775_CVE_2026_88776_CVE_2026_88777_and_CVE_2026_88778",
+                "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-88772",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6BC2D462-9ABE-4024-8E46-8D265C0B19FB",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2DB314FE-3886-4ABD-A820-B8A70EBB23A6",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:ndcpp:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FCFFA1B3-87CE-4CC8-990E-D3CE0B55CD45",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1.37.279"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1CA9588A-E3EB-44FC-9515-6EB89BB8C1D6",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "046FF602-D956-4961-89BF-2041A3590004",
+                "versionStartIncluding": "14.1-66.68",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "14.1-73.37",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3286D2C3-EA7E-4D9C-95DE-05D462DC8B1B",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C77243A7-1FDB-4557-88BE-EDF3BAA56A81",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.37"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "bleepingcomputer",
+                "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-citrix-netscaler-zero-day-to-deploy-web-shells/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.09.30",
+              "dateReleased": "2026-09-30T16:59:23.0688Z",
+              "retrievedAt": "2026-09-30T17:28:10.229Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-76504%2CCVE-2026-73570%2CCVE-2026-88771%2CCVE-2026-88772%2CCVE-2026-86950",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-88772",
+              "retrievedAt": "2026-09-30T17:28:10.229Z"
+            }
+          }
+        }
+      ],
+      "id": "s41"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Former US Air Force members sent to prison over BEC attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/former-us-air-force-members-sent-to-prison-over-bec-attacks/",
+      "publishedAt": "2026-09-29T18:09:39.000Z",
+      "excerpt": "Two former members of the United States Air Force were sentenced to a combined 189 months in federal prison for their roles in a multi-year series of business email compromise (BEC) scams and phishing campaigns. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/former-us-air-force-members-sent-to-prison-over-bec-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/former-us-air-force-members-sent-to-prison-over-bec-attacks"
+      ],
+      "cves": [],
+      "id": "s42"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "French Tax Data Theft Using Stolen Staff Passwords Went Undetected for Seven Weeks",
+      "url": "https://thehackernews.com/2026/09/french-tax-data-theft-using-stolen.html",
+      "publishedAt": "2026-09-29T17:47:01.000Z",
+      "excerpt": "An attacker used stolen passwords of staff at France's tax administration to take tax data on hundreds of thousands of taxpayers and businesses in June and July. Neither the tax administration nor France's national cybersecurity agency saw the data leave. The attack was not sophisticated, the agency, ANSSI, says in a report (in French) published on Tuesday: it worked because of weak",
+      "canonicalUrl": "https://thehackernews.com/2026/09/french-tax-data-theft-using-stolen.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/09/french-tax-data-theft-using-stolen.html"
+      ],
+      "cves": [],
+      "id": "s43"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Windows 11 2026 Update released, here's everything you need to know",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/windows-11-2026-update-released-heres-everything-you-need-to-know/",
+      "publishedAt": "2026-09-29T17:37:40.000Z",
+      "excerpt": "Microsoft has started rolling out Windows 11 26H2 to everyone, and while it's this year's big annual feature update, you probably won't notice a massive difference after installing it. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/windows-11-2026-update-released-heres-everything-you-need-to-know",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/microsoft/windows-11-2026-update-released-heres-everything-you-need-to-know"
+      ],
+      "cves": [],
+      "id": "s44"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "​​Beyond source code: A path to the keys to the kingdom",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/09/29/beyond-source-code-a-path-to-the-keys-to-the-kingdom/",
+      "publishedAt": "2026-09-29T16:00:00.000Z",
+      "excerpt": "Explore how Storm-3068 turned a compromised identity into broader cloud access and the steps organizations can take to defend their identities, pipelines, and cloud infrastructure. The post ​​Beyond source code: A path to the keys to the kingdom appeared first on Microsoft Security Blog.",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/09/29/beyond-source-code-a-path-to-the-keys-to-the-kingdom",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://microsoft.com/en-us/security/blog/2026/09/29/beyond-source-code-a-path-to-the-keys-to-the-kingdom"
+      ],
+      "cves": [],
+      "id": "s46"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 384,
+    "promptCacheMissTokens": 19251,
+    "outputTokens": 4286,
+    "estimatedCostUsd": 0.0038962952000000006
+  }
+}

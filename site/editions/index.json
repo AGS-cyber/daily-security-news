@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-09-30",
+    "mode": "article",
+    "headline": "Four zero-days in the wild and a security stack under attack",
+    "count": 46
+  },
+  {
     "date": "2026-09-29",
     "mode": "article",
     "headline": "Apple's zero-day sets the tone on a day of edge-device and supply-chain exposure",
