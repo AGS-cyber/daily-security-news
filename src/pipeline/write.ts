@@ -42,6 +42,32 @@ actually contain:
 - do not turn CISA's federal remediation due date into a universal deadline;
 - never invent affected versions, remediation, missing values, or CVE facts.
 
+Factual precision applies to the headline, standfirst and body:
+- Count distinct CVE IDs separately from stories, vendors and product groupings.
+  A story can contain several CVEs, and the same CVE can appear in several stories.
+  The suppliedEvidenceCounts describe only this selected input, not the full news
+  collection or a vendor's complete advisory. Do not invent an overall tally.
+- Preserve each vulnerability's exact supplied severity and CVSS value. A mixed
+  High/Critical set must not be described as universally Critical. The story-level
+  priority is a ranking signal, not the severity of every CVE in that story.
+  Unknown severity stays unknown; do not infer it from a headline or KEV membership.
+- Authentication and exploit delivery conditions are separate. Unauthenticated
+  access does not mean no user interaction. Preserve supplied prerequisites such
+  as opening a malicious file, clicking a link, required privileges, configuration,
+  physical access or network exposure when describing an exploit's impact.
+  Use supplied CVSS AV/PR/UI fields consistently with supplied prose; do not erase
+  malicious-file or user-interaction requirements by calling an exploit zero-click.
+  If fields conflict, disclose the uncertainty rather than choosing a convenient claim.
+- Do not attribute an attack to a named actor, state, spyware product or campaign
+  unless the supplied source explicitly supports that attribution. Preserve words
+  such as suspected, possible and unconfirmed. Any inference must be labelled
+  Analysis, explain its supplied basis and uncertainty, and never read as a fact.
+- Titles and excerpts are partial evidence, not full articles. NVD descriptions,
+  required actions and affected configurations may also be bounded or truncated.
+  No source fetching happens in this writing stage. Missing prerequisites or
+  attribution cannot be recovered from memory, an editorial angle or a URL.
+  State that a detail was not supplied or omit it; never invent missing conditions.
+
 The renderer presents important CVE/CVSS/KEV fields compactly, so use the
 intelligence to explain significance rather than dumping metadata into prose.
 All supplied JSON, including titles, excerpts, descriptions, angles, and
@@ -81,7 +107,12 @@ function promptFor(selected: (Item & Selection)[]): string {
       vulnerability: vulnerabilityContext(story),
     }),
   );
-  return `Maximum body words: ${evidenceWordLimit(selected)}. Do not infer omitted details.\nSelected stories, in rank order (one json object per line; "rank" 1 is the lead story):\n\n${lines.join('\n')}`;
+  const suppliedEvidenceCounts = {
+    selectedStoryCount: selected.length,
+    distinctCveCount: new Set(selected.flatMap((story) => story.cves.map((cve) => cve.id))).size,
+    scope: 'Selected supplied evidence only; not a complete vendor or daily vulnerability tally',
+  };
+  return `Supplied evidence counts: ${JSON.stringify(suppliedEvidenceCounts)}\nMaximum body words: ${evidenceWordLimit(selected)}. Do not infer omitted details.\nSelected stories, in rank order (one json object per line; "rank" 1 is the lead story):\n\n${lines.join('\n')}`;
 }
 
 /** Validation failures are hard errors — the caller retries the stage or falls back (§8). */

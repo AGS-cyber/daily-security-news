@@ -136,3 +136,50 @@ test('short evidence cannot be inflated to an 800-word article', async () => {
 test('raw HTML is rejected even when citations are valid', async () => {
  await assert.rejects(write(SELECTED, client(GOOD + '<script>alert(1)</script>')), /raw HTML/);
 });
+async function capturePrecisionInput(selected: (Item & Selection)[] = SELECTED) {
+ let request: Parameters<DeepSeekClient['complete']>[0] | undefined;
+ await write(selected, {async complete(o) {request = o; return {text: GOOD, usage: USAGE};}});
+ assert.ok(request);
+ return request;
+}
+
+test('writer input separates distinct CVEs from duplicate vendor/story groupings and preserves mixed severity', async () => {
+ const high = vulnerability('CVE-2026-1111', {severity:'HIGH',score:8.1});
+ const critical = vulnerability('CVE-2026-2222', {severity:'CRITICAL',score:9.8});
+ const third = vulnerability('CVE-2026-4444', {severity:'HIGH',score:7.5});
+ const selected = SELECTED.map((s) => ({...s, cves:[high,critical,third]}));
+ const request = await capturePrecisionInput(selected);
+ const counts = JSON.parse(request.user.split('\n')[0]!.replace('Supplied evidence counts: ',''));
+ assert.equal(counts.selectedStoryCount,2);
+ assert.equal(counts.distinctCveCount,3);
+ const stories = request.user.split('\n').filter((line) => line.startsWith('{')).map((line) => JSON.parse(line));
+ assert.equal(stories[0].vulnerability.cves[0].nvd.cvss.severity,'HIGH');
+ assert.equal(stories[0].vulnerability.cves[1].nvd.cvss.severity,'CRITICAL');
+ assert.match(request.system,/mixed\s+High\/Critical set must not be described as universally Critical/);
+ assert.match(request.system,/priority is a ranking signal, not the severity/);
+});
+
+test('writer retains malicious-file and user-interaction evidence separately from authentication', async () => {
+ const cve = vulnerability('CVE-2026-3333');
+ cve.nvd!.description = 'An unauthenticated attacker can exploit this issue only if a user opens a malicious file.';
+ cve.nvd!.cvss!.vector = 'CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H';
+ const selected = SELECTED.map((s,i) => ({...s,cves:i===0?[cve]:[],excerpt:i===0?'Requires opening a malicious file.':undefined}));
+ const request = await capturePrecisionInput(selected);
+ assert.match(request.user,/only if a user opens a malicious file/);
+ assert.match(request.user,/PR:N\/UI:R/);
+ assert.match(request.system,/Unauthenticated\s+access does not mean no user interaction/);
+ assert.match(request.system,/malicious-file or user-interaction requirements/);
+});
+
+test('writer preserves uncertain attribution and explicitly treats missing source detail as unknown', async () => {
+ const selected = SELECTED.map((s,i) => ({...s,excerpt:i===0?'A possible spyware attack is suspected; the actor is unconfirmed.':undefined}));
+ const request = await capturePrecisionInput(selected);
+ assert.match(request.user,/possible spyware attack is suspected; the actor is unconfirmed/);
+ assert.match(request.system,/unless the supplied source explicitly supports that attribution/);
+ assert.match(request.system,/Analysis, explain its supplied basis and uncertainty/);
+ assert.match(request.system,/No source fetching happens in this writing stage/);
+ assert.match(request.system,/never invent missing conditions/);
+ assert.match(request.system,/excerpts are partial evidence, not full articles/);
+ assert.match(request.user,/"distinctCveCount":0/);
+ assert.match(request.user,/"excerpt":""/);
+});
