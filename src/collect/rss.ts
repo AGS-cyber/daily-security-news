@@ -1,3 +1,4 @@
+import { httpUrl } from '../url.js';
 import Parser from 'rss-parser';
 import type { DegradedNotice, RawItem, Source } from '../types.js';
 
@@ -24,7 +25,7 @@ function errorMessage(err: unknown): string {
 
 export async function collectRss(sources: Source[]): Promise<CollectResult> {
   const settled = await Promise.allSettled(
-    sources.map((source) => parser.parseURL(source.feedUrl)),
+    sources.map(async (source) => parser.parseURL(httpUrl(source.feedUrl))),
   );
 
   const items: RawItem[] = [];

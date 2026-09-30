@@ -16,7 +16,7 @@ const SYSTEM = `You are the writer of a daily security news briefing. You are
 given the stories an editor has already selected, with their section, rank and
 angle, and you write the briefing itself.
 
-Length: about 800 words of body prose — a three-to-four minute read.
+Length: respect the evidence word budget in the user prompt; never pad. Report only supplied facts. Angles are editorial suggestions, not evidence. Never invent remediation, affected versions, causes or predictions. Label interpretation as Analysis and state uncertainty. Excerpts may be truncated. Use short summaries — a three-to-four minute read.
 
 The reader is security-literate. Do not explain what ransomware, a CVE, or a
 supply-chain attack is. Write for someone who wants to know which of
@@ -65,6 +65,10 @@ Prose about the stories in that section, citing them as [[s3]].
 
 More prose, citing stories as [[s7]].`;
 
+export function evidenceWordLimit(selected: (Item & Selection)[]): number {
+ const words = selected.map((s) => `${s.title} ${s.excerpt ?? ''} ${s.cves.length ? JSON.stringify(vulnerabilityContext(s)) : ''}`).join(' ').split(/\s+/).length;
+ return Math.min(800, Math.max(80, Math.ceil(words * 1.25)));
+}
 function promptFor(selected: (Item & Selection)[]): string {
   const lines = selected.map((story) =>
     JSON.stringify({
@@ -77,7 +81,7 @@ function promptFor(selected: (Item & Selection)[]): string {
       vulnerability: vulnerabilityContext(story),
     }),
   );
-  return `Selected stories, in rank order (one json object per line; "rank" 1 is the lead story):\n\n${lines.join('\n')}`;
+  return `Maximum body words: ${evidenceWordLimit(selected)}. Do not infer omitted details.\nSelected stories, in rank order (one json object per line; "rank" 1 is the lead story):\n\n${lines.join('\n')}`;
 }
 
 /** Validation failures are hard errors — the caller retries the stage or falls back (§8). */
@@ -134,7 +138,11 @@ export function parseArticle(text: string, selected: (Item & Selection)[]): Pars
     throw new ArticleInvalidError('write cited no stories at all');
   }
 
-  const knownCves = new Set(selected.flatMap((story) => story.cves.map((cve) => cve.id)));
+  const bodyIds = new Set([...bodyMarkdown.matchAll(CITATION)].map((m) => m[1]!.trim()));
+ for (const id of known) if (!bodyIds.has(id)) throw new ArticleInvalidError(`write omitted selected story "${id}" from body citations`);
+ if (bodyMarkdown.split(/\s+/).filter(Boolean).length > evidenceWordLimit(selected)) throw new ArticleInvalidError('write exceeded the evidence word budget');
+ if (/<\/?[a-z!]|!\[|\]\(/i.test(text)) throw new ArticleInvalidError('write returned raw HTML or external Markdown links');
+ const knownCves = new Set(selected.flatMap((story) => story.cves.map((cve) => cve.id)));
   for (const id of extractCveIds(`${headline}\n${standfirst}\n${bodyMarkdown}`)) {
     if (!knownCves.has(id)) {
       throw new ArticleInvalidError(`write invented CVE id "${id}", which was not supplied`);

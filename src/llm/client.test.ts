@@ -57,3 +57,31 @@ test('the key is read at construction, not captured at import', () => {
   assert.equal(first.ok, false);
   assert.equal(second.ok, true);
 });
+
+test('SDK retries are disabled: only two transport attempts occur', async () => {
+ let calls = 0;
+ const created = withKey('fake-test-key', () => createClient({fetch: async () => { calls++; return new Response('unavailable', {status: 503}); }}));
+ assert.equal(created.ok, true);
+ if (!created.ok) return;
+ await assert.rejects(created.client.complete({system: 'test', user: 'test'}), /failed twice/);
+ assert.equal(calls, 2);
+});
+test('empty responses exhaust exactly one wrapper retry', async () => {
+ let calls = 0;
+ const created = withKey('fake-test-key', () => createClient({fetch: async () => { calls++; return Response.json({choices: [{message: {content: ''}}]}); }}));
+ if (!created.ok) assert.fail('expected client');
+ await assert.rejects(created.client.complete({system: 'test', user: 'test'}), /empty content/);
+ assert.equal(calls, 2);
+});
+test('request timeout aborts both bounded attempts', async () => {
+ let calls = 0;
+ const created = withKey('fake-test-key', () => createClient({timeoutMs: 10, fetch: async (_url, init) => {
+  calls++;
+  return await new Promise<Response>((_resolve, reject) => {
+   init?.signal?.addEventListener('abort', () => reject(new Error('aborted')), {once: true});
+  });
+ }}));
+ if (!created.ok) assert.fail('expected client');
+ await assert.rejects(created.client.complete({system: 'test', user: 'test'}), /failed twice/);
+ assert.equal(calls, 2);
+});

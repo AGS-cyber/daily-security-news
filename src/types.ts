@@ -46,6 +46,7 @@ export interface CveReference {
 
 export type ReferencedCluster = Omit<Cluster, 'members'> & {
   cveReferences: CveReference[];
+ memberCanonicalUrls?: string[];
 };
 
 export type EnrichmentStatus = 'found' | 'not_found' | 'unavailable';

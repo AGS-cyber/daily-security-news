@@ -601,3 +601,25 @@ security news.
 
 **iOS is not distributed.** CI builds and links it, but it has no signing
 identity and its `AppIcon.appiconset` is empty (`app.md` §1, §7).
+
+## Review remediation state (2026-09-30)
+The 2026-08-18 status above is historical, not proof of current live freshness.
+The initial checkout contained 13 editions ending August 18. Read-only remote verification found main at c94a1db with editions through September 29; the feature branch now uses that history. No live deployment was verified
+or performed during this remediation. Scheduled runs now check today's generated
+record before pushing and poll the deployed record for the exact generation after
+pushing. Verification has bounded attempts and fails visibly for stale deployments.
+PR/feature-branch pipeline CI runs offline tests, typechecking and stored-page builds.
+SDK transport retries are disabled: the wrapper makes at most two requests, each
+with a 60-second timeout. Each stage may retry validation once; two stages therefore
+have a worst-case eight requests (about eight minutes plus overhead).
+
+Android personal releases require an owner-approved persistent signing key, password
+and alias in ANDROID_SIGNING_KEY_BASE64, ANDROID_SIGNING_PASSWORD and
+ANDROID_SIGNING_ALIAS. No credentials were generated, imported or configured here.
+Use the same key and increasing versionCode for every release and retain a secure
+backup. Existing throwaway-key installations need one uninstall before adopting the
+stable key. Local debug builds retain the local machine's debug key; releases build
+the release variant and fail closed without the approved key. Signing secrets are
+restored only into the ephemeral runner. Key setup requires separate owner approval.
+iOS has configured build checks; this Windows session does not establish compilation,
+simulator execution or runtime testing. Never describe it as tested based on YAML.

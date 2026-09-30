@@ -193,7 +193,7 @@ async function run(): Promise<void> {
   console.log(`render      ${written.join(' ')}`);
 
   // Only after both writes succeed: an unrendered item must never be marked seen.
-  for (const item of items) seen.add(item.canonicalUrl, date);
+  for (const item of items) for (const url of item.memberCanonicalUrls ?? [item.canonicalUrl]) seen.add(url, date);
   await seen.save();
   console.log(`seen        ${seen.size} entries saved`);
 }

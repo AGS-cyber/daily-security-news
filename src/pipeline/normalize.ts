@@ -1,3 +1,4 @@
+import { httpUrl } from '../url.js';
 import type { NormalizedItem, RawItem } from '../types.js';
 
 const TRACKING_PARAM = /^(utm_|ref$|ref_|fbclid$|gclid$|mc_cid$|mc_eid$|source$|amp$|si$)/i;
@@ -7,7 +8,7 @@ const MAX_FUTURE_MS = 2 * 24 * 60 * 60 * 1000;
 
 /** Canonicalize a URL for dedupe. Throws on unparseable input. */
 export function canonicalize(rawUrl: string): string {
-  const url = new URL(rawUrl);
+  const url = new URL(httpUrl(rawUrl));
 
   url.protocol = 'https:';
   url.hostname = url.hostname.toLowerCase().replace(/^www\./, '');
