@@ -1,5 +1,5 @@
 import { httpUrl } from '../url.js';
-import type { NormalizedItem, RawItem } from '../types.js';
+import type { NormalizedItem, RawItem, NormalizationExclusion, DegradedNotice } from '../types.js';
 
 const TRACKING_PARAM = /^(utm_|ref$|ref_|fbclid$|gclid$|mc_cid$|mc_eid$|source$|amp$|si$)/i;
 
@@ -52,33 +52,48 @@ function cleanExcerpt(raw: string | undefined): string | undefined {
   return text;
 }
 
-export function normalize(items: RawItem[]): { items: NormalizedItem[]; dropped: number } {
-  const out: NormalizedItem[] = [];
-  let dropped = 0;
-  const now = Date.now();
+/** A future event needs both an event URL and an explicit event label. */
+function isEventListing(item: RawItem): boolean {
+  return /\/events?\//i.test(new URL(item.url).pathname)
+    && /\b(?:virtual event|webinar|conference|summit)\b/i.test(item.title);
+}
 
+export function normalize(items: RawItem[], now = new Date()): {
+  items: NormalizedItem[];
+  dropped: number;
+  exclusions: NormalizationExclusion[];
+} {
+  const out: NormalizedItem[] = [];
+  const exclusions: NormalizationExclusion[] = [];
+  function exclude(item: RawItem, reason: NormalizationExclusion['reason']): void {
+    exclusions.push({sourceId: item.sourceId, title: item.title, url: item.url,
+      publishedAt: item.publishedAt, reason, observedAt: now.toISOString()});
+  }
   for (const item of items) {
     let canonicalUrl: string;
-    try {
-      canonicalUrl = canonicalize(item.url);
-    } catch {
-      dropped++;
-      continue;
-    }
-
+    try { canonicalUrl = canonicalize(item.url); }
+    catch { exclude(item, 'invalid_url'); continue; }
     const date = new Date(item.publishedAt);
-    if (Number.isNaN(date.getTime()) || date.getTime() - now > MAX_FUTURE_MS) {
-      dropped++;
+    if (Number.isNaN(date.getTime())) { exclude(item, 'invalid_date'); continue; }
+    if (date.getTime() - now.getTime() > MAX_FUTURE_MS) {
+      exclude(item, isEventListing(item) ? 'future_event' : 'future_timestamp');
       continue;
     }
-
-    out.push({
-      ...item,
-      canonicalUrl,
-      publishedAt: date.toISOString(),
-      excerpt: cleanExcerpt(item.excerpt),
-    });
+    out.push({...item, canonicalUrl, publishedAt: date.toISOString(), excerpt: cleanExcerpt(item.excerpt)});
   }
+  return {items: out, dropped: exclusions.length, exclusions};
+}
 
-  return { items: out, dropped };
+export function normalizationNotices(exclusions: NormalizationExclusion[]): DegradedNotice[] {
+  const invalid = exclusions.filter((item) => item.reason !== 'future_event');
+  if (invalid.length === 0) return [];
+  const counts = new Map<NormalizationExclusion['reason'], number>();
+  for (const item of invalid) counts.set(item.reason, (counts.get(item.reason) ?? 0) + 1);
+  const labels = {
+    invalid_url: 'invalid or disallowed URL', invalid_date: 'invalid publication date',
+    future_timestamp: 'unexplained publication date more than two days ahead',
+    future_event: 'future event listing',
+  };
+  const details = [...counts].map(([reason, count]) => `${count} with ${labels[reason]}`).join('; ');
+  return [{stage: 'normalize', message: `${invalid.length} collected ${invalid.length === 1 ? 'item was' : 'items were'} excluded: ${details}.`}];
 }

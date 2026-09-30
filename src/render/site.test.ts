@@ -5,6 +5,7 @@ import { join } from 'node:path';
 import { test } from 'node:test';
 import type { ArticleEdition, DigestEdition, Item, Selection } from '../types.js';
 import { vulnerability } from '../test-helpers.js';
+import { articlePage } from './html.js';
 import { writeEdition } from './edition.js';
 import { writeSite } from './site.js';
 
@@ -255,4 +256,33 @@ test('hostile saved Markdown cannot create scripts, images or executable links',
   assert.match(html, /Content-Security-Policy/);
   assert.match(html, /href="https:\/\/example.test\/a"/);
  });
+});
+test('expected future event exclusions show an informational notice without an incomplete banner', () => {
+ const edition = articleEdition({normalizationExclusions:[{sourceId:'darkreading', title:'[Virtual Event] Outlook',
+ url:'https://example.test/events/outlook', publishedAt:'2026-12-03T16:00:00Z',
+ observedAt:'2026-09-29T17:29:47.241Z', reason:'future_event'}]});
+ const html = articlePage(edition);
+ assert.match(html,/1 future event listing was excluded/);
+ assert.doesNotMatch(html,/This edition is incomplete/);
+});
+test('legacy normalize-only notice is honest and leaves the stored record unchanged', async () => {
+ await withDirs(async (dirs) => {
+  const edition = articleEdition({degraded:[{stage:'normalize',message:'1 items were dropped as unparseable'}]});
+  await writeEdition(edition,dirs.editionsDir);
+  const before = await readFile(join(dirs.editionsDir,`${edition.date}.json`),'utf8');
+  await writeSite(edition,dirs);
+  const html = await readFile(join(dirs.siteDir,'index.html'),'utf8');
+  assert.match(html,/Collection notice/);
+  assert.match(html,/specific rejection reason was not recorded/);
+  assert.doesNotMatch(html,/This edition is incomplete|future event/);
+  assert.equal(await readFile(join(dirs.editionsDir,`${edition.date}.json`),'utf8'), before);
+  assert.deepEqual(JSON.parse(await readFile(join(dirs.siteDir,'editions',`${edition.date}.json`),'utf8')),edition);
+ });
+});
+test('known malformed exclusions and independent failures retain the incomplete warning', () => {
+ const edition = articleEdition({normalizationExclusions:[],degraded:[{stage:'normalize',message:'1 collected item was excluded: 1 with invalid publication date.'}]});
+ assert.match(articlePage(edition),/This edition is incomplete/);
+ const mixed = articleEdition({degraded:[{stage:'normalize',message:'1 items were dropped as unparseable'},{stage:'collect',message:'A feed failed'}]});
+ assert.match(articlePage(mixed),/This edition is incomplete/);
+ assert.match(articlePage(mixed),/specific rejection reason was not recorded/);
 });

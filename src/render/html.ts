@@ -6,7 +6,7 @@ const marked = new Marked({ renderer: {
  image({ text }) { return escapeHtml(text); },
 } });
 import { sources } from '../config/sources.js';
-import type { ArticleEdition, DegradedNotice, DigestEdition, Item } from '../types.js';
+import type { ArticleEdition, DegradedNotice, DigestEdition, Item, NormalizationExclusion } from '../types.js';
 import {
   calendarMonths,
   type ArchiveEntry,
@@ -188,12 +188,24 @@ function formatTime(iso: string): string {
   return `${String(d.getUTCHours()).padStart(2, '0')}:${String(d.getUTCMinutes()).padStart(2, '0')} UTC`;
 }
 
-function degradedBanner(notices: DegradedNotice[]): string {
-  if (notices.length === 0) return '';
-  return `<div class="degraded">
-<h2>This edition is incomplete</h2>
+function degradedBanner(notices: DegradedNotice[], exclusions?: NormalizationExclusion[]): string {
+  const expected = exclusions?.filter((item) => item.reason === 'future_event') ?? [];
+  const eventNotice = expected.length ? `<aside class="notice">${expected.length} future event ${expected.length === 1 ? 'listing was' : 'listings were'} excluded from the news collection.</aside>` : '';
+  if (notices.length === 0) return eventNotice;
+  // Old records did not distinguish malformed input from expected future events.
+  // Preserve their recorded provenance without claiming a retrospective diagnosis.
+  const legacy = (n: DegradedNotice) => exclusions === undefined && n.stage === 'normalize'
+    && /^\d+ items were dropped as unparseable$/.test(n.message);
+  const collectionOnly = notices.every(legacy);
+  function message(n: DegradedNotice): string {
+    if (!legacy(n)) return n.message;
+    const count = Number(n.message.split(' ')[0]);
+    return `${count} collected ${count === 1 ? 'item was' : 'items were'} excluded during normalization. The specific rejection reason was not recorded.`;
+  }
+  return `${eventNotice}<div class="${collectionOnly ? 'notice' : 'degraded'}">
+<h2>${collectionOnly ? 'Collection notice' : 'This edition is incomplete'}</h2>
 <ul>
-${notices.map((n) => `<li>${escapeHtml(n.message)}</li>`).join('\n')}
+${notices.map((n) => `<li>${escapeHtml(message(n))}</li>`).join('\n')}
 </ul>
 </div>`;
 }
@@ -249,7 +261,7 @@ Every story collected in the window is listed below in the order it was publishe
 with no editorial selection, ranking, or summarising applied.
 </div>`;
 
-  const degraded = degradedBanner(edition.degraded);
+  const degraded = degradedBanner(edition.degraded, edition.normalizationExclusions);
 
   const body = storyList(edition.items, 'No new stories in this window.');
 
@@ -269,7 +281,7 @@ ${body}`,
 export function articlePage(edition: ArticleEdition): string {
   const { stats } = edition;
 
-  const degraded = degradedBanner(edition.degraded);
+  const degraded = degradedBanner(edition.degraded, edition.normalizationExclusions);
 
   // Render untrusted Markdown with raw HTML escaped, then insert trusted citations.
   const bodyHtml = substituteCitations(marked.parse(edition.bodyMarkdown, {
