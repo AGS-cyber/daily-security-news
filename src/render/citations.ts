@@ -1,3 +1,4 @@
+import { httpUrl } from '../url.js';
 import type { Item, Selection } from '../types.js';
 import { escapeHtml } from './escape.js';
 
@@ -25,6 +26,6 @@ export function substituteCitations(
     if (!story) {
       throw new Error(`citation [[${rawId}]] has no matching selected story`);
     }
-    return `<a href="${escapeHtml(story.url)}">${escapeHtml(story.title)}</a>`;
+    return `<a href="${escapeHtml(httpUrl(story.url))}">${escapeHtml(story.title)}</a>`;
   });
 }

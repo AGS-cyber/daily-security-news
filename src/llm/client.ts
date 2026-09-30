@@ -86,7 +86,7 @@ export type ClientOrReason =
  * while the secret plainly existed, which sent the search to the workflow file
  * instead of the stored value. See operations.md §5.
  */
-export function createClient(): ClientOrReason {
+export function createClient(options: { fetch?: typeof fetch; timeoutMs?: number } = {}): ClientOrReason {
   const raw = process.env['DEEPSEEK_API_KEY'];
   if (raw === undefined) return { ok: false, reason: 'DEEPSEEK_API_KEY is not set' };
 
@@ -95,7 +95,7 @@ export function createClient(): ClientOrReason {
     return { ok: false, reason: 'DEEPSEEK_API_KEY is set but its value is empty' };
   }
 
-  const openai = new OpenAI({ apiKey, baseURL: BASE_URL });
+  const openai = new OpenAI({ apiKey, baseURL: BASE_URL, maxRetries: 0, timeout: options.timeoutMs ?? 60_000, ...(options.fetch ? { fetch: options.fetch } : {}) });
 
   const client: DeepSeekClient = {
     async complete(o) {

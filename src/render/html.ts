@@ -1,4 +1,10 @@
-import { marked } from 'marked';
+import { Marked } from 'marked';
+import { httpUrl } from '../url.js';
+const marked = new Marked({ renderer: {
+ html({ text }) { return escapeHtml(text); },
+ link({ href, tokens }) { const text = this.parser.parseInline(tokens); try { return `<a href="${escapeHtml(httpUrl(href))}">${text}</a>`; } catch { return text; } },
+ image({ text }) { return escapeHtml(text); },
+} });
 import { sources } from '../config/sources.js';
 import type { ArticleEdition, DegradedNotice, DigestEdition, Item } from '../types.js';
 import {
@@ -141,6 +147,7 @@ export function layout(o: { title: string; bodyHtml: string; generatedAt: string
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="${PALETTE.bg}">
 <link rel="icon" type="image/svg+xml" href="${FAVICON_HREF}">
@@ -197,7 +204,7 @@ function vulnerabilityMetadata(items: Item[], summary = false): string {
   const list = rows
     .map((row) => {
       const id = row.href
-        ? `<a href="${escapeHtml(row.href)}">${escapeHtml(row.id)}</a>`
+        ? `<a href="${escapeHtml(httpUrl(row.href))}">${escapeHtml(row.id)}</a>`
         : escapeHtml(row.id);
       return `<li>${[id, ...row.labels.map(escapeHtml)]
         .map((part) => `<span>${part}</span>`)
@@ -217,13 +224,13 @@ ${items
   .map((item) => {
     const also = item.alsoCoveredBy.length
       ? `<p class="also">Also covered by: ${item.alsoCoveredBy
-          .map((a) => `<a href="${escapeHtml(a.url)}">${escapeHtml(a.name)}</a>`)
+          .map((a) => `<a href="${escapeHtml(httpUrl(a.url))}">${escapeHtml(a.name)}</a>`)
           .join(', ')}</p>`
       : '';
     const excerpt = item.excerpt ? `<p class="excerpt">${escapeHtml(item.excerpt)}</p>` : '';
     const vulnerabilities = vulnerabilityMetadata([item]);
     return `<li id="${escapeHtml(item.id)}">
-<p class="story-title"><a href="${escapeHtml(item.url)}">${escapeHtml(item.title)}</a></p>
+<p class="story-title"><a href="${escapeHtml(httpUrl(item.url))}">${escapeHtml(item.title)}</a></p>
 <p class="meta">${escapeHtml(sourceLabel(item.sourceId))} · ${escapeHtml(formatTime(item.publishedAt))}</p>${vulnerabilities}
 ${excerpt}
 ${also}
@@ -264,9 +271,10 @@ export function articlePage(edition: ArticleEdition): string {
 
   const degraded = degradedBanner(edition.degraded);
 
-  const bodyHtml = marked.parse(substituteCitations(edition.bodyMarkdown, edition.selected), {
+  // Render untrusted Markdown with raw HTML escaped, then insert trusted citations.
+  const bodyHtml = substituteCitations(marked.parse(edition.bodyMarkdown, {
     async: false,
-  });
+  }), edition.selected);
 
   const also = `<h2 class="also-heading">Also collected today</h2>
 ${storyList(edition.alsoCollected, 'Every story collected today was written up above.')}`;

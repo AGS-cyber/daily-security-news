@@ -25,9 +25,20 @@ android {
         }
     }
 
+    signingConfigs {
+        if (System.getenv("DSN_SIGNING_STORE") != null) {
+            create("personal") {
+                storeFile = file(System.getenv("DSN_SIGNING_STORE"))
+                storePassword = System.getenv("DSN_SIGNING_PASSWORD")
+                keyAlias = System.getenv("DSN_SIGNING_ALIAS")
+                keyPassword = System.getenv("DSN_SIGNING_PASSWORD")
+            }
+        }
+    }
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.findByName("personal")
         }
     }
 

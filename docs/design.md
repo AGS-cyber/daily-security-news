@@ -582,3 +582,11 @@ kept), and the site's own record of every edition under `site/editions/`.
 **If it ever comes back,** it comes back with delivery proven before the
 subscribe form goes up, not after — the ordering that failed here was shipping
 the sign-up first and discovering months later that the send end had never run.
+
+## Evidence and rendering contract (2026-09-30)
+The fixed 800-word target is superseded by a capped evidence-derived word budget.
+Every selected story must have a body citation. Supplied facts and explicitly labelled
+analysis must remain distinct; no inference of omitted excerpts or remediation.
+Raw HTML is refused by writing validation and rendered as text from saved records.
+Only credential-free HTTP(S) links are permitted. All cluster member canonical URLs
+are retained in new editions and recorded only after publication files are written.

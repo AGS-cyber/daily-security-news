@@ -244,3 +244,15 @@ test('a malformed edition JSON is fatal rather than skipped', async () => {
     await assert.rejects(() => writeSite(edition, dirs), /unknown "mode"/);
   });
 });
+
+test('hostile saved Markdown cannot create scripts, images or executable links', async () => {
+ await withDirs(async (dirs) => {
+  const edition = articleEdition({bodyMarkdown: '## News\n<script>alert(1)</script><img src=x onerror=alert(1)>\n[bad](javascript:alert(1)) [[s1]]'});
+  await writeEdition(edition, dirs.editionsDir);
+  await writeSite(edition, dirs);
+  const html = await readFile(join(dirs.siteDir, 'index.html'), 'utf8');
+  assert.doesNotMatch(html, /<script|<img|href="javascript:/i);
+  assert.match(html, /Content-Security-Policy/);
+  assert.match(html, /href="https:\/\/example.test\/a"/);
+ });
+});

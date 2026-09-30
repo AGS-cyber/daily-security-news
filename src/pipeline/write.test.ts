@@ -126,3 +126,13 @@ test('accepts an exact supplied CVE and passes authoritative context to the mode
   assert.match(request?.user ?? '', /CVE-2026-12345/);
   assert.match(request?.user ?? '', /"knownExploited":true/);
 });
+
+test('every selected story needs a body citation', async () => {
+ await assert.rejects(write(SELECTED, client(GOOD.replace('[[s2]]', ''))), /omitted selected story/);
+});
+test('short evidence cannot be inflated to an 800-word article', async () => {
+ await assert.rejects(write(SELECTED, client(GOOD + '\n' + 'Unsupported details '.repeat(400))), /evidence word budget/);
+});
+test('raw HTML is rejected even when citations are valid', async () => {
+ await assert.rejects(write(SELECTED, client(GOOD + '<script>alert(1)</script>')), /raw HTML/);
+});

@@ -87,3 +87,9 @@ test('returns survivors newest first', () => {
     ['https://a.test/new', 'https://a.test/mid', 'https://a.test/old'],
   );
 });
+
+test('a previously published secondary member prevents a cluster repeat', () => {
+ const first = cluster('https://a.test/new', hoursAgo(2));
+ first.members.push(cluster('https://a.test/old', hoursAgo(3)));
+ assert.equal(filter([first], seenStore({ 'https://a.test/old': '2026-08-05' }), NOW).droppedSeen, 1);
+});

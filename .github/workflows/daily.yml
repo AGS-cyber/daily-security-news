@@ -2,7 +2,7 @@ name: daily
 
 on:
   schedule:
-    # 12:00 UTC = 08:00 US Eastern (design §9)
+    # 12:00 UTC = 08:00 US Eastern (design ﾂｧ9)
     - cron: '0 12 * * *'
   workflow_dispatch:
 
@@ -16,6 +16,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
 
@@ -34,8 +35,10 @@ jobs:
           # rate limit; the client batches CVEs either way.
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
 
+      - run: npm run verify:publication
+
       # The push is the deploy: Vercel's Git integration builds `main` on every
-      # commit. There is no deploy job here on purpose (design §9).
+      # commit. There is no deploy job here on purpose (design ﾂｧ9).
       - name: Commit site and data
         run: |
           git config user.name 'github-actions[bot]'
@@ -43,3 +46,6 @@ jobs:
           git add site data
           git diff --staged --quiet || git commit -m "edition: $(date -u +%Y-%m-%d)"
           git push
+
+      - name: Confirm Vercel serves this generation
+        run: npm run verify:publication -- https://daily-security-news.vercel.app/

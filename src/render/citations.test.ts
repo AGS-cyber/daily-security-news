@@ -38,7 +38,7 @@ test('escapes &, < and " in both the title and the url', () => {
 
   assert.equal(
     html,
-    '<a href="https://a.test/?a=1&amp;b=&quot;2&quot;&lt;">Ampersand &amp; &lt;script&gt; and &quot;quotes&quot;</a>',
+    '<a href="https://a.test/?a=1&amp;b=%222%22%3C">Ampersand &amp; &lt;script&gt; and &quot;quotes&quot;</a>',
   );
   assert.ok(!html.includes('<script>'));
 });
@@ -55,4 +55,8 @@ test('an unknown id throws — a broken link must never ship', () => {
   const selected = [story('s1', 'One', 'https://a.test/1')];
 
   assert.throws(() => substituteCitations('Look at [[s9]].', selected), /\[\[s9\]\]/);
+});
+
+test('rejects executable citation URLs', () => {
+ assert.throws(() => substituteCitations('[[s1]]', [story('s1', 'Bad', 'javascript:alert(1)')]), /HTTP/);
 });

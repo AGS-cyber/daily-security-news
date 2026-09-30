@@ -20,7 +20,7 @@ export function filter(
   let droppedOld = 0;
 
   for (const cluster of clusters) {
-    if (seen.publishedBefore(cluster.canonicalUrl, date)) {
+    if (cluster.members.some((m) => seen.publishedBefore(m.canonicalUrl, date))) {
       droppedSeen++;
       continue;
     }

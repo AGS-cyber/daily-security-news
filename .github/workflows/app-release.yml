@@ -76,17 +76,28 @@ jobs:
         working-directory: app
         run: ./gradlew :shared:testAndroidHostTest
 
-      # The debug variant, deliberately — see operations.md §8. `release` has
-      # no signing config, so it would produce `app-release-unsigned.apk`,
-      # which no device will install. Signing is out of scope per app.md §1.
+      # Release artifacts require the same owner-approved signing key on every run.
+      - name: Restore approved stable personal signing key
+        env:
+          SIGNING_KEY: ${{ secrets.ANDROID_SIGNING_KEY_BASE64 }}
+          SIGNING_PASSWORD: ${{ secrets.ANDROID_SIGNING_PASSWORD }}
+          SIGNING_ALIAS: ${{ secrets.ANDROID_SIGNING_ALIAS }}
+        run: |
+          test -n "$SIGNING_KEY" && test -n "$SIGNING_PASSWORD" && test -n "$SIGNING_ALIAS" || { echo '::error::Stable signing credentials require owner setup before release'; exit 1; }
+          printf '%s' "$SIGNING_KEY" | base64 --decode > "$RUNNER_TEMP/personal.jks"
+          chmod 600 "$RUNNER_TEMP/personal.jks"
+          echo "DSN_SIGNING_STORE=$RUNNER_TEMP/personal.jks" >> "$GITHUB_ENV"
       - name: Build the APK
         working-directory: app
-        run: ./gradlew :androidApp:assembleDebug
+        env:
+          DSN_SIGNING_PASSWORD: ${{ secrets.ANDROID_SIGNING_PASSWORD }}
+          DSN_SIGNING_ALIAS: ${{ secrets.ANDROID_SIGNING_ALIAS }}
+        run: ./gradlew :androidApp:assembleRelease
 
       - name: Name it after the release
         id: apk
         run: |
-          SRC=app/androidApp/build/outputs/apk/debug/androidApp-debug.apk
+          SRC=app/androidApp/build/outputs/apk/release/androidApp-release.apk
           DEST="daily-security-news-${{ steps.version.outputs.version }}.apk"
           test -f "$SRC" || { echo "::error::no APK at $SRC"; exit 1; }
           cp "$SRC" "$DEST"
@@ -108,19 +119,14 @@ jobs:
           cat > release-notes.md <<'NOTES'
           Android APK, built from this tag by `app-release.yml`.
 
-          **This is a debug-signed build.** It installs and runs, but it is
-          signed with the runner's throwaway debug key, so:
-
-          - Android will refuse to install it over a copy signed with a
-            different key. Uninstall the old one first if you see
-            `INSTALL_FAILED_UPDATE_INCOMPATIBLE`.
-          - It is not a Play Store artifact. Store submission and real signing
-            are out of scope for v1 (`docs/app.md` §1).
+          Signed with the owner's stable personal signing key. Keep the same
+          key for every upgrade; previous throwaway-key installs require a
+          one-time uninstall. This is not a Play Store artifact.
 
           Verify the download against the published `.sha256` before
           installing it.
 
-          iOS is built and tested in CI but not distributed — it has no
+          iOS has build checks configured, but runtime testing is not established; it is not distributed — it has no
           signing identity and no app icon yet.
           NOTES
 
@@ -141,3 +147,7 @@ jobs:
           echo "$ASSETS"
           echo "$ASSETS" | grep -q '\.apk$' \
             || { echo "::error::release published with no APK attached"; exit 1; }
+
+      - name: Remove ephemeral signing material
+        if: always()
+        run: rm -f "$RUNNER_TEMP/personal.jks"
