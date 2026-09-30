@@ -39,6 +39,9 @@ jobs:
       # The runner image's SDK is not at the level `compileSdk 36` needs
       # (app.md §2); let the action install and license it.
       - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
+          log-accepted-android-sdk-licenses: false
 
       - uses: gradle/actions/setup-gradle@v4
 
@@ -92,6 +95,9 @@ jobs:
       # belt-and-braces: it pins the job to an SDK it asked for rather than
       # resting on whichever image `macos-latest` happens to resolve to.
       - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
+          log-accepted-android-sdk-licenses: false
 
       - uses: gradle/actions/setup-gradle@v4
 
