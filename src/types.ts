@@ -143,6 +143,16 @@ export interface Item extends EnrichedCluster {
   id: string;
 }
 
+export type NormalizationReason = 'invalid_url' | 'invalid_date' | 'future_event' | 'future_timestamp';
+export interface NormalizationExclusion {
+  sourceId: string;
+  title: string;
+  url: string;
+  publishedAt: string;
+  reason: NormalizationReason;
+  observedAt: string;
+}
+
 export interface DegradedNotice {
   stage: 'collect' | 'normalize' | 'filter' | 'enrich' | 'select' | 'write';
   sourceId?: string;
@@ -176,6 +186,8 @@ interface EditionBase {
   date: string;
   generatedAt: string;
   degraded: DegradedNotice[];
+  /** New runs retain exclusion evidence; absent on historical records. */
+  normalizationExclusions?: NormalizationExclusion[];
   stats: {
     sourcesConfigured: number;
     sourcesOk: number;

@@ -623,3 +623,14 @@ the release variant and fail closed without the approved key. Signing secrets ar
 restored only into the ephemeral runner. Key setup requires separate owner approval.
 iOS has configured build checks; this Windows session does not establish compilation,
 simulator execution or runtime testing. Never describe it as tested based on YAML.
+
+## Normalization notices (2026-09-30)
+New editions retain normalizationExclusions with the supplied source, title, URL,
+publication date, observed time and explicit reason. A date more than two days ahead
+is an expected future_event only when an event URL path and an explicit event label
+agree. Expected future events produce a collection notice rather than degradation.
+Invalid URLs, invalid dates and unexplained future timestamps retain the incomplete
+warning with precise reasons. The eligibility window and future-date limit are unchanged.
+Historical records remain untouched. Their generic normalize-only notices render as
+Collection notice with an explicit statement that the specific rejection reason was
+not recorded. Current feed evidence cannot retroactively identify historical rejects.

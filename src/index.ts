@@ -4,7 +4,7 @@ import { VULNERABILITY_CACHE_PATH } from './config/vulnerability.js';
 import { createClient, sumUsage } from './llm/client.js';
 import { dedupe } from './pipeline/dedupe.js';
 import { filter } from './pipeline/filter.js';
-import { normalize } from './pipeline/normalize.js';
+import { normalize, normalizationNotices } from './pipeline/normalize.js';
 import { select } from './pipeline/select.js';
 import { write } from './pipeline/write.js';
 import { writeEdition } from './render/edition.js';
@@ -114,13 +114,8 @@ async function run(): Promise<void> {
     `collect     ${collected.items.length} items · ${collected.sourcesOk}/${sources.length} sources ok`,
   );
 
-  const normalized = normalize(collected.items);
-  if (normalized.dropped > 0) {
-    degraded.push({
-      stage: 'normalize',
-      message: `${normalized.dropped} items were dropped as unparseable`,
-    });
-  }
+  const normalized = normalize(collected.items, now);
+  degraded.push(...normalizationNotices(normalized.exclusions));
   console.log(`normalize   ${normalized.items.length} items · ${normalized.dropped} dropped`);
 
   const clusters = dedupe(normalized.items);
@@ -172,6 +167,7 @@ async function run(): Promise<void> {
   const base = {
     date,
     generatedAt: now.toISOString(),
+    normalizationExclusions: normalized.exclusions,
     degraded,
     stats: {
       sourcesConfigured: sources.length,
