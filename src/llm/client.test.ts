@@ -73,3 +73,15 @@ test('empty responses exhaust exactly one wrapper retry', async () => {
  await assert.rejects(created.client.complete({system: 'test', user: 'test'}), /empty content/);
  assert.equal(calls, 2);
 });
+test('request timeout aborts both bounded attempts', async () => {
+ let calls = 0;
+ const created = withKey('fake-test-key', () => createClient({timeoutMs: 10, fetch: async (_url, init) => {
+  calls++;
+  return await new Promise<Response>((_resolve, reject) => {
+   init?.signal?.addEventListener('abort', () => reject(new Error('aborted')), {once: true});
+  });
+ }}));
+ if (!created.ok) assert.fail('expected client');
+ await assert.rejects(created.client.complete({system: 'test', user: 'test'}), /failed twice/);
+ assert.equal(calls, 2);
+});

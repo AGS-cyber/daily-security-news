@@ -58,6 +58,10 @@ jobs:
         working-directory: app
         run: ./gradlew :androidApp:assembleDebug
 
+      - name: Android lint
+        working-directory: app
+        run: ./gradlew :androidApp:lintDebug
+
       # `always()`, because the run that most needs the report is the one that
       # failed: the XML names which test it was.
       - name: Upload test results
