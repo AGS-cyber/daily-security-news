@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-10-01",
+    "mode": "article",
+    "headline": "Cisco's 9.8 auth bypass leads a three-CVE exploited docket",
+    "count": 52
+  },
+  {
     "date": "2026-09-30",
     "mode": "article",
     "headline": "Four zero-days in the wild and a security stack under attack",
