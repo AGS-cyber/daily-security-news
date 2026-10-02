@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-10-02",
+    "mode": "article",
+    "headline": "FortiMail zero-day leads a day of urgent patching",
+    "count": 33
+  },
+  {
     "date": "2026-10-01",
     "mode": "article",
     "headline": "Cisco's 9.8 auth bypass leads a three-CVE exploited docket",

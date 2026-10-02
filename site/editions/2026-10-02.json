@@ -1,0 +1,866 @@
+{
+  "date": "2026-10-02",
+  "generatedAt": "2026-10-02T17:18:05.290Z",
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 223,
+    "published": 33
+  },
+  "mode": "article",
+  "headline": "FortiMail zero-day leads a day of urgent patching",
+  "standfirst": "Fortinet's exploited mail-gateway flaw leads, GitLab and Dell push critical patches of their own, a Mississippi city goes offline to ransomware, and fresh research ties AI agents and China-linked campaigns to live intrusions.",
+  "bodyMarkdown": "## Actively exploited\n\nFortinet's FortiMail path traversal bug takes the lead: CVE-2026-104286 is a CVSS 9.8 Critical, CWE-22 flaw that vendor data says lets an unauthenticated attacker write arbitrary files via crafted HTTP or HTTPS requests, covering FortiMail 7.2.0 through 7.4.8, 7.6.0 through 7.6.6 and 8.0.0 through 8.0.1 [[s25]]. CISA's KEV catalog marks it known exploited, and the vendor's warning describes zero-day attacks used to execute unauthorized code or commands. KEV's required action directs federal agencies to vendor mitigations under BOD 26-04 and assigns a remediation due date; that is a US federal deadline, not a universal one. The combination — exploited in the wild, unauthenticated, internet-facing mail gateways, critical severity — is why this ranks first.\n\nWarlock, described as a China-based group, has expanded its SharePoint exploitation into critical-infrastructure attacks [[s19]]. The excerpt places the campaign's start but supplies no affected versions, targeted organizations or flaw identifiers, so which SharePoint exposure and which sectors is left unanswered.\n\n## Vulnerabilities\n\nGitLab urged customers to patch immediately a critical AI Gateway vulnerability that could let attackers run arbitrary commands on vulnerable instances [[s3]]. No CVE, CVSS score or affected version was supplied, so the urgency is vendor-stated rather than scored.\n\nDell has patched two maximum severity flaws in the Container Storage Modules that connect its enterprise storage arrays to Kubernetes, and is urging admins to patch as soon as possible [[s14]]. No CVE or CVSS value was supplied for either.\n\n## Breaches\n\nVicksburg, Mississippi shut down city systems after a ransomware incident, with government services temporarily disrupted [[s8]]. Mayor Willis Thompson said the FBI and other authorities are investigating. No actor, access vector or data-theft claim was supplied.\n\n## Research\n\nResearchers report autonomous AI agents aiming SQL injection at the US Department of Education and Library and Archives Canada, and link some agents to OpenAI [[s21]]. The attribution is the researchers' reported finding, not a vendor statement, and no impact or success rate is given.\n\nSeparately, two reports describe China-linked hacking operations, including a phishing campaign impersonating Western experts, aimed at AI firms and Asian governments [[s31]]. The excerpt does not establish whether the two reports describe the same activity.\n\n## Industry\n\nAmir Barati, alleged to be a member of the Mabna Institute, has been extradited to the US and indicted over targeting universities, private organizations and government entities in the US and abroad [[s18]]. The move is described as rare; the charges remain allegations.\n\nAnalysis: the day's highest-confidence item is also its most actionable. FortiMail has an identifier, a KEV entry and defined version ranges; the GitLab, Dell and SharePoint items carry urgency without supplied identifiers; the two research reports make actor-level attributions readers should treat as the reporting's claim rather than established fact.",
+  "selected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Fortinet warns of critical FortiMail flaw exploited in zero-day attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/fortinet-warns-of-critical-fortimail-flaw-exploited-in-zero-day-attacks/",
+      "publishedAt": "2026-10-01T22:42:49.000Z",
+      "excerpt": "Fortinet is warning customers of a critical FortiMail vulnerability, tracked as CVE-2026-104286, that is being actively exploited in zero-day attacks to execute unauthorized code or commands on vulnerable devices. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/fortinet-warns-of-critical-fortimail-flaw-exploited-in-zero-day-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/fortinet-warns-of-critical-fortimail-flaw-exploited-in-zero-day-attacks"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-104286",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Fortinet",
+            "product": "FortiMail",
+            "vulnerabilityName": "Fortinet FortiMail Path Traversal Vulnerability",
+            "dateAdded": "2026-10-01",
+            "shortDescription": "Fortinet FortiMail contains a path traversal and an improper neutralization of NULL byte or NULL character vulnerability that may allow an unauthenticated attacker to write arbitrary files on the underlying system via crafted HTTP or HTTPS requests.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-10-04",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://fortiguard.fortinet.com/psirt/FG-IR-26-175 ; ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-104286",
+            "cwes": [
+              "CWE-22",
+              "CWE-158"
+            ]
+          },
+          "nvd": {
+            "description": "An improper limitation of a pathname to a restricted directory ('path traversal') vulnerability in Fortinet FortiMail 8.0.0 through 8.0.1, FortiMail 7.6.0 through 7.6.6, FortiMail 7.4.0 through 7.4.8, FortiMail 7.2.0 through 7.2.9 may allow an unauthenticated attacker to write arbitrary files on the underlying system via crafted HTTP or HTTPS requests.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "psirt@fortinet.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-22"
+            ],
+            "published": "2026-10-01T20:17:24.010",
+            "lastModified": "2026-10-02T12:35:33.990",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://fortiguard.fortinet.com/psirt/FG-IR-26-175",
+                "source": "psirt@fortinet.com",
+                "tags": [
+                  "Mitigation",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-104286",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:fortinet:fortimail:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "77C9CE10-1038-4100-81E0-234822E6373B",
+                "versionStartIncluding": "7.2.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "7.4.8",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:fortinet:fortimail:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1EA73418-A7A1-4247-BA3E-969550962E0E",
+                "versionStartIncluding": "7.6.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "7.6.6",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:fortinet:fortimail:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "DDAF1B20-36CA-4DD4-9483-6B605001B9DA",
+                "versionStartIncluding": "8.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "8.0.1",
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "bleepingcomputer",
+                "url": "https://www.bleepingcomputer.com/news/security/fortinet-warns-of-critical-fortimail-flaw-exploited-in-zero-day-attacks/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.02",
+              "dateReleased": "2026-10-02T15:19:38.2945Z",
+              "retrievedAt": "2026-10-02T17:18:05.290Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-104286",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-104286",
+              "retrievedAt": "2026-10-02T17:18:05.290Z"
+            }
+          }
+        }
+      ],
+      "id": "s25",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "Actively exploited FortiMail path traversal flaw (CVE-2026-104286) carries a CVSS 9.8 and a CISA KEV remediation deadline of October 4, putting internet-facing mail gateways at immediate risk."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Warlock Expands SharePoint Exploitation in Critical Infrastructure Attacks",
+      "url": "https://www.securityweek.com/warlock-expands-sharepoint-exploitation-in-critical-infrastructure-attacks/",
+      "publishedAt": "2026-10-02T09:34:41.000Z",
+      "excerpt": "The China-based hacking group has been exploiting SharePoint vulnerabilities since July 2025. The post Warlock Expands SharePoint Exploitation in Critical Infrastructure Attacks appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/warlock-expands-sharepoint-exploitation-in-critical-infrastructure-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/warlock-expands-sharepoint-exploitation-in-critical-infrastructure-attacks"
+      ],
+      "cves": [],
+      "id": "s19",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "A China-based group is exploiting SharePoint flaws to hit critical infrastructure across Portuguese- and Spanish-speaking regions, broadening the threat beyond typical targets."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "GitLab warns of critical RCE vulnerability in AI Gateway service",
+      "url": "https://www.bleepingcomputer.com/news/security/gitlab-warns-of-critical-rce-vulnerability-in-ai-gateway-service/",
+      "publishedAt": "2026-10-02T16:20:05.000Z",
+      "excerpt": "GitLab warned customers today to immediately patch a critical AI Gateway vulnerability that could let attackers run arbitrary commands on vulnerable instances. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/gitlab-warns-of-critical-rce-vulnerability-in-ai-gateway-service",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/gitlab-warns-of-critical-rce-vulnerability-in-ai-gateway-service"
+      ],
+      "cves": [],
+      "id": "s3",
+      "section": "vulnerabilities",
+      "rank": 3,
+      "angle": "GitLab's critical AI Gateway RCE warning demands urgent patching to block arbitrary command execution on instances exposed to attackers."
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Mississippi mayor says ransomware incident led city to shut down systems",
+      "url": "https://therecord.media/vicksburg-mississippi-government-ransomware-attack",
+      "publishedAt": "2026-10-02T14:06:00.000Z",
+      "excerpt": "Government services were temporarily disrupted by ransomware in Vicksburg, Mississippi. Mayor Willis Thompson said the FBI and other authorities are investigating.",
+      "canonicalUrl": "https://therecord.media/vicksburg-mississippi-government-ransomware-attack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/vicksburg-mississippi-government-ransomware-attack"
+      ],
+      "cves": [],
+      "id": "s8",
+      "section": "breaches",
+      "rank": 4,
+      "angle": "A city-wide ransomware shutdown in Vicksburg shows how local governments remain prime targets, with services disrupted and federal investigators engaged."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Dell asks admins to patch max severity CSM flaws as soon as possible",
+      "url": "https://www.bleepingcomputer.com/news/security/new-max-severity-dell-csm-flaws-give-hackers-admin-privileges/",
+      "publishedAt": "2026-10-02T12:37:40.000Z",
+      "excerpt": "Dell has patched two maximum severity vulnerabilities in the Container Storage Modules (CSM) that connect Dell enterprise storage arrays to Kubernetes environments. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/new-max-severity-dell-csm-flaws-give-hackers-admin-privileges",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/new-max-severity-dell-csm-flaws-give-hackers-admin-privileges"
+      ],
+      "cves": [],
+      "id": "s14",
+      "section": "vulnerabilities",
+      "rank": 5,
+      "angle": "Dell's maximum-severity CSM flaws expose Kubernetes-connected storage arrays, and admins are urged to patch immediately to avoid compromise."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "AI Agents Aimed SQL Injection at US and Canadian Government Sites",
+      "url": "https://www.securityweek.com/ai-agents-aimed-sql-injection-at-us-and-canadian-government-sites/",
+      "publishedAt": "2026-10-02T08:38:46.000Z",
+      "excerpt": "The attacks targeted the US Department of Education and Library and Archives Canada, and researchers linked some agents to OpenAI. The post AI Agents Aimed SQL Injection at US and Canadian Government Sites appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/ai-agents-aimed-sql-injection-at-us-and-canadian-government-sites",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/ai-agents-aimed-sql-injection-at-us-and-canadian-government-sites"
+      ],
+      "cves": [],
+      "id": "s21",
+      "section": "research",
+      "rank": 6,
+      "angle": "Autonomous AI agents launching SQL injection against government sites signal a new era of AI-driven attacks that defenders must anticipate."
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Researchers find Chinese hacking campaigns targeting AI firms, Asian governments",
+      "url": "https://therecord.media/china-linked-phishing-scheme-backdoor-taiwan",
+      "publishedAt": "2026-10-01T18:16:00.000Z",
+      "excerpt": "Two separate reports by cybersecurity companies highlight China-linked hacking operations, including a phishing campaign that impersonated Western experts.",
+      "canonicalUrl": "https://therecord.media/china-linked-phishing-scheme-backdoor-taiwan",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/china-linked-phishing-scheme-backdoor-taiwan"
+      ],
+      "cves": [],
+      "id": "s31",
+      "section": "research",
+      "rank": 7,
+      "angle": "China-linked campaigns targeting AI firms and Asian governments highlight espionage risks in the AI supply chain and regional geopolitics."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "In Rare Move, Alleged Iranian State Hacker Extradited to US",
+      "url": "https://www.securityweek.com/in-rare-move-iranian-hacker-accused-of-working-for-irgc-extradited-to-us/",
+      "publishedAt": "2026-10-02T11:14:34.000Z",
+      "excerpt": "Amir Barati, an alleged member of the Mabna Institute, was indicted for targeting universities, private organizations, and government entities in the US and abroad. The post In Rare Move, Alleged Iranian State Hacker Extradited to US appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/in-rare-move-iranian-hacker-accused-of-working-for-irgc-extradited-to-us",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/in-rare-move-iranian-hacker-accused-of-working-for-irgc-extradited-to-us"
+      ],
+      "cves": [],
+      "id": "s18",
+      "section": "industry",
+      "rank": 8,
+      "angle": "A rare extradition of an alleged Iranian state hacker underscores growing international law enforcement pressure on state-sponsored cybercrime."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Kiteworks &amp; Citrix Incidents Show Challenges of Zero-Day Response",
+      "url": "https://www.darkreading.com/cybersecurity-operations/kiteworks-citrix-incidents-challenges-zero-day-response",
+      "publishedAt": "2026-10-02T16:56:30.000Z",
+      "excerpt": "One company told customers to power down its data-protection platform during a nine-hour window, while the other remained mum on reported attacks prior to releasing a patch for its product.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/kiteworks-citrix-incidents-challenges-zero-day-response",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cybersecurity-operations/kiteworks-citrix-incidents-challenges-zero-day-response"
+      ],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "SWIFT Banking &amp; Government Middleware Enables RCE",
+      "url": "https://www.darkreading.com/cybersecurity-operations/swift-banking-govt-middleware-rce",
+      "publishedAt": "2026-10-02T16:27:54.000Z",
+      "excerpt": "Patch middleware vulnerabilities now to avoid hardware-based MFA exploits in ultra-sensitive environments.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/swift-banking-govt-middleware-rce",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cybersecurity-operations/swift-banking-govt-middleware-rce"
+      ],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Is Your Organization Ready for 2027's AI Accountability Era?",
+      "url": "https://www.darkreading.com/cybersecurity-operations/is-your-organization-ready-for-2027-s-ai-accountability-era-",
+      "publishedAt": "2026-10-02T16:01:22.000Z",
+      "excerpt": "Organizations may face an artificial intelligence (AI) reckoning over the next year. Omdia and Gartner weigh in on how to tackle the governance, security, and value challenges ahead.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/is-your-organization-ready-for-2027-s-ai-accountability-era-",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cybersecurity-operations/is-your-organization-ready-for-2027-s-ai-accountability-era-"
+      ],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Is It Fair to Blame 'Rogue' AI for Security Failures?",
+      "url": "https://www.darkreading.com/insider-threats/blame-rogue-ai-security-failures",
+      "publishedAt": "2026-10-02T15:51:33.000Z",
+      "excerpt": "\"Rogue AI\" terminology anthropomorphizes LLMs and shifts risk responsibility from vendors. Defenders should treat agents as untrusted, nondeterministic software systems, not sentient beings with malicious intent.",
+      "canonicalUrl": "https://darkreading.com/insider-threats/blame-rogue-ai-security-failures",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/insider-threats/blame-rogue-ai-security-failures"
+      ],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "US sanctions Tren de Aragua gang members in ATM hacks crackdown",
+      "url": "https://www.bleepingcomputer.com/news/security/us-sanctions-tren-de-aragua-members-in-atm-jackpotting-crackdown/",
+      "publishedAt": "2026-10-02T15:20:53.000Z",
+      "excerpt": "The U.S. Treasury Department has sanctioned eight members of the Venezuelan gang Tren de Aragua (TdA) for their role in the theft of millions of dollars in ATM jackpotting attacks across the United States. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/us-sanctions-tren-de-aragua-members-in-atm-jackpotting-crackdown",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/us-sanctions-tren-de-aragua-members-in-atm-jackpotting-crackdown"
+      ],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "In Other News: $15K iCloud Spoofing Bugs, AI Policy Experts Phished, Adblocker Spies on AI Chats",
+      "url": "https://www.securityweek.com/in-other-news-15k-icloud-spoofing-bugs-ai-policy-experts-phished-adblocker-spies-on-ai-chats/",
+      "publishedAt": "2026-10-02T14:30:00.000Z",
+      "excerpt": "Noteworthy stories that might have slipped under the radar: Kiteworks patches over 100 vulnerabilities, Microsoft publishes 2026 Digital Defense Report, AI finds 24 Android app flaws. The post In Other News: $15K iCloud Spoofing Bugs, AI Policy Experts Phished, Adblocker Spies on AI Chats appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/in-other-news-15k-icloud-spoofing-bugs-ai-policy-experts-phished-adblocker-spies-on-ai-chats",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/in-other-news-15k-icloud-spoofing-bugs-ai-policy-experts-phished-adblocker-spies-on-ai-chats"
+      ],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "'Warlock' ransomware used in attacks on critical infrastructure in Portuguese, Spanish-speaking countries",
+      "url": "https://therecord.media/warlock-ransomware-used-in-critical-infrastructure-attacks",
+      "publishedAt": "2026-10-02T14:05:00.000Z",
+      "excerpt": "The group is exploiting a variety of vulnerabilities impacting Microsoft SharePoint, according to a new report from Symantec Threat Hunter Team.",
+      "canonicalUrl": "https://therecord.media/warlock-ransomware-used-in-critical-infrastructure-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/warlock-ransomware-used-in-critical-infrastructure-attacks"
+      ],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "The EDR blind spot: 3 ways browser attacks evade endpoint telemetry",
+      "url": "https://www.bleepingcomputer.com/news/security/the-edr-blind-spot-3-ways-browser-attacks-evade-endpoint-telemetry/",
+      "publishedAt": "2026-10-02T14:00:10.000Z",
+      "excerpt": "Browser-based attacks can steal sessions, abuse extensions, or manipulate users without creating the endpoint artifacts EDR is designed to detect. NordLayer explains three ways attacks can evade endpoint telemetry and why browser-level controls can help close the gap. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/the-edr-blind-spot-3-ways-browser-attacks-evade-endpoint-telemetry",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/the-edr-blind-spot-3-ways-browser-attacks-evade-endpoint-telemetry"
+      ],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Vulnerability Backlogs Are an Ownership Problem",
+      "url": "https://www.darkreading.com/cybersecurity-operations/vulnerability-backlogs-ownership-problem",
+      "publishedAt": "2026-10-02T14:00:00.000Z",
+      "excerpt": "Organizations don't need better vulnerability scanners; they need to know who owns their assets and has the authority and capacity to actually fix them.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/vulnerability-backlogs-ownership-problem",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cybersecurity-operations/vulnerability-backlogs-ownership-problem"
+      ],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "macOS Users Targeted by Fake Zoom Installer Carrying CloudSyncD Backdoor",
+      "url": "https://www.securityweek.com/macos-users-targeted-by-fake-zoom-installer-carrying-cloudsyncd-backdoor/",
+      "publishedAt": "2026-10-02T13:15:00.000Z",
+      "excerpt": "The dropper “carries a complete universal Mach-O inside itself, roughly 756 KB in the development build, and extracts it at runtime. The post macOS Users Targeted by Fake Zoom Installer Carrying CloudSyncD Backdoor appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/macos-users-targeted-by-fake-zoom-installer-carrying-cloudsyncd-backdoor",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/macos-users-targeted-by-fake-zoom-installer-carrying-cloudsyncd-backdoor"
+      ],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Malicious Linux Implants Mimic Asian Mail Security Products",
+      "url": "https://www.darkreading.com/threat-intelligence/malicious-linux-implants-mimic-asian-mail-security",
+      "publishedAt": "2026-10-02T13:00:00.000Z",
+      "excerpt": "A trio of newly discovered backdoors walk and quack like legitimate edge solutions, so it's hard to tell they're not.",
+      "canonicalUrl": "https://darkreading.com/threat-intelligence/malicious-linux-implants-mimic-asian-mail-security",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/threat-intelligence/malicious-linux-implants-mimic-asian-mail-security"
+      ],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "OpenAI Parts Ways With Three Safety Researchers Over Sensitive Information Mishandling",
+      "url": "https://thehackernews.com/2026/10/openai-parts-ways-with-three-safety.html",
+      "publishedAt": "2026-10-02T12:23:15.000Z",
+      "excerpt": "OpenAI has parted ways with three members of its safety team after they leaked private information in violation of company policies, The Wall Street Journal reported. \"We have parted ways with three individuals for violating our policies on accessing and handling sensitive company information,\" a spokesperson for the company was quoted as saying. \"Our investigation confirmed that these",
+      "canonicalUrl": "https://thehackernews.com/2026/10/openai-parts-ways-with-three-safety.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/openai-parts-ways-with-three-safety.html"
+      ],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Crypto Scammers Hijack Microsoft’s Official X Account",
+      "url": "https://www.securityweek.com/crypto-scammers-hijack-microsofts-official-x-account/",
+      "publishedAt": "2026-10-02T11:46:10.000Z",
+      "excerpt": "Hackers used the account, which has 13 million followers, to amplify a Clippy-themed cryptocurrency account. The post Crypto Scammers Hijack Microsoft’s Official X Account appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/crypto-scammers-hijack-microsofts-official-x-account",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/crypto-scammers-hijack-microsofts-official-x-account"
+      ],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Why CISOs Struggle to Answer the Board's Three Hardest Questions, and How to Fix the Report",
+      "url": "https://thehackernews.com/2026/10/why-cisos-struggle-to-answer-boards.html",
+      "publishedAt": "2026-10-02T11:30:00.000Z",
+      "excerpt": "The quarterly board meeting is two weeks out. The security team is pulling exports from the identity provider, the cloud posture tool, the vulnerability scanner, the SIEM and the EDR console. Someone is building a spreadsheet to reconcile them. Someone else is turning that spreadsheet into slides. Then a board member asks three questions: How secure is the organization, overall? What is",
+      "canonicalUrl": "https://thehackernews.com/2026/10/why-cisos-struggle-to-answer-boards.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/why-cisos-struggle-to-answer-boards.html"
+      ],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft’s X account hacked in crypto pump-and-dump scheme",
+      "url": "https://www.bleepingcomputer.com/news/security/microsofts-x-account-hacked-in-crypto-token-pump-and-dump-scheme/",
+      "publishedAt": "2026-10-02T09:29:56.000Z",
+      "excerpt": "On Thursday, unknown attackers hijacked the official Microsoft account on X, which has over 13 million followers, in what appeared to be a pump-and-dump scheme promoting a crypto token. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/microsofts-x-account-hacked-in-crypto-token-pump-and-dump-scheme",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/microsofts-x-account-hacked-in-crypto-token-pump-and-dump-scheme"
+      ],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Exploited Fortinet FortiMail Zero-Day Calls for Urgent Action",
+      "url": "https://www.securityweek.com/exploited-fortinet-fortimail-zero-day-calls-for-urgent-action/",
+      "publishedAt": "2026-10-02T08:07:33.000Z",
+      "excerpt": "CVE-2026-104286 is a critical-severity path traversal vulnerability that could allow attackers to write arbitrary files to the system. The post Exploited Fortinet FortiMail Zero-Day Calls for Urgent Action appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/exploited-fortinet-fortimail-zero-day-calls-for-urgent-action",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/exploited-fortinet-fortimail-zero-day-calls-for-urgent-action"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-104286",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Fortinet",
+            "product": "FortiMail",
+            "vulnerabilityName": "Fortinet FortiMail Path Traversal Vulnerability",
+            "dateAdded": "2026-10-01",
+            "shortDescription": "Fortinet FortiMail contains a path traversal and an improper neutralization of NULL byte or NULL character vulnerability that may allow an unauthenticated attacker to write arbitrary files on the underlying system via crafted HTTP or HTTPS requests.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-10-04",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://fortiguard.fortinet.com/psirt/FG-IR-26-175 ; ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-104286",
+            "cwes": [
+              "CWE-22",
+              "CWE-158"
+            ]
+          },
+          "nvd": {
+            "description": "An improper limitation of a pathname to a restricted directory ('path traversal') vulnerability in Fortinet FortiMail 8.0.0 through 8.0.1, FortiMail 7.6.0 through 7.6.6, FortiMail 7.4.0 through 7.4.8, FortiMail 7.2.0 through 7.2.9 may allow an unauthenticated attacker to write arbitrary files on the underlying system via crafted HTTP or HTTPS requests.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "psirt@fortinet.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-22"
+            ],
+            "published": "2026-10-01T20:17:24.010",
+            "lastModified": "2026-10-02T12:35:33.990",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://fortiguard.fortinet.com/psirt/FG-IR-26-175",
+                "source": "psirt@fortinet.com",
+                "tags": [
+                  "Mitigation",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-104286",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:fortinet:fortimail:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "77C9CE10-1038-4100-81E0-234822E6373B",
+                "versionStartIncluding": "7.2.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "7.4.8",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:fortinet:fortimail:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1EA73418-A7A1-4247-BA3E-969550962E0E",
+                "versionStartIncluding": "7.6.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "7.6.6",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:fortinet:fortimail:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "DDAF1B20-36CA-4DD4-9483-6B605001B9DA",
+                "versionStartIncluding": "8.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "8.0.1",
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/exploited-fortinet-fortimail-zero-day-calls-for-urgent-action/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.02",
+              "dateReleased": "2026-10-02T15:19:38.2945Z",
+              "retrievedAt": "2026-10-02T17:18:05.290Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-104286",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-104286",
+              "retrievedAt": "2026-10-02T17:18:05.290Z"
+            }
+          }
+        }
+      ],
+      "id": "s22"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Android 17 Advanced Protection Locks Accessibility Services to Verified Accessibility Tools",
+      "url": "https://thehackernews.com/2026/10/android-17-advanced-protection-locks.html",
+      "publishedAt": "2026-10-02T08:01:30.000Z",
+      "excerpt": "Google has announced a new security measure that limits access to Android's accessibility services to verified applications classified as Accessibility Tools when Advanced Protection is enabled. With malicious Android applications abusing the API serving as the main conduit for malware and financial fraud, the tech giant said the move would block a major attack pathway. Advanced Protection is a",
+      "canonicalUrl": "https://thehackernews.com/2026/10/android-17-advanced-protection-locks.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/android-17-advanced-protection-locks.html"
+      ],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Critical FortiMail Zero-Day Flaw Exploited in Attacks Allows Unauthenticated Arbitrary File Writes",
+      "url": "https://thehackernews.com/2026/10/critical-fortimail-zero-day-flaw.html",
+      "publishedAt": "2026-10-02T05:49:50.000Z",
+      "excerpt": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA), on Thursday, added a critical security flaw impacting Fortinet FortiMail to its Known Exploited Vulnerabilities (KEV) catalog, following reports of active exploitation. The vulnerability, tracked as CVE-2026-104286 (CVSS score: 9.8), allows unauthenticated attackers to write arbitrary files on the underlying system. \"An improper",
+      "canonicalUrl": "https://thehackernews.com/2026/10/critical-fortimail-zero-day-flaw.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/critical-fortimail-zero-day-flaw.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-104286",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Fortinet",
+            "product": "FortiMail",
+            "vulnerabilityName": "Fortinet FortiMail Path Traversal Vulnerability",
+            "dateAdded": "2026-10-01",
+            "shortDescription": "Fortinet FortiMail contains a path traversal and an improper neutralization of NULL byte or NULL character vulnerability that may allow an unauthenticated attacker to write arbitrary files on the underlying system via crafted HTTP or HTTPS requests.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-10-04",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://fortiguard.fortinet.com/psirt/FG-IR-26-175 ; ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-104286",
+            "cwes": [
+              "CWE-22",
+              "CWE-158"
+            ]
+          },
+          "nvd": {
+            "description": "An improper limitation of a pathname to a restricted directory ('path traversal') vulnerability in Fortinet FortiMail 8.0.0 through 8.0.1, FortiMail 7.6.0 through 7.6.6, FortiMail 7.4.0 through 7.4.8, FortiMail 7.2.0 through 7.2.9 may allow an unauthenticated attacker to write arbitrary files on the underlying system via crafted HTTP or HTTPS requests.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "psirt@fortinet.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-22"
+            ],
+            "published": "2026-10-01T20:17:24.010",
+            "lastModified": "2026-10-02T12:35:33.990",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://fortiguard.fortinet.com/psirt/FG-IR-26-175",
+                "source": "psirt@fortinet.com",
+                "tags": [
+                  "Mitigation",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-104286",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:fortinet:fortimail:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "77C9CE10-1038-4100-81E0-234822E6373B",
+                "versionStartIncluding": "7.2.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "7.4.8",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:fortinet:fortimail:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1EA73418-A7A1-4247-BA3E-969550962E0E",
+                "versionStartIncluding": "7.6.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "7.6.6",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:fortinet:fortimail:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "DDAF1B20-36CA-4DD4-9483-6B605001B9DA",
+                "versionStartIncluding": "8.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "8.0.1",
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/10/critical-fortimail-zero-day-flaw.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.02",
+              "dateReleased": "2026-10-02T15:19:38.2945Z",
+              "retrievedAt": "2026-10-02T17:18:05.290Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-104286",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-104286",
+              "retrievedAt": "2026-10-02T17:18:05.290Z"
+            }
+          }
+        }
+      ],
+      "id": "s24"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Alleged KillSec Ransomware Mastermind a 16-Year-Old",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/killsec-ransomware-mastermind-16-year-old",
+      "publishedAt": "2026-10-01T21:37:50.000Z",
+      "excerpt": "Law enforcement from multiple countries collaborated to disrupt a cybercrime operation that has claimed some 500 victims worldwide in the past two years.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/killsec-ransomware-mastermind-16-year-old",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyberattacks-data-breaches/killsec-ransomware-mastermind-16-year-old"
+      ],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Autonomous AI agents tried to hack US, Canadian government websites",
+      "url": "https://www.bleepingcomputer.com/news/security/autonomous-ai-agents-tried-to-hack-us-canadian-government-websites/",
+      "publishedAt": "2026-10-01T20:52:50.000Z",
+      "excerpt": "Autonomous AI agents using aggressive strategies attempted to hack U.S. and Canadian government websites to find school and divorce statistics. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/autonomous-ai-agents-tried-to-hack-us-canadian-government-websites",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/autonomous-ai-agents-tried-to-hack-us-canadian-government-websites"
+      ],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Iranian accused of hacking American universities extradited from Montenegro",
+      "url": "https://therecord.media/iran-montenegro-hacker-extradition",
+      "publishedAt": "2026-10-01T20:15:00.000Z",
+      "excerpt": "An Iranian national accused by the U.S. of taking part in dozens of breaches involving the theft of academic data and intellectual property has been extradited from Montenegro.",
+      "canonicalUrl": "https://therecord.media/iran-montenegro-hacker-extradition",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/iran-montenegro-hacker-extradition"
+      ],
+      "cves": [],
+      "id": "s28"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft says threat actors are ahead in the early AI race",
+      "url": "https://www.bleepingcomputer.com/news/security/microsoft-says-threat-actors-are-ahead-in-the-early-ai-race/",
+      "publishedAt": "2026-10-01T19:32:47.000Z",
+      "excerpt": "Microsoft says cyberattackers are currently benefiting from artificial intelligence faster than defenders, allowing threat actors to speed up vulnerability discovery, malware development, and post-compromise activity while security teams struggle to keep pace. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/microsoft-says-threat-actors-are-ahead-in-the-early-ai-race",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/microsoft-says-threat-actors-are-ahead-in-the-early-ai-race"
+      ],
+      "cves": [],
+      "id": "s29"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "OpenAI software attempted to secretly scrape data from dozens of prominent websites",
+      "url": "https://therecord.media/openai-software-attempted-to-secretly-scrape-data-from-dozens-of-websites",
+      "publishedAt": "2026-10-01T19:25:00.000Z",
+      "excerpt": "The findings, released Thursday by Asymmetric Security, are just the latest example of rogue behavior spurred by OpenAI’s software.",
+      "canonicalUrl": "https://therecord.media/openai-software-attempted-to-secretly-scrape-data-from-dozens-of-websites",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/openai-software-attempted-to-secretly-scrape-data-from-dozens-of-websites"
+      ],
+      "cves": [],
+      "id": "s30"
+    },
+    {
+      "sourceId": "talos",
+      "sourceKind": "rss",
+      "title": "Give yourself room to be human",
+      "url": "https://blog.talosintelligence.com/give-yourself-room-to-be-human/",
+      "publishedAt": "2026-10-01T18:00:52.000Z",
+      "excerpt": "In this week’s edition, Amy reflects on the importance of prioritizing family and personal well-being over the pressure to remain constantly productive.",
+      "canonicalUrl": "https://blog.talosintelligence.com/give-yourself-room-to-be-human",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://blog.talosintelligence.com/give-yourself-room-to-be-human"
+      ],
+      "cves": [],
+      "id": "s32"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Zero Trust Creator Says Model Holds Firm Against AI-Assisted Attacks",
+      "url": "https://www.securityweek.com/zero-trust-creator-says-model-holds-firm-against-ai-assisted-attacks/",
+      "publishedAt": "2026-10-01T18:00:00.000Z",
+      "excerpt": "Fifteen years after coining the framework, John Kindervag insists zero trust still works in the AI era—if you get the implementation right. The post Zero Trust Creator Says Model Holds Firm Against AI-Assisted Attacks appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/zero-trust-creator-says-model-holds-firm-against-ai-assisted-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/zero-trust-creator-says-model-holds-firm-against-ai-assisted-attacks"
+      ],
+      "cves": [],
+      "id": "s33"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1152,
+    "promptCacheMissTokens": 8077,
+    "outputTokens": 7922,
+    "estimatedCostUsd": 0.0033521656
+  }
+}
