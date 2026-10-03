@@ -1,0 +1,290 @@
+{
+  "date": "2026-10-03",
+  "generatedAt": "2026-10-03T15:35:42.753Z",
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 222,
+    "published": 14
+  },
+  "mode": "article",
+  "headline": "Warlock keeps exploiting SharePoint as Dell ships a 10.0 fix",
+  "standfirst": "Standfirst: Ransomware delivery through SharePoint, an MI5 warning on state-funded academics, a maximum-scoring Dell flaw, two institutional breaches and a newly documented China-nexus backdoor.",
+  "bodyMarkdown": "## Actively exploited\n\nWarlock, described as a suspected China-linked actor, is still weaponising Microsoft SharePoint vulnerabilities, \"likely both old and new,\" against organisations in Portuguese- and Spanish-speaking countries, with victims spanning critical infrastructure, government and education [[s2]]. No CVE identifiers were supplied for the SharePoint flaws, so the specific defects in play cannot be confirmed from this evidence. Analysis: reaching an existing access vector, disabling security tooling and then deploying ransomware points to tooling reuse rather than a new exploit chain, but the supplied excerpt is truncated and does not describe the disablement technique.\n\n## Industry\n\nAn MI5 espionage alert states that more than 100 academics have helped China's intelligence gathering on behalf of its state security service, naming the China General Technology Research Institute as funding research whose primary purpose was that effort [[s1]]. The scale of the figure is the story. Analysis: naming both an institute and a funding mechanism reads as pressure on universities' collaboration and disclosure decisions; the supplied excerpt gives no individual cases or consequences.\n\n## Vulnerabilities\n\nDell has released updates for multiple critical flaws in its Container Storage Modules. One, CVE-2026-63688, carries a CVSS score of 10.0 — a missing authentication for critical function issue in the csm-authorization-storage gRPC server [[s14]]. On the supplied data it is a confirmed CISA KEV miss, which establishes only that it is not catalogued, not that exploitation has not occurred. The other flaws in the set were not itemised here.\n\nGitLab's AI Gateway flaw rates 9.9 and requires a logged-in user with Duo Agent Platform access, with command execution possible \"under certain conditions\" — an authenticated path, not pre-auth. Only organisations self-hosting the gateway need to act, and fixes are in gateway versions 19.2.4, 19.3.2 and 19.4.1 [[s12]]. No CVE identifier was supplied. Analysis: the authentication prerequisite limits practical exposure, while the near-maximum score reflects the gateway's position in the AI trust path.\n\n## Breaches\n\nThe Technical University of Denmark says information on up to 200,000 users may have been exposed after attackers reached its identity and access management system and downloaded a large amount of data [[s3]]. Frontline Education is notifying school districts after attackers exploited a vulnerability in third-party software to steal employee information including Social Security numbers [[s10]]. Analysis: in both, initial access sat with a system other than the records themselves — identity infrastructure at one, an unnamed third-party product at the other.\n\n## Research\n\nCisco Talos reports a China-nexus cluster deploying a previously undocumented backdoor, Antino, against government and policy organisations in Taiwan, India, the Philippines, Cambodia, Pakistan, Thailand and Myanmar, using Outlook and OneDrive for command-and-control [[s13]]. No CVEs, initial-access method or attribution beyond the China-nexus label were supplied.",
+  "selected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Warlock Exploits SharePoint Flaws to Disable Security Tools and Deploy Ransomware",
+      "url": "https://thehackernews.com/2026/10/warlock-exploits-sharepoint-flaws-to.html",
+      "publishedAt": "2026-10-03T14:36:33.000Z",
+      "excerpt": "The suspected China-linked threat actor known as Warlock is still continuing to weaponize Microsoft SharePoint vulnerabilities, likely both old and new, in attacks targeting organizations in Portuguese- and Spanish-speaking countries. The activity, observed by the Symantec and Carbon Black Threat Hunter Team, has hit critical infrastructure, government, and education organizations. \"In the",
+      "canonicalUrl": "https://thehackernews.com/2026/10/warlock-exploits-sharepoint-flaws-to.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/warlock-exploits-sharepoint-flaws-to.html"
+      ],
+      "cves": [],
+      "id": "s2",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "Warlock ransomware is actively exploiting SharePoint flaws to disable security tools and deploy ransomware against critical infrastructure, government, and education sectors."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "MI5 Says China’s MSS Funded Research Involving 100+ U.K.-Linked Academics",
+      "url": "https://thehackernews.com/2026/10/mi5-says-chinas-mss-funded-research.html",
+      "publishedAt": "2026-10-03T14:38:46.000Z",
+      "excerpt": "The U.K.'s domestic intelligence and security agency has warned that more than 100 academics have helped China boost its intelligence gathering efforts on behalf of Beijing's state security service. In a \"Security Service Espionage Alert\" issued on September 30, 2026, MI5 said the \"primary purpose of the China General Technology Research Institute (CGTRI) 中国通用技术研究院 is to fund research that",
+      "canonicalUrl": "https://thehackernews.com/2026/10/mi5-says-chinas-mss-funded-research.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/mi5-says-chinas-mss-funded-research.html"
+      ],
+      "cves": [],
+      "id": "s1",
+      "section": "industry",
+      "rank": 2,
+      "angle": "MI5's warning that over 100 UK-linked academics were funded by China's MSS highlights the scale of state-sponsored academic espionage and its threat to national security."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Dell CSM Flaws Enable Unauthenticated Admin Access and Root on Kubernetes Nodes",
+      "url": "https://thehackernews.com/2026/10/dell-csm-flaws-enable-unauthenticated.html",
+      "publishedAt": "2026-10-02T17:02:12.000Z",
+      "excerpt": "Dell has released security updates to address multiple critical security flaws in Dell Container Storage Modules (CSM) that could be exploited by bad actors to take over susceptible systems. The vulnerabilities are listed below - CVE-2026-63688 (CVSS score: 10.0) - A missing authentication for critical function vulnerability in the csm-authorization-storage gRPC server that an",
+      "canonicalUrl": "https://thehackernews.com/2026/10/dell-csm-flaws-enable-unauthenticated.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/dell-csm-flaws-enable-unauthenticated.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-63688",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/10/dell-csm-flaws-enable-unauthenticated.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.02",
+              "dateReleased": "2026-10-02T15:19:38.2945Z",
+              "retrievedAt": "2026-10-03T15:35:42.753Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-63688",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-63688",
+              "retrievedAt": "2026-10-03T15:35:42.753Z"
+            }
+          }
+        }
+      ],
+      "id": "s14",
+      "section": "vulnerabilities",
+      "rank": 3,
+      "angle": "Dell CSM vulnerabilities with a 10.0 CVSS score allow unauthenticated attackers to gain admin access and root on Kubernetes nodes, demanding urgent patching."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "GitLab Patches Critical 9.9 AI Gateway Flaw Allowing Command Execution on Self-Hosted Servers",
+      "url": "https://thehackernews.com/2026/10/gitlab-patches-critical-self-hosted-ai.html",
+      "publishedAt": "2026-10-02T17:33:31.000Z",
+      "excerpt": "A critical flaw in GitLab's AI Gateway could let a logged-in user with Duo Agent Platform access run commands on the gateway under certain conditions, GitLab said in an advisory. The gateway is the service that connects a GitLab instance to AI models, and only organizations that host their own gateway need to act. The flaw is fixed in gateway versions 19.2.4, 19.3.2, and 19.4.1. The flaw",
+      "canonicalUrl": "https://thehackernews.com/2026/10/gitlab-patches-critical-self-hosted-ai.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/gitlab-patches-critical-self-hosted-ai.html"
+      ],
+      "cves": [],
+      "id": "s12",
+      "section": "vulnerabilities",
+      "rank": 4,
+      "angle": "GitLab's critical 9.9 AI Gateway flaw enables command execution on self-hosted servers, requiring immediate updates to versions 19.2.4, 19.3.2, and 19.4.1."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Danish university DTU breach exposes data of up to 200,000 people",
+      "url": "https://www.bleepingcomputer.com/news/security/danish-university-dtu-breach-exposes-data-of-up-to-200-000-people/",
+      "publishedAt": "2026-10-03T14:35:20.000Z",
+      "excerpt": "The Technical University of Denmark (DTU) says information belonging to up to 200,000 users may have been exposed after hackers accessed its identity and access management system and downloaded a large amount of data. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/danish-university-dtu-breach-exposes-data-of-up-to-200-000-people",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/danish-university-dtu-breach-exposes-data-of-up-to-200-000-people"
+      ],
+      "cves": [],
+      "id": "s3",
+      "section": "breaches",
+      "rank": 5,
+      "angle": "The DTU breach exposing data of up to 200,000 people underscores the vulnerability of identity and access management systems in academia."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Frontline Education breach exposes school district employee data",
+      "url": "https://www.bleepingcomputer.com/news/security/frontline-education-data-breach-impacts-school-district-employees/",
+      "publishedAt": "2026-10-02T19:01:40.000Z",
+      "excerpt": "Frontline Education is notifying school districts of a data breach after attackers exploited a vulnerability in third-party software to gain unauthorized access to its systems and steal employee information, including Social Security numbers. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/frontline-education-data-breach-impacts-school-district-employees",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/frontline-education-data-breach-impacts-school-district-employees"
+      ],
+      "cves": [],
+      "id": "s10",
+      "section": "breaches",
+      "rank": 6,
+      "angle": "Frontline Education's breach leaking employee Social Security numbers via a third-party software flaw shows the supply chain risk facing school districts."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Antino Backdoor Uses Outlook and OneDrive for C2 in China-Nexus Espionage Campaign",
+      "url": "https://thehackernews.com/2026/10/antino-backdoor-uses-outlook-and.html",
+      "publishedAt": "2026-10-02T17:33:16.000Z",
+      "excerpt": "Government and policy organizations across Asia have become the target of a new campaign orchestrated by a China-nexus threat actor. The activity, which has targeted government and policy organizations in Taiwan, India, the Philippines, Cambodia, Pakistan, Thailand, and Myanmar, involves the deployment of a previously undocumented backdoor codenamed Antino. Cisco Talos is tracking the cluster",
+      "canonicalUrl": "https://thehackernews.com/2026/10/antino-backdoor-uses-outlook-and.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/antino-backdoor-uses-outlook-and.html"
+      ],
+      "cves": [],
+      "id": "s13",
+      "section": "research",
+      "rank": 7,
+      "angle": "The Antino backdoor using Outlook and OneDrive for command-and-control in a China-nexus espionage campaign reveals evolving tradecraft targeting Asian governments."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "doxx.net Raises $38 Million to Prevent AI Agent-on-the-Internet Misadventures",
+      "url": "https://www.securityweek.com/doxx-net-raises-38-million-to-prevent-ai-agent-on-the-internet-misadventures/",
+      "publishedAt": "2026-10-03T11:45:00.000Z",
+      "excerpt": "doxx.net’s new ADN platform prevents agentic misadventure while the agent is operating under the user’s authority. The post doxx.net Raises $38 Million to Prevent AI Agent-on-the-Internet Misadventures appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/doxx-net-raises-38-million-to-prevent-ai-agent-on-the-internet-misadventures",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/doxx-net-raises-38-million-to-prevent-ai-agent-on-the-internet-misadventures"
+      ],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Fortra Patches Critical Vulnerabilities in BoKS",
+      "url": "https://www.securityweek.com/fortra-patches-critical-vulnerabilities-in-boks/",
+      "publishedAt": "2026-10-03T11:34:00.000Z",
+      "excerpt": "The bugs could lead to authentication bypass, shell command execution, and memory corruption. The post Fortra Patches Critical Vulnerabilities in BoKS appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/fortra-patches-critical-vulnerabilities-in-boks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/fortra-patches-critical-vulnerabilities-in-boks"
+      ],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "The State of Cybersecurity in 2026: Key Segments, Insights, and Innovations",
+      "url": "https://thehackernews.com/2026/10/the-state-of-cybersecurity-in-2026key.html",
+      "publishedAt": "2026-10-03T11:00:00.000Z",
+      "excerpt": "Featuring: Cybersecurity is being reshaped by the expansion of cloud infrastructure, AI, distributed systems, and increasingly complex digital environments. As organizations manage more identities, devices, data, and internet-facing infrastructure, security is shifting toward continuous visibility, control, and the ability to respond to risk at scale. This report examines how core areas of",
+      "canonicalUrl": "https://thehackernews.com/2026/10/the-state-of-cybersecurity-in-2026key.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/the-state-of-cybersecurity-in-2026key.html"
+      ],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Judge dismisses spyware case brought by Salvadoran journalists targeted with Pegasus",
+      "url": "https://therecord.media/judge-dismisses-spyware-case-brought-by-salvadoran-journalists",
+      "publishedAt": "2026-10-02T20:30:00.000Z",
+      "excerpt": "The plaintiffs, who all worked for the independent and Salvadoran news outlet El Faro, failed to convince the court that their case had jurisdiction in California, according to the judge’s order.",
+      "canonicalUrl": "https://therecord.media/judge-dismisses-spyware-case-brought-by-salvadoran-journalists",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/judge-dismisses-spyware-case-brought-by-salvadoran-journalists"
+      ],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "RemoteThreat Bets Security Teams Need to Test What Happens After Defenses Fail",
+      "url": "https://www.darkreading.com/cybersecurity-operations/remotethreat-bets-security-teams-need-to-test-what-happens-after-defenses-fail",
+      "publishedAt": "2026-10-02T20:18:37.000Z",
+      "excerpt": "The offensive cyber operations startup looks to evolve red teaming beyond traditional methods to simulate attackers' increasingly advanced capabilities.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/remotethreat-bets-security-teams-need-to-test-what-happens-after-defenses-fail",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cybersecurity-operations/remotethreat-bets-security-teams-need-to-test-what-happens-after-defenses-fail"
+      ],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Bipartisan backlash to ALPRs grows as two high-profile bills are introduced",
+      "url": "https://therecord.media/alpr-legislation-hawley-sanders-merkley-aoc",
+      "publishedAt": "2026-10-02T19:30:00.000Z",
+      "excerpt": "Republican Sen. Josh Hawley has new legislation on limiting automated license plate readers (ALPRs), while Democratic Sens. Bernie Sanders and Jeff Merkley, with Rep. Alexandria Ocasio-Cortez, have teed up a broader bill.",
+      "canonicalUrl": "https://therecord.media/alpr-legislation-hawley-sanders-merkley-aoc",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/alpr-legislation-hawley-sanders-merkley-aoc"
+      ],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Warlock ransomware breach SharePoint in water, telecom operator attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/warlock-ransomware-breach-sharepoint-in-water-telecom-operator-attacks/",
+      "publishedAt": "2026-10-02T18:33:01.000Z",
+      "excerpt": "The China-linked ransomware group Warlock targeted a water utility, a telecom provider, a regional government body, and a university by exploiting SharePoint vulnerabilities to gain initial access. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/warlock-ransomware-breach-sharepoint-in-water-telecom-operator-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/warlock-ransomware-breach-sharepoint-in-water-telecom-operator-attacks"
+      ],
+      "cves": [],
+      "id": "s11"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1152,
+    "promptCacheMissTokens": 3539,
+    "outputTokens": 6949,
+    "estimatedCostUsd": 0.0024444056000000004
+  }
+}
