@@ -1,0 +1,134 @@
+{
+  "date": "2026-10-04",
+  "generatedAt": "2026-10-04T16:20:18.762Z",
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 222,
+    "published": 6
+  },
+  "mode": "article",
+  "headline": "Nation-state phishing, an extortion arrest and AI governance",
+  "standfirst": "A China-nexus group targeting AI policy experts leads the day, alongside an alleged ShinyHunters arrest, a new federal AI task force, and widening AI data-access questions at Google and Anthropic. No CVEs appear in today's selection.",
+  "bodyMarkdown": "## Research\n\nTA419, described as a China-nexus espionage group, is running credential phishing against AI experts at U.S. think tanks, universities and legal-sector organizations [[s4]]. The campaigns impersonated prominent economists, AI policymakers and a prominent Anthropic employee, singling out an AI policy expert. The excerpt truncates there, so the targeting rationale beyond impersonation is not established.\n\nAnalysis: given its rank and the nation-state attribution, this is the story to read for the AI policy ecosystem's exposure — though the excerpt does not detail the phishing infrastructure or whether any access succeeded.\n\n## Industry\n\nA suspected ShinyHunters member using the alias \"Rey,\" named as Saif al-Din Khader, has reportedly been detained in Jordan and is said to be cooperating with the FBI, according to people familiar with the matter [[s3]]. If confirmed, it could disrupt an active extortion group and yield intelligence on other members — a conditional the excerpt supports as reporting, not established fact.\n\nSeparately, Jay Clayton, the National Intelligence Director, has been named to lead a new federal AI task force, after a White House meeting with AI executives [[s1]]. The excerpt does not describe the task force's mandate or authorities. Analysis: pairing intelligence leadership with AI policy implies a governance shift, but the excerpt supports only the appointment.\n\nOn the product side, Gemini could gain broad access to files, apps and the web on macOS, with actions taken without per-action permission prompts [[s5]]; Anthropic is asking Claude users to voluntarily share voice conversations for model training [[s2]]. Both are permission-and-consent questions rather than disclosed vulnerabilities.",
+  "selected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "China-Aligned TA419 Targets U.S. AI Policy Experts With Microsoft AitM Phishing",
+      "url": "https://thehackernews.com/2026/10/china-aligned-ta419-targets-us-ai.html",
+      "publishedAt": "2026-10-04T07:20:32.000Z",
+      "excerpt": "A new China-nexus cyber espionage group known as TA419 has been attributed to multiple credential phishing campaigns targeting artificial intelligence (AI) experts working for U.S. think tanks, universities, and legal sector organizations. The campaigns have impersonated prominent economists and AI policymakers, as well as a prominent Anthropic employee, to single out an AI policy expert at a",
+      "canonicalUrl": "https://thehackernews.com/2026/10/china-aligned-ta419-targets-us-ai.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/china-aligned-ta419-targets-us-ai.html"
+      ],
+      "cves": [],
+      "id": "s4",
+      "section": "research",
+      "rank": 1,
+      "angle": "China-aligned TA419 is actively phishing U.S. AI policy experts, making it a top nation-state espionage threat to the AI policy ecosystem."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "ShinyHunters Suspect Rey Reportedly Detained in Jordan, Helping FBI Identify Group Members",
+      "url": "https://thehackernews.com/2026/10/shinyhunters-suspect-rey-reportedly.html",
+      "publishedAt": "2026-10-04T07:22:05.000Z",
+      "excerpt": "A suspected member of the ShinyHunters digital extortion group, who goes by the online alias \"Rey,\" has been allegedly detained by authorities in Jordan, Reuters reported, citing three people familiar with the matter. Rey, whose real name is Saif ‌al-Din Khader, is said to have been brought into custody on September 29, 2026, cooperating with the U.S. Federal Bureau of Investigation (FBI) and",
+      "canonicalUrl": "https://thehackernews.com/2026/10/shinyhunters-suspect-rey-reportedly.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/shinyhunters-suspect-rey-reportedly.html"
+      ],
+      "cves": [],
+      "id": "s3",
+      "section": "industry",
+      "rank": 2,
+      "angle": "The detention of a key ShinyHunters suspect could disrupt one of the most active extortion groups and yield intelligence on its members."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Trump Names National Intelligence Director Jay Clayton to Lead a New Federal AI Task Force",
+      "url": "https://www.securityweek.com/trump-names-national-intelligence-director-jay-clayton-to-lead-a-new-federal-ai-task-force/",
+      "publishedAt": "2026-10-04T14:57:25.000Z",
+      "excerpt": "The announcement comes after Trump hosted top executives of AI companies at the White House last week. The post Trump Names National Intelligence Director Jay Clayton to Lead a New Federal AI Task Force appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/trump-names-national-intelligence-director-jay-clayton-to-lead-a-new-federal-ai-task-force",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/trump-names-national-intelligence-director-jay-clayton-to-lead-a-new-federal-ai-task-force"
+      ],
+      "cves": [],
+      "id": "s1",
+      "section": "industry",
+      "rank": 3,
+      "angle": "A new federal AI task force led by the National Intelligence Director signals a major pivot in how the U.S. governs AI security and intelligence."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Google Gemini could soon get full access to your Mac’s files, apps and the web",
+      "url": "https://www.bleepingcomputer.com/news/google/google-gemini-could-soon-get-full-access-to-your-macs-files-apps-and-the-web/",
+      "publishedAt": "2026-10-03T23:12:34.000Z",
+      "excerpt": "Google's Gemini could soon access any file on your macOS device, open apps, browse the web, and perform actions without asking for permission every time. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/google/google-gemini-could-soon-get-full-access-to-your-macs-files-apps-and-the-web",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/google/google-gemini-could-soon-get-full-access-to-your-macs-files-apps-and-the-web"
+      ],
+      "cves": [],
+      "id": "s5",
+      "section": "industry",
+      "rank": 4,
+      "angle": "Gemini's potential full access to macOS files and apps raises significant privacy and security concerns about AI agent permissions."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Anthropic asks Claude users to share voice data for AI model training",
+      "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/anthropic-asks-claude-users-to-share-voice-data-for-ai-model-training/",
+      "publishedAt": "2026-10-04T10:53:21.000Z",
+      "excerpt": "Anthropic has started asking Claude users to voluntarily share their voice conversations to help train and improve its AI models. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/artificial-intelligence/anthropic-asks-claude-users-to-share-voice-data-for-ai-model-training",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/artificial-intelligence/anthropic-asks-claude-users-to-share-voice-data-for-ai-model-training"
+      ],
+      "cves": [],
+      "id": "s2",
+      "section": "industry",
+      "rank": 5,
+      "angle": "Anthropic's voice data collection for AI training highlights growing privacy tensions between AI developers and users."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "ShinyHunters hacker reportedly detained in Jordan, aiding FBI",
+      "url": "https://www.bleepingcomputer.com/news/security/shinyhunters-hacker-reportedly-detained-in-jordan-aiding-fbi/",
+      "publishedAt": "2026-10-03T19:09:38.000Z",
+      "excerpt": "A suspected ShinyHunters hacking group member known online as \"Rey\" has reportedly been detained in Jordan and is cooperating with the FBI to help locate other members of the extortion group. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/shinyhunters-hacker-reportedly-detained-in-jordan-aiding-fbi",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/shinyhunters-hacker-reportedly-detained-in-jordan-aiding-fbi"
+      ],
+      "cves": [],
+      "id": "s6"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1152,
+    "promptCacheMissTokens": 1915,
+    "outputTokens": 6450,
+    "estimatedCostUsd": 0.0020773256
+  }
+}
