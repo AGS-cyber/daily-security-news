@@ -1,0 +1,1238 @@
+{
+  "date": "2026-10-05",
+  "generatedAt": "2026-10-05T23:17:09.664Z",
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 221,
+    "published": 34
+  },
+  "mode": "article",
+  "headline": "Citrix patches an exploited NetScaler zero-day as a second flaw draws attacks",
+  "standfirst": "Emergency updates for an exploited NetScaler memory flaw lead the day, with active attempts against a Rejetto HFS session-forgery bug close behind, alongside a national population-register breach, an out-of-band Exchange fix, and an espionage campaign aimed at AI policy circles.",
+  "bodyMarkdown": "## Actively exploited\n\nCitrix has shipped emergency updates for CVE-2026-88779 [[s34]], a memory-buffer flaw in NetScaler ADC and Gateway that the supplied intelligence confirms is exploited as a zero-day and that sits in the CISA KEV catalog. NVD rates it CVSS 4.0 8.7 (High) — network vector, no privileges, no user interaction, but impact confined to availability, which fits the headline's framing as denial of service. The open question is whether it can also reach remote code execution; researchers are investigating, so treat that as unconfirmed. Affected branches include ADC before 14.1-73.41 and before 13.1-64.28, FIPS ADC before 14.1-73.41 and before 13.1-37.282, and Gateway before 14.1-73.41 and 13.1-64.28. CISA's required action references BOD 26-04 and asks agencies to weigh internet exposure, with a due date only days out; internet-facing appliances on those branches are the triage priority.\n\nSecond, CVE-2026-61500 [[s30]] is session forgery in Rejetto HFS 3.0.0 through 3.2.0, rated CVSS 4.0 9.3 (Critical), CWE-338. HFS derives its session-cookie signing key from the non-cryptographic Math.random() generator and leaks outputs of that generator to unauthenticated clients during login: collect a few login responses, reconstruct the generator state, recover the key, forge an administrator cookie, and reach code execution through the server_code configuration feature. VulnCheck reports active exploitation attempts. KEV returned a confirmed catalog miss, which means only that — not that no one is exploiting it; the reported attempts rest on the story text.\n\n## Breaches\n\nDenmark's Central Population Register is warning of a breach affecting roughly 8.8 million registered individuals [[s12]]. Analysis: a register of this kind anchors national identity, so the downstream risk is not confined to Denmark — cross-matching against other leaked datasets and identity fraud are the obvious second-order concerns. The excerpt does not say which fields were exposed, how access was obtained, or who is responsible.\n\nUkraine's largest grocery chain, ATB, confirmed a cyberattack after hackers posted an extortion demand on its own website [[s8]]. Nothing supplied establishes data volume, the authenticity of any leaked material, or attribution; the confirmation and the public demand are the facts here.\n\n## Vulnerabilities\n\nMicrosoft issued out-of-band Exchange Server updates for CVE-2026-96940 [[s9]], CVSS 3.1 8.8 (High), CWE-1390. The flaw is weak authorization that lets an authenticated attacker elevate privileges over the network, described in the excerpt as reading other users' mailboxes. Note the prerequisites: network vector, low privileges, no user interaction — a mailbox on the server is needed first. That places it below the two exploited bugs above, but it is a post-compromise escalation path worth prioritizing on on-premises fleets. No affected-version list was supplied. KEV returned a confirmed miss, and no in-the-wild exploitation is reported.\n\n## Research\n\nA group tracked as TA419 built seemingly legitimate professional relationships with AI policy experts at US think tanks, universities and legal organizations [[s10]]. The supplied headline attributes the activity to Chinese hackers; the excerpt itself carries no technical attribution detail, so treat attribution as unconfirmed. Analysis: the notable element is targeting of the policy layer around AI rather than tooling — a template other intelligence and influence operations could copy.\n\nNozomi Networks reports exploitation attempts against a now-patched critical flaw in the Realtek Jungle SDK to deliver a botnet called Cling [[s23]]. Cling's distinguishing feature is that it repurposes ordinary STUN behaviour as a command-and-control channel rather than inventing new propagation. No CVE identifier was supplied for the Realtek flaw, and the excerpt gives no victim counts or attribution.\n\n## Industry\n\nAn alleged leader of the ShinyHunters extortion crew, known as Rey, has reportedly been arrested in Jordan and is said to be helping the FBI identify other members [[s31]]. The claims are reported rather than confirmed, and no detail was supplied on charges, extradition or what the cooperation has yielded. Analysis: the operational effect on the group is uncertain, but the investigative value of a cooperating insider is the part worth watching.",
+  "selected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Citrix patches NetScaler SAML zero-day exploited in attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/citrix-patches-netscaler-saml-zero-day-exploited-in-attacks/",
+      "publishedAt": "2026-10-04T21:58:01.000Z",
+      "excerpt": "Citrix has released emergency updates for a new NetScaler denial-of-service vulnerability tracked as CVE-2026-88779 that has been exploited in zero-day attacks, with researchers investigating whether it can also be exploited for remote code execution. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/citrix-patches-netscaler-saml-zero-day-exploited-in-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/citrix-patches-netscaler-saml-zero-day-exploited-in-attacks"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-88779",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Citrix",
+            "product": "NetScaler",
+            "vulnerabilityName": "Citrix NetScaler Improper Restriction of Operations within the Bounds of a Memory Buffer Vulnerability",
+            "dateAdded": "2026-10-04",
+            "shortDescription": "Citrix NetScaler ADC (formerly Citrix ADC) and Citrix NetScaler Gateway (formerly Citrix Gateway) contain an improper restriction of operations within the bounds of a memory buffer vulnerability that could allow for a denial of service.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-10-07",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697174 ; https://community.citrix.com/techzone-blogs/110_security-updates/understanding-and-addressing-cve-2026-88779-in-citrix-netscaler-adc-and-citrix-netscaler-gateway/ ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-88779",
+            "cwes": [
+              "CWE-119"
+            ]
+          },
+          "nvd": {
+            "description": "Vulnerability in NetScaler ADC and NetScaler Gateway.\n\nThis issue affects ADC: before 14.1-73.41, before 13.1-64.28, before 14.1-73.41 FIPS, and before 13.1-37.282; Gateway: before 14.1-73.41 and before 13.1-64.28.",
+            "cvss": {
+              "version": "4.0",
+              "score": 8.7,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-119"
+            ],
+            "published": "2026-10-04T04:16:43.680",
+            "lastModified": "2026-10-05T13:35:24.663",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697174",
+                "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://community.citrix.com/techzone-blogs/110_security-updates/understanding-and-addressing-cve-2026-88779-in-citrix-netscaler-adc-and-citrix-netscaler-gateway/",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Mitigation",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-88779",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3BBEE3C6-8CDE-4E13-8D7F-1DC21DE216B8",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-37.282"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:ndcpp:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6F6A3D5D-1861-4974-B091-26E87FB1D6B4",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-37.282"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1A3802BF-8836-4B1C-9C5E-BE6492D42847",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.28"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "92D219C6-E418-4AC1-9D9D-20F939914F0B",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.41"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "EBB3AD2A-AAE0-4A56-A36D-A327EB39792A",
+                "versionStartIncluding": "14.1-66.68",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "14.1-73.41",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C4B364B5-3ED9-4C84-9D09-6C79D7A66E94",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.28"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "33BB8BC4-DFDF-4760-9C92-129615BE7831",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.41"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "bleepingcomputer",
+                "url": "https://www.bleepingcomputer.com/news/security/citrix-patches-netscaler-saml-zero-day-exploited-in-attacks/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.04",
+              "dateReleased": "2026-10-04T18:52:56.0635Z",
+              "retrievedAt": "2026-10-05T23:17:09.664Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-61500%2CCVE-2026-96940%2CCVE-2026-88779",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-88779",
+              "retrievedAt": "2026-10-05T23:17:09.664Z"
+            }
+          }
+        }
+      ],
+      "id": "s34",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "A Citrix NetScaler memory flaw (CVE-2026-88779) is confirmed exploited as a zero-day, is in CISA KEV with a remediation due date of October 7, and emergency patches only just landed — internet-facing ADC and Gateway appliances running SAML need triage now."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Attackers Target Rejetto HFS Flaw That Enables Admin Session Forgery and RCE",
+      "url": "https://thehackernews.com/2026/10/attackers-target-rejetto-hfs-flaw-that.html",
+      "publishedAt": "2026-10-05T08:09:23.000Z",
+      "excerpt": "A critical security flaw impacting Rejetto HTTP File Server (HFS) is witnessing active exploitation attempts, according to VulnCheck. The vulnerability in question is CVE-2026-61500 (CVSS score: 9.3), a case of session forgery stemming from the use of a weak pseudo-random number generator (PRNG) that can lead to a predictable key, which an attacker can then use to gain unauthorized access and",
+      "canonicalUrl": "https://thehackernews.com/2026/10/attackers-target-rejetto-hfs-flaw-that.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/attackers-target-rejetto-hfs-flaw-that.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-61500",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Rejetto HFS 3.0.0 through 3.2.0 derives its session-cookie signing key from the non-cryptographic Math.random() generator and discloses outputs of the same generator to unauthenticated clients during login. A remote attacker can collect a small number of login responses, reconstruct the generator's state, recover the signing key, and forge a valid administrator session cookie, leading to full administrative access and remote code execution via the server_code configuration feature.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.3,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "disclosure@vulncheck.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-338"
+            ],
+            "published": "2026-07-13T18:16:29.903",
+            "lastModified": "2026-07-15T15:16:47.583",
+            "vulnStatus": "Deferred",
+            "references": [
+              {
+                "url": "https://github.com/rejetto/hfs/releases/tag/v3.2.1",
+                "source": "disclosure@vulncheck.com",
+                "tags": []
+              },
+              {
+                "url": "https://www.vulncheck.com/advisories/rejetto-hfs-session-forgery-via-predictable-signing-key",
+                "source": "disclosure@vulncheck.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/10/attackers-target-rejetto-hfs-flaw-that.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.04",
+              "dateReleased": "2026-10-04T18:52:56.0635Z",
+              "retrievedAt": "2026-10-05T23:17:09.664Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-61500%2CCVE-2026-96940%2CCVE-2026-88779",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-61500",
+              "retrievedAt": "2026-10-05T23:17:09.664Z"
+            }
+          }
+        }
+      ],
+      "id": "s30",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "Attackers are actively exploiting CVE-2026-61500 in Rejetto HFS, where a weak PRNG lets anyone forge an admin session and reach RCE — an AI-discovered flaw with public exploit paths hitting exposed file servers."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Denmark population registry data breach affects 8.8 million people",
+      "url": "https://www.bleepingcomputer.com/news/security/denmark-population-registry-data-breach-affects-88-million-people/",
+      "publishedAt": "2026-10-05T15:21:10.000Z",
+      "excerpt": "Denmark's Central Population Register (CPR) is warning of a data breach that exposed the personal information of approximately 8.8 million registered individuals. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/denmark-population-registry-data-breach-affects-88-million-people",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/denmark-population-registry-data-breach-affects-88-million-people"
+      ],
+      "cves": [],
+      "id": "s12",
+      "section": "breaches",
+      "rank": 3,
+      "angle": "Denmark's central population register exposing roughly 8.8 million people is a national-scale identity data event, with downstream fraud and re-identification risk far beyond the affected country."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Microsoft Exchange Flaw Lets Authenticated Attackers Read Other Users' Mailboxes",
+      "url": "https://thehackernews.com/2026/10/microsoft-exchange-flaw-lets.html",
+      "publishedAt": "2026-10-05T16:21:52.000Z",
+      "excerpt": "Microsoft has released out-of-band security updates to address a high-severity flaw in Microsoft Exchange Server that could allow an attacker to escalate privileges under certain conditions. The vulnerability, tracked as CVE-2026-96940, is rated 8.8 on the CVSS scoring system. \"Weak authorization in Microsoft Exchange Server allows an authenticated attacker to elevate privileges over a",
+      "canonicalUrl": "https://thehackernews.com/2026/10/microsoft-exchange-flaw-lets.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/microsoft-exchange-flaw-lets.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-96940",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Weak authorization in Microsoft Exchange Server allows an authenticated attacker to elevate privileges over a network.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.8,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+              "source": "secure@microsoft.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-1390"
+            ],
+            "published": "2026-10-02T19:16:43.023",
+            "lastModified": "2026-10-03T04:18:04.783",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-96940",
+                "source": "secure@microsoft.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/10/microsoft-exchange-flaw-lets.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.04",
+              "dateReleased": "2026-10-04T18:52:56.0635Z",
+              "retrievedAt": "2026-10-05T23:17:09.664Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-61500%2CCVE-2026-96940%2CCVE-2026-88779",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-96940",
+              "retrievedAt": "2026-10-05T23:17:09.664Z"
+            }
+          }
+        }
+      ],
+      "id": "s9",
+      "section": "vulnerabilities",
+      "rank": 4,
+      "angle": "Microsoft pushed out-of-band Exchange Server updates for CVE-2026-96940 (CVSS 8.8), where weak authorization lets any authenticated user escalate to reading other mailboxes — on-prem mail servers need patching outside the normal cycle."
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Chinese Hackers Impersonate US Officials for AI Cyber Espionage",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/chinese-actor-impersonates-us-officials-cyber-espionage",
+      "publishedAt": "2026-10-05T15:52:59.000Z",
+      "excerpt": "An emerging threat group known as TA419 established seemingly legitimate professional relationships with AI policy experts working for US think tanks, universities, and legal organizations.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/chinese-actor-impersonates-us-officials-cyber-espionage",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyberattacks-data-breaches/chinese-actor-impersonates-us-officials-cyber-espionage"
+      ],
+      "cves": [],
+      "id": "s10",
+      "section": "research",
+      "rank": 5,
+      "angle": "TA419's impersonation of US officials to cultivate AI policy experts at think tanks and universities shows espionage tradecraft adapting to the AI-policy world, a template other influence and intel groups can copy."
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Ukraine grocery chain ATB confirms cyberattack as hackers threaten to leak data",
+      "url": "https://therecord.media/atb-ukraine-cyberattack-ransomware",
+      "publishedAt": "2026-10-05T17:00:00.000Z",
+      "excerpt": "Ukraine’s largest grocery store chain, ATB, confirmed that it was hit by a cyberattack after hackers posted an extortion demand on its website.",
+      "canonicalUrl": "https://therecord.media/atb-ukraine-cyberattack-ransomware",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/atb-ukraine-cyberattack-ransomware"
+      ],
+      "cves": [],
+      "id": "s8",
+      "section": "breaches",
+      "rank": 6,
+      "angle": "Ukraine's largest grocery chain confirming an attack while hackers post an extortion demand on its own site is a live test of how retail infrastructure and civilian supply chains are targeted in the region."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Realtek Jungle SDK Exploit Attempts Deliver Cling Botnet With STUN-Based C2",
+      "url": "https://thehackernews.com/2026/10/realtek-jungle-sdk-exploit-attempts.html",
+      "publishedAt": "2026-10-05T11:46:25.000Z",
+      "excerpt": "Threat actors have been observed attempting to exploit a now-patched critical security flaw impacting the Realtek Jungle software development kit (SDK) to deploy a botnet malware called Cling. \"Cling is notable not because it introduces a new propagation technique, but because it repurposes ordinary STUN behavior into a practical command-and-control channel,\" Nozomi Networks said in a report",
+      "canonicalUrl": "https://thehackernews.com/2026/10/realtek-jungle-sdk-exploit-attempts.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/realtek-jungle-sdk-exploit-attempts.html"
+      ],
+      "cves": [],
+      "id": "s23",
+      "section": "research",
+      "rank": 7,
+      "angle": "Cling's abuse of ordinary STUN traffic for command-and-control, delivered via Realtek Jungle SDK exploit attempts, is a reminder that legitimate protocol behavior is increasingly the cheapest place to hide C2."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Alleged ShinyHunters Leader Arrested in Jordan",
+      "url": "https://www.securityweek.com/alleged-shinyhunters-leader-arrested-in-jordan/",
+      "publishedAt": "2026-10-05T07:16:53.000Z",
+      "excerpt": "Known as Rey, the suspect is reportedly helping the FBI identify and locate other members of the extortion group. The post Alleged ShinyHunters Leader Arrested in Jordan appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/alleged-shinyhunters-leader-arrested-in-jordan",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/alleged-shinyhunters-leader-arrested-in-jordan"
+      ],
+      "cves": [],
+      "id": "s31",
+      "section": "industry",
+      "rank": 8,
+      "angle": "The reported arrest of an alleged ShinyHunters leader now cooperating with the FBI could unsettle one of the most prolific extortion crews and yield intelligence on its membership and operations."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "OpenAI is adding invisible watermarks to ChatGPT and Codex text in the EU",
+      "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/openai-is-adding-invisible-watermarks-to-chatgpt-and-codex-text-in-the-eu/",
+      "publishedAt": "2026-10-05T22:46:33.000Z",
+      "excerpt": "OpenAI is preparing to add invisible watermarks to text generated by ChatGPT and Codex in the European Union. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/artificial-intelligence/openai-is-adding-invisible-watermarks-to-chatgpt-and-codex-text-in-the-eu",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/artificial-intelligence/openai-is-adding-invisible-watermarks-to-chatgpt-and-codex-text-in-the-eu"
+      ],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Wikimedia Foundation: OpenAI agents tried to edit pages and compromise notes tool",
+      "url": "https://therecord.media/wikimedia-foundation-openai-agents-report",
+      "publishedAt": "2026-10-05T21:26:00.000Z",
+      "excerpt": "Beyond the potential misuses of its services, Wikimedia said activity by AI agents can be a drain on web platforms that are already operating with limited resources.",
+      "canonicalUrl": "https://therecord.media/wikimedia-foundation-openai-agents-report",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/wikimedia-foundation-openai-agents-report"
+      ],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "ClingSTUN Turns Vulnerable IoT Devices Into Proxy Nodes",
+      "url": "https://www.darkreading.com/iot/clingstun-vulnerable-iot-devices-proxy-nodes",
+      "publishedAt": "2026-10-05T21:25:08.000Z",
+      "excerpt": "The Linux backdoor exploits 24 known flaws to compromise IoT devices and uses legitimate public STUN servers to obscure communications.",
+      "canonicalUrl": "https://darkreading.com/iot/clingstun-vulnerable-iot-devices-proxy-nodes",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/iot/clingstun-vulnerable-iot-devices-proxy-nodes"
+      ],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Rejetto HFS servers now actively scanned for critical RCE flaw",
+      "url": "https://www.bleepingcomputer.com/news/security/rejetto-hfs-servers-now-actively-scanned-for-critical-rce-flaw/",
+      "publishedAt": "2026-10-05T20:20:05.000Z",
+      "excerpt": "Hackers are actively scanning for a Rejetto HFS weak signing key vulnerability, tracked as CVE-2026-61500, that allows session forgery, account takeover, and remote code execution (RCE). [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/rejetto-hfs-servers-now-actively-scanned-for-critical-rce-flaw",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/rejetto-hfs-servers-now-actively-scanned-for-critical-rce-flaw"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-61500",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Rejetto HFS 3.0.0 through 3.2.0 derives its session-cookie signing key from the non-cryptographic Math.random() generator and discloses outputs of the same generator to unauthenticated clients during login. A remote attacker can collect a small number of login responses, reconstruct the generator's state, recover the signing key, and forge a valid administrator session cookie, leading to full administrative access and remote code execution via the server_code configuration feature.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.3,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "disclosure@vulncheck.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-338"
+            ],
+            "published": "2026-07-13T18:16:29.903",
+            "lastModified": "2026-07-15T15:16:47.583",
+            "vulnStatus": "Deferred",
+            "references": [
+              {
+                "url": "https://github.com/rejetto/hfs/releases/tag/v3.2.1",
+                "source": "disclosure@vulncheck.com",
+                "tags": []
+              },
+              {
+                "url": "https://www.vulncheck.com/advisories/rejetto-hfs-session-forgery-via-predictable-signing-key",
+                "source": "disclosure@vulncheck.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "bleepingcomputer",
+                "url": "https://www.bleepingcomputer.com/news/security/rejetto-hfs-servers-now-actively-scanned-for-critical-rce-flaw/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.04",
+              "dateReleased": "2026-10-04T18:52:56.0635Z",
+              "retrievedAt": "2026-10-05T23:17:09.664Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-61500%2CCVE-2026-96940%2CCVE-2026-88779",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-61500",
+              "retrievedAt": "2026-10-05T23:17:09.664Z"
+            }
+          }
+        }
+      ],
+      "id": "s4"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Alleged ShinyHunters member reportedly detained in Jordan, assisting law enforcement",
+      "url": "https://therecord.media/alleged-shinyhunters-member-detained-jordan-fbi",
+      "publishedAt": "2026-10-05T19:15:00.000Z",
+      "excerpt": "Saif ‌al-Din Khader is cooperating with the FBI, reports said, as the bureau responds to a massive breach that exposed employee data.",
+      "canonicalUrl": "https://therecord.media/alleged-shinyhunters-member-detained-jordan-fbi",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/alleged-shinyhunters-member-detained-jordan-fbi"
+      ],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "US, Australia warn of latest Citrix vulnerability after NetScaler advisory",
+      "url": "https://therecord.media/us-australia-warn-of-latest-citrix-vulnerability",
+      "publishedAt": "2026-10-05T17:22:00.000Z",
+      "excerpt": "Citrix confirmed late on Friday that it was “tracking a newly observed issue” related to some customer-managed NetScaler deployments but claimed the problem was not connected to vulnerabilities reported last week that also caused alarm among cybersecurity experts.",
+      "canonicalUrl": "https://therecord.media/us-australia-warn-of-latest-citrix-vulnerability",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/us-australia-warn-of-latest-citrix-vulnerability"
+      ],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "IQVIA fined $7.8 million for failing to properly anonymize health data",
+      "url": "https://www.bleepingcomputer.com/news/security/iqvia-fined-78-million-for-failing-to-properly-anonymize-health-data/",
+      "publishedAt": "2026-10-05T17:19:53.000Z",
+      "excerpt": "Italy's Data Protection Authority (GPDP) has fined IQVIA €7 million ($7.8M) over poor data-processing practices that the agency says could have put roughly one million patients at risk of data exposure and de-anonymization. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/iqvia-fined-78-million-for-failing-to-properly-anonymize-health-data",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/iqvia-fined-78-million-for-failing-to-properly-anonymize-health-data"
+      ],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "University of Illinois Chicago affected by ransomware attack on medical school",
+      "url": "https://therecord.media/ransomware-university-illinois-chicago",
+      "publishedAt": "2026-10-05T15:30:00.000Z",
+      "excerpt": "A ransomware attack that affected the University of Illinois Chicago (UIC) College of Medicine resulted in the theft of some information from its servers.",
+      "canonicalUrl": "https://therecord.media/ransomware-university-illinois-chicago",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/ransomware-university-illinois-chicago"
+      ],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "New Dell System Update flaw lets hackers gain root privileges",
+      "url": "https://www.bleepingcomputer.com/news/security/new-dell-system-update-flaw-lets-hackers-gain-root-privileges/",
+      "publishedAt": "2026-10-05T14:53:06.000Z",
+      "excerpt": "Dell warned customers to patch a critical vulnerability in the System Update (DSU) command-line interface (CLI) deployment tool as soon as possible. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/new-dell-system-update-flaw-lets-hackers-gain-root-privileges",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/new-dell-system-update-flaw-lets-hackers-gain-root-privileges"
+      ],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Google Narrows Open Source Bug Bounty Amid Wave of Invalid Automated Reports",
+      "url": "https://www.securityweek.com/google-narrows-open-source-bug-bounty-amid-wave-of-invalid-automated-reports/",
+      "publishedAt": "2026-10-05T14:26:00.000Z",
+      "excerpt": "Google has temporarily stopped accepting product vulnerability reports through its Open Source Software Vulnerability Reward Program (OSS VRP). The post Google Narrows Open Source Bug Bounty Amid Wave of Invalid Automated Reports appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/google-narrows-open-source-bug-bounty-amid-wave-of-invalid-automated-reports",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/google-narrows-open-source-bug-bounty-amid-wave-of-invalid-automated-reports"
+      ],
+      "cves": [],
+      "id": "s14"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "South Korea probes bank breaches amid suspected AI-powered attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/south-korea-probes-bank-breaches-amid-suspected-ai-powered-attacks/",
+      "publishedAt": "2026-10-05T14:22:12.000Z",
+      "excerpt": "South Korea's Financial Services Commission (FSC) held an emergency meeting following a series of cyberattacks targeting financial institutions in the country. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/south-korea-probes-bank-breaches-amid-suspected-ai-powered-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/south-korea-probes-bank-breaches-amid-suspected-ai-powered-attacks"
+      ],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "⚡ Weekly Recap: NetScaler and FortiMail 0-Days, AI Coding Leaks, Spectre v2 and Ransomware Arrests",
+      "url": "https://thehackernews.com/2026/10/weekly-recap-netscaler-and-fortimail-0.html",
+      "publishedAt": "2026-10-05T14:20:43.000Z",
+      "excerpt": "A blank field. A public repo. One reply to an email. A box left exposed. None of this sounds dramatic, which is partly the problem. This week’s threats keep finding leverage in small things that were easy to overlook. There are actively exploited bugs in the mix, cleaner intrusion paths, smarter automation, and a long patch list waiting behind them. Some attacks are getting more capable. Others",
+      "canonicalUrl": "https://thehackernews.com/2026/10/weekly-recap-netscaler-and-fortimail-0.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/weekly-recap-netscaler-and-fortimail-0.html"
+      ],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "tenfold CE: Our free Identity Governance tool just got 2 new features",
+      "url": "https://www.bleepingcomputer.com/news/security/tenfold-ce-our-free-identity-governance-tool-just-got-2-new-features/",
+      "publishedAt": "2026-10-05T13:33:42.000Z",
+      "excerpt": "tenfold has added shared content governance and real-time event auditing to its free Community Edition for organizations with under 150 users. The new features help teams manage Microsoft 365 sharing and investigate suspicious identity activity. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/tenfold-ce-our-free-identity-governance-tool-just-got-2-new-features",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/tenfold-ce-our-free-identity-governance-tool-just-got-2-new-features"
+      ],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Alleged dev of Ploutus ATM malware appears in US court after arrest",
+      "url": "https://www.bleepingcomputer.com/news/security/suspected-dev-of-ploutus-atm-malware-appears-in-us-court-after-arrest/",
+      "publishedAt": "2026-10-05T13:01:45.000Z",
+      "excerpt": "The U.S. Department of Justice has announced the arrest of the alleged developer of Ploutus malware, used to steal millions of dollars in ATM jackpotting attacks across the United States. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/suspected-dev-of-ploutus-atm-malware-appears-in-us-court-after-arrest",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/suspected-dev-of-ploutus-atm-malware-appears-in-us-court-after-arrest"
+      ],
+      "cves": [],
+      "id": "s18"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Linux Backdoor Abuses STUN Protocol, Exploits Dozens of Flaws",
+      "url": "https://www.securityweek.com/linux-backdoor-abuses-stun-protocol-exploits-dozens-of-flaws/",
+      "publishedAt": "2026-10-05T13:00:00.000Z",
+      "excerpt": "ClingSTUN operates as a back-connect proxy backdoor, sets up persistence, and contains exploits for self-propagation. The post Linux Backdoor Abuses STUN Protocol, Exploits Dozens of Flaws appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/linux-backdoor-abuses-stun-protocol-exploits-dozens-of-flaws",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/linux-backdoor-abuses-stun-protocol-exploits-dozens-of-flaws"
+      ],
+      "cves": [],
+      "id": "s19"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Need for Speed: AI-Driven Attacks Are Changing Security Strategies",
+      "url": "https://www.darkreading.com/cyber-risk/ai-attacks-security-strategies",
+      "publishedAt": "2026-10-05T13:00:00.000Z",
+      "excerpt": "AI-powered attacks are fast, relentless, and automated. How security teams can keep up is top of mind, according to the latest Dark Reading reader poll.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/ai-attacks-security-strategies",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyber-risk/ai-attacks-security-strategies"
+      ],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "250,000 Impacted by Data Breaches at New Jersey, Texas Healthcare Firms",
+      "url": "https://www.securityweek.com/250000-impacted-by-data-breaches-at-new-jersey-texas-healthcare-firms/",
+      "publishedAt": "2026-10-05T12:35:15.000Z",
+      "excerpt": "Hackers stole patient information from Clover Health Investments and AngMar Management Services in July. The post 250,000 Impacted by Data Breaches at New Jersey, Texas Healthcare Firms appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/250000-impacted-by-data-breaches-at-new-jersey-texas-healthcare-firms",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/250000-impacted-by-data-breaches-at-new-jersey-texas-healthcare-firms"
+      ],
+      "cves": [],
+      "id": "s21"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "The Credential Layer Is Expanding Faster Than Security Teams Can See It",
+      "url": "https://thehackernews.com/2026/10/the-credential-layer-is-expanding.html",
+      "publishedAt": "2026-10-05T11:55:00.000Z",
+      "excerpt": "Every modern enterprise depends on credentials. This is how humans, systems, and now AI, all connect to data, services, and each other securely. GitGuardian helps secure that credential layer through three connected capabilities: Detect, Remediate, and Prevent. The journey starts with detection, because organizations first need to understand what credentials exist, where they live, and what they",
+      "canonicalUrl": "https://thehackernews.com/2026/10/the-credential-layer-is-expanding.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/the-credential-layer-is-expanding.html"
+      ],
+      "cves": [],
+      "id": "s22"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Exploitation Hits Rejetto HFS Vulnerability Discovered by AI",
+      "url": "https://www.securityweek.com/exploitation-hits-rejetto-hfs-vulnerability-discovered-by-ai/",
+      "publishedAt": "2026-10-05T11:00:05.000Z",
+      "excerpt": "CVE-2026-61500 allows attackers to recover the session-cookie signing key and gain administrative access and RCE. The post Exploitation Hits Rejetto HFS Vulnerability Discovered by AI appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/exploitation-hits-rejetto-hfs-vulnerability-discovered-by-ai",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/exploitation-hits-rejetto-hfs-vulnerability-discovered-by-ai"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-61500",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Rejetto HFS 3.0.0 through 3.2.0 derives its session-cookie signing key from the non-cryptographic Math.random() generator and discloses outputs of the same generator to unauthenticated clients during login. A remote attacker can collect a small number of login responses, reconstruct the generator's state, recover the signing key, and forge a valid administrator session cookie, leading to full administrative access and remote code execution via the server_code configuration feature.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.3,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "disclosure@vulncheck.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-338"
+            ],
+            "published": "2026-07-13T18:16:29.903",
+            "lastModified": "2026-07-15T15:16:47.583",
+            "vulnStatus": "Deferred",
+            "references": [
+              {
+                "url": "https://github.com/rejetto/hfs/releases/tag/v3.2.1",
+                "source": "disclosure@vulncheck.com",
+                "tags": []
+              },
+              {
+                "url": "https://www.vulncheck.com/advisories/rejetto-hfs-session-forgery-via-predictable-signing-key",
+                "source": "disclosure@vulncheck.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/exploitation-hits-rejetto-hfs-vulnerability-discovered-by-ai/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.04",
+              "dateReleased": "2026-10-04T18:52:56.0635Z",
+              "retrievedAt": "2026-10-05T23:17:09.664Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-61500%2CCVE-2026-96940%2CCVE-2026-88779",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-61500",
+              "retrievedAt": "2026-10-05T23:17:09.664Z"
+            }
+          }
+        }
+      ],
+      "id": "s24"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Senate Passes Bipartisan Bill to Strengthen Healthcare Cybersecurity",
+      "url": "https://www.securityweek.com/senate-passes-bipartisan-bill-to-strengthen-healthcare-cybersecurity/",
+      "publishedAt": "2026-10-05T10:42:19.000Z",
+      "excerpt": "More than 730 cyber breaches affected over 270 million Americans last year, costing an average of $10 million per breach. The post Senate Passes Bipartisan Bill to Strengthen Healthcare Cybersecurity appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/senate-passes-bipartisan-bill-to-strengthen-healthcare-cybersecurity",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/senate-passes-bipartisan-bill-to-strengthen-healthcare-cybersecurity"
+      ],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Apple Plans Tighter macOS Full Disk Access Controls Over AI Agent Data Access",
+      "url": "https://thehackernews.com/2026/10/apple-plans-tighter-macos-full-disk.html",
+      "publishedAt": "2026-10-05T10:38:50.000Z",
+      "excerpt": "Apple has announced that it's taking steps to tighten controls around a macOS setting called Full Disk Access (FDA) due to security risks posed by artificial intelligence (AI) agents. \"Some developers are using Full Disk Access in ways that could put users at risk, exposing everything on their systems—including files, mail, messages, and even browsing history – without users' full knowledge",
+      "canonicalUrl": "https://thehackernews.com/2026/10/apple-plans-tighter-macos-full-disk.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/apple-plans-tighter-macos-full-disk.html"
+      ],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "OpenAI will show visual ads in ChatGPT while you generate images",
+      "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/openai-will-show-visual-ads-in-chatgpt-while-you-generate-images/",
+      "publishedAt": "2026-10-05T10:28:45.000Z",
+      "excerpt": "OpenAI is expanding ads in ChatGPT, and one of the first new formats will show visual ads while you're generating images. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/artificial-intelligence/openai-will-show-visual-ads-in-chatgpt-while-you-generate-images",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/artificial-intelligence/openai-will-show-visual-ads-in-chatgpt-while-you-generate-images"
+      ],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft: Windows KB5124010 update crashes some games and apps",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-windows-kb5124010-update-crashes-some-games-and-apps/",
+      "publishedAt": "2026-10-05T09:37:56.000Z",
+      "excerpt": "Microsoft confirmed over the weekend that some games and applications using AC-3 (Dolby Digital) audio decoding will crash after installing the September 2026 KB5124010 Windows 11 preview update. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-windows-kb5124010-update-crashes-some-games-and-apps",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/microsoft/microsoft-windows-kb5124010-update-crashes-some-games-and-apps"
+      ],
+      "cves": [],
+      "id": "s28"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Google halts open-source bug bounty program amid AI spam surge",
+      "url": "https://www.bleepingcomputer.com/news/google/google-halts-open-source-bug-bounty-program-amid-ai-spam-surge/",
+      "publishedAt": "2026-10-05T08:27:46.000Z",
+      "excerpt": "Google has now suspended submissions to its Open Source Software Vulnerability Rewards Program (OSS VRP) after being flooded by AI-generated reports. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/google/google-halts-open-source-bug-bounty-program-amid-ai-spam-surge",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/google/google-halts-open-source-bug-bounty-program-amid-ai-spam-surge"
+      ],
+      "cves": [],
+      "id": "s29"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "New NetScaler Zero-Day Exploited in Targeted Attacks Can Knock SAML Deployments Offline",
+      "url": "https://thehackernews.com/2026/10/new-netscaler-zero-day-exploited-in.html",
+      "publishedAt": "2026-10-05T06:40:19.000Z",
+      "excerpt": "Citrix has released security updates for a high-severity security flaw in NetScaler ADC and NetScaler Gateway that has been exploited as part of targeted zero-day attacks. The vulnerability, tracked as CVE-2026-88779, carries a CVSS score of 8.7 out of 10.0. \"CVE-2026-88779 is a memory overflow vulnerability in Citrix NetScaler ADC and Citrix NetScaler Gateway that can lead to",
+      "canonicalUrl": "https://thehackernews.com/2026/10/new-netscaler-zero-day-exploited-in.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/new-netscaler-zero-day-exploited-in.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-88779",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Citrix",
+            "product": "NetScaler",
+            "vulnerabilityName": "Citrix NetScaler Improper Restriction of Operations within the Bounds of a Memory Buffer Vulnerability",
+            "dateAdded": "2026-10-04",
+            "shortDescription": "Citrix NetScaler ADC (formerly Citrix ADC) and Citrix NetScaler Gateway (formerly Citrix Gateway) contain an improper restriction of operations within the bounds of a memory buffer vulnerability that could allow for a denial of service.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-10-07",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697174 ; https://community.citrix.com/techzone-blogs/110_security-updates/understanding-and-addressing-cve-2026-88779-in-citrix-netscaler-adc-and-citrix-netscaler-gateway/ ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-88779",
+            "cwes": [
+              "CWE-119"
+            ]
+          },
+          "nvd": {
+            "description": "Vulnerability in NetScaler ADC and NetScaler Gateway.\n\nThis issue affects ADC: before 14.1-73.41, before 13.1-64.28, before 14.1-73.41 FIPS, and before 13.1-37.282; Gateway: before 14.1-73.41 and before 13.1-64.28.",
+            "cvss": {
+              "version": "4.0",
+              "score": 8.7,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-119"
+            ],
+            "published": "2026-10-04T04:16:43.680",
+            "lastModified": "2026-10-05T13:35:24.663",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697174",
+                "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://community.citrix.com/techzone-blogs/110_security-updates/understanding-and-addressing-cve-2026-88779-in-citrix-netscaler-adc-and-citrix-netscaler-gateway/",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Mitigation",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-88779",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3BBEE3C6-8CDE-4E13-8D7F-1DC21DE216B8",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-37.282"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:ndcpp:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6F6A3D5D-1861-4974-B091-26E87FB1D6B4",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-37.282"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1A3802BF-8836-4B1C-9C5E-BE6492D42847",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.28"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "92D219C6-E418-4AC1-9D9D-20F939914F0B",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.41"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "EBB3AD2A-AAE0-4A56-A36D-A327EB39792A",
+                "versionStartIncluding": "14.1-66.68",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "14.1-73.41",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C4B364B5-3ED9-4C84-9D09-6C79D7A66E94",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.28"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "33BB8BC4-DFDF-4760-9C92-129615BE7831",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.41"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/10/new-netscaler-zero-day-exploited-in.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.04",
+              "dateReleased": "2026-10-04T18:52:56.0635Z",
+              "retrievedAt": "2026-10-05T23:17:09.664Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-61500%2CCVE-2026-96940%2CCVE-2026-88779",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-88779",
+              "retrievedAt": "2026-10-05T23:17:09.664Z"
+            }
+          }
+        }
+      ],
+      "id": "s32"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Exploitation of Citrix NetScaler Zero-Day Hits Appliances Patched Days Earlier",
+      "url": "https://www.securityweek.com/exploitation-of-citrix-netscaler-zero-day-hits-appliances-patched-days-earlier/",
+      "publishedAt": "2026-10-05T05:14:48.000Z",
+      "excerpt": "Citrix has confirmed that a new zero-day vulnerability, CVE-2026-88779, emerged just days after two other exploited flaws were patched. The post Exploitation of Citrix NetScaler Zero-Day Hits Appliances Patched Days Earlier appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/exploitation-of-citrix-netscaler-zero-day-hits-appliances-patched-days-earlier",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/exploitation-of-citrix-netscaler-zero-day-hits-appliances-patched-days-earlier"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-88779",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Citrix",
+            "product": "NetScaler",
+            "vulnerabilityName": "Citrix NetScaler Improper Restriction of Operations within the Bounds of a Memory Buffer Vulnerability",
+            "dateAdded": "2026-10-04",
+            "shortDescription": "Citrix NetScaler ADC (formerly Citrix ADC) and Citrix NetScaler Gateway (formerly Citrix Gateway) contain an improper restriction of operations within the bounds of a memory buffer vulnerability that could allow for a denial of service.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-10-07",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697174 ; https://community.citrix.com/techzone-blogs/110_security-updates/understanding-and-addressing-cve-2026-88779-in-citrix-netscaler-adc-and-citrix-netscaler-gateway/ ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-88779",
+            "cwes": [
+              "CWE-119"
+            ]
+          },
+          "nvd": {
+            "description": "Vulnerability in NetScaler ADC and NetScaler Gateway.\n\nThis issue affects ADC: before 14.1-73.41, before 13.1-64.28, before 14.1-73.41 FIPS, and before 13.1-37.282; Gateway: before 14.1-73.41 and before 13.1-64.28.",
+            "cvss": {
+              "version": "4.0",
+              "score": 8.7,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-119"
+            ],
+            "published": "2026-10-04T04:16:43.680",
+            "lastModified": "2026-10-05T13:35:24.663",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697174",
+                "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://community.citrix.com/techzone-blogs/110_security-updates/understanding-and-addressing-cve-2026-88779-in-citrix-netscaler-adc-and-citrix-netscaler-gateway/",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Mitigation",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-88779",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3BBEE3C6-8CDE-4E13-8D7F-1DC21DE216B8",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-37.282"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:ndcpp:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6F6A3D5D-1861-4974-B091-26E87FB1D6B4",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-37.282"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1A3802BF-8836-4B1C-9C5E-BE6492D42847",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.28"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "92D219C6-E418-4AC1-9D9D-20F939914F0B",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.41"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_application_delivery_controller:*:*:*:*:fips:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "EBB3AD2A-AAE0-4A56-A36D-A327EB39792A",
+                "versionStartIncluding": "14.1-66.68",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "14.1-73.41",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C4B364B5-3ED9-4C84-9D09-6C79D7A66E94",
+                "versionStartIncluding": "13.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "13.1-64.28"
+              },
+              {
+                "criteria": "cpe:2.3:a:citrix:netscaler_gateway:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "33BB8BC4-DFDF-4760-9C92-129615BE7831",
+                "versionStartIncluding": "14.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.1-73.41"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/exploitation-of-citrix-netscaler-zero-day-hits-appliances-patched-days-earlier/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.04",
+              "dateReleased": "2026-10-04T18:52:56.0635Z",
+              "retrievedAt": "2026-10-05T23:17:09.664Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-61500%2CCVE-2026-96940%2CCVE-2026-88779",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-88779",
+              "retrievedAt": "2026-10-05T23:17:09.664Z"
+            }
+          }
+        }
+      ],
+      "id": "s33"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1280,
+    "promptCacheMissTokens": 12439,
+    "outputTokens": 6135,
+    "estimatedCostUsd": 0.0034628440000000005
+  }
+}
