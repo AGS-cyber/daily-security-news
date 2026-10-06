@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-10-06",
+    "mode": "article",
+    "headline": "A national register breached through lawful access, and a critical Jira file-read flaw",
+    "count": 36
+  },
+  {
     "date": "2026-10-05",
     "mode": "article",
     "headline": "Citrix patches an exploited NetScaler zero-day as a second flaw draws attacks",

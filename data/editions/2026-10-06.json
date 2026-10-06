@@ -1,0 +1,908 @@
+{
+  "date": "2026-10-06",
+  "generatedAt": "2026-10-06T17:47:27.724Z",
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 221,
+    "published": 36
+  },
+  "mode": "article",
+  "headline": "A national register breached through lawful access, and a critical Jira file-read flaw",
+  "standfirst": "Denmark's CPR breach and Atlassian's unauthenticated arbitrary file-access flaw lead a day otherwise dominated by breach disclosures and law-enforcement news. One distinct CVE appears across the whole selection — do not read the story count as a vulnerability tally.",
+  "bodyMarkdown": "## Breaches\n\nDenmark's central person register is the lead story for a reason: the 8.8 million people exposed in the CPR breach [[s26]] were not reached through a perimeter hole but through a company's lawful lookup access to the system. Names, addresses and personal IDs were taken. The editor's framing — that authorised access paths are the softest route into national identity systems — is the point worth keeping; the supplied evidence does not describe how the abuse was detected or what access was withdrawn.\n\nSouth Korean officials believe AI agents were used against at least seven financial institutions, with personal data on at least 68,000 people reportedly exposed and a Chinese cybersecurity tool said to have been involved [[s5]]. Treat both as stated belief and report: no victims, tool or timeframe are named.\n\nAt the FBI, a missed patch by a contractor is being blamed for the ShinyHunters theft of personal information belonging to thousands of bureau employees, and the contractor has been removed [[s8]]. The unpatched system is not described. *Analysis:* the notable element is the accountability framing rather than the vulnerability class — the story as supplied supports only that a patch was missed and a contractor relationship ended.\n\nASOS confirmed a breach after attackers pushed unauthorised \"HACKED\" notifications through its mobile app and claimed to have stolen customer data from its Snowflake environment [[s3]]. The confirmation covers the breach and the notifications; the theft claim is the attackers' claim as reported.\n\n## Vulnerabilities\n\nAtlassian's CVE-2026-21589 is the day's most actionable item: CVSS 4.0 score 9.3, Critical, unauthenticated arbitrary file access across eight self-hosted Data Center products — Bitbucket, Confluence, Crowd, Jira Software, Jira Service Management, Bamboo, Crucible and Fisheye [[s1]]. Two constraints matter before anyone panics. Exploitation requires prior knowledge of the target file's exact name and path, and the flaw does not let an attacker enumerate or list directory contents; the supplied description notes that in some configurations sensitive files in the web application root make it highly severe. The vector is network-reachable with no privileges and no user interaction, and the scope metrics are High. Per-product fix versions are listed in the supplied data, part of which is truncated here, so confirm against Atlassian's own guidance rather than a partial list. KEV enrichment returned a confirmed catalog miss — which is not evidence that exploitation has not occurred.\n\n## Industry\n\nThe FBI has arrested a developer of Ploutus ATM malware who was on its ten most wanted list, described as an alleged leader of Tren de Aragua's ATM jackpotting activity [[s11]]. Keep the \"alleged\": the supplied text does not detail charges, extradition or any operational effect on jackpotting crews beyond the arrest itself.\n\n## Research\n\nA new analysis of the Blinder Tunnel campaign documents an Iran-nexus operation using fake Dubai Airports recruitment lures and GitHub-hosted command-and-control against Iraqi critical infrastructure [[s25]]. Attribution is supplied as given; outcomes and additional malware families are not. The lure-plus-hosted-C2 combination is the transferable tradecraft for energy and government defenders.\n\nCERT-UA found more than 100 compromised Ukrainian websites serving fake Cloudflare verification pages that funnel visitors into a ClickFix trap and deliver the Lunex infostealer [[s10]]. The familiar part is the lure; the less-discussed part is that compromised legitimate sites, not just user behaviour, are the delivery mechanism.",
+  "selected": [
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "8.8 Million Impacted by Data Breach at Denmark’s Central Person Register",
+      "url": "https://www.securityweek.com/8-8-million-impacted-by-data-breach-at-denmarks-central-person-register/",
+      "publishedAt": "2026-10-06T09:38:30.000Z",
+      "excerpt": "Hackers abused a company’s lawful access to the CPR system to steal the personal information of registered citizens. The post 8.8 Million Impacted by Data Breach at Denmark’s Central Person Register appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/8-8-million-impacted-by-data-breach-at-denmarks-central-person-register",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/8-8-million-impacted-by-data-breach-at-denmarks-central-person-register"
+      ],
+      "cves": [],
+      "id": "s26",
+      "section": "breaches",
+      "rank": 1,
+      "angle": "Attackers abused a company's lawful lookup access to Denmark's national CPR register, exposing 8.8 million people's names, addresses and personal IDs — a reminder that authorized access paths, not just perimeter holes, are the softest route into national identity systems."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Atlassian warns of critical file-access flaw in Jira, Confluence",
+      "url": "https://www.bleepingcomputer.com/news/security/atlassian-warns-of-critical-file-access-flaw-in-jira-confluence/",
+      "publishedAt": "2026-10-06T17:34:59.000Z",
+      "excerpt": "Atlassian is warning customers of a critical vulnerability, tracked as CVE-2026-21589, that can be exploited for arbitrary file-access in multiple self-hosted Data Center products, including Confluence, Jira, and Bitbucket. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/atlassian-warns-of-critical-file-access-flaw-in-jira-confluence",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/atlassian-warns-of-critical-file-access-flaw-in-jira-confluence"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-21589",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "This is a vulnerability in Bitbucket Data Center, Confluence Data Center, Jira Service Management Data Center, Jira Software Data Center, Bamboo Data Center. Crowd Data Center, Crucible and Fisheye. This Arbitrary File Access vulnerability allows an unauthenticated attacker to access specific files within the web application root directory in affected versions. Exploitation requires prior knowledge of the target file's exact name and path; this vulnerability does not allow attackers to enumerate or list directory contents. In some configurations, there may be some sensitive files that make this highly severe. This vulnerability allows an unauthenticated remote attacker to access specific files within the web application root directory in affected versions. The vulnerability must be addressed for affected versions of: -- Bitbucket Data Center, introduced in version >= 4.6.0, fix versions: 9.4.26, 10.2.8, 10.5.1 -- Confluence Data Center, introduced in version >= 5.10.0, fix versions 9.2.26, 10.2.19 -- Crowd Data Center, introduced in version >= 2.11.0, fix versions 6.3.7, 7.0.3, 7.1.7, 7.2.4 -- Jira Software Data Center, introduced in version >= 7.1.0, fix versions 9.12.40, 10.3.26, 11.3.12 -- Jira Service Management Data Center, introduced in version >= 3.1.0, fix versions 5.12.40, 10.3.26, 11.3.12 -- Bamboo Data Center >= 7.0.1, fix versions 10.2.24, 12.1.12 -- Crucible, fix versions 4.9.15 -- Fisheye, fix version 4.9.15 -- Exploitation requires prior knowledge of the target file's exact name and path. The vulnerability does not include the capability to enumerate or list directory contents.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.3,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "security@atlassian.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-552"
+            ],
+            "published": "2026-10-05T22:16:58.423",
+            "lastModified": "2026-10-06T17:17:25.613",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://jira.atlassian.com/browse/BAM-26567",
+                "source": "security@atlassian.com",
+                "tags": []
+              },
+              {
+                "url": "https://jira.atlassian.com/browse/BSERV-20604",
+                "source": "security@atlassian.com",
+                "tags": []
+              },
+              {
+                "url": "https://jira.atlassian.com/browse/CONFSERVER-104488",
+                "source": "security@atlassian.com",
+                "tags": []
+              },
+              {
+                "url": "https://jira.atlassian.com/browse/CRUC-8741",
+                "source": "security@atlassian.com",
+                "tags": []
+              },
+              {
+                "url": "https://jira.atlassian.com/browse/CWD-6610",
+                "source": "security@atlassian.com",
+                "tags": []
+              },
+              {
+                "url": "https://jira.atlassian.com/browse/FE-7583",
+                "source": "security@atlassian.com",
+                "tags": []
+              },
+              {
+                "url": "https://jira.atlassian.com/browse/JRASERVER-79546",
+                "source": "security@atlassian.com",
+                "tags": []
+              },
+              {
+                "url": "https://jira.atlassian.com/browse/JSDSERVER-16809",
+                "source": "security@atlassian.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "bleepingcomputer",
+                "url": "https://www.bleepingcomputer.com/news/security/atlassian-warns-of-critical-file-access-flaw-in-jira-confluence/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.04",
+              "dateReleased": "2026-10-04T18:52:56.0635Z",
+              "retrievedAt": "2026-10-05T23:17:09.664Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-21589%2CCVE-2026-27872%2CCVE-2026-27873%2CCVE-2026-15340",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-21589",
+              "retrievedAt": "2026-10-06T17:47:27.724Z"
+            }
+          }
+        }
+      ],
+      "id": "s1",
+      "section": "vulnerabilities",
+      "rank": 2,
+      "angle": "Atlassian's 9.3-rated unauthenticated arbitrary file-access flaw spans eight self-hosted Data Center products including Jira, Confluence and Bitbucket, so any organization running them internally needs to confirm patched versions today."
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "South Korean officials believe AI agents were used to hack several banks",
+      "url": "https://therecord.media/south-korean-bank-hacks-ai-agents",
+      "publishedAt": "2026-10-06T15:29:22.000Z",
+      "excerpt": "The personal data of at least 68,000 people was reportedly exposed in breaches of at least seven financial institutions, with officials saying they believe a Chinese cybersecurity tool was used to hack the banks’ systems.",
+      "canonicalUrl": "https://therecord.media/south-korean-bank-hacks-ai-agents",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/south-korean-bank-hacks-ai-agents"
+      ],
+      "cves": [],
+      "id": "s5",
+      "section": "breaches",
+      "rank": 3,
+      "angle": "South Korean officials say AI agents were used to breach at least seven financial institutions and expose data on 68,000 people, an early concrete case of agentic tooling in a real intrusion against regulated finance."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "FBI Blames Contractor’s Missed Patch for ShinyHunters Breach",
+      "url": "https://www.securityweek.com/fbi-blames-contractors-missed-patch-for-shinyhunters-breach/",
+      "publishedAt": "2026-10-06T14:15:00.000Z",
+      "excerpt": "The FBI has removed an Accenture contractor over a data breach that exposed personal information of thousands of bureau employees. The post FBI Blames Contractor’s Missed Patch for ShinyHunters Breach appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/fbi-blames-contractors-missed-patch-for-shinyhunters-breach",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/fbi-blames-contractors-missed-patch-for-shinyhunters-breach"
+      ],
+      "cves": [],
+      "id": "s8",
+      "section": "breaches",
+      "rank": 4,
+      "angle": "The FBI removing an Accenture contractor after a missed patch enabled the ShinyHunters theft of bureau employee data highlights third-party and contractor patch accountability at the highest-stakes targets."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "ASOS confirms data breach after “HACKED” in-app notifications",
+      "url": "https://www.bleepingcomputer.com/news/security/asos-confirms-data-breach-after-hacked-in-app-notifications/",
+      "publishedAt": "2026-10-06T16:33:54.000Z",
+      "excerpt": "UK fashion retailer ASOS confirmed a data breach Tuesday after hackers sent unauthorized push notifications through its mobile app while claiming to have stolen customer data from the company's Snowflake environment. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/asos-confirms-data-breach-after-hacked-in-app-notifications",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/asos-confirms-data-breach-after-hacked-in-app-notifications"
+      ],
+      "cves": [],
+      "id": "s3",
+      "section": "breaches",
+      "rank": 5,
+      "angle": "ASOS confirmed a breach after attackers pushed unauthorized 'HACKED' notifications through its app and claimed data stolen from its Snowflake environment — a public, customer-facing extortion play with immediate brand and market fallout."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "FBI Arrests ‘Most Wanted’ Developer of Ploutus ATM Malware",
+      "url": "https://www.securityweek.com/fbi-arrests-most-wanted-developer-of-ploutus-atm-malware/",
+      "publishedAt": "2026-10-06T12:47:57.000Z",
+      "excerpt": "An alleged leader of Tren de Aragua’s ATM jackpotting activities, Canelon Aguirre was on the FBI’s top 10 most wanted list since March 2026. The post FBI Arrests ‘Most Wanted’ Developer of Ploutus ATM Malware appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/fbi-arrests-most-wanted-developer-of-ploutus-atm-malware",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/fbi-arrests-most-wanted-developer-of-ploutus-atm-malware"
+      ],
+      "cves": [],
+      "id": "s11",
+      "section": "industry",
+      "rank": 6,
+      "angle": "The arrest of a top-10 most wanted developer of Ploutus ATM malware dealt a blow to Tren de Aragua-linked jackpotting operations, signaling continued law enforcement pressure on ATM-focused criminal crews."
+    },
+    {
+      "sourceId": "unit42",
+      "sourceKind": "rss",
+      "title": "Blinder Tunnel Campaign Targets Iraqi Infrastructure",
+      "url": "https://unit42.paloaltonetworks.com/blinder-tunnel-targets-critical-infrastructure/",
+      "publishedAt": "2026-10-06T10:00:33.000Z",
+      "excerpt": "Analysis of Blinder Tunnel, an Iran-nexus campaign using fake Dubai Airports recruitment lures and GitHub C2 malware to target critical infrastructure. The post Blinder Tunnel Campaign Targets Iraqi Infrastructure appeared first on Unit 42.",
+      "canonicalUrl": "https://unit42.paloaltonetworks.com/blinder-tunnel-targets-critical-infrastructure",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://unit42.paloaltonetworks.com/blinder-tunnel-targets-critical-infrastructure"
+      ],
+      "cves": [],
+      "id": "s25",
+      "section": "research",
+      "rank": 7,
+      "angle": "Unit 42's analysis of the Iran-nexus Blinder Tunnel campaign using fake Dubai Airports lures and GitHub-based C2 against Iraqi critical infrastructure is useful threat-actor tradecraft for defenders in energy and government sectors."
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "ClickFix campaign in Ukraine compromises over 100 websites to spread Lunex malware",
+      "url": "https://therecord.media/clickfix-campaign-ukraine-lunex-stealer",
+      "publishedAt": "2026-10-06T13:17:00.000Z",
+      "excerpt": "CERT-UA found fake Cloudflare verification pages that led visitors into a now-familiar ClickFix trap. This time the goal was to infect machines with an infostealer.",
+      "canonicalUrl": "https://therecord.media/clickfix-campaign-ukraine-lunex-stealer",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/clickfix-campaign-ukraine-lunex-stealer"
+      ],
+      "cves": [],
+      "id": "s10",
+      "section": "research",
+      "rank": 8,
+      "angle": "CERT-UA found over 100 compromised Ukrainian websites hosting fake Cloudflare verification pages that drop the Lunex infostealer, showing the ClickFix lure format is still scaling and evolving in live campaigns."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "'BigDiskBuster' Leaves Microsoft Defender Running While Blocking Updates",
+      "url": "https://www.darkreading.com/application-security/bigdiskbuster-microsoft-defender-running-blocking-updates",
+      "publishedAt": "2026-10-06T16:59:24.000Z",
+      "excerpt": "Not quite an EDR-killer, but the proof-of-concept cyber technique creates a silent virus detection gap while service runs normally, no exploit required.",
+      "canonicalUrl": "https://darkreading.com/application-security/bigdiskbuster-microsoft-defender-running-blocking-updates",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/application-security/bigdiskbuster-microsoft-defender-running-blocking-updates"
+      ],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "CISO perspectives on managing vulnerability risks in the age of AI",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/10/06/ciso-perspectives-on-managing-vulnerability-risks-in-the-age-of-ai/",
+      "publishedAt": "2026-10-06T16:00:00.000Z",
+      "excerpt": "Learn how CISOs can mitigate cybersecurity risks and increase resilience in the age of AI-powered vulnerability management. The post CISO perspectives on managing vulnerability risks in the age of AI appeared first on Microsoft Security Blog.",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/10/06/ciso-perspectives-on-managing-vulnerability-risks-in-the-age-of-ai",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://microsoft.com/en-us/security/blog/2026/10/06/ciso-perspectives-on-managing-vulnerability-risks-in-the-age-of-ai"
+      ],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Fake ChatGPT, Gemini Sites steal advertising accounts, MFA codes",
+      "url": "https://www.bleepingcomputer.com/news/security/fake-chatgpt-gemini-sites-steal-advertising-accounts-mfa-codes/",
+      "publishedAt": "2026-10-06T15:16:44.000Z",
+      "excerpt": "A new campaign targeting ad account managers uses fake ChatGPT, Gemini, Claude, and Perplexity sites that steal login credentials and multi-factor authentication (MFA) codes through browser-in-browser attacks. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/fake-chatgpt-gemini-sites-steal-advertising-accounts-mfa-codes",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/fake-chatgpt-gemini-sites-steal-advertising-accounts-mfa-codes"
+      ],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Osaka Metropolitan University cancels classes after suspected ransomware attack",
+      "url": "https://therecord.media/osaka-university-cancels-classes-ransomware",
+      "publishedAt": "2026-10-06T14:52:00.000Z",
+      "excerpt": "Osaka Metropolitan University said on Tuesday that the outage left its internal network, email and a range of administrative and academic systems unavailable.",
+      "canonicalUrl": "https://therecord.media/osaka-university-cancels-classes-ransomware",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/osaka-university-cancels-classes-ransomware"
+      ],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "How to secure RMM software: 8 controls MSPs should test",
+      "url": "https://www.bleepingcomputer.com/news/security/how-to-secure-rmm-software-8-controls-msps-should-test/",
+      "publishedAt": "2026-10-06T14:00:10.000Z",
+      "excerpt": "RMM platforms give MSPs privileged access across customer environments, making their security controls critical to limiting risk. Acronis outlines eight controls MSPs should test when evaluating RMM software, from patching and privileged access to recovery and tenant isolation. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/how-to-secure-rmm-software-8-controls-msps-should-test",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/how-to-secure-rmm-software-8-controls-msps-should-test"
+      ],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Hitachi Energy REB500",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-279-05",
+      "publishedAt": "2026-10-06T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Hitachi Energy is aware of open-source software vulnerabilities that affect REB500 product versions listed in this document. These vulnerabilities can be exploited to carry out Denial of Service (DoS) attack on the product. Please refer to the Recommended Immediate Actions for information about the mitigation/remediation. The following versions of Hitachi Energy REB500 are…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-279-05",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-advisories/icsa-26-279-05"
+      ],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Hitachi Energy Asset Suite",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-279-03",
+      "publishedAt": "2026-10-06T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Hitachi Energy is aware of unauthenticated servlet access vulnerabilities that affect Asset Suite product versions listed in this document. These vulnerabilities can be exploited to potentially cause confidentiality, integrity and availability impact on the product. Please refer to the Recommended Immediate Actions for information about the mitigation/remediation. The following…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-279-03",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-advisories/icsa-26-279-03"
+      ],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Johnson Controls EasyIO FG",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-279-01",
+      "publishedAt": "2026-10-06T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of these vulnerabilities could allow an attacker to gain full unauthorized access to the device. The following versions of Johnson Controls EasyIO FG are affected: EasyIO FG firmware <=2.0b52 (CVE-2026-27872, CVE-2026-27873) CVSS Vendor Equipment v3 7.7 Johnson Controls EasyIO FG firmware 2 Vulnerabilities Use of Hard-coded Credentials, Improper Privilege…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-279-01",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-advisories/icsa-26-279-01"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-27872",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "- Improper Privilege Management vulnerability in Johnson Controls Easy IO FG allows (Brute Force).\n\nThis issue affects Easy IO FG: before 2.0b52.",
+            "cvss": {
+              "version": "4.0",
+              "score": 5.6,
+              "severity": "MEDIUM",
+              "vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:L/UI:N/VC:L/VI:H/VA:H/SC:L/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "productsecurity@jci.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-269"
+            ],
+            "published": "2026-10-01T19:17:20.247",
+            "lastModified": "2026-10-02T17:49:39.320",
+            "vulnStatus": "Deferred",
+            "references": [
+              {
+                "url": "https://www.johnsoncontrols.com/trust-center/cybersecurity/security-advisories",
+                "source": "productsecurity@jci.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-279-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.04",
+              "dateReleased": "2026-10-04T18:52:56.0635Z",
+              "retrievedAt": "2026-10-05T23:17:09.664Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-21589%2CCVE-2026-27872%2CCVE-2026-27873%2CCVE-2026-15340",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-27872",
+              "retrievedAt": "2026-10-06T17:47:27.724Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-27873",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "- Use of Hard-coded Credentials vulnerability in Johnson Controls EasyIO FG allows - Pasword Spraying.\n\nThis issue affects EasyIO FG: before 2.0b52.",
+            "cvss": {
+              "version": "4.0",
+              "score": 5.6,
+              "severity": "MEDIUM",
+              "vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:L/UI:N/VC:L/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "productsecurity@jci.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-798"
+            ],
+            "published": "2026-10-01T22:17:01.450",
+            "lastModified": "2026-10-02T19:16:41.490",
+            "vulnStatus": "Deferred",
+            "references": [
+              {
+                "url": "https://www.johnsoncontrols.com/trust-center/cybersecurity/security-advisories",
+                "source": "productsecurity@jci.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-279-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.04",
+              "dateReleased": "2026-10-04T18:52:56.0635Z",
+              "retrievedAt": "2026-10-05T23:17:09.664Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-21589%2CCVE-2026-27872%2CCVE-2026-27873%2CCVE-2026-15340",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-27873",
+              "retrievedAt": "2026-10-06T17:47:27.724Z"
+            }
+          }
+        }
+      ],
+      "id": "s14"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Hitachi Energy SOI",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-279-04",
+      "publishedAt": "2026-10-06T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Hitachi Energy is aware of RCE (Remote Code Execution) vulnerability in Apache ActiveMQ component of SOI product versions listed in this document. These vulnerabilities can be exploited to carry out various attacks affecting confidentiality, integrity, and availability of the product. Please refer to the Recommended Immediate Actions for information about the…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-279-04",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-advisories/icsa-26-279-04"
+      ],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Savannah lwIP SMTP client",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-279-02",
+      "publishedAt": "2026-10-06T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of this vulnerability could crash the device being accessed; a buffer overflow condition may allow remote code execution. The following versions of Savannah lwIP SMTP client are affected: lwIP SMTP client 2.2.1 (CVE-2026-15340) CVSS Vendor Equipment v3 9.8 Savannah lwIP SMTP client 1 Vulnerability Buffer Copy without Checking Size of Input ('Classic…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-279-02",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-advisories/icsa-26-279-02"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-15340",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-279-02",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.04",
+              "dateReleased": "2026-10-04T18:52:56.0635Z",
+              "retrievedAt": "2026-10-05T23:17:09.664Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-21589%2CCVE-2026-27872%2CCVE-2026-27873%2CCVE-2026-15340",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-15340",
+              "retrievedAt": "2026-10-06T17:47:27.724Z"
+            }
+          }
+        }
+      ],
+      "id": "s16"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Hitachi Energy RTU500",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-279-06",
+      "publishedAt": "2026-10-06T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Hitachi Energy is publishing this cybersecurity advisory in response to the security findings reported by Dragos affecting end-of-life RTU500 CMU firmware version 9.x. The reported findings are associated with legacy RTU500 firmware versions that were developed according to the cybersecurity requirements, threat landscape, and industry practices that existed at the time of their…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-279-06",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-advisories/icsa-26-279-06"
+      ],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "LibreOffice and OpenOffice Flaws Let Malicious Spreadsheets Run Code Without Macro Warnings",
+      "url": "https://thehackernews.com/2026/10/libreoffice-and-openoffice-flaws-let.html",
+      "publishedAt": "2026-10-06T11:57:00.000Z",
+      "excerpt": "A malicious spreadsheet can make LibreOffice and Apache OpenOffice run an attacker's code as soon as the file is opened, security researchers have shown. There is no warning first, of the kind either program shows before it runs a macro. The attack works only when the program's Java support is enabled. So far, it has only been shown as a proof of concept, and there are no reports of its use in",
+      "canonicalUrl": "https://thehackernews.com/2026/10/libreoffice-and-openoffice-flaws-let.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/libreoffice-and-openoffice-flaws-let.html"
+      ],
+      "cves": [],
+      "id": "s18"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Apple to Tighten Full Disk Access Controls in macOS Amid AI Risks",
+      "url": "https://www.securityweek.com/apple-to-tighten-full-disk-access-controls-in-macos-amid-ai-risks/",
+      "publishedAt": "2026-10-06T11:48:59.000Z",
+      "excerpt": "Citing growing risks posed by more capable and autonomous AI agents, Apple will introduce additional controls. The post Apple to Tighten Full Disk Access Controls in macOS Amid AI Risks appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/apple-to-tighten-full-disk-access-controls-in-macos-amid-ai-risks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/apple-to-tighten-full-disk-access-controls-in-macos-amid-ai-risks"
+      ],
+      "cves": [],
+      "id": "s19"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Wikimedia: Rogue OpenAI agents behind unauthorized Wikipedia edits",
+      "url": "https://www.bleepingcomputer.com/news/security/rogue-openai-agents-behind-potentially-malicious-wikipedia-edits/",
+      "publishedAt": "2026-10-06T11:31:48.000Z",
+      "excerpt": "The Wikimedia Foundation says rogue OpenAI agents made unauthorized Wikipedia edits and may have been partially responsible for a May outage. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/rogue-openai-agents-behind-potentially-malicious-wikipedia-edits",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/rogue-openai-agents-behind-potentially-malicious-wikipedia-edits"
+      ],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Wikimedia Says OpenAI Agents Tried to Compromise Etherpad and Use Wiki Tools as Proxies",
+      "url": "https://thehackernews.com/2026/10/wikimedia-says-openai-agents-tried-to.html",
+      "publishedAt": "2026-10-06T11:26:25.000Z",
+      "excerpt": "The Wikimedia Foundation, which hosts Wikipedia, has confirmed that it has discovered activity by rogue OpenAI agents on its platforms, including unsuccessful efforts to compromise Etherpad, a public note-taking tool, and edit Wikipedia pages. \"The unauthorized bot activities included edits to our wikis, some unsuccessful attempts to exploit a public note-taking tool we host, and heavy traffic,",
+      "canonicalUrl": "https://thehackernews.com/2026/10/wikimedia-says-openai-agents-tried-to.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/wikimedia-says-openai-agents-tried-to.html"
+      ],
+      "cves": [],
+      "id": "s21"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Welcome to the Jungle: What We Found Inside 15,465 Public MCP Servers",
+      "url": "https://thehackernews.com/2026/10/welcome-to-jungle-what-we-found-inside.html",
+      "publishedAt": "2026-10-06T11:02:30.000Z",
+      "excerpt": "In 2024, MCP (Model Context Protocol) set out to become the USB-C of AI: one standard for connecting models, agents, and IDEs to tools and data. The protocol delivered. Thousands of developers built servers, and enterprises plugged them into agent workflows. The ecosystem around it fell short. Earlier this year, our team at OX Security, traced critical vulnerabilities in Anthropic's MCP",
+      "canonicalUrl": "https://thehackernews.com/2026/10/welcome-to-jungle-what-we-found-inside.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/welcome-to-jungle-what-we-found-inside.html"
+      ],
+      "cves": [],
+      "id": "s22"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Cybersecurity M&A Roundup: 39 Deals Announced in September 2026",
+      "url": "https://www.securityweek.com/cybersecurity-ma-roundup-39-deals-announced-in-september-2026/",
+      "publishedAt": "2026-10-06T11:01:35.000Z",
+      "excerpt": "Significant cybersecurity M&A deals announced by Dragos, IBM, Palo Alto Networks, Kiteworks, and Upwind. The post Cybersecurity M&A Roundup: 39 Deals Announced in September 2026 appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/cybersecurity-ma-roundup-39-deals-announced-in-september-2026",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/cybersecurity-ma-roundup-39-deals-announced-in-september-2026"
+      ],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Long-Running NPM Malware Campaign Accumulates 40,000 Downloads",
+      "url": "https://www.securityweek.com/long-running-npm-malware-campaign-accumulates-40000-downloads/",
+      "publishedAt": "2026-10-06T10:34:25.000Z",
+      "excerpt": "Since August 2023, attackers have published eight malicious packages as part of the MALFEX supply chain campaign. The post Long-Running NPM Malware Campaign Accumulates 40,000 Downloads appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/long-running-npm-malware-campaign-accumulates-40000-downloads",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/long-running-npm-malware-campaign-accumulates-40000-downloads"
+      ],
+      "cves": [],
+      "id": "s24"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Nikkei discloses breaches of employees’ Microsoft, Google email accounts",
+      "url": "https://www.bleepingcomputer.com/news/security/nikkei-discloses-breaches-of-employees-microsoft-google-email-accounts/",
+      "publishedAt": "2026-10-06T09:25:50.000Z",
+      "excerpt": "Over the weekend, Japanese publishing giant Nikkei disclosed that unknown attackers recently breached two employee email accounts and used one to send thousands of phishing emails. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/nikkei-discloses-breaches-of-employees-microsoft-google-email-accounts",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/nikkei-discloses-breaches-of-employees-microsoft-google-email-accounts"
+      ],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Google Pauses OSS Product Bug Bounty Rewards After Surge in Invalid Automated Reports",
+      "url": "https://thehackernews.com/2026/10/google-pauses-oss-product-bug-bounty.html",
+      "publishedAt": "2026-10-06T09:21:47.000Z",
+      "excerpt": "Google has stopped accepting product vulnerability reports through its bug bounty program for its open-source software. The change, in effect since October 1, means researchers can no longer submit security flaws in the code of projects such as Go, Angular, and Protocol Buffers there for a reward. Reports about supply chain compromises are still accepted, and reports filed before October 1 are",
+      "canonicalUrl": "https://thehackernews.com/2026/10/google-pauses-oss-product-bug-bounty.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/google-pauses-oss-product-bug-bounty.html"
+      ],
+      "cves": [],
+      "id": "s28"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Social Engineering Detection Moves Into the Live Conversation",
+      "url": "https://www.securityweek.com/social-engineering-detection-moves-into-the-live-conversation/",
+      "publishedAt": "2026-10-06T08:38:14.000Z",
+      "excerpt": "Companies are pouring time and dollars into security awareness training, but little evidence shows it actually works against social engineering. The post Social Engineering Detection Moves Into the Live Conversation appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/social-engineering-detection-moves-into-the-live-conversation",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/social-engineering-detection-moves-into-the-live-conversation"
+      ],
+      "cves": [],
+      "id": "s29"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Engineer sentenced for locking over 3,000 devices on employer network",
+      "url": "https://www.bleepingcomputer.com/news/security/engineer-sentenced-for-locking-thousands-of-devices-on-employer-network/",
+      "publishedAt": "2026-10-06T08:19:24.000Z",
+      "excerpt": "A former core infrastructure engineer at an industrial company headquartered in New Jersey was sentenced to 32 months in prison for locking thousands of devices on his employer's network in a ransomware-style attack. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/engineer-sentenced-for-locking-thousands-of-devices-on-employer-network",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/engineer-sentenced-for-locking-thousands-of-devices-on-employer-network"
+      ],
+      "cves": [],
+      "id": "s30"
+    },
+    {
+      "sourceId": "projectzero",
+      "sourceKind": "rss",
+      "title": "How to fix a bug in a fix",
+      "url": "https://projectzero.google/2026/10/emergency-patching.html",
+      "publishedAt": "2026-10-06T07:00:00.000Z",
+      "excerpt": "Project Zero often works with software vendors to remediate the vulnerabilities we report and provide broader guidance on making software more secure. Some vendors express concern about potential scenarios in which they are unable to fix vulnerabilities that are causing immediate user harm, due to limitations in their patch delivery systems. Since Project Zero encounters a wide array of systems…",
+      "canonicalUrl": "https://projectzero.google/2026/10/emergency-patching.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://projectzero.google/2026/10/emergency-patching.html"
+      ],
+      "cves": [],
+      "id": "s31"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Critical Atlassian Flaw Lets Unauthenticated Attackers Read Known Files Across 8 Products",
+      "url": "https://thehackernews.com/2026/10/critical-atlassian-flaw-lets.html",
+      "publishedAt": "2026-10-06T06:58:56.000Z",
+      "excerpt": "A critical flaw in 8 Atlassian Data Center products, which customers host themselves, allows an attacker with no login access to read specific files in each product's web application root directory. The attacker must already know a file's exact name and path and cannot list what the directory holds. Atlassian disclosed the flaw, CVE-2026-21589, on October 5, rated it 9.3 out of 10, and",
+      "canonicalUrl": "https://thehackernews.com/2026/10/critical-atlassian-flaw-lets.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/critical-atlassian-flaw-lets.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-21589",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "This is a vulnerability in Bitbucket Data Center, Confluence Data Center, Jira Service Management Data Center, Jira Software Data Center, Bamboo Data Center. Crowd Data Center, Crucible and Fisheye. This Arbitrary File Access vulnerability allows an unauthenticated attacker to access specific files within the web application root directory in affected versions. Exploitation requires prior knowledge of the target file's exact name and path; this vulnerability does not allow attackers to enumerate or list directory contents. In some configurations, there may be some sensitive files that make this highly severe. This vulnerability allows an unauthenticated remote attacker to access specific files within the web application root directory in affected versions. The vulnerability must be addressed for affected versions of: -- Bitbucket Data Center, introduced in version >= 4.6.0, fix versions: 9.4.26, 10.2.8, 10.5.1 -- Confluence Data Center, introduced in version >= 5.10.0, fix versions 9.2.26, 10.2.19 -- Crowd Data Center, introduced in version >= 2.11.0, fix versions 6.3.7, 7.0.3, 7.1.7, 7.2.4 -- Jira Software Data Center, introduced in version >= 7.1.0, fix versions 9.12.40, 10.3.26, 11.3.12 -- Jira Service Management Data Center, introduced in version >= 3.1.0, fix versions 5.12.40, 10.3.26, 11.3.12 -- Bamboo Data Center >= 7.0.1, fix versions 10.2.24, 12.1.12 -- Crucible, fix versions 4.9.15 -- Fisheye, fix version 4.9.15 -- Exploitation requires prior knowledge of the target file's exact name and path. The vulnerability does not include the capability to enumerate or list directory contents.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.3,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "security@atlassian.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-552"
+            ],
+            "published": "2026-10-05T22:16:58.423",
+            "lastModified": "2026-10-06T17:17:25.613",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://jira.atlassian.com/browse/BAM-26567",
+                "source": "security@atlassian.com",
+                "tags": []
+              },
+              {
+                "url": "https://jira.atlassian.com/browse/BSERV-20604",
+                "source": "security@atlassian.com",
+                "tags": []
+              },
+              {
+                "url": "https://jira.atlassian.com/browse/CONFSERVER-104488",
+                "source": "security@atlassian.com",
+                "tags": []
+              },
+              {
+                "url": "https://jira.atlassian.com/browse/CRUC-8741",
+                "source": "security@atlassian.com",
+                "tags": []
+              },
+              {
+                "url": "https://jira.atlassian.com/browse/CWD-6610",
+                "source": "security@atlassian.com",
+                "tags": []
+              },
+              {
+                "url": "https://jira.atlassian.com/browse/FE-7583",
+                "source": "security@atlassian.com",
+                "tags": []
+              },
+              {
+                "url": "https://jira.atlassian.com/browse/JRASERVER-79546",
+                "source": "security@atlassian.com",
+                "tags": []
+              },
+              {
+                "url": "https://jira.atlassian.com/browse/JSDSERVER-16809",
+                "source": "security@atlassian.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/10/critical-atlassian-flaw-lets.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.04",
+              "dateReleased": "2026-10-04T18:52:56.0635Z",
+              "retrievedAt": "2026-10-05T23:17:09.664Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-21589%2CCVE-2026-27872%2CCVE-2026-27873%2CCVE-2026-15340",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-21589",
+              "retrievedAt": "2026-10-06T17:47:27.724Z"
+            }
+          }
+        }
+      ],
+      "id": "s32"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "FBI Removes Accenture Contractor After Patch Failure Led to ShinyHunters Breach",
+      "url": "https://thehackernews.com/2026/10/fbi-removes-accenture-contractor-after.html",
+      "publishedAt": "2026-10-06T06:56:57.000Z",
+      "excerpt": "The U.S. Federal Bureau of Investigation (FBI) has removed an Accenture contractor for their alleged role in a ShinyHunters-breach that led to the theft of personal details of thousands of bureau employees. That's according to a report from Reuters, citing two sources familiar with the matter. \"To date, our review has determined that the incident occurred as the result of a security failure ​",
+      "canonicalUrl": "https://thehackernews.com/2026/10/fbi-removes-accenture-contractor-after.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/fbi-removes-accenture-contractor-after.html"
+      ],
+      "cves": [],
+      "id": "s33"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Denmark Says Attackers Accessed CPR Data for 8.8 Million People via Company Account",
+      "url": "https://thehackernews.com/2026/10/denmark-says-attackers-accessed-cpr.html",
+      "publishedAt": "2026-10-06T06:00:30.000Z",
+      "excerpt": "Unauthorized parties have gained access to the names, addresses, and personal identification numbers of about 8.8 million people, living and dead, in Denmark's national population register, the country's digitalization ministry said on October 5. They used a private Danish company's lawful right to look up records in the Central Person Register (CPR). The ministry has told people never to",
+      "canonicalUrl": "https://thehackernews.com/2026/10/denmark-says-attackers-accessed-cpr.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/denmark-says-attackers-accessed-cpr.html"
+      ],
+      "cves": [],
+      "id": "s34"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "ClickFix Smuggles Payloads Through Browser Cache to Bypass Windows Run Limits",
+      "url": "https://thehackernews.com/2026/10/clickfix-smuggles-payloads-through.html",
+      "publishedAt": "2026-10-06T05:22:55.000Z",
+      "excerpt": "A new type of ClickFix attack is using compromised websites to trick users into executing a malicious payload cached in a web browser's cache. \"Instead of downloading and executing remote payloads like the typical attack pattern, in this attack, the websites pre-fetch a script payload into the browser cache disguised as a PNG file,\" the Microsoft Threat Intelligence team said in a post on X.",
+      "canonicalUrl": "https://thehackernews.com/2026/10/clickfix-smuggles-payloads-through.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/clickfix-smuggles-payloads-through.html"
+      ],
+      "cves": [],
+      "id": "s35"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Shares in British clothing company ASOS dive after hackers apparently send push notification",
+      "url": "https://therecord.media/asos-push-notification-apparently-sent-by-hackers",
+      "publishedAt": "2026-10-06T04:00:00.000Z",
+      "excerpt": "Several mysteries surround what appeared to be an unauthorized push notification sent to customers of London-based clothing company ASOS.",
+      "canonicalUrl": "https://therecord.media/asos-push-notification-apparently-sent-by-hackers",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/asos-push-notification-apparently-sent-by-hackers"
+      ],
+      "cves": [],
+      "id": "s36"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1280,
+    "promptCacheMissTokens": 8336,
+    "outputTokens": 4801,
+    "estimatedCostUsd": 0.002514904
+  }
+}
