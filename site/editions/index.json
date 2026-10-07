@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-10-07",
+    "mode": "article",
+    "headline": "Atlassian exploitation lands alongside a live credential campaign and a spreading AI-infrastructure botnet",
+    "count": 43
+  },
+  {
     "date": "2026-10-06",
     "mode": "article",
     "headline": "A national register breached through lawful access, and a critical Jira file-read flaw",
