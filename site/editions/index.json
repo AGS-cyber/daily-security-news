@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-10-08",
+    "mode": "article",
+    "headline": "Atlassian's PoC-to-attack sprint, exploited Zammad bugs, and a 20-million-record health breach",
+    "count": 51
+  },
+  {
     "date": "2026-10-07",
     "mode": "article",
     "headline": "Atlassian exploitation lands alongside a live credential campaign and a spreading AI-infrastructure botnet",
