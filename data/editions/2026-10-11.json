@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-11",
+  "generatedAt": "2026-10-11T17:13:27.884Z",
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 225,
+    "published": 1
+  },
+  "mode": "article",
+  "headline": "Contractor malware at Nippon Columbia exposed millions of karaoke customer records",
+  "standfirst": "One story today: a malware infection at Nippon Columbia, a contractor of entertainment system maker Daiichi Kosho, exposed millions of customer and employee records.",
+  "bodyMarkdown": "## Breaches\n\nDaiichi Kosho disclosed that malware at contractor Nippon Columbia exposed more than 8.7 million customer and employee records [[s1]]. The headline cites 8.6 million karaoke fan records; the excerpt gives a higher, broader figure. No CVE was supplied.\n\nAnalysis: infection vector, dwell time and notification status are not supplied.",
+  "selected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Nippon Columbia malware incident exposes 8.6 million karaoke fan records",
+      "url": "https://www.bleepingcomputer.com/news/security/nippon-columbia-malware-incident-exposes-86-million-karaoke-fan-records/",
+      "publishedAt": "2026-10-11T14:23:46.000Z",
+      "excerpt": "Daiichi Kosho, a major Japanese entertainment system maker, disclosed that a malware infection at its contractor, Nippon Columbia, exposed more than 8.7 million customer and employee records. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/nippon-columbia-malware-incident-exposes-86-million-karaoke-fan-records",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/nippon-columbia-malware-incident-exposes-86-million-karaoke-fan-records"
+      ],
+      "cves": [],
+      "id": "s1",
+      "section": "breaches",
+      "rank": 1,
+      "angle": "A contractor malware infection exposed millions of customer and employee records, underscoring third-party risk in entertainment data supply chains."
+    }
+  ],
+  "alsoCollected": [],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1152,
+    "promptCacheMissTokens": 729,
+    "outputTokens": 1433,
+    "estimatedCostUsd": 0.0005065256000000001
+  }
+}
