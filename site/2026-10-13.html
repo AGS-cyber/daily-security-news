@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080b08">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22108%22%20height%3D%22108%22%20viewBox%3D%220%200%20108%20108%22%3E%0A%3Cpath%20d%3D%22M0%2C0h108v108h-108z%22%20fill%3D%22%23080b08%22%2F%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%237dffa4%22%20stroke-width%3D%227%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20transform%3D%22translate(54%2054)%20scale(1.45)%20translate(-54%20-54)%22%3E%0A%3Cpath%20d%3D%22M%2054%2044%20C%2054%2036%2043%2032.5%2036%2036%20C%2029.5%2039.5%2029.5%2048%2037.5%2052%20C%2046%2056%2054%2059.5%2053%2066.5%20C%2052%2073.5%2040.5%2075.5%2033%2071%22%2F%3E%0A%3Cpath%20d%3D%22M%2041.5%2027%20L%2041.5%2080%22%2F%3E%0A%3Cpath%20d%3D%22M%2064.5%2071.5%20L%2078.5%2071.5%22%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E">
+<title>Remote access gateways under attack as Docker Hub and GitLab ship critical fixes — 13 October 2026</title>
+<style>
+:root { color-scheme: dark;
+  --bg:#080b08; --fg:#c9f5d5; --bright:#7dffa4; --muted:#6aa87f; --dim:#4a7f5e;
+  --rule:#1e3327; --link:#79dfff; --warn:#ffb642; --warn-bg:#1e1505; --warn-fg:#ffdca6;
+  --note:#79dfff; --note-bg:#06181f;
+  --mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace; }
+* { box-sizing: border-box; }
+html { background: var(--bg); scrollbar-color: var(--dim) var(--bg); }
+body { margin: 0; color: var(--fg); line-height: 1.6; font-family: var(--mono); font-size: 16px;
+  overflow-wrap: break-word;
+  background: radial-gradient(ellipse at 50% -10%, #0f1c13 0%, var(--bg) 65%) no-repeat fixed; }
+/* Scanlines. Fixed, inert, and subtle enough to survive a full page of reading. */
+body::before { content: ""; position: fixed; inset: 0; z-index: 9; pointer-events: none;
+  background: repeating-linear-gradient(to bottom, rgba(0,0,0,.20) 0 1px, transparent 1px 3px); }
+::selection { background: var(--bright); color: var(--bg); text-shadow: none; }
+main, header, footer { max-width: 76ch; margin: 0 auto; padding: 0 1.25rem; }
+header { display: flex; flex-wrap: wrap; gap: .4rem 1.25rem; align-items: baseline;
+  border-bottom: 1px solid var(--rule); padding-top: 1.5rem; padding-bottom: .6rem; }
+header .brand { color: var(--bright); font-weight: 700; text-shadow: 0 0 10px rgba(125,255,164,.35); }
+header .brand::before { content: "root@sec:~$ "; color: var(--dim); font-weight: 400; }
+.nav { display: flex; gap: .9rem; }
+.nav a { text-decoration: none; border-bottom: 0; }
+.nav a::before { content: "["; color: var(--dim); }
+.nav a::after { content: "]"; color: var(--dim); }
+.nav a:hover::before, .nav a:hover::after, .nav a:focus-visible::before, .nav a:focus-visible::after {
+  color: inherit; }
+a { color: var(--link); text-decoration: none; border-bottom: 1px dotted currentColor; }
+a:hover, a:focus-visible { background: var(--link); color: var(--bg);
+  border-bottom-color: transparent; text-shadow: none; }
+a:focus-visible { outline: 1px solid var(--bright); outline-offset: 2px; }
+h1 { font-size: 1.45rem; line-height: 1.35; margin: 1.75rem 0 .5rem; color: var(--bright);
+  text-shadow: 0 0 12px rgba(125,255,164,.3); }
+h1::before { content: "$ "; color: var(--dim); font-weight: 400; }
+h1::after { content: "\2588"; margin-left: .15ch; animation: blink 1.1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { h1::after { animation: none; } }
+h2 { font-size: 1.05rem; margin: 0 0 .5rem; color: var(--bright); }
+strong { color: var(--bright); }
+hr { border: 0; border-top: 1px dashed var(--rule); margin: 2rem 0; }
+code { color: var(--warn); }
+pre { border: 1px solid var(--rule); padding: .75rem; overflow-x: auto; }
+.summary { color: var(--muted); font-size: .82rem; margin: 0 0 1.5rem; }
+.summary::before { content: "// "; color: var(--dim); }
+.notice, .degraded { border: 1px solid; padding: .85rem 1rem; margin: 1.5rem 0; font-size: .9rem; }
+.notice::before, .degraded::before { display: block; letter-spacing: .12em; font-size: .72rem;
+  margin-bottom: .5rem; }
+.notice { border-color: var(--note); background: var(--note-bg); }
+.notice::before { content: "[ NOTICE ]"; color: var(--note); }
+.degraded { border-color: var(--warn); background: var(--warn-bg); color: var(--warn-fg); }
+.degraded::before { content: "[ !! DEGRADED ]"; color: var(--warn); }
+.degraded h2 { color: var(--warn); font-size: .95rem; letter-spacing: .04em; text-transform: uppercase; }
+.degraded ul { list-style: none; margin: .5rem 0 0; padding: 0; }
+.degraded li { padding-left: 2ch; text-indent: -2ch; }
+.degraded li::before { content: "! "; color: var(--warn); }
+ol.stories { list-style: none; margin: 0; padding: 0; counter-reset: story; }
+ol.stories > li { counter-increment: story; border-top: 1px solid var(--rule); padding: 1.1rem 0; }
+.story-title { font-size: 1rem; font-weight: 700; margin: 0 0 .3rem; }
+.story-title::before { content: "[" counter(story, decimal-leading-zero) "] ";
+  color: var(--dim); font-weight: 400; }
+.meta { color: var(--muted); font-size: .8rem; margin: 0 0 .45rem; }
+.excerpt { margin: .4rem 0 0; }
+.also { font-size: .82rem; color: var(--muted); margin: .5rem 0 0; }
+.vuln-summary { border: 1px solid var(--rule); margin: 0 0 1.75rem; padding: .75rem 1rem; }
+.vuln-summary h2 { margin: 0 0 .4rem; font-size: .9rem; }
+.vuln-summary h2::before { content: "## "; color: var(--dim); }
+.vuln-list { list-style: none; margin: 0; padding: 0; }
+.vuln-list li { color: var(--muted); font-size: .82rem; padding: .15rem 0; }
+.vuln-list li::before { content: "> "; color: var(--dim); }
+.vuln-meta { margin: .35rem 0 0; }
+.vuln-list span + span::before { content: " \00B7 "; color: var(--dim); }
+.standfirst { color: var(--fg); margin: 0 0 1.75rem; padding-left: 1rem;
+  border-left: 2px solid var(--dim); }
+.article h2 { margin: 2.25rem 0 .75rem; }
+.article h2::before { content: "## "; color: var(--dim); }
+.article p { margin: 0 0 1.1rem; }
+.article ul, .article ol { padding-left: 2ch; }
+.article li { margin: 0 0 .35rem; }
+.article li::marker { color: var(--dim); }
+.also-heading { border-top: 1px solid var(--rule); margin-top: 2.75rem; padding-top: 1.5rem; }
+.also-heading::before { content: "## "; color: var(--dim); }
+table.cal { border-collapse: collapse; table-layout: fixed; width: 100%; margin: 0 0 2.25rem; }
+table.cal caption { text-align: left; color: var(--bright); font-size: 1.05rem;
+  padding: 1.5rem 0 .6rem; }
+table.cal caption::before { content: "## "; color: var(--dim); }
+table.cal caption .count { color: var(--muted); font-size: .82rem; }
+table.cal th { font-weight: 400; font-size: .72rem; letter-spacing: .1em; color: var(--dim);
+  padding: .35rem 0; text-align: center; }
+table.cal th abbr { text-decoration: none; }
+table.cal td { border: 1px solid var(--rule); padding: 0; text-align: center; font-size: .9rem; }
+table.cal td.pad { border-color: transparent; }
+table.cal td span, table.cal td a { display: block; padding: .55rem 0; }
+table.cal td.off span { color: var(--dim); }
+table.cal td a { border-bottom: 0; }
+table.cal td a.article { color: var(--bright); font-weight: 700; }
+table.cal td.latest { outline: 1px dashed var(--dim); outline-offset: -3px; }
+table.cal td a:hover, table.cal td a:focus-visible { background: var(--link); color: var(--bg); }
+table.cal td a.article:hover, table.cal td a.article:focus-visible { background: var(--bright); }
+footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
+  padding-bottom: 3rem; color: var(--muted); font-size: .8rem; }
+footer::before { content: "// "; color: var(--dim); }
+.empty { color: var(--muted); padding: 1.5rem 0; }
+.empty::before { content: "# "; color: var(--dim); }
+</style>
+</head>
+<body>
+<header>
+<span class="brand">daily-security-news</span>
+<nav class="nav">
+<a href="index.html">today</a>
+<a href="archive.html">archive</a>
+</nav>
+</header>
+<main>
+<h1>Remote access gateways under attack as Docker Hub and GitLab ship critical fixes</h1>
+<p class="summary">8 of 32 stories written up · 12 of 12 sources · generated 18:46 UTC</p>
+
+<p class="standfirst">Two internet-facing remote access products are under active attack, Docker Hub and GitLab disclosed critical flaws, and the breach file runs from warm supermarket fridges to tampered crypto wallets.</p>
+<aside class="vuln-summary"><h2>Vulnerability intelligence</h2><ul class="vuln-list"><li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-105445">CVE-2026-105445</a></span><span>CVSS 9.4</span><span>Critical</span></li></ul></aside>
+<div class="article">
+<h2>Actively exploited</h2>
+<p>Two warnings about edge infrastructure. Ivanti told customers to immediately patch an actively exploited zero-day in Connect Secure, its remote access gateway <a href="https://www.bleepingcomputer.com/news/security/ivanti-warns-of-connect-secure-zero-day-exploited-in-attacks/">Ivanti warns of Connect Secure zero-day exploited in attacks</a>. The supplied material gives no CVE, CVSS score or affected versions, so the scope of exposure cannot be judged from it. SonicWall&#39;s SMA 1000 appliances are being targeted through a maximum-severity server-side request forgery flaw <a href="https://www.darkreading.com/vulnerabilities-threats/max-severity-ssrf-flaw-sonicwall-sma-devices-under-attack">Maximum-Severity SSRF Flaw in SonicWall SMA Devices Under Attack</a>, again with no identifier supplied here. Analysis: both cases fit the pattern that matters most to defenders — a flaw in an appliance that sits on the internet by design, where patching is the only lever the sources imply. Neither is attributed to a named actor; treat the missing technical identifiers as something to confirm against the vendors&#39; own advisories, not as an absence of risk.</p>
+<h2>Vulnerabilities</h2>
+<p>Docker Hub carried a critical incorrect-privilege-assignment flaw, CVE-2026-105445, rated 9.4 under CVSS 4.0 <a href="https://www.bleepingcomputer.com/news/security/docker-hub-flaw-let-attackers-impersonate-users-tamper-with-images/">Docker Hub flaw let attackers impersonate users, tamper with images</a>. Per the structured record, an authenticated attacker could reassign a personal access token they controlled to another Docker Hub user without rotating or revoking the token secret; the unchanged token then authenticated to the registry as the recipient and could pull, push or delete images within its scopes, including organization repositories. There is no indication in the supplied intelligence that it was exploited.</p>
+<p>GitLab patched a CVSS 10.0 issue that, under certain conditions, could have allowed an unauthenticated user to execute arbitrary code on the server via a specially crafted regular expression in CI/CD, affecting Community and Enterprise Editions <a href="https://thehackernews.com/2026/10/gitlab-patches-cvss-100-flaw-that-could.html">GitLab Patches CVSS 10.0 Flaw That Could Let Unauthenticated Users Run Server Code</a>. No CVE ID was supplied. Self-hosted instances are the relevant exposure.</p>
+<h2>Breaches</h2>
+<p>Attackers took remote control of fridges and freezers at hundreds of French supermarkets and warmed them, forcing stores to discard food <a href="https://thehackernews.com/2026/10/attackers-heat-french-supermarket.html">Attackers Heat French Supermarket Fridges Up to 50°C by Hijacking Danfoss Controllers</a>. Access came through the Danfoss controller that runs a store&#39;s refrigeration and that maintenance firms manage remotely — a physical-world outcome reached through a remote management path. Meta said hackers took code and personal data belonging to 1,500 people, mostly US employees, who are being offered credit monitoring <a href="https://www.securityweek.com/meta-says-hackers-took-code-personal-data-of-1500-in-github-breach/">Meta Says Hackers Took Code, Personal Data of 1,500 in GitHub Breach</a>. Ledger said wallets sold through a Southeast Asian reseller had an implant that let outsiders drain funds, with recovery-phrase theft reported as the mechanism <a href="https://therecord.media/ledger-cryptocurrency-wallet-implant-theft">Ledger says hardware implant in cryptocurrency wallets stole recovery phrases</a> — a company statement, with no technical detail supplied.</p>
+<h2>Research</h2>
+<p>North Korean hackers have been targeting Ukrainian experts in diplomacy, security and international policy, reportedly for intelligence on Russia&#39;s war, amid Pyongyang&#39;s growing military cooperation with Moscow <a href="https://therecord.media/north-korea-hackers-russia-ukraine">North Korean hackers target Ukrainian experts for possible intelligence on Russia&#39;s war</a>. The excerpt offers no tooling, victim counts or named intrusion set, so the operational picture stays thin; the attribution is the source&#39;s.</p>
+
+</div>
+<h2 class="also-heading">Also collected today</h2>
+<ol class="stories">
+<li id="s1">
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/uk-housing-ombudsman-service-investigates-security-incident/">UK Housing Ombudsman Service investigates &#39;security incident&#39;</a></p>
+<p class="meta">BleepingComputer · 18:19 UTC</p>
+<p class="excerpt">The U.K. Housing Ombudsman Service is investigating a third-party IT security incident that impacted its case management system on Tuesday. [...]</p>
+
+</li>
+<li id="s2">
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/microsoft/windows-11-kb5127648-and-kb5126653-cumulative-updates-released/">Windows 11 KB5127648 &amp; KB5126653 cumulative updates released</a></p>
+<p class="meta">BleepingComputer · 17:49 UTC</p>
+<p class="excerpt">Microsoft has released the Patch Tuesday Windows 11 KB5127648 and KB5126653 cumulative updates for versions 26H2/25H2/24H2 and 23H2 to fix security vulnerabilities and bugs, and add new features. [...]</p>
+
+</li>
+<li id="s3">
+<p class="story-title"><a href="https://www.securityweek.com/adobe-patches-140-vulnerabilities-across-10-products/">Adobe Patches 140 Vulnerabilities Across 10 Products</a></p>
+<p class="meta">SecurityWeek · 17:14 UTC</p>
+<p class="excerpt">The flaws affect products such as Commerce, Photoshop, ColdFusion, Substance 3D, Dimension, FrameMaker and Bridge. The post Adobe Patches 140 Vulnerabilities Across 10 Products appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s4">
+<p class="story-title"><a href="https://www.securityweek.com/google-partially-reverses-chrome-bug-bounty-cuts/">Google Partially Reverses Chrome Bug Bounty Cuts</a></p>
+<p class="meta">SecurityWeek · 17:00 UTC</p>
+<p class="excerpt">Google is restructuring bug bounty rewards with a focus on complex memory safety vulnerabilities. The post Google Partially Reverses Chrome Bug Bounty Cuts appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s5">
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/tfg-london-cyberattack-disrupts-systems-at-hobbs-and-whistles-retailers/">TFG London cyberattack disrupts systems at Hobbs and Whistles retailers</a></p>
+<p class="meta">BleepingComputer · 16:44 UTC</p>
+<p class="excerpt">TFG London detected a cybersecurity incident that impacted IT systems used by the Phase Eight, Hobbs, and Whistles premium fashion brands. [...]</p>
+
+</li>
+<li id="s6">
+<p class="story-title"><a href="https://thehackernews.com/2026/10/github-tightens-npm-publishing-after.html">GitHub Tightens npm Publishing After Flaw Left 1,500+ Packages Vulnerable to Hijacking</a></p>
+<p class="meta">The Hacker News · 16:18 UTC</p>
+<p class="excerpt">GitHub has taken the step of expiring unvalidated npm trusted publishing configurations 48 hours after creation after researchers found that it was possible for an attacker to push new versions of a different user&#39;s package without having to steal their credentials. &quot;Your configuration becomes validated and exempt from expiry after its first successful publish,&quot; the Microsoft-owned subsidiary</p>
+
+</li>
+<li id="s7">
+<p class="story-title"><a href="https://therecord.media/sandbox-vulnerability-gives-rogue-ai-agents-path-out">Sandbox vulnerability gives rogue AI agents a path to escape and leak data, research says</a></p>
+<p class="meta">The Record · 16:18 UTC</p>
+<p class="excerpt">The new research, published by AI security startup AIR, found that a network filtering flaw in Vercel Sandbox — a tool used to run code in isolated environments — could allow agents to exploit certificate validation processes to transmit data outside approved networks.</p>
+
+</li>
+<li id="s8">
+<p class="story-title"><a href="https://therecord.media/ghana-nigeria-scam-centers-raided-uk-us">West African scam compounds raided, more than 100 suspected trafficking victims ‘rescued’</a></p>
+<p class="meta">The Record · 16:05 UTC</p>
+<p class="excerpt">More than two dozen people were arrested by police in Ghana and Nigeria as part of a U.K.-hosted operation that also included tech companies.</p>
+
+</li>
+<li id="s13">
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/the-mfa-gaps-attackers-are-still-exploiting/">The MFA Gaps Attackers are Still Exploiting</a></p>
+<p class="meta">BleepingComputer · 14:01 UTC</p>
+<p class="excerpt">Attackers continue exploiting gaps in MFA coverage, using stolen credentials to access VPNs, RDP, and Windows systems that still rely on passwords alone. Specops explains why protecting cloud applications isn&#39;t enough and how organizations can close these authentication gaps. [...]</p>
+
+</li>
+<li id="s14">
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/sap-warns-of-maximum-severity-oauth2-ssrf-security-flaw/">SAP warns of maximum severity OAuth2 SSRF security flaw</a></p>
+<p class="meta">BleepingComputer · 13:51 UTC</p>
+<p class="excerpt">SAP has addressed 20 security flaws across multiple products in its October 2026 security updates, including a maximum-severity vulnerability in the Cloud SDK for Python. [...]</p>
+
+</li>
+<li id="s15">
+<p class="story-title"><a href="https://therecord.media/russian-internet-provider-skynet-reports-outages-ddos">Russian internet provider SkyNet reports outages after cyberattack claimed by Ukrainian hackers</a></p>
+<p class="meta">The Record · 13:20 UTC</p>
+<p class="excerpt">One of St. Petersburg&#39;s major internet providers said its network had been under a distributed denial-of-service (DDoS) attack since October 6, affecting services including online gaming, voice calls and video conferencing.</p>
+
+</li>
+<li id="s17">
+<p class="story-title"><a href="https://thehackernews.com/2026/10/xandr-fined-record-86-million-for.html">Xandr Fined a Record €8.6 Million for Relaying Grindr Data Revealing Sexual Orientation</a></p>
+<p class="meta">The Hacker News · 13:12 UTC</p>
+<p class="excerpt">The Norwegian Data Protection Authority (DPA) has fined Xandr, an advertising unit owned by Microsoft, €8.6 million ($9.62 million) for illegally relaying ​Grindr users&#39; sensitive data to advertisers. The administrative penalty is the largest issued by the data protection watchdog, arguing the case merited a high fine because of the &quot;very serious&quot; nature of the breach. The infringements</p>
+
+</li>
+<li id="s18">
+<p class="story-title"><a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-286-02">Swann Communications SWIFI-SE2KIC</a></p>
+<p class="meta">CISA Advisories · 12:00 UTC</p>
+<p class="excerpt">View CSAF Summary Successful exploitation of these vulnerabilities could allow an attacker to view video information without authentication. The following versions of Swann Communications SWIFI-SE2KIC are affected: SWIFI-SE2KIC firmware &lt;=2.0.22 (CVE-2026-107605, CVE-2026-107606, CVE-2026-107607) CVSS Vendor Equipment v3 6.2 Swann Communications SWIFI-SE2KIC firmware 1 Vulnerability Missing…</p>
+
+</li>
+<li id="s19">
+<p class="story-title"><a href="https://www.securityweek.com/small-ai-models-may-soon-be-able-to-self-replicate-on-iot-devices-anthropic-warns/">Small AI Models Could Soon Self-Replicate on IoT Devices, Anthropic Warns</a></p>
+<p class="meta">SecurityWeek · 11:58 UTC</p>
+<p class="excerpt">Experiments show cheap TV boxes can run capable AI models, and small models may soon be able to spread across such devices on their own. The post Small AI Models Could Soon Self-Replicate on IoT Devices, Anthropic Warns appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s20">
+<p class="story-title"><a href="https://thehackernews.com/2026/10/webinar-how-to-stop-ai-driven-privilege.html">[Webinar] How to Stop AI-Driven Privilege Escalation With Runtime Identity Controls</a></p>
+<p class="meta">The Hacker News · 11:57 UTC</p>
+<p class="excerpt">The dangerous part of a stolen identity isn&#39;t always the initial login. It&#39;s what an attacker can do with that access next. With AI accelerating reconnaissance, exploitation of vulnerabilities, and privilege escalation, attackers can move through systems faster than security teams can investigate. A compromised account that looks legitimate at first could become the starting point for a much</p>
+
+</li>
+<li id="s21">
+<p class="story-title"><a href="https://www.securityweek.com/xworm-rat-evolves-into-surveillance-platform/">XWorm RAT Evolves Into Surveillance Platform</a></p>
+<p class="meta">SecurityWeek · 11:13 UTC</p>
+<p class="excerpt">Expanded plugin count allows the malware to monitor users’ location, stream live audio, and interact with authenticated browser sessions. The post XWorm RAT Evolves Into Surveillance Platform appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s22">
+<p class="story-title"><a href="https://thehackernews.com/2026/10/lg-smart-tvs-vulnerable-to-pre-auth.html">LG Smart TVs Vulnerable to Pre-Auth Root Takeover From Local Network</a></p>
+<p class="meta">The Hacker News · 11:09 UTC</p>
+<p class="excerpt">Three vulnerabilities in LG&#39;s webOS can be chained to give an attacker on the same local network root access to certain smart TVs without a PIN or any interaction from the owner. LG has issued a fix, according to an advisory published by SSD Secure Disclosure on October 12. The chain was tested on two TV models, the 32LQ636BPSA and the 27TQ600SW, running webOS 7.5.7-25 on firmware</p>
+
+</li>
+<li id="s23">
+<p class="story-title"><a href="https://www.securityweek.com/ai-turns-familiar-cyberattacks-into-a-race-against-time/">AI Turns Familiar Cyberattacks Into a Race Against Time</a></p>
+<p class="meta">SecurityWeek · 11:00 UTC</p>
+<p class="excerpt">IBM’s Steve Wallin talks to SecurityWeek on the effect of AI-driven attacks on enterprise defenses. The post AI Turns Familiar Cyberattacks Into a Race Against Time appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s24">
+<p class="story-title"><a href="https://www.securityweek.com/86-million-crypto-heist-linked-to-ledger-signer-hardware-implant/">$86 Million Crypto Heist Linked to Ledger Signer Hardware Implant</a></p>
+<p class="meta">SecurityWeek · 10:36 UTC</p>
+<p class="excerpt">A small circuit board hidden under the signers’ screens read user data and transmitted it to the attackers. The post $86 Million Crypto Heist Linked to Ledger Signer Hardware Implant appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s25">
+<p class="story-title"><a href="https://thehackernews.com/2026/10/product-walkthrough-bitdefender-ai.html">Product Walkthrough: Bitdefender AI Visibility and Control</a></p>
+<p class="meta">The Hacker News · 10:30 UTC</p>
+<p class="excerpt">A user opens a browser tab, pastes data into a chat assistant, and nothing is installed. A developer adds a coding assistant as an editor extension, and nothing shows up in the installed programs list. Someone downloads a local model runtime, a program that runs models directly on the machine instead of sending data to an external service, because they were told not to send company data</p>
+
+</li>
+<li id="s26">
+<p class="story-title"><a href="https://www.securityweek.com/cyberattack-prompts-ahold-delhaize-to-disconnect-systems/">Cyberattack Prompts Grocery Giant Ahold Delhaize to Disconnect Systems</a></p>
+<p class="meta">SecurityWeek · 09:37 UTC</p>
+<p class="excerpt">The company says it took some of its systems offline to contain a security issue within its network. The post Cyberattack Prompts Grocery Giant Ahold Delhaize to Disconnect Systems appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s28">
+<p class="story-title"><a href="https://thehackernews.com/2026/10/two-critical-marklogic-flaws-could-give.html">Two Critical MarkLogic Flaws Could Give Delegated Managers Persistent Admin Control</a></p>
+<p class="meta">The Hacker News · 08:44 UTC</p>
+<p class="excerpt">Two of 31 newly disclosed flaws in Progress Software&#39;s MarkLogic Server database could let an account given only some management privileges take administrator control of the server, the company says. Progress published all 31 on October 12 and scored five of them critical. Fixes have been available since September 10, in MarkLogic 11.3.7 and MarkLogic 12.1.0. Affected</p>
+
+</li>
+<li id="s30">
+<p class="story-title"><a href="https://www.securityweek.com/refrigeration-controller-hack-spoils-food-across-european-supermarkets/">Refrigeration Controller Hack Spoils Food Across European Supermarkets</a></p>
+<p class="meta">SecurityWeek · 08:28 UTC</p>
+<p class="excerpt">A cyberattack targeted refrigeration controllers, setting refrigerators and freezers across hundreds of supermarkets to defrost. The post Refrigeration Controller Hack Spoils Food Across European Supermarkets appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s31">
+<p class="story-title"><a href="https://thehackernews.com/2026/10/low-cost-android-phones-ship-with.html">Low-Cost Android Phones Ship With Preinstalled Malware That Turns Them Into Residential Proxies</a></p>
+<p class="meta">The Hacker News · 06:00 UTC</p>
+<p class="excerpt">Low-cost Android smartphones have been shipped with malicious software baked into the device firmware, allowing bad actors to covertly install apps, conduct ad fraud, and turn devices into residential proxies. The activity, which targets Android devices built on MediaTek platforms across several brands, is being tracked by Bitdefender under the moniker Midnight Mimosa. The preinstalled</p>
+
+</li>
+</ol>
+</main>
+<footer>Generated 2026-10-13T18:46:42.741Z</footer>
+</body>
+</html>

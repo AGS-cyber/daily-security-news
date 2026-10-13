@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-10-13",
+    "mode": "article",
+    "headline": "Remote access gateways under attack as Docker Hub and GitLab ship critical fixes",
+    "count": 32
+  },
+  {
     "date": "2026-10-12",
     "mode": "article",
     "headline": "Two maximum-severity flaws already under fire, and a week of operational disruption",
