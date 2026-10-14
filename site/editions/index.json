@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-10-14",
+    "mode": "article",
+    "headline": "Ivanti zero-day and an exploited Windows Shell bypass lead a heavy patch week",
+    "count": 54
+  },
+  {
     "date": "2026-10-13",
     "mode": "article",
     "headline": "Remote access gateways under attack as Docker Hub and GitLab ship critical fixes",

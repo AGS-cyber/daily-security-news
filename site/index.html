@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#080b08">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22108%22%20height%3D%22108%22%20viewBox%3D%220%200%20108%20108%22%3E%0A%3Cpath%20d%3D%22M0%2C0h108v108h-108z%22%20fill%3D%22%23080b08%22%2F%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%237dffa4%22%20stroke-width%3D%227%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20transform%3D%22translate(54%2054)%20scale(1.45)%20translate(-54%20-54)%22%3E%0A%3Cpath%20d%3D%22M%2054%2044%20C%2054%2036%2043%2032.5%2036%2036%20C%2029.5%2039.5%2029.5%2048%2037.5%2052%20C%2046%2056%2054%2059.5%2053%2066.5%20C%2052%2073.5%2040.5%2075.5%2033%2071%22%2F%3E%0A%3Cpath%20d%3D%22M%2041.5%2027%20L%2041.5%2080%22%2F%3E%0A%3Cpath%20d%3D%22M%2064.5%2071.5%20L%2078.5%2071.5%22%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E">
-<title>Remote access gateways under attack as Docker Hub and GitLab ship critical fixes — 13 October 2026</title>
+<title>Ivanti zero-day and an exploited Windows Shell bypass lead a heavy patch week — 14 October 2026</title>
 <style>
 :root { color-scheme: dark;
   --bg:#080b08; --fg:#c9f5d5; --bright:#7dffa4; --muted:#6aa87f; --dim:#4a7f5e;
@@ -120,171 +120,310 @@ footer::before { content: "// "; color: var(--dim); }
 </nav>
 </header>
 <main>
-<h1>Remote access gateways under attack as Docker Hub and GitLab ship critical fixes</h1>
-<p class="summary">8 of 32 stories written up · 12 of 12 sources · generated 18:46 UTC</p>
+<h1>Ivanti zero-day and an exploited Windows Shell bypass lead a heavy patch week</h1>
+<p class="summary">8 of 54 stories written up · 12 of 12 sources · generated 16:22 UTC</p>
 
-<p class="standfirst">Two internet-facing remote access products are under active attack, Docker Hub and GitLab disclosed critical flaws, and the breach file runs from warm supermarket fridges to tampered crypto wallets.</p>
-<aside class="vuln-summary"><h2>Vulnerability intelligence</h2><ul class="vuln-list"><li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-105445">CVE-2026-105445</a></span><span>CVSS 9.4</span><span>Critical</span></li></ul></aside>
+<p class="standfirst">Two actively exploited flaws — one in an edge remote-access appliance, one buried in Microsoft&#39;s record Patch Tuesday — dominate the day, alongside a critical Ghostscript RCE, a local-root Linux kernel bug, a phishing-infrastructure disruption and UK sanctions on a crypto payment conduit.</p>
+<aside class="vuln-summary"><h2>Vulnerability intelligence</h2><ul class="vuln-list"><li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-96951">CVE-2026-96951</a></span><span>CVSS 8.8</span><span>High</span><span>CISA KEV</span></li>
+<li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-39919">CVE-2026-39919</a></span><span>CVSS 9.3</span><span>Critical</span></li>
+<li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-74580">CVE-2026-74580</a></span><span>CVSS 8.8</span><span>High</span></li></ul></aside>
 <div class="article">
 <h2>Actively exploited</h2>
-<p>Two warnings about edge infrastructure. Ivanti told customers to immediately patch an actively exploited zero-day in Connect Secure, its remote access gateway <a href="https://www.bleepingcomputer.com/news/security/ivanti-warns-of-connect-secure-zero-day-exploited-in-attacks/">Ivanti warns of Connect Secure zero-day exploited in attacks</a>. The supplied material gives no CVE, CVSS score or affected versions, so the scope of exposure cannot be judged from it. SonicWall&#39;s SMA 1000 appliances are being targeted through a maximum-severity server-side request forgery flaw <a href="https://www.darkreading.com/vulnerabilities-threats/max-severity-ssrf-flaw-sonicwall-sma-devices-under-attack">Maximum-Severity SSRF Flaw in SonicWall SMA Devices Under Attack</a>, again with no identifier supplied here. Analysis: both cases fit the pattern that matters most to defenders — a flaw in an appliance that sits on the internet by design, where patching is the only lever the sources imply. Neither is attributed to a named actor; treat the missing technical identifiers as something to confirm against the vendors&#39; own advisories, not as an absence of risk.</p>
+<p>CISA is telling administrators to patch an Ivanti Connect Secure flaw immediately, describing it as exploited in zero-day attacks since at least the beginning of October <a href="https://www.bleepingcomputer.com/news/security/cisa-warns-admins-to-immediately-fix-ivanti-flaw-exploited-as-zero-day/">CISA warns admins to immediately fix Ivanti flaw exploited as zero-day</a>. The supplied structured record for this story carries no CVE identifier and no KEV enrichment, so the specific vulnerability ID, severity and catalog status are not confirmed here; the urgency rests on the reported in-the-wild exploitation and the agency&#39;s guidance. Analysis: an authentication bypass in a remote-access appliance is the kind of foothold that tends to attract follow-on intrusion, but the supplied evidence gives no attribution, affected versions or post-exploitation detail, so those stay unknown.</p>
+<p>Microsoft&#39;s Patch Tuesday shipped fixes for a record 1,413 vulnerabilities <a href="https://www.securityweek.com/microsoft-patches-record-1413-vulnerabilities-including-exploited-windows-zero-day/">Microsoft Patches Record 1,413 Vulnerabilities, Including Exploited Windows Zero-Day</a>, but the one to triage first is CVE-2026-96951: a Windows Shell security-feature bypass that is confirmed exploited and present in CISA&#39;s KEV catalog, listed there as a Windows command-injection issue (CWE-77). NVD scores it 8.8 High under CVSS 3.1, vector AV:N/AC:L/PR:N/UI:R — network-reachable with no privileges required, but user interaction required, so it should not be described as zero-click. CISA&#39;s required action directs US federal agencies to apply mitigations under BOD 26-04, with a due date only a few days after the KEV addition; that is a federal requirement, not a universal deadline.</p>
+<h2>Industry</h2>
+<p>Microsoft says its Digital Crimes Unit facilitated a disruption of a Chinese-language cybercrime ecosystem that coupled phishing-kit operators tracked as Storm-2990 with a marketplace tracked as Storm-3119 selling tools and infrastructure, working alongside law enforcement agencies and other partners worldwide <a href="https://www.microsoft.com/en-us/security/blog/2026/10/14/the-hidden-network-inside-the-phishing-infrastructure-ecosystem-powering-global-cybercrime/">The hidden network: Inside the phishing infrastructure ecosystem powering global cybercrime</a>. The operation is tied to more than a billion malicious messages. The supplied excerpt names none of the specific agencies, courts or countries involved, so those details cannot be stated.</p>
+<p>The United Kingdom has sanctioned Cryptomus, a cryptocurrency platform that experts describe as a major conduit for payments tied to ransomware, narcotics, darknet markets, fraud and cybercrime services, and as helping Russia circumvent existing financial restrictions <a href="https://krebsonsecurity.com/2026/10/u-k-sanctions-cryptomus-for-ru-money-laundering/">U.K. Sanctions Cryptomus for RU Money Laundering</a>.</p>
 <h2>Vulnerabilities</h2>
-<p>Docker Hub carried a critical incorrect-privilege-assignment flaw, CVE-2026-105445, rated 9.4 under CVSS 4.0 <a href="https://www.bleepingcomputer.com/news/security/docker-hub-flaw-let-attackers-impersonate-users-tamper-with-images/">Docker Hub flaw let attackers impersonate users, tamper with images</a>. Per the structured record, an authenticated attacker could reassign a personal access token they controlled to another Docker Hub user without rotating or revoking the token secret; the unchanged token then authenticated to the registry as the recipient and could pull, push or delete images within its scopes, including organization repositories. There is no indication in the supplied intelligence that it was exploited.</p>
-<p>GitLab patched a CVSS 10.0 issue that, under certain conditions, could have allowed an unauthenticated user to execute arbitrary code on the server via a specially crafted regular expression in CI/CD, affecting Community and Enterprise Editions <a href="https://thehackernews.com/2026/10/gitlab-patches-cvss-100-flaw-that-could.html">GitLab Patches CVSS 10.0 Flaw That Could Let Unauthenticated Users Run Server Code</a>. No CVE ID was supplied. Self-hosted instances are the relevant exposure.</p>
-<h2>Breaches</h2>
-<p>Attackers took remote control of fridges and freezers at hundreds of French supermarkets and warmed them, forcing stores to discard food <a href="https://thehackernews.com/2026/10/attackers-heat-french-supermarket.html">Attackers Heat French Supermarket Fridges Up to 50°C by Hijacking Danfoss Controllers</a>. Access came through the Danfoss controller that runs a store&#39;s refrigeration and that maintenance firms manage remotely — a physical-world outcome reached through a remote management path. Meta said hackers took code and personal data belonging to 1,500 people, mostly US employees, who are being offered credit monitoring <a href="https://www.securityweek.com/meta-says-hackers-took-code-personal-data-of-1500-in-github-breach/">Meta Says Hackers Took Code, Personal Data of 1,500 in GitHub Breach</a>. Ledger said wallets sold through a Southeast Asian reseller had an implant that let outsiders drain funds, with recovery-phrase theft reported as the mechanism <a href="https://therecord.media/ledger-cryptocurrency-wallet-implant-theft">Ledger says hardware implant in cryptocurrency wallets stole recovery phrases</a> — a company statement, with no technical detail supplied.</p>
+<p>CVE-2026-74580, dubbed Vghost, is a Linux vhost bug scored 8.8 High under CVSS 3.1 on a local vector (AV:L/AC:L/PR:L/UI:N) with changed scope <a href="https://thehackernews.com/2026/10/ai-found-linux-kernel-flaw-gives-local.html">AI-Found Linux Kernel Flaw Gives Local Users Root, and Can Break a Guest Out to the Host</a>. Per the supplied description, the vring metadata cache that vhost treats as proof a region was already validated is not reset when VHOST_SET_VRING_ADDR replaces the descriptor, available and used rings, nor when VHOST_SET_VRING_NUM changes region sizes; with a device IOTLB attached, the stale cache keeps translating through a mapping that no longer covers the address. The reported result: local kernel memory read and write and root across nearly a decade of kernel versions, and in one virtualization configuration a guest writing into host memory and hijacking the program that runs the virtual machine. Tencent Zhuque Lab is credited with the find. The KEV check is a confirmed miss for this CVE, which does not establish that exploitation has not occurred.</p>
+<p>CVE-2026-39919 in Ghostscript is the day&#39;s highest-scoring item: a heap-based buffer overflow rated 9.3 Critical under CVSS 4.0 (CWE-122) in the JPEG 2000 output adapter, affecting Ghostscript before 10.08.0 <a href="https://www.bleepingcomputer.com/news/security/ghostscript-flaw-lets-hackers-hijack-servers-via-pdf-uploads/">Ghostscript flaw lets hackers hijack servers via PDF uploads</a>. A crafted PDF with mismatched component subsampling factors drives the non-samescale sub-byte-depth output path to allocate a row buffer sized for packed output while writing a full byte per column, corrupting chunk-allocator metadata to reach code execution. The supplied vector records network reachability, no privileges and no user interaction; delivery still depends on a crafted document reaching a Ghostscript-based pipeline, a condition the vector does not capture. Here too the KEV check is a confirmed miss, not proof that exploitation has not occurred.</p>
 <h2>Research</h2>
-<p>North Korean hackers have been targeting Ukrainian experts in diplomacy, security and international policy, reportedly for intelligence on Russia&#39;s war, amid Pyongyang&#39;s growing military cooperation with Moscow <a href="https://therecord.media/north-korea-hackers-russia-ukraine">North Korean hackers target Ukrainian experts for possible intelligence on Russia&#39;s war</a>. The excerpt offers no tooling, victim counts or named intrusion set, so the operational picture stays thin; the attribution is the source&#39;s.</p>
+<p>Talos and Recorded Future attribute UAT-6275, described as Kazakhstan-nexus, to intrusions against government organizations across the Commonwealth of Independent States, with recovered artifacts showing additional apparent interest in water resources and energy <a href="https://blog.talosintelligence.com/break-the-silence-kazakhstan-nexus-uat-6275-targets-cis-government-organizations/">Break the silence: Kazakhstan-nexus UAT-6275 targets CIS government organizations</a>. The excerpt supplies no tooling, timeline or victim detail, and the attribution is the researchers&#39; assessment.</p>
+<p>ThreatFabric has detailed Hirudo, an Android banking trojan that replaces legitimate banking apps with purpose-built patched versions designed to defeat the apps&#39; own in-app security checks, with replacements identified for eight Indonesian banking apps <a href="https://thehackernews.com/2026/10/hirudo-android-trojan-uses-patched.html">Hirudo Android Trojan Uses Patched Banking Apps to Bypass Their Built-In Security Checks</a>. Analysis: the defensive check now runs inside the attacker&#39;s build, so it cannot be relied on; the excerpt does not describe distribution channels or victim counts.</p>
 
 </div>
 <h2 class="also-heading">Also collected today</h2>
 <ol class="stories">
 <li id="s1">
-<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/uk-housing-ombudsman-service-investigates-security-incident/">UK Housing Ombudsman Service investigates &#39;security incident&#39;</a></p>
-<p class="meta">BleepingComputer · 18:19 UTC</p>
-<p class="excerpt">The U.K. Housing Ombudsman Service is investigating a third-party IT security incident that impacted its case management system on Tuesday. [...]</p>
+<p class="story-title"><a href="https://www.securityweek.com/ics-patch-tuesday-siemens-issues-17-advisories-rockwell-fixes-armorblock-takeover-flaw/">ICS Patch Tuesday: Siemens Issues 17 Advisories, Rockwell Fixes ArmorBlock Takeover Flaw</a></p>
+<p class="meta">SecurityWeek · 15:15 UTC</p>
+<p class="excerpt">ABB previously published an advisory warning about possible probing of a dynovaPRO vulnerability. The post ICS Patch Tuesday: Siemens Issues 17 Advisories, Rockwell Fixes ArmorBlock Takeover Flaw appeared first on SecurityWeek.</p>
 
 </li>
 <li id="s2">
-<p class="story-title"><a href="https://www.bleepingcomputer.com/news/microsoft/windows-11-kb5127648-and-kb5126653-cumulative-updates-released/">Windows 11 KB5127648 &amp; KB5126653 cumulative updates released</a></p>
-<p class="meta">BleepingComputer · 17:49 UTC</p>
-<p class="excerpt">Microsoft has released the Patch Tuesday Windows 11 KB5127648 and KB5126653 cumulative updates for versions 26H2/25H2/24H2 and 23H2 to fix security vulnerabilities and bugs, and add new features. [...]</p>
-
-</li>
-<li id="s3">
-<p class="story-title"><a href="https://www.securityweek.com/adobe-patches-140-vulnerabilities-across-10-products/">Adobe Patches 140 Vulnerabilities Across 10 Products</a></p>
-<p class="meta">SecurityWeek · 17:14 UTC</p>
-<p class="excerpt">The flaws affect products such as Commerce, Photoshop, ColdFusion, Substance 3D, Dimension, FrameMaker and Bridge. The post Adobe Patches 140 Vulnerabilities Across 10 Products appeared first on SecurityWeek.</p>
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-vpn-issues-caused-by-september-windows-updates/">Microsoft fixes VPN issues caused by September Windows updates</a></p>
+<p class="meta">BleepingComputer · 14:27 UTC</p>
+<p class="excerpt">Microsoft has resolved a known issue that caused Always On VPN connection issues after installing the September 2026 Windows 11 security updates. [...]</p>
 
 </li>
 <li id="s4">
-<p class="story-title"><a href="https://www.securityweek.com/google-partially-reverses-chrome-bug-bounty-cuts/">Google Partially Reverses Chrome Bug Bounty Cuts</a></p>
-<p class="meta">SecurityWeek · 17:00 UTC</p>
-<p class="excerpt">Google is restructuring bug bounty rewards with a focus on complex memory safety vulnerabilities. The post Google Partially Reverses Chrome Bug Bounty Cuts appeared first on SecurityWeek.</p>
+<p class="story-title"><a href="https://www.securityweek.com/harmonic-security-raises-50-million-for-workforce-ai-protection/">Harmonic Security Raises $50 Million for Workforce AI Protection</a></p>
+<p class="meta">SecurityWeek · 14:09 UTC</p>
+<p class="excerpt">The cybersecurity startup plans to expand engineering and go-to-market teams in the US and UK. The post Harmonic Security Raises $50 Million for Workforce AI Protection appeared first on SecurityWeek.</p>
 
 </li>
 <li id="s5">
-<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/tfg-london-cyberattack-disrupts-systems-at-hobbs-and-whistles-retailers/">TFG London cyberattack disrupts systems at Hobbs and Whistles retailers</a></p>
-<p class="meta">BleepingComputer · 16:44 UTC</p>
-<p class="excerpt">TFG London detected a cybersecurity incident that impacted IT systems used by the Phase Eight, Hobbs, and Whistles premium fashion brands. [...]</p>
-
-</li>
-<li id="s6">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/github-tightens-npm-publishing-after.html">GitHub Tightens npm Publishing After Flaw Left 1,500+ Packages Vulnerable to Hijacking</a></p>
-<p class="meta">The Hacker News · 16:18 UTC</p>
-<p class="excerpt">GitHub has taken the step of expiring unvalidated npm trusted publishing configurations 48 hours after creation after researchers found that it was possible for an attacker to push new versions of a different user&#39;s package without having to steal their credentials. &quot;Your configuration becomes validated and exempt from expiry after its first successful publish,&quot; the Microsoft-owned subsidiary</p>
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/the-blind-spots-of-agentic-pentesting-and-how-to-close-them/">The Blind Spots of Agentic Pentesting and How to Close Them</a></p>
+<p class="meta">BleepingComputer · 14:00 UTC</p>
+<p class="excerpt">AI-powered penetration testing can uncover complex attack paths, but safety restrictions and network limitations leave many assets and vulnerabilities untested. Picus Security explains how combining agentic pentesting with exposure validation and breach simulation can help close these gaps. [...]</p>
 
 </li>
 <li id="s7">
-<p class="story-title"><a href="https://therecord.media/sandbox-vulnerability-gives-rogue-ai-agents-path-out">Sandbox vulnerability gives rogue AI agents a path to escape and leak data, research says</a></p>
-<p class="meta">The Record · 16:18 UTC</p>
-<p class="excerpt">The new research, published by AI security startup AIR, found that a network filtering flaw in Vercel Sandbox — a tool used to run code in isolated environments — could allow agents to exploit certificate validation processes to transmit data outside approved networks.</p>
+<p class="story-title"><a href="https://www.securityweek.com/virtual-event-today-zero-trust-strategies-summit-2/">Virtual Event Today: Zero Trust Strategies Summit</a></p>
+<p class="meta">SecurityWeek · 13:56 UTC</p>
+<p class="excerpt">This summit is laser-focused on the next generation of Zero Trust and Identity security, moving beyond theory to deliver actionable strategies. The post Virtual Event Today: Zero Trust Strategies Summit appeared first on SecurityWeek.</p>
 
 </li>
 <li id="s8">
-<p class="story-title"><a href="https://therecord.media/ghana-nigeria-scam-centers-raided-uk-us">West African scam compounds raided, more than 100 suspected trafficking victims ‘rescued’</a></p>
-<p class="meta">The Record · 16:05 UTC</p>
-<p class="excerpt">More than two dozen people were arrested by police in Ghana and Nigeria as part of a U.K.-hosted operation that also included tech companies.</p>
+<p class="story-title"><a href="https://therecord.media/microsoft-takes-down-3-major-chinese-phishing-platforms">Microsoft takes down 3 major phishing platforms used by Chinese cybercriminals</a></p>
+<p class="meta">The Record · 13:18 UTC</p>
+<p class="excerpt">The tech giant worked with Japan’s National Police Agency and healthcare cybersecurity organization Health-ISAC to obtain a U.S. court order seizing and redirecting domains that were part of the infrastructure underlying YAM Store, CoGUI and Iron Man.</p>
 
 </li>
-<li id="s13">
-<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/the-mfa-gaps-attackers-are-still-exploiting/">The MFA Gaps Attackers are Still Exploiting</a></p>
-<p class="meta">BleepingComputer · 14:01 UTC</p>
-<p class="excerpt">Attackers continue exploiting gaps in MFA coverage, using stolen credentials to access VPNs, RDP, and Windows systems that still rely on passwords alone. Specops explains why protecting cloud applications isn&#39;t enough and how organizations can close these authentication gaps. [...]</p>
+<li id="s9">
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/global-takedown-hits-network-behind-1-billion-phishing-messages/">Global takedown hits network behind 1 billion phishing messages</a></p>
+<p class="meta">BleepingComputer · 13:12 UTC</p>
+<p class="excerpt">A massive cybercriminal ecosystem facilitating more than a billion malicious messages targeting over 75,000 organizations across 150 countries has been disrupted by law enforcement agencies and partners worldwide. [...]</p>
 
 </li>
-<li id="s14">
-<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/sap-warns-of-maximum-severity-oauth2-ssrf-security-flaw/">SAP warns of maximum severity OAuth2 SSRF security flaw</a></p>
-<p class="meta">BleepingComputer · 13:51 UTC</p>
-<p class="excerpt">SAP has addressed 20 security flaws across multiple products in its October 2026 security updates, including a maximum-severity vulnerability in the Cloud SDK for Python. [...]</p>
+<li id="s10">
+<p class="story-title"><a href="https://therecord.media/russia-anywayanyday-travel-website-cyberattack">Russian travel booking platform suspends reservations after cyberattack</a></p>
+<p class="meta">The Record · 13:05 UTC</p>
+<p class="excerpt">Customers of Russian travel website Anywayanyday were unable to book tickets or hotel rooms as the company responded to a cyberattack.</p>
+
+</li>
+<li id="s11">
+<p class="story-title"><a href="https://www.securityweek.com/microsoft-disrupts-chinese-language-phishing-market-behind-1b-messages/">Microsoft Disrupts Chinese-Language Phishing Market Behind 1B+ Messages</a></p>
+<p class="meta">SecurityWeek · 13:00 UTC</p>
+<p class="excerpt">Backed by a federal court order, Microsoft and Health-ISAC seized domains powering YAM Store, CoGUI, and Iron Man. The post Microsoft Disrupts Chinese-Language Phishing Market Behind 1B+ Messages appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s12">
+<p class="story-title"><a href="https://www.darkreading.com/cyberattacks-data-breaches/russian-influence-operation-targeting-latin-america">Russian Influence Operation Widely Targeting Latin America</a></p>
+<p class="meta">Dark Reading · 13:00 UTC</p>
+<p class="excerpt">The AI-enabled operation used spoofed emails, fake government documents, and the creation of a local organization to target schools in Peru and Ecuador, among other efforts.</p>
 
 </li>
 <li id="s15">
-<p class="story-title"><a href="https://therecord.media/russian-internet-provider-skynet-reports-outages-ddos">Russian internet provider SkyNet reports outages after cyberattack claimed by Ukrainian hackers</a></p>
-<p class="meta">The Record · 13:20 UTC</p>
-<p class="excerpt">One of St. Petersburg&#39;s major internet providers said its network had been under a distributed denial-of-service (DDoS) attack since October 6, affecting services including online gaming, voice calls and video conferencing.</p>
+<p class="story-title"><a href="https://therecord.media/new-ivanti-microsoft-bugs-exploitation">CISA warns of new Ivanti bug being exploited as latest Patch Tuesday breaks records</a></p>
+<p class="meta">The Record · 12:35 UTC</p>
+<p class="excerpt">The sixth exploited Ivanti bug this year drew attention from the feds and researchers, while a severe Microsoft vulnerability was one of more than 1,400 listed for Patch Tuesday.</p>
+
+</li>
+<li id="s16">
+<p class="story-title"><a href="https://therecord.media/congressional-probe-faults-match-group-for-failing-to-stop-dating-app-scams">Congressional probe faults Match Group for failing to rein in dating app scams</a></p>
+<p class="meta">The Record · 12:32 UTC</p>
+<p class="excerpt">The Joint Economic Committee on Tuesday released the results of a year-long investigation into Tinder, Hinge, Match, Plenty of Fish and several other dating sites owned by Match Group.</p>
 
 </li>
 <li id="s17">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/xandr-fined-record-86-million-for.html">Xandr Fined a Record €8.6 Million for Relaying Grindr Data Revealing Sexual Orientation</a></p>
-<p class="meta">The Hacker News · 13:12 UTC</p>
-<p class="excerpt">The Norwegian Data Protection Authority (DPA) has fined Xandr, an advertising unit owned by Microsoft, €8.6 million ($9.62 million) for illegally relaying ​Grindr users&#39; sensitive data to advertisers. The administrative penalty is the largest issued by the data protection watchdog, arguing the case merited a high fine because of the &quot;very serious&quot; nature of the breach. The infringements</p>
+<p class="story-title"><a href="https://thehackernews.com/2026/10/cisa-urges-immediate-ivanti-connect.html">CISA Urges Immediate Ivanti Connect Secure Updates as Honeypots Log 105 Exploit Attempts</a></p>
+<p class="meta">The Hacker News · 12:30 UTC</p>
+<ul class="vuln-list vuln-meta"><li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-104935">CVE-2026-104935</a></span><span>CVSS 8.6</span><span>High</span><span>CISA KEV</span></li></ul>
+<p class="excerpt">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Tuesday urged organizations to take steps to immediately update their Ivanti Connect Secure (ICS) appliances and deployments to the latest version following the disclosure of an actively exploited vulnerability. The security flaw, tracked as CVE-2026-104935 (CVSS score: 8.6), is a case of authentication bypass impacting ICS</p>
 
 </li>
 <li id="s18">
-<p class="story-title"><a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-286-02">Swann Communications SWIFI-SE2KIC</a></p>
-<p class="meta">CISA Advisories · 12:00 UTC</p>
-<p class="excerpt">View CSAF Summary Successful exploitation of these vulnerabilities could allow an attacker to view video information without authentication. The following versions of Swann Communications SWIFI-SE2KIC are affected: SWIFI-SE2KIC firmware &lt;=2.0.22 (CVE-2026-107605, CVE-2026-107606, CVE-2026-107607) CVSS Vendor Equipment v3 6.2 Swann Communications SWIFI-SE2KIC firmware 1 Vulnerability Missing…</p>
+<p class="story-title"><a href="https://thehackernews.com/2026/10/curl-patches-http2-upload-flaw-after.html">curl Patches HTTP/2 Upload Flaw After PoC Demonstrates Client-Side Code Execution</a></p>
+<p class="meta">The Hacker News · 12:13 UTC</p>
+<p class="excerpt">A flaw in how curl handles HTTP/2 uploads lets a malicious server receiving an upload corrupt the client&#39;s memory, and the researcher who reported it turned that into code execution on the uploading machine. The curl project fixed it on October 14 in curl 8.23.0. Taking over a client needs exact knowledge of its build and memory layout, and curl expects a real attack to end in a crash</p>
 
 </li>
 <li id="s19">
-<p class="story-title"><a href="https://www.securityweek.com/small-ai-models-may-soon-be-able-to-self-replicate-on-iot-devices-anthropic-warns/">Small AI Models Could Soon Self-Replicate on IoT Devices, Anthropic Warns</a></p>
-<p class="meta">SecurityWeek · 11:58 UTC</p>
-<p class="excerpt">Experiments show cheap TV boxes can run capable AI models, and small models may soon be able to spread across such devices on their own. The post Small AI Models Could Soon Self-Replicate on IoT Devices, Anthropic Warns appeared first on SecurityWeek.</p>
+<p class="story-title"><a href="https://thehackernews.com/2026/10/how-to-run-deepfake-readiness-drill.html">How to Run a Deepfake Readiness Drill Before a Cloned Voice Calls Your Team</a></p>
+<p class="meta">The Hacker News · 11:50 UTC</p>
+<p class="excerpt">Cloned voices and synthetic video calls now show up in payment fraud, help desk resets, and access requests. A structured drill shows security teams exactly where verification breaks down, while nothing is at stake. The call comes in at 4:40 on a Friday. It&#39;s the CFO, or it sounds exactly like her, asking the controller to push a supplier payment out before the weekend because a deal closes</p>
 
 </li>
 <li id="s20">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/webinar-how-to-stop-ai-driven-privilege.html">[Webinar] How to Stop AI-Driven Privilege Escalation With Runtime Identity Controls</a></p>
-<p class="meta">The Hacker News · 11:57 UTC</p>
-<p class="excerpt">The dangerous part of a stolen identity isn&#39;t always the initial login. It&#39;s what an attacker can do with that access next. With AI accelerating reconnaissance, exploitation of vulnerabilities, and privilege escalation, attackers can move through systems faster than security teams can investigate. A compromised account that looks legitimate at first could become the starting point for a much</p>
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/hirudo-android-malware-replaces-banking-apps-to-evade-security-checks/">Hirudo Android malware replaces banking apps to evade security checks</a></p>
+<p class="meta">BleepingComputer · 11:41 UTC</p>
+<p class="excerpt">A new Android malware called Hirudo steals bank account credentials by replacing legitimate banking apps with modified versions that disable security checks. [...]</p>
 
 </li>
 <li id="s21">
-<p class="story-title"><a href="https://www.securityweek.com/xworm-rat-evolves-into-surveillance-platform/">XWorm RAT Evolves Into Surveillance Platform</a></p>
-<p class="meta">SecurityWeek · 11:13 UTC</p>
-<p class="excerpt">Expanded plugin count allows the malware to monitor users’ location, stream live audio, and interact with authenticated browser sessions. The post XWorm RAT Evolves Into Surveillance Platform appeared first on SecurityWeek.</p>
-
-</li>
-<li id="s22">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/lg-smart-tvs-vulnerable-to-pre-auth.html">LG Smart TVs Vulnerable to Pre-Auth Root Takeover From Local Network</a></p>
-<p class="meta">The Hacker News · 11:09 UTC</p>
-<p class="excerpt">Three vulnerabilities in LG&#39;s webOS can be chained to give an attacker on the same local network root access to certain smart TVs without a PIN or any interaction from the owner. LG has issued a fix, according to an advisory published by SSD Secure Disclosure on October 12. The chain was tested on two TV models, the 32LQ636BPSA and the 27TQ600SW, running webOS 7.5.7-25 on firmware</p>
+<p class="story-title"><a href="https://thehackernews.com/2026/10/researchers-used-public-openai-model-to.html">Researchers Used a Public OpenAI Model to Build a $250,000 Chrome Full-Chain Exploit in Six Days</a></p>
+<p class="meta">The Hacker News · 11:19 UTC</p>
+<p class="excerpt">A team at security firm XBOW chained three then-unknown Google Chrome bugs into a single attack that runs code on a Windows computer when the user only loads a web page, the company said. Its researchers built the attack in six days by directing AI agents running OpenAI&#39;s publicly available GPT-5.6 Sol model. Google has since confirmed all three bugs, fixed them, and paid XBOW its top $</p>
 
 </li>
 <li id="s23">
-<p class="story-title"><a href="https://www.securityweek.com/ai-turns-familiar-cyberattacks-into-a-race-against-time/">AI Turns Familiar Cyberattacks Into a Race Against Time</a></p>
-<p class="meta">SecurityWeek · 11:00 UTC</p>
-<p class="excerpt">IBM’s Steve Wallin talks to SecurityWeek on the effect of AI-driven attacks on enterprise defenses. The post AI Turns Familiar Cyberattacks Into a Race Against Time appeared first on SecurityWeek.</p>
+<p class="story-title"><a href="https://thehackernews.com/2026/10/an-ai-agent-found-critical-otp-bypass.html">An AI Agent Found a Critical OTP Bypass in Production. The Attack Was the Easy Part.</a></p>
+<p class="meta">The Hacker News · 11:00 UTC</p>
+<p class="excerpt">The bug was simple: the login let you choose where your sign-in code went. Proving it on a live website was the hard part. TL;DR During an authorized assessment, an AI pentesting agent found a critical authentication bypass on a major insurer&#39;s production website, on its own. One login request let the user choose where the one-time passcode went. The attack was the easy part. Proving it</p>
 
 </li>
 <li id="s24">
-<p class="story-title"><a href="https://www.securityweek.com/86-million-crypto-heist-linked-to-ledger-signer-hardware-implant/">$86 Million Crypto Heist Linked to Ledger Signer Hardware Implant</a></p>
-<p class="meta">SecurityWeek · 10:36 UTC</p>
-<p class="excerpt">A small circuit board hidden under the signers’ screens read user data and transmitted it to the attackers. The post $86 Million Crypto Heist Linked to Ledger Signer Hardware Implant appeared first on SecurityWeek.</p>
+<p class="story-title"><a href="https://www.securityweek.com/us-arrests-two-in-crackdown-on-north-korean-it-worker-laptop-farms/">US Arrests Two in Crackdown on North Korean IT Worker Laptop Farms</a></p>
+<p class="meta">SecurityWeek · 10:55 UTC</p>
+<p class="excerpt">Investigators stormed 40 locations in Texas and seized 187 laptops used by North Korean IT workers to hide their location. The post US Arrests Two in Crackdown on North Korean IT Worker Laptop Farms appeared first on SecurityWeek.</p>
 
 </li>
 <li id="s25">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/product-walkthrough-bitdefender-ai.html">Product Walkthrough: Bitdefender AI Visibility and Control</a></p>
-<p class="meta">The Hacker News · 10:30 UTC</p>
-<p class="excerpt">A user opens a browser tab, pastes data into a chat assistant, and nothing is installed. A developer adds a coding assistant as an editor extension, and nothing shows up in the installed programs list. Someone downloads a local model runtime, a program that runs models directly on the machine instead of sending data to an external service, because they were told not to send company data</p>
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/microsoft-recent-windows-updates-may-trigger-remote-desktop-failures/">Microsoft: Recent Windows updates may trigger Remote Desktop failures</a></p>
+<p class="meta">BleepingComputer · 10:48 UTC</p>
+<p class="excerpt">Microsoft has confirmed that non-admin users may be unable to connect to devices via Remote Desktop after installing recent Windows updates if the &quot;Administrator protection&quot; security feature is enabled. [...]</p>
 
 </li>
-<li id="s26">
-<p class="story-title"><a href="https://www.securityweek.com/cyberattack-prompts-ahold-delhaize-to-disconnect-systems/">Cyberattack Prompts Grocery Giant Ahold Delhaize to Disconnect Systems</a></p>
-<p class="meta">SecurityWeek · 09:37 UTC</p>
-<p class="excerpt">The company says it took some of its systems offline to contain a security issue within its network. The post Cyberattack Prompts Grocery Giant Ahold Delhaize to Disconnect Systems appeared first on SecurityWeek.</p>
+<li id="s27">
+<p class="story-title"><a href="https://www.securityweek.com/chrome-firefox-updates-patch-114-flaws-as-mozilla-unveils-firefox-enterprise/">Chrome, Firefox Updates Patch 114 Flaws as Mozilla Unveils Firefox Enterprise</a></p>
+<p class="meta">SecurityWeek · 07:38 UTC</p>
+<p class="excerpt">Mozilla has introduced Firefox Enterprise for organizations with strict compliance, governance, and security requirements. The post Chrome, Firefox Updates Patch 114 Flaws as Mozilla Unveils Firefox Enterprise appeared first on SecurityWeek.</p>
 
 </li>
 <li id="s28">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/two-critical-marklogic-flaws-could-give.html">Two Critical MarkLogic Flaws Could Give Delegated Managers Persistent Admin Control</a></p>
-<p class="meta">The Hacker News · 08:44 UTC</p>
-<p class="excerpt">Two of 31 newly disclosed flaws in Progress Software&#39;s MarkLogic Server database could let an account given only some management privileges take administrator control of the server, the company says. Progress published all 31 on October 12 and scored five of them critical. Fixes have been available since September 10, in MarkLogic 11.3.7 and MarkLogic 12.1.0. Affected</p>
+<p class="story-title"><a href="https://www.securityweek.com/citrix-fortinet-ivanti-patch-29-vulnerabilities-across-their-products/">Citrix, Fortinet, Ivanti Patch 29 Vulnerabilities Across Their Products</a></p>
+<p class="meta">SecurityWeek · 07:26 UTC</p>
+<p class="excerpt">Critical-severity flaws could lead to authentication bypass, code execution, and sensitive authentication information leaks. The post Citrix, Fortinet, Ivanti Patch 29 Vulnerabilities Across Their Products appeared first on SecurityWeek.</p>
 
 </li>
 <li id="s30">
-<p class="story-title"><a href="https://www.securityweek.com/refrigeration-controller-hack-spoils-food-across-european-supermarkets/">Refrigeration Controller Hack Spoils Food Across European Supermarkets</a></p>
-<p class="meta">SecurityWeek · 08:28 UTC</p>
-<p class="excerpt">A cyberattack targeted refrigeration controllers, setting refrigerators and freezers across hundreds of supermarkets to defrost. The post Refrigeration Controller Hack Spoils Food Across European Supermarkets appeared first on SecurityWeek.</p>
+<p class="story-title"><a href="https://www.securityweek.com/sap-patches-critical-netweaver-s-4hana-vulnerabilities/">SAP Patches Critical NetWeaver, S/4HANA Vulnerabilities</a></p>
+<p class="meta">SecurityWeek · 06:12 UTC</p>
+<p class="excerpt">The bugs could allow attackers to invoke internal operations and execute code, completely compromising the system. The post SAP Patches Critical NetWeaver, S/4HANA Vulnerabilities appeared first on SecurityWeek.</p>
 
 </li>
 <li id="s31">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/low-cost-android-phones-ship-with.html">Low-Cost Android Phones Ship With Preinstalled Malware That Turns Them Into Residential Proxies</a></p>
-<p class="meta">The Hacker News · 06:00 UTC</p>
-<p class="excerpt">Low-cost Android smartphones have been shipped with malicious software baked into the device firmware, allowing bad actors to covertly install apps, conduct ad fraud, and turn devices into residential proxies. The activity, which targets Android devices built on MediaTek platforms across several brands, is being tracked by Bitdefender under the moniker Midnight Mimosa. The preinstalled</p>
+<p class="story-title"><a href="https://thehackernews.com/2026/10/four-byte-write-and-timing-bug-let.html">Four-Byte Write and Timing Bug Let Researchers Run Code in Windows SmartScreen Enclave</a></p>
+<p class="meta">The Hacker News · 05:52 UTC</p>
+<p class="excerpt">Security researchers ran their own code inside a protected part of Windows that is meant to stay sealed off even when the rest of the computer is taken over. The protected area is a VBS enclave, an isolated slice of memory the operating system uses to guard secrets, and the one they broke into handles passwords for a Windows anti-phishing feature. The work was done in a lab as a proof of</p>
+
+</li>
+<li id="s32">
+<p class="story-title"><a href="https://www.darkreading.com/cybersecurity-analytics/ransomware-gangs-physical-threats-family-stalking">Ransomware Gangs Embrace Physical Threats, Family Stalking?</a></p>
+<p class="meta">Dark Reading · 05:00 UTC</p>
+<p class="excerpt">Organizations are reporting that employees face threats of stalking, physical violence, and abduction. But these alarming claims are hard to verify.</p>
+
+</li>
+<li id="s33">
+<p class="story-title"><a href="https://thehackernews.com/2026/10/microsoft-patches-record-1413-flaws.html">Microsoft Patches Record 1,413 Flaws, Including Exploited Windows Shell Bug</a></p>
+<p class="meta">The Hacker News · 04:34 UTC</p>
+<p class="excerpt">Microsoft on Tuesday shattered its own Patch Tuesday record by shipping patches for a whopping 1,413 vulnerabilities, including one that it said has come under active exploitation. These include 1,102 flaws in Windows, 134 in Office, 61 in Developer Tools, 36 in SharePoint Server, and 22 in SQL Server. Of these, more than 670 relate to privilege escalation, followed by over 300 remote code</p>
+
+</li>
+<li id="s34">
+<p class="story-title"><a href="https://thehackernews.com/2026/10/openai-employee-arrested-for-allegedly.html">OpenAI Employee Arrested for Allegedly Planting Hidden Recorder in Executive Conference Room</a></p>
+<p class="meta">The Hacker News · 01:59 UTC</p>
+<p class="excerpt">A Saudi national and employee of OpenAI has been arrested for allegedly planting a hidden recording device in an executive conference room at the company&#39;s San Francisco offices to covertly record sensitive conversations. Abdulrahman Alfozan, 35, has been charged with using or endeavoring to use an electronic, mechanical, or other device to intercept oral communications. He was arrested by</p>
+
+</li>
+<li id="s35">
+<p class="story-title"><a href="https://krebsonsecurity.com/2026/10/microsoft-patches-more-than-1400-security-flaws/">Microsoft Patches More Than 1,400 Security Flaws</a></p>
+<p class="meta">Krebs on Security · 23:24 UTC</p>
+<p class="excerpt">Microsoft today issued updates to fix more than 1,400 security vulnerabilities in its Windows operating systems and other software. Today&#39;s epic patch batch dwarfs September&#39;s record of nearly 1,000 fixes, which was already about ten times the normal monthly patch load from Redmond.</p>
+
+</li>
+<li id="s36">
+<p class="story-title"><a href="https://www.securityweek.com/employee-arrested-after-listening-device-found-in-openai-conference-room-fbi-and-the-company-say/">Employee Arrested After Listening Device Found in OpenAI Conference Room, FBI and the Company Say</a></p>
+<p class="meta">SecurityWeek · 23:07 UTC</p>
+<p class="excerpt">Saudi national Abdulrahman Alfozan was arrested Friday and terminated by OpenAI. The post Employee Arrested After Listening Device Found in OpenAI Conference Room, FBI and the Company Say appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s37">
+<p class="story-title"><a href="https://therecord.media/saudi-national-charged-with-spy-device-openai">Saudi national charged with planting spy device in OpenAI executive conference room</a></p>
+<p class="meta">The Record · 23:00 UTC</p>
+<p class="excerpt">Abdulrahman Alfozan, 35, a Saudi national working as an engineer for OpenAI, was charged Tuesday with secretly bugging an executive conference room at one of the company’s buildings in San Francisco.</p>
+
+</li>
+<li id="s38">
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/artificial-intelligence/openai-engineer-arrested-for-allegedly-planting-spy-device-in-office/">OpenAI engineer arrested for allegedly planting spy device in office</a></p>
+<p class="meta">BleepingComputer · 22:33 UTC</p>
+<p class="excerpt">A Saudi OpenAI engineer has been arrested for allegedly planting a hidden recording device in an executive conference room at the company&#39;s San Francisco offices to secretly record sensitive conversations. [...]</p>
+
+</li>
+<li id="s39">
+<p class="story-title"><a href="https://www.darkreading.com/vulnerabilities-threats/zero-days-microsoft-october-patch-tuesday">Zero-Days Lurk in Microsoft&#39;s Overgrown October Patch Tuesday</a></p>
+<p class="meta">Dark Reading · 22:29 UTC</p>
+<p class="excerpt">The scary surprises in the largest security update ever include security bypasses and unauthenticated RCEs.</p>
+
+</li>
+<li id="s40">
+<p class="story-title"><a href="https://unit42.paloaltonetworks.com/noise-inside-network-third-party-risk/">The Noise Inside the Network: How an Unsophisticated Attack Exposed a Third-Party Risk</a></p>
+<p class="meta">Unit 42 · 22:00 UTC</p>
+<p class="excerpt">Unit 42 dissects a cyberattack targeting a European bank&#39;s IT infrastructure, delivering concrete defense strategies to help organizations detect and counter comparable threats. The post The Noise Inside the Network: How an Unsophisticated Attack Exposed a Third-Party Risk appeared first on Unit 42.</p>
+
+</li>
+<li id="s42">
+<p class="story-title"><a href="https://www.darkreading.com/cyberattacks-data-breaches/north-korea-phishes-ukrainians-war-intel">North Korea Phishes Ukrainians for War Intel</a></p>
+<p class="meta">Dark Reading · 21:24 UTC</p>
+<p class="excerpt">The Democratic People&#39;s Republic of Korea (DPRK) is trying to get insight into its own war effort in Ukraine, through simple reply-baiting phishing attacks.</p>
+
+</li>
+<li id="s43">
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/anthropic-warns-self-replicating-ai-could-spread-to-your-smart-devices/">Anthropic warns self-replicating AI could spread to your smart devices</a></p>
+<p class="meta">BleepingComputer · 21:16 UTC</p>
+<p class="excerpt">Anthropic is warning that small AI models could soon be able to self-replicate across consumer IoT devices, from Android TV boxes to smart ovens, creating distributed botnets capable of running AI workloads without relying on data centers. [...]</p>
+
+</li>
+<li id="s44">
+<p class="story-title"><a href="https://blog.talosintelligence.com/microsoft-patch-tuesday-for-october-2026/">Microsoft Patch Tuesday for October 2026 — Snort rules and prominent vulnerabilities</a></p>
+<p class="meta">Cisco Talos · 20:37 UTC</p>
+<p class="excerpt">Blog post covering the vulnerabilities disclosed during Microsoft Patch Tuesday.</p>
+
+</li>
+<li id="s45">
+<p class="story-title"><a href="https://www.darkreading.com/perimeter/anthropic-ingredients-future-ai-worms">Anthropic Finds Ingredients for Future AI Worms</a></p>
+<p class="meta">Dark Reading · 20:35 UTC</p>
+<p class="excerpt">Anthropic&#39;s latest study combined IoT and network tests to explore AI self-replication, which researchers said would be &quot;challenging&quot; to shut down.</p>
+
+</li>
+<li id="s46">
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-october-2026-patch-tuesday-fixes-1-411-flaws-3-zero-days/">Microsoft October 2026 Patch Tuesday fixes 1,411 flaws, 3 zero-days</a></p>
+<p class="meta">BleepingComputer · 19:56 UTC</p>
+<p class="excerpt">Today is Microsoft&#39;s October 2026 Patch Tuesday, with security updates addressing a record-breaking 1,411 flaws, including one actively exploited and two publicly disclosed zero-day vulnerabilities. [...]</p>
+
+</li>
+<li id="s47">
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-releases-windows-10-kb5126657-extended-security-update/">Microsoft releases Windows 10 KB5126657 extended security update</a></p>
+<p class="meta">BleepingComputer · 19:47 UTC</p>
+<p class="excerpt">Microsoft released the Windows 10 KB5126657 extended security update, which includes this month&#39;s record-breaking October 2026 Patch Tuesday fixes and a few bug fixes and changes. [...]</p>
+
+</li>
+<li id="s48">
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-windows-11-24h2-home-and-pro-reached-end-of-support/">Microsoft: Windows 11 24H2 Home and Pro reached end of support</a></p>
+<p class="meta">BleepingComputer · 19:04 UTC</p>
+<p class="excerpt">Microsoft announced today that devices running Windows 11 24H2 Home and Pro editions have reached the end of support and will no longer receive monthly security and non-security preview updates. [...]</p>
+
+</li>
+<li id="s49">
+<p class="story-title"><a href="https://thehackernews.com/2026/10/anthropic-warns-small-ai-models-could.html">Anthropic Warns Small AI Models Could Soon Form Self-Propagating IoT Botnets</a></p>
+<p class="meta">The Hacker News · 18:20 UTC</p>
+<p class="excerpt">Small artificial intelligence (AI) models may be months away from developing capabilities to self-replicate on IoT devices like smart ovens and off-brand Android TV boxes, according to a warning from Anthropic. The frontier AI lab said small AI models could form autonomous, self-propagating worm botnets that are &quot;challenging to shut down,&quot; since &quot;there&#39;s no centralized point to shut off.&quot;</p>
+
+</li>
+<li id="s50">
+<p class="story-title"><a href="https://thehackernews.com/2026/10/docker-fixes-critical-two-year-old-hub.html">Docker Fixes Critical Two-Year-Old Hub Flaw That Let One User Push Images as Another</a></p>
+<p class="meta">The Hacker News · 18:03 UTC</p>
+<p class="excerpt">A flaw in Docker Hub, the registry where container images are published and downloaded, let one user push, pull, or delete images as another user. Docker fixed the flaw on September 30 and says it found no evidence that anyone exploited it. The flaw was in the feature that converts a personal account into an organization, Docker said in a security advisory on October 12.</p>
+
+</li>
+<li id="s51">
+<p class="story-title"><a href="https://thehackernews.com/2026/10/attacker-chains-three-ivanti-connect.html">Attacker Chains Three Ivanti Connect Secure Zero-Days for Root Access, Only Two Patched So Far</a></p>
+<p class="meta">The Hacker News · 17:33 UTC</p>
+<p class="excerpt">An attacker chained three zero-day flaws in Ivanti Connect Secure, a VPN appliance, to run commands as root without logging in, security firm Volexity said on October 13. Ivanti has released fixes for two of the flaws and told customers on affected versions to &quot;act immediately.&quot; A fix for the third is still pending, according to Volexity. Volexity, which reported the flaws to Ivanti,</p>
+
+</li>
+<li id="s52">
+<p class="story-title"><a href="https://thehackernews.com/2026/10/sap-discloses-critical-cvss-10-flaw-in.html">SAP Discloses Critical CVSS 10 Flaw in Cloud SDK for Python Allowing OAuth2 Credential Theft</a></p>
+<p class="meta">The Hacker News · 17:28 UTC</p>
+<p class="excerpt">A flaw in SAP&#39;s Cloud SDK for Python can send an application&#39;s OAuth2 client credentials to a server an attacker controls, SAP said in a security advisory on October 13. The flaw affects multi-tenant applications on SAP Business Technology Platform (BTP) that use the SDK, SAP&#39;s official Python client for BTP services. An attacker must be able to control the tenant subdomain,</p>
+
+</li>
+<li id="s53">
+<p class="story-title"><a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-286-01">Inductive Automation Ignition Software</a></p>
+<p class="meta">CISA Advisories · 12:00 UTC</p>
+<p class="excerpt">View CSAF Summary Successful exploitation of this vulnerability could allow an authenticated low-level user to escalate their privileges to a higher level. The following versions of Inductive Automation Ignition Software are affected: Ignition &gt;=8.1.0| =8.3.0| =8.1.0| =8.3.0|&lt;=8.3.8 Product Status: known_affected Remediations Mitigation Inductive Automation released version 8.3.9 in August 2025…</p>
+
+</li>
+<li id="s54">
+<p class="story-title"><a href="https://www.cisa.gov/news-events/alerts/2026/10/13/cisa-urges-patching-newly-exploited-vulnerability-ivanti-connect-secure">CISA Urges Patching Newly Exploited Vulnerability in Ivanti Connect Secure</a></p>
+<p class="meta">CISA Advisories · 12:00 UTC</p>
+<ul class="vuln-list vuln-meta"><li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-104935">CVE-2026-104935</a></span><span>CVSS 8.6</span><span>High</span><span>CISA KEV</span></li></ul>
+<p class="excerpt">CISA is aware of Ivanti’s disclosure of a newly exploited vulnerability, CVE-2026-104935, affecting Ivanti Connect Secure versions 25.1.1.1 and prior, 25.1.2.2 and prior, and 22.8R2.4 and prior. CISA is aware of cyber threat actors exploiting this zero-day authentication bypass vulnerability, which allows remote, unauthenticated execution of arbitrary commands, to conduct credential theft and…</p>
 
 </li>
 </ol>
 </main>
-<footer>Generated 2026-10-13T18:46:42.741Z</footer>
+<footer>Generated 2026-10-14T16:22:02.601Z</footer>
 </body>
 </html>

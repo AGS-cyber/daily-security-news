@@ -1,0 +1,1376 @@
+{
+  "date": "2026-10-14",
+  "generatedAt": "2026-10-14T16:22:02.601Z",
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 225,
+    "published": 54
+  },
+  "mode": "article",
+  "headline": "Ivanti zero-day and an exploited Windows Shell bypass lead a heavy patch week",
+  "standfirst": "Two actively exploited flaws — one in an edge remote-access appliance, one buried in Microsoft's record Patch Tuesday — dominate the day, alongside a critical Ghostscript RCE, a local-root Linux kernel bug, a phishing-infrastructure disruption and UK sanctions on a crypto payment conduit.",
+  "bodyMarkdown": "## Actively exploited\n\nCISA is telling administrators to patch an Ivanti Connect Secure flaw immediately, describing it as exploited in zero-day attacks since at least the beginning of October [[s14]]. The supplied structured record for this story carries no CVE identifier and no KEV enrichment, so the specific vulnerability ID, severity and catalog status are not confirmed here; the urgency rests on the reported in-the-wild exploitation and the agency's guidance. Analysis: an authentication bypass in a remote-access appliance is the kind of foothold that tends to attract follow-on intrusion, but the supplied evidence gives no attribution, affected versions or post-exploitation detail, so those stay unknown.\n\nMicrosoft's Patch Tuesday shipped fixes for a record 1,413 vulnerabilities [[s29]], but the one to triage first is CVE-2026-96951: a Windows Shell security-feature bypass that is confirmed exploited and present in CISA's KEV catalog, listed there as a Windows command-injection issue (CWE-77). NVD scores it 8.8 High under CVSS 3.1, vector AV:N/AC:L/PR:N/UI:R — network-reachable with no privileges required, but user interaction required, so it should not be described as zero-click. CISA's required action directs US federal agencies to apply mitigations under BOD 26-04, with a due date only a few days after the KEV addition; that is a federal requirement, not a universal deadline.\n\n## Industry\n\nMicrosoft says its Digital Crimes Unit facilitated a disruption of a Chinese-language cybercrime ecosystem that coupled phishing-kit operators tracked as Storm-2990 with a marketplace tracked as Storm-3119 selling tools and infrastructure, working alongside law enforcement agencies and other partners worldwide [[s13]]. The operation is tied to more than a billion malicious messages. The supplied excerpt names none of the specific agencies, courts or countries involved, so those details cannot be stated.\n\nThe United Kingdom has sanctioned Cryptomus, a cryptocurrency platform that experts describe as a major conduit for payments tied to ransomware, narcotics, darknet markets, fraud and cybercrime services, and as helping Russia circumvent existing financial restrictions [[s3]].\n\n## Vulnerabilities\n\nCVE-2026-74580, dubbed Vghost, is a Linux vhost bug scored 8.8 High under CVSS 3.1 on a local vector (AV:L/AC:L/PR:L/UI:N) with changed scope [[s26]]. Per the supplied description, the vring metadata cache that vhost treats as proof a region was already validated is not reset when VHOST_SET_VRING_ADDR replaces the descriptor, available and used rings, nor when VHOST_SET_VRING_NUM changes region sizes; with a device IOTLB attached, the stale cache keeps translating through a mapping that no longer covers the address. The reported result: local kernel memory read and write and root across nearly a decade of kernel versions, and in one virtualization configuration a guest writing into host memory and hijacking the program that runs the virtual machine. Tencent Zhuque Lab is credited with the find. The KEV check is a confirmed miss for this CVE, which does not establish that exploitation has not occurred.\n\nCVE-2026-39919 in Ghostscript is the day's highest-scoring item: a heap-based buffer overflow rated 9.3 Critical under CVSS 4.0 (CWE-122) in the JPEG 2000 output adapter, affecting Ghostscript before 10.08.0 [[s41]]. A crafted PDF with mismatched component subsampling factors drives the non-samescale sub-byte-depth output path to allocate a row buffer sized for packed output while writing a full byte per column, corrupting chunk-allocator metadata to reach code execution. The supplied vector records network reachability, no privileges and no user interaction; delivery still depends on a crafted document reaching a Ghostscript-based pipeline, a condition the vector does not capture. Here too the KEV check is a confirmed miss, not proof that exploitation has not occurred.\n\n## Research\n\nTalos and Recorded Future attribute UAT-6275, described as Kazakhstan-nexus, to intrusions against government organizations across the Commonwealth of Independent States, with recovered artifacts showing additional apparent interest in water resources and energy [[s6]]. The excerpt supplies no tooling, timeline or victim detail, and the attribution is the researchers' assessment.\n\nThreatFabric has detailed Hirudo, an Android banking trojan that replaces legitimate banking apps with purpose-built patched versions designed to defeat the apps' own in-app security checks, with replacements identified for eight Indonesian banking apps [[s22]]. Analysis: the defensive check now runs inside the attacker's build, so it cannot be relied on; the excerpt does not describe distribution channels or victim counts.",
+  "selected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "CISA warns admins to immediately fix Ivanti flaw exploited as zero-day",
+      "url": "https://www.bleepingcomputer.com/news/security/cisa-warns-admins-to-immediately-fix-ivanti-flaw-exploited-as-zero-day/",
+      "publishedAt": "2026-10-14T12:58:07.000Z",
+      "excerpt": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA) urged security teams to immediately patch an Ivanti Connect Secure (ICS) flaw exploited in zero-day attacks since at least October 1st. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/cisa-warns-admins-to-immediately-fix-ivanti-flaw-exploited-as-zero-day",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/cisa-warns-admins-to-immediately-fix-ivanti-flaw-exploited-as-zero-day"
+      ],
+      "cves": [],
+      "id": "s14",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "CISA is pressing admins to immediately patch an Ivanti Connect Secure authentication-bypass zero-day (CVE-2026-104935) exploited in the wild since at least October 1, with KEV listing and a near-term federal deadline."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Microsoft Patches Record 1,413 Vulnerabilities, Including Exploited Windows Zero-Day",
+      "url": "https://www.securityweek.com/microsoft-patches-record-1413-vulnerabilities-including-exploited-windows-zero-day/",
+      "publishedAt": "2026-10-14T07:16:12.000Z",
+      "excerpt": "The most important is CVE-2026-96951, a security feature bypass flaw in Windows that has been exploited in the wild. The post Microsoft Patches Record 1,413 Vulnerabilities, Including Exploited Windows Zero-Day appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/microsoft-patches-record-1413-vulnerabilities-including-exploited-windows-zero-day",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/microsoft-patches-record-1413-vulnerabilities-including-exploited-windows-zero-day"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-96951",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Microsoft",
+            "product": "Windows",
+            "vulnerabilityName": "Microsoft Windows Command Injection Vulnerability",
+            "dateAdded": "2026-10-13",
+            "shortDescription": "Microsoft Windows Shell contains a command injection vulnerability that allows an unauthorized attacker to bypass a security feature over a network.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-10-16",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://msrc.microsoft.com/update-guide/en-US/vulnerability/CVE-2026-96951 ; BOD 26-04: BOD 26-04: Prioritizing Security Updates Based on Risk | CISA ; Forensics Triage Requirements: BOD 26-04: Implementation Guidance for Prioritizing Security Updates Based on Risk | CISA ;  https://nvd.nist.gov/vuln/detail/CVE-2026-96951",
+            "cwes": [
+              "CWE-77"
+            ]
+          },
+          "nvd": {
+            "description": "Improper neutralization of special elements used in a command ('command injection') in Windows Shell allows an unauthorized attacker to bypass a security feature over a network.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.8,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+              "source": "secure@microsoft.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-77"
+            ],
+            "published": "2026-10-13T19:22:07.760",
+            "lastModified": "2026-10-14T04:19:03.993",
+            "vulnStatus": "Undergoing Analysis",
+            "references": [
+              {
+                "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-96951",
+                "source": "secure@microsoft.com",
+                "tags": []
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-96951",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/microsoft-patches-record-1413-vulnerabilities-including-exploited-windows-zero-day/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.13",
+              "dateReleased": "2026-10-13T19:10:43.6568Z",
+              "retrievedAt": "2026-10-14T16:22:02.601Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-104935%2CCVE-2026-74580%2CCVE-2026-96951%2CCVE-2026-39919",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-96951",
+              "retrievedAt": "2026-10-14T16:22:02.601Z"
+            }
+          }
+        }
+      ],
+      "id": "s29",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "Inside a record 1,413-fix Patch Tuesday, Microsoft's exploited Windows Shell security-feature-bypass zero-day (CVE-2026-96951) is the one defenders must treat as already in adversaries' hands."
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "The hidden network: Inside the phishing infrastructure ecosystem powering global cybercrime",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/10/14/the-hidden-network-inside-the-phishing-infrastructure-ecosystem-powering-global-cybercrime/",
+      "publishedAt": "2026-10-14T13:00:00.000Z",
+      "excerpt": "Microsoft uncovered a Chinese-language cybercriminal ecosystem, an interconnected network of phishing kit operators (tracked as Storm-2990), and an illicit marketplace (tracked as Storm-3119) selling tools and infrastructure for large-scale phishing. In collaboration with law enforcement agencies and other partners worldwide, Microsoft’s Digital Crimes Unit (DCU) facilitated a disruption of the…",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/10/14/the-hidden-network-inside-the-phishing-infrastructure-ecosystem-powering-global-cybercrime",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://microsoft.com/en-us/security/blog/2026/10/14/the-hidden-network-inside-the-phishing-infrastructure-ecosystem-powering-global-cybercrime"
+      ],
+      "cves": [],
+      "id": "s13",
+      "section": "industry",
+      "rank": 3,
+      "angle": "A court-ordered Microsoft/Health-ISAC disruption, backed by Japanese police, took down the Storm-2990 phishing kit ecosystem and Storm-3119 marketplace behind more than a billion malicious messages."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "AI-Found Linux Kernel Flaw Gives Local Users Root, and Can Break a Guest Out to the Host",
+      "url": "https://thehackernews.com/2026/10/ai-found-linux-kernel-flaw-gives-local.html",
+      "publishedAt": "2026-10-14T07:46:57.000Z",
+      "excerpt": "A flaw in Linux's vhost subsystem lets a local user read and write kernel memory at will and become root across nearly a decade of kernel versions. In one virtualization setup, it lets an untrusted virtual machine write to the host's memory and hijack the program that runs the virtual machine. The bug is tracked as CVE-2026-74580 and named Vghost. Tencent Zhuque Lab, which found the",
+      "canonicalUrl": "https://thehackernews.com/2026/10/ai-found-linux-kernel-flaw-gives-local.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/ai-found-linux-kernel-flaw-gives-local.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-74580",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nvhost: reset the vring metadata cache on vring reconfiguration\n\nvq->meta_iotlb[] caches the vhost_iotlb_map that backs each vring\nmetadata region, and iotlb_access_ok() returns early on a cache hit,\ntaking the hit as proof that the region has already been validated:\n\n\tif (vhost_vq_meta_fetch(vq, addr, len, type))\n\t\treturn true;\n\nThe cache is reset on VHOST_IOTLB_UPDATE and VHOST_IOTLB_INVALIDATE, on\ndevice IOTLB (re)initialisation and on vq reset, but not when\nVHOST_SET_VRING_ADDR replaces vq->desc, vq->avail and vq->used, nor when\nVHOST_SET_VRING_NUM changes the region sizes.\n\nWith a device IOTLB attached both ioctls are accepted while the vq is\nlive, and neither validates the addresses at ioctl time: vq_access_ok()\nand vq_log_used_access_ok() return true early because the addresses are\nGIOVAs, deferring validation to prefetch time.  Once the cache has been\npopulated that deferred validation no longer runs -- vq_meta_prefetch()\nhits the stale entry and returns true -- and vhost_vq_meta_fetch() keeps\ntranslating through the old mapping as\n\n\tmap->addr + addr - map->start\n\nfor an address the mapping no longer covers.  vhost_copy_to_user() and\nvhost_copy_from_user() consume the result with __copy_to_user() and\n__copy_from_user(), which do not check it either, so a subsequent used\nring update or descriptor fetch accesses memory outside the region the\nIOTLB actually maps.\n\nReset the metadata cache whenever the vring is reconfigured, so the new\naddresses are pushed back through iotlb_access_ok()'s slow path.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.8,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+              "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+              "type": "Secondary"
+            },
+            "cwes": [],
+            "published": "2026-08-21T17:16:44.210",
+            "lastModified": "2026-10-14T05:16:44.390",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://git.kernel.org/stable/c/13fa6f32a56a386a82bd7451644c494beed034af",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/5224bd37e37d36076a550d99b2aebba33939fd95",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/54617e9119be2eb728ecdd8d977b99c99d4c498a",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/6fa3e9b1fe856259555a7e22f3f3082e7827fd9b",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/b70ebe0bba254e093dd5fd4c0c170941ce83eb85",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/cf363a7a02ce132ef1f58084fdb13e1a3b7da7e7",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/de845981da67a6b049080c87e605130b0c30adc5",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/f1e21108e3ddfcce62f6cad4ebd7b5674543c9e6",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/10/14/2",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/10/ai-found-linux-kernel-flaw-gives-local.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.13",
+              "dateReleased": "2026-10-13T19:10:43.6568Z",
+              "retrievedAt": "2026-10-14T16:22:02.601Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-104935%2CCVE-2026-74580%2CCVE-2026-96951%2CCVE-2026-39919",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-74580",
+              "retrievedAt": "2026-10-14T16:22:02.601Z"
+            }
+          }
+        }
+      ],
+      "id": "s26",
+      "section": "vulnerabilities",
+      "rank": 4,
+      "angle": "The AI-found 'Vghost' Linux vhost bug (CVE-2026-74580) gives local users kernel read/write and root across nearly a decade of kernels, and can break a guest out to the host."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Ghostscript flaw lets hackers hijack servers via PDF uploads",
+      "url": "https://www.bleepingcomputer.com/news/security/ghostscript-flaw-lets-hackers-hijack-servers-via-pdf-uploads/",
+      "publishedAt": "2026-10-13T21:33:26.000Z",
+      "excerpt": "A critical heap buffer overflow vulnerability (CVE-2026-39919) in the Ghostscript interpreter and rendering engine could allow remote code execution through specially crafted PDF files. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/ghostscript-flaw-lets-hackers-hijack-servers-via-pdf-uploads",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/ghostscript-flaw-lets-hackers-hijack-servers-via-pdf-uploads"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-39919",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Ghostscript before 10.08.0 contains a heap-based buffer overflow vulnerability in the JPEG 2000 output adapter (base/sjpx_openjpeg.c) that allows attackers to cause memory corruption by supplying a crafted PDF containing a JPEG 2000 image with mismatched component subsampling factors. When image components declare different subsampling values, the non-samescale sub-byte-depth output path allocates a row buffer sized for packed output but writes a full byte per output column regardless of bit depth, overflowing the allocation and corrupting internal chunk-allocator metadata to achieve code execution.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.3,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "disclosure@vulncheck.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-122"
+            ],
+            "published": "2026-09-15T15:17:14.723",
+            "lastModified": "2026-09-24T21:04:40.340",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://bugs.ghostscript.com/show_bug.cgi?id=709666",
+                "source": "disclosure@vulncheck.com",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/tag/gs10080",
+                "source": "disclosure@vulncheck.com",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/ArtifexSoftware/ghostpdl/commit/0a8bf88e39db07b0751a58d6ec1cf992073e4dc1",
+                "source": "disclosure@vulncheck.com",
+                "tags": []
+              },
+              {
+                "url": "https://www.vulncheck.com/advisories/ghostscript-heap-buffer-overflow-via-jpeg-2000-output-adapter",
+                "source": "disclosure@vulncheck.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "bleepingcomputer",
+                "url": "https://www.bleepingcomputer.com/news/security/ghostscript-flaw-lets-hackers-hijack-servers-via-pdf-uploads/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.13",
+              "dateReleased": "2026-10-13T19:10:43.6568Z",
+              "retrievedAt": "2026-10-14T16:22:02.601Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-104935%2CCVE-2026-74580%2CCVE-2026-96951%2CCVE-2026-39919",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-39919",
+              "retrievedAt": "2026-10-14T16:22:02.601Z"
+            }
+          }
+        }
+      ],
+      "id": "s41",
+      "section": "vulnerabilities",
+      "rank": 5,
+      "angle": "A critical (CVSS 9.3) Ghostscript heap overflow (CVE-2026-39919) turns crafted PDFs into remote code execution, a serious risk for any pipeline that renders untrusted documents."
+    },
+    {
+      "sourceId": "talos",
+      "sourceKind": "rss",
+      "title": "Break the silence: Kazakhstan-nexus UAT-6275 targets CIS government organizations",
+      "url": "https://blog.talosintelligence.com/break-the-silence-kazakhstan-nexus-uat-6275-targets-cis-government-organizations/",
+      "publishedAt": "2026-10-14T14:00:00.000Z",
+      "excerpt": "Talos and Recorded Future identified UAT-6275 activity targeting government organizations across the Commonwealth of Independent States. Recovered artifacts show additional interest in water resources and energy.",
+      "canonicalUrl": "https://blog.talosintelligence.com/break-the-silence-kazakhstan-nexus-uat-6275-targets-cis-government-organizations",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://blog.talosintelligence.com/break-the-silence-kazakhstan-nexus-uat-6275-targets-cis-government-organizations"
+      ],
+      "cves": [],
+      "id": "s6",
+      "section": "research",
+      "rank": 6,
+      "angle": "Talos and Recorded Future tie a Kazakhstan-nexus actor, UAT-6275, to persistent intrusions against CIS government networks and apparent interest in water and energy targets."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Hirudo Android Trojan Uses Patched Banking Apps to Bypass Their Built-In Security Checks",
+      "url": "https://thehackernews.com/2026/10/hirudo-android-trojan-uses-patched.html",
+      "publishedAt": "2026-10-14T11:08:22.000Z",
+      "excerpt": "Cybersecurity researchers have disclosed details of a new Android banking trojan called Hirudo that works by replacing legitimate banking apps with purpose-built patched versions designed to bypass security checks from inside the app itself, marking a new escalation in financial fraud. Dutch mobile security company ThreatFabric said it identified replacements for eight Indonesian banking",
+      "canonicalUrl": "https://thehackernews.com/2026/10/hirudo-android-trojan-uses-patched.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/hirudo-android-trojan-uses-patched.html"
+      ],
+      "cves": [],
+      "id": "s22",
+      "section": "research",
+      "rank": 7,
+      "angle": "Hirudo's trick of replacing legitimate banking apps with repackaged versions that disable in-app security checks marks a new escalation in Android banking fraud."
+    },
+    {
+      "sourceId": "krebs",
+      "sourceKind": "rss",
+      "title": "U.K. Sanctions Cryptomus for RU Money Laundering",
+      "url": "https://krebsonsecurity.com/2026/10/u-k-sanctions-cryptomus-for-ru-money-laundering/",
+      "publishedAt": "2026-10-14T14:22:49.000Z",
+      "excerpt": "The United Kingdom has issued economic sanctions against Cryptomus, a chameleonic cryptocurrency platform that experts say serves as a major conduit for payments related to ransomware, narcotics, darknet markets, fraud and cybercrime services that are helping Russia circumvent existing financial restrictions.",
+      "canonicalUrl": "https://krebsonsecurity.com/2026/10/u-k-sanctions-cryptomus-for-ru-money-laundering",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://krebsonsecurity.com/2026/10/u-k-sanctions-cryptomus-for-ru-money-laundering"
+      ],
+      "cves": [],
+      "id": "s3",
+      "section": "industry",
+      "rank": 8,
+      "angle": "UK sanctions on Cryptomus put a major ransomware and darknet-market payment conduit in the spotlight and raise pressure on the platforms enabling Russian sanctions evasion."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "ICS Patch Tuesday: Siemens Issues 17 Advisories, Rockwell Fixes ArmorBlock Takeover Flaw",
+      "url": "https://www.securityweek.com/ics-patch-tuesday-siemens-issues-17-advisories-rockwell-fixes-armorblock-takeover-flaw/",
+      "publishedAt": "2026-10-14T15:15:15.000Z",
+      "excerpt": "ABB previously published an advisory warning about possible probing of a dynovaPRO vulnerability. The post ICS Patch Tuesday: Siemens Issues 17 Advisories, Rockwell Fixes ArmorBlock Takeover Flaw appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/ics-patch-tuesday-siemens-issues-17-advisories-rockwell-fixes-armorblock-takeover-flaw",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/ics-patch-tuesday-siemens-issues-17-advisories-rockwell-fixes-armorblock-takeover-flaw"
+      ],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft fixes VPN issues caused by September Windows updates",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-vpn-issues-caused-by-september-windows-updates/",
+      "publishedAt": "2026-10-14T14:27:01.000Z",
+      "excerpt": "Microsoft has resolved a known issue that caused Always On VPN connection issues after installing the September 2026 Windows 11 security updates. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-fixes-vpn-issues-caused-by-september-windows-updates",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/microsoft/microsoft-fixes-vpn-issues-caused-by-september-windows-updates"
+      ],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Harmonic Security Raises $50 Million for Workforce AI Protection",
+      "url": "https://www.securityweek.com/harmonic-security-raises-50-million-for-workforce-ai-protection/",
+      "publishedAt": "2026-10-14T14:09:51.000Z",
+      "excerpt": "The cybersecurity startup plans to expand engineering and go-to-market teams in the US and UK. The post Harmonic Security Raises $50 Million for Workforce AI Protection appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/harmonic-security-raises-50-million-for-workforce-ai-protection",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/harmonic-security-raises-50-million-for-workforce-ai-protection"
+      ],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "The Blind Spots of Agentic Pentesting and How to Close Them",
+      "url": "https://www.bleepingcomputer.com/news/security/the-blind-spots-of-agentic-pentesting-and-how-to-close-them/",
+      "publishedAt": "2026-10-14T14:00:10.000Z",
+      "excerpt": "AI-powered penetration testing can uncover complex attack paths, but safety restrictions and network limitations leave many assets and vulnerabilities untested. Picus Security explains how combining agentic pentesting with exposure validation and breach simulation can help close these gaps. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/the-blind-spots-of-agentic-pentesting-and-how-to-close-them",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/the-blind-spots-of-agentic-pentesting-and-how-to-close-them"
+      ],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Virtual Event Today: Zero Trust Strategies Summit",
+      "url": "https://www.securityweek.com/virtual-event-today-zero-trust-strategies-summit-2/",
+      "publishedAt": "2026-10-14T13:56:36.000Z",
+      "excerpt": "This summit is laser-focused on the next generation of Zero Trust and Identity security, moving beyond theory to deliver actionable strategies. The post Virtual Event Today: Zero Trust Strategies Summit appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/virtual-event-today-zero-trust-strategies-summit-2",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/virtual-event-today-zero-trust-strategies-summit-2"
+      ],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Microsoft takes down 3 major phishing platforms used by Chinese cybercriminals",
+      "url": "https://therecord.media/microsoft-takes-down-3-major-chinese-phishing-platforms",
+      "publishedAt": "2026-10-14T13:18:00.000Z",
+      "excerpt": "The tech giant worked with Japan’s National Police Agency and healthcare cybersecurity organization Health-ISAC to obtain a U.S. court order seizing and redirecting domains that were part of the infrastructure underlying YAM Store, CoGUI and Iron Man.",
+      "canonicalUrl": "https://therecord.media/microsoft-takes-down-3-major-chinese-phishing-platforms",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/microsoft-takes-down-3-major-chinese-phishing-platforms"
+      ],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Global takedown hits network behind 1 billion phishing messages",
+      "url": "https://www.bleepingcomputer.com/news/security/global-takedown-hits-network-behind-1-billion-phishing-messages/",
+      "publishedAt": "2026-10-14T13:12:52.000Z",
+      "excerpt": "A massive cybercriminal ecosystem facilitating more than a billion malicious messages targeting over 75,000 organizations across 150 countries has been disrupted by law enforcement agencies and partners worldwide. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/global-takedown-hits-network-behind-1-billion-phishing-messages",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/global-takedown-hits-network-behind-1-billion-phishing-messages"
+      ],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Russian travel booking platform suspends reservations after cyberattack",
+      "url": "https://therecord.media/russia-anywayanyday-travel-website-cyberattack",
+      "publishedAt": "2026-10-14T13:05:00.000Z",
+      "excerpt": "Customers of Russian travel website Anywayanyday were unable to book tickets or hotel rooms as the company responded to a cyberattack.",
+      "canonicalUrl": "https://therecord.media/russia-anywayanyday-travel-website-cyberattack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/russia-anywayanyday-travel-website-cyberattack"
+      ],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Microsoft Disrupts Chinese-Language Phishing Market Behind 1B+ Messages",
+      "url": "https://www.securityweek.com/microsoft-disrupts-chinese-language-phishing-market-behind-1b-messages/",
+      "publishedAt": "2026-10-14T13:00:00.000Z",
+      "excerpt": "Backed by a federal court order, Microsoft and Health-ISAC seized domains powering YAM Store, CoGUI, and Iron Man. The post Microsoft Disrupts Chinese-Language Phishing Market Behind 1B+ Messages appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/microsoft-disrupts-chinese-language-phishing-market-behind-1b-messages",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/microsoft-disrupts-chinese-language-phishing-market-behind-1b-messages"
+      ],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Russian Influence Operation Widely Targeting Latin America",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/russian-influence-operation-targeting-latin-america",
+      "publishedAt": "2026-10-14T13:00:00.000Z",
+      "excerpt": "The AI-enabled operation used spoofed emails, fake government documents, and the creation of a local organization to target schools in Peru and Ecuador, among other efforts.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/russian-influence-operation-targeting-latin-america",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyberattacks-data-breaches/russian-influence-operation-targeting-latin-america"
+      ],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "CISA warns of new Ivanti bug being exploited as latest Patch Tuesday breaks records",
+      "url": "https://therecord.media/new-ivanti-microsoft-bugs-exploitation",
+      "publishedAt": "2026-10-14T12:35:00.000Z",
+      "excerpt": "The sixth exploited Ivanti bug this year drew attention from the feds and researchers, while a severe Microsoft vulnerability was one of more than 1,400 listed for Patch Tuesday.",
+      "canonicalUrl": "https://therecord.media/new-ivanti-microsoft-bugs-exploitation",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/new-ivanti-microsoft-bugs-exploitation"
+      ],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Congressional probe faults Match Group for failing to rein in dating app scams",
+      "url": "https://therecord.media/congressional-probe-faults-match-group-for-failing-to-stop-dating-app-scams",
+      "publishedAt": "2026-10-14T12:32:00.000Z",
+      "excerpt": "The Joint Economic Committee on Tuesday released the results of a year-long investigation into Tinder, Hinge, Match, Plenty of Fish and several other dating sites owned by Match Group.",
+      "canonicalUrl": "https://therecord.media/congressional-probe-faults-match-group-for-failing-to-stop-dating-app-scams",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/congressional-probe-faults-match-group-for-failing-to-stop-dating-app-scams"
+      ],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "CISA Urges Immediate Ivanti Connect Secure Updates as Honeypots Log 105 Exploit Attempts",
+      "url": "https://thehackernews.com/2026/10/cisa-urges-immediate-ivanti-connect.html",
+      "publishedAt": "2026-10-14T12:30:42.000Z",
+      "excerpt": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Tuesday urged organizations to take steps to immediately update their Ivanti Connect Secure (ICS) appliances and deployments to the latest version following the disclosure of an actively exploited vulnerability. The security flaw, tracked as CVE-2026-104935 (CVSS score: 8.6), is a case of authentication bypass impacting ICS",
+      "canonicalUrl": "https://thehackernews.com/2026/10/cisa-urges-immediate-ivanti-connect.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/cisa-urges-immediate-ivanti-connect.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-104935",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Ivanti",
+            "product": "Connect Secure",
+            "vulnerabilityName": "Ivanti Connect Secure Authentication Bypass by Spoofing Vulnerability",
+            "dateAdded": "2026-10-13",
+            "shortDescription": "Ivanti Connect Secure contains an authentication bypass by spoofing vulnerability that allows a remote unauthenticated attacker to execute arbitrary commands.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-10-16",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https:/forums.ivanti.com/s/article/Security-Advisory-Ivanti-Connect-Secure-CVE-2026-104935 ; https://nvd.nist.gov/vuln/detail/CVE-2026-104935",
+            "cwes": [
+              "CWE-290"
+            ]
+          },
+          "nvd": {
+            "description": "Authentication bypass by spoofing in ICS before version 25.1.3.0 allows a remote unauthenticated attacker to execute arbitrary commands. This does not impact ICS version 22.7R2.14 or prior.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.6,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:L",
+              "source": "3c1d8aa1-5a33-4ea4-8992-aadd6440af75",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-290"
+            ],
+            "published": "2026-10-13T16:17:11.640",
+            "lastModified": "2026-10-13T19:24:36.243",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://hub.ivanti.com/s/article/Security-Advisory-Ivanti-Connect-Secure-CVE-2026-104935",
+                "source": "3c1d8aa1-5a33-4ea4-8992-aadd6440af75",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-104935",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "51F9201D-EF2F-4750-846E-912827761A9F",
+                "versionStartIncluding": "25.1.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "25.1.1.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "822E7CEB-9AB2-4B0E-B87A-B9718503466A",
+                "versionStartIncluding": "25.1.2.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "25.1.3.0"
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:22.8:r2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "56FEC223-8FF7-4A05-9577-CFFE0AA6526C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:22.8:r2.1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5569D323-6ADF-4B16-822D-FBA6760356C3",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:22.8:r2.2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FF4D400F-49DA-4C5F-8F63-5A15738360AE",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:22.8:r2.3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9CA7EF35-D0BC-4714-A38A-91660BE1BA55",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:22.8:r2.4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F22EC396-A447-4175-8A30-C8DC10ACFFE9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/10/cisa-urges-immediate-ivanti-connect.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.13",
+              "dateReleased": "2026-10-13T19:10:43.6568Z",
+              "retrievedAt": "2026-10-14T16:22:02.601Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-104935%2CCVE-2026-74580%2CCVE-2026-96951%2CCVE-2026-39919",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-104935",
+              "retrievedAt": "2026-10-14T16:22:02.601Z"
+            }
+          }
+        }
+      ],
+      "id": "s17"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "curl Patches HTTP/2 Upload Flaw After PoC Demonstrates Client-Side Code Execution",
+      "url": "https://thehackernews.com/2026/10/curl-patches-http2-upload-flaw-after.html",
+      "publishedAt": "2026-10-14T12:13:36.000Z",
+      "excerpt": "A flaw in how curl handles HTTP/2 uploads lets a malicious server receiving an upload corrupt the client's memory, and the researcher who reported it turned that into code execution on the uploading machine. The curl project fixed it on October 14 in curl 8.23.0. Taking over a client needs exact knowledge of its build and memory layout, and curl expects a real attack to end in a crash",
+      "canonicalUrl": "https://thehackernews.com/2026/10/curl-patches-http2-upload-flaw-after.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/curl-patches-http2-upload-flaw-after.html"
+      ],
+      "cves": [],
+      "id": "s18"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "How to Run a Deepfake Readiness Drill Before a Cloned Voice Calls Your Team",
+      "url": "https://thehackernews.com/2026/10/how-to-run-deepfake-readiness-drill.html",
+      "publishedAt": "2026-10-14T11:50:00.000Z",
+      "excerpt": "Cloned voices and synthetic video calls now show up in payment fraud, help desk resets, and access requests. A structured drill shows security teams exactly where verification breaks down, while nothing is at stake. The call comes in at 4:40 on a Friday. It's the CFO, or it sounds exactly like her, asking the controller to push a supplier payment out before the weekend because a deal closes",
+      "canonicalUrl": "https://thehackernews.com/2026/10/how-to-run-deepfake-readiness-drill.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/how-to-run-deepfake-readiness-drill.html"
+      ],
+      "cves": [],
+      "id": "s19"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hirudo Android malware replaces banking apps to evade security checks",
+      "url": "https://www.bleepingcomputer.com/news/security/hirudo-android-malware-replaces-banking-apps-to-evade-security-checks/",
+      "publishedAt": "2026-10-14T11:41:20.000Z",
+      "excerpt": "A new Android malware called Hirudo steals bank account credentials by replacing legitimate banking apps with modified versions that disable security checks. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hirudo-android-malware-replaces-banking-apps-to-evade-security-checks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/hirudo-android-malware-replaces-banking-apps-to-evade-security-checks"
+      ],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Researchers Used a Public OpenAI Model to Build a $250,000 Chrome Full-Chain Exploit in Six Days",
+      "url": "https://thehackernews.com/2026/10/researchers-used-public-openai-model-to.html",
+      "publishedAt": "2026-10-14T11:19:02.000Z",
+      "excerpt": "A team at security firm XBOW chained three then-unknown Google Chrome bugs into a single attack that runs code on a Windows computer when the user only loads a web page, the company said. Its researchers built the attack in six days by directing AI agents running OpenAI's publicly available GPT-5.6 Sol model. Google has since confirmed all three bugs, fixed them, and paid XBOW its top $",
+      "canonicalUrl": "https://thehackernews.com/2026/10/researchers-used-public-openai-model-to.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/researchers-used-public-openai-model-to.html"
+      ],
+      "cves": [],
+      "id": "s21"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "An AI Agent Found a Critical OTP Bypass in Production. The Attack Was the Easy Part.",
+      "url": "https://thehackernews.com/2026/10/an-ai-agent-found-critical-otp-bypass.html",
+      "publishedAt": "2026-10-14T11:00:00.000Z",
+      "excerpt": "The bug was simple: the login let you choose where your sign-in code went. Proving it on a live website was the hard part. TL;DR During an authorized assessment, an AI pentesting agent found a critical authentication bypass on a major insurer's production website, on its own. One login request let the user choose where the one-time passcode went. The attack was the easy part. Proving it",
+      "canonicalUrl": "https://thehackernews.com/2026/10/an-ai-agent-found-critical-otp-bypass.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/an-ai-agent-found-critical-otp-bypass.html"
+      ],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "US Arrests Two in Crackdown on North Korean IT Worker Laptop Farms",
+      "url": "https://www.securityweek.com/us-arrests-two-in-crackdown-on-north-korean-it-worker-laptop-farms/",
+      "publishedAt": "2026-10-14T10:55:21.000Z",
+      "excerpt": "Investigators stormed 40 locations in Texas and seized 187 laptops used by North Korean IT workers to hide their location. The post US Arrests Two in Crackdown on North Korean IT Worker Laptop Farms appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/us-arrests-two-in-crackdown-on-north-korean-it-worker-laptop-farms",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/us-arrests-two-in-crackdown-on-north-korean-it-worker-laptop-farms"
+      ],
+      "cves": [],
+      "id": "s24"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft: Recent Windows updates may trigger Remote Desktop failures",
+      "url": "https://www.bleepingcomputer.com/news/security/microsoft-recent-windows-updates-may-trigger-remote-desktop-failures/",
+      "publishedAt": "2026-10-14T10:48:09.000Z",
+      "excerpt": "Microsoft has confirmed that non-admin users may be unable to connect to devices via Remote Desktop after installing recent Windows updates if the \"Administrator protection\" security feature is enabled. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/microsoft-recent-windows-updates-may-trigger-remote-desktop-failures",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/microsoft-recent-windows-updates-may-trigger-remote-desktop-failures"
+      ],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Chrome, Firefox Updates Patch 114 Flaws as Mozilla Unveils Firefox Enterprise",
+      "url": "https://www.securityweek.com/chrome-firefox-updates-patch-114-flaws-as-mozilla-unveils-firefox-enterprise/",
+      "publishedAt": "2026-10-14T07:38:51.000Z",
+      "excerpt": "Mozilla has introduced Firefox Enterprise for organizations with strict compliance, governance, and security requirements. The post Chrome, Firefox Updates Patch 114 Flaws as Mozilla Unveils Firefox Enterprise appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/chrome-firefox-updates-patch-114-flaws-as-mozilla-unveils-firefox-enterprise",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/chrome-firefox-updates-patch-114-flaws-as-mozilla-unveils-firefox-enterprise"
+      ],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Citrix, Fortinet, Ivanti Patch 29 Vulnerabilities Across Their Products",
+      "url": "https://www.securityweek.com/citrix-fortinet-ivanti-patch-29-vulnerabilities-across-their-products/",
+      "publishedAt": "2026-10-14T07:26:35.000Z",
+      "excerpt": "Critical-severity flaws could lead to authentication bypass, code execution, and sensitive authentication information leaks. The post Citrix, Fortinet, Ivanti Patch 29 Vulnerabilities Across Their Products appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/citrix-fortinet-ivanti-patch-29-vulnerabilities-across-their-products",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/citrix-fortinet-ivanti-patch-29-vulnerabilities-across-their-products"
+      ],
+      "cves": [],
+      "id": "s28"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "SAP Patches Critical NetWeaver, S/4HANA Vulnerabilities",
+      "url": "https://www.securityweek.com/sap-patches-critical-netweaver-s-4hana-vulnerabilities/",
+      "publishedAt": "2026-10-14T06:12:10.000Z",
+      "excerpt": "The bugs could allow attackers to invoke internal operations and execute code, completely compromising the system. The post SAP Patches Critical NetWeaver, S/4HANA Vulnerabilities appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/sap-patches-critical-netweaver-s-4hana-vulnerabilities",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/sap-patches-critical-netweaver-s-4hana-vulnerabilities"
+      ],
+      "cves": [],
+      "id": "s30"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Four-Byte Write and Timing Bug Let Researchers Run Code in Windows SmartScreen Enclave",
+      "url": "https://thehackernews.com/2026/10/four-byte-write-and-timing-bug-let.html",
+      "publishedAt": "2026-10-14T05:52:28.000Z",
+      "excerpt": "Security researchers ran their own code inside a protected part of Windows that is meant to stay sealed off even when the rest of the computer is taken over. The protected area is a VBS enclave, an isolated slice of memory the operating system uses to guard secrets, and the one they broke into handles passwords for a Windows anti-phishing feature. The work was done in a lab as a proof of",
+      "canonicalUrl": "https://thehackernews.com/2026/10/four-byte-write-and-timing-bug-let.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/four-byte-write-and-timing-bug-let.html"
+      ],
+      "cves": [],
+      "id": "s31"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Ransomware Gangs Embrace Physical Threats, Family Stalking?",
+      "url": "https://www.darkreading.com/cybersecurity-analytics/ransomware-gangs-physical-threats-family-stalking",
+      "publishedAt": "2026-10-14T05:00:00.000Z",
+      "excerpt": "Organizations are reporting that employees face threats of stalking, physical violence, and abduction. But these alarming claims are hard to verify.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-analytics/ransomware-gangs-physical-threats-family-stalking",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cybersecurity-analytics/ransomware-gangs-physical-threats-family-stalking"
+      ],
+      "cves": [],
+      "id": "s32"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Microsoft Patches Record 1,413 Flaws, Including Exploited Windows Shell Bug",
+      "url": "https://thehackernews.com/2026/10/microsoft-patches-record-1413-flaws.html",
+      "publishedAt": "2026-10-14T04:34:43.000Z",
+      "excerpt": "Microsoft on Tuesday shattered its own Patch Tuesday record by shipping patches for a whopping 1,413 vulnerabilities, including one that it said has come under active exploitation. These include 1,102 flaws in Windows, 134 in Office, 61 in Developer Tools, 36 in SharePoint Server, and 22 in SQL Server. Of these, more than 670 relate to privilege escalation, followed by over 300 remote code",
+      "canonicalUrl": "https://thehackernews.com/2026/10/microsoft-patches-record-1413-flaws.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/microsoft-patches-record-1413-flaws.html"
+      ],
+      "cves": [],
+      "id": "s33"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "OpenAI Employee Arrested for Allegedly Planting Hidden Recorder in Executive Conference Room",
+      "url": "https://thehackernews.com/2026/10/openai-employee-arrested-for-allegedly.html",
+      "publishedAt": "2026-10-14T01:59:25.000Z",
+      "excerpt": "A Saudi national and employee of OpenAI has been arrested for allegedly planting a hidden recording device in an executive conference room at the company's San Francisco offices to covertly record sensitive conversations. Abdulrahman Alfozan, 35, has been charged with using or endeavoring to use an electronic, mechanical, or other device to intercept oral communications. He was arrested by",
+      "canonicalUrl": "https://thehackernews.com/2026/10/openai-employee-arrested-for-allegedly.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/openai-employee-arrested-for-allegedly.html"
+      ],
+      "cves": [],
+      "id": "s34"
+    },
+    {
+      "sourceId": "krebs",
+      "sourceKind": "rss",
+      "title": "Microsoft Patches More Than 1,400 Security Flaws",
+      "url": "https://krebsonsecurity.com/2026/10/microsoft-patches-more-than-1400-security-flaws/",
+      "publishedAt": "2026-10-13T23:24:53.000Z",
+      "excerpt": "Microsoft today issued updates to fix more than 1,400 security vulnerabilities in its Windows operating systems and other software. Today's epic patch batch dwarfs September's record of nearly 1,000 fixes, which was already about ten times the normal monthly patch load from Redmond.",
+      "canonicalUrl": "https://krebsonsecurity.com/2026/10/microsoft-patches-more-than-1400-security-flaws",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://krebsonsecurity.com/2026/10/microsoft-patches-more-than-1400-security-flaws"
+      ],
+      "cves": [],
+      "id": "s35"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Employee Arrested After Listening Device Found in OpenAI Conference Room, FBI and the Company Say",
+      "url": "https://www.securityweek.com/employee-arrested-after-listening-device-found-in-openai-conference-room-fbi-and-the-company-say/",
+      "publishedAt": "2026-10-13T23:07:00.000Z",
+      "excerpt": "Saudi national Abdulrahman Alfozan was arrested Friday and terminated by OpenAI. The post Employee Arrested After Listening Device Found in OpenAI Conference Room, FBI and the Company Say appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/employee-arrested-after-listening-device-found-in-openai-conference-room-fbi-and-the-company-say",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/employee-arrested-after-listening-device-found-in-openai-conference-room-fbi-and-the-company-say"
+      ],
+      "cves": [],
+      "id": "s36"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Saudi national charged with planting spy device in OpenAI executive conference room",
+      "url": "https://therecord.media/saudi-national-charged-with-spy-device-openai",
+      "publishedAt": "2026-10-13T23:00:00.000Z",
+      "excerpt": "Abdulrahman Alfozan, 35, a Saudi national working as an engineer for OpenAI, was charged Tuesday with secretly bugging an executive conference room at one of the company’s buildings in San Francisco.",
+      "canonicalUrl": "https://therecord.media/saudi-national-charged-with-spy-device-openai",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/saudi-national-charged-with-spy-device-openai"
+      ],
+      "cves": [],
+      "id": "s37"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "OpenAI engineer arrested for allegedly planting spy device in office",
+      "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/openai-engineer-arrested-for-allegedly-planting-spy-device-in-office/",
+      "publishedAt": "2026-10-13T22:33:02.000Z",
+      "excerpt": "A Saudi OpenAI engineer has been arrested for allegedly planting a hidden recording device in an executive conference room at the company's San Francisco offices to secretly record sensitive conversations. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/artificial-intelligence/openai-engineer-arrested-for-allegedly-planting-spy-device-in-office",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/artificial-intelligence/openai-engineer-arrested-for-allegedly-planting-spy-device-in-office"
+      ],
+      "cves": [],
+      "id": "s38"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Zero-Days Lurk in Microsoft's Overgrown October Patch Tuesday",
+      "url": "https://www.darkreading.com/vulnerabilities-threats/zero-days-microsoft-october-patch-tuesday",
+      "publishedAt": "2026-10-13T22:29:57.000Z",
+      "excerpt": "The scary surprises in the largest security update ever include security bypasses and unauthenticated RCEs.",
+      "canonicalUrl": "https://darkreading.com/vulnerabilities-threats/zero-days-microsoft-october-patch-tuesday",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/vulnerabilities-threats/zero-days-microsoft-october-patch-tuesday"
+      ],
+      "cves": [],
+      "id": "s39"
+    },
+    {
+      "sourceId": "unit42",
+      "sourceKind": "rss",
+      "title": "The Noise Inside the Network: How an Unsophisticated Attack Exposed a Third-Party Risk",
+      "url": "https://unit42.paloaltonetworks.com/noise-inside-network-third-party-risk/",
+      "publishedAt": "2026-10-13T22:00:04.000Z",
+      "excerpt": "Unit 42 dissects a cyberattack targeting a European bank's IT infrastructure, delivering concrete defense strategies to help organizations detect and counter comparable threats. The post The Noise Inside the Network: How an Unsophisticated Attack Exposed a Third-Party Risk appeared first on Unit 42.",
+      "canonicalUrl": "https://unit42.paloaltonetworks.com/noise-inside-network-third-party-risk",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://unit42.paloaltonetworks.com/noise-inside-network-third-party-risk"
+      ],
+      "cves": [],
+      "id": "s40"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "North Korea Phishes Ukrainians for War Intel",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/north-korea-phishes-ukrainians-war-intel",
+      "publishedAt": "2026-10-13T21:24:45.000Z",
+      "excerpt": "The Democratic People's Republic of Korea (DPRK) is trying to get insight into its own war effort in Ukraine, through simple reply-baiting phishing attacks.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/north-korea-phishes-ukrainians-war-intel",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyberattacks-data-breaches/north-korea-phishes-ukrainians-war-intel"
+      ],
+      "cves": [],
+      "id": "s42"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Anthropic warns self-replicating AI could spread to your smart devices",
+      "url": "https://www.bleepingcomputer.com/news/security/anthropic-warns-self-replicating-ai-could-spread-to-your-smart-devices/",
+      "publishedAt": "2026-10-13T21:16:34.000Z",
+      "excerpt": "Anthropic is warning that small AI models could soon be able to self-replicate across consumer IoT devices, from Android TV boxes to smart ovens, creating distributed botnets capable of running AI workloads without relying on data centers. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/anthropic-warns-self-replicating-ai-could-spread-to-your-smart-devices",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/anthropic-warns-self-replicating-ai-could-spread-to-your-smart-devices"
+      ],
+      "cves": [],
+      "id": "s43"
+    },
+    {
+      "sourceId": "talos",
+      "sourceKind": "rss",
+      "title": "Microsoft Patch Tuesday for October 2026 — Snort rules and prominent vulnerabilities",
+      "url": "https://blog.talosintelligence.com/microsoft-patch-tuesday-for-october-2026/",
+      "publishedAt": "2026-10-13T20:37:58.000Z",
+      "excerpt": "Blog post covering the vulnerabilities disclosed during Microsoft Patch Tuesday.",
+      "canonicalUrl": "https://blog.talosintelligence.com/microsoft-patch-tuesday-for-october-2026",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://blog.talosintelligence.com/microsoft-patch-tuesday-for-october-2026"
+      ],
+      "cves": [],
+      "id": "s44"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Anthropic Finds Ingredients for Future AI Worms",
+      "url": "https://www.darkreading.com/perimeter/anthropic-ingredients-future-ai-worms",
+      "publishedAt": "2026-10-13T20:35:23.000Z",
+      "excerpt": "Anthropic's latest study combined IoT and network tests to explore AI self-replication, which researchers said would be \"challenging\" to shut down.",
+      "canonicalUrl": "https://darkreading.com/perimeter/anthropic-ingredients-future-ai-worms",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/perimeter/anthropic-ingredients-future-ai-worms"
+      ],
+      "cves": [],
+      "id": "s45"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft October 2026 Patch Tuesday fixes 1,411 flaws, 3 zero-days",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-october-2026-patch-tuesday-fixes-1-411-flaws-3-zero-days/",
+      "publishedAt": "2026-10-13T19:56:09.000Z",
+      "excerpt": "Today is Microsoft's October 2026 Patch Tuesday, with security updates addressing a record-breaking 1,411 flaws, including one actively exploited and two publicly disclosed zero-day vulnerabilities. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-october-2026-patch-tuesday-fixes-1-411-flaws-3-zero-days",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/microsoft/microsoft-october-2026-patch-tuesday-fixes-1-411-flaws-3-zero-days"
+      ],
+      "cves": [],
+      "id": "s46"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft releases Windows 10 KB5126657 extended security update",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-releases-windows-10-kb5126657-extended-security-update/",
+      "publishedAt": "2026-10-13T19:47:30.000Z",
+      "excerpt": "Microsoft released the Windows 10 KB5126657 extended security update, which includes this month's record-breaking October 2026 Patch Tuesday fixes and a few bug fixes and changes. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-releases-windows-10-kb5126657-extended-security-update",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/microsoft/microsoft-releases-windows-10-kb5126657-extended-security-update"
+      ],
+      "cves": [],
+      "id": "s47"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft: Windows 11 24H2 Home and Pro reached end of support",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-windows-11-24h2-home-and-pro-reached-end-of-support/",
+      "publishedAt": "2026-10-13T19:04:38.000Z",
+      "excerpt": "Microsoft announced today that devices running Windows 11 24H2 Home and Pro editions have reached the end of support and will no longer receive monthly security and non-security preview updates. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-windows-11-24h2-home-and-pro-reached-end-of-support",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/microsoft/microsoft-windows-11-24h2-home-and-pro-reached-end-of-support"
+      ],
+      "cves": [],
+      "id": "s48"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Anthropic Warns Small AI Models Could Soon Form Self-Propagating IoT Botnets",
+      "url": "https://thehackernews.com/2026/10/anthropic-warns-small-ai-models-could.html",
+      "publishedAt": "2026-10-13T18:20:57.000Z",
+      "excerpt": "Small artificial intelligence (AI) models may be months away from developing capabilities to self-replicate on IoT devices like smart ovens and off-brand Android TV boxes, according to a warning from Anthropic. The frontier AI lab said small AI models could form autonomous, self-propagating worm botnets that are \"challenging to shut down,\" since \"there's no centralized point to shut off.\"",
+      "canonicalUrl": "https://thehackernews.com/2026/10/anthropic-warns-small-ai-models-could.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/anthropic-warns-small-ai-models-could.html"
+      ],
+      "cves": [],
+      "id": "s49"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Docker Fixes Critical Two-Year-Old Hub Flaw That Let One User Push Images as Another",
+      "url": "https://thehackernews.com/2026/10/docker-fixes-critical-two-year-old-hub.html",
+      "publishedAt": "2026-10-13T18:03:18.000Z",
+      "excerpt": "A flaw in Docker Hub, the registry where container images are published and downloaded, let one user push, pull, or delete images as another user. Docker fixed the flaw on September 30 and says it found no evidence that anyone exploited it. The flaw was in the feature that converts a personal account into an organization, Docker said in a security advisory on October 12.",
+      "canonicalUrl": "https://thehackernews.com/2026/10/docker-fixes-critical-two-year-old-hub.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/docker-fixes-critical-two-year-old-hub.html"
+      ],
+      "cves": [],
+      "id": "s50"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Attacker Chains Three Ivanti Connect Secure Zero-Days for Root Access, Only Two Patched So Far",
+      "url": "https://thehackernews.com/2026/10/attacker-chains-three-ivanti-connect.html",
+      "publishedAt": "2026-10-13T17:33:11.000Z",
+      "excerpt": "An attacker chained three zero-day flaws in Ivanti Connect Secure, a VPN appliance, to run commands as root without logging in, security firm Volexity said on October 13. Ivanti has released fixes for two of the flaws and told customers on affected versions to \"act immediately.\" A fix for the third is still pending, according to Volexity. Volexity, which reported the flaws to Ivanti,",
+      "canonicalUrl": "https://thehackernews.com/2026/10/attacker-chains-three-ivanti-connect.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/attacker-chains-three-ivanti-connect.html"
+      ],
+      "cves": [],
+      "id": "s51"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "SAP Discloses Critical CVSS 10 Flaw in Cloud SDK for Python Allowing OAuth2 Credential Theft",
+      "url": "https://thehackernews.com/2026/10/sap-discloses-critical-cvss-10-flaw-in.html",
+      "publishedAt": "2026-10-13T17:28:50.000Z",
+      "excerpt": "A flaw in SAP's Cloud SDK for Python can send an application's OAuth2 client credentials to a server an attacker controls, SAP said in a security advisory on October 13. The flaw affects multi-tenant applications on SAP Business Technology Platform (BTP) that use the SDK, SAP's official Python client for BTP services. An attacker must be able to control the tenant subdomain,",
+      "canonicalUrl": "https://thehackernews.com/2026/10/sap-discloses-critical-cvss-10-flaw-in.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/sap-discloses-critical-cvss-10-flaw-in.html"
+      ],
+      "cves": [],
+      "id": "s52"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Inductive Automation Ignition Software",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-286-01",
+      "publishedAt": "2026-10-13T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of this vulnerability could allow an authenticated low-level user to escalate their privileges to a higher level. The following versions of Inductive Automation Ignition Software are affected: Ignition >=8.1.0| =8.3.0| =8.1.0| =8.3.0|<=8.3.8 Product Status: known_affected Remediations Mitigation Inductive Automation released version 8.3.9 in August 2025…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-286-01",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-advisories/icsa-26-286-01"
+      ],
+      "cves": [],
+      "id": "s53"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "CISA Urges Patching Newly Exploited Vulnerability in Ivanti Connect Secure",
+      "url": "https://www.cisa.gov/news-events/alerts/2026/10/13/cisa-urges-patching-newly-exploited-vulnerability-ivanti-connect-secure",
+      "publishedAt": "2026-10-13T12:00:00.000Z",
+      "excerpt": "CISA is aware of Ivanti’s disclosure of a newly exploited vulnerability, CVE-2026-104935, affecting Ivanti Connect Secure versions 25.1.1.1 and prior, 25.1.2.2 and prior, and 22.8R2.4 and prior. CISA is aware of cyber threat actors exploiting this zero-day authentication bypass vulnerability, which allows remote, unauthenticated execution of arbitrary commands, to conduct credential theft and…",
+      "canonicalUrl": "https://cisa.gov/news-events/alerts/2026/10/13/cisa-urges-patching-newly-exploited-vulnerability-ivanti-connect-secure",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/alerts/2026/10/13/cisa-urges-patching-newly-exploited-vulnerability-ivanti-connect-secure"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-104935",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Ivanti",
+            "product": "Connect Secure",
+            "vulnerabilityName": "Ivanti Connect Secure Authentication Bypass by Spoofing Vulnerability",
+            "dateAdded": "2026-10-13",
+            "shortDescription": "Ivanti Connect Secure contains an authentication bypass by spoofing vulnerability that allows a remote unauthenticated attacker to execute arbitrary commands.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-10-16",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https:/forums.ivanti.com/s/article/Security-Advisory-Ivanti-Connect-Secure-CVE-2026-104935 ; https://nvd.nist.gov/vuln/detail/CVE-2026-104935",
+            "cwes": [
+              "CWE-290"
+            ]
+          },
+          "nvd": {
+            "description": "Authentication bypass by spoofing in ICS before version 25.1.3.0 allows a remote unauthenticated attacker to execute arbitrary commands. This does not impact ICS version 22.7R2.14 or prior.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.6,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:L",
+              "source": "3c1d8aa1-5a33-4ea4-8992-aadd6440af75",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-290"
+            ],
+            "published": "2026-10-13T16:17:11.640",
+            "lastModified": "2026-10-13T19:24:36.243",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://hub.ivanti.com/s/article/Security-Advisory-Ivanti-Connect-Secure-CVE-2026-104935",
+                "source": "3c1d8aa1-5a33-4ea4-8992-aadd6440af75",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-104935",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "51F9201D-EF2F-4750-846E-912827761A9F",
+                "versionStartIncluding": "25.1.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "25.1.1.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "822E7CEB-9AB2-4B0E-B87A-B9718503466A",
+                "versionStartIncluding": "25.1.2.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "25.1.3.0"
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:22.8:r2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "56FEC223-8FF7-4A05-9577-CFFE0AA6526C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:22.8:r2.1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5569D323-6ADF-4B16-822D-FBA6760356C3",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:22.8:r2.2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FF4D400F-49DA-4C5F-8F63-5A15738360AE",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:22.8:r2.3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9CA7EF35-D0BC-4714-A38A-91660BE1BA55",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:22.8:r2.4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F22EC396-A447-4175-8A30-C8DC10ACFFE9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/10/13/cisa-urges-patching-newly-exploited-vulnerability-ivanti-connect-secure",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.13",
+              "dateReleased": "2026-10-13T19:10:43.6568Z",
+              "retrievedAt": "2026-10-14T16:22:02.601Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-104935%2CCVE-2026-74580%2CCVE-2026-96951%2CCVE-2026-39919",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-104935",
+              "retrievedAt": "2026-10-14T16:22:02.601Z"
+            }
+          }
+        }
+      ],
+      "id": "s54"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 11520,
+    "promptCacheMissTokens": 2809,
+    "outputTokens": 8348,
+    "estimatedCostUsd": 0.0027629560000000004
+  }
+}
