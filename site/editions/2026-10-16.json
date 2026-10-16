@@ -1,0 +1,1995 @@
+{
+  "date": "2026-10-16",
+  "generatedAt": "2026-10-16T15:57:17.754Z",
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 225,
+    "published": 44
+  },
+  "mode": "article",
+  "headline": "Two exploited zero-days open an eight-story day",
+  "standfirst": "Two in-the-wild exploitation stories lead: a BeyondTrust Remote Support zero-day attributed to a China-nexus espionage group, and a Collabora CODE Server flaw used to backdoor Nextcloud. Three distinct CVEs appear across the eight selected stories; none is present in CISA's KEV catalog — a confirmed catalog miss, which does not establish that exploitation has not occurred.",
+  "bodyMarkdown": "## Actively exploited\n\nBeyondTrust Remote Support, formerly Bomgar, was exploited as a zero-day from late August by the group reported as Armory Castle — previously tracked as UNC5221 and Warp Panda — according to [[s21]]. CVE-2026-102764 is scored CVSS 4.0 9.3, Critical, and classified CWE-290: internal components did not adequately validate the origin of the messages they received, which NVD says could, under the right conditions, let an attacker perform file operations on the appliance. The supplied vector is network-reachable with no privileges and no user interaction required. The story text reports exploitation in the wild, while the CVE is a confirmed miss from CISA's KEV catalog.\n\nThe second is a command injection in the Collabora Online Built-in CODE Server app (richdocumentscode) for Nextcloud [[s30]]. CVE-2026-110447 is CVSS 4.0 9.2, Critical — an OS command injection in proxy.php, reachable when the CODE server isn't running, for instance just after a restart — and NVD's record describes it as exploited in the wild in September and October. Scope is narrow and worth checking: standalone Collabora Online servers are not affected, only deployments running CODE Server, and the CVSS attack-requirements field is set to Present, so exploitability depends on the appliance being in the vulnerable state.\n\n## Breaches\n\nBurger King Japan disclosed that attackers accessed a server containing 11.18 million customer records [[s10]]. The Administrative Office of the US Courts, meanwhile, says a cyberattack on contractor BAE Systems took down the notice system federal bankruptcy courts use, halting nationwide noticing [[s19]]. The second is the more instructive: a single supplier's compromise mapping straight onto a court function stopping. Neither story supplies an attacker, a vulnerability or a cause.\n\n## Vulnerabilities\n\nPwnEscape, CVE-2026-99999, is a Linux kernel flaw in networking code that lets code inside a guest virtual machine read memory on the host it runs on [[s31]]. NVD describes an ipv4 checksum validation problem in which bad checksum metadata reaching the stack can let skb_checksum_help corrupt the network header. It carries a CVSS 3.1 score of 9.3, Critical, with a local attack vector, no privileges, no user interaction, changed scope and High impact across confidentiality, integrity and availability. A researcher demonstrated the leak against Vercel's live cloud sandboxes and Vercel confirmed it, per the story. Analysis: the boundary crossed — guest to host — matters more than the local vector, which reflects where the attacker must already be executing code. How broadly exploitable the flaw is in other configurations was not supplied.\n\n## Research\n\nCitizen Lab traced infections at Al Jazeera to Candiru spyware — described in the story as an Israeli maker of spyware sold to governments — delivered through ordinary online ads and requiring no click or other action from the user [[s38]]. The hidden code ran the moment an ad loaded, in some cases with the ad rendering out of sight in the background. Analysis: the delivery channel is the notable part, a mainstream ad path rather than a bespoke lure, which makes the targeting harder to spot from the victim's side. Affected devices and platforms are not stated in the excerpt.\n\n## Industry\n\nCISA and the FBI issued a public service announcement warning election and campaign officials about cyber threats during the 2026 US midterms, flagging phishing and smishing to steal credentials and sensitive information or install malware [[s11]]. Elsewhere, Thoma Bravo-owned Proofpoint will acquire Varonis in an all-cash transaction valued at $6.3 billion, with Varonis going private [[s20]]. Analysis: credential theft remains the named electoral risk while email security spends heavily to move deeper into data security.",
+  "selected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "China-Linked Hackers Exploited BeyondTrust Zero-Day to Take Over Remote Support Servers",
+      "url": "https://thehackernews.com/2026/10/china-linked-hackers-exploited.html",
+      "publishedAt": "2026-10-16T06:55:55.000Z",
+      "excerpt": "The China-nexus cyber espionage group tracked as Armory Castle (previously UNC5221 or Warp Panda) exploited a newly disclosed security flaw in BeyondTrust Remote Support (formerly Bomgar) as a zero-day in late August 2026. The vulnerability, tracked as CVE-2026-102764 (CVSS score: 9.3), is a case of improper origin validation in an internal messaging component that could be exploited by a",
+      "canonicalUrl": "https://thehackernews.com/2026/10/china-linked-hackers-exploited.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/china-linked-hackers-exploited.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-102764",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "The vulnerability exists within internal components of BeyondTrust’s Remote Support product. The components did not adequately validate the origin of the messages it received. Under the right conditions, this could allow an attacker to perform file operations on the appliance.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.3,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "13061848-ea10-403d-bd75-c83a022c2891",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-290"
+            ],
+            "published": "2026-10-15T21:17:00.117",
+            "lastModified": "2026-10-15T21:17:00.117",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://beyondtrustcorp.service-now.com/csm?id=csm_kb_article&sysparm_article=KB0024066",
+                "source": "13061848-ea10-403d-bd75-c83a022c2891",
+                "tags": []
+              },
+              {
+                "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-102764",
+                "source": "13061848-ea10-403d-bd75-c83a022c2891",
+                "tags": []
+              },
+              {
+                "url": "https://www.beyondtrust.com/blog/entry/bt26-05",
+                "source": "13061848-ea10-403d-bd75-c83a022c2891",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/10/china-linked-hackers-exploited.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.15",
+              "dateReleased": "2026-10-15T17:00:11.2795Z",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-102764%2CCVE-2025-61624%2CCVE-2026-110447%2CCVE-2026-99999%2CCVE-2026-107777%2CCVE-2026-105273%2CCVE-2026-107621%2CCVE-2026-97851%2CCVE-2026-105664%2CCVE-2026-107617%2CCVE-2026-97858%2CCVE-2026-107333%2CCVE-2026-107334%2CCVE-2026-107335%2CCVE-2026-107336%2CCVE-2026-107337%2CCVE-2026-107361%2CCVE-2026-107362",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-102764",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            }
+          }
+        }
+      ],
+      "id": "s21",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "China-nexus group Armory Castle exploited a BeyondTrust Remote Support zero-day (CVE-2026-102764, CVSS 9.3) for espionage since late August, deploying custom tools and deleting logs."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers exploit Collabora RCE flaw to backdoor Nextcloud servers",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-collabora-rce-flaw-to-backdoor-nextcloud-servers/",
+      "publishedAt": "2026-10-15T20:25:04.000Z",
+      "excerpt": "Threat actors are exploiting a critical command execution flaw, now tracked as CVE-2026-110447, in the Collabora Online - Built-in CODE Server app (richdocumentscode) for Nextcloud. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-exploit-collabora-rce-flaw-to-backdoor-nextcloud-servers",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/hackers-exploit-collabora-rce-flaw-to-backdoor-nextcloud-servers"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-110447",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Collabora Online Built-in CODE Server before 26.4.303 (richdocumentscode), a Nextcloud app, allows remote code execution, as exploited in the wild in September and October 2026, a different vulnerability than CVE-2025-66208. This is an OS command injection in proxy.php when the CODE server isn't running (e.g., the product was recently restarted). The vulnerability is not present in standalone Collabora Online servers; only this deployment with CODE Server is affected.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.2,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "cve@mitre.org",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-78"
+            ],
+            "published": "2026-10-14T03:17:20.683",
+            "lastModified": "2026-10-14T19:17:10.487",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://github.com/CollaboraOnline/richdocumentscode/issues/354",
+                "source": "cve@mitre.org",
+                "tags": []
+              },
+              {
+                "url": "https://help.nextcloud.com/t/to-collabora-built-in-user-update-asap/250516",
+                "source": "cve@mitre.org",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "bleepingcomputer",
+                "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-collabora-rce-flaw-to-backdoor-nextcloud-servers/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.15",
+              "dateReleased": "2026-10-15T17:00:11.2795Z",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-102764%2CCVE-2025-61624%2CCVE-2026-110447%2CCVE-2026-99999%2CCVE-2026-107777%2CCVE-2026-105273%2CCVE-2026-107621%2CCVE-2026-97851%2CCVE-2026-105664%2CCVE-2026-107617%2CCVE-2026-97858%2CCVE-2026-107333%2CCVE-2026-107334%2CCVE-2026-107335%2CCVE-2026-107336%2CCVE-2026-107337%2CCVE-2026-107361%2CCVE-2026-107362",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-110447",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            }
+          }
+        }
+      ],
+      "id": "s30",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "Threat actors are actively backdooring Nextcloud servers via a critical Collabora Online RCE (CVE-2026-110447), putting self-hosted collaboration platforms at immediate risk."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Burger King Japan data breach exposes 11 million customer records",
+      "url": "https://www.bleepingcomputer.com/news/security/burger-king-japan-data-breach-exposes-11-million-customer-records/",
+      "publishedAt": "2026-10-16T12:01:29.000Z",
+      "excerpt": "Burger King Japan, the Japanese subsidiary of global fast-food giant Burger King, disclosed a major data breach after attackers accessed a server containing 11.18 million customer records. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/burger-king-japan-data-breach-exposes-11-million-customer-records",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/burger-king-japan-data-breach-exposes-11-million-customer-records"
+      ],
+      "cves": [],
+      "id": "s10",
+      "section": "breaches",
+      "rank": 3,
+      "angle": "Burger King Japan disclosed a breach exposing 11.18 million customer records, underscoring the large-scale data exposure risk facing retail brands."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "BAE Systems cyberattack disrupts US federal court operations",
+      "url": "https://www.bleepingcomputer.com/news/security/bae-systems-cyberattack-disrupts-us-federal-court-operations/",
+      "publishedAt": "2026-10-16T07:37:35.000Z",
+      "excerpt": "The Administrative Office of the US Courts says a cyberattack on government contractor BAE Systems has taken down the notice system used by federal bankruptcy courts. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/bae-systems-cyberattack-disrupts-us-federal-court-operations",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/bae-systems-cyberattack-disrupts-us-federal-court-operations"
+      ],
+      "cves": [],
+      "id": "s19",
+      "section": "breaches",
+      "rank": 4,
+      "angle": "A cyberattack on contractor BAE Systems has halted federal bankruptcy noticing nationwide, highlighting third-party risk to critical court operations."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Critical PwnEscape Linux Kernel Vulnerability Lets Guest VMs Read Host Memory",
+      "url": "https://thehackernews.com/2026/10/critical-pwnescape-linux-kernel.html",
+      "publishedAt": "2026-10-15T20:24:36.000Z",
+      "excerpt": "A newly disclosed critical flaw in the Linux kernel allows code inside a virtual machine to read memory on the host computer it runs on. A researcher demonstrated the leak against Vercel's live cloud sandboxes, and Vercel confirmed it. The flaw, now tracked as CVE-2026-99999 and nicknamed PwnEscape, is in the Linux kernel's networking code, not in any one cloud's setup, so it reaches the shared",
+      "canonicalUrl": "https://thehackernews.com/2026/10/critical-pwnescape-linux-kernel.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/critical-pwnescape-linux-kernel.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-99999",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nipv4: validate checksum_start before completing checksum\n\nIf a packet with bad checksum metadata gets into the ipv4 stack,\nskb_checksum_help can corrupt the network header and cause a bunch of\nmischief.\n\nThis was discovered and reported by Paulos, and has been reporoduced\nby others independently since.\n\nWe really shouldn't allow such packets in, but as a defence\nin depth measure, let's also check before we complete the checksum.\n\nA more complete validation at input is forthcoming, but needs more work.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.3,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+              "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+              "type": "Secondary"
+            },
+            "cwes": [],
+            "published": "2026-10-15T13:17:14.137",
+            "lastModified": "2026-10-15T23:19:38.590",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://git.kernel.org/stable/c/0fab003ef4698e0628060a45a48f14b43ba2a40a",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/32a8b0adaa18e52aaa0b246b5ffe683075354dbb",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/6785011f8b16abf40b1e9d8b2e332232b3e68822",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/94524b7b32691de2e2ce162c04d6cbc9106e5cbf",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/a464d950f31c89565cbaae038cc60db04fe01956",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/a65f69e0f38ffbed1b128029e09097436416dc8b",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/c3e33464746166264334641dc850a36eef7e6326",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/f3e835af6226f1dd12160cbd696081e9b6155de0",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://pwn.ai/blog/Pwnescape",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://vercel.com/blog/findings-from-the-1-million-dollar-vercel-sandbox-challenge",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/10/15/5",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/10/critical-pwnescape-linux-kernel.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.15",
+              "dateReleased": "2026-10-15T17:00:11.2795Z",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-102764%2CCVE-2025-61624%2CCVE-2026-110447%2CCVE-2026-99999%2CCVE-2026-107777%2CCVE-2026-105273%2CCVE-2026-107621%2CCVE-2026-97851%2CCVE-2026-105664%2CCVE-2026-107617%2CCVE-2026-97858%2CCVE-2026-107333%2CCVE-2026-107334%2CCVE-2026-107335%2CCVE-2026-107336%2CCVE-2026-107337%2CCVE-2026-107361%2CCVE-2026-107362",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-99999",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            }
+          }
+        }
+      ],
+      "id": "s31",
+      "section": "vulnerabilities",
+      "rank": 5,
+      "angle": "PwnEscape (CVE-2026-99999) lets a guest VM read host memory, a critical Linux kernel flaw demonstrated against Vercel's live cloud sandboxes."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Citizen Lab Traces Zero-Click Candiru Spyware Infections at Al Jazeera to Targeted Online Ads",
+      "url": "https://thehackernews.com/2026/10/citizen-lab-traces-zero-click-candiru.html",
+      "publishedAt": "2026-10-15T16:01:57.000Z",
+      "excerpt": "Candiru, an Israeli maker of spyware sold to governments, infected devices at the news network Al Jazeera through ordinary online ads, in attacks that needed no click or other action from the user, researchers at the Citizen Lab said Thursday. The hidden attack code ran the moment an ad loaded on the screen, and in some cases the ad loaded out of sight, in the background. The Citizen",
+      "canonicalUrl": "https://thehackernews.com/2026/10/citizen-lab-traces-zero-click-candiru.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/citizen-lab-traces-zero-click-candiru.html"
+      ],
+      "cves": [],
+      "id": "s38",
+      "section": "research",
+      "rank": 6,
+      "angle": "Citizen Lab traced zero-click Candiru spyware infections at Al Jazeera to ordinary online ads, revealing ad-delivered surveillance that requires no user action."
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Cyber Threat Actors Use a Variety of Techniques to Target Election and Campaign Officials",
+      "url": "https://www.cisa.gov/resources-tools/resources/cyber-threat-actors-use-variety-techniques-target-election-and-campaign-officials",
+      "publishedAt": "2026-10-16T12:00:00.000Z",
+      "excerpt": "CISA and the Federal Bureau of Investigation (FBI) released a Public Service Announcement (PSA) warning election and campaign officials about cyber threats during the 2026 U.S. midterm elections. Malicious cyber actors may use phishing and smishing techniques to steal login credentials and other sensitive information or install malware on targeted devices. Election officials, candidates, and…",
+      "canonicalUrl": "https://cisa.gov/resources-tools/resources/cyber-threat-actors-use-variety-techniques-target-election-and-campaign-officials",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/resources-tools/resources/cyber-threat-actors-use-variety-techniques-target-election-and-campaign-officials"
+      ],
+      "cves": [],
+      "id": "s11",
+      "section": "industry",
+      "rank": 7,
+      "angle": "CISA and the FBI warn election and campaign officials of phishing and smishing threats ahead of the 2026 U.S. midterms."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Proofpoint Inks $6.3 Billion All-Cash Deal to Acquire Varonis",
+      "url": "https://www.securityweek.com/proofpoint-inks-6-3-billion-all-cash-deal-to-acquire-varonis/",
+      "publishedAt": "2026-10-16T07:12:51.000Z",
+      "excerpt": "The Thoma Bravo-owned Proofpoint will acquire Varonis in an all-cash transaction and Varonis will become a private company. The post Proofpoint Inks $6.3 Billion All-Cash Deal to Acquire Varonis appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/proofpoint-inks-6-3-billion-all-cash-deal-to-acquire-varonis",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/proofpoint-inks-6-3-billion-all-cash-deal-to-acquire-varonis"
+      ],
+      "cves": [],
+      "id": "s20",
+      "section": "industry",
+      "rank": 8,
+      "angle": "Proofpoint's $6.3 billion all-cash acquisition of Varonis will reshape the data security and email security market."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Proofpoint lines up $6.3 billion deal for Varonis’ data security",
+      "url": "https://therecord.media/proofpoint-varonis-cybersecurity-acquisition",
+      "publishedAt": "2026-10-16T14:45:00.000Z",
+      "excerpt": "Cybersecurity giant Proofpoint says it will acquire Miami-based data visibility and security company Varonis in an all-cash transaction worth $6.3 billion.",
+      "canonicalUrl": "https://therecord.media/proofpoint-varonis-cybersecurity-acquisition",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/proofpoint-varonis-cybersecurity-acquisition"
+      ],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "In Other News: ICS-Sniper Attack, Hacking XWorm Malware Operators, $250k Chrome Exploit",
+      "url": "https://www.securityweek.com/in-other-news-ics-sniper-attack-hacking-xworm-malware-operators-250k-chrome-exploit/",
+      "publishedAt": "2026-10-16T14:09:51.000Z",
+      "excerpt": "Noteworthy stories that might have slipped under the radar: BofA adds 1,000 patching contractors, KGB RAT pairs data theft with jump scares, and Langflow flaw under attack. The post In Other News: ICS-Sniper Attack, Hacking XWorm Malware Operators, $250k Chrome Exploit appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/in-other-news-ics-sniper-attack-hacking-xworm-malware-operators-250k-chrome-exploit",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/in-other-news-ics-sniper-attack-hacking-xworm-malware-operators-250k-chrome-exploit"
+      ],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "OpenAI Research Model Spent 3rd-Party Test ETH Without Permission to Deploy Smart Contract",
+      "url": "https://thehackernews.com/2026/10/openai-research-model-spent-3rd-party.html",
+      "publishedAt": "2026-10-16T14:03:04.000Z",
+      "excerpt": "OpenAI has disclosed seven new incidents in which its artificial intelligence (AI) models exhibited misaligned behavior, including one case where its research model, after not having funds on an Ethereum test network, spent test cryptocurrency from a third-party's wallet without authorization to complete a coding task. The incident, the AI company said, involved an internal research model part",
+      "canonicalUrl": "https://thehackernews.com/2026/10/openai-research-model-spent-3rd-party.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/openai-research-model-spent-3rd-party.html"
+      ],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "When Your Ransomware Negotiator Works for the Other Side",
+      "url": "https://www.darkreading.com/cyber-risk/when-your-ransomware-negotiator-works-other-side",
+      "publishedAt": "2026-10-16T14:00:00.000Z",
+      "excerpt": "The shocking arrest of a well-known ransomware negotiator reveals the critical need for vendor program oversight.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/when-your-ransomware-negotiator-works-other-side",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyber-risk/when-your-ransomware-negotiator-works-other-side"
+      ],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Employees using personal ChatGPT at work? Here's what IT admins need to do",
+      "url": "https://www.bleepingcomputer.com/news/security/employees-using-personal-chatgpt-at-work-heres-what-it-admins-need-to-do/",
+      "publishedAt": "2026-10-16T13:50:59.000Z",
+      "excerpt": "Employees using personal ChatGPT accounts at work can expose sensitive company data, even when their organization provides an approved Enterprise workspace. NordLayer explains how IT teams can investigate unauthorized AI use and block sensitive information before it reaches personal accounts. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/employees-using-personal-chatgpt-at-work-heres-what-it-admins-need-to-do",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/employees-using-personal-chatgpt-at-work-heres-what-it-admins-need-to-do"
+      ],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Moscow police detain suspected DataSuckers hackers linked to breaches in Ukraine and Russia",
+      "url": "https://therecord.media/russia-datasuckers-hackers-arrested",
+      "publishedAt": "2026-10-16T13:30:00.000Z",
+      "excerpt": "Russian authorities have reportedly detained three suspected members of the DataSuckers hacking group following a cyberattack on a popular restaurant chain that exposed vast amounts of customer information.",
+      "canonicalUrl": "https://therecord.media/russia-datasuckers-hackers-arrested",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/russia-datasuckers-hackers-arrested"
+      ],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Baltimore suburb confirms August data breach after ransomware claims",
+      "url": "https://therecord.media/anne-arundel-county-maryland-confirms-data-breach",
+      "publishedAt": "2026-10-16T13:05:00.000Z",
+      "excerpt": "Anne Arundel County, Maryland, said an intruder stole files from government systems, and investigators are working to assess how much data was exposed.",
+      "canonicalUrl": "https://therecord.media/anne-arundel-county-maryland-confirms-data-breach",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/anne-arundel-county-maryland-confirms-data-breach"
+      ],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Suspected Chinese espionage attackers abusing BeyondTrust IT support zero-day",
+      "url": "https://therecord.media/beyond-trust-cyberattack-china",
+      "publishedAt": "2026-10-16T13:00:00.000Z",
+      "excerpt": "An alleged Chinese state-backed group is using a new zero-day affecting BeyondTrust IT support software to conduct espionage attacks.",
+      "canonicalUrl": "https://therecord.media/beyond-trust-cyberattack-china",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/beyond-trust-cyberattack-china"
+      ],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "When AI Agents Commit Breaches, Humans May Not Be Held Liable",
+      "url": "https://www.darkreading.com/insider-threats/ai-agents-breaches-humans-liable",
+      "publishedAt": "2026-10-16T13:00:00.000Z",
+      "excerpt": "As agents escape containment and access external systems, responsibility remains human. Accountability, however, is much less settled.",
+      "canonicalUrl": "https://darkreading.com/insider-threats/ai-agents-breaches-humans-liable",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/insider-threats/ai-agents-breaches-humans-liable"
+      ],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "BAE Systems Security Incident Stalls Notices From US Bankruptcy Courts",
+      "url": "https://www.securityweek.com/bae-systems-security-incident-stalls-notices-from-us-bankruptcy-courts/",
+      "publishedAt": "2026-10-16T11:46:40.000Z",
+      "excerpt": "A cyber incident affecting contractor BAE Systems has knocked out the Bankruptcy Noticing Center, halting notices nationwide for a week. The post BAE Systems Security Incident Stalls Notices From US Bankruptcy Courts appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/bae-systems-security-incident-stalls-notices-from-us-bankruptcy-courts",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/bae-systems-security-incident-stalls-notices-from-us-bankruptcy-courts"
+      ],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "AI Decision Models and Their Impact on AI SOC Platforms",
+      "url": "https://thehackernews.com/2026/10/ai-decision-models-and-their-impact-on.html",
+      "publishedAt": "2026-10-16T11:30:00.000Z",
+      "excerpt": "In the space of a month, a new category of AI model went from nonexistent to everywhere. TypeSafe AI released Jev on September 15 and called it a System One model, a nod to Kahneman's fast, intuitive thinking. OpenAI announced its own Decisions API at DevDay and opened a public beta on October 6. Cribl published cribl-decision, an open LoRA adapter you can run locally. Others, like Laya, are",
+      "canonicalUrl": "https://thehackernews.com/2026/10/ai-decision-models-and-their-impact-on.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/ai-decision-models-and-their-impact-on.html"
+      ],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Chinese APT Exploited BeyondTrust Vulnerability as Zero-Day",
+      "url": "https://www.securityweek.com/chinese-apt-exploited-beyondtrust-vulnerability-as-zero-day/",
+      "publishedAt": "2026-10-16T10:53:22.000Z",
+      "excerpt": "Armory Castle exploited CVE-2026-102764 for initial access, deployed custom tools, and deleted logs and artifacts. The post Chinese APT Exploited BeyondTrust Vulnerability as Zero-Day appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/chinese-apt-exploited-beyondtrust-vulnerability-as-zero-day",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/chinese-apt-exploited-beyondtrust-vulnerability-as-zero-day"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-102764",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "The vulnerability exists within internal components of BeyondTrust’s Remote Support product. The components did not adequately validate the origin of the messages it received. Under the right conditions, this could allow an attacker to perform file operations on the appliance.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.3,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "13061848-ea10-403d-bd75-c83a022c2891",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-290"
+            ],
+            "published": "2026-10-15T21:17:00.117",
+            "lastModified": "2026-10-15T21:17:00.117",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://beyondtrustcorp.service-now.com/csm?id=csm_kb_article&sysparm_article=KB0024066",
+                "source": "13061848-ea10-403d-bd75-c83a022c2891",
+                "tags": []
+              },
+              {
+                "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-102764",
+                "source": "13061848-ea10-403d-bd75-c83a022c2891",
+                "tags": []
+              },
+              {
+                "url": "https://www.beyondtrust.com/blog/entry/bt26-05",
+                "source": "13061848-ea10-403d-bd75-c83a022c2891",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/chinese-apt-exploited-beyondtrust-vulnerability-as-zero-day/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.15",
+              "dateReleased": "2026-10-15T17:00:11.2795Z",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-102764%2CCVE-2025-61624%2CCVE-2026-110447%2CCVE-2026-99999%2CCVE-2026-107777%2CCVE-2026-105273%2CCVE-2026-107621%2CCVE-2026-97851%2CCVE-2026-105664%2CCVE-2026-107617%2CCVE-2026-97858%2CCVE-2026-107333%2CCVE-2026-107334%2CCVE-2026-107335%2CCVE-2026-107336%2CCVE-2026-107337%2CCVE-2026-107361%2CCVE-2026-107362",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-102764",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            }
+          }
+        }
+      ],
+      "id": "s14"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "OpenAI Models Hacked Data Portals, Raided a Crypto Wallet to Finish Tasks",
+      "url": "https://www.securityweek.com/openai-models-hacked-data-portals-raided-a-crypto-wallet-to-finish-tasks/",
+      "publishedAt": "2026-10-16T10:32:11.000Z",
+      "excerpt": "Left without funds for a coding task, an OpenAI model spent test crypto from a stranger’s wallet and left it out of its report. The post OpenAI Models Hacked Data Portals, Raided a Crypto Wallet to Finish Tasks appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/openai-models-hacked-data-portals-raided-a-crypto-wallet-to-finish-tasks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/openai-models-hacked-data-portals-raided-a-crypto-wallet-to-finish-tasks"
+      ],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "F5, Juniper Networks Patch Critical Vulnerabilities",
+      "url": "https://www.securityweek.com/f5-juniper-networks-patch-critical-vulnerabilities/",
+      "publishedAt": "2026-10-16T09:54:34.000Z",
+      "excerpt": "Successful exploitation of some of these issues could lead to remote code execution and full device takeover. The post F5, Juniper Networks Patch Critical Vulnerabilities appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/f5-juniper-networks-patch-critical-vulnerabilities",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/f5-juniper-networks-patch-critical-vulnerabilities"
+      ],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft: October Windows update may break Smart App Control",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/kb5127648-windows-security-update-may-break-smart-app-control/",
+      "publishedAt": "2026-10-16T08:44:22.000Z",
+      "excerpt": "Microsoft says some users may have trouble turning on Smart App Control after installing this month's KB5127648 Windows 11 security update. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/kb5127648-windows-security-update-may-break-smart-app-control",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/microsoft/kb5127648-windows-security-update-may-break-smart-app-control"
+      ],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Microsoft Patches Two Dozen RCE Flaws in Office",
+      "url": "https://www.securityweek.com/microsoft-patches-two-dozen-rce-flaws-in-office/",
+      "publishedAt": "2026-10-16T07:55:06.000Z",
+      "excerpt": "In addition to RCE flaws, Microsoft fixed multiple information disclosure bugs and a security bypass issue in Office. The post Microsoft Patches Two Dozen RCE Flaws in Office appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/microsoft-patches-two-dozen-rce-flaws-in-office",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/microsoft-patches-two-dozen-rce-flaws-in-office"
+      ],
+      "cves": [],
+      "id": "s18"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "CERT-In Warns AI Agents Accessed Sensitive Data at Indian Organizations During Testing",
+      "url": "https://thehackernews.com/2026/10/cert-in-warns-ai-agents-accessed.html",
+      "publishedAt": "2026-10-16T06:53:09.000Z",
+      "excerpt": "AI agents being tested online reached the live systems of Indian organizations and read business records, including personal data and confidential material, CERT-In said in an advisory on October 15. The agents went beyond their assigned tasks, and none of the organizations detected the unauthorized access. After internal reviews, the AI companies whose models were being tested",
+      "canonicalUrl": "https://thehackernews.com/2026/10/cert-in-warns-ai-agents-accessed.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/cert-in-warns-ai-agents-accessed.html"
+      ],
+      "cves": [],
+      "id": "s22"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "BeyondTrust patches zero-day exploited in attacks since August",
+      "url": "https://www.bleepingcomputer.com/news/security/beyondtrust-patches-zero-day-exploited-in-attacks-since-august/",
+      "publishedAt": "2026-10-16T06:18:08.000Z",
+      "excerpt": "BeyondTrust warned customers on Thursday to patch a critical flaw in its Remote Support (RS) that has been exploited in zero-day attacks since late August. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/beyondtrust-patches-zero-day-exploited-in-attacks-since-august",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/beyondtrust-patches-zero-day-exploited-in-attacks-since-august"
+      ],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "PEERSTITCH Malware Deployed via FortiOS Flaw Bypasses Checks on Tagged VPN Sessions",
+      "url": "https://thehackernews.com/2026/10/attackers-exploit-fortios-flaw-to.html",
+      "publishedAt": "2026-10-16T04:59:36.000Z",
+      "excerpt": "A suspected advanced threat actor has been observed exploiting a security flaw in Fortinet FortiOS to deliver a previously unreported memory-resident ARM64 malware known as PEERSTITCH. The attack involves the exploitation of CVE-2025-61624 (CVSS score: 5.4), a path traversal flaw in the command line interpreter of FortiOS, FortiPAM, FortiProxy, and FortiSwitchManager that could allow a",
+      "canonicalUrl": "https://thehackernews.com/2026/10/attackers-exploit-fortios-flaw-to.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/attackers-exploit-fortios-flaw-to.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2025-61624",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "An Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal') [CWE-22] vulnerability in Fortinet FortiOS 7.6.0 through 7.6.4, FortiOS 7.4.0 through 7.4.9, FortiOS 7.2 all versions, FortiOS 7.0 all versions, FortiOS 6.4 all versions, FortiPAM 1.7.0, FortiPAM 1.6 all versions, FortiPAM 1.5 all versions, FortiPAM 1.4 all versions, FortiPAM 1.3 all versions, FortiPAM 1.2 all versions, FortiPAM 1.1 all versions, FortiPAM 1.0 all versions, FortiProxy 7.6.0 through 7.6.4, FortiProxy 7.4.0 through 7.4.11, FortiProxy 7.2 all versions, FortiProxy 7.0 all versions, FortiSwitchManager 7.2.0 through 7.2.7, FortiSwitchManager 7.0.0 through 7.0.6 may allow an authenticated attacker with admin profile and at least read-write permissions to write or delete arbitrary files via specific CLI commands.",
+            "cvss": {
+              "version": "3.1",
+              "score": 6.5,
+              "severity": "MEDIUM",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:H/A:H",
+              "source": "nvd@nist.gov",
+              "type": "Primary"
+            },
+            "cwes": [
+              "CWE-22"
+            ],
+            "published": "2026-04-14T16:16:31.300",
+            "lastModified": "2026-10-16T04:18:02.637",
+            "vulnStatus": "Modified",
+            "references": [
+              {
+                "url": "https://fortiguard.fortinet.com/psirt/FG-IR-26-122",
+                "source": "psirt@fortinet.com",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://cert-portal.siemens.com/productcert/html/ssa-975644.html",
+                "source": "0b142b55-0307-4c5a-b3c9-f314f3fb7c5e",
+                "tags": []
+              },
+              {
+                "url": "https://unit42.paloaltonetworks.com/fortimanager-cve-2024-47575-peerstitch-malware/#post-188095-_guyq53ar8k05",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:o:fortinet:fortios:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8E0DD361-4041-480A-8B5E-1E14BBDD8133",
+                "versionStartIncluding": "6.4.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "7.4.10"
+              },
+              {
+                "criteria": "cpe:2.3:o:fortinet:fortios:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "26DF2CCC-782C-4AE8-8CDE-13FFEE8676E6",
+                "versionStartIncluding": "7.6.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "7.6.5"
+              },
+              {
+                "criteria": "cpe:2.3:o:fortinet:fortipam:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C8E26F28-B9CA-47D5-86B0-AA98C67D9314",
+                "versionStartIncluding": "1.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.7.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:fortinet:fortiproxy:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "92465F3D-698E-4CA6-87CB-E5A08C34067E",
+                "versionStartIncluding": "7.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "7.4.12"
+              },
+              {
+                "criteria": "cpe:2.3:a:fortinet:fortiproxy:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "026DF873-FF5C-4629-8516-350C53CE2DEA",
+                "versionStartIncluding": "7.6.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "7.6.5"
+              },
+              {
+                "criteria": "cpe:2.3:a:fortinet:fortiswitchmanager:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "23564E7E-21B7-4936-B4F2-85CD46D64A5D",
+                "versionStartIncluding": "7.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "7.0.7"
+              },
+              {
+                "criteria": "cpe:2.3:a:fortinet:fortiswitchmanager:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6EFEB80D-87BB-4AD3-AA9D-9F0C37F227D2",
+                "versionStartIncluding": "7.2.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "7.2.8"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/10/attackers-exploit-fortios-flaw-to.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.15",
+              "dateReleased": "2026-10-15T17:00:11.2795Z",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-102764%2CCVE-2025-61624%2CCVE-2026-110447%2CCVE-2026-99999%2CCVE-2026-107777%2CCVE-2026-105273%2CCVE-2026-107621%2CCVE-2026-97851%2CCVE-2026-105664%2CCVE-2026-107617%2CCVE-2026-97858%2CCVE-2026-107333%2CCVE-2026-107334%2CCVE-2026-107335%2CCVE-2026-107336%2CCVE-2026-107337%2CCVE-2026-107361%2CCVE-2026-107362",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2025-61624",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            }
+          }
+        }
+      ],
+      "id": "s24"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "SecTor 2026 Reveals a Rapidly Shifting Cybersecurity Landscape",
+      "url": "https://www.darkreading.com/cybersecurity-operations/sector-2026-reveals-a-rapidly-shifting-cybersecurity-landscape",
+      "publishedAt": "2026-10-15T22:10:08.000Z",
+      "excerpt": "The event closed in Toronto last week, with experts sharing critical perspectives on emerging risks, drawing record attendance and marking 22% growth.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/sector-2026-reveals-a-rapidly-shifting-cybersecurity-landscape",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cybersecurity-operations/sector-2026-reveals-a-rapidly-shifting-cybersecurity-landscape"
+      ],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "unit42",
+      "sourceKind": "rss",
+      "title": "AI-Powered Espionage Campaign Targets Government Linux Infrastructure",
+      "url": "https://unit42.paloaltonetworks.com/ai-campaign-targets-linux-infrastructure/",
+      "publishedAt": "2026-10-15T22:00:09.000Z",
+      "excerpt": "Our analysis an AI-powered espionage campaign targeting government Linux infrastructure with custom malware, web shells, and advanced credential theft. The post AI-Powered Espionage Campaign Targets Government Linux Infrastructure appeared first on Unit 42.",
+      "canonicalUrl": "https://unit42.paloaltonetworks.com/ai-campaign-targets-linux-infrastructure",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://unit42.paloaltonetworks.com/ai-campaign-targets-linux-infrastructure"
+      ],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "F-Secure Launches Victim-First Scam Encyclopedia Covering 50+ Types of Consumer Fraud",
+      "url": "https://www.darkreading.com/threat-intelligence/f-secure-launches-victim-first-scam-encyclopedia-covering-50-types-of-consumer-fraud",
+      "publishedAt": "2026-10-15T21:55:07.000Z",
+      "excerpt": "Built from decades of threat intelligence research, the new resource explains scams from the victims' perspective and tracks emerging forms of cyber crime.",
+      "canonicalUrl": "https://darkreading.com/threat-intelligence/f-secure-launches-victim-first-scam-encyclopedia-covering-50-types-of-consumer-fraud",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/threat-intelligence/f-secure-launches-victim-first-scam-encyclopedia-covering-50-types-of-consumer-fraud"
+      ],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Federal bankruptcy courts dealing with outages after contractor cyberattack",
+      "url": "https://therecord.media/federal-bankruptcy-courts-dealing-with-cyberattack-outage",
+      "publishedAt": "2026-10-15T20:46:00.000Z",
+      "excerpt": "The incident, which involved a government contractor, has halted all production of bankruptcy notices.",
+      "canonicalUrl": "https://therecord.media/federal-bankruptcy-courts-dealing-with-cyberattack-outage",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/federal-bankruptcy-courts-dealing-with-cyberattack-outage"
+      ],
+      "cves": [],
+      "id": "s28"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "AI Slop Isn't Just for Social Media; It's Ruining Cyberattacks, Too",
+      "url": "https://www.darkreading.com/threat-intelligence/ai-slop-ruining-cyberattacks",
+      "publishedAt": "2026-10-15T20:43:20.000Z",
+      "excerpt": "Don't buy the hype! AI has been dumbing down cyberattacks, and serious threat actors are barely touching it.",
+      "canonicalUrl": "https://darkreading.com/threat-intelligence/ai-slop-ruining-cyberattacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/threat-intelligence/ai-slop-ruining-cyberattacks"
+      ],
+      "cves": [],
+      "id": "s29"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Android gets AI defenses against messaging scams, fake calls",
+      "url": "https://www.bleepingcomputer.com/news/security/android-gets-ai-defenses-against-messaging-scams-fake-calls/",
+      "publishedAt": "2026-10-15T19:48:43.000Z",
+      "excerpt": "Google announced new AI-powered defenses against scam messages and call-forwarding abuse on Android, currently rolling out to eligible devices. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/android-gets-ai-defenses-against-messaging-scams-fake-calls",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/android-gets-ai-defenses-against-messaging-scams-fake-calls"
+      ],
+      "cves": [],
+      "id": "s32"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "ThreatsDay: Adobe RCE, DNS Wallet Theft, NVIDIA Container Escape, Self-Healing Backdoor + 23 More",
+      "url": "https://thehackernews.com/2026/10/threatsday-adobe-rce-dns-wallet-theft.html",
+      "publishedAt": "2026-10-15T18:49:33.000Z",
+      "excerpt": "Someone built a tool to steal data, then decided it should scare the victim for fun. Yes, that’s an actual feature. And somehow, it fits right in with this week's security stories. The rest gets interesting in different ways. A small permission can lead to a big theft. A trusted login can hide the wrong person. Old bugs are finding new victims, familiar tools are being put to strange uses, and",
+      "canonicalUrl": "https://thehackernews.com/2026/10/threatsday-adobe-rce-dns-wallet-theft.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/threatsday-adobe-rce-dns-wallet-theft.html"
+      ],
+      "cves": [],
+      "id": "s33"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers hijack D-Link, Ubiquiti devices to resell your stolen bandwidth",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-hijack-d-link-ubiquiti-devices-to-resell-your-stolen-bandwidth/",
+      "publishedAt": "2026-10-15T18:20:59.000Z",
+      "excerpt": "A proxyjacking campaign has impacted devices in 34 countries, monetizing victims' internet connections through a commercial residential proxy network. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-hijack-d-link-ubiquiti-devices-to-resell-your-stolen-bandwidth",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/hackers-hijack-d-link-ubiquiti-devices-to-resell-your-stolen-bandwidth"
+      ],
+      "cves": [],
+      "id": "s34"
+    },
+    {
+      "sourceId": "talos",
+      "sourceKind": "rss",
+      "title": "The Q3 Vulnerability Pulse: Discovery ≠ Exploitation",
+      "url": "https://blog.talosintelligence.com/the-q3-vulnerability-pulse-discovery-exploitation/",
+      "publishedAt": "2026-10-15T18:00:00.000Z",
+      "excerpt": "Is the cybersecurity world really facing a \"Bugmageddon?\" Thor breaks down the latest CVE and KEV trends in the latest Threat Source newsletter.",
+      "canonicalUrl": "https://blog.talosintelligence.com/the-q3-vulnerability-pulse-discovery-exploitation",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://blog.talosintelligence.com/the-q3-vulnerability-pulse-discovery-exploitation"
+      ],
+      "cves": [],
+      "id": "s35"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Context Is King in the Fight Against Modern Cyberattacks",
+      "url": "https://www.securityweek.com/context-is-king-in-the-fight-against-modern-cyberattacks/",
+      "publishedAt": "2026-10-15T17:42:50.000Z",
+      "excerpt": "Contextual defense helps security teams connect the signals, anticipate what comes next, and stop threats before they escalate. The post Context Is King in the Fight Against Modern Cyberattacks appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/context-is-king-in-the-fight-against-modern-cyberattacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/context-is-king-in-the-fight-against-modern-cyberattacks"
+      ],
+      "cves": [],
+      "id": "s36"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Fake Arch Linux packages push malware with root privileges",
+      "url": "https://www.bleepingcomputer.com/news/security/fake-arch-linux-packages-push-malware-with-root-privileges/",
+      "publishedAt": "2026-10-15T17:12:31.000Z",
+      "excerpt": "A threat actor uploaded malicious packages to the Arch User Repository (AUR) that impersonated two popular helper tools, yay and paru. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/fake-arch-linux-packages-push-malware-with-root-privileges",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/fake-arch-linux-packages-push-malware-with-root-privileges"
+      ],
+      "cves": [],
+      "id": "s37"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Silent Lynx Exploits WinRAR Flaw to Deploy Reverse Shell in CIS Government Attacks",
+      "url": "https://thehackernews.com/2026/10/silent-lynx-exploits-winrar-flaw-to.html",
+      "publishedAt": "2026-10-15T16:00:26.000Z",
+      "excerpt": "The threat actor known as Silent Lynx has been attributed to a fresh set of attacks targeting government organizations across the Commonwealth of Independent States (CIS). The activity, observed from June 2025 through August 2026, involves four different infection chains that make use of macro-enabled documents, PS2EXE downloaders, GitHub-hosted PowerShell, and crafted WinRAR archives",
+      "canonicalUrl": "https://thehackernews.com/2026/10/silent-lynx-exploits-winrar-flaw-to.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/silent-lynx-exploits-winrar-flaw-to.html"
+      ],
+      "cves": [],
+      "id": "s39"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Thermo Fisher Torrent Suite Software",
+      "url": "https://www.cisa.gov/news-events/ics-medical-advisories/icsma-26-288-01",
+      "publishedAt": "2026-10-15T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of this vulnerability could allow an attacker to read arbitrary files on the Torrent Server. The following versions of Thermo Fisher Torrent Suite Software are affected: Torrent Suite Software <=5.18 (CVE-2026-107777) CVSS Vendor Equipment v3 6.5 Thermo Fisher Torrent Suite Software 1 Vulnerability Improper Limitation of a Pathname to a Restricted…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-medical-advisories/icsma-26-288-01",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-medical-advisories/icsma-26-288-01"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-107777",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Thermo Fisher Torrent Suite Software is vulnerable to a path traversal, which could allow an authenticated attacker to read arbitrary files on the Torrent Server that are accessible to the web service account.",
+            "cvss": {
+              "version": "4.0",
+              "score": 7.1,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "ics-cert@hq.dhs.gov",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-22"
+            ],
+            "published": "2026-10-16T15:17:05.977",
+            "lastModified": "2026-10-16T15:17:05.977",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://documents.thermofisher.com/TFS-Assets/CORP/Product-Guides/Ion_OneTouch_2_and_Torrent_Suite_Software.pdf",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/cisagov/CSAF/blob/develop/csaf_files/OT/white/2026/icsma-26-288-01.json",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              },
+              {
+                "url": "https://www.cisa.gov/news-events/ics-medical-advisories/icsma-26-288-01",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-medical-advisories/icsma-26-288-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.15",
+              "dateReleased": "2026-10-15T17:00:11.2795Z",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-102764%2CCVE-2025-61624%2CCVE-2026-110447%2CCVE-2026-99999%2CCVE-2026-107777%2CCVE-2026-105273%2CCVE-2026-107621%2CCVE-2026-97851%2CCVE-2026-105664%2CCVE-2026-107617%2CCVE-2026-97858%2CCVE-2026-107333%2CCVE-2026-107334%2CCVE-2026-107335%2CCVE-2026-107336%2CCVE-2026-107337%2CCVE-2026-107361%2CCVE-2026-107362",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-107777",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            }
+          }
+        }
+      ],
+      "id": "s40"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "J4Care dcm4che",
+      "url": "https://www.cisa.gov/news-events/ics-medical-advisories/icsma-26-288-02",
+      "publishedAt": "2026-10-15T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of these vulnerabilities could allow an attacker to delete stored medical images, disclose patient information, inject forged studies, reassign patient records, overwrite files, and cause a denial-of-service condition. The following versions of J4Care dcm4che are affected: dcm4chee-arc-light 5.35.1 (CVE-2026-97851, CVE-2026-107621, CVE-2026-105273,…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-medical-advisories/icsma-26-288-02",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-medical-advisories/icsma-26-288-02"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-105273",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "MP4Parser does not adequately validate MP4 box sizes. A malformed box can cause parsing to make no forward progress and repeatedly process the same input.",
+            "cvss": {
+              "version": "4.0",
+              "score": 8.7,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "ics-cert@hq.dhs.gov",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-835"
+            ],
+            "published": "2026-10-16T15:17:03.993",
+            "lastModified": "2026-10-16T15:17:03.993",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://github.com/cisagov/CSAF/blob/develop/csaf_files/OT/white/2026/icsma-26-288-02.json",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              },
+              {
+                "url": "https://www.cisa.gov/news-events/ics-medical-advisories/icsma-26-288-02",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-medical-advisories/icsma-26-288-02",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.15",
+              "dateReleased": "2026-10-15T17:00:11.2795Z",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-102764%2CCVE-2025-61624%2CCVE-2026-110447%2CCVE-2026-99999%2CCVE-2026-107777%2CCVE-2026-105273%2CCVE-2026-107621%2CCVE-2026-97851%2CCVE-2026-105664%2CCVE-2026-107617%2CCVE-2026-97858%2CCVE-2026-107333%2CCVE-2026-107334%2CCVE-2026-107335%2CCVE-2026-107336%2CCVE-2026-107337%2CCVE-2026-107361%2CCVE-2026-107362",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-105273",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-107621",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "JPEGParser can enter an infinite loop while parsing a specially crafted or truncated stream.",
+            "cvss": {
+              "version": "4.0",
+              "score": 8.7,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "ics-cert@hq.dhs.gov",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-835"
+            ],
+            "published": "2026-10-16T15:17:05.003",
+            "lastModified": "2026-10-16T15:17:05.003",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://github.com/cisagov/CSAF/blob/develop/csaf_files/OT/white/2026/icsma-26-288-02.json",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              },
+              {
+                "url": "https://www.cisa.gov/news-events/ics-medical-advisories/icsma-26-288-02",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-medical-advisories/icsma-26-288-02",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.15",
+              "dateReleased": "2026-10-15T17:00:11.2795Z",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-102764%2CCVE-2025-61624%2CCVE-2026-110447%2CCVE-2026-99999%2CCVE-2026-107777%2CCVE-2026-105273%2CCVE-2026-107621%2CCVE-2026-97851%2CCVE-2026-105664%2CCVE-2026-107617%2CCVE-2026-97858%2CCVE-2026-107333%2CCVE-2026-107334%2CCVE-2026-107335%2CCVE-2026-107336%2CCVE-2026-107337%2CCVE-2026-107361%2CCVE-2026-107362",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-107621",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-97851",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "The storage status-change REST service allows location records still associated with DICOM instances to be changed to deletion-related states. Changing a location to TO_DELETE causes PurgeStorageScheduler to delete the referenced object from storage even though the corresponding instance record remains in the database.",
+            "cvss": {
+              "version": "4.0",
+              "score": 8.8,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "ics-cert@hq.dhs.gov",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-862"
+            ],
+            "published": "2026-10-16T15:17:38.490",
+            "lastModified": "2026-10-16T15:17:38.490",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://github.com/cisagov/CSAF/blob/develop/csaf_files/OT/white/2026/icsma-26-288-02.json",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              },
+              {
+                "url": "https://www.cisa.gov/news-events/ics-medical-advisories/icsma-26-288-02",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-medical-advisories/icsma-26-288-02",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.15",
+              "dateReleased": "2026-10-15T17:00:11.2795Z",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-102764%2CCVE-2025-61624%2CCVE-2026-110447%2CCVE-2026-99999%2CCVE-2026-107777%2CCVE-2026-105273%2CCVE-2026-107621%2CCVE-2026-97851%2CCVE-2026-105664%2CCVE-2026-107617%2CCVE-2026-97858%2CCVE-2026-107333%2CCVE-2026-107334%2CCVE-2026-107335%2CCVE-2026-107336%2CCVE-2026-107337%2CCVE-2026-107361%2CCVE-2026-107362",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-97851",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            }
+          }
+        }
+      ],
+      "id": "s41"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Guangzhou Juan IoT Technology EseeCloud",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-288-02",
+      "publishedAt": "2026-10-15T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of these vulnerabilities could allow an attacker to gain control over affected IP cameras. The following versions of Guangzhou Juan IoT Technology EseeCloud are affected: EseeCloud App <=4.9.6 (CVE-2026-107617, CVE-2026-97858, CVE-2026-105664) EseeCloud Firmware <=4.9.86.0 (CVE-2026-107617, CVE-2026-97858, CVE-2026-105664) CVSS Vendor Equipment v3 9.8…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-288-02",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-advisories/icsa-26-288-02"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-105664",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "The endpoint exposes an observable response discrepancy when processing ID values. A request submitted with a nonexistent ID returns a distinct error response code from one submitted with a valid, registered ID, allowing an attacker holding a valid access token - but without further authentication or authorization - to distinguish valid ID values from the full 10-digit numeric search space. Combined with the absence of meaningful rate limiting on this endpoint, this discrepancy constitutes an enumeration oracle, enabling an attacker to discover registered devices at scale.",
+            "cvss": {
+              "version": "4.0",
+              "score": 6.9,
+              "severity": "MEDIUM",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "ics-cert@hq.dhs.gov",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-204"
+            ],
+            "published": "2026-10-16T14:17:14.903",
+            "lastModified": "2026-10-16T14:17:14.903",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://eseecloud.app/",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/cisagov/CSAF/blob/develop/csaf_files/OT/white/2026/icsa-26-288-02.json",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              },
+              {
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-288-02",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-288-02",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.15",
+              "dateReleased": "2026-10-15T17:00:11.2795Z",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-102764%2CCVE-2025-61624%2CCVE-2026-110447%2CCVE-2026-99999%2CCVE-2026-107777%2CCVE-2026-105273%2CCVE-2026-107621%2CCVE-2026-97851%2CCVE-2026-105664%2CCVE-2026-107617%2CCVE-2026-97858%2CCVE-2026-107333%2CCVE-2026-107334%2CCVE-2026-107335%2CCVE-2026-107336%2CCVE-2026-107337%2CCVE-2026-107361%2CCVE-2026-107362",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-105664",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-107617",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "An attacker can use a hard-coded credential to log in to EseeCloud devices.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.3,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "ics-cert@hq.dhs.gov",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-798"
+            ],
+            "published": "2026-10-16T14:17:16.510",
+            "lastModified": "2026-10-16T14:17:16.510",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://eseecloud.app/",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/cisagov/CSAF/blob/develop/csaf_files/OT/white/2026/icsa-26-288-02.json",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              },
+              {
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-288-02",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-288-02",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.15",
+              "dateReleased": "2026-10-15T17:00:11.2795Z",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-102764%2CCVE-2025-61624%2CCVE-2026-110447%2CCVE-2026-99999%2CCVE-2026-107777%2CCVE-2026-105273%2CCVE-2026-107621%2CCVE-2026-97851%2CCVE-2026-105664%2CCVE-2026-107617%2CCVE-2026-97858%2CCVE-2026-107333%2CCVE-2026-107334%2CCVE-2026-107335%2CCVE-2026-107336%2CCVE-2026-107337%2CCVE-2026-107361%2CCVE-2026-107362",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-107617",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-97858",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "An attacker can cause the server to unbind the target device from its current owner and rebind it to the requesting account, regardless of whether the device is currently bound to a different account, allowing an attacker to obtain the device's full serial ID.",
+            "cvss": {
+              "version": "4.0",
+              "score": 6.9,
+              "severity": "MEDIUM",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "ics-cert@hq.dhs.gov",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-915"
+            ],
+            "published": "2026-10-16T14:19:36.597",
+            "lastModified": "2026-10-16T14:19:36.597",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://eseecloud.app/",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/cisagov/CSAF/blob/develop/csaf_files/OT/white/2026/icsa-26-288-02.json",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              },
+              {
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-288-02",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-288-02",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.15",
+              "dateReleased": "2026-10-15T17:00:11.2795Z",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-102764%2CCVE-2025-61624%2CCVE-2026-110447%2CCVE-2026-99999%2CCVE-2026-107777%2CCVE-2026-105273%2CCVE-2026-107621%2CCVE-2026-97851%2CCVE-2026-105664%2CCVE-2026-107617%2CCVE-2026-97858%2CCVE-2026-107333%2CCVE-2026-107334%2CCVE-2026-107335%2CCVE-2026-107336%2CCVE-2026-107337%2CCVE-2026-107361%2CCVE-2026-107362",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-97858",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            }
+          }
+        }
+      ],
+      "id": "s42"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Eclipse Foundation Eclipse Milo",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-288-01",
+      "publishedAt": "2026-10-15T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of these vulnerabilities could allow an attacker to delete protected data, recover user credentials and impersonate legitimate users, or cause the server to stop responding to all clients. The following versions of Eclipse Foundation Eclipse Milo are affected: Eclipse Milo >=0.6.0| =1.0.0| =1.0.0| =1.0.0| =0.6.0| =1.0.0| =0.6.0| =1.0.0| =1.0.0| =0.6.0|…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-288-01",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-advisories/icsa-26-288-01"
+      ],
+      "cves": [],
+      "id": "s43"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "CISA Malcolm",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-280-01",
+      "publishedAt": "2026-10-15T12:00:00.000Z",
+      "excerpt": "View CSAF Summary The following versions of CISA Malcolm are affected: Malcolm <=v26.07.1 (CVE-2026-107336, CVE-2026-107361, CVE-2026-107337, CVE-2026-107335, CVE-2026-107334) Malcolm <=v26.08.0 (CVE-2026-107333, CVE-2026-107362) CVSS Vendor Equipment v3 8.1 CISA Malcolm 6 Vulnerabilities Authentication Bypass by Spoofing, Incorrect Authorization, Server-Side Request Forgery (SSRF),…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-280-01",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-advisories/icsa-26-280-01"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-107333",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Malcolm's nginx based reverse proxy contains a URL path normalization inconsistency between its Lua based role-based access control (RBAC) authorization layer and nginx's own request routing logic. An authenticated user can craft a specially formatted request path to bypass role-based restrictions and reach administrative or role gated endpoints they should not have access to. This affects all restricted paths protected by the RBAC authorization layer, including file upload, PHP server, htadmin, and authentication management interfaces.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.1,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+              "source": "ics-cert@hq.dhs.gov",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-863"
+            ],
+            "published": "2026-10-08T18:17:19.603",
+            "lastModified": "2026-10-08T21:03:43.847",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://github.com/cisagov/CSAF/blob/develop/csaf_files/OT/white/2026/icsa-26-280-01.json",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/cisagov/Malcolm/security/advisories/GHSA-v66f-cwcm-hf73",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-280-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.15",
+              "dateReleased": "2026-10-15T17:00:11.2795Z",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-102764%2CCVE-2025-61624%2CCVE-2026-110447%2CCVE-2026-99999%2CCVE-2026-107777%2CCVE-2026-105273%2CCVE-2026-107621%2CCVE-2026-97851%2CCVE-2026-105664%2CCVE-2026-107617%2CCVE-2026-97858%2CCVE-2026-107333%2CCVE-2026-107334%2CCVE-2026-107335%2CCVE-2026-107336%2CCVE-2026-107337%2CCVE-2026-107361%2CCVE-2026-107362",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-107333",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-107334",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Malcolm's nginx Lua role-based access control (RBAC) layer decides whether an authenticated user may reach a role-restricted path (e.g. /htadmin, /auth, /admin_login, /arkime/api/esadmin, NetBox, upload endpoints) by pattern-matching the raw, percent-encoded request URI. Nginx itself, however, selects which location block actually serves the request using the percent-decoded, normalized URI. Because the RBAC check never percent-decodes its input, an authenticated low-privilege user can request an admin-only path using percent-encoding (e.g. /%68tadmin.php) and have nginx route it to the restricted location while the Lua RBAC gate evaluating the un-decoded raw string finds no matching restriction and grants access.",
+            "cvss": {
+              "version": "3.1",
+              "score": 5.4,
+              "severity": "MEDIUM",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:N",
+              "source": "ics-cert@hq.dhs.gov",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-863"
+            ],
+            "published": "2026-10-08T18:17:19.763",
+            "lastModified": "2026-10-08T21:03:43.847",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://github.com/cisagov/CSAF/blob/develop/csaf_files/OT/white/2026/icsa-26-280-01.json",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/cisagov/Malcolm/security/advisories/GHSA-jr6p-63pg-hr6g",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/cisagov/Malcolm/security/advisories/GHSA-jr6p-63pg-hr6g",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-280-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.15",
+              "dateReleased": "2026-10-15T17:00:11.2795Z",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-102764%2CCVE-2025-61624%2CCVE-2026-110447%2CCVE-2026-99999%2CCVE-2026-107777%2CCVE-2026-105273%2CCVE-2026-107621%2CCVE-2026-97851%2CCVE-2026-105664%2CCVE-2026-107617%2CCVE-2026-97858%2CCVE-2026-107333%2CCVE-2026-107334%2CCVE-2026-107335%2CCVE-2026-107336%2CCVE-2026-107337%2CCVE-2026-107361%2CCVE-2026-107362",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-107334",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-107335",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Malcolm's upload-processing pipeline (scripts/safe-extract.py) enforces entry-count, nesting-depth, and total-uncompressed-byte limits when extracting container archives (zip/tar/rar/7z via libarchive), but those limits are not applied when the uploaded file is a single-stream compressed format (.gz, .bz2, .xz, .lzma, .lz) that isn't a .tar.*-style archive. Any authenticated user permitted to upload PCAP/log files can upload a small, highly compressible file (e.g. a gzip bomb) that decompresses to an effectively unbounded size on disk, exhausting the shared Docker volume used by OpenSearch, Logstash, Arkime, and Zeek, and disrupting the platform for all users.",
+            "cvss": {
+              "version": "3.1",
+              "score": 6.5,
+              "severity": "MEDIUM",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+              "source": "ics-cert@hq.dhs.gov",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-409"
+            ],
+            "published": "2026-10-08T18:17:19.970",
+            "lastModified": "2026-10-13T17:17:16.610",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://github.com/cisagov/CSAF/blob/develop/csaf_files/OT/white/2026/icsa-26-280-01.json",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/cisagov/Malcolm/security/advisories/GHSA-f2v6-8cj4-mhr6",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/cisagov/Malcolm/security/advisories/GHSA-jr6p-63pg-hr6g",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-280-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.15",
+              "dateReleased": "2026-10-15T17:00:11.2795Z",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-102764%2CCVE-2025-61624%2CCVE-2026-110447%2CCVE-2026-99999%2CCVE-2026-107777%2CCVE-2026-105273%2CCVE-2026-107621%2CCVE-2026-97851%2CCVE-2026-105664%2CCVE-2026-107617%2CCVE-2026-97858%2CCVE-2026-107333%2CCVE-2026-107334%2CCVE-2026-107335%2CCVE-2026-107336%2CCVE-2026-107337%2CCVE-2026-107361%2CCVE-2026-107362",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-107335",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-107336",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Malcolm's front nginx reverse proxy defines a \"Dashboards → Arkime shortcut\" location using a case-insensitive regex matcher but a case-sensitive rewrite. A request whose path segment is not exact-lowercase (for example /IDDASH2ARK/...) enters the location (the matcher fires) but evades the rewrite (no redirect is issued), so nginx falls through to the location's proxy_pass to the Arkime backend. That location is the one proxied location in the shipped config that does not include the per-location authentication file, so the request reaches Arkime unauthenticated. The same location also forwards a client-supplied X-Forwarded-User header un-overwritten, and Arkime is configured to trust X-Forwarded-User as the authenticated username — so an unauthenticated network caller can reach the Arkime backend while supplying a forged, auto-provisioned identity.",
+            "cvss": {
+              "version": "3.1",
+              "score": 6.5,
+              "severity": "MEDIUM",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+              "source": "ics-cert@hq.dhs.gov",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-290",
+              "CWE-441",
+              "CWE-863"
+            ],
+            "published": "2026-10-08T18:17:20.177",
+            "lastModified": "2026-10-08T21:03:43.847",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://github.com/cisagov/CSAF/blob/develop/csaf_files/OT/white/2026/icsa-26-280-01.json",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/cisagov/Malcolm/security/advisories/GHSA-7j32-cf27-cp6h",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-280-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.15",
+              "dateReleased": "2026-10-15T17:00:11.2795Z",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-102764%2CCVE-2025-61624%2CCVE-2026-110447%2CCVE-2026-99999%2CCVE-2026-107777%2CCVE-2026-105273%2CCVE-2026-107621%2CCVE-2026-97851%2CCVE-2026-105664%2CCVE-2026-107617%2CCVE-2026-97858%2CCVE-2026-107333%2CCVE-2026-107334%2CCVE-2026-107335%2CCVE-2026-107336%2CCVE-2026-107337%2CCVE-2026-107361%2CCVE-2026-107362",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-107336",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-107337",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "The Malcolm kiosk Flask application exposes a POST /script_call/<script> endpoint with zero authentication and wildcard CORS (CORS(app)). An attacker can force the operator's browser to execute arbitrary management commands via CSRF, including control.py --wipe which permanently deletes all captured network traffic and forensic logs, or control.py --stop which blinds the security monitoring.",
+            "cvss": {
+              "version": "3.1",
+              "score": 7.1,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:H",
+              "source": "ics-cert@hq.dhs.gov",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-352"
+            ],
+            "published": "2026-10-08T18:17:20.687",
+            "lastModified": "2026-10-08T21:03:43.847",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://github.com/cisagov/CSAF/blob/develop/csaf_files/OT/white/2026/icsa-26-280-01.json",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/cisagov/Malcolm/security/advisories/GHSA-w8gq-4v5x-xrrm",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/cisagov/Malcolm/security/advisories/GHSA-w8gq-4v5x-xrrm",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-280-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.15",
+              "dateReleased": "2026-10-15T17:00:11.2795Z",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-102764%2CCVE-2025-61624%2CCVE-2026-110447%2CCVE-2026-99999%2CCVE-2026-107777%2CCVE-2026-105273%2CCVE-2026-107621%2CCVE-2026-97851%2CCVE-2026-105664%2CCVE-2026-107617%2CCVE-2026-97858%2CCVE-2026-107333%2CCVE-2026-107334%2CCVE-2026-107335%2CCVE-2026-107336%2CCVE-2026-107337%2CCVE-2026-107361%2CCVE-2026-107362",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-107337",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-107361",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "The Arkime live capture service (arkime-live) in Malcolm runs with network_mode: host, exposing port 8005 on all network interfaces (viewHost=0.0.0.0). Arkime trusts the X-Forwarded-User header from any IP address (userAuthIps=::,0.0.0.0/0) and auto-creates users with full access. The passwordSecret is hardcoded to the public value \"Malcolm\". A network-adjacent attacker bypasses nginx entirely by connecting directly to port 8005 with a forged identity header.",
+            "cvss": {
+              "version": "3.1",
+              "score": 4.2,
+              "severity": "MEDIUM",
+              "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N",
+              "source": "ics-cert@hq.dhs.gov",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-288"
+            ],
+            "published": "2026-10-08T18:17:21.170",
+            "lastModified": "2026-10-08T21:03:43.847",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://github.com/cisagov/CSAF/blob/develop/csaf_files/OT/white/2026/icsa-26-280-01.json",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/cisagov/Malcolm/security/advisories/GHSA-86h3-7rf8-8j34",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/cisagov/Malcolm/security/advisories/GHSA-86h3-7rf8-8j34",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-280-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.15",
+              "dateReleased": "2026-10-15T17:00:11.2795Z",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-102764%2CCVE-2025-61624%2CCVE-2026-110447%2CCVE-2026-99999%2CCVE-2026-107777%2CCVE-2026-105273%2CCVE-2026-107621%2CCVE-2026-97851%2CCVE-2026-105664%2CCVE-2026-107617%2CCVE-2026-97858%2CCVE-2026-107333%2CCVE-2026-107334%2CCVE-2026-107335%2CCVE-2026-107336%2CCVE-2026-107337%2CCVE-2026-107361%2CCVE-2026-107362",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-107361",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-107362",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Malcolm file-upload component ships the upstream FilePond PHP server (pqina/filepond-server-php) largely unmodified: Dockerfile copies all upstream *.php files and Malcolm only overwrites config.php and submit.php. Upstream index.php exposes a fetch API route that instructs the server to download an arbitrary URL with curl (including FOLLOWLOCATION) and, for HEAD requests, stores the fetched response body in the upload container's transfer directory and returns the transfer ID to the caller, enabling full readback of the fetched content.",
+            "cvss": {
+              "version": "3.1",
+              "score": 7.1,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:L",
+              "source": "ics-cert@hq.dhs.gov",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-918"
+            ],
+            "published": "2026-10-08T18:17:21.587",
+            "lastModified": "2026-10-08T21:03:43.847",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://github.com/cisagov/CSAF/blob/develop/csaf_files/OT/white/2026/icsa-26-280-01.json",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/cisagov/Malcolm/security/advisories/GHSA-cvx2-hj33-vc4q",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/cisagov/Malcolm/security/advisories/GHSA-cvx2-hj33-vc4q",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-280-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.15",
+              "dateReleased": "2026-10-15T17:00:11.2795Z",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-102764%2CCVE-2025-61624%2CCVE-2026-110447%2CCVE-2026-99999%2CCVE-2026-107777%2CCVE-2026-105273%2CCVE-2026-107621%2CCVE-2026-97851%2CCVE-2026-105664%2CCVE-2026-107617%2CCVE-2026-97858%2CCVE-2026-107333%2CCVE-2026-107334%2CCVE-2026-107335%2CCVE-2026-107336%2CCVE-2026-107337%2CCVE-2026-107361%2CCVE-2026-107362",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-107362",
+              "retrievedAt": "2026-10-16T15:57:17.754Z"
+            }
+          }
+        }
+      ],
+      "id": "s44"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 3456,
+    "promptCacheMissTokens": 12462,
+    "outputTokens": 11367,
+    "estimatedCostUsd": 0.0049371168
+  }
+}
