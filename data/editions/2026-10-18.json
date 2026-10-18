@@ -1,0 +1,98 @@
+{
+  "date": "2026-10-18",
+  "generatedAt": "2026-10-18T15:15:40.854Z",
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 226,
+    "published": 4
+  },
+  "mode": "article",
+  "headline": "SiteGuard flaw exploited; ConnectWise cuts Cloud Backup access",
+  "standfirst": "Active exploitation of a command injection flaw in a web application firewall leads today's briefing, alongside a supply-chain breach that reached Microsoft 365 tenants and a shifting security hiring market.",
+  "bodyMarkdown": "## Actively exploited\n\nAttackers are exploiting an OS command injection flaw in SiteGuard Server Edition to run commands as root or SYSTEM on affected servers [[s1]]. No CVE ID, affected versions or patch guidance were supplied. Analysis: severity is unstated, so priority rests on reported active exploitation rather than any scoring signal.\n\n## Breaches\n\nConnectWise shut off customer access to its Cloud Backup service after attackers accessed application identities and compromised Microsoft 365 tenants [[s4]]. The excerpt does not say how those identities were obtained or how many tenants were affected.\n\n## Industry\n\nUS cybersecurity job postings fell 26% while demand for AI security engineers rose, according to a jobs report [[s2]]. No breakdown by role or region was supplied.",
+  "selected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers exploit SiteGuard WAF flaw to run commands as SYSTEM, root",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-siteguard-waf-flaw-to-run-commands-as-system-root/",
+      "publishedAt": "2026-10-18T14:23:16.000Z",
+      "excerpt": "Attackers are targeting an OS command injection vulnerability in SiteGuard Server Edition that lets them execute commands as root or SYSTEM on affected servers. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-exploit-siteguard-waf-flaw-to-run-commands-as-system-root",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/hackers-exploit-siteguard-waf-flaw-to-run-commands-as-system-root"
+      ],
+      "cves": [],
+      "id": "s1",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "Attackers are exploiting an OS command injection flaw in SiteGuard Server Edition to run commands as root or SYSTEM, putting exposed servers at immediate risk."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers breach Microsoft 365 tenants via ConnectWise supply-chain attack",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-breach-microsoft-365-tenants-via-connectwise-supply-chain-attack/",
+      "publishedAt": "2026-10-17T15:18:51.000Z",
+      "excerpt": "ConnectWise has shut down customer access to its Cloud Backup service (formerly SkyKick Cloud Backup) after hackers accessed application identities and compromised Microsoft 365 tenants. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-breach-microsoft-365-tenants-via-connectwise-supply-chain-attack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/hackers-breach-microsoft-365-tenants-via-connectwise-supply-chain-attack"
+      ],
+      "cves": [],
+      "id": "s4",
+      "section": "breaches",
+      "rank": 2,
+      "angle": "Compromised ConnectWise application identities gave attackers access to Microsoft 365 tenants, forcing the vendor to shut off Cloud Backup service."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "US Cybersecurity Job Postings Fall 26% as AI Security Engineer Demand Soars",
+      "url": "https://www.securityweek.com/us-cybersecurity-job-postings-fall-26-as-ai-security-engineer-demand-soars/",
+      "publishedAt": "2026-10-18T11:00:00.000Z",
+      "excerpt": "CyberSN’s Cybersecurity Jobs Report provides visibility into the US cybersecurity job market. It’s a mixed bag. The post US Cybersecurity Job Postings Fall 26% as AI Security Engineer Demand Soars appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/us-cybersecurity-job-postings-fall-26-as-ai-security-engineer-demand-soars",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/us-cybersecurity-job-postings-fall-26-as-ai-security-engineer-demand-soars"
+      ],
+      "cves": [],
+      "id": "s2",
+      "section": "industry",
+      "rank": 3,
+      "angle": "A 26% drop in US cybersecurity job postings alongside rising demand for AI security engineers signals a shifting hiring market."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "ConnectWise Suspends Cloud Backup After Attackers Compromise Microsoft 365 Tenants",
+      "url": "https://thehackernews.com/2026/10/connectwise-suspends-cloud-backup-after.html",
+      "publishedAt": "2026-10-18T08:23:02.000Z",
+      "excerpt": "ConnectWise on Saturday said it has disabled seven ConnectWise application identities as it continues its investigation into an incident in which unknown threat actors obtained unauthorized access to the application identities and compromised Microsoft 365 tenants. The disabled identities are listed below - ConnectWise Cloud Backup - 506e08f9-6e9a-4da4-942b-a099a03644ae ConnectWise",
+      "canonicalUrl": "https://thehackernews.com/2026/10/connectwise-suspends-cloud-backup-after.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/connectwise-suspends-cloud-backup-after.html"
+      ],
+      "cves": [],
+      "id": "s3"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1659,
+    "promptCacheMissTokens": 827,
+    "outputTokens": 2143,
+    "estimatedCostUsd": 0.0007204652000000001
+  }
+}

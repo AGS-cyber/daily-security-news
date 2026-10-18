@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#080b08">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22108%22%20height%3D%22108%22%20viewBox%3D%220%200%20108%20108%22%3E%0A%3Cpath%20d%3D%22M0%2C0h108v108h-108z%22%20fill%3D%22%23080b08%22%2F%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%237dffa4%22%20stroke-width%3D%227%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20transform%3D%22translate(54%2054)%20scale(1.45)%20translate(-54%20-54)%22%3E%0A%3Cpath%20d%3D%22M%2054%2044%20C%2054%2036%2043%2032.5%2036%2036%20C%2029.5%2039.5%2029.5%2048%2037.5%2052%20C%2046%2056%2054%2059.5%2053%2066.5%20C%2052%2073.5%2040.5%2075.5%2033%2071%22%2F%3E%0A%3Cpath%20d%3D%22M%2041.5%2027%20L%2041.5%2080%22%2F%3E%0A%3Cpath%20d%3D%22M%2064.5%2071.5%20L%2078.5%2071.5%22%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E">
-<title>BeyondTrust exploitation, exposed MSP credentials and a 10.0 Magento flaw — 17 October 2026</title>
+<title>SiteGuard flaw exploited; ConnectWise cuts Cloud Backup access — 18 October 2026</title>
 <style>
 :root { color-scheme: dark;
   --bg:#080b08; --fg:#c9f5d5; --bright:#7dffa4; --muted:#6aa87f; --dim:#4a7f5e;
@@ -120,91 +120,29 @@ footer::before { content: "// "; color: var(--dim); }
 </nav>
 </header>
 <main>
-<h1>BeyondTrust exploitation, exposed MSP credentials and a 10.0 Magento flaw</h1>
-<p class="summary">8 of 18 stories written up · 12 of 12 sources · generated 14:50 UTC</p>
+<h1>SiteGuard flaw exploited; ConnectWise cuts Cloud Backup access</h1>
+<p class="summary">3 of 4 stories written up · 12 of 12 sources · generated 15:15 UTC</p>
 
-<p class="standfirst">Eight selected stories and two distinct CVEs. Confirmed exploitation, compromised credentials and tampered update channels feature among the critical patches and new exploitation research.</p>
-<aside class="vuln-summary"><h2>Vulnerability intelligence</h2><ul class="vuln-list"><li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-102764">CVE-2026-102764</a></span><span>CVSS 9.3</span><span>Critical</span><span>CISA KEV</span></li>
-<li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-103849">CVE-2026-103849</a></span><span>CVSS 10.0</span><span>Critical</span></li></ul></aside>
+<p class="standfirst">Active exploitation of a command injection flaw in a web application firewall leads today&#39;s briefing, alongside a supply-chain breach that reached Microsoft 365 tenants and a shifting security hiring market.</p>
 <div class="article">
 <h2>Actively exploited</h2>
-<p><a href="https://www.cisa.gov/news-events/alerts/2026/10/16/cisa-urges-patching-critical-vulnerability-beyondtrust-remote-support">CISA Urges Patching Critical Vulnerability in BeyondTrust Remote Support</a> CISA says CVE-2026-102764, a critical authentication bypass in BeyondTrust Remote Support, is being actively exploited to gain initial access and establish persistence. NVD’s affected configuration reaches Remote Support 26.2.3 and earlier; patches are available for supported versions 24.3.1 and later, so older deployments must upgrade first. NVD scores the flaw 9.3 under CVSS 4.0 with CWE-290, network attack vector, and no privileges or user interaction required. CISA’s required action points to BOD 26-04 and forensics triage requirements; that federal requirement is not a universal deadline.</p>
+<p>Attackers are exploiting an OS command injection flaw in SiteGuard Server Edition to run commands as root or SYSTEM on affected servers <a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-siteguard-waf-flaw-to-run-commands-as-system-root/">Hackers exploit SiteGuard WAF flaw to run commands as SYSTEM, root</a>. No CVE ID, affected versions or patch guidance were supplied. Analysis: severity is unstated, so priority rests on reported active exploitation rather than any scoring signal.</p>
 <h2>Breaches</h2>
-<p><a href="https://thehackernews.com/2026/10/hackers-use-compromised-connectwise.html">Hackers Use Compromised ConnectWise Credential to Sign In to 173 Microsoft 365 Tenants</a> Unknown actors used a compromised ConnectWise Cloud Backup credential to sign in to 173 Microsoft 365 tenants, according to researchers tracking an active campaign. The backup service is built for managed service providers, so customer M365 environments are in scope. No CVE is attached in the supplied intelligence.</p>
-<p><a href="https://thehackernews.com/2026/10/attackers-tampered-with-aomei.html">Attackers Tampered with AOMEI Backupper&#39;s Update Servers for Minutes to Deliver a Backdoor</a> Attackers repeatedly altered the files AOMEI Backupper fetched from its own update servers, in windows of five to ten minutes at a time, so Windows systems checking for an update during one of those windows would download and run a backdoor. The source describes repeated tampering over a multi-month period, not a single poisoned release.</p>
-<h2>Vulnerabilities</h2>
-<p><a href="https://www.bleepingcomputer.com/news/security/critical-blockstrap-flaw-lets-hackers-run-code-on-magento-servers/">Critical BlockStrap flaw lets hackers run code on Magento servers</a> CVE-2026-103849 is a maximum-severity 10.0 flaw in Magento and Adobe Commerce: an improper neutralization issue in a template engine, CWE-1336, that could result in arbitrary code execution. NVD says exploitation does not require user interaction and that scope is changed. The supplied KEV check is a confirmed catalog miss, which does not prove exploitation has not occurred, and researchers warn attackers could soon exploit it.</p>
-<p><a href="https://www.bleepingcomputer.com/news/security/drupal-patches-critical-rce-flaws-warns-exploits-may-emerge-soon/">Drupal patches critical RCE flaws, warns exploits may emerge soon</a> Drupal patched two critical remote-code-execution flaws affecting any supported version of the CMS and warned that exploits may emerge soon. No CVE identifiers were supplied for the pair, so they cannot be matched to NVD or KEV records here.</p>
-<h2>Research</h2>
-<p><a href="https://www.bleepingcomputer.com/news/security/zero-click-attacks-used-targeted-ads-to-deliver-candiru-spyware/">Targeted ads installed Candiru spyware in zero-click attacks</a> Candiru spyware reached devices at Al Jazeera Media Network through targeted online advertisements in zero-click attacks that required only rendering the malicious ads, according to the supplied report. The excerpt does not supply the underlying vulnerability or full delivery chain.</p>
-<p><a href="https://thehackernews.com/2026/10/malfex-npm-package-imgdecode-hides.html">MALFEX npm Package &#39;imgdecode&#39; Hides Shellcode Loader in Windows Native Addon</a> The malicious npm package imgdecode, tied to the MALFEX supply-chain campaign, hides a shellcode loader in a Windows native addon. It had been downloaded 979 times and remained available on npm at the time of the report.</p>
-<p><a href="https://thehackernews.com/2026/10/researchers-demonstrate-openbsd-root.html">Researchers Demonstrate OpenBSD Root Exploit Chaining 37-Year-Old Shared-Memory Bug</a> Security firm Calif published a full local root exploit for OpenBSD 7.9 that chains a roughly 37-year-old integer overflow with a separate kernel flaw, bypassing KARL, SMAP and SMEP. The writeup and proof-of-concept code followed OpenBSD’s fixes.</p>
+<p>ConnectWise shut off customer access to its Cloud Backup service after attackers accessed application identities and compromised Microsoft 365 tenants <a href="https://www.bleepingcomputer.com/news/security/hackers-breach-microsoft-365-tenants-via-connectwise-supply-chain-attack/">Hackers breach Microsoft 365 tenants via ConnectWise supply-chain attack</a>. The excerpt does not say how those identities were obtained or how many tenants were affected.</p>
+<h2>Industry</h2>
+<p>US cybersecurity job postings fell 26% while demand for AI security engineers rose, according to a jobs report <a href="https://www.securityweek.com/us-cybersecurity-job-postings-fall-26-as-ai-security-engineer-demand-soars/">US Cybersecurity Job Postings Fall 26% as AI Security Engineer Demand Soars</a>. No breakdown by role or region was supplied.</p>
 
 </div>
 <h2 class="also-heading">Also collected today</h2>
 <ol class="stories">
 <li id="s3">
-<p class="story-title"><a href="https://www.securityweek.com/israeli-ad-firm-doubled-as-candirus-zero-click-spyware-delivery-channel/">Israeli Ad Firm Doubled as Candiru’s Zero-Click Spyware Delivery Channel</a></p>
-<p class="meta">SecurityWeek · 11:00 UTC</p>
-<p class="excerpt">Israeli company Discover-Tech’s ads allow threat actors to fingerprint and track devices at scale and infect selected targets. The post Israeli Ad Firm Doubled as Candiru’s Zero-Click Spyware Delivery Channel appeared first on SecurityWeek.</p>
-
-</li>
-<li id="s5">
-<p class="story-title"><a href="https://www.darkreading.com/endpoint-security/beyondtrust-remote-support-exploited-edge-bugs">BeyondTrust Remote Support Zero-Day Continues Trend of Exploited Edge Bugs</a></p>
-<p class="meta">Dark Reading · 20:34 UTC</p>
-<p class="excerpt">Ivanti, Cisco, and Palo Alto Networks all had vulnerabilities in edge devices come under fire this week. Now BeyondTrust joins the group.</p>
-
-</li>
-<li id="s7">
-<p class="story-title"><a href="https://www.darkreading.com/application-security/fake-claude-chatgpt-attacks-developers-risk">Fake Claude, ChatGPT Attacks Surge, Putting Developers at Risk</a></p>
-<p class="meta">Dark Reading · 19:49 UTC</p>
-<p class="excerpt">Campaigns that impersonate popular AI brands are on the rise, and they typically use ClickFix-like tactics to target unsuspecting enterprise employees.</p>
-
-</li>
-<li id="s8">
-<p class="story-title"><a href="https://www.darkreading.com/data-privacy/biomemory-launches-dna-shield">Biomemory Launches DNA Shield, First Commercial Product Built on Its Molecular IT Platform</a></p>
-<p class="meta">Dark Reading · 19:22 UTC</p>
-<p class="excerpt">The launch follows the acquisition of catalog&#39;s assets and the appointment of Laurent Guengant as CEO earlier this year.</p>
-
-</li>
-<li id="s9">
-<p class="story-title"><a href="https://www.darkreading.com/cyber-risk/enterprise-ai-risk-management-phase-security-concerns-rise">Enterprise AI Enters Risk Management Phase as Security Concerns Rise</a></p>
-<p class="meta">Dark Reading · 19:13 UTC</p>
-<p class="excerpt">Companies are increasingly discovering that the challenge with AI is no longer adoption, but execution.</p>
-
-</li>
-<li id="s10">
-<p class="story-title"><a href="https://www.darkreading.com/ics-ot-security/ai-takes-control-robotic-arm-16-minutes">AI Takes Control of Robotic Arm in 16 Minutes Flat</a></p>
-<p class="meta">Dark Reading · 18:37 UTC</p>
-<p class="excerpt">Most OT devices at utilities, factories, and elsewhere have been deployed for a decade or more, but operators need to get agile and deploy new cyber defenses.</p>
-
-</li>
-<li id="s12">
-<p class="story-title"><a href="https://unit42.paloaltonetworks.com/top-5-initial-access-vectors-september-2026/">Top 5 Initial Access Threat Vectors Observed by Unit 42 in September 2026</a></p>
-<p class="meta">Unit 42 · 17:47 UTC</p>
-<p class="excerpt">Unit 42 details the top initial access vectors adversaries use to breach organizations, led by edge exploits, credential abuse and phishing The post Top 5 Initial Access Threat Vectors Observed by Unit 42 in September 2026 appeared first on Unit 42.</p>
-
-</li>
-<li id="s15">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/uat-11985-uses-fake-event-invites-to.html">UAT-11985 Uses Fake Event Invites to Target Taiwan Research Affiliates With Google AitM Phishing</a></p>
-<p class="meta">The Hacker News · 16:16 UTC</p>
-<p class="excerpt">Cybersecurity researchers have disclosed details of an advanced persistent threat (APT) spear-phishing campaign that has targeted individuals affiliated with Taiwan research organizations to direct victims to an adversary-in-the-middle (AitM) phishing framework designed to harvest their Google account credentials and multi-factor authentication (MFA) codes. The activity is being tracked by</p>
-
-</li>
-<li id="s16">
-<p class="story-title"><a href="https://www.microsoft.com/en-us/security/blog/2026/10/16/managing-open-weight-model-risk-in-enterprise-deployments/">Managing open-weight model risk in enterprise deployments</a></p>
-<p class="meta">Microsoft Security · 16:00 UTC</p>
-<p class="excerpt">New whitepaper from Microsoft and NVIDIA helps enterprises manage open-weight AI model risks with a shared taxonomy, evaluations, and controls. The post Managing open-weight model risk in enterprise deployments appeared first on Microsoft Security Blog.</p>
-
-</li>
-<li id="s17">
-<p class="story-title"><a href="https://www.cisa.gov/resources-tools/resources/key-practices-incident-readiness-and-response-super-intelligence-training-and-evaluation">Key Practices for Incident Readiness and Response in Super Intelligence Training and Evaluation</a></p>
-<p class="meta">CISA Advisories · 12:00 UTC</p>
-<p class="excerpt">The National Institute of Standards and Technology (NIST), National Security Agency’s Super Intelligence Security Center (NSA SISC) and Cybersecurity and Infrastructure Security Agency (CISA) published Key Practices for Incident Readiness and Response in Super Intelligence Training and Evaluation. The product outlines ten voluntary core practices to help organizations that train and evaluate…</p>
+<p class="story-title"><a href="https://thehackernews.com/2026/10/connectwise-suspends-cloud-backup-after.html">ConnectWise Suspends Cloud Backup After Attackers Compromise Microsoft 365 Tenants</a></p>
+<p class="meta">The Hacker News · 08:23 UTC</p>
+<p class="excerpt">ConnectWise on Saturday said it has disabled seven ConnectWise application identities as it continues its investigation into an incident in which unknown threat actors obtained unauthorized access to the application identities and compromised Microsoft 365 tenants. The disabled identities are listed below - ConnectWise Cloud Backup - 506e08f9-6e9a-4da4-942b-a099a03644ae ConnectWise</p>
 
 </li>
 </ol>
 </main>
-<footer>Generated 2026-10-17T14:50:17.913Z</footer>
+<footer>Generated 2026-10-18T15:15:40.854Z</footer>
 </body>
 </html>

@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-10-18",
+    "mode": "article",
+    "headline": "SiteGuard flaw exploited; ConnectWise cuts Cloud Backup access",
+    "count": 4
+  },
+  {
     "date": "2026-10-17",
     "mode": "article",
     "headline": "BeyondTrust exploitation, exposed MSP credentials and a 10.0 Magento flaw",
