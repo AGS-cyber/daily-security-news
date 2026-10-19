@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-10-19",
+    "mode": "article",
+    "headline": "Edge risk, poisoned updates and a grocery outage",
+    "count": 28
+  },
+  {
     "date": "2026-10-18",
     "mode": "article",
     "headline": "SiteGuard flaw exploited; ConnectWise cuts Cloud Backup access",

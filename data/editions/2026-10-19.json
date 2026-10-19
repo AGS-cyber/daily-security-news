@@ -1,0 +1,473 @@
+{
+  "date": "2026-10-19",
+  "generatedAt": "2026-10-19T18:12:55.454Z",
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 226,
+    "published": 28
+  },
+  "mode": "article",
+  "headline": "Edge risk, poisoned updates and a grocery outage",
+  "standfirst": "A retailer confirms malicious action behind cross-brand outages, a WordPress plugin update window is tied to a backdoor, and exploited edge devices plus an unpatched Wi-Fi flaw dominate the vulnerability picture.",
+  "bodyMarkdown": "## Breaches\n\nAhold Delhaize confirmed that “malicious actions” were behind cyber outages that forced systems offline across most of its U.S. and European brands, affecting shoppers on both sides of the Atlantic [[s2]]. The confirmation covers malicious action but not the intrusion path or data impact; those details were not supplied.\n\nCopies of Rank Math PRO, the paid WordPress SEO plugin, downloaded from the vendor’s site or delivered as updates during a short window contained malware, the vendor said, and any site that installed and activated one should be treated as compromised [[s3]]. The payload is described as a self-restoring backdoor.\n\nA single compromised ETS SFTP login let intruders copy millions of California students’ records dating back to 2006 [[s19]]. The stated scope is millions of records and years of history.\n\n## Actively exploited\n\nAttackers were observed weaponizing the Plex2Shell exploit chain against Plex servers within hours of disclosure, delivering cryptocurrency miners and proxy software [[s18]]. Analysis: the short gap between disclosure and observed weaponization suggests fast tooling, but the supplied details do not identify vulnerable versions or actors.\n\nAn exploited Fortinet bug has been linked to a stealthy FortiGate implant deployed against a telecommunications organization [[s22]]. Analysis: the implant’s persistence on edge equipment is the salient risk; attribution and the exact exploitation path were not supplied.\n\n## Vulnerabilities\n\nDrupal warned of fast exploitation risk for critical core remote-code-execution flaws affecting the Entity List and Field UI modules, with exploit paths available through contributed modules [[s5]]. No CVE or confirmation of actual exploitation was supplied.\n\nF5 released out-of-band patches for multiple NGINX flaws, including three critical-severity vulnerabilities that can allow code execution [[s12]]. Analysis: code execution in a web server raises priority, though exposure depends on deployment.\n\nAn unpatched Broadcom Wi-Fi flaw lets an attacker within radio range run code as root on Broadcom-based routers without the network password or a pairing step [[s27]]. The researcher demonstrated it against home gateways from three Belgian providers, including reading a Wi-Fi password off one device. Analysis: proximity plus root execution against ISP-supplied gateways makes this a practical concern; no patch was supplied.",
+  "selected": [
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Ahold Delhaize confirms 'malicious actions' behind cyber outages affecting grocery brands",
+      "url": "https://therecord.media/ahold-delhaize-cyberattack-grocery",
+      "publishedAt": "2026-10-19T16:45:00.000Z",
+      "excerpt": "Ahold Delhaize, the Dutch multinational grocery retailer, said Monday that a cyberattack forced it to take systems offline across most of its U.S. and European brands, impacting shoppers on both sides of the Atlantic.",
+      "canonicalUrl": "https://therecord.media/ahold-delhaize-cyberattack-grocery",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/ahold-delhaize-cyberattack-grocery"
+      ],
+      "cves": [],
+      "id": "s2",
+      "section": "breaches",
+      "rank": 1,
+      "angle": "Ahold Delhaize confirmed malicious actions behind outages that forced systems offline across most U.S. and European brands, affecting shoppers on both sides of the Atlantic."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Popular WordPress SEO Plugin Rank Math PRO Hijacked to Deliver Self-Restoring Backdoor",
+      "url": "https://thehackernews.com/2026/10/popular-wordpress-seo-plugin-rank-math.html",
+      "publishedAt": "2026-10-19T16:28:47.000Z",
+      "excerpt": "Copies of Rank Math PRO, the paid version of the Rank Math SEO plugin for WordPress, that were downloaded from rankmath.com or delivered as updates between 20:02 UTC on October 15 and 07:12 UTC on October 16 contained malware, Rank Math said in a security notice published on October 16. Any site that installed and activated one of those copies should be treated as compromised, and the",
+      "canonicalUrl": "https://thehackernews.com/2026/10/popular-wordpress-seo-plugin-rank-math.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/popular-wordpress-seo-plugin-rank-math.html"
+      ],
+      "cves": [],
+      "id": "s3",
+      "section": "breaches",
+      "rank": 2,
+      "angle": "Malicious Rank Math PRO copies downloaded or delivered as updates between Oct 15–16 contained a self-restoring backdoor, and affected sites should be treated as compromised."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Plex2Shell Exploit Chain Weaponized Against Plex Servers Hours After Disclosure",
+      "url": "https://www.securityweek.com/plex2shell-exploit-chain-weaponized-against-plex-servers-hours-after-disclosure/",
+      "publishedAt": "2026-10-19T12:44:39.000Z",
+      "excerpt": "Threat actors have been observed delivering cryptocurrency miners and proxy software. The post Plex2Shell Exploit Chain Weaponized Against Plex Servers Hours After Disclosure appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/plex2shell-exploit-chain-weaponized-against-plex-servers-hours-after-disclosure",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/plex2shell-exploit-chain-weaponized-against-plex-servers-hours-after-disclosure"
+      ],
+      "cves": [],
+      "id": "s18",
+      "section": "exploited",
+      "rank": 3,
+      "angle": "Attackers have been observed weaponizing Plex2Shell against Plex servers hours after disclosure, delivering miners and proxy software."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Exploited Fortinet Bug Linked to Stealthy FortiGate Implant in Telecom Hack",
+      "url": "https://www.securityweek.com/exploited-fortinet-bug-linked-to-stealthy-fortigate-implant-in-telecom-hack/",
+      "publishedAt": "2026-10-19T11:13:23.000Z",
+      "excerpt": "The persistent, stealthy FortiGate implant was deployed against a telecommunications organization. The post Exploited Fortinet Bug Linked to Stealthy FortiGate Implant in Telecom Hack appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/exploited-fortinet-bug-linked-to-stealthy-fortigate-implant-in-telecom-hack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/exploited-fortinet-bug-linked-to-stealthy-fortigate-implant-in-telecom-hack"
+      ],
+      "cves": [],
+      "id": "s22",
+      "section": "exploited",
+      "rank": 4,
+      "angle": "An exploited Fortinet bug has been tied to a stealthy FortiGate implant in a telecom intrusion, highlighting persistent edge-device compromise."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Drupal Warns of Fast Exploitation Risk for Critical Core RCE Flaw",
+      "url": "https://www.securityweek.com/drupal-warns-of-fast-exploitation-risk-for-critical-core-rce-flaw/",
+      "publishedAt": "2026-10-19T15:47:50.000Z",
+      "excerpt": "Critical flaws impact the Entity List and Field UI modules, and exploit paths exist with contributed modules. The post Drupal Warns of Fast Exploitation Risk for Critical Core RCE Flaw appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/drupal-warns-of-fast-exploitation-risk-for-critical-core-rce-flaw",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/drupal-warns-of-fast-exploitation-risk-for-critical-core-rce-flaw"
+      ],
+      "cves": [],
+      "id": "s5",
+      "section": "vulnerabilities",
+      "rank": 5,
+      "angle": "Drupal is warning of fast exploitation risk for critical core RCE flaws with exploit paths through contributed modules."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "One Compromised Login Exposed Millions of California Students’ Records",
+      "url": "https://www.securityweek.com/one-compromised-login-exposed-millions-of-california-students-records/",
+      "publishedAt": "2026-10-19T11:55:50.000Z",
+      "excerpt": "Intruders used compromised credentials to access an ETS SFTP server, copying records of California students back to 2006. The post One Compromised Login Exposed Millions of California Students’ Records appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/one-compromised-login-exposed-millions-of-california-students-records",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/one-compromised-login-exposed-millions-of-california-students-records"
+      ],
+      "cves": [],
+      "id": "s19",
+      "section": "breaches",
+      "rank": 6,
+      "angle": "One compromised ETS SFTP login allowed intruders to copy millions of California students’ records dating back to 2006."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "F5 releases out-of-band patches for critical NGINX vulnerabilities",
+      "url": "https://www.bleepingcomputer.com/news/security/f5-releases-out-of-band-patches-for-critical-nginx-vulnerabilities/",
+      "publishedAt": "2026-10-19T13:49:24.000Z",
+      "excerpt": "F5 has released out-of-band security patches to address multiple NGINX web server flaws, including three critical-severity vulnerabilities that can let attackers execute code on vulnerable systems. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/f5-releases-out-of-band-patches-for-critical-nginx-vulnerabilities",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/f5-releases-out-of-band-patches-for-critical-nginx-vulnerabilities"
+      ],
+      "cves": [],
+      "id": "s12",
+      "section": "vulnerabilities",
+      "rank": 7,
+      "angle": "F5 has released out-of-band fixes for three critical NGINX code-execution flaws, a significant patch event for internet-facing infrastructure."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Unpatched Broadcom Wi-Fi Flaw Lets Attackers in Range Run Code as Root on Routers",
+      "url": "https://thehackernews.com/2026/10/unpatched-broadcom-wi-fi-flaw-lets.html",
+      "publishedAt": "2026-10-19T06:29:44.000Z",
+      "excerpt": "A flaw in Broadcom's Wi-Fi setup software lets an attacker within radio range run code as root on Broadcom-based routers, without the network password or any pairing step, security researcher Quentin Kaiser disclosed on October 16. He showed the attack working against home gateways supplied by three Belgian internet providers, in one case reading the Wi-Fi password off the device",
+      "canonicalUrl": "https://thehackernews.com/2026/10/unpatched-broadcom-wi-fi-flaw-lets.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/unpatched-broadcom-wi-fi-flaw-lets.html"
+      ],
+      "cves": [],
+      "id": "s27",
+      "section": "vulnerabilities",
+      "rank": 8,
+      "angle": "An unpatched Broadcom Wi-Fi flaw lets nearby attackers run code as root on routers without the network password, affecting ISP-supplied gateways."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "OpenCode hack exposes API keys amid AI distillation attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/opencode-hack-exposes-api-keys-amid-ai-distillation-attacks/",
+      "publishedAt": "2026-10-19T17:27:15.000Z",
+      "excerpt": "The open-source AI coding project OpenCode has notified a small number of users that API keys they used with external providers were exposed in a security breach. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/opencode-hack-exposes-api-keys-amid-ai-distillation-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/opencode-hack-exposes-api-keys-amid-ai-distillation-attacks"
+      ],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Russian social media giant VK faces disruptions after data center drone strike",
+      "url": "https://therecord.media/russian-social-media-giant-vk-faces-disruptions-drone-strike-data-center",
+      "publishedAt": "2026-10-19T15:55:00.000Z",
+      "excerpt": "The disruptions began Sunday, when users complained of difficulties loading news feeds, playing music and accessing other features of VK's platforms.",
+      "canonicalUrl": "https://therecord.media/russian-social-media-giant-vk-faces-disruptions-drone-strike-data-center",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/russian-social-media-giant-vk-faces-disruptions-drone-strike-data-center"
+      ],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Rank Math PRO WordPress Plugin Compromised in Supply Chain Attack",
+      "url": "https://www.securityweek.com/rank-math-pro-wordpress-plugin-compromised-in-supply-chain-attack/",
+      "publishedAt": "2026-10-19T15:20:53.000Z",
+      "excerpt": "Hackers injected malware into Rank Math PRO version 3.0.123 packages distributed between October 15 and October 16. The post Rank Math PRO WordPress Plugin Compromised in Supply Chain Attack appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/rank-math-pro-wordpress-plugin-compromised-in-supply-chain-attack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/rank-math-pro-wordpress-plugin-compromised-in-supply-chain-attack"
+      ],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft fixes game, app crashes caused by recent Windows update",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-game-app-crashes-caused-by-windows-kb5124010-preview-update/",
+      "publishedAt": "2026-10-19T14:55:23.000Z",
+      "excerpt": "Microsoft has resolved a bug that caused games and apps using AC-3 (Dolby Digital) audio decoding to crash after installing the September 2026 Windows 11 preview update (KB5124010). [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-fixes-game-app-crashes-caused-by-windows-kb5124010-preview-update",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/microsoft/microsoft-fixes-game-app-crashes-caused-by-windows-kb5124010-preview-update"
+      ],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "OnlyFans Copyright Takedowns Expose Compromised Websites",
+      "url": "https://www.darkreading.com/vulnerabilities-threats/onlyfans-copyright-takedowns-expose-compromised-websites",
+      "publishedAt": "2026-10-19T14:28:11.000Z",
+      "excerpt": "Copyright takedown requests tied to OnlyFans and other adult content creators are revealing how attackers exploit vulnerable university and government websites to manipulate search results. UpGuard's Greg Pollock explains what universities, government websites, and security teams need to think about next.",
+      "canonicalUrl": "https://darkreading.com/vulnerabilities-threats/onlyfans-copyright-takedowns-expose-compromised-websites",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/vulnerabilities-threats/onlyfans-copyright-takedowns-expose-compromised-websites"
+      ],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "⚡ Weekly Recap: 98 Zero-Days, Rogue AI Agents, $100M Crypto Theft, 700 Supermarkets Hit and More",
+      "url": "https://thehackernews.com/2026/10/weekly-recap-98-zero-days-rogue-ai.html",
+      "publishedAt": "2026-10-19T14:14:07.000Z",
+      "excerpt": "The worst problems don't always come with a warning. Sometimes they arrive through a service everyone trusts, a device someone bought, or a system nobody thought to check. By the time something looks wrong, the damage may already be done. This week had plenty of that. Trusted connections became a problem. Hardware wasn't as safe as it looked. Old bugs found new victims, and some systems were",
+      "canonicalUrl": "https://thehackernews.com/2026/10/weekly-recap-98-zero-days-rogue-ai.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/weekly-recap-98-zero-days-rogue-ai.html"
+      ],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Inside the Underground Market for Know Your Client Services",
+      "url": "https://www.bleepingcomputer.com/news/security/inside-the-underground-market-for-know-your-client-services/",
+      "publishedAt": "2026-10-19T14:00:10.000Z",
+      "excerpt": "Cybercriminals are selling forged identity documents, deepfake videos, and live verification services to help buyers bypass Know Your Client (KYC) checks. Flare examines how these underground services operate and the techniques used to create and maintain fraudulent verified accounts. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/inside-the-underground-market-for-know-your-client-services",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/inside-the-underground-market-for-know-your-client-services"
+      ],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "The Evolving Cybersecurity Lexicon: Vulnerability Discovery to Resilience",
+      "url": "https://www.darkreading.com/vulnerabilities-threats/cybersecurity-lexicon-vulnerability-discovery-resilience",
+      "publishedAt": "2026-10-19T14:00:00.000Z",
+      "excerpt": "An industry-wide laser focus on vulnerabilities has left cybersecurity teams without enough room to strategize for resilience.",
+      "canonicalUrl": "https://darkreading.com/vulnerabilities-threats/cybersecurity-lexicon-vulnerability-discovery-resilience",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/vulnerabilities-threats/cybersecurity-lexicon-vulnerability-discovery-resilience"
+      ],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "krebs",
+      "sourceKind": "rss",
+      "title": "Feds Suspect Ransom Negotiator Ran ShinyHunters Extortion Site",
+      "url": "https://krebsonsecurity.com/2026/10/feds-suspect-ransom-negotiator-ran-shinyhunters-extortion-site/",
+      "publishedAt": "2026-10-19T13:48:56.000Z",
+      "excerpt": "U.S. federal investigators pursuing the ShinyHunters hacking group that recently stole highly sensitive data from the FBI have identified executives at two different ransomware negotiation firms who maintained unusually close relations with the extortion group, KrebsOnSecurity has learned. Sources close to the investigation say one of the executives in the United States even helped ShinyHunters…",
+      "canonicalUrl": "https://krebsonsecurity.com/2026/10/feds-suspect-ransom-negotiator-ran-shinyhunters-extortion-site",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://krebsonsecurity.com/2026/10/feds-suspect-ransom-negotiator-ran-shinyhunters-extortion-site"
+      ],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "ConnectWise Suspends Cloud Services in Response to Cyberattack",
+      "url": "https://www.securityweek.com/connectwise-suspends-cloud-services-in-response-to-cyberattack/",
+      "publishedAt": "2026-10-19T13:16:20.000Z",
+      "excerpt": "The services remain unavailable as the company continues remediation and security validation. The post ConnectWise Suspends Cloud Services in Response to Cyberattack appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/connectwise-suspends-cloud-services-in-response-to-cyberattack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/connectwise-suspends-cloud-services-in-response-to-cyberattack"
+      ],
+      "cves": [],
+      "id": "s14"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "GhostAction Attackers Plant Credential Stealer Disguised as Font in 94 GitHub Repositories",
+      "url": "https://thehackernews.com/2026/10/ghostaction-attackers-plant-credential.html",
+      "publishedAt": "2026-10-19T13:05:45.000Z",
+      "excerpt": "The threat actor behind the GhostAction supply chain attack has expanded beyond injecting malicious GitHub Actions workflows into compromised projects to phish open-source developers and deliver a stealer malware disguised within a fake font file. The latest evolution, detailed by OpenSourceMalware, signals that the attackers are actively refining their modus operandi in response to steps",
+      "canonicalUrl": "https://thehackernews.com/2026/10/ghostaction-attackers-plant-credential.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/ghostaction-attackers-plant-credential.html"
+      ],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "Agents are your newest insiders. Security must move at their speed.",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/10/19/agents-are-your-newest-insiders-security-must-move-at-their-speed/",
+      "publishedAt": "2026-10-19T13:00:00.000Z",
+      "excerpt": "New capabilities in Microsoft 365 E7 and Project Perception help organizations contain agent risk and adapt protection continuously. The post Agents are your newest insiders. Security must move at their speed. appeared first on Microsoft Security Blog.",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/10/19/agents-are-your-newest-insiders-security-must-move-at-their-speed",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://microsoft.com/en-us/security/blog/2026/10/19/agents-are-your-newest-insiders-security-must-move-at-their-speed"
+      ],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft fixes classic Outlook bug that hid Copilot buttons",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-bug-that-hid-copilot-buttons-in-classic-outlook/",
+      "publishedAt": "2026-10-19T12:44:44.000Z",
+      "excerpt": "Microsoft has fixed a known issue that removed the Copilot Chat and Copilot buttons in the classic Outlook desktop mail client for some Windows users. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-fixes-bug-that-hid-copilot-buttons-in-classic-outlook",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/microsoft/microsoft-fixes-bug-that-hid-copilot-buttons-in-classic-outlook"
+      ],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "From Email-to-Case to the Boardroom: How Inherited Agents Break Governance Built for Software",
+      "url": "https://thehackernews.com/2026/10/from-email-to-case-to-boardroom-how.html",
+      "publishedAt": "2026-10-19T11:50:00.000Z",
+      "excerpt": "In Salesforce Agentforce, the recommended way to make an agent respond to events is a Flow: a record is created or a case is updated, and the Flow passes data into the agent's prompt. Separately, Email-to-Case and Web-to-Case turn inbound customer messages into case records; it is how airlines and hotels run support intake. Both are standard, documented, as-designed features. Chained together,",
+      "canonicalUrl": "https://thehackernews.com/2026/10/from-email-to-case-to-boardroom-how.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/from-email-to-case-to-boardroom-how.html"
+      ],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Hackers steal customer data from major Russian hosting provider FirstVDS",
+      "url": "https://therecord.media/russia-cyberattack-firstvds-cloud",
+      "publishedAt": "2026-10-19T11:45:00.000Z",
+      "excerpt": "Hackers have stolen passwords, access credentials and other sensitive data belonging to customers of Russian hosting provider FirstVDS after exploiting a vulnerability in software used to manage its servers.",
+      "canonicalUrl": "https://therecord.media/russia-cyberattack-firstvds-cloud",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/russia-cyberattack-firstvds-cloud"
+      ],
+      "cves": [],
+      "id": "s21"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Fake Web3 Accelerator Uses npm Packages to Spread Malware and Hijack AI Agent Traffic",
+      "url": "https://thehackernews.com/2026/10/fake-web3-accelerator-uses-npm-packages.html",
+      "publishedAt": "2026-10-19T10:06:40.000Z",
+      "excerpt": "A fake Web3 accelerator has been observed pushing information stealers and backdoors to Windows and macOS systems using malicious npm packages under the pretext of offering free artificial intelligence (AI) credits for Anthropic Claude and Google Gemini, coding tools, and security audits. \"The tools delivered information-stealing malware and backdoors for macOS and Windows machines,\" Elastic",
+      "canonicalUrl": "https://thehackernews.com/2026/10/fake-web3-accelerator-uses-npm-packages.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/fake-web3-accelerator-uses-npm-packages.html"
+      ],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "MITRE ATT&CK v20 Catalogs AI Abuse, MFA Bypass, Water Utility Attacks",
+      "url": "https://www.securityweek.com/mitre-attck-v20-catalogs-ai-abuse-mfa-bypass-water-utility-attacks/",
+      "publishedAt": "2026-10-19T09:37:04.000Z",
+      "excerpt": "Defenders get 15 new detection strategies, six for Enterprise and nine for ICS, backed by 38 analytics. The post MITRE ATT&CK v20 Catalogs AI Abuse, MFA Bypass, Water Utility Attacks appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/mitre-attck-v20-catalogs-ai-abuse-mfa-bypass-water-utility-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/mitre-attck-v20-catalogs-ai-abuse-mfa-bypass-water-utility-attacks"
+      ],
+      "cves": [],
+      "id": "s24"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft: October Windows Server updates break Exchange sign-in, mail flow",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-october-windows-server-updates-cause-exchange-issues/",
+      "publishedAt": "2026-10-19T08:58:41.000Z",
+      "excerpt": "Microsoft has confirmed that this month's Windows Server security updates are causing OWA sign-in and mail delivery issues on some Exchange Server systems. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-october-windows-server-updates-cause-exchange-issues",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/microsoft/microsoft-october-windows-server-updates-cause-exchange-issues"
+      ],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Anthropic Acquires Confidential AI Startup Opaque Systems",
+      "url": "https://www.securityweek.com/anthropic-acquires-confidential-ai-startup-opaque-systems/",
+      "publishedAt": "2026-10-19T07:45:25.000Z",
+      "excerpt": "Opaque Systems has developed technology that lets AI systems use sensitive data while keeping it protected by the underlying hardware. The post Anthropic Acquires Confidential AI Startup Opaque Systems appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/anthropic-acquires-confidential-ai-startup-opaque-systems",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/anthropic-acquires-confidential-ai-startup-opaque-systems"
+      ],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "OpenCode Console Breach May Have Exposed OpenAI, Anthropic, and Google API Keys",
+      "url": "https://thehackernews.com/2026/10/opencode-console-breach-may-have.html",
+      "publishedAt": "2026-10-19T06:07:08.000Z",
+      "excerpt": "An intruder reached a legacy system at OpenCode on the night of October 16 and may have exposed the third-party AI provider keys that users had saved in OpenCode Console, the company said. Console is OpenCode's optional hosted service: a workspace saves its own OpenAI, Anthropic, or Google key there, and Console uses that key to call the provider so team members can use the models without",
+      "canonicalUrl": "https://thehackernews.com/2026/10/opencode-console-breach-may-have.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/opencode-console-breach-may-have.html"
+      ],
+      "cves": [],
+      "id": "s28"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1152,
+    "promptCacheMissTokens": 5041,
+    "outputTokens": 10909,
+    "estimatedCostUsd": 0.003763485600000001
+  }
+}

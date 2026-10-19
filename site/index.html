@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#080b08">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22108%22%20height%3D%22108%22%20viewBox%3D%220%200%20108%20108%22%3E%0A%3Cpath%20d%3D%22M0%2C0h108v108h-108z%22%20fill%3D%22%23080b08%22%2F%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%237dffa4%22%20stroke-width%3D%227%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20transform%3D%22translate(54%2054)%20scale(1.45)%20translate(-54%20-54)%22%3E%0A%3Cpath%20d%3D%22M%2054%2044%20C%2054%2036%2043%2032.5%2036%2036%20C%2029.5%2039.5%2029.5%2048%2037.5%2052%20C%2046%2056%2054%2059.5%2053%2066.5%20C%2052%2073.5%2040.5%2075.5%2033%2071%22%2F%3E%0A%3Cpath%20d%3D%22M%2041.5%2027%20L%2041.5%2080%22%2F%3E%0A%3Cpath%20d%3D%22M%2064.5%2071.5%20L%2078.5%2071.5%22%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E">
-<title>SiteGuard flaw exploited; ConnectWise cuts Cloud Backup access — 18 October 2026</title>
+<title>Edge risk, poisoned updates and a grocery outage — 19 October 2026</title>
 <style>
 :root { color-scheme: dark;
   --bg:#080b08; --fg:#c9f5d5; --bright:#7dffa4; --muted:#6aa87f; --dim:#4a7f5e;
@@ -120,29 +120,148 @@ footer::before { content: "// "; color: var(--dim); }
 </nav>
 </header>
 <main>
-<h1>SiteGuard flaw exploited; ConnectWise cuts Cloud Backup access</h1>
-<p class="summary">3 of 4 stories written up · 12 of 12 sources · generated 15:15 UTC</p>
+<h1>Edge risk, poisoned updates and a grocery outage</h1>
+<p class="summary">8 of 28 stories written up · 12 of 12 sources · generated 18:12 UTC</p>
 
-<p class="standfirst">Active exploitation of a command injection flaw in a web application firewall leads today&#39;s briefing, alongside a supply-chain breach that reached Microsoft 365 tenants and a shifting security hiring market.</p>
+<p class="standfirst">A retailer confirms malicious action behind cross-brand outages, a WordPress plugin update window is tied to a backdoor, and exploited edge devices plus an unpatched Wi-Fi flaw dominate the vulnerability picture.</p>
 <div class="article">
-<h2>Actively exploited</h2>
-<p>Attackers are exploiting an OS command injection flaw in SiteGuard Server Edition to run commands as root or SYSTEM on affected servers <a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-siteguard-waf-flaw-to-run-commands-as-system-root/">Hackers exploit SiteGuard WAF flaw to run commands as SYSTEM, root</a>. No CVE ID, affected versions or patch guidance were supplied. Analysis: severity is unstated, so priority rests on reported active exploitation rather than any scoring signal.</p>
 <h2>Breaches</h2>
-<p>ConnectWise shut off customer access to its Cloud Backup service after attackers accessed application identities and compromised Microsoft 365 tenants <a href="https://www.bleepingcomputer.com/news/security/hackers-breach-microsoft-365-tenants-via-connectwise-supply-chain-attack/">Hackers breach Microsoft 365 tenants via ConnectWise supply-chain attack</a>. The excerpt does not say how those identities were obtained or how many tenants were affected.</p>
-<h2>Industry</h2>
-<p>US cybersecurity job postings fell 26% while demand for AI security engineers rose, according to a jobs report <a href="https://www.securityweek.com/us-cybersecurity-job-postings-fall-26-as-ai-security-engineer-demand-soars/">US Cybersecurity Job Postings Fall 26% as AI Security Engineer Demand Soars</a>. No breakdown by role or region was supplied.</p>
+<p>Ahold Delhaize confirmed that “malicious actions” were behind cyber outages that forced systems offline across most of its U.S. and European brands, affecting shoppers on both sides of the Atlantic <a href="https://therecord.media/ahold-delhaize-cyberattack-grocery">Ahold Delhaize confirms &#39;malicious actions&#39; behind cyber outages affecting grocery brands</a>. The confirmation covers malicious action but not the intrusion path or data impact; those details were not supplied.</p>
+<p>Copies of Rank Math PRO, the paid WordPress SEO plugin, downloaded from the vendor’s site or delivered as updates during a short window contained malware, the vendor said, and any site that installed and activated one should be treated as compromised <a href="https://thehackernews.com/2026/10/popular-wordpress-seo-plugin-rank-math.html">Popular WordPress SEO Plugin Rank Math PRO Hijacked to Deliver Self-Restoring Backdoor</a>. The payload is described as a self-restoring backdoor.</p>
+<p>A single compromised ETS SFTP login let intruders copy millions of California students’ records dating back to 2006 <a href="https://www.securityweek.com/one-compromised-login-exposed-millions-of-california-students-records/">One Compromised Login Exposed Millions of California Students’ Records</a>. The stated scope is millions of records and years of history.</p>
+<h2>Actively exploited</h2>
+<p>Attackers were observed weaponizing the Plex2Shell exploit chain against Plex servers within hours of disclosure, delivering cryptocurrency miners and proxy software <a href="https://www.securityweek.com/plex2shell-exploit-chain-weaponized-against-plex-servers-hours-after-disclosure/">Plex2Shell Exploit Chain Weaponized Against Plex Servers Hours After Disclosure</a>. Analysis: the short gap between disclosure and observed weaponization suggests fast tooling, but the supplied details do not identify vulnerable versions or actors.</p>
+<p>An exploited Fortinet bug has been linked to a stealthy FortiGate implant deployed against a telecommunications organization <a href="https://www.securityweek.com/exploited-fortinet-bug-linked-to-stealthy-fortigate-implant-in-telecom-hack/">Exploited Fortinet Bug Linked to Stealthy FortiGate Implant in Telecom Hack</a>. Analysis: the implant’s persistence on edge equipment is the salient risk; attribution and the exact exploitation path were not supplied.</p>
+<h2>Vulnerabilities</h2>
+<p>Drupal warned of fast exploitation risk for critical core remote-code-execution flaws affecting the Entity List and Field UI modules, with exploit paths available through contributed modules <a href="https://www.securityweek.com/drupal-warns-of-fast-exploitation-risk-for-critical-core-rce-flaw/">Drupal Warns of Fast Exploitation Risk for Critical Core RCE Flaw</a>. No CVE or confirmation of actual exploitation was supplied.</p>
+<p>F5 released out-of-band patches for multiple NGINX flaws, including three critical-severity vulnerabilities that can allow code execution <a href="https://www.bleepingcomputer.com/news/security/f5-releases-out-of-band-patches-for-critical-nginx-vulnerabilities/">F5 releases out-of-band patches for critical NGINX vulnerabilities</a>. Analysis: code execution in a web server raises priority, though exposure depends on deployment.</p>
+<p>An unpatched Broadcom Wi-Fi flaw lets an attacker within radio range run code as root on Broadcom-based routers without the network password or a pairing step <a href="https://thehackernews.com/2026/10/unpatched-broadcom-wi-fi-flaw-lets.html">Unpatched Broadcom Wi-Fi Flaw Lets Attackers in Range Run Code as Root on Routers</a>. The researcher demonstrated it against home gateways from three Belgian providers, including reading a Wi-Fi password off one device. Analysis: proximity plus root execution against ISP-supplied gateways makes this a practical concern; no patch was supplied.</p>
 
 </div>
 <h2 class="also-heading">Also collected today</h2>
 <ol class="stories">
-<li id="s3">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/connectwise-suspends-cloud-backup-after.html">ConnectWise Suspends Cloud Backup After Attackers Compromise Microsoft 365 Tenants</a></p>
-<p class="meta">The Hacker News · 08:23 UTC</p>
-<p class="excerpt">ConnectWise on Saturday said it has disabled seven ConnectWise application identities as it continues its investigation into an incident in which unknown threat actors obtained unauthorized access to the application identities and compromised Microsoft 365 tenants. The disabled identities are listed below - ConnectWise Cloud Backup - 506e08f9-6e9a-4da4-942b-a099a03644ae ConnectWise</p>
+<li id="s1">
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/opencode-hack-exposes-api-keys-amid-ai-distillation-attacks/">OpenCode hack exposes API keys amid AI distillation attacks</a></p>
+<p class="meta">BleepingComputer · 17:27 UTC</p>
+<p class="excerpt">The open-source AI coding project OpenCode has notified a small number of users that API keys they used with external providers were exposed in a security breach. [...]</p>
+
+</li>
+<li id="s4">
+<p class="story-title"><a href="https://therecord.media/russian-social-media-giant-vk-faces-disruptions-drone-strike-data-center">Russian social media giant VK faces disruptions after data center drone strike</a></p>
+<p class="meta">The Record · 15:55 UTC</p>
+<p class="excerpt">The disruptions began Sunday, when users complained of difficulties loading news feeds, playing music and accessing other features of VK&#39;s platforms.</p>
+
+</li>
+<li id="s6">
+<p class="story-title"><a href="https://www.securityweek.com/rank-math-pro-wordpress-plugin-compromised-in-supply-chain-attack/">Rank Math PRO WordPress Plugin Compromised in Supply Chain Attack</a></p>
+<p class="meta">SecurityWeek · 15:20 UTC</p>
+<p class="excerpt">Hackers injected malware into Rank Math PRO version 3.0.123 packages distributed between October 15 and October 16. The post Rank Math PRO WordPress Plugin Compromised in Supply Chain Attack appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s7">
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-game-app-crashes-caused-by-windows-kb5124010-preview-update/">Microsoft fixes game, app crashes caused by recent Windows update</a></p>
+<p class="meta">BleepingComputer · 14:55 UTC</p>
+<p class="excerpt">Microsoft has resolved a bug that caused games and apps using AC-3 (Dolby Digital) audio decoding to crash after installing the September 2026 Windows 11 preview update (KB5124010). [...]</p>
+
+</li>
+<li id="s8">
+<p class="story-title"><a href="https://www.darkreading.com/vulnerabilities-threats/onlyfans-copyright-takedowns-expose-compromised-websites">OnlyFans Copyright Takedowns Expose Compromised Websites</a></p>
+<p class="meta">Dark Reading · 14:28 UTC</p>
+<p class="excerpt">Copyright takedown requests tied to OnlyFans and other adult content creators are revealing how attackers exploit vulnerable university and government websites to manipulate search results. UpGuard&#39;s Greg Pollock explains what universities, government websites, and security teams need to think about next.</p>
+
+</li>
+<li id="s9">
+<p class="story-title"><a href="https://thehackernews.com/2026/10/weekly-recap-98-zero-days-rogue-ai.html">⚡ Weekly Recap: 98 Zero-Days, Rogue AI Agents, $100M Crypto Theft, 700 Supermarkets Hit and More</a></p>
+<p class="meta">The Hacker News · 14:14 UTC</p>
+<p class="excerpt">The worst problems don&#39;t always come with a warning. Sometimes they arrive through a service everyone trusts, a device someone bought, or a system nobody thought to check. By the time something looks wrong, the damage may already be done. This week had plenty of that. Trusted connections became a problem. Hardware wasn&#39;t as safe as it looked. Old bugs found new victims, and some systems were</p>
+
+</li>
+<li id="s10">
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/inside-the-underground-market-for-know-your-client-services/">Inside the Underground Market for Know Your Client Services</a></p>
+<p class="meta">BleepingComputer · 14:00 UTC</p>
+<p class="excerpt">Cybercriminals are selling forged identity documents, deepfake videos, and live verification services to help buyers bypass Know Your Client (KYC) checks. Flare examines how these underground services operate and the techniques used to create and maintain fraudulent verified accounts. [...]</p>
+
+</li>
+<li id="s11">
+<p class="story-title"><a href="https://www.darkreading.com/vulnerabilities-threats/cybersecurity-lexicon-vulnerability-discovery-resilience">The Evolving Cybersecurity Lexicon: Vulnerability Discovery to Resilience</a></p>
+<p class="meta">Dark Reading · 14:00 UTC</p>
+<p class="excerpt">An industry-wide laser focus on vulnerabilities has left cybersecurity teams without enough room to strategize for resilience.</p>
+
+</li>
+<li id="s13">
+<p class="story-title"><a href="https://krebsonsecurity.com/2026/10/feds-suspect-ransom-negotiator-ran-shinyhunters-extortion-site/">Feds Suspect Ransom Negotiator Ran ShinyHunters Extortion Site</a></p>
+<p class="meta">Krebs on Security · 13:48 UTC</p>
+<p class="excerpt">U.S. federal investigators pursuing the ShinyHunters hacking group that recently stole highly sensitive data from the FBI have identified executives at two different ransomware negotiation firms who maintained unusually close relations with the extortion group, KrebsOnSecurity has learned. Sources close to the investigation say one of the executives in the United States even helped ShinyHunters…</p>
+
+</li>
+<li id="s14">
+<p class="story-title"><a href="https://www.securityweek.com/connectwise-suspends-cloud-services-in-response-to-cyberattack/">ConnectWise Suspends Cloud Services in Response to Cyberattack</a></p>
+<p class="meta">SecurityWeek · 13:16 UTC</p>
+<p class="excerpt">The services remain unavailable as the company continues remediation and security validation. The post ConnectWise Suspends Cloud Services in Response to Cyberattack appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s15">
+<p class="story-title"><a href="https://thehackernews.com/2026/10/ghostaction-attackers-plant-credential.html">GhostAction Attackers Plant Credential Stealer Disguised as Font in 94 GitHub Repositories</a></p>
+<p class="meta">The Hacker News · 13:05 UTC</p>
+<p class="excerpt">The threat actor behind the GhostAction supply chain attack has expanded beyond injecting malicious GitHub Actions workflows into compromised projects to phish open-source developers and deliver a stealer malware disguised within a fake font file. The latest evolution, detailed by OpenSourceMalware, signals that the attackers are actively refining their modus operandi in response to steps</p>
+
+</li>
+<li id="s16">
+<p class="story-title"><a href="https://www.microsoft.com/en-us/security/blog/2026/10/19/agents-are-your-newest-insiders-security-must-move-at-their-speed/">Agents are your newest insiders. Security must move at their speed.</a></p>
+<p class="meta">Microsoft Security · 13:00 UTC</p>
+<p class="excerpt">New capabilities in Microsoft 365 E7 and Project Perception help organizations contain agent risk and adapt protection continuously. The post Agents are your newest insiders. Security must move at their speed. appeared first on Microsoft Security Blog.</p>
+
+</li>
+<li id="s17">
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-bug-that-hid-copilot-buttons-in-classic-outlook/">Microsoft fixes classic Outlook bug that hid Copilot buttons</a></p>
+<p class="meta">BleepingComputer · 12:44 UTC</p>
+<p class="excerpt">Microsoft has fixed a known issue that removed the Copilot Chat and Copilot buttons in the classic Outlook desktop mail client for some Windows users. [...]</p>
+
+</li>
+<li id="s20">
+<p class="story-title"><a href="https://thehackernews.com/2026/10/from-email-to-case-to-boardroom-how.html">From Email-to-Case to the Boardroom: How Inherited Agents Break Governance Built for Software</a></p>
+<p class="meta">The Hacker News · 11:50 UTC</p>
+<p class="excerpt">In Salesforce Agentforce, the recommended way to make an agent respond to events is a Flow: a record is created or a case is updated, and the Flow passes data into the agent&#39;s prompt. Separately, Email-to-Case and Web-to-Case turn inbound customer messages into case records; it is how airlines and hotels run support intake. Both are standard, documented, as-designed features. Chained together,</p>
+
+</li>
+<li id="s21">
+<p class="story-title"><a href="https://therecord.media/russia-cyberattack-firstvds-cloud">Hackers steal customer data from major Russian hosting provider FirstVDS</a></p>
+<p class="meta">The Record · 11:45 UTC</p>
+<p class="excerpt">Hackers have stolen passwords, access credentials and other sensitive data belonging to customers of Russian hosting provider FirstVDS after exploiting a vulnerability in software used to manage its servers.</p>
+
+</li>
+<li id="s23">
+<p class="story-title"><a href="https://thehackernews.com/2026/10/fake-web3-accelerator-uses-npm-packages.html">Fake Web3 Accelerator Uses npm Packages to Spread Malware and Hijack AI Agent Traffic</a></p>
+<p class="meta">The Hacker News · 10:06 UTC</p>
+<p class="excerpt">A fake Web3 accelerator has been observed pushing information stealers and backdoors to Windows and macOS systems using malicious npm packages under the pretext of offering free artificial intelligence (AI) credits for Anthropic Claude and Google Gemini, coding tools, and security audits. &quot;The tools delivered information-stealing malware and backdoors for macOS and Windows machines,&quot; Elastic</p>
+
+</li>
+<li id="s24">
+<p class="story-title"><a href="https://www.securityweek.com/mitre-attck-v20-catalogs-ai-abuse-mfa-bypass-water-utility-attacks/">MITRE ATT&amp;CK v20 Catalogs AI Abuse, MFA Bypass, Water Utility Attacks</a></p>
+<p class="meta">SecurityWeek · 09:37 UTC</p>
+<p class="excerpt">Defenders get 15 new detection strategies, six for Enterprise and nine for ICS, backed by 38 analytics. The post MITRE ATT&amp;CK v20 Catalogs AI Abuse, MFA Bypass, Water Utility Attacks appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s25">
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-october-windows-server-updates-cause-exchange-issues/">Microsoft: October Windows Server updates break Exchange sign-in, mail flow</a></p>
+<p class="meta">BleepingComputer · 08:58 UTC</p>
+<p class="excerpt">Microsoft has confirmed that this month&#39;s Windows Server security updates are causing OWA sign-in and mail delivery issues on some Exchange Server systems. [...]</p>
+
+</li>
+<li id="s26">
+<p class="story-title"><a href="https://www.securityweek.com/anthropic-acquires-confidential-ai-startup-opaque-systems/">Anthropic Acquires Confidential AI Startup Opaque Systems</a></p>
+<p class="meta">SecurityWeek · 07:45 UTC</p>
+<p class="excerpt">Opaque Systems has developed technology that lets AI systems use sensitive data while keeping it protected by the underlying hardware. The post Anthropic Acquires Confidential AI Startup Opaque Systems appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s28">
+<p class="story-title"><a href="https://thehackernews.com/2026/10/opencode-console-breach-may-have.html">OpenCode Console Breach May Have Exposed OpenAI, Anthropic, and Google API Keys</a></p>
+<p class="meta">The Hacker News · 06:07 UTC</p>
+<p class="excerpt">An intruder reached a legacy system at OpenCode on the night of October 16 and may have exposed the third-party AI provider keys that users had saved in OpenCode Console, the company said. Console is OpenCode&#39;s optional hosted service: a workspace saves its own OpenAI, Anthropic, or Google key there, and Console uses that key to call the provider so team members can use the models without</p>
 
 </li>
 </ol>
 </main>
-<footer>Generated 2026-10-18T15:15:40.854Z</footer>
+<footer>Generated 2026-10-19T18:12:55.454Z</footer>
 </body>
 </html>
