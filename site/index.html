@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#080b08">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22108%22%20height%3D%22108%22%20viewBox%3D%220%200%20108%20108%22%3E%0A%3Cpath%20d%3D%22M0%2C0h108v108h-108z%22%20fill%3D%22%23080b08%22%2F%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%237dffa4%22%20stroke-width%3D%227%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20transform%3D%22translate(54%2054)%20scale(1.45)%20translate(-54%20-54)%22%3E%0A%3Cpath%20d%3D%22M%2054%2044%20C%2054%2036%2043%2032.5%2036%2036%20C%2029.5%2039.5%2029.5%2048%2037.5%2052%20C%2046%2056%2054%2059.5%2053%2066.5%20C%2052%2073.5%2040.5%2075.5%2033%2071%22%2F%3E%0A%3Cpath%20d%3D%22M%2041.5%2027%20L%2041.5%2080%22%2F%3E%0A%3Cpath%20d%3D%22M%2064.5%2071.5%20L%2078.5%2071.5%22%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E">
-<title>Edge risk, poisoned updates and a grocery outage — 19 October 2026</title>
+<title>Ransomware keeps the VPN door open while everyone else patches — 20 October 2026</title>
 <style>
 :root { color-scheme: dark;
   --bg:#080b08; --fg:#c9f5d5; --bright:#7dffa4; --muted:#6aa87f; --dim:#4a7f5e;
@@ -120,148 +120,299 @@ footer::before { content: "// "; color: var(--dim); }
 </nav>
 </header>
 <main>
-<h1>Edge risk, poisoned updates and a grocery outage</h1>
-<p class="summary">8 of 28 stories written up · 12 of 12 sources · generated 18:12 UTC</p>
+<h1>Ransomware keeps the VPN door open while everyone else patches</h1>
+<p class="summary">8 of 52 stories written up · 12 of 12 sources · generated 16:13 UTC</p>
 
-<p class="standfirst">A retailer confirms malicious action behind cross-brand outages, a WordPress plugin update window is tied to a backdoor, and exploited edge devices plus an unpatched Wi-Fi flaw dominate the vulnerability picture.</p>
+<p class="standfirst">A KEV-listed PAN-OS authentication bypass with confirmed ransomware use leads today, with Qilin and INC operators still using it for initial access. Behind it: autonomous AI agents run against more than 1,200 websites, a new APT28 loader aimed at the defense industrial base, a public proof-of-concept for a critical FortiSIEM path traversal, and a Siemens DLL-sideloading flaw the vendor says is live in ClickFix lures. ConnectWise&#39;s Cloud Backup remains offline, an OVHcloud CLI release was poisoned for up to 94 minutes, and DHS has ordered DeepSeek out of federal civilian systems.</p>
+<aside class="vuln-summary"><h2>Vulnerability intelligence</h2><ul class="vuln-list"><li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-0257">CVE-2026-0257</a></span><span>CVSS 7.8</span><span>High</span><span>CISA KEV</span><span>CISA ransomware use: Known</span></li>
+<li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-106173">CVE-2026-106173</a></span><span>CVSS 9.8</span><span>Critical</span></li>
+<li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-110936">CVE-2026-110936</a></span><span>CVSS 8.4</span><span>High</span></li></ul></aside>
 <div class="article">
-<h2>Breaches</h2>
-<p>Ahold Delhaize confirmed that “malicious actions” were behind cyber outages that forced systems offline across most of its U.S. and European brands, affecting shoppers on both sides of the Atlantic <a href="https://therecord.media/ahold-delhaize-cyberattack-grocery">Ahold Delhaize confirms &#39;malicious actions&#39; behind cyber outages affecting grocery brands</a>. The confirmation covers malicious action but not the intrusion path or data impact; those details were not supplied.</p>
-<p>Copies of Rank Math PRO, the paid WordPress SEO plugin, downloaded from the vendor’s site or delivered as updates during a short window contained malware, the vendor said, and any site that installed and activated one should be treated as compromised <a href="https://thehackernews.com/2026/10/popular-wordpress-seo-plugin-rank-math.html">Popular WordPress SEO Plugin Rank Math PRO Hijacked to Deliver Self-Restoring Backdoor</a>. The payload is described as a self-restoring backdoor.</p>
-<p>A single compromised ETS SFTP login let intruders copy millions of California students’ records dating back to 2006 <a href="https://www.securityweek.com/one-compromised-login-exposed-millions-of-california-students-records/">One Compromised Login Exposed Millions of California Students’ Records</a>. The stated scope is millions of records and years of history.</p>
 <h2>Actively exploited</h2>
-<p>Attackers were observed weaponizing the Plex2Shell exploit chain against Plex servers within hours of disclosure, delivering cryptocurrency miners and proxy software <a href="https://www.securityweek.com/plex2shell-exploit-chain-weaponized-against-plex-servers-hours-after-disclosure/">Plex2Shell Exploit Chain Weaponized Against Plex Servers Hours After Disclosure</a>. Analysis: the short gap between disclosure and observed weaponization suggests fast tooling, but the supplied details do not identify vulnerable versions or actors.</p>
-<p>An exploited Fortinet bug has been linked to a stealthy FortiGate implant deployed against a telecommunications organization <a href="https://www.securityweek.com/exploited-fortinet-bug-linked-to-stealthy-fortigate-implant-in-telecom-hack/">Exploited Fortinet Bug Linked to Stealthy FortiGate Implant in Telecom Hack</a>. Analysis: the implant’s persistence on edge equipment is the salient risk; attribution and the exact exploitation path were not supplied.</p>
+<p>CVE-2026-0257 is a High-severity authentication bypass (CVSS 4.0: 7.8, CWE-565) in the GlobalProtect portal and gateway of PAN-OS, with a network-reachable vector requiring no privileges and no user interaction. The impact is narrow but valuable: bypassing security restrictions to establish an unauthorized VPN connection. Panorama and Cloud NGFW are not affected. The flaw is in CISA&#39;s KEV catalog with known ransomware campaign use, and Qilin and INC operators are reported to be using it to stand up rogue VPN sessions against a fix that has already shipped <a href="https://thehackernews.com/2026/10/qilin-and-inc-ransomware-groups-exploit.html">Qilin and INC Ransomware Groups Exploit Palo Alto Networks Flaw to Bypass MFA</a>. CISA&#39;s required action is vendor mitigations or discontinuation of the product, with a federal remediation due date — a US federal deadline, not a universal one. Analysis: the 7.8 undersells this. A patched, KEV-listed edge-device bypass that still yields initial access for extortion crews means unpatched GlobalProtect portals remain an active entry point; the supplied reporting does not say how many remain exposed or how victims were selected.</p>
+<p>Siemens has fixed a DLL-sideloading flaw in Software Center, CVE-2026-110936 (CVSS v4: 8.4, High, CWE-427), affecting versions below V4.0.9.8, and says it has been exploited in ClickFix attacks to deploy a remote access trojan <a href="https://thehackernews.com/2026/10/clickfix-attackers-exploit-siemens.html">ClickFix Attackers Exploit Siemens Software Center Flaw to Deploy Remote Access Trojan</a>. Worth reading the vector carefully: the NVD record describes an authenticated local attacker with high privileges placing a crafted DLL in a directory the application searches, so the flaw is the execution step rather than the lure — the ClickFix social-engineering stage supplies the user action the CVSS vector does not capture. It is also a confirmed KEV miss despite the vendor&#39;s exploitation statement, which is a reminder that catalog absence is not evidence of safety.</p>
+<h2>Research</h2>
+<p>A Chinese-speaking criminal pointed autonomous AI agents at company websites with almost no human help, and the campaign is unusually well documented because the operators left their control panels exposed on the internet <a href="https://thehackernews.com/2026/10/hackers-use-autonomous-ai-agents-to.html">Hackers Use Autonomous AI Agents to Breach Company Websites, Target Over 1,200 Sites</a>. The agents attempted more than 1,200 sites and reached websites belonging to more than 100 companies, including an industrial manufacturer and an appliance maker. No CVE is involved; the story is the economics. Analysis: agentic tooling collapses the cost of trying 1,200 targets, and the leaked panels give defenders a rare view of how the targeting was sequenced — the supplied text does not say what the agents succeeded in doing after access.</p>
+<p>APT28 has been attributed to attacks on two NATO member states, including a breach of a naval shipbuilder, deploying a backdoor called HOOKEDGE alongside a previously unseen reflective loader; researchers track the cluster as Swallowtail <a href="https://thehackernews.com/2026/10/russian-apt28-breaches-nato-naval.html">Russian APT28 Breaches NATO Naval Shipbuilder in NATO Country, Deploys New Reflective Loader</a>. For anyone defending the defense industrial base, the loader and backdoor are the actionable part — new tooling means existing signatures are the wrong place to look.</p>
 <h2>Vulnerabilities</h2>
-<p>Drupal warned of fast exploitation risk for critical core remote-code-execution flaws affecting the Entity List and Field UI modules, with exploit paths available through contributed modules <a href="https://www.securityweek.com/drupal-warns-of-fast-exploitation-risk-for-critical-core-rce-flaw/">Drupal Warns of Fast Exploitation Risk for Critical Core RCE Flaw</a>. No CVE or confirmation of actual exploitation was supplied.</p>
-<p>F5 released out-of-band patches for multiple NGINX flaws, including three critical-severity vulnerabilities that can allow code execution <a href="https://www.bleepingcomputer.com/news/security/f5-releases-out-of-band-patches-for-critical-nginx-vulnerabilities/">F5 releases out-of-band patches for critical NGINX vulnerabilities</a>. Analysis: code execution in a web server raises priority, though exposure depends on deployment.</p>
-<p>An unpatched Broadcom Wi-Fi flaw lets an attacker within radio range run code as root on Broadcom-based routers without the network password or a pairing step <a href="https://thehackernews.com/2026/10/unpatched-broadcom-wi-fi-flaw-lets.html">Unpatched Broadcom Wi-Fi Flaw Lets Attackers in Range Run Code as Root on Routers</a>. The researcher demonstrated it against home gateways from three Belgian providers, including reading a Wi-Fi password off one device. Analysis: proximity plus root execution against ISP-supplied gateways makes this a practical concern; no patch was supplied.</p>
+<p>A public proof-of-concept now exists for CVE-2026-106173, a path traversal (CWE-22) in FortiSIEM that permits unauthenticated remote code execution <a href="https://thehackernews.com/2026/10/critical-fortisiem-flaw-gets-public.html">Critical FortiSIEM Flaw Gets Public Exploit PoC for Unauthenticated Remote Code Execution</a>. The severity figures in the supplied material disagree: reporting gives 9.4, while the NVD record carries CVSS 3.1 at 9.8 — both Critical, and the NVD description names FortiSIEM 7.5.0. Either way this is a patch-now item for anything exposing the platform, because the PoC lowers the skill floor. It is a confirmed KEV miss; the supplied evidence does not report in-the-wild exploitation, and the PoC&#39;s mechanics are not described.</p>
+<h2>Breaches</h2>
+<p>ConnectWise says it has strengthened administrative-access protections and is resetting accounts and replacing application credentials after unauthorized access to application identities associated with Cloud Backup, which remains offline <a href="https://thehackernews.com/2026/10/connectwise-resets-credentials-as-cloud.html">ConnectWise Resets Credentials as Cloud Backup Remains Offline After Security Incident</a>. Analysis: the unresolved question for partners is downstream — MSP tooling and Microsoft 365 tenant exposure is what should be scoped now. The supplied material does not state whether customer data was accessed or how many partners are affected.</p>
+<p>An attacker used a hijacked contributor account to replace the download archives on five existing OVHcloud CLI releases with a build designed to steal secrets stored on disk <a href="https://thehackernews.com/2026/10/hackers-hijack-five-ovhcloud-cli.html">Hackers Hijack Five OVHcloud CLI Releases to Distribute Secret-Stealing Malware</a>. The malicious files were live for up to 94 minutes, from 12:47 to 14:21 UTC. Short windows are not reassuring here: mirror caches and CI pipelines that pulled during that gap keep the tainted artifact long after the releases were pulled.</p>
+<h2>Industry</h2>
+<p>DHS is ordering federal civilian agencies to stop using DeepSeek products and remove them from government systems <a href="https://www.bleepingcomputer.com/news/security/dhs-bans-deepseek-products-across-us-federal-civilian-agencies/">DHS bans DeepSeek products across US federal civilian agencies</a>. Analysis: policy-driven removal of AI tooling sets an expectation that extends past the agencies themselves — contractors handling federal work should assume the same posture is coming. No effective date, scope exemptions or enforcement mechanism are in the supplied excerpt.</p>
 
 </div>
 <h2 class="also-heading">Also collected today</h2>
 <ol class="stories">
 <li id="s1">
-<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/opencode-hack-exposes-api-keys-amid-ai-distillation-attacks/">OpenCode hack exposes API keys amid AI distillation attacks</a></p>
-<p class="meta">BleepingComputer · 17:27 UTC</p>
-<p class="excerpt">The open-source AI coding project OpenCode has notified a small number of users that API keys they used with external providers were exposed in a security breach. [...]</p>
+<p class="story-title"><a href="https://www.securityweek.com/us-agencies-detail-incident-response-practices-for-rogue-ai-agents/">US Agencies Detail Incident Response Practices for Rogue AI Agents</a></p>
+<p class="meta">SecurityWeek · 15:45 UTC</p>
+<p class="excerpt">NIST, CISA and NSA share ten voluntary practices for preparing for, detecting, responding to, recovering from, and reporting rogue AI agent incidents. The post US Agencies Detail Incident Response Practices for Rogue AI Agents appeared first on SecurityWeek.</p>
 
 </li>
 <li id="s4">
-<p class="story-title"><a href="https://therecord.media/russian-social-media-giant-vk-faces-disruptions-drone-strike-data-center">Russian social media giant VK faces disruptions after data center drone strike</a></p>
-<p class="meta">The Record · 15:55 UTC</p>
-<p class="excerpt">The disruptions began Sunday, when users complained of difficulties loading news feeds, playing music and accessing other features of VK&#39;s platforms.</p>
+<p class="story-title"><a href="https://blog.talosintelligence.com/theres-only-so-much-code-the-rise-in-vulnerability-numbers/">There&#39;s only so much code: the rise in vulnerability numbers</a></p>
+<p class="meta">Cisco Talos · 15:31 UTC</p>
+<p class="excerpt">The September Microsoft Tuesday release included 975 vulnerability advisories. This month, 1,415 vulnerabilities were just dropped. Compared to a pre-June average of 100 a month, that increase is staggering. Where did they come from? And what does the future look like?</p>
+
+</li>
+<li id="s5">
+<p class="story-title"><a href="https://therecord.media/eu-cyber-law-wont-force-fixes-for-fridges-in-french-attack">EU cyber law won’t force fixes for fridge controllers hit in French attack</a></p>
+<p class="meta">The Record · 14:55 UTC</p>
+<p class="excerpt">The EU’s Cyber Resilience Act that took effect last month only requires companies to fix vulnerabilities and issue free updates during a product&#39;s support period, which manufacturers define.</p>
 
 </li>
 <li id="s6">
-<p class="story-title"><a href="https://www.securityweek.com/rank-math-pro-wordpress-plugin-compromised-in-supply-chain-attack/">Rank Math PRO WordPress Plugin Compromised in Supply Chain Attack</a></p>
-<p class="meta">SecurityWeek · 15:20 UTC</p>
-<p class="excerpt">Hackers injected malware into Rank Math PRO version 3.0.123 packages distributed between October 15 and October 16. The post Rank Math PRO WordPress Plugin Compromised in Supply Chain Attack appeared first on SecurityWeek.</p>
-
-</li>
-<li id="s7">
-<p class="story-title"><a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-game-app-crashes-caused-by-windows-kb5124010-preview-update/">Microsoft fixes game, app crashes caused by recent Windows update</a></p>
-<p class="meta">BleepingComputer · 14:55 UTC</p>
-<p class="excerpt">Microsoft has resolved a bug that caused games and apps using AC-3 (Dolby Digital) audio decoding to crash after installing the September 2026 Windows 11 preview update (KB5124010). [...]</p>
+<p class="story-title"><a href="https://www.darkreading.com/cyberattacks-data-breaches/hackers-abuse-ai-pen-test-tool-cairn">Hackers Abuse AI Pen-Test Tool Cairn to Automate Massive Attack Spree</a></p>
+<p class="meta">Dark Reading · 14:36 UTC</p>
+<p class="excerpt">A Chinese-speaking attacker has compromised hundreds of websites across the globe, looting from big fish like John Deere, SharkNinja, and engine manufacturer Cummins.</p>
 
 </li>
 <li id="s8">
-<p class="story-title"><a href="https://www.darkreading.com/vulnerabilities-threats/onlyfans-copyright-takedowns-expose-compromised-websites">OnlyFans Copyright Takedowns Expose Compromised Websites</a></p>
-<p class="meta">Dark Reading · 14:28 UTC</p>
-<p class="excerpt">Copyright takedown requests tied to OnlyFans and other adult content creators are revealing how attackers exploit vulnerable university and government websites to manipulate search results. UpGuard&#39;s Greg Pollock explains what universities, government websites, and security teams need to think about next.</p>
-
-</li>
-<li id="s9">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/weekly-recap-98-zero-days-rogue-ai.html">⚡ Weekly Recap: 98 Zero-Days, Rogue AI Agents, $100M Crypto Theft, 700 Supermarkets Hit and More</a></p>
-<p class="meta">The Hacker News · 14:14 UTC</p>
-<p class="excerpt">The worst problems don&#39;t always come with a warning. Sometimes they arrive through a service everyone trusts, a device someone bought, or a system nobody thought to check. By the time something looks wrong, the damage may already be done. This week had plenty of that. Trusted connections became a problem. Hardware wasn&#39;t as safe as it looked. Old bugs found new victims, and some systems were</p>
+<p class="story-title"><a href="https://therecord.media/aomei-yet-to-notify-customers-hijack-software">AOMEI yet to notify customers after hackers hijacked its software updates</a></p>
+<p class="meta">The Record · 14:11 UTC</p>
+<p class="excerpt">In an email, the Hong Kong-registered company confirmed to Recorded Future News that hackers repeatedly altered configuration files on its update servers between April and July, redirecting the software to download malware for minutes at a time.</p>
 
 </li>
 <li id="s10">
-<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/inside-the-underground-market-for-know-your-client-services/">Inside the Underground Market for Know Your Client Services</a></p>
-<p class="meta">BleepingComputer · 14:00 UTC</p>
-<p class="excerpt">Cybercriminals are selling forged identity documents, deepfake videos, and live verification services to help buyers bypass Know Your Client (KYC) checks. Flare examines how these underground services operate and the techniques used to create and maintain fraudulent verified accounts. [...]</p>
+<p class="story-title"><a href="https://therecord.media/anti-putin-messages-disrupt-russian-education-platform">Anti-Putin messages disrupt nationwide school assessments in Russia</a></p>
+<p class="meta">The Record · 14:05 UTC</p>
+<p class="excerpt">A pro-Ukraine group that says it operates within Russia took responsibility for anti-Putin messages appearing on an education assessment platform. Authorities said they had restored systems.</p>
 
 </li>
 <li id="s11">
-<p class="story-title"><a href="https://www.darkreading.com/vulnerabilities-threats/cybersecurity-lexicon-vulnerability-discovery-resilience">The Evolving Cybersecurity Lexicon: Vulnerability Discovery to Resilience</a></p>
-<p class="meta">Dark Reading · 14:00 UTC</p>
-<p class="excerpt">An industry-wide laser focus on vulnerabilities has left cybersecurity teams without enough room to strategize for resilience.</p>
+<p class="story-title"><a href="https://www.securityweek.com/aomei-backupper-compromised-in-short-burst-supply-chain-campaign/">AOMEI Backupper Compromised in Short-Burst Supply Chain Campaign</a></p>
+<p class="meta">SecurityWeek · 13:51 UTC</p>
+<p class="excerpt">Across multiple short compromise windows, users were served a downloader for the ShinyRoad modular backdoor framework. The post AOMEI Backupper Compromised in Short-Burst Supply Chain Campaign appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s12">
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/cjis-v61-compliance-5-practical-priorities-for-agencies/">CJIS v6.1 Compliance: 5 Practical Priorities for Agencies</a></p>
+<p class="meta">BleepingComputer · 13:51 UTC</p>
+<p class="excerpt">CJIS v6.1 requires agencies to maintain strong authentication, account security, and audit controls while demonstrating ongoing compliance. Specops outlines five practical priorities covering MFA, account management, passwords, logging, and audit readiness. [...]</p>
 
 </li>
 <li id="s13">
-<p class="story-title"><a href="https://krebsonsecurity.com/2026/10/feds-suspect-ransom-negotiator-ran-shinyhunters-extortion-site/">Feds Suspect Ransom Negotiator Ran ShinyHunters Extortion Site</a></p>
-<p class="meta">Krebs on Security · 13:48 UTC</p>
-<p class="excerpt">U.S. federal investigators pursuing the ShinyHunters hacking group that recently stole highly sensitive data from the FBI have identified executives at two different ransomware negotiation firms who maintained unusually close relations with the extortion group, KrebsOnSecurity has learned. Sources close to the investigation say one of the executives in the United States even helped ShinyHunters…</p>
+<p class="story-title"><a href="https://www.securityweek.com/the-key-to-ai-software-security-isnt-speed-its-maturity/">The Key to AI Software Security Isn’t Speed, It’s Maturity</a></p>
+<p class="meta">SecurityWeek · 13:34 UTC</p>
+<p class="excerpt">Where your developers sit on the AI adoption scale has a real impact on how you are addressing security risk. The post The Key to AI Software Security Isn’t Speed, It’s Maturity appeared first on SecurityWeek.</p>
 
 </li>
 <li id="s14">
-<p class="story-title"><a href="https://www.securityweek.com/connectwise-suspends-cloud-services-in-response-to-cyberattack/">ConnectWise Suspends Cloud Services in Response to Cyberattack</a></p>
-<p class="meta">SecurityWeek · 13:16 UTC</p>
-<p class="excerpt">The services remain unavailable as the company continues remediation and security validation. The post ConnectWise Suspends Cloud Services in Response to Cyberattack appeared first on SecurityWeek.</p>
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/hacker-gets-8-years-for-stealing-33-million-from-taxpayers/">Hacker gets 8 years for stealing $3.3 million from taxpayers</a></p>
+<p class="meta">BleepingComputer · 13:18 UTC</p>
+<p class="excerpt">A Nigerian national was sentenced to eight years in prison for his involvement in a series of spearphishing attacks targeting US tax preparation businesses since 2019. [...]</p>
 
 </li>
 <li id="s15">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/ghostaction-attackers-plant-credential.html">GhostAction Attackers Plant Credential Stealer Disguised as Font in 94 GitHub Repositories</a></p>
-<p class="meta">The Hacker News · 13:05 UTC</p>
-<p class="excerpt">The threat actor behind the GhostAction supply chain attack has expanded beyond injecting malicious GitHub Actions workflows into compromised projects to phish open-source developers and deliver a stealer malware disguised within a fake font file. The latest evolution, detailed by OpenSourceMalware, signals that the attackers are actively refining their modus operandi in response to steps</p>
+<p class="story-title"><a href="https://www.securityweek.com/ahold-delhaize-restoring-services-disrupted-by-cyberattack/">Ahold Delhaize Restoring Services Disrupted by Cyberattack</a></p>
+<p class="meta">SecurityWeek · 13:02 UTC</p>
+<p class="excerpt">The company has restored many websites and apps in Europe and expects e-commerce brands in the US to be restored in days. The post Ahold Delhaize Restoring Services Disrupted by Cyberattack appeared first on SecurityWeek.</p>
 
 </li>
 <li id="s16">
-<p class="story-title"><a href="https://www.microsoft.com/en-us/security/blog/2026/10/19/agents-are-your-newest-insiders-security-must-move-at-their-speed/">Agents are your newest insiders. Security must move at their speed.</a></p>
-<p class="meta">Microsoft Security · 13:00 UTC</p>
-<p class="excerpt">New capabilities in Microsoft 365 E7 and Project Perception help organizations contain agent risk and adapt protection continuously. The post Agents are your newest insiders. Security must move at their speed. appeared first on Microsoft Security Blog.</p>
+<p class="story-title"><a href="https://thehackernews.com/2026/10/pegasus-spyware-infection-confirmed-on.html">Pegasus Spyware Infection Confirmed on Serbian University Rector&#39;s iPhone Days Before Election</a></p>
+<p class="meta">The Hacker News · 12:59 UTC</p>
+<p class="excerpt">The iPhone of Vladan Đokić, rector of the University of Belgrade and a prominent supporter of Serbia&#39;s student protest movement, was infected with NSO Group&#39;s Pegasus spyware in 2026, the Citizen Lab said on October 19. The finding came six days before Serbia&#39;s October 25 snap parliamentary election. The infection used a zero-click exploit, meaning Đokić did not have to tap a link or</p>
 
 </li>
 <li id="s17">
-<p class="story-title"><a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-bug-that-hid-copilot-buttons-in-classic-outlook/">Microsoft fixes classic Outlook bug that hid Copilot buttons</a></p>
-<p class="meta">BleepingComputer · 12:44 UTC</p>
-<p class="excerpt">Microsoft has fixed a known issue that removed the Copilot Chat and Copilot buttons in the classic Outlook desktop mail client for some Windows users. [...]</p>
+<p class="story-title"><a href="https://www.securityweek.com/ai-platform-cairn-abused-to-hack-over-100-organizations/">AI Platform Cairn Abused to Hack Over 100 Organizations</a></p>
+<p class="meta">SecurityWeek · 12:47 UTC</p>
+<p class="excerpt">At least three threat actors have been abusing Cairn for persistent access and financial theft. The post AI Platform Cairn Abused to Hack Over 100 Organizations appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s18">
+<p class="story-title"><a href="https://www.securityweek.com/ex-openai-worker-accused-of-bugging-conference-room-planned-to-fly-to-saudi-arabia-prosecutors-say/">Ex-OpenAI Worker Accused of Bugging Conference Room Planned to Fly to Saudi Arabia, Prosecutors Say</a></p>
+<p class="meta">SecurityWeek · 12:33 UTC</p>
+<p class="excerpt">Abdulrahman Alfozan’s wife and young son also left the country the day after the 35-year-old Saudi national’s arrest. The post Ex-OpenAI Worker Accused of Bugging Conference Room Planned to Fly to Saudi Arabia, Prosecutors Say appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s19">
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/microsoft/windows-server-2025-gets-support-for-quick-machine-recovery/">Windows Server 2025 gets support for quick machine recovery</a></p>
+<p class="meta">BleepingComputer · 12:16 UTC</p>
+<p class="excerpt">Microsoft announced that IT administrators can now use quick machine recovery on Windows Server 2025 after installing the October 2026 security update. [...]</p>
 
 </li>
 <li id="s20">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/from-email-to-case-to-boardroom-how.html">From Email-to-Case to the Boardroom: How Inherited Agents Break Governance Built for Software</a></p>
-<p class="meta">The Hacker News · 11:50 UTC</p>
-<p class="excerpt">In Salesforce Agentforce, the recommended way to make an agent respond to events is a Flow: a record is created or a case is updated, and the Flow passes data into the agent&#39;s prompt. Separately, Email-to-Case and Web-to-Case turn inbound customer messages into case records; it is how airlines and hotels run support intake. Both are standard, documented, as-designed features. Chained together,</p>
+<p class="story-title"><a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-293-01">HMS Networks PEAK-System PCAN Windows drivers</a></p>
+<p class="meta">CISA Advisories · 12:00 UTC</p>
+<p class="excerpt">View CSAF Summary Successful exploitation of these vulnerabilities could crash the Windows kernel. The following versions of HMS Networks PEAK-System PCAN Windows drivers are affected: PEAK-System Device Driver Setup &lt;=5.1.2.1151 (CVE-2026-109576, CVE-2026-101103, CVE-2026-94188, CVE-2026-103672, CVE-2026-110322, CVE-2026-105960) PCAN Windows CAN device drivers &lt;=5.1.2 (CVE-2026-109576,…</p>
 
 </li>
 <li id="s21">
-<p class="story-title"><a href="https://therecord.media/russia-cyberattack-firstvds-cloud">Hackers steal customer data from major Russian hosting provider FirstVDS</a></p>
-<p class="meta">The Record · 11:45 UTC</p>
-<p class="excerpt">Hackers have stolen passwords, access credentials and other sensitive data belonging to customers of Russian hosting provider FirstVDS after exploiting a vulnerability in software used to manage its servers.</p>
+<p class="story-title"><a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-293-02">WAGO OS Linux</a></p>
+<p class="meta">CISA Advisories · 12:00 UTC</p>
+<p class="excerpt">View CSAF Summary Two vulnerabilities in the Web-Based Management (WBM) interface of WAGO CC100, PFC100 G2, PFC200 G2, TP600, Edge Controller and WP400 devices allow an authenticated low-privileged user to bypass intended privilege boundaries. The issues affect both the routing configuration functionality and the authorization model for PROFIBUS configuration management. The following versions of…</p>
+
+</li>
+<li id="s22">
+<p class="story-title"><a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-293-03">Moxa AIG-302 ThingsPro Edge</a></p>
+<p class="meta">CISA Advisories · 12:00 UTC</p>
+<p class="excerpt">View CSAF Summary Successful exploitation of these vulnerabilities could allow an attacker to obtain and disclose sensitive information. The following versions of Moxa AIG-302 ThingsPro Edge are affected: Moxa AIG-302 ThingsPro Edge firmware Software Upgrades, and click Check for upgrades to check for and obtain the update. Mitigation Users can download the v1.4.1 patch manually from either the…</p>
 
 </li>
 <li id="s23">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/fake-web3-accelerator-uses-npm-packages.html">Fake Web3 Accelerator Uses npm Packages to Spread Malware and Hijack AI Agent Traffic</a></p>
-<p class="meta">The Hacker News · 10:06 UTC</p>
-<p class="excerpt">A fake Web3 accelerator has been observed pushing information stealers and backdoors to Windows and macOS systems using malicious npm packages under the pretext of offering free artificial intelligence (AI) credits for Anthropic Claude and Google Gemini, coding tools, and security audits. &quot;The tools delivered information-stealing malware and backdoors for macOS and Windows machines,&quot; Elastic</p>
+<p class="story-title"><a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-293-04">Hitachi Energy MicroSCADA X SYS600 Product</a></p>
+<p class="meta">CISA Advisories · 12:00 UTC</p>
+<p class="excerpt">View CSAF Summary Hitachi Energy is aware of multiple vulnerabilities that affect MicroSCADA X SYS600 product versions listed in this document. These vulnerabilities can be exploited to carry out various attacks on the product. Please refer to the Recommended Immediate Actions for information about the mitigation/remediation. The following versions of Hitachi Energy MicroSCADA X SYS600 Product…</p>
 
 </li>
 <li id="s24">
-<p class="story-title"><a href="https://www.securityweek.com/mitre-attck-v20-catalogs-ai-abuse-mfa-bypass-water-utility-attacks/">MITRE ATT&amp;CK v20 Catalogs AI Abuse, MFA Bypass, Water Utility Attacks</a></p>
-<p class="meta">SecurityWeek · 09:37 UTC</p>
-<p class="excerpt">Defenders get 15 new detection strategies, six for Enterprise and nine for ICS, backed by 38 analytics. The post MITRE ATT&amp;CK v20 Catalogs AI Abuse, MFA Bypass, Water Utility Attacks appeared first on SecurityWeek.</p>
+<p class="story-title"><a href="https://thehackernews.com/2026/10/whatsapp-hid-instructions-in-help-pages.html">WhatsApp Hid Instructions in Help Pages Telling Its AI Chatbot Not to Recommend Privacy Regulators</a></p>
+<p class="meta">The Hacker News · 11:41 UTC</p>
+<p class="excerpt">WhatsApp&#39;s help pages carried hidden instructions for its support chatbot that told it not to recommend a data protection authority or regulator to users who could no longer delete their accounts, even though WhatsApp&#39;s own privacy policy for Europe tells users they can complain to one. The text sat in the pages&#39; code, never shown on screen, until it was removed by October 18. Whether the</p>
 
 </li>
 <li id="s25">
-<p class="story-title"><a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-october-windows-server-updates-cause-exchange-issues/">Microsoft: October Windows Server updates break Exchange sign-in, mail flow</a></p>
-<p class="meta">BleepingComputer · 08:58 UTC</p>
-<p class="excerpt">Microsoft has confirmed that this month&#39;s Windows Server security updates are causing OWA sign-in and mail delivery issues on some Exchange Server systems. [...]</p>
+<p class="story-title"><a href="https://thehackernews.com/2026/10/what-security-teams-can-do-to-tame-wild.html">What Security Teams Can Do To Tame Wild Code</a></p>
+<p class="meta">The Hacker News · 11:33 UTC</p>
+<p class="excerpt">A sales manager builds an AI-assisted workflow to route leads. It connects to customer records, summarizes inbound requests, and posts updates to a shared channel. The workflow saves time, reduces manual work, and soon becomes part of the team’s daily routine. Across the same organization, employees are building useful apps, agents, and automations faster than existing processes can support them</p>
 
 </li>
 <li id="s26">
-<p class="story-title"><a href="https://www.securityweek.com/anthropic-acquires-confidential-ai-startup-opaque-systems/">Anthropic Acquires Confidential AI Startup Opaque Systems</a></p>
-<p class="meta">SecurityWeek · 07:45 UTC</p>
-<p class="excerpt">Opaque Systems has developed technology that lets AI systems use sensitive data while keeping it protected by the underlying hardware. The post Anthropic Acquires Confidential AI Startup Opaque Systems appeared first on SecurityWeek.</p>
+<p class="story-title"><a href="https://thehackernews.com/2026/10/go-issues-emergency-update-blocking.html">Go Issues Emergency Update Blocking Eight CA Keys Over Undisclosed Security Concerns</a></p>
+<p class="meta">The Hacker News · 11:32 UTC</p>
+<p class="excerpt">Go 1.27.3 and Go 1.26.10, released on October 20, make Go&#39;s certificate verifier reject any certificate chain that passes through one of eight intermediate certificate authority keys. Programs built on the new release will refuse connections to sites and services whose certificates were issued under those keys. The Go team says the keys belong to one certificate authority it has not</p>
+
+</li>
+<li id="s27">
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/ovhcloud-cli-releases-backdoored-on-github-to-steal-developer-secrets/">OVHcloud CLI releases backdoored on GitHub to steal developer secrets</a></p>
+<p class="meta">BleepingComputer · 11:31 UTC</p>
+<p class="excerpt">French cloud and hosting provider OVHcloud is warning users that attackers compromised its open-source command-line interface (CLI) tool to distribute information-stealing malware. [...]</p>
 
 </li>
 <li id="s28">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/opencode-console-breach-may-have.html">OpenCode Console Breach May Have Exposed OpenAI, Anthropic, and Google API Keys</a></p>
-<p class="meta">The Hacker News · 06:07 UTC</p>
-<p class="excerpt">An intruder reached a legacy system at OpenCode on the night of October 16 and may have exposed the third-party AI provider keys that users had saved in OpenCode Console, the company said. Console is OpenCode&#39;s optional hosted service: a workspace saves its own OpenAI, Anthropic, or Google key there, and Console uses that key to call the provider so team members can use the models without</p>
+<p class="story-title"><a href="https://www.securityweek.com/microsoft-targets-rogue-ai-agents-with-dynamic-permissions-risk-scoring/">Microsoft Targets Rogue AI Agents With Dynamic Permissions, Risk Scoring</a></p>
+<p class="meta">SecurityWeek · 11:30 UTC</p>
+<p class="excerpt">Microsoft says companies should treat AI agents as insiders, and is adding controls that grant access per task and tighten it as an agent’s risk rises. The post Microsoft Targets Rogue AI Agents With Dynamic Permissions, Risk Scoring appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s29">
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/ahold-delhaize-cyberattack-affects-services-across-us-and-europe/">Ahold Delhaize: Cyberattack affects services across US and Europe</a></p>
+<p class="meta">BleepingComputer · 11:18 UTC</p>
+<p class="excerpt">Ahold Delhaize, one of the world&#39;s largest food retail chains, confirmed that last week&#39;s cyberattack disrupted services at stores across Europe and the United States. [...]</p>
+
+</li>
+<li id="s32">
+<p class="story-title"><a href="https://www.securityweek.com/hackers-steal-1-8-million-records-from-nikkei/">Hackers Steal 1.8 Million Records From Nikkei</a></p>
+<p class="meta">SecurityWeek · 10:35 UTC</p>
+<p class="excerpt">The compromised information includes names, addresses, email addresses, phone numbers, and dates of birth. The post Hackers Steal 1.8 Million Records From Nikkei appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s33">
+<p class="story-title"><a href="https://therecord.media/european-defense-contractors-fancy-bear-espionage">Defense contractors in two NATO allies hacked in recent Russia-linked campaign</a></p>
+<p class="meta">The Record · 10:00 UTC</p>
+<p class="excerpt">The Russian group known as APT28 and Fancy Bear used a recently documented backdoor to dwell in the networks of two defense contractors and a law enforcement agency in two NATO allies, researchers said.</p>
+
+</li>
+<li id="s34">
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/revolut-outage-disrupts-online-banking-operations-worldwide/">Revolut outage disrupts online banking operations worldwide</a></p>
+<p class="meta">BleepingComputer · 09:46 UTC</p>
+<p class="excerpt">Fintech company Revolut is working to resolve a massive outage that disrupted most of its services worldwide earlier today. [...]</p>
+
+</li>
+<li id="s35">
+<p class="story-title"><a href="https://www.securityweek.com/970000-medi-cal-members-affected-by-paradigm-healthcare-data-breach/">970,000 Medi-Cal Members Affected by Paradigm Healthcare Data Breach</a></p>
+<p class="meta">SecurityWeek · 09:33 UTC</p>
+<p class="excerpt">Paradigm Healthcare Services detected an intrusion in October 2025, but it took nearly a year to start notifying affected individuals. The post 970,000 Medi-Cal Members Affected by Paradigm Healthcare Data Breach appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s38">
+<p class="story-title"><a href="https://securelist.com/paper-unicorn-warehouse-security/121537/">The journey of a paper unicorn: adventures inside a modern warehouse</a></p>
+<p class="meta">Securelist · 07:00 UTC</p>
+<p class="excerpt">Kaspersky experts explain the security issues affecting warehouse environments. We break down initial access vectors specific to warehouses, and discuss the impact of a compromise.</p>
+
+</li>
+<li id="s39">
+<p class="story-title"><a href="https://thehackernews.com/2026/10/ex-openai-engineer-detained-in-spy.html">Ex-OpenAI Engineer Detained in Spy Device Case as Saudi Royal Contacts Emerge</a></p>
+<p class="meta">The Hacker News · 05:53 UTC</p>
+<p class="excerpt">A U.S. court on Monday granted the U.S. government&#39;s request to detain a former OpenAI engineer accused of planting a recording device in an executive conference room at the company&#39;s San Francisco office to allegedly steal sensitive secrets. In a new court filing Sunday, prosecutors revealed that Abdulrahman Alfozan, a 35-year-old Saudi national, was &quot;in frequent communications via WhatsApp</p>
+
+</li>
+<li id="s40">
+<p class="story-title"><a href="https://thehackernews.com/2026/10/romulus-clickfix-platform-tricks-users.html">Hackers Use New ROMULUS ClickFix Platform to Deliver LegionLoader and Other Malware</a></p>
+<p class="meta">The Hacker News · 04:05 UTC</p>
+<p class="excerpt">Cybersecurity researchers have disclosed details of a ClickFix delivery platform called ROMULUS that&#39;s being used to distribute malware such as Legion Loader. According to Forescout Research - Vedere Labs, ROMULUS is akin to a malware delivery service that employs ClickFix-style lures on bogus landing pages to trick unsuspecting users into running malicious commands and infecting their own</p>
+
+</li>
+<li id="s41">
+<p class="story-title"><a href="https://unit42.paloaltonetworks.com/active-exploitation-of-pan-os-cve-2026-0257/">Threat Brief: Active Exploitation of PAN-OS CVE-2026-0257 (Updated October 19)</a></p>
+<p class="meta">Unit 42 · 22:35 UTC</p>
+<ul class="vuln-list vuln-meta"><li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-0257">CVE-2026-0257</a></span><span>CVSS 7.8</span><span>High</span><span>CISA KEV</span><span>CISA ransomware use: Known</span></li></ul>
+<p class="excerpt">Ransomware operators including Spikey Scorpius (aka Qilin) and Tarnished Scorpius (aka Inc) are exploiting PAN-OS vulnerability CVE-2026-0257. The post Threat Brief: Active Exploitation of PAN-OS CVE-2026-0257 (Updated October 19) appeared first on Unit 42.</p>
+
+</li>
+<li id="s42">
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/nikkei-discloses-third-data-breach-in-a-month-18m-records-exposed/">Nikkei discloses third data breach in a month, 1.8M records exposed</a></p>
+<p class="meta">BleepingComputer · 21:49 UTC</p>
+<p class="excerpt">Nikkei Inc. disclosed a new data breach, the third in about a month, that exposed 1.83 million personal information records. [...]</p>
+
+</li>
+<li id="s43">
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/wordpress-seo-plugin-rank-math-compromised-to-backdoor-websites/">WordPress SEO plugin Rank Math compromised to backdoor websites</a></p>
+<p class="meta">BleepingComputer · 21:24 UTC</p>
+<p class="excerpt">Some downloads of the Rank Math PRO WordPress plugin from the vendor&#39;s official website carried malware that planted hidden backdoors in a supply-chain attack last week. [...]</p>
+
+</li>
+<li id="s44">
+<p class="story-title"><a href="https://www.darkreading.com/threat-intelligence/microsoft-tech-support-scam-operation">Researchers Infiltrate Microsoft Tech Support Scam Operation</a></p>
+<p class="meta">Dark Reading · 21:13 UTC</p>
+<p class="excerpt">A large-scale scam operation impersonating Microsoft uses a malicious traffic distribution system (TDS) run by a Russian organization and abuses thousands of Cloudflare links.</p>
+
+</li>
+<li id="s45">
+<p class="story-title"><a href="https://www.darkreading.com/data-privacy/adfection-online-ads-spyware-delivery">&#39;AdFection&#39; Turns Ad Impressions Into Zero-Click Spyware Delivery</a></p>
+<p class="meta">Dark Reading · 19:55 UTC</p>
+<p class="excerpt">Spyware vendors are exploiting targeted ad bidding in the digital ecosystem to identify and track individuals and organizations of interest.</p>
+
+</li>
+<li id="s46">
+<p class="story-title"><a href="https://therecord.media/whatsapp-denied-appeal-alleged-nso-group-violation-injunction">Judge denies WhatsApp’s bid to hold spyware maker in contempt for allegedly targeting users</a></p>
+<p class="meta">The Record · 19:49 UTC</p>
+<p class="excerpt">WhatsApp argued that NSO Group violated a 2025 injunction against using the messaging app to spread spyware. A federal judge said WhatsApp hurt its case by not revealing enough information.</p>
+
+</li>
+<li id="s47">
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/hackers-hijack-aomei-update-servers-to-secretly-spread-malware/">Hackers hijack AOMEI update servers to secretly spread malware</a></p>
+<p class="meta">BleepingComputer · 19:40 UTC</p>
+<p class="excerpt">Hackers reportedly compromised AOMEI&#39;s servers to distribute malware through a built-in promotional feature in its backup software, briefly tampering with configuration files before restoring them to their original state to hide the attacks.a [...]</p>
+
+</li>
+<li id="s48">
+<p class="story-title"><a href="https://www.darkreading.com/identity-access-management-security/connectwise-disables-cloud-backups-downstream-msps">ConnectWise Disables Cloud Backups Amid Concerns for Downstream MSPs</a></p>
+<p class="meta">Dark Reading · 19:19 UTC</p>
+<p class="excerpt">Researchers say attackers authenticated into Microsoft 365 tenants using ConnectWise credentials; ConnectWise says customer impact remains unconfirmed.</p>
+
+</li>
+<li id="s49">
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/bullhorn-takes-staffing-platform-offline-to-contain-cyberattack/">Bullhorn takes staffing platform offline to contain cyberattack</a></p>
+<p class="meta">BleepingComputer · 18:51 UTC</p>
+<p class="excerpt">Staffing software company Bullhorn has disabled access to its platform to contain a cyberattack that caused a system-wide outage. [...]</p>
+
+</li>
+<li id="s50">
+<p class="story-title"><a href="https://www.securityweek.com/siemens-software-center-vulnerability-exploited-in-clickfix-malware-attacks/">Siemens Software Center Vulnerability Exploited in ClickFix Malware Attacks</a></p>
+<p class="meta">SecurityWeek · 18:15 UTC</p>
+<p class="excerpt">Attackers paired a genuine, signed copy of Siemens Software Center with malicious DLLs to infect Windows PCs via ClickFix lures. The post Siemens Software Center Vulnerability Exploited in ClickFix Malware Attacks appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s51">
+<p class="story-title"><a href="https://thehackernews.com/2026/10/hackers-exploit-plex2shell-flaws-to.html">Hackers Exploit Plex2Shell Flaws to Install Crypto Miners and Linux Proxy Backdoor</a></p>
+<p class="meta">The Hacker News · 17:32 UTC</p>
+<p class="excerpt">Threat actors have begun to exploit a chain of vulnerabilities in Plex Media Server to deploy cryptocurrency miners and reverse proxy software, a day after a proof-of-concept (PoC) went public. According to a researcher who goes by the online alias boredhackerblog, the exploitation activity involves chaining four different vulnerabilities, collectively called Plex2Shell. The vulnerabilities</p>
+
+</li>
+<li id="s52">
+<p class="story-title"><a href="https://www.cisa.gov/news-events/alerts/2026/10/15/cisa-adds-one-known-exploited-vulnerability-catalog">CISA Adds One Known Exploited Vulnerability to Catalog</a></p>
+<p class="meta">CISA Advisories · 12:00 UTC</p>
+<ul class="vuln-list vuln-meta"><li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-21589">CVE-2026-21589</a></span><span>CVSS 9.3</span><span>Critical</span><span>CISA KEV</span></li></ul>
+<p class="excerpt">CISA has added one new vulnerability to its Known Exploited Vulnerabilities (KEV) Catalog, based on evidence of active exploitation. CVE-2026-21589 Atlassian Multiple Products Files or Directories Accessible to External Parties Vulnerability This type of vulnerability is a frequent attack vector for malicious cyber actors and poses significant risks to the federal enterprise. Binding Operational…</p>
 
 </li>
 </ol>
 </main>
-<footer>Generated 2026-10-19T18:12:55.454Z</footer>
+<footer>Generated 2026-10-20T16:13:35.055Z</footer>
 </body>
 </html>
