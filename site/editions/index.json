@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-10-21",
+    "mode": "article",
+    "headline": "PHP runtime flaws lead a day of exploited-in-the-wild reminders",
+    "count": 55
+  },
+  {
     "date": "2026-10-20",
     "mode": "article",
     "headline": "Ransomware keeps the VPN door open while everyone else patches",
