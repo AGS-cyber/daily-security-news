@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-10-22",
+    "mode": "article",
+    "headline": "Pre-disclosure probes and a second GitLab patch",
+    "count": 45
+  },
+  {
     "date": "2026-10-21",
     "mode": "article",
     "headline": "PHP runtime flaws lead a day of exploited-in-the-wild reminders",
