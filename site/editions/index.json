@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-10-23",
+    "mode": "article",
+    "headline": "Edge control planes, build pipelines, and a Medium-severity KEV refresh",
+    "count": 62
+  },
+  {
     "date": "2026-10-22",
     "mode": "article",
     "headline": "Pre-disclosure probes and a second GitLab patch",
