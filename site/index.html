@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#080b08">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22108%22%20height%3D%22108%22%20viewBox%3D%220%200%20108%20108%22%3E%0A%3Cpath%20d%3D%22M0%2C0h108v108h-108z%22%20fill%3D%22%23080b08%22%2F%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%237dffa4%22%20stroke-width%3D%227%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20transform%3D%22translate(54%2054)%20scale(1.45)%20translate(-54%20-54)%22%3E%0A%3Cpath%20d%3D%22M%2054%2044%20C%2054%2036%2043%2032.5%2036%2036%20C%2029.5%2039.5%2029.5%2048%2037.5%2052%20C%2046%2056%2054%2059.5%2053%2066.5%20C%2052%2073.5%2040.5%2075.5%2033%2071%22%2F%3E%0A%3Cpath%20d%3D%22M%2041.5%2027%20L%2041.5%2080%22%2F%3E%0A%3Cpath%20d%3D%22M%2064.5%2071.5%20L%2078.5%2071.5%22%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E">
-<title>Edge control planes, build pipelines, and a Medium-severity KEV refresh — 23 October 2026</title>
+<title>Security digest — 24 October 2026</title>
 <style>
 :root { color-scheme: dark;
   --bg:#080b08; --fg:#c9f5d5; --bright:#7dffa4; --muted:#6aa87f; --dim:#4a7f5e;
@@ -120,367 +120,140 @@ footer::before { content: "// "; color: var(--dim); }
 </nav>
 </header>
 <main>
-<h1>Edge control planes, build pipelines, and a Medium-severity KEV refresh</h1>
-<p class="summary">8 of 62 stories written up · 12 of 12 sources · generated 16:18 UTC</p>
-
-<p class="standfirst">The day&#39;s most consequential items sit at the management layer rather than the endpoint: a third exploited Arista VCO zero-day in four months, a large-scale credential harvest against FortiGate and GlobalProtect edge devices, a poisoned LiteLLM release, and a vendor-attributed ConnectWise supply-chain intrusion across more than 2,200 tenants. Mass exploitation attempts against the newly patched PHP2Shell flaws have so far failed, and the newest CISA KEV additions detailed here are Plex Media Server bugs rated Medium — a reminder that catalog membership signals exploitation, not severity. Five distinct CVE IDs appear across this selection.</p>
-<aside class="vuln-summary"><h2>Vulnerability intelligence</h2><ul class="vuln-list"><li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-96652">CVE-2026-96652</a></span><span>CVSS 5.3</span><span>Medium</span><span>CISA KEV</span></li>
-<li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-96654">CVE-2026-96654</a></span><span>CVSS 6.9</span><span>Medium</span><span>CISA KEV</span></li>
-<li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-96655">CVE-2026-96655</a></span><span>CVSS 5.3</span><span>Medium</span><span>CISA KEV</span></li>
-<li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-109618">CVE-2026-109618</a></span><span>CVSS 9.2</span><span>Critical</span></li>
-<li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-109619">CVE-2026-109619</a></span><span>CVSS 9.2</span><span>Critical</span></li></ul></aside>
-<div class="article">
-<h2>Actively exploited</h2>
-<p>The lead story is the third actively exploited Arista VeloCloud Orchestrator zero-day in four months <a href="https://www.securityweek.com/attackers-exploit-third-velocloud-orchestrator-zero-day-in-four-months/">Attackers Exploit Third Arista VCO Zero-Day in Four Months</a>. The flaw is a critical-severity SQL injection that lets low-privilege users reach privileged internal functionality and obtain operator privileges. No CVE ID or KEV enrichment was supplied with this story, so it cannot be correlated against the catalog here. <em>Analysis:</em> operator-level access to an SD-WAN orchestrator is a control-plane foothold that reaches every managed edge site behind it; that assessment rests on the described privilege escalation, not on any supplied detail about which victims were touched.</p>
-<p>CISA added six vulnerabilities to its Known Exploited Vulnerabilities Catalog <a href="https://www.cisa.gov/news-events/alerts/2026/10/20/cisa-adds-six-known-exploited-vulnerabilities-catalog">CISA Adds Six Known Exploited Vulnerabilities to Catalog</a>. The supplied records detail three of them, all Plex Media Server issues affecting releases before 1.43.3.10861: CVE-2026-96652 and CVE-2026-96655 are server-side request forgery flaws scored 5.3, with the supplied vectors indicating a low-privileged actor and no user interaction, while CVE-2026-96654 — improper neutralization of encoded URI schemes in the searchOne path — is scored 6.9 with no privileges or interaction required. All three are Medium severity; KEV listing rests on evidence of active exploitation. CISA&#39;s remediation requirement runs to federal civilian agencies under BOD 26-04, with near-term due dates set for these entries — that is not a universal deadline for other operators. Ransomware campaign use is listed as unknown for all three. The remaining three additions were not detailed in the supplied evidence.</p>
-<h2>Research</h2>
-<p>Microsoft has attributed the ConnectWise supply-chain attack to the China-linked actor it tracks as Storm-0940, saying the group used an AI-enabled penetration-testing tool to automate and accelerate an intrusion affecting more than 2,200 tenants <a href="https://www.darkreading.com/cyberattacks-data-breaches/microsoft-storm-0940-connectwise-supply-chain-attack">Microsoft Links Storm-0940 to ConnectWise Supply Chain Attack</a>. <em>Analysis:</em> the notable claim is tempo, not novelty — automation applied to a supply-chain foothold compresses the interval between access and follow-on action across every downstream tenant at once. The supplied excerpt does not describe the tooling itself, the victims&#39; geography, or whether all 2,200+ tenants were materially compromised; treat the scale figure as describing the affected tenant base, not confirmed secondary breaches.</p>
-<h2>Breaches</h2>
-<p>Researchers have disclosed a large-scale campaign against exposed network edge devices, specifically Fortinet FortiGate and Palo Alto Networks GlobalProtect firewalls, exposing more than 70,000 credentials <a href="https://thehackernews.com/2026/10/hackers-breach-enterprise-firewalls-and.html">Hackers Breach Enterprise Firewalls and VPNs, Exposing Over 70,000 Credentials</a>. Artifacts from the investigation indicate the operators obtained access to numerous organizations worldwide and attempted to further compromise some victims. No CVE is attached to this story in the supplied evidence, so the entry vector into the appliances is not established here — do not assume a specific vulnerability.</p>
-<p>The LiteLLM project&#39;s PyPI package was compromised and malicious Docker images were published, carrying a payload that steals credentials, secrets and environment variables <a href="https://www.bleepingcomputer.com/news/security/litellm-release-pipeline-hacked-to-distribute-info-stealer-malware/">LiteLLM release pipeline hacked to distribute info-stealer malware</a>. <em>Analysis:</em> the material risk is downstream — anyone who pulled the package or images into a build or deployment pipeline should treat every secret available to that environment as exposed. The supplied excerpt gives no timeline, affected version list or maintainer statement.</p>
-<p>Quest Diagnostics reported unauthorized access to its Quanum Lab Services Manager, a platform where certain clients can place test orders, in a regulatory filing referencing &quot;certain patient records&quot; <a href="https://www.securityweek.com/quest-diagnostics-reports-cyber-breach-affecting-certain-patient-records/">Quest Diagnostics Data Breach Exposed ‘Certain Patient Records’</a>. The number of individuals affected, the records involved and the access mechanism were not supplied.</p>
-<h2>Vulnerabilities</h2>
-<p>Attackers have been observed attempting to exploit the PHP2Shell vulnerabilities at volume, including operators trying to enrol systems into a Mirai variant called Potassium, but the attempts have been unsuccessful, and reporting suggests weaponization is harder than first assumed <a href="https://thehackernews.com/2026/10/php2shell-exploit-attempts-hit-millions.html">PHP2Shell Exploit Attempts Hit Millions as Attackers Try to Deploy Mirai Malware</a>. The two flaws, CVE-2026-109618 and CVE-2026-109619, are each scored 9.2 Critical under CVSS 4.0, and can yield unauthenticated remote code execution — the supplied vectors show network reach and no privilege or user-interaction requirement, but rate attack complexity as high, which is consistent with the reported difficulty. Affected PHP ranges end-exclusive at 8.2.35, 8.3.36, 8.4.27 and 8.5.12. Neither CVE is in KEV, which is a confirmed catalog miss but not proof that exploitation has not occurred. <em>Analysis:</em> continued mass probing against a high-complexity bug is a reasonable signal that a working exploit will eventually circulate; that is inference from attempt volume, not a supplied finding.</p>
-<p>HPE released updates for 72 vulnerabilities in ArubaOS, including eight maximum-severity authentication bypass and code execution issues in widely deployed network infrastructure <a href="https://www.bleepingcomputer.com/news/security/hpe-patches-eight-max-severity-rce-and-auth-bypass-aos-flaws/">HPE patches eight max severity RCE and auth bypass AOS flaws</a>. No CVE IDs were supplied for this story, so individual flaws cannot be cross-referenced against KEV or NVD here.</p>
-
+<h1>Security digest — 24 October 2026</h1>
+<p class="summary">19 stories · 12 of 12 sources · generated 15:15 UTC</p>
+<div class="notice">
+<strong>This is an automated chronological digest, not a written article.</strong>
+Every story collected in the window is listed below in the order it was published,
+with no editorial selection, ranking, or summarising applied.
 </div>
-<h2 class="also-heading">Also collected today</h2>
+<div class="degraded">
+<h2>This edition is incomplete</h2>
+<ul>
+<li>The written article could not be generated: write failed — write invented CVE id &quot;CVE-2025-66208&quot;, which was not supplied. This page is the chronological digest of everything collected instead.</li>
+</ul>
+</div>
 <ol class="stories">
 <li id="s1">
-<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/php-shares-mitigation-for-new-and-unpatched-rce-vulnerability/">PHP shares mitigation for new RCE vulnerability with no patch</a></p>
-<p class="meta">BleepingComputer · 15:38 UTC</p>
-<p class="excerpt">The PHP security team has shared mitigation measures for a new remote code execution vulnerability that affects systems with non-default configurations and has no patch. [...]</p>
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/blackx-uefi-bootkit-exploits-baton-drop-flaw-to-bypass-secure-boot/">BlackX UEFI bootkit exploits Baton Drop flaw to bypass Secure Boot</a></p>
+<p class="meta">BleepingComputer · 14:17 UTC</p>
+<p class="excerpt">A new UEFI bootkit named BlackX, deployed in an espionage campaign in early 2026, exploited the old Baton Drop vulnerability to bypass Secure Boot and load a malicious driver designed to interfere with security solutions from Kaspersky and Avast. [...]</p>
 
 </li>
 <li id="s2">
-<p class="story-title"><a href="https://www.securityweek.com/in-other-news-tor-exit-relays-hijacked-banks-spot-rogue-ai-agents-self-rebuilding-macos-ransomware/">In Other News: Tor Exit Relays Hijacked, Banks Spot Rogue AI Agents, Self-Rebuilding macOS Ransomware</a></p>
-<p class="meta">SecurityWeek · 14:23 UTC</p>
-<p class="excerpt">Noteworthy stories that might have slipped under the radar: Russia’s APT28 hit NATO defense firms, PingCAP source code stolen, ShinyHunters negotiator probe. The post In Other News: Tor Exit Relays Hijacked, Banks Spot Rogue AI Agents, Self-Rebuilding macOS Ransomware appeared first on SecurityWeek.</p>
+<p class="story-title"><a href="https://thehackernews.com/2026/10/brotli-decoder-flaw-behind-nodejs-rce.html">Brotli Decoder Flaw Behind Node.js RCE Also Affects Bun, Python and Other Widely Used Software</a></p>
+<p class="meta">The Hacker News · 11:09 UTC</p>
+<ul class="vuln-list vuln-meta"><li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-111497">CVE-2026-111497</a></span><span>CVSS 9.2</span><span>Critical</span></li></ul>
+<p class="excerpt">A memory-corruption flaw in Google&#39;s Brotli decoder sits in many programs that unpack Brotli-compressed data, among them Bun, the Python Brotli and brotlicffi packages, and Envoy proxies set up to decompress Brotli. Tracked as CVE-2026-111497, the flaw allows crafted compressed data to overwrite past the end of a buffer and corrupt a program&#39;s memory, potentially</p>
 
 </li>
 <li id="s3">
-<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/you-gave-your-ai-agent-access-but-who-is-giving-it-orders/">You gave your AI agent access, but who is giving it orders?</a></p>
-<p class="meta">BleepingComputer · 14:00 UTC</p>
-<p class="excerpt">AI agents can be manipulated through malicious emails, websites, and plugins into executing commands, stealing data, or deleting files using their legitimate permissions. Gen Digital explains how its Agent Trust Hub helps protect agents through skill verification, secure connectivity, and runtime controls that intercept dangerous act [...]</p>
+<p class="story-title"><a href="https://thehackernews.com/2026/10/leaked-litellm-master-key-let-attackers.html">Leaked LiteLLM Master Key Let Attackers Steal GitHub Tokens and Hijack Release Pipeline</a></p>
+<p class="meta">The Hacker News · 11:03 UTC</p>
+<p class="excerpt">LiteLLM on Friday revealed that an Agent Platform master key accidentally published to a public GitHub repository in late May 2026 ultimately allowed the threat actor to push a malicious version of the popular Python package. &quot;On May 27, 2026, a configuration file was committed to the public LiteLLM-Labs/lite-harness repository which inadvertently contained the master key to a deployment of</p>
 
 </li>
 <li id="s4">
-<p class="story-title"><a href="https://www.darkreading.com/cyber-risk/why-caribbean-threats-cascade-global-cyber-risk">Why Caribbean Threats Cascade Into Global Cyber-Risk</a></p>
-<p class="meta">Dark Reading · 14:00 UTC</p>
-<p class="excerpt">The region is demonstrating what happens when exploits accelerate but assurance does not.</p>
+<p class="story-title"><a href="https://thehackernews.com/2026/10/google-says-gmail-and-photos-data.html">Google Says Gmail and Photos Data Shared With AI Search Could Be Used for Targeted Ads</a></p>
+<p class="meta">The Hacker News · 10:36 UTC</p>
+<p class="excerpt">Google has updated its privacy policy to spell out that using personalized artificial intelligence (AI) features in Search or Gemini could allow the company to serve targeted ads to users based on their activity on other connected Google services. &quot;You may choose to allow certain Google services, including services like Search or Gemini Apps, to access data from other Google services you use,</p>
+
+</li>
+<li id="s5">
+<p class="story-title"><a href="https://thehackernews.com/2026/10/researchers-push-over-2-million-updates.html">Researchers Push Over 2 Million Updates to Remotely Disable Popcorn Time Updater That Could Fuel a Botnet</a></p>
+<p class="meta">The Hacker News · 09:04 UTC</p>
+<p class="excerpt">Between November 2025 and March 2026, the Dutch security firm Eye Security pushed more than 2 million updates to computers it did not own to switch off a background updater that it said could have allowed an outsider to take over the machine. The updater belongs to Time4Popcorn, an abandoned copy of Popcorn Time, a free app that streamed pirated films and TV over BitTorrent. Popcorn Time was</p>
 
 </li>
 <li id="s6">
-<p class="story-title"><a href="https://www.darkreading.com/cyber-risk/cyber-insurances-underwriting-isnt-enough">Cyber Insurance&#39;s New Reality: Underwriting Isn&#39;t Enough</a></p>
-<p class="meta">Dark Reading · 13:30 UTC</p>
-<p class="excerpt">Rising AI, social engineering, and cloud risks are pushing carriers beyond risk transfer and deeper into cybersecurity itself.</p>
+<p class="story-title"><a href="https://thehackernews.com/2026/10/cisa-flags-two-actively-exploited.html">CISA Flags Two Actively Exploited Critical Flaws in Collabora Online and Arista VeloCloud</a></p>
+<p class="meta">The Hacker News · 06:25 UTC</p>
+<ul class="vuln-list vuln-meta"><li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-110447">CVE-2026-110447</a></span><span>CVSS 9.2</span><span>Critical</span><span>CISA KEV</span></li></ul>
+<p class="excerpt">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Friday added two vulnerabilities impacting Collabora Online Built-in CODE Server and Arista VeloCloud Orchestrator (VCO) to its Known Exploited Vulnerabilities (KEV), citing reports of active exploitation in the wild. The critical-severity vulnerabilities are listed below - CVE-2026-110447 (CVSS score: 9.2) - An operating</p>
 
 </li>
 <li id="s7">
-<p class="story-title"><a href="https://therecord.media/uk-undersea-cables-sabotage-new-sentencing-guidelines">UK proposes 14-year prison terms for undersea cable sabotage</a></p>
-<p class="meta">The Record · 13:26 UTC</p>
-<p class="excerpt">In an era of hybrid threats, the British government wants to update the Submarine Telegraph Act 1885, which carries a maximum fine of £1,000 and five years’ imprisonment in cases of deliberate damage.</p>
+<p class="story-title"><a href="https://www.darkreading.com/cyber-risk/trust-is-not-what-it-seems-and-fraudsters-are-counting-on-it">Trust Is Not What It Seems — And Fraudsters Are Counting on It</a></p>
+<p class="meta">Dark Reading · 20:57 UTC</p>
+<p class="excerpt">Threat actors don&#39;t need to rely on malware to breach organizations anymore. They&#39;re simply calling help desks and politely asking for access, with a little help from artificial intelligence.</p>
 
 </li>
 <li id="s8">
-<p class="story-title"><a href="https://therecord.media/quest-diagnostics-network-intrusion">Quest Diagnostics warns of potential data theft after attack on lab service system</a></p>
-<p class="meta">The Record · 12:52 UTC</p>
-<p class="excerpt">Nationwide lab test company Quest Diagnostics said one of its key systems may have experienced a breach of patient data.</p>
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/abandoned-popcorn-time-app-exposed-millions-of-device-to-rce-attacks/">Abandoned Popcorn Time app exposed millions of devices to RCE attacks</a></p>
+<p class="meta">BleepingComputer · 20:55 UTC</p>
+<p class="excerpt">Researchers remotely disabled a vulnerable updater in the abandoned Time4Popcorn app, a fork of the Popcorn Time BitTorrent client, closing a security flaw that could have allowed attackers to execute malicious code with elevated privileges on millions of computers. [...]</p>
+
+</li>
+<li id="s9">
+<p class="story-title"><a href="https://www.darkreading.com/application-security/exposed-php2shell-cyber-experts-advice">Exposed to PHP2Shell? Cyber Experts Weigh in With Advice</a></p>
+<p class="meta">Dark Reading · 19:41 UTC</p>
+<p class="excerpt">Fixing the critical PHP flaws is not as simple as clicking &quot;Update.&quot; Here&#39;s how to assess your risk, and what you can do to protect yourself.</p>
 
 </li>
 <li id="s10">
-<p class="story-title"><a href="https://www.securityweek.com/mirai-botnet-operators-join-php2shell-attacks-as-aslr-bypass-exploits-emerge/">Mirai Botnet Operators Join PHP2Shell Attacks as ASLR Bypass Exploits Emerge</a></p>
-<p class="meta">SecurityWeek · 12:45 UTC</p>
-<p class="excerpt">Researchers tie PHP2Shell attempts to a Mirai botnet and show an ASLR bypass, but no successful compromise has been confirmed yet. The post Mirai Botnet Operators Join PHP2Shell Attacks as ASLR Bypass Exploits Emerge appeared first on SecurityWeek.</p>
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-teams-to-get-ai-powered-context-aware-phishing-detection/">Microsoft Teams to get AI-powered, context-aware phishing detection</a></p>
+<p class="meta">BleepingComputer · 18:54 UTC</p>
+<p class="excerpt">Microsoft has announced plans to add AI-powered phishing detection to Teams messages starting in early November 2026. [...]</p>
 
 </li>
 <li id="s11">
-<p class="story-title"><a href="https://www.darkreading.com/cybersecurity-operations/ai-agents-insider-threats-inside-microsoft-unified-security-stack">AI Agents as Insider Threats: Inside Microsoft&#39;s Bet on a Unified Security Stack</a></p>
-<p class="meta">Dark Reading · 11:38 UTC</p>
-<p class="excerpt">Microsoft&#39;s Project Perception adds Guardian Agents to monitor and contain anomalous AI agents, but experts warn that policing unpredictable agents with other agents may multiply — not contain — the risk.</p>
+<p class="story-title"><a href="https://thehackernews.com/2026/10/blackx-uefi-bootkit-bypasses-secure.html">BlackX UEFI Bootkit Bypasses Secure Boot on Patched Windows Systems Missing Revocations</a></p>
+<p class="meta">The Hacker News · 18:50 UTC</p>
+<p class="excerpt">Diplomatic organizations in Central Asia have been targeted by a sophisticated new Unified Extensible Firmware Interface (UEFI) bootkit called BlackX. The activity, which singled out diplomatic entities in Tajikistan, Uzbekistan, and Turkmenistan in early 2026, is suspected to be orchestrated by a China-linked state-sponsored hacking group known as APT41, Kaspersky said in a technical report</p>
 
 </li>
 <li id="s12">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/urgent-php-warns-of-another-unpatched.html">PHP Warns of Another Unpatched RCE Risk Two Days After Emergency PHP2Shell Patches</a></p>
-<p class="meta">The Hacker News · 11:25 UTC</p>
-<p class="excerpt">PHP has warned of another way an attacker could run code on a web server, two days after it shipped emergency fixes for the critical PHP2Shell flaws. The new issue, assigned CVE-2026-115560, affects only web applications configured in an unusual way, and PHP considers it an unlikely risk.The project is not issuing an emergency fix for it. Instead, it recommends turning off a feature called</p>
+<p class="story-title"><a href="https://www.microsoft.com/en-us/security/blog/2026/10/23/inside-the-litellm-1-107-0-supply-chain-compromise-credential-theft-through-python-startup-hooks/">Inside the LiteLLM 1.107.0 supply chain compromise: Credential theft through Python startup hooks</a></p>
+<p class="meta">Microsoft Security · 18:12 UTC</p>
+<p class="excerpt">Microsoft Threat Intelligence analyzes the LiteLLM 1.107.0 compromise, including Python startup hooks, credential theft, remote code loading, detections, and mitigations. The post Inside the LiteLLM 1.107.0 supply chain compromise: Credential theft through Python startup hooks appeared first on Microsoft Security Blog.</p>
 
 </li>
 <li id="s13">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/russian-linked-hackers-used-new-mesh.html">Russian-Linked Hackers Used New Mesh Network Backdoor in Destructive Ukraine Attack</a></p>
-<p class="meta">The Hacker News · 11:11 UTC</p>
-<p class="excerpt">The Russian state-sponsored hacking group Sandworm teamed up with another threat actor to carry out a destructive wiping attack targeting a Ukrainian logistics company last year. According to ESET, the attack involved UAC-0099 (aka Earth Sirrush) obtaining initial access to the target on July 16, 2025, via a spear-phishing email bearing a malware-laced attachment that led to the deployment of</p>
+<p class="story-title"><a href="https://thehackernews.com/2026/10/ruby-fixes-three-regex-engine-bugs.html">Ruby Fixes Three Regex Engine Bugs Responsible for Four Critical GitLab RCE Flaws</a></p>
+<p class="meta">The Hacker News · 17:54 UTC</p>
+<p class="excerpt">Ruby has released versions 4.0.9, 3.4.12, and 3.3.13 to fix three bugs in Onigmo, the regular expression engine built into the language. The bugs lie behind four critical security flaws that GitLab patched over the past month. GitLab found that a specially crafted pattern could corrupt memory while Ruby compiles it, potentially leading to code execution on its own servers. Ruby says any</p>
 
 </li>
 <li id="s14">
-<p class="story-title"><a href="https://www.securityweek.com/china-apt-uses-ai-pentest-tool-artex-in-connectwise-attacks/">China APT Uses AI Pentest Tool Artex in ConnectWise Attacks</a></p>
-<p class="meta">SecurityWeek · 10:31 UTC</p>
-<p class="excerpt">The state-sponsored hackers targeted hundreds of organizations and gained privileged access to some environments. The post China APT Uses AI Pentest Tool Artex in ConnectWise Attacks appeared first on SecurityWeek.</p>
+<p class="story-title"><a href="https://thehackernews.com/2026/10/exposed-infrastructure-reveals-how.html">Exposed Infrastructure Reveals How Ransomware Affiliates Used AI Agents to Execute Intrusions</a></p>
+<p class="meta">The Hacker News · 17:50 UTC</p>
+<p class="excerpt">Cybersecurity researchers have discovered an artificial intelligence (AI)-driven intrusion ecosystem run by affiliates of the INC and The Gentlemen ransomware groups. Central to the operation is an &quot;Autonomous Red Team Kill Chain Framework&quot; referred to as Phantom. The threat actor is assessed to be Russian-speaking and functions both as an intrusion and data-extortion operator, as well as an</p>
+
+</li>
+<li id="s15">
+<p class="story-title"><a href="https://therecord.media/fcc-bans-devices-huawei-surveillance-chips">FCC bans two devices with surveillance chips linked to Huawei</a></p>
+<p class="meta">The Record · 17:28 UTC</p>
+<p class="excerpt">The banned items — a wireless video transmitter and dashboard camera — are made with chips manufactured by Huawei subsidiary HiSilicon, which markets its products as “designed for the surveillance market.”</p>
 
 </li>
 <li id="s16">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/critical-flaw-in-pythons-popular-pillow.html">Critical Flaw in Python’s Popular Pillow Image Library Allows Code Execution via a Crafted Image</a></p>
-<p class="meta">The Hacker News · 09:36 UTC</p>
-<ul class="vuln-list vuln-meta"><li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-112900">CVE-2026-112900</a></span><span>CVSS 9.2</span><span>Critical</span></li></ul>
-<p class="excerpt">Pillow, the most widely used image library for Python, can be made to run operating system commands on a server by specifying the name of a file it is told to open. The flaw, CVE-2026-112900, is in the way Pillow handles EPS images, which it opens by passing the file&#39;s name to Ghostscript, a separate program it runs to turn the image into pixels, without checking the name first.</p>
+<p class="story-title"><a href="https://www.darkreading.com/cybersecurity-operations/ai-tools-massive-attacks-little-cost">AI Tools Are Generating Massive Attacks for Little Cost</a></p>
+<p class="meta">Dark Reading · 17:26 UTC</p>
+<p class="excerpt">One campaign targets 105 sites using open-weight models; in another, public models gained full domain control for $12. Cyber-defense will have to change.</p>
 
 </li>
 <li id="s17">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/researchers-demonstrate-node2shell-rce.html">Researchers Demonstrate Node2Shell RCE Exploit on Node.js Build Using Crafted Brotli Data</a></p>
-<p class="meta">The Hacker News · 08:40 UTC</p>
-<ul class="vuln-list vuln-meta"><li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-111497">CVE-2026-111497</a></span><span>CVSS 9.2</span><span>Critical</span></li></ul>
-<p class="excerpt">Malicious Brotli data can make an application on an official build of Node.js run attacker-supplied code, security researchers at Imperva have demonstrated. Their &quot;Node2Shell&quot; proof of concept ran code on the official Node.js 24.22.0 image for Linux arm64, with no debugger or custom build, by feeding crafted data to the bundled Brotli decoder (CVE-2026-111497). Node.js disclosed the flaw</p>
+<p class="story-title"><a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-windows-server-2016-reaches-end-of-support-in-january/">Microsoft: Windows Server 2016 reaches end of support in January</a></p>
+<p class="meta">BleepingComputer · 17:05 UTC</p>
+<p class="excerpt">Microsoft says Windows Server 2016 will stop receiving security updates after it reaches the end of support in January 2027. [...]</p>
 
 </li>
 <li id="s18">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/critical-x402-sdk-flaw-could-let.html">Critical x402 SDK Flaw Could Let Malicious APIs Drain AI Agents’ Token Balances</a></p>
-<p class="meta">The Hacker News · 08:35 UTC</p>
-<p class="excerpt">AI agents paying for API calls with the x402 SDKs could sign a payment for their full balance of a supported token if a malicious API asked for it, security firm V12 said on October 22. The cause was the SDKs&#39; default client, which set no spending limit until releases on August 18 added one. The risk was limited to agents who automatically signed payments and whose apps set</p>
+<p class="story-title"><a href="https://www.cisa.gov/news-events/alerts/2026/10/23/cisa-adds-one-known-exploited-vulnerability-catalog-0">CISA Adds One Known Exploited Vulnerability to Catalog</a></p>
+<p class="meta">CISA Advisories · 12:00 UTC</p>
+<ul class="vuln-list vuln-meta"><li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-110447">CVE-2026-110447</a></span><span>CVSS 9.2</span><span>Critical</span><span>CISA KEV</span></li>
+<li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-114625">CVE-2026-114625</a></span><span>CVSS 9.4</span><span>Critical</span><span>CISA KEV</span></li></ul>
+<p class="excerpt">CISA has added one new vulnerability to its Known Exploited Vulnerabilities (KEV) Catalog, based on evidence of active exploitation. CVE-2026-110447 Collabora Online – Built-in CODE Server OS Command Injection Vulnerability This type of vulnerability is a frequent attack vector for malicious cyber actors and poses significant risks to the federal enterprise. Binding Operational Directive (BOD)…</p>
 
 </li>
 <li id="s19">
-<p class="story-title"><a href="https://www.securityweek.com/11-million-impacted-by-capcom-data-breach/">11 Million Impacted by Capcom Data Breach</a></p>
-<p class="meta">SecurityWeek · 08:34 UTC</p>
-<p class="excerpt">The hackers stole 11 million email addresses from CAPCOM ID and changed the login passwords for 196 accounts. The post 11 Million Impacted by Capcom Data Breach appeared first on SecurityWeek.</p>
-
-</li>
-<li id="s21">
-<p class="story-title"><a href="https://www.securityweek.com/litellm-compromised-in-fresh-supply-chain-attack/">LiteLLM Compromised in Fresh Supply Chain Attack</a></p>
-<p class="meta">SecurityWeek · 08:10 UTC</p>
-<p class="excerpt">Hackers used compromised GitHub CLI OAuth tokens to push and approve malicious packages on PyPI and Docker. The post LiteLLM Compromised in Fresh Supply Chain Attack appeared first on SecurityWeek.</p>
-
-</li>
-<li id="s22">
-<p class="story-title"><a href="https://www.securityweek.com/atlassian-patches-75-third-party-flaws-in-data-center-and-server-products/">Atlassian Patches 75 Flaws in Data Center and Server Products</a></p>
-<p class="meta">SecurityWeek · 07:54 UTC</p>
-<p class="excerpt">Atlassian’s October bulletin lists 176 vulnerability entries, including 14 critical-severity issues, all in third-party components. The post Atlassian Patches 75 Flaws in Data Center and Server Products appeared first on SecurityWeek.</p>
-
-</li>
-<li id="s24">
-<p class="story-title"><a href="https://www.securityweek.com/irans-prince-of-persia-apt-hosts-cc-in-us-for-first-time-since-2016/">Iran’s Prince of Persia APT Hosts C&amp;C in US for First Time Since 2016</a></p>
-<p class="meta">SecurityWeek · 06:39 UTC</p>
-<p class="excerpt">After a three-month lull, Prince of Persia hid a Tornado C&amp;C server on US shared hosting, its first US-based server since 2016. The post Iran’s Prince of Persia APT Hosts C&amp;C in US for First Time Since 2016 appeared first on SecurityWeek.</p>
-
-</li>
-<li id="s25">
-<p class="story-title"><a href="https://www.darkreading.com/cyberattacks-data-breaches/state-bank-india-customer-pii-data-leak">State Bank of India Suffers a Customer PII Data Leak</a></p>
-<p class="meta">Dark Reading · 03:30 UTC</p>
-<p class="excerpt">Relatively small data breaches in India can turn quite serious, thanks to a sophisticated underground market for trading PII.</p>
-
-</li>
-<li id="s26">
-<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/railway-warns-devs-to-rotate-secrets-after-potential-breach/">Railway warns devs to rotate secrets after potential breach</a></p>
-<p class="meta">BleepingComputer · 21:25 UTC</p>
-<p class="excerpt">Cloud platform Railway published an urgent warning to users after detecting suspicious activity on its systems that store customer environment variables earlier this week. [...]</p>
-
-</li>
-<li id="s27">
-<p class="story-title"><a href="https://therecord.media/toronto-crime-tips-org-freezes-ops-after-breach">Toronto crime tips org freezes operations after details of data breach come to light</a></p>
-<p class="meta">The Record · 20:52 UTC</p>
-<p class="excerpt">Late Wednesday night the Toronto chapter of Crime Stoppers broke ranks with the national association, revealing a timeline showing what it knew and when along with an announcement that it will pause operations.</p>
-
-</li>
-<li id="s29">
-<p class="story-title"><a href="https://www.darkreading.com/insider-threats/texas-laptop-farms-north-korean-it-workers">What We Missed: Feds Lasso Texas Laptop Farms</a></p>
-<p class="meta">Dark Reading · 20:33 UTC</p>
-<p class="excerpt">In this video, Dark Reading editors discuss some of the news they didn&#39;t get a chance to cover, from busting up North Korea&#39;s stateside infrastructure in &quot;Operation Lonestar Justice&quot; to Staples&#39; gift card bonanza.</p>
-
-</li>
-<li id="s30">
-<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/capcom-confirms-data-breach-affecting-117-million-accounts/">Capcom confirms data breach affecting 11.7 million accounts</a></p>
-<p class="meta">BleepingComputer · 20:22 UTC</p>
-<p class="excerpt">Japanese gaming giant Capcom has confirmed that hackers breached its membership service, CAPCOM ID, exposing more than 11.7 million customer email addresses and associated information. [...]</p>
-
-</li>
-<li id="s31">
-<p class="story-title"><a href="https://www.darkreading.com/ics-ot-security/eu-grocers-unpatched-fridge-firmware-french">Les supermarchés de l&#39;UE paient d&#39;un firmware de réfrigérateur non mis à jour</a></p>
-<p class="meta">Dark Reading · 19:30 UTC</p>
-<p class="excerpt">Des centaines de magasins ont subi des pertes se chiffrant en millions d&#39;euros parce qu&#39;ils avaient fait appel à des tiers pour gérer le micrologiciel OT obsolète qui pilotait leurs systèmes de climatisation.</p>
-
-</li>
-<li id="s33">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/arista-warns-of-critical-velocloud-sql.html">Arista Warns of Critical VeloCloud SQL Injection Zero-Day Exploited in Attacks</a></p>
-<p class="meta">The Hacker News · 19:05 UTC</p>
-<p class="excerpt">Attackers are exploiting a zero-day SQL injection flaw in Arista&#39;s VeloCloud Orchestrator (VCO), the central management system for VeloCloud SD-WAN networks, the company said in an advisory on October 22. The flaw lets anyone who can log in to the orchestrator, even with a read-only customer account, gain operator privileges, the top level of control over it. For</p>
-
-</li>
-<li id="s34">
-<p class="story-title"><a href="https://therecord.media/indian-tech-company-announces-withdrawal-certificate-business-incident">Indian tech company eMudhra announces withdrawal from certificate business after security incident</a></p>
-<p class="meta">The Record · 18:46 UTC</p>
-<p class="excerpt">The issue was publicized by cybersecurity researcher Scott Helme, who published a blog saying that instead of a random 384-bit number, one of the company&#39;s private keys was just the number four.</p>
-
-</li>
-<li id="s35">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/emudhra-to-exit-global-ssltls-business.html">eMudhra to Exit Global SSL/TLS Business After 8 Intermediate CA Keys Found Easily Guessable</a></p>
-<p class="meta">The Hacker News · 18:12 UTC</p>
-<p class="excerpt">eMudhra, an Indian certificate authority (CA), will withdraw from its global SSL/TLS certificate business, its board decided on Thursday. The decision came five days after a researcher reported recovering the private keys of eight of its intermediate CA certificates. eMudhra said it will replace affected customers&#39; certificates with free ones from partners, though its</p>
-
-</li>
-<li id="s36">
-<p class="story-title"><a href="https://blog.talosintelligence.com/i-had-plans-for-that-second/">I had plans for that second</a></p>
-<p class="meta">Cisco Talos · 18:04 UTC</p>
-<p class="excerpt">The Earth is speeding up, the leap second is being abolished, oh, and there&#39;s critical vulnerabilities in PHP.</p>
-
-</li>
-<li id="s37">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/threatsday-ai-secrets-leak-pingcap.html">ThreatsDay: AI Secrets Leak, PingCAP Source Theft, Signal Hang-Up Flaw, Laravel Auth Bypass + 21 More</a></p>
-<p class="meta">The Hacker News · 17:45 UTC</p>
-<p class="excerpt">This week has already been rough for cybersecurity. Critical PHP and GitLab RCE flaws, serious Linux security bugs, compromised eMudhra certificates, a Node.js RCE flaw, a hacked LiteLLM release, and hundreds of hijacked Tor relays. That&#39;s a lot to deal with in just a few days. And the week isn&#39;t even over yet. But those big headlines are only half the story. Stolen passwords, exposed</p>
-
-</li>
-<li id="s38">
-<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/arista-patches-new-velocloud-orchestrator-zero-day-exploited-in-attacks/">Arista patches new VeloCloud Orchestrator zero-day exploited in attacks</a></p>
-<p class="meta">BleepingComputer · 17:18 UTC</p>
-<p class="excerpt">Arista Networks released security updates to patch an actively exploited zero-day vulnerability affecting VeloCloud Orchestrator (VCO) On-Prem deployments. [...]</p>
-
-</li>
-<li id="s39">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/two-cvss-90-linux-ksmbd-rce-flaws.html">Two CVSS 9.0 Linux KSMBD RCE Flaws Disclosed on Public Mailing Lists Before Kernel Fixes</a></p>
-<p class="meta">The Hacker News · 17:01 UTC</p>
-<p class="excerpt">Linux servers running KSMBD, the kernel&#39;s built-in SMB server, are exposed to two publicly reported remote code execution flaws rated 9.0 by Trend Micro&#39;s Zero Day Initiative, with no fix yet in the mainline kernel. One of them, ZDI-CAN-33774, can be triggered before any network authentication. The other, ZDI-CAN-33549, requires the SMB Direct transport and an RDMA-capable network</p>
-
-</li>
-<li id="s40">
-<p class="story-title"><a href="https://unit42.paloaltonetworks.com/current-landscape-oauth-attacks/">The Current Landscape of OAuth Attacks</a></p>
-<p class="meta">Unit 42 · 17:00 UTC</p>
-<p class="excerpt">Unit 42 explores modern OAuth threats and actionable steps organizations can take to protect their environments. The post The Current Landscape of OAuth Attacks appeared first on Unit 42.</p>
-
-</li>
-<li id="s41">
-<p class="story-title"><a href="https://therecord.media/china-cyber-connectwise-ai">Microsoft blames ConnectWise attacks on Chinese state hacker using ARTEX AI agents</a></p>
-<p class="meta">The Record · 16:30 UTC</p>
-<p class="excerpt">A Chinese government-aligned hacking group used automated tools to carry out the recent supply chain attack on IT management software company ConnectWise and is using the same techniques to try to compromise organizations around the globe, Microsoft said.</p>
-
-</li>
-<li id="s42">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/meta-ordered-to-pay-25-billion-after.html">Meta Ordered to Pay $25 Billion After Court Finds 43 Million Privacy Violations</a></p>
-<p class="meta">The Hacker News · 16:12 UTC</p>
-<p class="excerpt">Social media giant Meta was ordered to pay 25 billion in penalties by a New Mexico court on Wednesday as part of a data privacy lawsuit that sprang from the company&#39;s Cambridge Analytica data scandal, which came to light in 2018. According to multiple reports from the Associated Press, the New York Times, Reuters, and the Wall Street Journal, state District Court Judge Francis J. Mathew called</p>
-
-</li>
-<li id="s43">
-<p class="story-title"><a href="https://www.darkreading.com/cyber-risk/cyber-insurance-covering-ai-damage">As AI Risks Grow, Insurers Split on Covering the Damage</a></p>
-<p class="meta">Dark Reading · 14:21 UTC</p>
-<p class="excerpt">Insurers are split on AI risk: some build specialized agentic AI coverage, while major carriers quietly exclude it — leaving enterprises exposed without their knowledge.</p>
-
-</li>
-<li id="s44">
-<p class="story-title"><a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-295-10">Siemens SIMATIC S7 Webserver API</a></p>
-<p class="meta">CISA Advisories · 12:00 UTC</p>
-<p class="excerpt">View CSAF Summary .NET Client Library for SIMATIC S7 Webserver API contains multiple vulnerabilities that could allow an attacker to obtain sensitive information or write arbitrary files outside the intended download directory. Siemens has released a new version for .NET Client Library for SIMATIC S7 Webserver API and recommends to update to the latest version. The following versions of Siemens…</p>
-
-</li>
-<li id="s45">
-<p class="story-title"><a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-295-08">Siemens APOGEE, TALON and Desigo PXC/PXM Products</a></p>
-<p class="meta">CISA Advisories · 12:00 UTC</p>
-<p class="excerpt">View CSAF Summary The products listed below contain multiple vulnerabilities that could allow an attacker to cause a denial of service and potentially impact the availability of the affected device. Siemens has released new versions for several affected products and recommends to update to the latest versions. Siemens recommends specific mitigations for products where fixes are not or not yet…</p>
-
-</li>
-<li id="s46">
-<p class="story-title"><a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-295-12">Siemens RUGGEDCOM CROSSBOW</a></p>
-<p class="meta">CISA Advisories · 12:00 UTC</p>
-<p class="excerpt">View CSAF Summary RUGGEDCOM CROSSBOW contains multiple vulnerabilities that could allow an attacker to execute arbitrary SQL commands on the underlying database, retrieve sensitive administrative credentials, escalate privileges, and perform unauthorized operations such as modifying system configurations or causing a denial of service. Siemens has released a new version for RUGGEDCOM CROSSBOW and…</p>
-
-</li>
-<li id="s47">
-<p class="story-title"><a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-295-18">Siemens RUGGEDCOM APE1808 Devices</a></p>
-<p class="meta">CISA Advisories · 12:00 UTC</p>
-<p class="excerpt">View CSAF Summary Nozomi Networks has published information on vulnerabilities in Nozomi Guardian/CMC. This advisory lists the related Siemens Industrial products affected by these vulnerabilities. Siemens recommends to contact customer support to receive patch and update information. The following versions of Siemens RUGGEDCOM APE1808 Devices are affected: RUGGEDCOM APE1808 vers:all/*…</p>
-
-</li>
-<li id="s48">
-<p class="story-title"><a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-295-02">Siemens Industrial Edge App Publisher</a></p>
-<p class="meta">CISA Advisories · 12:00 UTC</p>
-<p class="excerpt">View CSAF Summary The Industrial Edge App Publisher contains a vulnerability chain involving improper certificate validation and the rendering of unescaped data from backend responses. These issues can be combined to allow an attacker on the network to impersonate the management server and execute arbitrary code (RCE) on the local machine through Node.js integration. Siemens has released an…</p>
-
-</li>
-<li id="s49">
-<p class="story-title"><a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-295-11">Siemens SIMATIC S7-1500 CPU 1518(F)-4 PN/DP MFP</a></p>
-<p class="meta">CISA Advisories · 12:00 UTC</p>
-<p class="excerpt">View CSAF Summary Multiple vulnerabilities have been identified in the additional GNU/Linux subsystem of the firmware version V3.1.7 for the SIMATIC S7-1500 CPU 1518(F)-4 PN/DP MFP (incl. SIPLUS variant). Siemens is preparing fixes and recommends specific mitigations for products where fixes are not or not yet available. The following versions of Siemens SIMATIC S7-1500 CPU 1518(F)-4 PN/DP MFP…</p>
-
-</li>
-<li id="s50">
-<p class="story-title"><a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-295-13">Siemens WinCC</a></p>
-<p class="meta">CISA Advisories · 12:00 UTC</p>
-<p class="excerpt">View CSAF Summary Multiple SIMATIC WinCC versions are affected by a database privilege escalation vulnerability that could allow an authenticated user with access to the database to execute commands on the underlying host system. Siemens has released new versions for several affected products and recommends to update to the latest versions. Siemens is preparing further fixes and recommends…</p>
-
-</li>
-<li id="s51">
-<p class="story-title"><a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-295-09">Siemens Industrial Edge Device Kit</a></p>
-<p class="meta">CISA Advisories · 12:00 UTC</p>
-<p class="excerpt">View CSAF Summary Users of Industrial Edge Devices are advised to consult the respective Security Advisories for their devices (for Siemens Industrial Edge devices see Additional Information). Industrial Edge Device Kit contains multiple path traversal vulnerabilities that could facilitate an authenticated remote attacker to access sensitive internal information. Siemens has released new versions…</p>
-
-</li>
-<li id="s52">
-<p class="story-title"><a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-295-04">Siemens Capital Embedded AR Classic</a></p>
-<p class="meta">CISA Advisories · 12:00 UTC</p>
-<p class="excerpt">View CSAF Summary The products listed below contain an out-of-bounds read vulnerability that could allow an attacker to cause abnormal product behavior, instability, or denial of service. Siemens has released a new version for Capital Embedded AR Classic R20-11 and recommends updating to the latest version. Siemens is preparing further fix versions and recommends specific countermeasures for…</p>
-
-</li>
-<li id="s53">
-<p class="story-title"><a href="https://www.cisa.gov/news-events/ics-medical-advisories/icsma-26-295-01">InterSystems Corporation InterSystems IRIS for Health</a></p>
-<p class="meta">CISA Advisories · 12:00 UTC</p>
-<ul class="vuln-list vuln-meta"><li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-111594">CVE-2026-111594</a></span><span>CVSS 9.2</span><span>Critical</span></li></ul>
-<p class="excerpt">View CSAF Summary Successful exploitation of this vulnerability could allow an attacker to view transmitted data and use that data to log into the device. The following versions of InterSystems Corporation InterSystems IRIS for Health are affected: InterSystems IRIS for Health 2026.2.0.221, 2026.1.0.235, 2025.3.0.226 (CVE-2026-111594, CVE-2026-111594, CVE-2026-111594) CVSS Vendor Equipment v3 8.1…</p>
-
-</li>
-<li id="s54">
-<p class="story-title"><a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-295-06">Siemens PSS(R)SINCAL</a></p>
-<p class="meta">CISA Advisories · 12:00 UTC</p>
-<p class="excerpt">View CSAF Summary PSS(R)SINCAL uses WibuKey third-party product that contains an out-of-bounds write vulnerability. An attacker could exploit this vulnerability to cause a system crash, resulting in a denial-of-service condition. This affects PSS SINCAL only when configured to use the legacy WibuKey dongle license type. Siemens is actively preparing updates and recommends applicable mitigations…</p>
-
-</li>
-<li id="s55">
-<p class="story-title"><a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-295-03">Siemens Software Center</a></p>
-<p class="meta">CISA Advisories · 12:00 UTC</p>
-<p class="excerpt">View CSAF Summary The affected application loads dynamic-link libraries (DLLs) from an uncontrolled search path. This could allow an authenticated local attacker to place a specially crafted DLL in a directory that the application searches, leading to arbitrary code execution with the privileges of the affected application. Siemens has released a new version for Siemens Software Center and…</p>
-
-</li>
-<li id="s56">
-<p class="story-title"><a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-295-15">Siemens RUGGEDCOM CROSSBOW Station Access Controller</a></p>
-<p class="meta">CISA Advisories · 12:00 UTC</p>
-<p class="excerpt">View CSAF Summary RUGGEDCOM CROSSBOW Station Access Controller (SAC) contains multiple vulnerabilities in the integrated SQLite component that could allow an attacker to execute arbitrary code, cause a denial of service, or obtain sensitive information. Siemens has released a new version for RUGGEDCOM CROSSBOW Station Access Controller (SAC) and recommends to update to the latest version. The…</p>
-
-</li>
-<li id="s57">
-<p class="story-title"><a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-295-07">Siemens SIMATIC IPCs</a></p>
-<p class="meta">CISA Advisories · 12:00 UTC</p>
-<p class="excerpt">View CSAF Summary The products listed below contain a vulnerability that could allow an attacker to boot an operating system or UEFI application signed with that test key, bypassing UEFI Secure Boot protections even when Secure Boot is enabled. Siemens has released new versions for the affected products and recommends to update to the latest versions. The following versions of Siemens SIMATIC…</p>
-
-</li>
-<li id="s58">
-<p class="story-title"><a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-295-17">Siemens Industrial Edge Devices</a></p>
-<p class="meta">CISA Advisories · 12:00 UTC</p>
-<p class="excerpt">View CSAF Summary Siemens Industrial Edge Devices contain multiple path traversal vulnerabilities that could facilitate an authenticated remote attacker to access sensitive internal information. Siemens has released new versions for several affected products and recommends to update to the latest versions. Siemens is preparing further fixes and recommends specific mitigations for products where…</p>
-
-</li>
-<li id="s59">
-<p class="story-title"><a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-295-14">Siemens SIMATIC S7 PLCs Web Server</a></p>
-<p class="meta">CISA Advisories · 12:00 UTC</p>
-<p class="excerpt">View CSAF Summary SIMATIC S7-1500 devices contain multiple vulnerabilities in the web server that could allow an attacker to execute malicious code in an authorized user’s browser session and perform PLC operations within the scope of that user’s authorization. Siemens is preparing fixes and recommends specific mitigations for products where fixes are not or not yet available. The following…</p>
-
-</li>
-<li id="s60">
-<p class="story-title"><a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-295-05">Siemens SENTRON 3NA COM Fuse</a></p>
-<p class="meta">CISA Advisories · 12:00 UTC</p>
-<p class="excerpt">View CSAF Summary SENTRON 3NA COM Fuse contains a Denial-of-Service vulnerability. Improper handling of a network management message could allow an attacker to trigger a denial-of-service (DoS) condition. Successful exploitation may require the affected network to be re-established to restore normal operation. The following versions of Siemens SENTRON 3NA COM Fuse are affected: SENTRON 3NA COM…</p>
-
-</li>
-<li id="s61">
-<p class="story-title"><a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-295-01">Kiloview E3 NDI Encoder</a></p>
-<p class="meta">CISA Advisories · 12:00 UTC</p>
-<ul class="vuln-list vuln-meta"><li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-107861">CVE-2026-107861</a></span><span>CVSS 9.4</span><span>Critical</span></li>
-<li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-109122">CVE-2026-109122</a></span><span>CVSS 9.4</span><span>Critical</span></li>
-<li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-110243">CVE-2026-110243</a></span><span>CVSS 9.4</span><span>Critical</span></li>
-<li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-110825">CVE-2026-110825</a></span><span>CVSS 8.7</span><span>High</span></li>
-<li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-92450">CVE-2026-92450</a></span><span>CVSS 8.7</span><span>High</span></li>
-<li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-96616">CVE-2026-96616</a></span><span>CVSS 8.3</span><span>High</span></li></ul>
-<p class="excerpt">View CSAF Summary Successful exploitation of this these vulnerabilities could allow an attacker to fully compromise the device. The following versions of Kiloview E3 NDI Encoder are affected: E3 Firmware &lt;1.30 (CVE-2026-109122, CVE-2026-111100, CVE-2026-96616, CVE-2026-105265, CVE-2026-110491, CVE-2026-107861, CVE-2026-110243, CVE-2026-92450, CVE-2026-110825) CVSS Vendor Equipment v3 9.9 Kiloview…</p>
+<p class="story-title"><a href="https://therecord.media/php-php2shell-exploitation-attempts-pocs">Reports of PHP bug exploitation attempts grow as experts downplay viability of exploits</a></p>
+<p class="meta">The Record · 04:00 UTC</p>
+<p class="excerpt">The headline-grabbing bugs known colloquially as PHP2Shell are giving cyber analysts a lot to track — and a lot to debunk.</p>
 
 </li>
 </ol>
 </main>
-<footer>Generated 2026-10-23T16:18:44.617Z</footer>
+<footer>Generated 2026-10-24T15:15:59.512Z</footer>
 </body>
 </html>
