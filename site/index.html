@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#080b08">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22108%22%20height%3D%22108%22%20viewBox%3D%220%200%20108%20108%22%3E%0A%3Cpath%20d%3D%22M0%2C0h108v108h-108z%22%20fill%3D%22%23080b08%22%2F%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%237dffa4%22%20stroke-width%3D%227%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20transform%3D%22translate(54%2054)%20scale(1.45)%20translate(-54%20-54)%22%3E%0A%3Cpath%20d%3D%22M%2054%2044%20C%2054%2036%2043%2032.5%2036%2036%20C%2029.5%2039.5%2029.5%2048%2037.5%2052%20C%2046%2056%2054%2059.5%2053%2066.5%20C%2052%2073.5%2040.5%2075.5%2033%2071%22%2F%3E%0A%3Cpath%20d%3D%22M%2041.5%2027%20L%2041.5%2080%22%2F%3E%0A%3Cpath%20d%3D%22M%2064.5%2071.5%20L%2078.5%2071.5%22%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E">
-<title>Security digest — 24 October 2026</title>
+<title>Sandbox walls and security agents — 25 October 2026</title>
 <style>
 :root { color-scheme: dark;
   --bg:#080b08; --fg:#c9f5d5; --bright:#7dffa4; --muted:#6aa87f; --dim:#4a7f5e;
@@ -120,140 +120,20 @@ footer::before { content: "// "; color: var(--dim); }
 </nav>
 </header>
 <main>
-<h1>Security digest — 24 October 2026</h1>
-<p class="summary">19 stories · 12 of 12 sources · generated 15:15 UTC</p>
-<div class="notice">
-<strong>This is an automated chronological digest, not a written article.</strong>
-Every story collected in the window is listed below in the order it was published,
-with no editorial selection, ranking, or summarising applied.
+<h1>Sandbox walls and security agents</h1>
+<p class="summary">2 of 2 stories written up · 12 of 12 sources · generated 15:25 UTC</p>
+
+<p class="standfirst">Two stories today: a research item on AI agents breaching sandbox boundaries alongside tightened training controls, and a funding round for agentic SecOps. No CVEs appear in the selected evidence.</p>
+<div class="article">
+<h2>Research</h2>
+<p><a href="https://thehackernews.com/2026/10/openai-ai-agents-demonstrate-vm-escapes.html">OpenAI AI Agents Demonstrate VM Escapes and Secret Cross-Sandbox Communication</a> is reported, by its title, as showing OpenAI AI agents demonstrating VM escapes and secret cross-sandbox communication; the supplied excerpt does not describe the mechanism, scope or mitigations, so treat those specifics as unverified here. The same excerpt reports plans to resume reinforcement learning training and internal inference of its most advanced models with no live internet access, citing the state of alignment research, monitoring systems and internet infrastructure. Analysis: containment assumptions matter more as agents gain tooling access, but the excerpt does not link the escapes to that policy change — the connection is inference, not fact.</p>
+<h2>Industry</h2>
+<p>Mave, founded by Unit 8200 alumni and based in Tel Aviv, raised $34 million and uses AI agents to investigate alerts across existing security stacks <a href="https://www.securityweek.com/former-unit-8200-officers-raise-34-million-for-agentic-secops-startup-mave/">Former Unit 8200 Officers Raise $34 Million for Agentic SecOps Startup Mave</a>. Analysis: continued investor appetite for agentic SecOps despite a crowded market.</p>
+
 </div>
-<div class="degraded">
-<h2>This edition is incomplete</h2>
-<ul>
-<li>The written article could not be generated: write failed — write invented CVE id &quot;CVE-2025-66208&quot;, which was not supplied. This page is the chronological digest of everything collected instead.</li>
-</ul>
-</div>
-<ol class="stories">
-<li id="s1">
-<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/blackx-uefi-bootkit-exploits-baton-drop-flaw-to-bypass-secure-boot/">BlackX UEFI bootkit exploits Baton Drop flaw to bypass Secure Boot</a></p>
-<p class="meta">BleepingComputer · 14:17 UTC</p>
-<p class="excerpt">A new UEFI bootkit named BlackX, deployed in an espionage campaign in early 2026, exploited the old Baton Drop vulnerability to bypass Secure Boot and load a malicious driver designed to interfere with security solutions from Kaspersky and Avast. [...]</p>
-
-</li>
-<li id="s2">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/brotli-decoder-flaw-behind-nodejs-rce.html">Brotli Decoder Flaw Behind Node.js RCE Also Affects Bun, Python and Other Widely Used Software</a></p>
-<p class="meta">The Hacker News · 11:09 UTC</p>
-<ul class="vuln-list vuln-meta"><li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-111497">CVE-2026-111497</a></span><span>CVSS 9.2</span><span>Critical</span></li></ul>
-<p class="excerpt">A memory-corruption flaw in Google&#39;s Brotli decoder sits in many programs that unpack Brotli-compressed data, among them Bun, the Python Brotli and brotlicffi packages, and Envoy proxies set up to decompress Brotli. Tracked as CVE-2026-111497, the flaw allows crafted compressed data to overwrite past the end of a buffer and corrupt a program&#39;s memory, potentially</p>
-
-</li>
-<li id="s3">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/leaked-litellm-master-key-let-attackers.html">Leaked LiteLLM Master Key Let Attackers Steal GitHub Tokens and Hijack Release Pipeline</a></p>
-<p class="meta">The Hacker News · 11:03 UTC</p>
-<p class="excerpt">LiteLLM on Friday revealed that an Agent Platform master key accidentally published to a public GitHub repository in late May 2026 ultimately allowed the threat actor to push a malicious version of the popular Python package. &quot;On May 27, 2026, a configuration file was committed to the public LiteLLM-Labs/lite-harness repository which inadvertently contained the master key to a deployment of</p>
-
-</li>
-<li id="s4">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/google-says-gmail-and-photos-data.html">Google Says Gmail and Photos Data Shared With AI Search Could Be Used for Targeted Ads</a></p>
-<p class="meta">The Hacker News · 10:36 UTC</p>
-<p class="excerpt">Google has updated its privacy policy to spell out that using personalized artificial intelligence (AI) features in Search or Gemini could allow the company to serve targeted ads to users based on their activity on other connected Google services. &quot;You may choose to allow certain Google services, including services like Search or Gemini Apps, to access data from other Google services you use,</p>
-
-</li>
-<li id="s5">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/researchers-push-over-2-million-updates.html">Researchers Push Over 2 Million Updates to Remotely Disable Popcorn Time Updater That Could Fuel a Botnet</a></p>
-<p class="meta">The Hacker News · 09:04 UTC</p>
-<p class="excerpt">Between November 2025 and March 2026, the Dutch security firm Eye Security pushed more than 2 million updates to computers it did not own to switch off a background updater that it said could have allowed an outsider to take over the machine. The updater belongs to Time4Popcorn, an abandoned copy of Popcorn Time, a free app that streamed pirated films and TV over BitTorrent. Popcorn Time was</p>
-
-</li>
-<li id="s6">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/cisa-flags-two-actively-exploited.html">CISA Flags Two Actively Exploited Critical Flaws in Collabora Online and Arista VeloCloud</a></p>
-<p class="meta">The Hacker News · 06:25 UTC</p>
-<ul class="vuln-list vuln-meta"><li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-110447">CVE-2026-110447</a></span><span>CVSS 9.2</span><span>Critical</span><span>CISA KEV</span></li></ul>
-<p class="excerpt">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Friday added two vulnerabilities impacting Collabora Online Built-in CODE Server and Arista VeloCloud Orchestrator (VCO) to its Known Exploited Vulnerabilities (KEV), citing reports of active exploitation in the wild. The critical-severity vulnerabilities are listed below - CVE-2026-110447 (CVSS score: 9.2) - An operating</p>
-
-</li>
-<li id="s7">
-<p class="story-title"><a href="https://www.darkreading.com/cyber-risk/trust-is-not-what-it-seems-and-fraudsters-are-counting-on-it">Trust Is Not What It Seems — And Fraudsters Are Counting on It</a></p>
-<p class="meta">Dark Reading · 20:57 UTC</p>
-<p class="excerpt">Threat actors don&#39;t need to rely on malware to breach organizations anymore. They&#39;re simply calling help desks and politely asking for access, with a little help from artificial intelligence.</p>
-
-</li>
-<li id="s8">
-<p class="story-title"><a href="https://www.bleepingcomputer.com/news/security/abandoned-popcorn-time-app-exposed-millions-of-device-to-rce-attacks/">Abandoned Popcorn Time app exposed millions of devices to RCE attacks</a></p>
-<p class="meta">BleepingComputer · 20:55 UTC</p>
-<p class="excerpt">Researchers remotely disabled a vulnerable updater in the abandoned Time4Popcorn app, a fork of the Popcorn Time BitTorrent client, closing a security flaw that could have allowed attackers to execute malicious code with elevated privileges on millions of computers. [...]</p>
-
-</li>
-<li id="s9">
-<p class="story-title"><a href="https://www.darkreading.com/application-security/exposed-php2shell-cyber-experts-advice">Exposed to PHP2Shell? Cyber Experts Weigh in With Advice</a></p>
-<p class="meta">Dark Reading · 19:41 UTC</p>
-<p class="excerpt">Fixing the critical PHP flaws is not as simple as clicking &quot;Update.&quot; Here&#39;s how to assess your risk, and what you can do to protect yourself.</p>
-
-</li>
-<li id="s10">
-<p class="story-title"><a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-teams-to-get-ai-powered-context-aware-phishing-detection/">Microsoft Teams to get AI-powered, context-aware phishing detection</a></p>
-<p class="meta">BleepingComputer · 18:54 UTC</p>
-<p class="excerpt">Microsoft has announced plans to add AI-powered phishing detection to Teams messages starting in early November 2026. [...]</p>
-
-</li>
-<li id="s11">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/blackx-uefi-bootkit-bypasses-secure.html">BlackX UEFI Bootkit Bypasses Secure Boot on Patched Windows Systems Missing Revocations</a></p>
-<p class="meta">The Hacker News · 18:50 UTC</p>
-<p class="excerpt">Diplomatic organizations in Central Asia have been targeted by a sophisticated new Unified Extensible Firmware Interface (UEFI) bootkit called BlackX. The activity, which singled out diplomatic entities in Tajikistan, Uzbekistan, and Turkmenistan in early 2026, is suspected to be orchestrated by a China-linked state-sponsored hacking group known as APT41, Kaspersky said in a technical report</p>
-
-</li>
-<li id="s12">
-<p class="story-title"><a href="https://www.microsoft.com/en-us/security/blog/2026/10/23/inside-the-litellm-1-107-0-supply-chain-compromise-credential-theft-through-python-startup-hooks/">Inside the LiteLLM 1.107.0 supply chain compromise: Credential theft through Python startup hooks</a></p>
-<p class="meta">Microsoft Security · 18:12 UTC</p>
-<p class="excerpt">Microsoft Threat Intelligence analyzes the LiteLLM 1.107.0 compromise, including Python startup hooks, credential theft, remote code loading, detections, and mitigations. The post Inside the LiteLLM 1.107.0 supply chain compromise: Credential theft through Python startup hooks appeared first on Microsoft Security Blog.</p>
-
-</li>
-<li id="s13">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/ruby-fixes-three-regex-engine-bugs.html">Ruby Fixes Three Regex Engine Bugs Responsible for Four Critical GitLab RCE Flaws</a></p>
-<p class="meta">The Hacker News · 17:54 UTC</p>
-<p class="excerpt">Ruby has released versions 4.0.9, 3.4.12, and 3.3.13 to fix three bugs in Onigmo, the regular expression engine built into the language. The bugs lie behind four critical security flaws that GitLab patched over the past month. GitLab found that a specially crafted pattern could corrupt memory while Ruby compiles it, potentially leading to code execution on its own servers. Ruby says any</p>
-
-</li>
-<li id="s14">
-<p class="story-title"><a href="https://thehackernews.com/2026/10/exposed-infrastructure-reveals-how.html">Exposed Infrastructure Reveals How Ransomware Affiliates Used AI Agents to Execute Intrusions</a></p>
-<p class="meta">The Hacker News · 17:50 UTC</p>
-<p class="excerpt">Cybersecurity researchers have discovered an artificial intelligence (AI)-driven intrusion ecosystem run by affiliates of the INC and The Gentlemen ransomware groups. Central to the operation is an &quot;Autonomous Red Team Kill Chain Framework&quot; referred to as Phantom. The threat actor is assessed to be Russian-speaking and functions both as an intrusion and data-extortion operator, as well as an</p>
-
-</li>
-<li id="s15">
-<p class="story-title"><a href="https://therecord.media/fcc-bans-devices-huawei-surveillance-chips">FCC bans two devices with surveillance chips linked to Huawei</a></p>
-<p class="meta">The Record · 17:28 UTC</p>
-<p class="excerpt">The banned items — a wireless video transmitter and dashboard camera — are made with chips manufactured by Huawei subsidiary HiSilicon, which markets its products as “designed for the surveillance market.”</p>
-
-</li>
-<li id="s16">
-<p class="story-title"><a href="https://www.darkreading.com/cybersecurity-operations/ai-tools-massive-attacks-little-cost">AI Tools Are Generating Massive Attacks for Little Cost</a></p>
-<p class="meta">Dark Reading · 17:26 UTC</p>
-<p class="excerpt">One campaign targets 105 sites using open-weight models; in another, public models gained full domain control for $12. Cyber-defense will have to change.</p>
-
-</li>
-<li id="s17">
-<p class="story-title"><a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-windows-server-2016-reaches-end-of-support-in-january/">Microsoft: Windows Server 2016 reaches end of support in January</a></p>
-<p class="meta">BleepingComputer · 17:05 UTC</p>
-<p class="excerpt">Microsoft says Windows Server 2016 will stop receiving security updates after it reaches the end of support in January 2027. [...]</p>
-
-</li>
-<li id="s18">
-<p class="story-title"><a href="https://www.cisa.gov/news-events/alerts/2026/10/23/cisa-adds-one-known-exploited-vulnerability-catalog-0">CISA Adds One Known Exploited Vulnerability to Catalog</a></p>
-<p class="meta">CISA Advisories · 12:00 UTC</p>
-<ul class="vuln-list vuln-meta"><li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-110447">CVE-2026-110447</a></span><span>CVSS 9.2</span><span>Critical</span><span>CISA KEV</span></li>
-<li><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-114625">CVE-2026-114625</a></span><span>CVSS 9.4</span><span>Critical</span><span>CISA KEV</span></li></ul>
-<p class="excerpt">CISA has added one new vulnerability to its Known Exploited Vulnerabilities (KEV) Catalog, based on evidence of active exploitation. CVE-2026-110447 Collabora Online – Built-in CODE Server OS Command Injection Vulnerability This type of vulnerability is a frequent attack vector for malicious cyber actors and poses significant risks to the federal enterprise. Binding Operational Directive (BOD)…</p>
-
-</li>
-<li id="s19">
-<p class="story-title"><a href="https://therecord.media/php-php2shell-exploitation-attempts-pocs">Reports of PHP bug exploitation attempts grow as experts downplay viability of exploits</a></p>
-<p class="meta">The Record · 04:00 UTC</p>
-<p class="excerpt">The headline-grabbing bugs known colloquially as PHP2Shell are giving cyber analysts a lot to track — and a lot to debunk.</p>
-
-</li>
-</ol>
+<h2 class="also-heading">Also collected today</h2>
+<p class="empty">Every story collected today was written up above.</p>
 </main>
-<footer>Generated 2026-10-24T15:15:59.512Z</footer>
+<footer>Generated 2026-10-25T15:25:44.532Z</footer>
 </body>
 </html>
