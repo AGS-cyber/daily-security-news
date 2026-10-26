@@ -62,11 +62,14 @@ export async function writeSite(
 ): Promise<string[]> {
   await mkdir(o.siteDir, { recursive: true });
 
-  const html = edition.mode === 'article' ? articlePage(edition) : digestPage(edition);
+  // The dated page is a permalink that outlives tomorrow's run, so it must not
+  // call itself the latest; only index.html does, with a live staleness check.
+  const render = (role: 'latest' | 'edition') =>
+    edition.mode === 'article' ? articlePage(edition, { role }) : digestPage(edition, { role });
   const datedPath = join(o.siteDir, `${edition.date}.html`);
   const indexPath = join(o.siteDir, 'index.html');
-  await writeFile(datedPath, html, 'utf8');
-  await writeFile(indexPath, html, 'utf8');
+  await writeFile(datedPath, render('edition'), 'utf8');
+  await writeFile(indexPath, render('latest'), 'utf8');
 
   const entries = await archiveEntries(o.editionsDir);
   const archivePath = join(o.siteDir, 'archive.html');

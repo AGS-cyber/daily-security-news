@@ -41,8 +41,8 @@ these lines stops being true.
 
 ## 1. Setup
 
-Node 22+ is required — the code uses native `fetch` and the built-in test
-runner, and the workflow pins Node 22.
+Node 22.23.4 is pinned in the workflows and version files; the supported range
+is >=22.23.4 and <23. The code uses native `fetch` and the built-in test runner.
 
 ```sh
 npm install
@@ -151,6 +151,17 @@ state:
 
 If the first deploy 404s, it is almost always Output Directory: Vercel served
 the repo root instead of `site/`.
+
+**Check the HTTP security policy before releasing renderer changes.** The CSP
+header in `vercel.json` and the page's meta policy are enforced together. A meta
+hash alone cannot permit a script blocked by the HTTP header. The deployment
+regression test checks the exact rendered script bytes against both policies.
+When the fixed enhancement script changes, its SHA-256 must match the deployed
+header; never fix a mismatch by allowing arbitrary inline scripts or evaluation.
+Test with the actual HTTP headers, including a changed or additional script that
+must be blocked, and confirm the filters and freshness display on the live site.
+Rerender from the latest committed edition records before pushing: Vercel does
+not run the renderer during deployment.
 
 **A known, harmless annotation.** Every run reports that `actions/checkout@v4`
 and `actions/setup-node@v4` target Node 20 and are being forced onto Node 24.
@@ -269,9 +280,13 @@ the event loop open with them. It only appeared with all twelve feeds — a
 two-feed probe exited cleanly, which made it look like it was not the HTTP
 layer at all.
 
-**Fix, already in place:** `requestOptions: { agent: false }` in
-`src/collect/rss.ts` gives each request a throwaway agent. We fetch each host
-once per run, so there is no connection worth pooling. **Do not remove it.**
+**Current fix (2026-10-25):** `src/collect/feed.ts` uses native fetch with a
+15-second abort deadline covering headers and body, cancels unsuccessful or
+oversized responses, and parses the resulting XML with rss-parser. The old
+`parseURL` transport and throwaway-agent workaround have been replaced. Fetch
+has one bounded retry for transient failures; see `reliability-review.md` for
+the limits and mocked timeout tests. Do not restore a timeout that only rejects
+a promise while leaving the underlying request alive.
 
 **Diagnose a recurrence:** `process.getActiveResourcesInfo()` after the work
 finishes. A lingering `TCPSocketWrap` is this bug.
@@ -303,12 +318,27 @@ run — 140 became 123 — with an identical `collected` count.
 always return their latest N), while their contents rotate. Meanwhile the
 7-day eligibility window slides forward, so the oldest stories age out.
 
-Consequence worth knowing: a same-day re-run is **non-destructive but not
-idempotent** — the edition reflects whatever was collectible at generation
-time. Harmless for a once-daily job. It becomes a real question at layer 3,
-where a re-run regenerates a different article from a different story set. If
-that ever matters, the fix is to union a re-run's items with the existing
-edition for that date so the day's record only ever grows.
+**Current rerun policy (2026-10-25):** if collection or normalization is degraded
+and any output already exists for the same UTC date, the generator exits nonzero
+before enrichment, model calls, or file writes. It checks the stored edition JSON,
+served edition JSON and dated HTML; any one of them protects an earlier or
+interrupted publication, even when the old JSON is truncated. The error names the
+failed source/stage and states that no replacement was generated. All existing
+content, generation timestamps, vulnerability cache and seen state stay unchanged.
+
+This deliberately blocks even a partial rerun that appears to contain as many or
+more stories: counts alone cannot prove that no story was lost. Recover the failed
+sources, then rerun. There is no silent merge of old stories into a newly dated
+edition and no force-overwrite option. Expected future-event exclusions are
+informational and do not block a rerun.
+
+A first edition for a new UTC date may still publish partial results with its
+source-failure banner. Healthy same-day reruns remain allowed and can change as
+feeds rotate or the eligibility window advances. Later-stage enrichment/writing
+fallbacks keep their existing policy. The guard does not make multi-file writes
+transactional or serialize concurrent local processes; the daily workflow already
+serializes its jobs. An operator must resolve genuinely interrupted output rather
+than bypass the guard during a collection outage.
 
 ### The article is missing and the page is a digest
 
@@ -487,8 +517,9 @@ as designed:
 
 | Failure | Behaviour | Build |
 |---|---|---|
-| A feed times out, 404s, or returns garbage | Notice appended, banner on the page naming the source | green |
-| Items unparseable in `normalize` | One aggregated notice, banner | green |
+| A feed times out, 404s, or returns garbage | First/new-day partial edition is disclosed if input remains usable; an existing same-date edition is preserved with a nonzero exit | green for first partial; **red** for degraded replacement |
+| Invalid links/dates or unexplained future timestamps | Aggregated notice; same-date replacement is blocked. Expected future-event listings are informational | green for first partial; **red** for degraded replacement |
+| No usable collected/normalized input | Stop before enrichment, model calls and output writes | **red** |
 | CISA KEV or NVD times out, rate-limits, or returns malformed data | Use fresh/stale cache where possible; otherwise explicit unavailable fields and an `enrich` banner | green |
 | A CVE is absent from NVD | Confirmed `not_found`; NVD fields remain null/empty | green |
 | The vulnerability cache cannot be read or written | Rebuild or continue in memory, with an `enrich` banner | green |
@@ -634,3 +665,25 @@ warning with precise reasons. The eligibility window and future-date limit are u
 Historical records remain untouched. Their generic normalize-only notices render as
 Collection notice with an explicit statement that the specific rejection reason was
 not recorded. Current feed evidence cannot retroactively identify historical rejects.
+
+
+## Reader freshness and local validation (2026-10-25)
+
+The front page and dated permalink now render separately. The former warns when
+the next scheduled edition is overdue; the latter is explicitly a stored edition.
+The browser checks age on resume, focus, history restore and every visible minute.
+The two-hour grace is a reader hint, not a promise about Actions completion. A
+clock mismatch or unreadable timestamp is disclosed. Source status is a snapshot
+of that edition's attempts, not a continuous health monitor.
+
+The fixed enhancement script has a SHA-256 CSP hash. Do not minify or otherwise
+rewrite its bytes independently of that hash; an additional HTTP CSP must permit
+the same script. No browser services are called. With scripts unavailable, all
+stories, dates, source evidence and conditional freshness guidance remain visible;
+filters stay hidden rather than becoming dead controls.
+
+The local audit changed source/tests/docs only. Stored editions, caches, seen
+state and generated site files were preserved. Existing generated pages acquire
+the new reader on a later intentional render; this audit did not publish them.
+Use the existing offline test/typecheck scripts before any separately authorized
+publication. The review report records validation and remaining trade-offs.

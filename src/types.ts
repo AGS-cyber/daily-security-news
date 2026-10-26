@@ -7,6 +7,15 @@ export interface Source {
   feedUrl: string;
 }
 
+/** Observations from this run; an HTTP success does not establish news freshness. */
+export interface CollectionSource {
+  sourceId: string;
+  attemptedAt: string;
+  status: 'ok' | 'empty' | 'failed';
+  items: number;
+  skipped: number;
+}
+
 export interface RawItem {
   sourceId: string;
   sourceKind: SourceKind;
@@ -186,6 +195,7 @@ interface EditionBase {
   date: string;
   generatedAt: string;
   degraded: DegradedNotice[];
+  collection?: CollectionSource[];
   /** New runs retain exclusion evidence; absent on historical records. */
   normalizationExclusions?: NormalizationExclusion[];
   stats: {

@@ -24,9 +24,9 @@ delivered, and the non-goal it contradicted was right the first time.
 
 ## 2. Deliverable
 
-A static site whose front page is today's article.
+A static site whose front page is the latest published edition, which may be older than today.
 
-- `site/index.html` — today's article.
+- `site/index.html` — the latest published edition with freshness context.
 - `site/YYYY-MM-DD.html` — one page per past article.
 - `site/archive.html` — every past edition, drawn as a calendar.
 - `data/editions/YYYY-MM-DD.json` — the structured record that produced the
@@ -42,28 +42,38 @@ sections, and inline links to primary sources. Below it, a plain list of
 everything else collected that day but not written up — cheap to render, and
 it means nothing collected is silently discarded.
 
-Static HTML with inlined CSS. No client-side framework.
+Static HTML with inlined CSS and a small dependency-free enhancement script.
+There is no client-side framework or browser network access. All stories and
+absolute timestamps remain readable without JavaScript; filter controls appear
+only after they bind successfully. One fixed script is permitted by its SHA-256
+CSP hash, with no inline-script wildcard or dynamic evaluation.
 
-**Presentation — a green-phosphor terminal.** Monospace throughout, near-black
-background, a fixed scanline overlay, and shell-prompt chrome. Dark only: there
-is no light palette, because a light-mode CRT is a contradiction and carrying
-two themes for one page buys nothing.
+**Presentation (updated 2026-10-25):** the dark green terminal identity remains,
+but the scanline overlay, blinking cursor and heading glow are removed. Informative
+text uses the higher-contrast muted colour; decoration stays in CSS. Labelled
+filters, a skip link, keyboard focus, live result counts and 44px controls support
+small screens and keyboard use. Article prose precedes secondary lists.
 
-Every decorative character — the `root@sec:~$` prompt, the `$` and `##` sigils,
-the `[01]` story numbers, the blinking cursor — is CSS `content`, never markup.
-The document stays plain readable prose with the stylesheet off, and the theme
-never touches a story's title, link, or timestamp. Styling is confined to the
-`CSS` constant and `layout()` in `render/html.ts`; no other module knows what
-the page looks like.
+**Freshness and source status:** the front page describes itself as latest when
+published, gives immutable generation time, and computes an age in the browser.
+The next scheduled edition is due at 12:00 UTC the following day; a two-hour grace
+separates a due notice from a stale/cached-page warning. Age updates on resume,
+focus, history restoration and once a minute while visible. Dated permalinks state
+that they are stored editions and show age without implying a missed schedule.
+Invalid/future timestamps have explicit explanations. These checks depend on the
+device clock and do not establish live pipeline health. The no-script fallback
+keeps the expected date and a conditional freshness warning visible.
 
-**The rule now has no exceptions.** The email edition was the one surface that
-inverted it — email clients strip generated content, so there the decorative
-characters had to be real markup — and it was removed on 2026-08-18 (§12). Every
-remaining surface keeps its sigils in CSS.
+Per-source results list failures first, distinguish FETCHED from fresh reporting,
+show attempt times and missing fields, and disclose absent historical metadata.
+Priority uses supplied KEV membership and CVSS evidence; source links and CISA's
+exact action remain visible, with catalog deadlines qualified rather than treated
+as universal deadlines. Search, priority and source filters operate on the existing
+story list; reset and zero-match states do not remove data from the stored edition.
 
-**The colours live in `render/palette.ts`**, which `html.ts` interpolates into
-`:root`. One definition, and since the email renderer went, one web-side
-consumer.
+Renderer responsibilities are split between html.ts (composition), styles.ts,
+status.ts, format.ts and enhance.ts. Colours remain in palette.ts;
+the native app's hand-mirrored palette is unchanged.
 
 **The archive is a calendar, not a list of dates.** One grid per month, newest
 month first, Monday first because the dates are UTC and this is a technical
@@ -146,10 +156,20 @@ therefore produces one unusually large edition, and every run after it settles
 to roughly a day's news — an emergent property of the seen store, not a
 window check.
 
-**Dedupe.** Canonical URL match first (strip `utm_*`, fragments, AMP paths).
-Then title similarity within the window to catch the same story reported by
-five outlets — the cluster keeps every source URL so the article can cite the
-best one and note who else covered it.
+**Dedupe.** Exact canonical URL matches collapse first and retain every member's
+source URL. Fuzzy title matching is conservative: each URL group must agree with
+every group already in the cluster, be within 48 hours, and come from different
+publisher posts. If both groups mention CVEs, their IDs must overlap. CVE tokens
+are removed from title similarity so repeated identifier formatting cannot inflate
+the score. A vague or multi-CVE bridge cannot join conflicting advisories. Inputs
+are sorted deterministically, so asynchronous source order does not decide the
+clusters. Canonical hashing is unchanged, preserving the existing seen store.
+
+The earliest report remains the primary, with its actual publication date. Age
+eligibility uses the newest cluster member so a fresh report is not discarded
+merely because its primary crosses the seven-day boundary. A URL published in an
+earlier edition still suppresses a repeated cluster; materially updated reporting
+at the same URL is not version-tracked.
 
 **Seen store.** `data/seen.json` — a map of canonical-URL hash to the date
 that first covered it, pruned to 30 days. Committed back by the workflow so
@@ -165,7 +185,10 @@ double-fire. Treating "seen at all" as a drop meant the second run of any day
 found nothing to publish and rendered an empty edition *over* the real one,
 destroying that day's record while the page still read as healthy ("No new
 stories in this window"). That is the §8 failure this project refuses to ship,
-so the rule is date-aware and same-day runs are idempotent.
+so the seen rule is date-aware. Repeating a healthy run keeps same-day stories
+eligible, but the result can still change as feeds rotate. A degraded collection
+cannot replace any existing same-date output; the guard preserves the entire
+earlier edition and its original generation timestamp, then reports a failed run.
 
 ## 4. Sources
 
@@ -413,7 +436,23 @@ it complete is exactly the failure mode we refuse.
 **Pipeline-stage failures are hard failures.** Dedupe, render, and publish
 either work or the run aborts with a non-zero exit and no deploy. Yesterday's
 article stays up, the workflow goes red, and the failure is findable. There
-is no partial publish and no placeholder content.
+is no placeholder content. Local files are still written sequentially; an interrupted
+local run can leave partial files, even though a failed workflow does not commit
+or deploy them. The rerun guard protects any same-date copy, not a transaction.
+
+**An unusable collection is also a hard failure.** If no source supplies a usable
+entry, or normalization rejects every collected entry, stop before enrichment,
+generation and output writes. Partial collection may still publish with source
+notices. A healthy collection with no unseen stories after filtering remains a
+valid quiet-day digest; it is not the same as an outage producing zero input.
+
+**Degraded collection cannot replace a same-date edition.** Any collect/normalize
+notice blocks regeneration when the stored edition JSON, served JSON or dated HTML
+already exists. This check runs before enrichment, LLM calls and output writes.
+It fails with the source/stage reasons and retains the previous output and
+timestamps unchanged, including on repeated attempts. First publication on a new
+date may remain partial with its explicit warning. This is a preservation guard,
+not an atomic publication transaction.
 
 **LLM failures fall back visibly, once.** If `select` or `write` fails —
 empty content, invalid JSON, unknown story `id`, refusal, API error — retry
