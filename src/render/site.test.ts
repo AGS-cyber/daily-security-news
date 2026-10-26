@@ -4,10 +4,23 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
 import type { ArticleEdition, DigestEdition, Item, Selection } from '../types.js';
+import { createHash } from 'node:crypto';
 import { vulnerability } from '../test-helpers.js';
-import { articlePage } from './html.js';
+import { articlePage, digestPage } from './html.js';
 import { writeEdition } from './edition.js';
+import { ENHANCE_SCRIPT } from './enhance.js';
 import { writeSite } from './site.js';
+
+/**
+ * Every page deliberately carries one script: the constant, CSP-hashed
+ * enhancement. Remove exactly that one so assertions about untrusted content
+ * can still say "no script at all came from the edition".
+ */
+function withoutEnhancement(html: string): string {
+  const tag = `<script>${ENHANCE_SCRIPT}</script>`;
+  assert.equal(html.split(tag).length - 1, 1, 'expected exactly one trusted enhancement script');
+  return html.replace(tag, '');
+}
 
 /**
  * Round-trips an edition through disk: writeEdition serialises it, then
@@ -195,20 +208,28 @@ test('important selected vulnerabilities render as compact authoritative metadat
   });
 });
 
-test('no page asks for an email address, and none carries a script', async () => {
+test('no page asks for an email address, and the only script is the hashed enhancement', async () => {
   await withDirs(async (dirs) => {
     const edition = articleEdition();
     await writeEdition(edition, dirs.editionsDir);
     await writeSite(edition, dirs);
 
+    const hash = `sha256-${createHash('sha256').update(ENHANCE_SCRIPT, 'utf8').digest('base64')}`;
     // The subscribe form lived in layout(), so its removal has to hold for
     // today's page, the dated page and the archive alike.
     for (const file of ['index.html', '2026-08-06.html', 'archive.html']) {
       const page = await readFile(join(dirs.siteDir, file), 'utf8');
       assert.doesNotMatch(page, /buttondown/i, `${file} still points at Buttondown`);
       assert.doesNotMatch(page, /<form/i, `${file} still collects an address`);
-      // The site has never shipped a script tag and this must not be the first.
-      assert.doesNotMatch(page, /<script/i, `${file} gained a script tag`);
+      // One deliberate script, permitted by hash alone: no other script tag,
+      // no external source, no inline handler, no inline/eval allowance.
+      assert.doesNotMatch(withoutEnhancement(page), /<script/i, `${file} gained another script tag`);
+      assert.doesNotMatch(page, /<script[^>]*\ssrc=/i, `${file} loads an external script`);
+      assert.doesNotMatch(page, /<[a-z][^>]*\son[a-z]+\s*=/i, `${file} has an inline event handler`);
+      const csp = /<meta http-equiv="Content-Security-Policy" content="([^"]+)">/.exec(page)?.at(1);
+      assert.ok(csp, `${file} has no CSP`);
+      assert.match(csp, new RegExp(`script-src '${hash.replace(/[+/=]/g, '\\$&')}'`), `${file} CSP does not pin the script hash`);
+      assert.doesNotMatch(csp, /unsafe-eval|script-src[^;]*unsafe-inline|connect-src/, `${file} CSP is too broad`);
     }
   });
 });
@@ -252,7 +273,7 @@ test('hostile saved Markdown cannot create scripts, images or executable links',
   await writeEdition(edition, dirs.editionsDir);
   await writeSite(edition, dirs);
   const html = await readFile(join(dirs.siteDir, 'index.html'), 'utf8');
-  assert.doesNotMatch(html, /<script|<img|href="javascript:/i);
+  assert.doesNotMatch(withoutEnhancement(html), /<script|<img|href="javascript:/i);
   assert.match(html, /Content-Security-Policy/);
   assert.match(html, /href="https:\/\/example.test\/a"/);
  });
@@ -285,4 +306,57 @@ test('known malformed exclusions and independent failures retain the incomplete 
  const mixed = articleEdition({degraded:[{stage:'normalize',message:'1 items were dropped as unparseable'},{stage:'collect',message:'A feed failed'}]});
  assert.match(articlePage(mixed),/This edition is incomplete/);
  assert.match(articlePage(mixed),/specific rejection reason was not recorded/);
+});
+
+test('article and digest readers see full edition and story dates without scripts', () => {
+  const article = articlePage(articleEdition());
+  assert.match(article, /Edition 6 August 2026/);
+  assert.match(article, /Generated <time datetime="2026-08-06T12:00:00.000Z">6 August 2026 12:00 UTC/);
+  assert.match(article, /Scheduled daily at 12:00 UTC; publication can be delayed/);
+  assert.match(article, /href="index.html">latest/);
+  assert.match(article, /<time datetime="2026-08-06T09:00:00.000Z">6 August 2026 09:00 UTC/);
+  assert.match(digestPage(digestEdition('2026-08-06')), /Edition 6 August 2026/);
+});
+
+test('coverage reports partial failures and exclusions without claiming new reporting', () => {
+  const html = articlePage(articleEdition({ collection: [
+    { sourceId: 'krebs', attemptedAt: '2026-08-06T12:00:00Z', status: 'ok', items: 5, skipped: 1 },
+    { sourceId: 'down<script>', attemptedAt: '2026-08-06T12:00:00Z', status: 'failed', items: 0, skipped: 0 },
+  ], degraded: [{ stage: 'collect', sourceId: 'down<script>', message: 'A source failed' }] }));
+  assert.match(html, /Krebs on Security: 5 entries collected/);
+  assert.match(html, /1 entry missing a title or link/);
+  assert.match(html, /down&lt;script&gt;: fetch failed/);
+  assert.match(html, /does not establish that a source has new reporting/);
+  assert.match(html, /This edition is incomplete/);
+  assert.doesNotMatch(withoutEnhancement(html), /<script/);
+});
+
+test('CISA actions are linked to evidence, escaped and explicitly dated', () => {
+  const story = selected('s1', 'Example advisory', 'https://example.test/a');
+  const cve = vulnerability();
+  cve.kev!.requiredAction = 'Apply <script>untrusted</script> & follow vendor instructions.';
+  story.cves = [cve];
+  const html = articlePage(articleEdition({ selected: [story] }));
+  assert.match(html, /CISA required action/);
+  assert.match(html, /Apply &lt;script&gt;untrusted&lt;\/script&gt; &amp;/);
+  assert.match(html, /href="https:\/\/www.cisa.gov\/known-exploited-vulnerabilities-catalog"/);
+  assert.match(html, /retrieved <time datetime="2026-08-01T01:00:00.000Z"/);
+  assert.match(html, /older than the refresh window at generation/);
+  assert.match(html, /CISA catalog due date: 2026-08-22 \(not a universal deadline\)/);
+  assert.doesNotMatch(withoutEnhancement(html), /<script/);
+});
+
+test('unenriched CVEs remain visible beside a story with explicit unknown status and no invented action', () => {
+  const cve = vulnerability('CVE-2026-12345', { knownExploited: null, score: null, severity: null });
+  cve.nvd = null;
+  cve.provenance.nvd.status = 'unavailable';
+  cve.provenance.nvd.retrievedAt = null;
+  const edition = digestEdition('2026-08-06');
+  edition.items[0]!.cves = [cve];
+  const html = digestPage(edition);
+  assert.match(html, /CVE-2026-12345/);
+  assert.match(html, /KEV status unavailable/);
+  assert.match(html, /NVD unavailable/);
+  assert.doesNotMatch(html, /CISA required action:|CISA catalog due date:|CVSS \d/);
+  assert.match(html, /Absence from KEV does not establish absence of exploitation/);
 });

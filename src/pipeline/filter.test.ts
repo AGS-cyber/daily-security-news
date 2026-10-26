@@ -93,3 +93,18 @@ test('a previously published secondary member prevents a cluster repeat', () => 
  first.members.push(cluster('https://a.test/old', hoursAgo(3)));
  assert.equal(filter([first], seenStore({ 'https://a.test/old': '2026-08-05' }), NOW).droppedSeen, 1);
 });
+
+test('an older primary does not hide a fresh member at the seven-day boundary', () => {
+  const primary = cluster('https://a.test/primary', hoursAgo(24 * 7 + 1));
+  primary.members.push(cluster('https://b.test/new-report', hoursAgo(24 * 7 - 1)));
+  const result = filter([primary], seenStore({}), NOW);
+  assert.equal(result.kept.length, 1);
+  assert.equal(result.droppedOld, 0);
+  assert.equal(result.kept[0]?.publishedAt, hoursAgo(24 * 7 + 1), 'do not relabel the old primary as newly published');
+});
+
+test('a cluster whose newest member is outside the window is still dropped', () => {
+  const primary = cluster('https://a.test/primary', hoursAgo(24 * 8));
+  primary.members.push(cluster('https://b.test/report', hoursAgo(24 * 7)));
+  assert.equal(filter([primary], seenStore({}), NOW).droppedOld, 1);
+});

@@ -24,7 +24,10 @@ export function filter(
       droppedSeen++;
       continue;
     }
-    const age = now.getTime() - new Date(cluster.publishedAt).getTime();
+    // An old primary report must not discard a newly published member of the
+    // same story. Keep the original primary/date for honest source provenance.
+    const latest = cluster.members.reduce((at, member) => Math.max(at, Date.parse(member.publishedAt)), Date.parse(cluster.publishedAt));
+    const age = now.getTime() - latest;
     if (age < ELIGIBILITY_WINDOW_MS) kept.push(cluster);
     else droppedOld++;
   }
