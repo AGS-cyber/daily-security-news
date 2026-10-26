@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-10-26",
+    "mode": "article",
+    "headline": "PHP2Shell Exploitation Leads a Day of Session and Supply-Chain Risk",
+    "count": 34
+  },
+  {
     "date": "2026-10-25",
     "mode": "article",
     "headline": "Sandbox walls and security agents",
