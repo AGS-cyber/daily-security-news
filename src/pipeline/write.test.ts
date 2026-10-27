@@ -3,7 +3,7 @@ import { test } from 'node:test';
 import type { DeepSeekClient, LlmResult } from '../llm/client.js';
 import type { Item, Section, Selection, Usage } from '../types.js';
 import { vulnerability } from '../test-helpers.js';
-import { write } from './write.js';
+import { evidenceWordLimit, suppliedCveIds, write } from './write.js';
 
 const USAGE: Usage = {
   model: 'deepseek-v4-flash',
@@ -81,7 +81,7 @@ Something happened [[s1]].`;
 
 test('rejects a response with no "## " section heading', async () => {
   await assert.rejects(
-    write(SELECTED, client('# A headline\n\nA standfirst citing [[s1]].')),
+    write(SELECTED, client('# Security updates arrive\n\nA standfirst citing [[s1]].')),
     /no "## " section heading/,
   );
 });
@@ -102,6 +102,53 @@ test('retries once, and a valid second response succeeds', async () => {
   const result = await write(SELECTED, client('no headings here', GOOD));
 
   assert.equal(result.headline, 'A busy day at the edge');
+  assert.equal(result.usage.outputTokens, 1600);
+});
+
+test('October 24 regression: a related CVE explicitly present in supplied NVD prose is not invented', async () => {
+  const cve = vulnerability('CVE-2026-110447');
+  cve.nvd!.description = 'This is a different vulnerability than CVE-2025-66208.';
+  const selected = SELECTED.map((s, i) => ({ ...s, cves: i === 0 ? [cve] : [] }));
+  const response = GOOD.replace('The edge appliance flaw', 'CVE-2026-110447, distinct from CVE-2025-66208,');
+  const result = await write(selected, client(response));
+  assert.match(result.bodyMarkdown, /CVE-2025-66208/);
+  assert.deepEqual(selected[0]!.cves.map((c) => c.id), ['CVE-2026-110447']);
+});
+
+test('CVE allowlist excludes editorial angles, unsent URLs and truncated NVD text', async () => {
+  const cve = vulnerability('CVE-2026-110447');
+  cve.nvd!.description = 'Evidence '.repeat(200) + 'CVE-2025-66208';
+  const selected = SELECTED.map((s) => ({ ...s, cves: [cve], angle: 'Discuss CVE-2026-9999', url: 'https://a.test/CVE-2026-8888' }));
+  assert.deepEqual([...suppliedCveIds(selected)], ['CVE-2026-110447']);
+  for (const id of ['CVE-2025-66208', 'CVE-2026-9999', 'CVE-2026-8888']) {
+    await assert.rejects(write(selected, client(GOOD.replace('The edge appliance flaw', id))), /invented CVE/);
+  }
+});
+
+test('August 13 regression: Unicode-dash identifiers in supplied excerpts are recognized', async () => {
+  const selected = SELECTED.map((s) => ({ ...s, excerpt: 'Tracked as CVE-2026–59310.' }));
+  await write(selected, client(GOOD.replace('The edge appliance flaw', 'CVE-2026-59310')));
+});
+
+test('October 9 regression: over-budget retry receives the actual count and limit, then succeeds', async () => {
+  const requests: Parameters<DeepSeekClient['complete']>[0][] = [];
+  const bad = GOOD + '\n' + 'Unsupported details '.repeat(60);
+  const result = await write(SELECTED, { async complete(request) {
+    requests.push(request);
+    return { text: requests.length === 1 ? bad : GOOD, usage: USAGE };
+  } });
+  assert.equal(requests.length, 2);
+  assert.match(requests[1]!.user, /evidence word budget: \d+ body words; maximum 80/);
+  assert.match(requests[1]!.user, /previousResponse/);
+  assert.equal(requests[0]!.system, requests[1]!.system);
+  assert.equal(result.usage.promptCacheMissTokens, 200);
+  assert.ok(result.bodyMarkdown.split(/\s+/).length <= evidenceWordLimit(SELECTED));
+});
+
+test('placeholder headlines are corrected once and rejected if repeated', async () => {
+  const placeholder = GOOD.replace('A busy day at the edge', 'The headline');
+  assert.equal((await write(SELECTED, client(placeholder, GOOD))).headline, 'A busy day at the edge');
+  await assert.rejects(write(SELECTED, client(placeholder)), /placeholder headline/);
 });
 
 test('rejects a CVE identifier that was not supplied with a selected story', async () => {

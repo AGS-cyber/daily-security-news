@@ -67,6 +67,8 @@ npm start          # one run, one edition
 npm run rerender   # rebuild all pages from stored editions — no network, no LLM
 npm test
 npm run typecheck
+npm run audit:editions  # inspect stored history; no network or publication
+npm run check:health   # fail if today's edition is stale, degraded or inconsistent
 ```
 
 A run collects every feed, writes `data/editions/<date>.json` and the pages
@@ -126,6 +128,11 @@ Core pipeline failures are hard failures: the run aborts, nothing deploys, and
 yesterday's article stays up. Feed and vulnerability-source failures are
 visible degradations because a partial edition is still useful when it says
 exactly what could not be collected or refreshed.
+
+The daily workflow checks edition health after publication. A partial edition
+can reach readers while the job finishes red with its precise failure reasons.
+Healthy quiet days remain green. Deployment checks allow up to ten minutes and
+verify the dated record, latest homepage and app archive index together.
 
 ## Sources
 

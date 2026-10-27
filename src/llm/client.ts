@@ -100,6 +100,7 @@ export function createClient(options: { fetch?: typeof fetch; timeoutMs?: number
   const client: DeepSeekClient = {
     async complete(o) {
       let lastError = '';
+      let usage: Usage | undefined;
 
       // One attempt, then exactly one retry (§8).
       for (let attempt = 1; attempt <= 2; attempt++) {
@@ -113,6 +114,13 @@ export function createClient(options: { fetch?: typeof fetch; timeoutMs?: number
             ...(o.responseFormatJson ? { response_format: { type: 'json_object' as const } } : {}),
           });
 
+          const currentUsage = accountUsage(response.usage);
+          usage = usage ? sumUsage(usage, currentUsage) : currentUsage;
+          const finishReason = response.choices[0]?.finish_reason;
+          if (finishReason && finishReason !== 'stop') {
+            lastError = `the API returned incomplete content (finish_reason=${finishReason})`;
+            continue;
+          }
           const text = response.choices[0]?.message?.content ?? '';
           // §6: DeepSeek may return empty content. Never read that as "no news".
           if (text.trim() === '') {
@@ -120,7 +128,7 @@ export function createClient(options: { fetch?: typeof fetch; timeoutMs?: number
             continue;
           }
 
-          return { text, usage: accountUsage(response.usage) };
+          return { text, usage };
         } catch (err) {
           lastError = err instanceof Error ? err.message : String(err);
         }

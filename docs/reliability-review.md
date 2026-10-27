@@ -101,8 +101,8 @@ site, account, credential, notification, deployment or dependency was changed.
 - Filters do not persist in the URL. Browser-return behavior stays internally
   consistent; the script reapplies any restored form values. Search includes
   evidence text, so the priority selector is more precise than searching KEV.
-- Healthy same-day reruns can still change as feeds rotate. The guard protects
-  collection/normalization degradation, not later enrichment/editorial fallbacks.
+- Healthy same-day reruns can still change as feeds rotate. The October 27 follow-up
+  below extends the guard to article-to-digest and new stage/source failures.
   Publication still writes multiple local files sequentially and has no concurrent
   local-run lock. This is not a transactional publication redesign.
 - Conservative fuzzy matching may retain duplicates, particularly publisher
@@ -166,3 +166,65 @@ interrupted-script fallback kept all 54 stories on the checked edition readable.
 No browser errors occurred in ordinary flows; deliberate CSP rejection fixtures
 remain outside the published site. Live functionality must also be checked after
 deployment, separately from CI or deployment-build success.
+
+## Future-edition degradation audit — 2026-10-27
+
+This follow-up checked all **83 editions, August 6–October 27**, using the 56
+local records through September 30 plus 27 October records read from GitHub.
+There are no missing dates. **36 editions have recorded degradation** and one
+additional edition has an undisclosed placeholder headline: **37 flagged days**.
+Four editions are digests. Historical records were not changed or regenerated.
+
+| Evidence | Cause and forward fix |
+|---|---|
+| August 13: CVE-2026-59310 rejected | The supplied excerpt used an en dash in `CVE-2026–59310`; the old extractor missed it. The existing Unicode normalization fixes extraction; a writer regression now covers the exact case too. |
+| August 15: article titled `The headline` | The prompt's template title was accepted. The writer now rejects placeholder titles and asks for a corrected response. The archive audit detects existing instances. |
+| September 11: invalid selection JSON | The stored notice proves invalid JSON, but not its provider-side cause. Previously the validation retry repeated the identical prompt. Both stages now provide the actual error and bounded previous response as diagnostic data. |
+| October 9: article exceeded evidence word limit | The hard limit remains. The prompt now targets 80% of it, explicitly includes headings/citations, and the corrective retry reports actual versus allowed words. |
+| October 24: CVE-2025-66208 rejected | The ID was supplied in the NVD description for CVE-2026-110447, but validation only allowed top-level CVE records. The allowlist now follows the exact bounded factual input. Context-only references do not become enriched records or inherit KEV/severity. Angles, unsent URLs and text beyond truncation cannot authorize IDs. |
+| October 26: CISA Advisories and Project Zero missing | The former 2 MiB cap rejected valid large feeds. The existing 16 MiB cap is retained and boundary-tested. A live check collected all 230 entries from all 12 feeds, with no collection or normalization exclusions. |
+| August 13 Dark Reading 404; August 23 Microsoft 403 | Historical HTTP errors, with no evidence of a still-broken URL. Both current endpoints passed. Existing transient retry, isolation and source diagnostics remain; permanent errors are disclosed instead of bypassed. |
+| 31 generic normalization-warning days | Historical records did not retain rejected entries, so their exact causes cannot be reconstructed. Existing reason-level exclusions and strict future-event classification are retained. The audit does not relabel these old warnings as healthy. |
+| October 21 deployment check failed with 404 | [Run 39635063425](https://github.com/AGS-cyber/daily-security-news/actions/runs/39635063425) pushed at 16:29:39 UTC and stopped checking at 16:32:26. The [commit's Vercel status](https://github.com/AGS-cyber/daily-security-news/commit/41c5823dc01e7c4eb00426837cc7f8bcef555b90) records successful deployment at 16:38:41. Polling now has a ten-minute wall-clock budget and fresh attempt query keys; it verifies dated JSON, homepage generation and app archive index. The daily job allows 30 minutes overall. |
+
+Additional safeguards: successful retries include both attempts' usage; explicitly
+truncated API responses cannot be accepted; ranks must be unique/contiguous and
+angles nonempty. Healthy quiet days skip the model. A late failure cannot replace
+an existing article with a digest or introduce a new failing stage/source. The
+publication/seen files remain untouched when blocked; enrichment cache refreshes
+can already have happened. Unreadable or HTML-only prior output is protected.
+
+`npm run check:health` checks today's record (or an explicit date) and exits nonzero
+for degradation, stale publication or detected inconsistencies. The daily workflow
+runs it after publication, even if deployment verification failed, and writes an
+escaped GitHub job summary. Partial first editions remain available to readers.
+`npm run audit:editions` reports all stored dates, gaps and failures grouped by
+stage/source. `EDITIONS_DIR` can point either command at an isolated audit directory.
+No email, issue, or third-party notification is sent.
+
+Validation: baseline 178 tests passed; the final **199/199 tests and typechecking
+pass on pinned Node 22.23.4**. The expanded suite covers the historical
+failure cases, corrective retries, CVE evidence boundaries, truncated output,
+quiet days, byte-preserving late-failure protection, health-command exit codes,
+and a nine-minute deployment using a fake clock. All 25 October articles pass the
+revised validator; all 83 editions render in memory. Live feed checks passed for
+12/12 sources, and a read-only deployment check confirmed the dated JSON, homepage
+and archive index match generation `2026-10-27T13:42:34.026Z`.
+
+These changes are local and not deployed by this audit. No paid model generation
+was performed; correction efficacy beyond the deterministic regression cases
+still needs observation in future production runs. External services can fail
+again, and arbitrary factual prose is not completely verified by these checks.
+
+## Deployment preparation ? 2026-10-27
+
+The release is based on production commit `16f38b6aa4b2720f5be68689962a440a4ab17401`.
+It preserves production's HTTP CSP, its deployment regression test, release notes,
+and all 83 stored editions. No archive, cache, seen ledger or generated site file
+is changed by this code release. The combined suite passes **200/200 tests** and
+typechecking on Node 22.23.4; today's record passes `check:health`.
+
+The clean install identified [GHSA-mrhx-c7xc-m3w5](https://github.com/advisories/GHSA-mrhx-c7xc-m3w5)
+in Zod 4.4.3. The manifest and lockfile now require the patched 4.6.6 release.
+The installation audit reports zero known vulnerabilities after the update, and
+all checks above passed again with the patched dependency.

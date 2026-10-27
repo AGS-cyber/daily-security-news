@@ -9,14 +9,16 @@
     "start": "tsx src/index.ts",
     "rerender": "tsx src/rerender.ts",
     "typecheck": "tsc --noEmit",
-    "test": "tsx --test src/collect/rss.test.ts src/pipeline/collection-health.test.ts src/pipeline/normalize.test.ts src/pipeline/dedupe.test.ts src/pipeline/filter.test.ts src/vulnerability/extract.test.ts src/vulnerability/http.test.ts src/vulnerability/kev.test.ts src/vulnerability/nvd.test.ts src/vulnerability/cache.test.ts src/vulnerability/enrich.test.ts src/vulnerability/priority.test.ts src/pipeline/select.test.ts src/pipeline/write.test.ts src/llm/client.test.ts src/render/citations.test.ts src/render/calendar.test.ts src/render/site.test.ts src/render/enhance.test.ts src/render/html.test.ts src/render/enhance-dom.test.ts src/publication.test.ts src/deployment.test.ts",
-    "verify:publication": "tsx src/verify-publication.ts"
+    "test": "tsx --test src/collect/rss.test.ts src/pipeline/collection-health.test.ts src/pipeline/normalize.test.ts src/pipeline/dedupe.test.ts src/pipeline/filter.test.ts src/vulnerability/extract.test.ts src/vulnerability/http.test.ts src/vulnerability/kev.test.ts src/vulnerability/nvd.test.ts src/vulnerability/cache.test.ts src/vulnerability/enrich.test.ts src/vulnerability/priority.test.ts src/pipeline/select.test.ts src/pipeline/write.test.ts src/llm/client.test.ts src/render/citations.test.ts src/render/calendar.test.ts src/render/site.test.ts src/render/enhance.test.ts src/render/html.test.ts src/render/enhance-dom.test.ts src/publication.test.ts src/deployment.test.ts src/health.test.ts",
+    "verify:publication": "tsx src/verify-publication.ts",
+    "check:health": "tsx src/check-health.ts",
+    "audit:editions": "tsx src/check-health.ts --history"
   },
   "dependencies": {
     "marked": "^18.0.9",
     "openai": "^7.4.0",
     "rss-parser": "^3.13.0",
-    "zod": "^4.4.3"
+    "zod": "^4.6.6"
   },
   "devDependencies": {
     "@types/node": "^26.1.2",

@@ -445,6 +445,7 @@ entry, or normalization rejects every collected entry, stop before enrichment,
 generation and output writes. Partial collection may still publish with source
 notices. A healthy collection with no unseen stories after filtering remains a
 valid quiet-day digest; it is not the same as an outage producing zero input.
+It skips the model entirely and does not create an editorial failure notice.
 
 **Degraded collection cannot replace a same-date edition.** Any collect/normalize
 notice blocks regeneration when the stored edition JSON, served JSON or dated HTML
@@ -454,6 +455,14 @@ timestamps unchanged, including on repeated attempts. First publication on a new
 date may remain partial with its explicit warning. This is a preservation guard,
 not an atomic publication transaction.
 
+**Late-stage regressions also preserve a published edition.** Immediately before
+writing, compare existing same-date JSON records with the proposed edition. An
+article cannot become a digest, and a new failing stage/source cannot replace an
+edition without that failure. A prior HTML-only or unreadable record cannot establish
+that a degraded replacement is safe. Existing publication and seen bytes remain;
+the disposable enrichment cache may already have refreshed. Recovery to a healthy
+article is allowed. This compares recorded failures, not semantic article quality.
+
 **LLM failures fall back visibly, once.** If `select` or `write` fails —
 empty content, invalid JSON, unknown story `id`, refusal, API error — retry
 once. If it fails again, the site publishes a plain chronological digest of
@@ -461,6 +470,24 @@ the day's items under a banner reading that the written article could not be
 generated and why. That is a degraded mode the reader can *see*. What never
 happens: a half-written article, an article citing stories that weren't
 selected, or a page that looks like a normal edition when no writing occurred.
+
+Validation retries include the exact error and previous response as diagnostic
+data, together with the original evidence. Both attempts count toward successful
+usage totals. The writer targets 80% of the unchanged hard evidence word limit,
+counts headings/citations in that limit, and rejects placeholder headlines.
+Allowed CVE IDs come from the exact bounded factual fields sent to the writer,
+including related IDs in NVD descriptions. Editorial angles, unsent URLs and text
+outside the bounded context cannot authorize a CVE. Contextual mentions do not
+inherit the primary CVE's KEV status or severity and are excluded from its tally.
+
+**Publication health is separate from publication availability.** After publishing
+a useful partial edition and checking deployment, the daily job runs `check:health`.
+Recorded degradation, unexplained fallback, mismatched counts, placeholder headlines
+and inconsistent citations fail the job and enter its summary. Historical failures
+remain visible through `audit:editions`; they do not block a healthy new edition.
+Deployment polling has a ten-minute wall-clock budget because a measured Vercel
+deployment took nine minutes. It checks the exact dated generation, latest homepage
+and archive index, with a fresh query key on each attempt to avoid cached 404s.
 
 **Never fabricate.** If enrichment can't reach the NVD, the item ships
 without CVSS data and the page shows no score — not a guess, not a zero, and

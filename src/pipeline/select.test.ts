@@ -122,6 +122,27 @@ test('retries once, and a valid second response succeeds', async () => {
     result.selections.map((s) => s.id),
     ['s3'],
   );
+  assert.equal(result.usage.outputTokens, 40);
+});
+
+test('September 11 regression: malformed JSON retry gets validation feedback and original evidence', async () => {
+  const requests: Parameters<DeepSeekClient['complete']>[0][] = [];
+  await select(ITEMS, { async complete(request) {
+    requests.push(request);
+    return { text: requests.length === 1 ? '{"selections":[' : body([{ id: 's1', section: 'research', rank: 1, angle: 'Relevant research' }]), usage: USAGE };
+  } });
+  assert.equal(requests.length, 2);
+  assert.match(requests[1]!.user, /not JSON/);
+  assert.match(requests[1]!.user, /Story s3/);
+  assert.equal(requests[1]!.responseFormatJson, true);
+  assert.equal(requests[0]!.system, requests[1]!.system);
+});
+
+test('invalid ranks and blank angles cannot silently distort editorial order', async () => {
+  for (const ranks of [[1, 1], [0, 1], [1, 3]]) {
+    await assert.rejects(select(ITEMS, client(body(ranks.map((rank, i) => ({ id: `s${i + 1}`, section: 'research', rank, angle: 'Relevant' }))))));
+  }
+  await assert.rejects(select(ITEMS, client(body([{ id: 's1', section: 'research', rank: 1, angle: '  ' }]))), /wrong shape/);
 });
 
 test('passes authoritative vulnerability context and prompt-injection boundaries to the model', async () => {
