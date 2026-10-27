@@ -44,7 +44,7 @@ site, account, credential, notification, deployment or dependency was changed.
 
 1. Installed `rss-parser.parseURL` rejects its timeout without aborting the request
    and buffers the response without a size cap. RSS now uses native fetch with a
-   15-second deadline including body reads, cancellation, a 2 MiB decoded-body cap,
+   15-second deadline including body reads, cancellation, a 16 MiB decoded-body cap,
    and one retry for transport errors, 429 and 5xx. Retry-After is honored up to
    60 seconds; longer waits fail this source without retrying early. Parsing stays
    in rss-parser; malformed XML, permanent HTTP errors and oversize bodies do not
@@ -116,8 +116,10 @@ site, account, credential, notification, deployment or dependency was changed.
   Structured claim/evidence checks and evaluation fixtures remain useful follow-ups.
 - Native apps ignore new JSON keys and retain their existing presentation; these
   reader improvements are on the web. No mobile build or UI test was run.
-- The 2 MiB cap is intentionally conservative; a legitimate larger feed becomes
-  visibly unavailable and should be assessed before raising the bound.
+- The decoded-body cap was raised from 2 MiB to 16 MiB on 2026-10-27 after live
+  CISA Advisories and Project Zero feeds measured 5.43 MiB and 10.79 MiB. This
+  allows their full content with headroom while retaining a finite memory bound;
+  larger feeds still become visibly unavailable and need assessment.
 
 ## Validation
 

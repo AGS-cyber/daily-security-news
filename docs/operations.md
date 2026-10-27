@@ -268,6 +268,16 @@ Anything that is not an XML content type (`application/rss+xml`, `text/xml`,
 source; do not leave a permanently failing feed in the config, because a
 banner that is always on trains the reader to ignore banners.
 
+### A legitimate feed exceeds the response-size limit
+
+The October 26, 2026 edition omitted CISA Advisories and Google Project Zero
+because both exceeded the original 2 MiB cap. Live checks on October 27 measured
+their decoded response bodies at 5.43 MiB and 10.79 MiB respectively; both parsed
+successfully. The cap in `src/collect/feed.ts` is now **16 MiB per feed** to admit
+these full-content feeds with room to grow. The limit still counts actual decoded
+body bytes as they stream in, and cancels larger responses without retrying.
+The 15-second deadline and other retry rules remain unchanged.
+
 ### The process completes every stage and never exits
 
 **Symptom:** all log lines print, output files are written correctly, and the

@@ -82,17 +82,43 @@ test('timeout aborts stalled requests and stalled bodies, including the second a
   }
 });
 
-test('an oversized streaming response is cancelled without retrying', async () => {
+test('large feeds above 2 MiB are parsed in full up to the inclusive 16 MiB limit', async () => {
+  for (const bytes of [2 * 1024 * 1024 + 1, 16 * 1024 * 1024]) {
+    const padding = 'x'.repeat(bytes - Buffer.byteLength(rss(`<!---->${entry}`)));
+    const body = Buffer.from(rss(`<!--${padding}-->${entry}`));
+    assert.equal(body.byteLength, bytes);
+    let offset = 0;
+    const feed = await fetchFeed(source('large').feedUrl, {
+      fetchImpl: async () => new Response(new ReadableStream({
+        pull(controller) {
+          if (offset === body.byteLength) { controller.close(); return; }
+          const end = Math.min(offset + 64 * 1024, body.byteLength);
+          controller.enqueue(body.subarray(offset, end));
+          offset = end;
+        },
+      })),
+      sleep: async () => assert.fail('must not retry'),
+    });
+    assert.equal(feed.items.length, 1);
+    assert.equal(feed.items[0]?.title, 'Example advisory');
+    assert.equal(feed.items[0]?.link, 'https://example.test/advisory');
+  }
+});
+
+test('a streaming response exceeding 16 MiB cumulatively is cancelled without retrying', async () => {
   let cancelled = false;
   let calls = 0;
   const fetchImpl: typeof fetch = async () => {
     calls++;
     return new Response(new ReadableStream({
-      start(controller) { controller.enqueue(new Uint8Array(2 * 1024 * 1024 + 1)); },
+      start(controller) {
+        controller.enqueue(new Uint8Array(8 * 1024 * 1024));
+        controller.enqueue(new Uint8Array(8 * 1024 * 1024 + 1));
+      },
       cancel() { cancelled = true; },
     }));
   };
-  await assert.rejects(fetchFeed(source('large').feedUrl, { fetchImpl, sleep: noSleep }), /2 MiB/);
+  await assert.rejects(fetchFeed(source('large').feedUrl, { fetchImpl, sleep: noSleep }), /16 MiB/);
   assert.equal(cancelled, true);
   assert.equal(calls, 1);
 });

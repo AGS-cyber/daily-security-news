@@ -1,7 +1,9 @@
 import Parser from 'rss-parser';
 import { httpUrl } from '../url.js';
 
-const MAX_FEED_BYTES = 2 * 1024 * 1024;
+// Full-content feeds can be large: Project Zero measured 10.79 MiB in October 2026.
+const MAX_FEED_MIB = 16;
+const MAX_FEED_BYTES = MAX_FEED_MIB * 1024 * 1024;
 const MAX_RETRY_DELAY_MS = 60_000;
 
 export interface FeedOptions {
@@ -36,7 +38,7 @@ async function boundedText(response: Response): Promise<string> {
       const { value, done } = await reader.read();
       if (done) break;
       bytes += value.byteLength;
-      if (bytes > MAX_FEED_BYTES) throw new FeedContentError('Feed exceeds the 2 MiB response limit');
+      if (bytes > MAX_FEED_BYTES) throw new FeedContentError(`Feed exceeds the ${MAX_FEED_MIB} MiB response limit`);
       chunks.push(value);
     }
   } finally {
