@@ -5,9 +5,9 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { test } from 'node:test';
-import { assertSafeCollectionRerun, assertUsableCollection } from './collection-health.js';
+import { assertSafeCollectionRerun, assertSafeEditionRerun, assertUsableCollection } from './collection-health.js';
 import { sources } from '../config/sources.js';
-import type { DigestEdition } from '../types.js';
+import type { DigestEdition, Edition } from '../types.js';
 
 test('total collection failure and entirely rejected input fail before publication', () => {
   assert.throws(() => assertUsableCollection(0, 0, [{ stage: 'collect', message: 'Source unavailable' }]), /no usable news.*Source unavailable/);
@@ -217,6 +217,69 @@ test('any same-date output protects against a degraded retry, without requiring 
       assert.equal(await readFile(target, 'utf8'), 'Preserve this earlier output even if truncated');
       // Collection protection does not reinterpret later-stage enrichment or writing notices.
       await assertSafeCollectionRerun({ ...options, notices: [] });
+    });
+  }
+});
+
+test('late writer or enrichment failures preserve a published article; recovery can replace a digest', async () => {
+  await withRunDirectory(async root => {
+    const options = { editionsDir: join(root, 'data', 'editions'), siteDir: join(root, 'site') };
+    await mkdir(options.editionsDir, { recursive: true });
+    const prior = { date: '2026-10-27', mode: 'article', degraded: [] } as unknown as Edition;
+    const path = join(options.editionsDir, `${prior.date}.json`);
+    await writeFile(path, JSON.stringify(prior));
+    const before = await readFile(path, 'utf8');
+    for (const stage of ['write', 'select', 'enrich'] as const) {
+      const failed = { ...prior, mode: stage === 'enrich' ? 'article' : 'digest', degraded: [{ stage, message: `${stage} unavailable` }] } as Edition;
+      await assert.rejects(assertSafeEditionRerun(failed, options), /would degrade published quality/);
+      assert.equal(await readFile(path, 'utf8'), before);
+    }
+    await assert.rejects(assertSafeEditionRerun({ ...prior, mode: 'digest' } as Edition, options), /would degrade/);
+    const fallback = { ...prior, mode: 'digest', degraded: [{ stage: 'write', message: 'unavailable' }] } as Edition;
+    await writeFile(path, JSON.stringify(fallback));
+    await assertSafeEditionRerun(prior, options);
+    await assertSafeEditionRerun(fallback, options);
+  });
+});
+
+test('the entry point never overwrites a same-day article when its LLM credential fails', async () => {
+  await withRunDirectory(async root => {
+    assert.equal((await runScenario(root, 'healthy')).code, 0);
+    for (const relative of ['data/editions/2026-10-25.json', 'site/editions/2026-10-25.json']) {
+      const path = join(root, relative);
+      const previous = JSON.parse(await readFile(path, 'utf8'));
+      previous.mode = 'article';
+      previous.degraded = [];
+      await writeFile(path, JSON.stringify(previous));
+    }
+    const before = await publicationSnapshot(root);
+    const rerun = await runScenario(root, 'healthy', '2026-10-25T13:00:00Z');
+    assert.equal(rerun.code, 1);
+    assert.match(rerun.stderr, /would degrade published quality/);
+    assert.deepEqual(await publicationSnapshot(root), before);
+  });
+});
+
+test('a healthy quiet day does not report a missing article or require an LLM credential', async () => {
+  await withRunDirectory(async root => {
+    assert.equal((await runScenario(root, 'healthy')).code, 0);
+    assert.equal((await runScenario(root, 'healthy', '2026-10-26T12:00:00Z')).code, 0);
+    const edition = JSON.parse(await readFile(join(root, 'data', 'editions', '2026-10-26.json'), 'utf8')) as DigestEdition;
+    assert.equal(edition.mode, 'digest');
+    assert.equal(edition.items.length, 0);
+    assert.deepEqual(edition.degraded, []);
+  });
+});
+
+test('late failure protection also covers a served-only, truncated or HTML-only prior edition', async () => {
+  for (const relative of ['site/editions/2026-10-27.json', 'data/editions/2026-10-27.json', 'site/2026-10-27.html']) {
+    await withRunDirectory(async root => {
+      const path = join(root, relative);
+      await mkdir(join(path, '..'), { recursive: true });
+      await writeFile(path, 'Earlier output');
+      const fallback = { date: '2026-10-27', mode: 'digest', degraded: [{ stage: 'write', message: 'API unavailable' }] } as Edition;
+      await assert.rejects(assertSafeEditionRerun(fallback, { editionsDir: join(root, 'data', 'editions'), siteDir: join(root, 'site') }), /previous quality cannot be checked/);
+      assert.equal(await readFile(path, 'utf8'), 'Earlier output');
     });
   }
 });

@@ -70,9 +70,9 @@ never written to a URL, log, cache, edition, or generated page.
 
 A missing `DEEPSEEK_API_KEY` is a **disclosed fallback**, not a crash: the run
 publishes the chronological digest under a banner saying the article is
-missing, and the build stays green (§8). That is deliberate, and it is the only
-credential the daily run has left — nothing in the pipeline now fails red for
-want of a key.
+missing. Generation can complete so readers receive useful news; the workflow's
+post-publication health check then fails visibly (§8). A healthy quiet day needs
+no model credential and stays green.
 
 Locally, export `DEEPSEEK_API_KEY` in your shell. **Nothing breaks without
 it** — a missing key is treated as an LLM failure, so the run publishes the
@@ -365,7 +365,7 @@ The banner names the stage and the reason. Read it — it distinguishes the case
 | `DEEPSEEK_API_KEY is set but its value is empty` | The secret exists and holds nothing. See below |
 | `select failed — …` after retries | DeepSeek was unreachable, returned empty content twice, or its JSON failed validation |
 | `write failed — …` | Selection succeeded; prose generation or its citation validation failed |
-| `there are no stories to select from` | The window was genuinely empty — every feed item was already covered |
+| `there are no stories to select from` | Historical behavior; healthy empty windows now skip the model without a failure notice |
 
 **What must never happen:** a half-written article, an article citing a story
 `select` did not choose, or a page that looks like a normal edition when no
@@ -375,7 +375,10 @@ validation in `select.ts` / `write.ts` / `citations.ts` is what prevents it.
 **Retry shape.** Two layers, deliberately: the client retries once on transport
 failure or empty content (§6 documents empty responses as a real DeepSeek
 failure mode), and `select`/`write` each retry once more on a *validation*
-failure. Worst case is two validation attempts, not four transport attempts.
+failure. Validation retries carry the precise error and previous response alongside
+the original evidence. Each stage makes at most four HTTP requests; the two stages
+combined make at most eight. Truncated API responses are retried as incomplete.
+Successful usage totals include the consumed failed attempts that preceded recovery.
 
 **Cost.** A successful run logs a cost per call, summed into `usage` on the
 edition. **Measured on the first real run (2026-08-06): $0.0047** — 16,785
@@ -391,8 +394,9 @@ run will usually miss the cache, so expect the hit count to stay at zero.
 
 **Symptom:** `gh secret list` shows `DEEPSEEK_API_KEY`, the workflow passes it
 through `env:`, and the edition still comes out `mode: "digest"` with
-`select failed — DEEPSEEK_API_KEY is set but its value is empty`. The build is
-green and fast — about 20 seconds, versus roughly two minutes for a real run.
+`select failed — DEEPSEEK_API_KEY is set but its value is empty`. Historically the
+build was green and fast — about 20 seconds, versus roughly two minutes for a real
+run. The post-publication health check now fails the workflow for this fallback.
 
 **Actual cause:** the secret exists but its **value is empty**. `gh secret set`
 takes the value from a blind paste that echoes nothing, so a paste that does
@@ -405,7 +409,8 @@ failed on it. The check was red every single morning and said exactly what was
 wrong; a daily red check on a step that cannot hurt the site is a notification
 people stop reading. The email edition was removed rather than repaired
 (design §12), so this failure mode now applies only to `DEEPSEEK_API_KEY` —
-where it stays green and merely produces a digest, which is harder to spot.
+where generation still produces a disclosed digest, and the health step makes
+the failure visible in the run status and summary.
 
 **Diagnose from the run log,** which settles it in one line:
 
@@ -527,14 +532,15 @@ as designed:
 
 | Failure | Behaviour | Build |
 |---|---|---|
-| A feed times out, 404s, or returns garbage | First/new-day partial edition is disclosed if input remains usable; an existing same-date edition is preserved with a nonzero exit | green for first partial; **red** for degraded replacement |
-| Invalid links/dates or unexplained future timestamps | Aggregated notice; same-date replacement is blocked. Expected future-event listings are informational | green for first partial; **red** for degraded replacement |
+| A feed times out, 404s, or returns garbage | First/new-day partial edition is disclosed if input remains usable; an existing same-date edition is preserved with a nonzero exit | **red**, after publishing a first partial edition |
+| Invalid links/dates or unexplained future timestamps | Aggregated notice; same-date replacement is blocked. Expected future-event listings are informational | **red** for real exclusions; green for expected events |
 | No usable collected/normalized input | Stop before enrichment, model calls and output writes | **red** |
-| CISA KEV or NVD times out, rate-limits, or returns malformed data | Use fresh/stale cache where possible; otherwise explicit unavailable fields and an `enrich` banner | green |
+| CISA KEV or NVD times out, rate-limits, or returns malformed data | Use fresh/stale cache where possible; otherwise explicit unavailable fields and an `enrich` banner | **red**, after publishing a first partial edition |
 | A CVE is absent from NVD | Confirmed `not_found`; NVD fields remain null/empty | green |
-| The vulnerability cache cannot be read or written | Rebuild or continue in memory, with an `enrich` banner | green |
-| `select` or `write` fails after one retry | Falls back to the digest under a banner saying why | green |
-| `DEEPSEEK_API_KEY` missing | Same as above — disclosed fallback | green |
+| The vulnerability cache cannot be read or written | Rebuild or continue in memory, with an `enrich` banner | **red** after publication |
+| `select` or `write` fails after one retry | First edition falls back to a disclosed digest; an existing same-day article is preserved | **red** |
+| `DEEPSEEK_API_KEY` missing | Same as above when unseen news exists | **red** |
+| Healthy collection with no unseen stories | Quiet-day digest; no model call or failure notice | green |
 | `dedupe`, `render`, or `publish` fails | Run aborts, nothing deploys, yesterday's edition stays up | **red** |
 | `seen.json` is malformed | Throws — never silently reset, or everything republishes | **red** |
 

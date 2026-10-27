@@ -1,4 +1,6 @@
 import type { DeepSeekClient } from '../llm/client.js';
+import { sumUsage } from '../llm/client.js';
+import { correctionPrompt } from '../llm/retry.js';
 import type { Item, Selection, Usage } from '../types.js';
 import { vulnerabilityContext } from '../vulnerability/context.js';
 import { extractCveIds } from '../vulnerability/extract.js';
@@ -41,11 +43,15 @@ actually contain:
   story text explicitly reports real exploitation in the wild;
 - do not turn CISA's federal remediation due date into a universal deadline;
 - never invent affected versions, remediation, missing values, or CVE facts.
+- CVE IDs mentioned only inside supplied descriptions are contextual references,
+  not separately enriched vulnerabilities. Preserve the stated relationship;
+  never transfer another CVE's KEV membership, severity or affected products.
 
 Factual precision applies to the headline, standfirst and body:
 - Count distinct CVE IDs separately from stories, vendors and product groupings.
   A story can contain several CVEs, and the same CVE can appear in several stories.
-  The suppliedEvidenceCounts describe only this selected input, not the full news
+  The suppliedEvidenceCounts count primary CVE records in this selected input;
+  description-only cross-references are excluded. They are not the full news
   collection or a vendor's complete advisory. Do not invent an overall tally.
 - Preserve each vulnerability's exact supplied severity and CVSS value. A mixed
   High/Critical set must not be described as universally Critical. The story-level
@@ -91,6 +97,19 @@ Prose about the stories in that section, citing them as [[s3]].
 
 More prose, citing stories as [[s7]].`;
 
+/** Use exactly the bounded factual fields sent to the writer, excluding editorial angles. */
+function storyEvidence(story: Item): object {
+  return { title: story.title, excerpt: story.excerpt ?? '', vulnerability: vulnerabilityContext(story) };
+}
+
+export function suppliedCveIds(selected: (Item & Selection)[]): Set<string> {
+  return new Set(selected.flatMap((story) => extractCveIds(JSON.stringify(storyEvidence(story)))));
+}
+
+export function isPlaceholderHeadline(headline: string): boolean {
+  return /^(?:the headline|a headline|headline|your headline(?: here)?|insert headline(?: here)?|untitled|tbd)[.!:]?$/i.test(headline.trim());
+}
+
 export function evidenceWordLimit(selected: (Item & Selection)[]): number {
  const words = selected.map((s) => `${s.title} ${s.excerpt ?? ''} ${s.cves.length ? JSON.stringify(vulnerabilityContext(s)) : ''}`).join(' ').split(/\s+/).length;
  return Math.min(800, Math.max(80, Math.ceil(words * 1.25)));
@@ -99,20 +118,19 @@ function promptFor(selected: (Item & Selection)[]): string {
   const lines = selected.map((story) =>
     JSON.stringify({
       id: story.id,
-      title: story.title,
+      ...storyEvidence(story),
       section: SECTION_NAMES[story.section],
       rank: story.rank,
       angle: story.angle,
-      excerpt: story.excerpt ?? '',
-      vulnerability: vulnerabilityContext(story),
     }),
   );
   const suppliedEvidenceCounts = {
     selectedStoryCount: selected.length,
     distinctCveCount: new Set(selected.flatMap((story) => story.cves.map((cve) => cve.id))).size,
-    scope: 'Selected supplied evidence only; not a complete vendor or daily vulnerability tally',
+    scope: 'Primary CVE records in selected evidence only; excludes description-only cross-references and is not a complete vendor or daily vulnerability tally',
   };
-  return `Supplied evidence counts: ${JSON.stringify(suppliedEvidenceCounts)}\nMaximum body words: ${evidenceWordLimit(selected)}. Do not infer omitted details.\nSelected stories, in rank order (one json object per line; "rank" 1 is the lead story):\n\n${lines.join('\n')}`;
+  const limit = evidenceWordLimit(selected);
+  return `Supplied evidence counts: ${JSON.stringify(suppliedEvidenceCounts)}\nMaximum body words: ${limit}, including section headings and citation markers. Aim for at most ${Math.floor(limit * 0.8)} words to leave room below the hard limit. Do not infer omitted details.\nAllowed CVE IDs from supplied evidence: ${JSON.stringify([...suppliedCveIds(selected)].sort())}. Contextual mentions do not establish enrichment or exploitation.\nWrite a specific news headline; never copy the template headline or standfirst.\nSelected stories, in rank order (one json object per line; "rank" 1 is the lead story):\n\n${lines.join('\n')}`;
 }
 
 /** Validation failures are hard errors — the caller retries the stage or falls back (§8). */
@@ -138,6 +156,9 @@ export function parseArticle(text: string, selected: (Item & Selection)[]): Pars
   const headline = lines[headlineIndex]!.slice(2).trim();
   if (headline === '') {
     throw new ArticleInvalidError('write returned an empty headline');
+  }
+  if (isPlaceholderHeadline(headline)) {
+    throw new ArticleInvalidError('write returned a placeholder headline; write a specific news headline');
   }
 
   const bodyIndex = lines.findIndex((line, i) => i > headlineIndex && line.startsWith('## '));
@@ -171,9 +192,11 @@ export function parseArticle(text: string, selected: (Item & Selection)[]): Pars
 
   const bodyIds = new Set([...bodyMarkdown.matchAll(CITATION)].map((m) => m[1]!.trim()));
  for (const id of known) if (!bodyIds.has(id)) throw new ArticleInvalidError(`write omitted selected story "${id}" from body citations`);
- if (bodyMarkdown.split(/\s+/).filter(Boolean).length > evidenceWordLimit(selected)) throw new ArticleInvalidError('write exceeded the evidence word budget');
+ const words = bodyMarkdown.split(/\s+/).filter(Boolean).length;
+ const limit = evidenceWordLimit(selected);
+ if (words > limit) throw new ArticleInvalidError(`write exceeded the evidence word budget: ${words} body words; maximum ${limit}, including headings and citations`);
  if (/<\/?[a-z!]|!\[|\]\(/i.test(text)) throw new ArticleInvalidError('write returned raw HTML or external Markdown links');
- const knownCves = new Set(selected.flatMap((story) => story.cves.map((cve) => cve.id)));
+ const knownCves = suppliedCveIds(selected);
   for (const id of extractCveIds(`${headline}\n${standfirst}\n${bodyMarkdown}`)) {
     if (!knownCves.has(id)) {
       throw new ArticleInvalidError(`write invented CVE id "${id}", which was not supplied`);
@@ -188,16 +211,20 @@ export async function write(
   client: DeepSeekClient,
 ): Promise<ParsedArticle & { usage: Usage }> {
   const user = promptFor(selected);
+  let request = user;
+  let usage: Usage | undefined;
   let lastError: ArticleInvalidError | undefined;
 
   // §8: an invalid response is retried exactly once before the stage gives up.
   for (let attempt = 1; attempt <= 2; attempt++) {
-    const result = await client.complete({ system: SYSTEM, user });
+    const result = await client.complete({ system: SYSTEM, user: request });
+    usage = usage ? sumUsage(usage, result.usage) : result.usage;
     try {
-      return { ...parseArticle(result.text, selected), usage: result.usage };
+      return { ...parseArticle(result.text, selected), usage };
     } catch (err) {
       if (!(err instanceof ArticleInvalidError)) throw err;
       lastError = err;
+      request = correctionPrompt(user, err, result.text);
     }
   }
 

@@ -85,3 +85,28 @@ test('request timeout aborts both bounded attempts', async () => {
  await assert.rejects(created.client.complete({system: 'test', user: 'test'}), /failed twice/);
  assert.equal(calls, 2);
 });
+
+test('a truncated response is retried, never accepted as a complete article, and usage is retained', async () => {
+  let calls = 0;
+  const created = withKey('fake-test-key', () => createClient({ fetch: async () => {
+    calls++;
+    return Response.json({ choices: [{ finish_reason: calls === 1 ? 'length' : 'stop', message: { content: 'A plausible but possibly truncated response' } }],
+      usage: { completion_tokens: 10, prompt_cache_miss_tokens: 20 } });
+  } }));
+  if (!created.ok) assert.fail('expected client');
+  const result = await created.client.complete({ system: 'test', user: 'test' });
+  assert.equal(calls, 2);
+  assert.equal(result.usage.outputTokens, 20);
+  assert.equal(result.usage.promptCacheMissTokens, 40);
+});
+
+test('persistent truncation exhausts exactly two transport attempts', async () => {
+  let calls = 0;
+  const created = withKey('fake-test-key', () => createClient({ fetch: async () => {
+    calls++;
+    return Response.json({ choices: [{ finish_reason: 'length', message: { content: 'Partial content' } }] });
+  } }));
+  if (!created.ok) assert.fail('expected client');
+  await assert.rejects(created.client.complete({ system: 'test', user: 'test' }), /incomplete content.*length/);
+  assert.equal(calls, 2);
+});
