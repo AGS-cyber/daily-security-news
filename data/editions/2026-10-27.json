@@ -1,87 +1,87 @@
 {
   "date": "2026-10-27",
-  "generatedAt": "2026-10-27T13:42:34.026Z",
+  "generatedAt": "2026-10-27T17:17:46.122Z",
   "collection": [
     {
       "sourceId": "krebs",
-      "attemptedAt": "2026-10-27T13:42:34.026Z",
+      "attemptedAt": "2026-10-27T17:17:46.122Z",
       "status": "ok",
       "items": 10,
       "skipped": 0
     },
     {
       "sourceId": "bleepingcomputer",
-      "attemptedAt": "2026-10-27T13:42:34.026Z",
+      "attemptedAt": "2026-10-27T17:17:46.122Z",
       "status": "ok",
       "items": 15,
       "skipped": 0
     },
     {
       "sourceId": "thehackernews",
-      "attemptedAt": "2026-10-27T13:42:34.026Z",
+      "attemptedAt": "2026-10-27T17:17:46.122Z",
       "status": "ok",
       "items": 50,
       "skipped": 0
     },
     {
       "sourceId": "therecord",
-      "attemptedAt": "2026-10-27T13:42:34.026Z",
+      "attemptedAt": "2026-10-27T17:17:46.122Z",
       "status": "ok",
       "items": 5,
       "skipped": 0
     },
     {
       "sourceId": "securityweek",
-      "attemptedAt": "2026-10-27T13:42:34.026Z",
+      "attemptedAt": "2026-10-27T17:17:46.122Z",
       "status": "ok",
       "items": 10,
       "skipped": 0
     },
     {
       "sourceId": "darkreading",
-      "attemptedAt": "2026-10-27T13:42:34.026Z",
+      "attemptedAt": "2026-10-27T17:17:46.122Z",
       "status": "ok",
       "items": 50,
       "skipped": 0
     },
     {
       "sourceId": "cisa-advisories",
-      "attemptedAt": "2026-10-27T13:42:34.026Z",
+      "attemptedAt": "2026-10-27T17:17:46.122Z",
       "status": "ok",
       "items": 30,
       "skipped": 0
     },
     {
       "sourceId": "projectzero",
-      "attemptedAt": "2026-10-27T13:42:34.026Z",
+      "attemptedAt": "2026-10-27T17:17:46.122Z",
       "status": "ok",
       "items": 10,
       "skipped": 0
     },
     {
       "sourceId": "securelist",
-      "attemptedAt": "2026-10-27T13:42:34.026Z",
+      "attemptedAt": "2026-10-27T17:17:46.122Z",
       "status": "ok",
       "items": 10,
       "skipped": 0
     },
     {
       "sourceId": "talos",
-      "attemptedAt": "2026-10-27T13:42:34.026Z",
+      "attemptedAt": "2026-10-27T17:17:46.122Z",
       "status": "ok",
       "items": 15,
       "skipped": 0
     },
     {
       "sourceId": "unit42",
-      "attemptedAt": "2026-10-27T13:42:34.026Z",
+      "attemptedAt": "2026-10-27T17:17:46.122Z",
       "status": "ok",
       "items": 15,
       "skipped": 0
     },
     {
       "sourceId": "microsoft-security",
-      "attemptedAt": "2026-10-27T13:42:34.026Z",
+      "attemptedAt": "2026-10-27T17:17:46.122Z",
       "status": "ok",
       "items": 10,
       "skipped": 0
@@ -95,12 +95,12 @@
     "collected": 230,
     "normalized": 230,
     "deduped": 229,
-    "published": 37
+    "published": 46
   },
   "mode": "article",
-  "headline": "Actively exploited PHP flaws lead a heavy patching day",
-  "standfirst": "Two stories dominate: reportedly exploited PHP flaws that enable unauthenticated remote code execution, and a 286-fix Apple release that backports a zero-day patch to older iPhones. Behind them sit a fixed Android Authenticator token-theft flaw, a botnet disruption, a long-running espionage campaign and two breach disclosures.",
-  "bodyMarkdown": "## Actively exploited\n\nCISA has confirmed in-the-wild exploitation of the \"PHP2Shell\" flaws and added them to its Known Exploited Vulnerabilities catalog, according to [[s24]]; both are rated 9.2. One caveat worth flagging: the supplied enrichment for CVE-2026-109618 returned no KEV record, so treat catalog membership as reported by the story rather than corroborated by the structured data. Only one of the two CVE identifiers appears in the supplied excerpt — the second is truncated — so the description below covers that one flaw. CVE-2026-109618 is a memory-handling bug: PHP's longjmp() path for out-of-memory errors can leave request memory uninitialized, and request cleanup may then read or branch on it, leading to RCE. The CVSS 4.0 vector is network-reachable with no privileges and no user interaction, but carries high attack complexity — reliably triggering the condition is not trivial. Affected ranges are PHP 7.3.0 up to before 8.2.35, 8.3.0 before 8.3.36, 8.4.0 before 8.4.27 and 8.5.0 before 8.5.12; the NVD configuration list also sweeps in Siemens Ruggedcom APE1808 firmware and a run of PAN-OS builds, which is worth checking against your own estate rather than assuming PHP-only exposure.\n\nApple's iOS and macOS 27.2 release fixes 286 vulnerabilities and brings the fix for an exploited CoreGraphics flaw to older iPhones via iOS 18, [[s9]]. No CVE identifiers or exploitation details were supplied, so the practical point is coverage: the patch is not limited to the newest hardware.\n\n## Vulnerabilities\n\nCVE-2026-80097 in Microsoft Authenticator for Android is an improper-authentication flaw (CWE-287) rated 8.6 High, with a CVSS 3.1 vector of local attack, low complexity, no privileges, user interaction required and scope changed [[s6]]. In the researchers' tests, a malicious app holding no permissions could pose as a trusted Microsoft app such as Teams and collect sign-in tokens for a victim's work account. Fixed in Authenticator 6.2606.4246. Two things are easy to garble here: the vector is local with user interaction, so this is not a remote zero-click compromise, and the KEV lookup is a confirmed miss — which does not establish that exploitation has not occurred. For BYOD fleets, the update is the whole control.\n\n## Industry\n\nAustralian Signals Directorate operators gained access to a criminal's Amadey backend and disconnected that controller from 180,000 infected computers worldwide, including machines in Australia [[s18]]. Analysis: this is a disruption of one operator's access rather than demonstrated cleanup of the bots, and the supplied text does not say whether those hosts were remediated or simply orphaned — a distinction that matters for anyone tracking follow-on infrastructure.\n\n## Research\n\nThe North Korea-linked Lazarus Group has been attributed to an espionage campaign dubbed Operation FlashHole, targeting at least three South Korean organisations across construction, software, and wire-communication equipment manufacturing, active since at least July 2025 according to Kaspersky [[s12]]. The campaign abuses South Korean security software and post-quantum encryption. The attribution is the source's; the operational lesson is the familiar one about locally trusted tooling as a supply-chain foothold.\n\n## Breaches\n\nENGIE confirmed that attackers stole customer data after breaching a marketing platform used by its business partners; no affected population or data categories were supplied [[s19]]. The University of Copenhagen confirmed hackers accessed a test environment containing personal data belonging to 525,000 people [[s27]]. Read together, the pattern is unglamorous but consistent: partner platforms and non-production systems are still where large notifications come from, and neither disclosure supplied root-cause detail.",
+  "headline": "PHP goes live in KEV while a hospital diversion shows the patient-care edge",
+  "standfirst": "Three distinct CVEs frame the day: a PHP memory-corruption bug CISA has now confirmed as exploited, an Apple CoreGraphics fix reaching older devices, and a patched Android Authenticator flaw that turns a permissionless app into a token thief. Elsewhere, a hospital's ambulance diversion, a botnet backend severed by a national agency, and a university test environment holding data on more than half a million people.",
+  "bodyMarkdown": "## Actively exploited\n\nCISA added the PHP2Shell flaws to its Known Exploited Vulnerabilities catalog, confirming real-world exploitation [[s35]]. The detail supplied covers CVE-2026-109618, a memory-corruption issue in PHP's out-of-memory handling: longjmp() error paths can leave request memory uninitialized before an allocation, and later cleanup may read or branch on it, culminating in remote code execution. NVD rates it 9.2 CRITICAL under CVSS 4.0, with a vector of network-reachable, no privileges and no user interaction — but high attack complexity, which is worth noting before treating it as trivially exploitable. Affected ranges end before PHP 8.2.35, 8.3.36, 8.4.27 and 8.5.12. The KEV entry carries a federal remediation due date three days after the addition; that is a US federal requirement, not a universal deadline. The excerpt describes two flaws both rated 9.2, but only CVE-2026-109618 is detailed in the supplied intelligence — treat the second as unreviewed here.\n\nApple backported CVE-2026-86950 to older iPhones and iPads [[s9]]. The out-of-bounds write in CoreGraphics is rated 8.8 HIGH and requires user interaction: processing a maliciously crafted file (CVSS 3.1 AV:N/AC:L/PR:N/UI:R). Fixes land in iOS and iPadOS 18.7.11 and 26.7.1, macOS Sequoia 15.8.1 and macOS Tahoe 26.7.1. The KEV record notes Apple is aware of a report that the issue may have been exploited in an extremely sophisticated attack against specific targeted individuals on iOS before iOS 27 — hedged language, and targeted rather than opportunistic. Analysis: the backport's practical value is for older devices that would otherwise sit outside the patch path, but the crafted-file prerequisite means the exposure is to users who can be induced to open something, not to the network at large. That inference rests on the supplied vector, and the underlying report's specifics were not supplied.\n\n## Breaches\n\nA hospital diverted ambulances to other health systems in two cities for about two hours and suspended outpatient surgeries and appointments for the remainder of the day following a cyberattack [[s5]]. The supplied text does not characterise the incident as ransomware or name a cause; what it does document is operational and patient-care impact, which is the part that matters when assessing third-party and clinical risk.\n\nThe University of Copenhagen confirmed attackers accessed a test environment containing personal data belonging to 525,000 people [[s38]]. Analysis: test environments repeatedly surface in breach disclosures because they often hold copies of production data under lighter controls — but no specifics on how the data got there or how access was obtained were supplied, so the mechanism and any control failure remain unconfirmed.\n\n## Vulnerabilities\n\nMicrosoft fixed CVE-2026-80097 in Authenticator for Android, an improper-authentication flaw (CWE-287) rated 8.6 HIGH that let a malicious app with no permissions pose as a trusted Microsoft app such as Teams and collect sign-in tokens for a victim's work account [[s15]]. The fix is in Authenticator for Android 6.2606.4246. The CVSS vector is local (AV:L) with user interaction required, and scope changed; the KEV lookup is a confirmed catalog miss, which says nothing about whether exploitation has occurred. For enterprise fleets, the significance is the target: work-account tokens are the currency of session hijacking, and the vector is a user installing something on a managed Android device.\n\nTailscale is working through almost a dozen SSH vulnerabilities that could be exploited to steal credentials, crash servers and gain root privileges [[s6]]. Patch status is described as still in flight; no CVE IDs, affected versions or exploitation evidence were supplied, so the practical triage question — which of the dozen matter and which deployments are exposed — cannot be answered from this evidence alone.\n\n## Research\n\nLazarus has been attributed to an espionage campaign tracked as Operation FlashHole against at least three South Korean organisations in construction, software, and wire-communication equipment manufacturing, active since at least July 2025 according to Kaspersky [[s23]]. Two tradecraft details stand out: abuse of legitimate South Korean security software, and post-quantum encryption used to protect payloads. Analysis: the first borrows trust from software that local defenders are inclined to allow; the second suggests the operators are optimising against retrospective decryption of captured traffic rather than against live detection. Neither claim about intent is supplied — it is an inference from the tooling described.\n\n## Industry\n\nAustralia's signals directorate gained access to an Amadey operator's backend and cut it off from roughly 180,000 infected computers worldwide, including machines in Australia [[s29]]. The agency says the criminal can no longer access or steal data from those systems. Analysis: this is disruption rather than prosecution, and it raises the usual unanswered question for defenders — whether cutting the controller leaves the implants dormant, orphaned, or ready for a new operator. The supplied text does not say whether remediation or cleanup of the 180,000 hosts accompanied the takedown.",
   "selected": [
     {
       "sourceId": "thehackernews",
@@ -117,8 +117,25 @@
       "cves": [
         {
           "id": "CVE-2026-109618",
-          "knownExploited": false,
-          "kev": null,
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "PHP Group",
+            "product": "PHP",
+            "vulnerabilityName": "PHP Memory Corruption Vulnerability",
+            "dateAdded": "2026-10-26",
+            "shortDescription": "PHP contains an out-of-memory corruption vulnerability that allows for unauthenticated remote code execution.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-10-29",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "This vulnerability affects an open-source component, third-party library, protocol, or proprietary implementation that could be used by different products. For more information, please see: https://www.php.net/ ; https://www.cisa.gov/news-events/alerts/2026/10/21/critical-vulnerabilities-php-require-immediate-patching ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ;  https://nvd.nist.gov/vuln/detail/CVE-2026-109618",
+            "cwes": [
+              "CWE-416",
+              "CWE-755",
+              "CWE-824",
+              "CWE-1325",
+              "CWE-1419"
+            ]
+          },
           "nvd": {
             "description": "PHP uses longjmp() for out-of-memory (OOM) errors to exit the current context and abort handling of the request. Some contexts may not properly account for this scenario and leave request memory in an uninitialized state before performing an allocation. The subsequent request cleanup procedure may read or branch on this memory. Multiple OOM strategies can consistently trigger this condition and lead to remote code execution (RCE).",
             "cvss": {
@@ -136,7 +153,7 @@
               "CWE-1325"
             ],
             "published": "2026-10-21T14:17:09.357",
-            "lastModified": "2026-10-26T10:10:00.140",
+            "lastModified": "2026-10-27T13:43:51.433",
             "vulnStatus": "Analyzed",
             "references": [
               {
@@ -164,10 +181,31 @@
                 ]
               },
               {
+                "url": "https://arcticwolf.com/resources/blog/php2shell-critical-php-vulnerabilities-enable-unauthenticated-remote-code-execution/",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
                 "url": "https://cert-portal.siemens.com/productcert/html/ssa-566512.html",
                 "source": "0b142b55-0307-4c5a-b3c9-f314f3fb7c5e",
                 "tags": [
                   "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://php2shell.delftintellab.com",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-109618",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
                 ]
               },
               {
@@ -2935,44 +2973,242 @@
               }
             ],
             "cisaKev": {
-              "status": "not_found",
+              "status": "found",
               "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
               "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
-              "catalogVersion": "2026.10.23",
-              "dateReleased": "2026-10-23T19:30:18.9209Z",
-              "retrievedAt": "2026-10-26T18:06:57.242Z"
+              "catalogVersion": "2026.10.26",
+              "dateReleased": "2026-10-26T22:24:24.6101Z",
+              "retrievedAt": "2026-10-27T17:17:46.122Z"
             },
             "nvd": {
               "status": "found",
-              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-111497%2CCVE-2026-109618%2CCVE-2026-109619",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-86950%2CCVE-2026-114595%2CCVE-2026-114596%2CCVE-2026-114597%2CCVE-2026-114598%2CCVE-2023-4863%2CCVE-2026-16436%2CCVE-2026-16437%2CCVE-2026-16438%2CCVE-2026-109618%2CCVE-2026-109619",
               "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-109618",
-              "retrievedAt": "2026-10-26T18:06:57.242Z"
+              "retrievedAt": "2026-10-27T17:17:46.122Z"
             }
           }
         }
       ],
-      "id": "s24",
+      "id": "s35",
       "section": "exploited",
       "rank": 1,
-      "angle": "CISA has confirmed in-the-wild exploitation of the PHP2Shell RCE flaws and set a Thursday federal patch deadline, putting internet-facing PHP deployments on immediate notice."
+      "angle": "CISA's KEV addition confirms real-world exploitation of the PHP2Shell RCE flaws and gives federal agencies only until Thursday to patch, making this the most urgent item on the board."
     },
     {
-      "sourceId": "securityweek",
+      "sourceId": "therecord",
       "sourceKind": "rss",
-      "title": "iOS, macOS 27.2 Patch 286 Bugs; Fix for Exploited Flaw Backported to iOS 18",
-      "url": "https://www.securityweek.com/ios-macos-27-2-patch-286-bugs-fix-for-exploited-flaw-backported-to-ios-18/",
-      "publishedAt": "2026-10-27T11:49:57.000Z",
-      "excerpt": "Apple patched 286 vulnerabilities in iOS and macOS 27.2 and brought the fix for an exploited CoreGraphics zero-day to older iPhones. The post iOS, macOS 27.2 Patch 286 Bugs; Fix for Exploited Flaw Backported to iOS 18 appeared first on SecurityWeek.",
-      "canonicalUrl": "https://securityweek.com/ios-macos-27-2-patch-286-bugs-fix-for-exploited-flaw-backported-to-ios-18",
+      "title": "University of New Mexico hospital diverts ambulances after cyberattack",
+      "url": "https://therecord.media/university-of-new-mexico-hospital-diverts-cyber-incident",
+      "publishedAt": "2026-10-27T14:57:00.000Z",
+      "excerpt": "For about two hours on Monday, the organization diverted ambulances to health systems in Albuquerque and Santa Fe. They were forced to suspend outpatient surgeries and appointments for the remainder of the day.",
+      "canonicalUrl": "https://therecord.media/university-of-new-mexico-hospital-diverts-cyber-incident",
       "alsoCoveredBy": [],
       "memberCanonicalUrls": [
-        "https://securityweek.com/ios-macos-27-2-patch-286-bugs-fix-for-exploited-flaw-backported-to-ios-18"
+        "https://therecord.media/university-of-new-mexico-hospital-diverts-cyber-incident"
       ],
       "cves": [],
+      "id": "s5",
+      "section": "breaches",
+      "rank": 2,
+      "angle": "A hospital diverting ambulances and suspending surgeries for hours shows ransomware-style disruption translating directly into patient-care impact."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Apple Backports Fix for Exploited CoreGraphics Flaw to Older iPhones and iPads",
+      "url": "https://thehackernews.com/2026/10/apple-backports-fix-for-exploited.html",
+      "publishedAt": "2026-10-27T13:59:09.000Z",
+      "excerpt": "Apple on Monday backported fixes for a high-severity security flaw that was exploited in real-world cyber attacks to older devices. The vulnerability, tracked as CVE-2026-86950 (CVSS score: 8.8), is an out-of-bounds write affecting CoreGraphics that could result in arbitrary code execution when processing a maliciously crafted file. Patches for the flaw were released last month by Apple in",
+      "canonicalUrl": "https://thehackernews.com/2026/10/apple-backports-fix-for-exploited.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/apple-backports-fix-for-exploited.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-86950",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Apple",
+            "product": "Multiple Products",
+            "vulnerabilityName": "Apple Multiple Products Out-of-Bounds Write Vulnerability",
+            "dateAdded": "2026-09-29",
+            "shortDescription": "Apple iOS, macOS, and iPadOS contain an out-of-bounds write vulnerability in CoreGraphics that may lead to arbitrary code execution.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-10-13",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://support.apple.com/en-us/149226 ; https://support.apple.com/en-us/149228 ; https://support.apple.com/en-us/149229 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-86950",
+            "cwes": [
+              "CWE-787"
+            ]
+          },
+          "nvd": {
+            "description": "An out-of-bounds write issue was addressed with improved bounds checking. This issue is fixed in iOS 18.7.11 and iPadOS 18.7.11, iOS 26.7.1 and iPadOS 26.7.1, macOS Sequoia 15.8.1, macOS Tahoe 26.7.1. Processing a maliciously crafted file may lead to arbitrary code execution. Apple is aware of a report that this issue may have been exploited in an extremely sophisticated attack against specific targeted individuals on versions of iOS before iOS 27.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.8,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-787"
+            ],
+            "published": "2026-09-28T20:17:11.193",
+            "lastModified": "2026-10-27T12:29:30.297",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://support.apple.com/en-us/149225",
+                "source": "product-security@apple.com",
+                "tags": [
+                  "Release Notes",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/149226",
+                "source": "product-security@apple.com",
+                "tags": [
+                  "Release Notes",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/149228",
+                "source": "product-security@apple.com",
+                "tags": [
+                  "Release Notes",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/149229",
+                "source": "product-security@apple.com",
+                "tags": [
+                  "Release Notes",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "http://seclists.org/fulldisclosure/2026/Sep/89",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://seclists.org/fulldisclosure/2026/Sep/90",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://seclists.org/fulldisclosure/2026/Sep/91",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-86950",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:o:apple:ipados:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "74E4AE60-EB9D-4AF9-9488-AFFBB0BBD489",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "18.7.11"
+              },
+              {
+                "criteria": "cpe:2.3:o:apple:ipados:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "AB66472F-FF8A-4E84-A35C-68991EB0A4DB",
+                "versionStartIncluding": "26.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "26.7.1"
+              },
+              {
+                "criteria": "cpe:2.3:o:apple:iphone_os:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "63C40D1C-6CA1-4CE1-ABEB-8D7858094C07",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "18.7.11"
+              },
+              {
+                "criteria": "cpe:2.3:o:apple:iphone_os:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B8726625-65F3-4086-B4D4-3E1A43E7949C",
+                "versionStartIncluding": "26.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "26.7.1"
+              },
+              {
+                "criteria": "cpe:2.3:o:apple:macos:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "77C881FE-1FF0-4D7A-9E5A-9E7FC6BBA3B8",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "15.8.1"
+              },
+              {
+                "criteria": "cpe:2.3:o:apple:macos:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "810BEE78-D6FB-416D-B719-A7639184DEAA",
+                "versionStartIncluding": "26.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "26.7.1"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/10/apple-backports-fix-for-exploited.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.26",
+              "dateReleased": "2026-10-26T22:24:24.6101Z",
+              "retrievedAt": "2026-10-27T17:17:46.122Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-86950%2CCVE-2026-114595%2CCVE-2026-114596%2CCVE-2026-114597%2CCVE-2026-114598%2CCVE-2023-4863%2CCVE-2026-16436%2CCVE-2026-16437%2CCVE-2026-16438%2CCVE-2026-109618%2CCVE-2026-109619",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-86950",
+              "retrievedAt": "2026-10-27T17:17:46.122Z"
+            }
+          }
+        }
+      ],
       "id": "s9",
       "section": "exploited",
-      "rank": 2,
-      "angle": "Apple’s iOS/macOS 27.2 update fixes 286 flaws and backports a CoreGraphics zero-day fix to older iPhones, widening urgent patching beyond the newest devices."
+      "rank": 3,
+      "angle": "Apple's backport of the CVE-2026-86950 CoreGraphics fix extends a known-exploited zero-day patch to older iPhones and iPads that would otherwise stay exposed to targeted attacks."
     },
     {
       "sourceId": "thehackernews",
@@ -3040,9 +3276,9 @@
               "status": "not_found",
               "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
               "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
-              "catalogVersion": "2026.10.23",
-              "dateReleased": "2026-10-23T19:30:18.9209Z",
-              "retrievedAt": "2026-10-26T18:06:57.242Z"
+              "catalogVersion": "2026.10.26",
+              "dateReleased": "2026-10-26T22:24:24.6101Z",
+              "retrievedAt": "2026-10-27T17:17:46.122Z"
             },
             "nvd": {
               "status": "found",
@@ -3053,28 +3289,28 @@
           }
         }
       ],
-      "id": "s6",
+      "id": "s15",
       "section": "vulnerabilities",
-      "rank": 3,
-      "angle": "A fixed Authenticator for Android flaw could let permissionless apps impersonate trusted Microsoft apps and steal work-account tokens, making app updates urgent for BYOD enterprise fleets."
+      "rank": 4,
+      "angle": "A patched Authenticator flaw that let a permissionless Android app impersonate trusted Microsoft apps and harvest work-account tokens puts mobile token theft on the enterprise patch list."
     },
     {
-      "sourceId": "thehackernews",
+      "sourceId": "bleepingcomputer",
       "sourceKind": "rss",
-      "title": "Australia Gets Into Amadey Malware Backend, Cuts Off Access to 180,000 Infected Computers",
-      "url": "https://thehackernews.com/2026/10/australia-gets-into-amadey-malware.html",
-      "publishedAt": "2026-10-27T09:33:06.000Z",
-      "excerpt": "A criminal using the Amadey malware can no longer access or steal data from 180,000 infected computers around the world, including some in Australia, the Australian Signals Directorate (ASD) says. The agency's operators gained access to the criminal's operation's backend and cut it off from those computers. \"The next steps that we took were to disconnect that Amadey controller from all those",
-      "canonicalUrl": "https://thehackernews.com/2026/10/australia-gets-into-amadey-malware.html",
+      "title": "Tailscale warns of SSH flaws allowing root privilege escalation",
+      "url": "https://www.bleepingcomputer.com/news/security/tailscale-warns-of-serious-ssh-flaws-allowing-root-privilege-escalation/",
+      "publishedAt": "2026-10-27T14:09:46.000Z",
+      "excerpt": "The Tailscale security team is working to patch almost a dozen security vulnerabilities that could be exploited to steal credentials, crash servers, gain root privileges, and more. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/tailscale-warns-of-serious-ssh-flaws-allowing-root-privilege-escalation",
       "alsoCoveredBy": [],
       "memberCanonicalUrls": [
-        "https://thehackernews.com/2026/10/australia-gets-into-amadey-malware.html"
+        "https://bleepingcomputer.com/news/security/tailscale-warns-of-serious-ssh-flaws-allowing-root-privilege-escalation"
       ],
       "cves": [],
-      "id": "s18",
-      "section": "industry",
-      "rank": 4,
-      "angle": "Australia’s signals agency disrupted an Amadey backend and cut a criminal off from 180,000 bots, showing law-enforcement operations can meaningfully reduce botnet scale."
+      "id": "s6",
+      "section": "vulnerabilities",
+      "rank": 5,
+      "angle": "Almost a dozen Tailscale SSH flaws enabling credential theft, crashes and root escalation matter because the fixes are still in flight across a widely deployed remote-access fabric."
     },
     {
       "sourceId": "thehackernews",
@@ -3089,28 +3325,28 @@
         "https://thehackernews.com/2026/10/lazarus-abuses-south-korean-security.html"
       ],
       "cves": [],
-      "id": "s12",
+      "id": "s23",
       "section": "research",
-      "rank": 5,
-      "angle": "Lazarus is abusing South Korean security software and post-quantum encryption in a long-running espionage campaign, a reminder that trusted local tooling remains a supply-chain target."
+      "rank": 6,
+      "angle": "Lazarus abusing legitimate South Korean security software alongside post-quantum encryption for payload protection signals another step up in North Korean espionage tradecraft."
     },
     {
-      "sourceId": "bleepingcomputer",
+      "sourceId": "thehackernews",
       "sourceKind": "rss",
-      "title": "Energy giant ENGIE discloses data breach affecting customers",
-      "url": "https://www.bleepingcomputer.com/news/security/energy-giant-engie-discloses-data-breach-affecting-customers/",
-      "publishedAt": "2026-10-27T09:25:50.000Z",
-      "excerpt": "French energy giant ENGIE, one of the world's largest power and natural gas providers, confirmed that attackers stole customer data after breaching a marketing platform used by business partners. [...]",
-      "canonicalUrl": "https://bleepingcomputer.com/news/security/energy-giant-engie-discloses-data-breach-affecting-customers",
+      "title": "Australia Gets Into Amadey Malware Backend, Cuts Off Access to 180,000 Infected Computers",
+      "url": "https://thehackernews.com/2026/10/australia-gets-into-amadey-malware.html",
+      "publishedAt": "2026-10-27T09:33:06.000Z",
+      "excerpt": "A criminal using the Amadey malware can no longer access or steal data from 180,000 infected computers around the world, including some in Australia, the Australian Signals Directorate (ASD) says. The agency's operators gained access to the criminal's operation's backend and cut it off from those computers. \"The next steps that we took were to disconnect that Amadey controller from all those",
+      "canonicalUrl": "https://thehackernews.com/2026/10/australia-gets-into-amadey-malware.html",
       "alsoCoveredBy": [],
       "memberCanonicalUrls": [
-        "https://bleepingcomputer.com/news/security/energy-giant-engie-discloses-data-breach-affecting-customers"
+        "https://thehackernews.com/2026/10/australia-gets-into-amadey-malware.html"
       ],
       "cves": [],
-      "id": "s19",
-      "section": "breaches",
-      "rank": 6,
-      "angle": "ENGIE’s confirmed breach via a partner marketing platform shows third-party customer-data exposure continues to hit critical-infrastructure-adjacent brands."
+      "id": "s29",
+      "section": "industry",
+      "rank": 7,
+      "angle": "Australia's ASD going into an Amadey operator's backend and severing control of 180,000 infected machines is a notable case of disruption over prosecution."
     },
     {
       "sourceId": "bleepingcomputer",
@@ -3125,13 +3361,118 @@
         "https://bleepingcomputer.com/news/security/university-of-copenhagen-data-breach-exposes-data-of-525-000-people"
       ],
       "cves": [],
-      "id": "s27",
+      "id": "s38",
       "section": "breaches",
-      "rank": 7,
-      "angle": "Copenhagen’s exposure of 525,000 people through a test environment highlights how unmanaged non-production systems keep turning into major breach notifications."
+      "rank": 8,
+      "angle": "A 525,000-person exposure rooted in a university test environment is a reminder that non-production systems keep becoming the soft path to personal data."
     }
   ],
   "alsoCollected": [
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "'Aokigahara' Stealer Targets 'Developer Keyrings' &amp; AI Assistants",
+      "url": "https://www.darkreading.com/endpoint-security/aokigahara-stealer-developer-keyrings-ai-assistants",
+      "publishedAt": "2026-10-27T16:47:20.000Z",
+      "excerpt": "The malware's focus on AI tools expands the traditional infostealer playbook to expose a forest of AI sessions, sensitive business data, and developer infrastructure from a single compromised endpoint.",
+      "canonicalUrl": "https://darkreading.com/endpoint-security/aokigahara-stealer-developer-keyrings-ai-assistants",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/endpoint-security/aokigahara-stealer-developer-keyrings-ai-assistants"
+      ],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Warp discloses breach exposing AI agent logs, user telemetry data",
+      "url": "https://www.bleepingcomputer.com/news/security/warp-discloses-breach-exposing-ai-agent-logs-user-telemetry-data/",
+      "publishedAt": "2026-10-27T16:15:39.000Z",
+      "excerpt": "Agent decision logs and telemetry data belonging to Warp agentic development environment users were exposed in an attack on a third-party vendor in the project's infrastructure. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/warp-discloses-breach-exposing-ai-agent-logs-user-telemetry-data",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/warp-discloses-breach-exposing-ai-agent-logs-user-telemetry-data"
+      ],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Tailscale Rushes Patches After Uncoordinated Disclosure of ‘Tailworm’ Flaws",
+      "url": "https://www.securityweek.com/tailscale-rushes-patches-after-uncoordinated-disclosure-of-tailworm-flaws/",
+      "publishedAt": "2026-10-27T15:26:12.000Z",
+      "excerpt": "Tailscale is preparing a patch for Tailscale SSH flaws whose details went public over the weekend, before any fixes had been released. The post Tailscale Rushes Patches After Uncoordinated Disclosure of ‘Tailworm’ Flaws appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/tailscale-rushes-patches-after-uncoordinated-disclosure-of-tailworm-flaws",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/tailscale-rushes-patches-after-uncoordinated-disclosure-of-tailworm-flaws"
+      ],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Hackers repeatedly breached suppliers holding UK police data, watchdog finds",
+      "url": "https://therecord.media/uk-police-data-breached-from-suppliers-watchdog-report",
+      "publishedAt": "2026-10-27T15:07:00.000Z",
+      "excerpt": "His Majesty’s Inspectorate of Constabulary and Fire & Rescue Services says British police data has been breach several times this decade through third-party IT suppliers.",
+      "canonicalUrl": "https://therecord.media/uk-police-data-breached-from-suppliers-watchdog-report",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/uk-police-data-breached-from-suppliers-watchdog-report"
+      ],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "The Huntress Tragic Quadrant: Ranking Threats Hitting Businesses Hardest",
+      "url": "https://www.bleepingcomputer.com/news/security/the-huntress-tragic-quadrant-ranking-threats-hitting-businesses-hardest/",
+      "publishedAt": "2026-10-27T14:01:11.000Z",
+      "excerpt": "Attackers are increasingly abusing legitimate IT tools, Microsoft 365 sessions, and everyday workflows to compromise businesses without triggering traditional defenses. Huntress Labs ranks the threats hitting organizations hardest, highlighting which attack techniques deserve immediate attention and which remain emerging risks. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/the-huntress-tragic-quadrant-ranking-threats-hitting-businesses-hardest",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/the-huntress-tragic-quadrant-ranking-threats-hitting-businesses-hardest"
+      ],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "GoAhead TLS Flaws Allow Revoked Client Certificates and Enable Session Decryption",
+      "url": "https://thehackernews.com/2026/10/goahead-tls-flaws-allow-revoked-client.html",
+      "publishedAt": "2026-10-27T13:59:48.000Z",
+      "excerpt": "The GoAhead embedded web server loaded a certificate revocation list into its default TLS backend but never turned revocation checking on, so a revoked client certificate could still pass login on affected setups. The flaw is in builds that use the OpenSSL backend with mutual-TLS, where the server checks a client certificate and vice versa, and a revocation list is configured to block revoked",
+      "canonicalUrl": "https://thehackernews.com/2026/10/goahead-tls-flaws-allow-revoked-client.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/goahead-tls-flaws-allow-revoked-client.html"
+      ],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Malicious apps prey on Russians’ anxiety about fuel prices, drone strikes",
+      "url": "https://therecord.media/malicious-apps-russian-anxiety-gas-prices-drone-strikes",
+      "publishedAt": "2026-10-27T13:36:00.000Z",
+      "excerpt": "Cybercriminals are stuffing infostealer malware into bogus apps aimed at tracking gas prices, police activity, drone strikes and other information of concern to average Russians, researchers said.",
+      "canonicalUrl": "https://therecord.media/malicious-apps-russian-anxiety-gas-prices-drone-strikes",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/malicious-apps-russian-anxiety-gas-prices-drone-strikes"
+      ],
+      "cves": [],
+      "id": "s10"
+    },
     {
       "sourceId": "securityweek",
       "sourceKind": "rss",
@@ -3145,7 +3486,7 @@
         "https://securityweek.com/vendor-key-leak-puts-data-of-238000-denver-health-plan-members-at-risk"
       ],
       "cves": [],
-      "id": "s1"
+      "id": "s11"
     },
     {
       "sourceId": "therecord",
@@ -3160,7 +3501,7 @@
         "https://therecord.media/moscow-faces-internet-disruptions-as-foreign-leaders-gather"
       ],
       "cves": [],
-      "id": "s2"
+      "id": "s12"
     },
     {
       "sourceId": "therecord",
@@ -3175,7 +3516,7 @@
         "https://therecord.media/php-vulnerabilities-cisa-kev"
       ],
       "cves": [],
-      "id": "s3"
+      "id": "s13"
     },
     {
       "sourceId": "securityweek",
@@ -3190,22 +3531,7 @@
         "https://securityweek.com/hpe-patches-dozens-of-critical-flaws-in-networking-products"
       ],
       "cves": [],
-      "id": "s4"
-    },
-    {
-      "sourceId": "therecord",
-      "sourceKind": "rss",
-      "title": "Australia’s spies are sharing intelligence with hacking targets — and want them to share back",
-      "url": "https://therecord.media/australia-spies-share-intel-and-want-victims-to-share-back",
-      "publishedAt": "2026-10-27T13:13:00.000Z",
-      "excerpt": "More than half of the individual warnings from the Australian Signals Directorate (ASD) drew on previously secret material that had been cleared for disclosure, underscoring the growing role of intelligence sharing to prevent attacks.",
-      "canonicalUrl": "https://therecord.media/australia-spies-share-intel-and-want-victims-to-share-back",
-      "alsoCoveredBy": [],
-      "memberCanonicalUrls": [
-        "https://therecord.media/australia-spies-share-intel-and-want-victims-to-share-back"
-      ],
-      "cves": [],
-      "id": "s5"
+      "id": "s14"
     },
     {
       "sourceId": "securityweek",
@@ -3220,7 +3546,7 @@
         "https://securityweek.com/unexplained-dreamhost-incident-prompts-email-ftp-password-resets"
       ],
       "cves": [],
-      "id": "s7"
+      "id": "s16"
     },
     {
       "sourceId": "securelist",
@@ -3235,7 +3561,1334 @@
         "https://securelist.com/cloud-infrastructure-isolation-bypass/121609"
       ],
       "cves": [],
-      "id": "s8"
+      "id": "s17"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "EPICS Base",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-300-01",
+      "publishedAt": "2026-10-27T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of these vulnerabilities could allow an attacker to cause a denial-of-service condition, corrupt memory, disclose sensitive information, or potentially execute arbitrary code. The following versions of EPICS Base are affected: EPICS Base release <=7.0.10 (CVE-2026-114595, CVE-2026-114596, CVE-2026-114597, CVE-2026-114598) CVSS Vendor Equipment v3 9.8 The…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-300-01",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-advisories/icsa-26-300-01"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-114595",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "In EPICS Base release 7.0.10 and prior, an integer overflow in network request processing can cause memory to be allocated with an incorrect size. Subsequent handling of attacker supplied data may result in memory corruption, denial of service, or potential remote code execution.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.3,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "ics-cert@hq.dhs.gov",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-190"
+            ],
+            "published": "2026-10-27T17:16:58.530",
+            "lastModified": "2026-10-27T17:16:58.530",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-300-01",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-300-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.26",
+              "dateReleased": "2026-10-26T22:24:24.6101Z",
+              "retrievedAt": "2026-10-27T17:17:46.122Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-86950%2CCVE-2026-114595%2CCVE-2026-114596%2CCVE-2026-114597%2CCVE-2026-114598%2CCVE-2023-4863%2CCVE-2026-16436%2CCVE-2026-16437%2CCVE-2026-16438%2CCVE-2026-109618%2CCVE-2026-109619",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-114595",
+              "retrievedAt": "2026-10-27T17:17:46.122Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-114596",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "In EPICS Base release 7.0.10 and prior, an improper validation of message length values during protocol parsing can trigger an integer overflow, resulting in an out-of-bounds memory write. Successful exploitation can cause process instability or denial of service.",
+            "cvss": {
+              "version": "4.0",
+              "score": 8.8,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "ics-cert@hq.dhs.gov",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-190"
+            ],
+            "published": "2026-10-27T17:16:58.690",
+            "lastModified": "2026-10-27T17:16:58.690",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-300-01",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-300-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.26",
+              "dateReleased": "2026-10-26T22:24:24.6101Z",
+              "retrievedAt": "2026-10-27T17:17:46.122Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-86950%2CCVE-2026-114595%2CCVE-2026-114596%2CCVE-2026-114597%2CCVE-2026-114598%2CCVE-2023-4863%2CCVE-2026-16436%2CCVE-2026-16437%2CCVE-2026-16438%2CCVE-2026-109618%2CCVE-2026-109619",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-114596",
+              "retrievedAt": "2026-10-27T17:17:46.122Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-114597",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "In EPICS Base release 7.0.10 and prior, an insufficient validation of element or length values in a network message can cause the application to read beyond the bounds of an allocated buffer. This may lead to denial of service and could expose adjacent memory contents.",
+            "cvss": {
+              "version": "4.0",
+              "score": 8.7,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "ics-cert@hq.dhs.gov",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-130"
+            ],
+            "published": "2026-10-27T17:16:58.840",
+            "lastModified": "2026-10-27T17:16:58.840",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-300-01",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-300-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.26",
+              "dateReleased": "2026-10-26T22:24:24.6101Z",
+              "retrievedAt": "2026-10-27T17:17:46.122Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-86950%2CCVE-2026-114595%2CCVE-2026-114596%2CCVE-2026-114597%2CCVE-2026-114598%2CCVE-2023-4863%2CCVE-2026-16436%2CCVE-2026-16437%2CCVE-2026-16438%2CCVE-2026-109618%2CCVE-2026-109619",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-114597",
+              "retrievedAt": "2026-10-27T17:17:46.122Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-114598",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "In EPICS Base release 7.0.10 and prior, an insufficient validation of element or length values in a network message can cause the application to read beyond the bounds of an allocated buffer. This may lead to denial of service and could expose adjacent memory contents.",
+            "cvss": {
+              "version": "4.0",
+              "score": 8.7,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "ics-cert@hq.dhs.gov",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-843"
+            ],
+            "published": "2026-10-27T17:16:59.003",
+            "lastModified": "2026-10-27T17:16:59.003",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-300-01",
+                "source": "ics-cert@hq.dhs.gov",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-300-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.26",
+              "dateReleased": "2026-10-26T22:24:24.6101Z",
+              "retrievedAt": "2026-10-27T17:17:46.122Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-86950%2CCVE-2026-114595%2CCVE-2026-114596%2CCVE-2026-114597%2CCVE-2026-114598%2CCVE-2023-4863%2CCVE-2026-16436%2CCVE-2026-16437%2CCVE-2026-16438%2CCVE-2026-109618%2CCVE-2026-109619",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-114598",
+              "retrievedAt": "2026-10-27T17:17:46.122Z"
+            }
+          }
+        }
+      ],
+      "id": "s18"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Mitsubishi Electric GENESIS, GENESIS64, ICONICS Suite, Hyper Historian, AnalytiX, MobileHMI, IoTWorX, MC Works64, GENESIS32 and BizViz",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-300-02",
+      "publishedAt": "2026-10-27T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of these vulnerabilities could allow an attacker to execute arbitrary code (CVE-2023-4863), bypass authentication (CVE-2026-16436 and CVE-2026-16437), or perform arbitrary operations (CVE-2026-16438), resulting in information disclosure, tampering with, destruction, or deletion of information, and a denial-of-service (DoS) condition of the system. The…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-300-02",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-advisories/icsa-26-300-02"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2023-4863",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Google",
+            "product": "Chromium WebP",
+            "vulnerabilityName": "Google Chromium WebP Heap-Based Buffer Overflow Vulnerability",
+            "dateAdded": "2023-09-13",
+            "shortDescription": "Google Chromium WebP contains a heap-based buffer overflow vulnerability that allows a remote attacker to perform an out-of-bounds memory write via a crafted HTML page. This vulnerability can affect applications that use the WebP Codec.",
+            "requiredAction": "Apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable.",
+            "dueDate": "2023-10-04",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://chromereleases.googleblog.com/2023/09/stable-channel-update-for-desktop_11.html?m=1; https://nvd.nist.gov/vuln/detail/CVE-2023-4863",
+            "cwes": [
+              "CWE-787"
+            ]
+          },
+          "nvd": {
+            "description": "Heap buffer overflow in libwebp in Google Chrome prior to 116.0.5845.187 and libwebp 1.3.2 allowed a remote attacker to perform an out of bounds memory write via a crafted HTML page. (Chromium security severity: Critical)",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.8,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+              "source": "nvd@nist.gov",
+              "type": "Primary"
+            },
+            "cwes": [
+              "CWE-787"
+            ],
+            "published": "2023-09-12T15:15:24.327",
+            "lastModified": "2026-06-17T06:38:46.547",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2023/09/21/4",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2023/09/22/1",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2023/09/22/3",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2023/09/22/4",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2023/09/22/5",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2023/09/22/6",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2023/09/22/7",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2023/09/22/8",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2023/09/26/1",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2023/09/26/7",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2023/09/28/1",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2023/09/28/2",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2023/09/28/4",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "https://adamcaudill.com/2023/09/14/whose-cve-is-it-anyway/",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://blog.isosceles.com/the-webp-0day/",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Exploit",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://bugzilla.suse.com/show_bug.cgi?id=1215231",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Issue Tracking",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://chromereleases.googleblog.com/2023/09/stable-channel-update-for-desktop_11.html",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://crbug.com/1479274",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Issue Tracking",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://en.bandisoft.com/honeyview/history/",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://github.com/webmproject/libwebp/commit/902bc9190331343b2017211debcec8d2ab87e17a",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://github.com/webmproject/libwebp/releases/tag/v1.3.2",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://lists.debian.org/debian-lts-announce/2023/09/msg00015.html",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://lists.debian.org/debian-lts-announce/2023/09/msg00016.html",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://lists.debian.org/debian-lts-announce/2023/09/msg00017.html",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/6T655QF7CQ3DYAMPFV7IECQYGDEUIVVT/",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/FYYKLG6CRGEDTNRBSU26EEWAO6D6U645/",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/KUQ7CTX3W372X3UY56VVNAHCH6H2F4X3/",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/OZDGWWMJREPAGKWCJKSCM4WYLANSKIFX/",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/PYZV7TMKF4QHZ54SFJX54BDN52VHGGCX/",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/WHOLML7N2G5KCAZXFWC5IDFFHSQS5SDB/",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/WTRUIS3564P7ZLM2S2IH4Y4KZ327LI4I/",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2023-4863",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Patch",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://news.ycombinator.com/item?id=37478403",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Exploit",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://security-tracker.debian.org/tracker/CVE-2023-4863",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Issue Tracking",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://security.gentoo.org/glsa/202309-05",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://security.gentoo.org/glsa/202401-10",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://security.netapp.com/advisory/ntap-20230929-0011/",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://sethmlarson.dev/security-developer-in-residence-weekly-report-16",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Exploit"
+                ]
+              },
+              {
+                "url": "https://stackdiary.com/critical-vulnerability-in-webp-codec-cve-2023-4863/",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Exploit",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.bentley.com/advisories/be-2023-0001/",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.bleepingcomputer.com/news/google/google-fixes-another-chrome-zero-day-bug-exploited-in-attacks/",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.debian.org/security/2023/dsa-5496",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "https://www.debian.org/security/2023/dsa-5497",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "https://www.debian.org/security/2023/dsa-5498",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.mozilla.org/en-US/security/advisories/mfsa2023-40/",
+                "source": "chrome-cve-admin@google.com",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2023/09/21/4",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2023/09/22/1",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2023/09/22/3",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2023/09/22/4",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2023/09/22/5",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2023/09/22/6",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2023/09/22/7",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2023/09/22/8",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2023/09/26/1",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2023/09/26/7",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2023/09/28/1",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2023/09/28/2",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2023/09/28/4",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "https://adamcaudill.com/2023/09/14/whose-cve-is-it-anyway/",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://blog.isosceles.com/the-webp-0day/",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Exploit",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://bugzilla.suse.com/show_bug.cgi?id=1215231",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Issue Tracking",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://chromereleases.googleblog.com/2023/09/stable-channel-update-for-desktop_11.html",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://crbug.com/1479274",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Issue Tracking",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://en.bandisoft.com/honeyview/history/",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://github.com/webmproject/libwebp/commit/902bc9190331343b2017211debcec8d2ab87e17a",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://github.com/webmproject/libwebp/releases/tag/v1.3.2",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://lists.debian.org/debian-lts-announce/2023/09/msg00015.html",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://lists.debian.org/debian-lts-announce/2023/09/msg00016.html",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://lists.debian.org/debian-lts-announce/2023/09/msg00017.html",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/6T655QF7CQ3DYAMPFV7IECQYGDEUIVVT/",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/FYYKLG6CRGEDTNRBSU26EEWAO6D6U645/",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/KUQ7CTX3W372X3UY56VVNAHCH6H2F4X3/",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/OZDGWWMJREPAGKWCJKSCM4WYLANSKIFX/",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/PYZV7TMKF4QHZ54SFJX54BDN52VHGGCX/",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/WHOLML7N2G5KCAZXFWC5IDFFHSQS5SDB/",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/WTRUIS3564P7ZLM2S2IH4Y4KZ327LI4I/",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2023-4863",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Patch",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://news.ycombinator.com/item?id=37478403",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Exploit",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://security-tracker.debian.org/tracker/CVE-2023-4863",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Issue Tracking",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://security.gentoo.org/glsa/202309-05",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://security.gentoo.org/glsa/202401-10",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://security.netapp.com/advisory/ntap-20230929-0011/",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://sethmlarson.dev/security-developer-in-residence-weekly-report-16",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Exploit"
+                ]
+              },
+              {
+                "url": "https://stackdiary.com/critical-vulnerability-in-webp-codec-cve-2023-4863/",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Exploit",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.bentley.com/advisories/be-2023-0001/",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.bleepingcomputer.com/news/google/google-fixes-another-chrome-zero-day-bug-exploited-in-attacks/",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.debian.org/security/2023/dsa-5496",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "https://www.debian.org/security/2023/dsa-5497",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "https://www.debian.org/security/2023/dsa-5498",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.mozilla.org/en-US/security/advisories/mfsa2023-40/",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.vicarius.io/vsociety/posts/zero-day-webp-vulnerability-cve-2023-4863",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Exploit",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2023-4863",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:google:chrome:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "856C1821-5D22-4A4E-859D-8F5305255AB7",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "116.0.5845.187"
+              },
+              {
+                "criteria": "cpe:2.3:o:fedoraproject:fedora:37:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E30D0E6F-4AE8-4284-8716-991DFA48CC5D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:fedoraproject:fedora:38:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "CC559B26-5DFC-4B7A-A27C-B77DE755DFF9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:fedoraproject:fedora:39:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B8EDB836-4E6A-4B71-B9B2-AA3E03E0F646",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "07B237A9-69A3-4A9C-9DA0-4E06BD37AE73",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:debian:debian_linux:11.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FA6FEEC2-9F11-4643-8827-749718254FED",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:debian:debian_linux:12.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "46D69DCC-AE4D-4EA5-861C-D60951444C6C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:mozilla:firefox:*:*:*:*:esr:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "54B8855E-19B9-4D20-9B93-A5219F077335",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "102.15.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:mozilla:firefox:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FBA8858E-AB6C-4708-820D-3F9D8D5A077F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "117.0.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:mozilla:firefox:*:*:*:*:esr:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6C494574-4187-4BC7-816B-6C1C288D711E",
+                "versionStartIncluding": "115.1.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "115.2.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:mozilla:thunderbird:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A073724D-52BD-4426-B58D-7A8BD24B8F8E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "102.15.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:mozilla:thunderbird:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "952BEC0C-2DB0-476A-AF62-1269F8635B4A",
+                "versionStartIncluding": "115.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "115.2.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:edge_chromium:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0C8F8BD1-1D13-4605-BF19-E4292E2D6A00",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "116.0.1938.81"
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:teams:*:*:*:*:*:macos:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "11C16818-7453-46CB-89C2-2A4D4452A198",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.6.00.26463"
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:teams:*:*:*:*:desktop:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "46625A28-312D-4406-87AE-8A7C93222A45",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.6.00.26474"
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:webp_image_extension:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "201D3850-75A4-4CB4-A312-B01BF51C7C8A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.0.62681.0"
+              },
+              {
+                "criteria": "cpe:2.3:a:webmproject:libwebp:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2804DDE4-B0A4-4B7F-A318-F491B6316B34",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.3.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:netapp:active_iq_unified_manager:-:*:*:*:*:vmware_vsphere:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3A756737-1CC4-42C2-A4DF-E1C893B4E2D5",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:bentley:seequent_leapfrog:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E50A797C-2C6C-46A5-A9D0-8CD877EBA3CD",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "2023.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:bandisoft:honeyview:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A9D1BE06-A20B-43F3-B78D-21F2FF20026C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.51"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-300-02",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.26",
+              "dateReleased": "2026-10-26T22:24:24.6101Z",
+              "retrievedAt": "2026-10-27T17:17:46.122Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-86950%2CCVE-2026-114595%2CCVE-2026-114596%2CCVE-2026-114597%2CCVE-2026-114598%2CCVE-2023-4863%2CCVE-2026-16436%2CCVE-2026-16437%2CCVE-2026-16438%2CCVE-2026-109618%2CCVE-2026-109619",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2023-4863",
+              "retrievedAt": "2026-10-27T17:17:46.122Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-16436",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Weak Password Recovery Mechanism for Forgotten Password vulnerability in Mitsubishi Electric GENESIS versions 11.03 and prior, GENESIS64 versions 10.97.3 and prior, ICONICS Suite versions 10.97.3 and prior, Hyper Historian versions 10.97.3 and prior, AnalytiX versions 10.97.3 and prior, MobileHMI 10.97.3 and prior, IoTWorX 10.97.3 and prior, MC Works64 all versions, GENESIS32 all versions, BizViz all versions, Mitsubishi Electric Iconics Digital Solutions GENESIS versions 11.03 and prior, GENESIS64 versions 10.97.3 and prior, ICONICS Suite versions 10.97.3 and prior, Hyper Historian versions 10.97.3 and prior, AnalytiX versions 10.97.3 and prior, MobileHMI 10.97.3 and prior, IoTWorX 10.97.3 and prior, GENESIS32 all versions, and BizViz all versions allows a remote attacker to unlock the system by obtaining the challenge response by some means. The challenge response used to unlock the system is common to all users and fixed. As a result, the attacker may disclose, tamper with, destroy, or delete internal information, or cause the affected system to enter a denial-of-service (DoS) condition.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.2,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "Mitsubishielectric.Psirt@yd.MitsubishiElectric.co.jp",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-640"
+            ],
+            "published": "2026-10-15T09:17:16.717",
+            "lastModified": "2026-10-16T06:17:10.253",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://www.mitsubishielectric.com/psirt/vulnerability/pdf/2026-006_en.pdf",
+                "source": "Mitsubishielectric.Psirt@yd.MitsubishiElectric.co.jp",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-300-02",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.26",
+              "dateReleased": "2026-10-26T22:24:24.6101Z",
+              "retrievedAt": "2026-10-27T17:17:46.122Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-86950%2CCVE-2026-114595%2CCVE-2026-114596%2CCVE-2026-114597%2CCVE-2026-114598%2CCVE-2023-4863%2CCVE-2026-16436%2CCVE-2026-16437%2CCVE-2026-16438%2CCVE-2026-109618%2CCVE-2026-109619",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-16436",
+              "retrievedAt": "2026-10-27T17:17:46.122Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-16437",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Weak Password Recovery Mechanism for Forgotten Password vulnerability in Mitsubishi Electric GENESIS versions 11.03 and prior, GENESIS64 versions 10.97.3 and prior, ICONICS Suite versions 10.97.3 and prior, Hyper Historian versions 10.97.3 and prior, AnalytiX versions 10.97.3 and prior, MobileHMI 10.97.3 and prior, IoTWorX 10.97.3 and prior, MC Works64 all versions, GENESIS32 all versions, BizViz all versions, Mitsubishi Electric Iconics Digital Solutions GENESIS versions 11.03 and prior, GENESIS64 versions 10.97.3 and prior, ICONICS Suite versions 10.97.3 and prior, Hyper Historian versions 10.97.3 and prior, AnalytiX versions 10.97.3 and prior, MobileHMI 10.97.3 and prior, IoTWorX 10.97.3 and prior, GENESIS32 all versions, and BizViz all versions allows an authenticated local user with administrative privileges to unlock the system by tampering with the management file that stores the challenge response. Administrators are able to read and write the management file. But the management file is protected by Windows. As a result, the attacker may disclose, tamper with, destroy, or delete internal information, or cause the affected system to enter a denial-of-service (DoS) condition.",
+            "cvss": {
+              "version": "4.0",
+              "score": 7.1,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:L/AC:H/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "Mitsubishielectric.Psirt@yd.MitsubishiElectric.co.jp",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-640"
+            ],
+            "published": "2026-10-15T09:17:16.910",
+            "lastModified": "2026-10-16T06:17:10.823",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://www.mitsubishielectric.com/psirt/vulnerability/pdf/2026-006_en.pdf",
+                "source": "Mitsubishielectric.Psirt@yd.MitsubishiElectric.co.jp",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-300-02",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.26",
+              "dateReleased": "2026-10-26T22:24:24.6101Z",
+              "retrievedAt": "2026-10-27T17:17:46.122Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-86950%2CCVE-2026-114595%2CCVE-2026-114596%2CCVE-2026-114597%2CCVE-2026-114598%2CCVE-2023-4863%2CCVE-2026-16436%2CCVE-2026-16437%2CCVE-2026-16438%2CCVE-2026-109618%2CCVE-2026-109619",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-16437",
+              "retrievedAt": "2026-10-27T17:17:46.122Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-16438",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Incorrect Privilege Assignment vulnerability in Mitsubishi Electric GENESIS64 versions 10.97.3 and prior, ICONICS Suite versions 10.97.3 and prior, Hyper Historian versions 10.97.3 and prior, AnalytiX versions 10.97.3 and prior, MobileHMI 10.97.3 and prior, MC Works64 all versions, Mitsubishi Electric Iconics Digital Solutions GENESIS64 versions 10.97.3 and prior, ICONICS Suite versions 10.97.3 and prior, Hyper Historian versions 10.97.3 and prior, AnalytiX versions 10.97.3 and prior, and MobileHMI 10.97.3 and prior allows an attacker who can log in using the same administrator account for the affected products to launch and operate DCOM objects locally or remotely. During installation, the installers of the affected products unnecessarily grant default DCOM permissions to the administrator account of the affected products. Users with that administrator accounts can locally or remotely launch and operate DCOM objects that should require UAC elevation. As a result, the attacker may disclose, tamper with, destroy, or delete internal information, or cause the affected system to enter a denial-of-service (DoS) condition.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.4,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "Mitsubishielectric.Psirt@yd.MitsubishiElectric.co.jp",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-266"
+            ],
+            "published": "2026-10-15T09:17:17.087",
+            "lastModified": "2026-10-16T06:17:11.153",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://www.mitsubishielectric.com/psirt/vulnerability/pdf/2026-006_en.pdf",
+                "source": "Mitsubishielectric.Psirt@yd.MitsubishiElectric.co.jp",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-300-02",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.26",
+              "dateReleased": "2026-10-26T22:24:24.6101Z",
+              "retrievedAt": "2026-10-27T17:17:46.122Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-86950%2CCVE-2026-114595%2CCVE-2026-114596%2CCVE-2026-114597%2CCVE-2026-114598%2CCVE-2023-4863%2CCVE-2026-16436%2CCVE-2026-16437%2CCVE-2026-16438%2CCVE-2026-109618%2CCVE-2026-109619",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-16438",
+              "retrievedAt": "2026-10-27T17:17:46.122Z"
+            }
+          }
+        }
+      ],
+      "id": "s19"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "iOS, macOS 27.2 Patch 286 Bugs; Fix for Exploited Flaw Backported to iOS 18",
+      "url": "https://www.securityweek.com/ios-macos-27-2-patch-286-bugs-fix-for-exploited-flaw-backported-to-ios-18/",
+      "publishedAt": "2026-10-27T11:49:57.000Z",
+      "excerpt": "Apple patched 286 vulnerabilities in iOS and macOS 27.2 and brought the fix for an exploited CoreGraphics zero-day to older iPhones. The post iOS, macOS 27.2 Patch 286 Bugs; Fix for Exploited Flaw Backported to iOS 18 appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/ios-macos-27-2-patch-286-bugs-fix-for-exploited-flaw-backported-to-ios-18",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/ios-macos-27-2-patch-286-bugs-fix-for-exploited-flaw-backported-to-ios-18"
+      ],
+      "cves": [],
+      "id": "s20"
     },
     {
       "sourceId": "thehackernews",
@@ -3250,7 +4903,7 @@
         "https://thehackernews.com/2026/10/keystone-to-destroy-18835-hardware.html"
       ],
       "cves": [],
-      "id": "s10"
+      "id": "s21"
     },
     {
       "sourceId": "thehackernews",
@@ -3265,7 +4918,7 @@
         "https://thehackernews.com/2026/10/ai-generated-fake-login-pages-are.html"
       ],
       "cves": [],
-      "id": "s11"
+      "id": "s22"
     },
     {
       "sourceId": "securityweek",
@@ -3280,7 +4933,7 @@
         "https://securityweek.com/risks-spelled-out-for-anthropic-investors-include-possible-harms-from-runaway-ai"
       ],
       "cves": [],
-      "id": "s13"
+      "id": "s24"
     },
     {
       "sourceId": "bleepingcomputer",
@@ -3295,7 +4948,7 @@
         "https://bleepingcomputer.com/news/apple/apple-backports-coregraphics-zero-day-patches-to-older-iphones"
       ],
       "cves": [],
-      "id": "s14"
+      "id": "s25"
     },
     {
       "sourceId": "securityweek",
@@ -3310,7 +4963,7 @@
         "https://securityweek.com/this-is-fine-what-netscaler-zero-days-tell-us-about-the-new-normal"
       ],
       "cves": [],
-      "id": "s15"
+      "id": "s26"
     },
     {
       "sourceId": "talos",
@@ -3325,7 +4978,7 @@
         "https://blog.talosintelligence.com/from-federal-socs-to-talos-ryan-fetterman-on-practical-security-research"
       ],
       "cves": [],
-      "id": "s16"
+      "id": "s27"
     },
     {
       "sourceId": "securityweek",
@@ -3340,7 +4993,22 @@
         "https://securityweek.com/dead-popcorn-time-updater-put-millions-of-computers-at-risk-of-takeover"
       ],
       "cves": [],
-      "id": "s17"
+      "id": "s28"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Energy giant ENGIE discloses data breach affecting customers",
+      "url": "https://www.bleepingcomputer.com/news/security/energy-giant-engie-discloses-data-breach-affecting-customers/",
+      "publishedAt": "2026-10-27T09:25:50.000Z",
+      "excerpt": "French energy giant ENGIE, one of the world's largest power and natural gas providers, confirmed that attackers stole customer data after breaching a marketing platform used by business partners. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/energy-giant-engie-discloses-data-breach-affecting-customers",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/energy-giant-engie-discloses-data-breach-affecting-customers"
+      ],
+      "cves": [],
+      "id": "s30"
     },
     {
       "sourceId": "thehackernews",
@@ -3355,7 +5023,7 @@
         "https://thehackernews.com/2026/10/openai-compaction-flaw-let-researchers.html"
       ],
       "cves": [],
-      "id": "s20"
+      "id": "s31"
     },
     {
       "sourceId": "bleepingcomputer",
@@ -3370,7 +5038,7 @@
         "https://bleepingcomputer.com/news/security/cisa-confirms-php2shell-vulnerabilities-now-exploited-in-attacks"
       ],
       "cves": [],
-      "id": "s21"
+      "id": "s32"
     },
     {
       "sourceId": "securityweek",
@@ -3385,7 +5053,7 @@
         "https://securityweek.com/maritime-coalition-launches-free-vulnerability-database-for-ship-and-port-systems"
       ],
       "cves": [],
-      "id": "s22"
+      "id": "s33"
     },
     {
       "sourceId": "thehackernews",
@@ -3400,7 +5068,7 @@
         "https://thehackernews.com/2026/10/attackers-hijack-dahua-ip-cameras-in.html"
       ],
       "cves": [],
-      "id": "s23"
+      "id": "s34"
     },
     {
       "sourceId": "securityweek",
@@ -3415,7 +5083,7 @@
         "https://securityweek.com/cybersecurity-issue-forces-a-major-new-mexico-hospital-to-divert-patients-and-close-clinics"
       ],
       "cves": [],
-      "id": "s25"
+      "id": "s36"
     },
     {
       "sourceId": "darkreading",
@@ -3430,7 +5098,7 @@
         "https://darkreading.com/cybersecurity-analytics/benchmarking-security-of-ai-models-poses-challenges"
       ],
       "cves": [],
-      "id": "s26"
+      "id": "s37"
     },
     {
       "sourceId": "darkreading",
@@ -3445,7 +5113,7 @@
         "https://darkreading.com/cybersecurity-careers/risks-rewards-ai-redefining-ciso-role"
       ],
       "cves": [],
-      "id": "s28"
+      "id": "s39"
     },
     {
       "sourceId": "bleepingcomputer",
@@ -3460,22 +5128,7 @@
         "https://bleepingcomputer.com/news/security/former-pentester-used-artex-ai-to-steal-82-million-data-records"
       ],
       "cves": [],
-      "id": "s29"
-    },
-    {
-      "sourceId": "therecord",
-      "sourceKind": "rss",
-      "title": "Texas sues OpenAI for deceiving consumers about safety, seeks sweeping reforms and fines",
-      "url": "https://therecord.media/texas-sues-openai-deceiving-customers",
-      "publishedAt": "2026-10-26T21:03:00.000Z",
-      "excerpt": "In an unusual move, the suit — brought under the state’s deceptive trade practices laws — seeks to hold founder and CEO Sam Altman personally liable for the alleged deception.",
-      "canonicalUrl": "https://therecord.media/texas-sues-openai-deceiving-customers",
-      "alsoCoveredBy": [],
-      "memberCanonicalUrls": [
-        "https://therecord.media/texas-sues-openai-deceiving-customers"
-      ],
-      "cves": [],
-      "id": "s30"
+      "id": "s40"
     },
     {
       "sourceId": "darkreading",
@@ -3490,7 +5143,7 @@
         "https://darkreading.com/application-security/in-the-wild-attack-ai-agents-trust-markdown"
       ],
       "cves": [],
-      "id": "s31"
+      "id": "s41"
     },
     {
       "sourceId": "bleepingcomputer",
@@ -3505,22 +5158,7 @@
         "https://bleepingcomputer.com/news/artificial-intelligence/openai-launches-gpt-61-terra-with-3x-faster-ai-agents-50-percent-lower-pricing"
       ],
       "cves": [],
-      "id": "s32"
-    },
-    {
-      "sourceId": "securityweek",
-      "sourceKind": "rss",
-      "title": "Anthropic Files for Potentially the Biggest IPO Ever as CEO Warns of Risk to Humanity From AI",
-      "url": "https://www.securityweek.com/anthropic-files-for-potentially-the-biggest-ipo-ever-as-ceo-warns-of-risk-to-humanity-from-ai/",
-      "publishedAt": "2026-10-26T20:20:56.000Z",
-      "excerpt": "A string of hacking incidents by rogue AI agents also has raised fears the technology will slip free of human control to carry out harmful, life-threatening tasks. The post Anthropic Files for Potentially the Biggest IPO Ever as CEO Warns of Risk to Humanity From AI appeared first on SecurityWeek.",
-      "canonicalUrl": "https://securityweek.com/anthropic-files-for-potentially-the-biggest-ipo-ever-as-ceo-warns-of-risk-to-humanity-from-ai",
-      "alsoCoveredBy": [],
-      "memberCanonicalUrls": [
-        "https://securityweek.com/anthropic-files-for-potentially-the-biggest-ipo-ever-as-ceo-warns-of-risk-to-humanity-from-ai"
-      ],
-      "cves": [],
-      "id": "s33"
+      "id": "s42"
     },
     {
       "sourceId": "bleepingcomputer",
@@ -3535,7 +5173,7 @@
         "https://bleepingcomputer.com/news/security/dreamhost-forces-email-ftp-sftp-password-resets-in-ongoing-incident"
       ],
       "cves": [],
-      "id": "s34"
+      "id": "s43"
     },
     {
       "sourceId": "thehackernews",
@@ -3550,7 +5188,7 @@
         "https://thehackernews.com/2026/10/hackers-infect-953-online-stores-with.html"
       ],
       "cves": [],
-      "id": "s35"
+      "id": "s44"
     },
     {
       "sourceId": "darkreading",
@@ -3565,7 +5203,7 @@
         "https://darkreading.com/cyberattacks-data-breaches/gheist-stolen-github-tokens-cloud-secrets"
       ],
       "cves": [],
-      "id": "s36"
+      "id": "s45"
     },
     {
       "sourceId": "cisa-advisories",
@@ -3582,8 +5220,25 @@
       "cves": [
         {
           "id": "CVE-2026-109618",
-          "knownExploited": false,
-          "kev": null,
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "PHP Group",
+            "product": "PHP",
+            "vulnerabilityName": "PHP Memory Corruption Vulnerability",
+            "dateAdded": "2026-10-26",
+            "shortDescription": "PHP contains an out-of-memory corruption vulnerability that allows for unauthenticated remote code execution.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-10-29",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "This vulnerability affects an open-source component, third-party library, protocol, or proprietary implementation that could be used by different products. For more information, please see: https://www.php.net/ ; https://www.cisa.gov/news-events/alerts/2026/10/21/critical-vulnerabilities-php-require-immediate-patching ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ;  https://nvd.nist.gov/vuln/detail/CVE-2026-109618",
+            "cwes": [
+              "CWE-416",
+              "CWE-755",
+              "CWE-824",
+              "CWE-1325",
+              "CWE-1419"
+            ]
+          },
           "nvd": {
             "description": "PHP uses longjmp() for out-of-memory (OOM) errors to exit the current context and abort handling of the request. Some contexts may not properly account for this scenario and leave request memory in an uninitialized state before performing an allocation. The subsequent request cleanup procedure may read or branch on this memory. Multiple OOM strategies can consistently trigger this condition and lead to remote code execution (RCE).",
             "cvss": {
@@ -3601,7 +5256,7 @@
               "CWE-1325"
             ],
             "published": "2026-10-21T14:17:09.357",
-            "lastModified": "2026-10-26T10:10:00.140",
+            "lastModified": "2026-10-27T13:43:51.433",
             "vulnStatus": "Analyzed",
             "references": [
               {
@@ -3629,10 +5284,31 @@
                 ]
               },
               {
+                "url": "https://arcticwolf.com/resources/blog/php2shell-critical-php-vulnerabilities-enable-unauthenticated-remote-code-execution/",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
                 "url": "https://cert-portal.siemens.com/productcert/html/ssa-566512.html",
                 "source": "0b142b55-0307-4c5a-b3c9-f314f3fb7c5e",
                 "tags": [
                   "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://php2shell.delftintellab.com",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-109618",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
                 ]
               },
               {
@@ -6400,25 +8076,42 @@
               }
             ],
             "cisaKev": {
-              "status": "not_found",
+              "status": "found",
               "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
               "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
-              "catalogVersion": "2026.10.23",
-              "dateReleased": "2026-10-23T19:30:18.9209Z",
-              "retrievedAt": "2026-10-26T18:06:57.242Z"
+              "catalogVersion": "2026.10.26",
+              "dateReleased": "2026-10-26T22:24:24.6101Z",
+              "retrievedAt": "2026-10-27T17:17:46.122Z"
             },
             "nvd": {
               "status": "found",
-              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-111497%2CCVE-2026-109618%2CCVE-2026-109619",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-86950%2CCVE-2026-114595%2CCVE-2026-114596%2CCVE-2026-114597%2CCVE-2026-114598%2CCVE-2023-4863%2CCVE-2026-16436%2CCVE-2026-16437%2CCVE-2026-16438%2CCVE-2026-109618%2CCVE-2026-109619",
               "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-109618",
-              "retrievedAt": "2026-10-26T18:06:57.242Z"
+              "retrievedAt": "2026-10-27T17:17:46.122Z"
             }
           }
         },
         {
           "id": "CVE-2026-109619",
-          "knownExploited": false,
-          "kev": null,
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "PHP Group",
+            "product": "PHP",
+            "vulnerabilityName": "PHP Stale Internal Request-State Vulnerability",
+            "dateAdded": "2026-10-26",
+            "shortDescription": "PHP contains a stale internal request-state vulnerability that allows for unauthenticated remote code execution.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-10-29",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "This vulnerability affects an open-source component, third-party library, protocol, or proprietary implementation that could be used by different products. For more information, please see: https://www.php.net/ ; https://www.cisa.gov/news-events/alerts/2026/10/21/critical-vulnerabilities-php-require-immediate-patching ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ;  https://nvd.nist.gov/vuln/detail/CVE-2026-109619",
+            "cwes": [
+              "CWE-416",
+              "CWE-755",
+              "CWE-824",
+              "CWE-1325",
+              "CWE-1419"
+            ]
+          },
           "nvd": {
             "description": "PHP has various global state that temporarily points into request memory. In some scenarios, global state may not be correctly reset, or may be repopulated after being reset. The global state may then refer to request memory even after it has been freed. Subsequent requests may read or branch on this stale state before it is fully initialized. Multiple strategies can trigger this condition and produce remote code execution (RCE).",
             "cvss": {
@@ -6436,7 +8129,7 @@
               "CWE-1325"
             ],
             "published": "2026-10-21T14:17:09.823",
-            "lastModified": "2026-10-26T10:10:00.140",
+            "lastModified": "2026-10-27T13:43:34.837",
             "vulnStatus": "Analyzed",
             "references": [
               {
@@ -6536,10 +8229,31 @@
                 ]
               },
               {
+                "url": "https://arcticwolf.com/resources/blog/php2shell-critical-php-vulnerabilities-enable-unauthenticated-remote-code-execution/",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
                 "url": "https://cert-portal.siemens.com/productcert/html/ssa-566512.html",
                 "source": "0b142b55-0307-4c5a-b3c9-f314f3fb7c5e",
                 "tags": [
                   "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://php2shell.delftintellab.com/",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-109619",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
                 ]
               },
               {
@@ -9307,30 +11021,30 @@
               }
             ],
             "cisaKev": {
-              "status": "not_found",
+              "status": "found",
               "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
               "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
-              "catalogVersion": "2026.10.23",
-              "dateReleased": "2026-10-23T19:30:18.9209Z",
-              "retrievedAt": "2026-10-26T18:06:57.242Z"
+              "catalogVersion": "2026.10.26",
+              "dateReleased": "2026-10-26T22:24:24.6101Z",
+              "retrievedAt": "2026-10-27T17:17:46.122Z"
             },
             "nvd": {
               "status": "found",
-              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-111497%2CCVE-2026-109618%2CCVE-2026-109619",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-86950%2CCVE-2026-114595%2CCVE-2026-114596%2CCVE-2026-114597%2CCVE-2026-114598%2CCVE-2023-4863%2CCVE-2026-16436%2CCVE-2026-16437%2CCVE-2026-16438%2CCVE-2026-109618%2CCVE-2026-109619",
               "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-109619",
-              "retrievedAt": "2026-10-26T18:06:57.242Z"
+              "retrievedAt": "2026-10-27T17:17:46.122Z"
             }
           }
         }
       ],
-      "id": "s37"
+      "id": "s46"
     }
   ],
   "usage": {
     "model": "deepseek-v4-flash",
-    "promptCacheHitTokens": 1152,
-    "promptCacheMissTokens": 15768,
-    "outputTokens": 4508,
-    "estimatedCostUsd": 0.0034729856000000003
+    "promptCacheHitTokens": 6144,
+    "promptCacheMissTokens": 19810,
+    "outputTokens": 4436,
+    "estimatedCostUsd": 0.0040326832000000005
   }
 }
