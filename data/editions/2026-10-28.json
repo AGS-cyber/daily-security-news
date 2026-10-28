@@ -1,0 +1,3861 @@
+{
+  "date": "2026-10-28",
+  "generatedAt": "2026-10-28T17:48:29.453Z",
+  "collection": [
+    {
+      "sourceId": "krebs",
+      "attemptedAt": "2026-10-28T17:48:29.453Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "attemptedAt": "2026-10-28T17:48:29.453Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "thehackernews",
+      "attemptedAt": "2026-10-28T17:48:29.453Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "therecord",
+      "attemptedAt": "2026-10-28T17:48:29.453Z",
+      "status": "ok",
+      "items": 5,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securityweek",
+      "attemptedAt": "2026-10-28T17:48:29.453Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "darkreading",
+      "attemptedAt": "2026-10-28T17:48:29.453Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "attemptedAt": "2026-10-28T17:48:29.453Z",
+      "status": "ok",
+      "items": 30,
+      "skipped": 0
+    },
+    {
+      "sourceId": "projectzero",
+      "attemptedAt": "2026-10-28T17:48:29.453Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securelist",
+      "attemptedAt": "2026-10-28T17:48:29.453Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "talos",
+      "attemptedAt": "2026-10-28T17:48:29.453Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "unit42",
+      "attemptedAt": "2026-10-28T17:48:29.453Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "microsoft-security",
+      "attemptedAt": "2026-10-28T17:48:29.453Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    }
+  ],
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 228,
+    "published": 52
+  },
+  "mode": "article",
+  "headline": "Brotli and PeopleSoft join KEV as storefront attacks and Oracle scanning accelerate",
+  "standfirst": "CISA added two entries to its exploited-vulnerability catalog — a critical Brotli decoder overflow that ships inside Node.js, .NET and Debian, and an Adobe Commerce/Magento flaw — while PolyShell storefront attacks, a chained PeopleSoft exploit and fresh Oracle E-Business Suite probing all compress the window between patch and intrusion.",
+  "bodyMarkdown": "## Actively exploited\n\nThe Brotli entry is CVE-2026-111497: a CVSS 4.0 score of 9.2, rated Critical, buffer overflow in the decoder mapped to CWE-252 and CWE-787. A crafted Brotli-compressed stream from a remote, unauthenticated attacker can corrupt adjacent decoder state memory, disclose sensitive memory, cause denial of service or potentially execute arbitrary code. Libraries from 1.0.3 through 1.2.0 are affected; fixed releases are 1.0.10, 1.1.1 and 1.2.1, and the vulnerable code is nested inside Node.js, several .NET versions, the Python brotlicffi binding and Debian 12 — which is what makes a decoder CVE an inventory problem rather than a single upgrade. The second KEV addition covers Adobe Commerce and Magento, but the supplied material provides no CVE identifier for it; both were added citing evidence of active exploitation, alongside reporting of PolyShell attacks that breached hundreds of storefronts and of Brotli exploit traffic [[s39]]. CISA's remediation due date binds US federal agencies under BOD 26-04, not every estate; everyone else should treat KEV membership as a prioritisation signal, not a deadline.\n\nSeparately, researchers describe what appears to be an AI-assisted intrusion by a suspected China-nexus actor that combined PHP2Shell with a kernel privilege escalation to root 25 servers and reach a U.S. government-affiliated network [[s5]]. The attribution and the AI-assistance characterisation are both hedged in the source; what is concrete is the chain — web-facing flaw to root to adjacent high-value network.\n\nThe PeopleSoft bug ShinyHunters has been riding is not one flaw but three chained together, all patched by Oracle under a single identifier, CVE-2026-35273 [[s37]]. That CVE is a 9.8 Critical missing-authentication flaw in PeopleTools 8.61 and 8.62, unauthenticated over HTTP with full confidentiality, integrity and availability impact, in KEV since it was added with known ransomware campaign use recorded. The root cause is a server-side request forgery that reaches an internal management interface because PeopleSoft trusts its own loopback address. Analysis: that loopback-trust detail is the more durable takeaway — it is a hunting signature that survives the next single-identifier patch, though whether other deployments share the pattern is not established in the supplied material.\n\n## Vulnerabilities\n\nProbing has begun for CVE-2026-101767, a 9.8 Critical flaw in the Oracle Application Object Library of E-Business Suite, days after Oracle's Critical Patch Update fixed it [[s17]]. It affects 12.2.3 through 12.2.15 and allows an unauthenticated attacker with network access to take over the component. Scanning is not exploitation, and KEV enrichment returned a confirmed catalog miss — which does not establish that no exploitation has occurred. Internet-facing EBS teams have little room to stage the upgrade.\n\nBrowser teams get a large batch this cycle: Chrome 156 fixes 52 bugs and Firefox 159 carries 167 security patches, over 200 fixes in total [[s15]]. No individual CVEs were supplied, so the argument for acting is volume and reach rather than any named flaw.\n\n## Research\n\nVolt Typhoon has been operating with a framework, \"Silent Train,\" built on rotating chains of connected devices compromised on demand — including for zero-day attacks against high-value systems [[s6]]. The reframing is that this is reusable infrastructure rather than one-off intrusion tradecraft, which complicates the usual advice to hunt for a single actor's bespoke tooling.\n\n## Industry\n\nThe U.K. budget states the government will \"consider where liability for cyber breaches should sit\" — a potential break from the voluntary codes the country has relied on to push vendors toward better security [[s8]]. Nothing is committed yet; the significance is that vendor accountability now has a fiscal-process foothold.\n\n## Breaches\n\nA ransomware attack on the University of New Mexico Health Sciences Center caused system outages and disrupted patient care and academic activities, with surgeries affected [[s42]]. The headline cost is operational: care deferred, not records counted.",
+  "selected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Adobe Commerce PolyShell Attacks Breach Hundreds of Stores as Brotli Exploit Traffic Emerges",
+      "url": "https://thehackernews.com/2026/10/adobe-commerce-polyshell-attacks-breach.html",
+      "publishedAt": "2026-10-28T05:42:26.000Z",
+      "excerpt": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Tuesday added two vulnerabilities impacting Adobe Commerce and Magento, and Google's Brotli decoder library to its Known Exploited Vulnerabilities (KEV) catalog, citing evidence of active exploitation. The vulnerabilities are listed below - CVE-2026-111497 (CVSS score: 9.2) - An unchecked return value vulnerability in",
+      "canonicalUrl": "https://thehackernews.com/2026/10/adobe-commerce-polyshell-attacks-breach.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/adobe-commerce-polyshell-attacks-breach.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-111497",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Google",
+            "product": "Brotli",
+            "vulnerabilityName": "Google Brotli Unchecked Return Value Vulnerability",
+            "dateAdded": "2026-10-27",
+            "shortDescription": "Google Brotli contains an unchecked return value vulnerability that allows a remote unauthenticated attacker to corrupt adjacent decoder state memory, disclose sensitive memory contents, cause a denial of service, or potentially execute arbitrary code using a crafted Brotli-compressed stream.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-10",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "This vulnerability affects an open-source component, third-party library, protocol, or proprietary implementation that could be used by different products. For more information, please see: https://github.com/google/brotli/releases/tag/v1.2.1 ; ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-111497",
+            "cwes": [
+              "CWE-252",
+              "CWE-787"
+            ]
+          },
+          "nvd": {
+            "description": "A buffer overflow vulnerability in the Brotli decoder (c/dec/decode.c) in Google Brotli versions 1.0.3 through 1.2.0 on all platforms allows a remote unauthenticated attacker to corrupt adjacent decoder state memory, disclose sensitive memory contents, cause a denial of service, or potentially execute arbitrary code using a crafted Brotli-compressed stream.\n\n\n\n\n\nUsers need to update any Brotli libraries or binaries between 1.0.3 through 1.2.0 to the latest available version: 1.0.10 or 1.1.1 or 1.2.1.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.2,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "cve-coordination@google.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-252",
+              "CWE-787"
+            ],
+            "published": "2026-10-22T14:17:37.190",
+            "lastModified": "2026-10-28T17:47:31.370",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://github.com/andybalholm/brotli/releases/tag/v1.2.7",
+                "source": "cve-coordination@google.com",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases#nodejs-brotli-decoder-out-of-bounds-write-permits-remote-code-execution-cve-2026-111497---high",
+                "source": "cve-coordination@google.com",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/10/23/25",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/10/24/6",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/10/26/12",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/10/26/13",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/10/26/16",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://broccoli2shell.com",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/advisories/GHSA-9v8h-qqgm-4m35",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/dotnet/announcements/issues/494",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Issue Tracking",
+                  "Mitigation",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/google/brotli/releases/tag/v1.0.10",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://github.com/google/brotli/releases/tag/v1.1.1",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://github.com/google/brotli/releases/tag/v1.2.1",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://lists.debian.org/debian-lts-announce/2026/10/msg00049.html",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://patchtheplanet.org/brotli",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.aikido.dev/blog/node2shell-nodejs-brotli-rce-cve-2026-111497",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://ellio.tech/en/blog/node2shell-cve-2026-111497-rce-on-stock-nodejs-builds/",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-111497",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:google:brotli:*:*:*:*:*:-:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8A7BE60F-21B0-4779-8D59-6E5E58C5826B",
+                "versionStartIncluding": "1.0.3",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.0.10"
+              },
+              {
+                "criteria": "cpe:2.3:a:google:brotli:*:*:*:*:*:-:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "48E72297-AFBD-4460-A732-5A6803CCCDB0",
+                "versionStartIncluding": "1.1.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.1.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:google:brotli:*:*:*:*:*:-:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C8CA5C74-26A8-44E3-B893-1FA01CED49F5",
+                "versionStartIncluding": "1.2.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.2.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:nodejs:node.js:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "02348F18-5E17-4427-8B78-63B4082F2FB4",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "22.23.4"
+              },
+              {
+                "criteria": "cpe:2.3:a:nodejs:node.js:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "852D09BB-A396-4813-81C9-7D89D5DD5FB6",
+                "versionStartIncluding": "23.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "24.22.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:nodejs:node.js:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "219CA855-3A40-42CE-BAB6-79CCFEE7746F",
+                "versionStartIncluding": "25.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "26.12.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:python-hyper:brotlicffi:*:*:*:*:*:python:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E732E75B-4BEF-4D7E-8520-E03B707FB4F6",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.2.1.0"
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "65DCE51C-2CD9-4179-9354-5323D28573AA",
+                "versionStartIncluding": "8.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "8.0.33"
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "98654489-8C4E-4801-8728-29B01A22DEED",
+                "versionStartIncluding": "9.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "9.0.22"
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "27DF5CF4-58E3-4F01-A3AA-D44B7DCC3D67",
+                "versionStartIncluding": "10.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "10.0.14"
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:preview1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5DACF2FE-CF61-43E4-8A3F-F7A358DE8A01",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:preview2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "280B2E64-3163-40AB-A048-14D58DEC42FD",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:preview3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "12357908-3294-46EF-85A0-DA3F86C97489",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:preview4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "849FC8F5-86CD-4B5D-ADFD-9CB16EA75D09",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:preview5:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C86E87E2-B236-4AC9-B6C3-64B9CDEC91EB",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:preview6:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9B14656E-2BB0-4B4B-B518-F3D5108253ED",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:preview7:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E09C9DB3-F42C-4442-9CF0-24A780D094C8",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:rc1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "67035E86-61F5-421E-B243-EF64458AD8BA",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:rc2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C46300CA-BA84-48B3-85C5-C20CB487C733",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:debian:debian_linux:12.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "46D69DCC-AE4D-4EA5-861C-D60951444C6C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:istio:istio:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9F01FA9D-7190-431F-84DD-24D4EBC41A2D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.29.9"
+              },
+              {
+                "criteria": "cpe:2.3:a:istio:istio:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B8DE25CE-AFCB-4685-9836-B8EC9C820975",
+                "versionStartIncluding": "1.30.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.30.6"
+              },
+              {
+                "criteria": "cpe:2.3:a:istio:istio:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "55EBE231-2EB8-4C9C-B279-D07F82EA5B55",
+                "versionStartIncluding": "1.31.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.31.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:anthropic:bun:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "51DD72B3-85F6-4B10-AEB4-41E0679ED0AA",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.4.4"
+              },
+              {
+                "criteria": "cpe:2.3:a:envoyproxy:envoy:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8EE6278D-A48A-427C-8A7E-1D4103E2ADF7",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.37.8"
+              },
+              {
+                "criteria": "cpe:2.3:a:envoyproxy:envoy:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "CDCA301F-83CA-4DDB-AAE4-24D5235EE2D5",
+                "versionStartIncluding": "1.38.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.38.6"
+              },
+              {
+                "criteria": "cpe:2.3:a:envoyproxy:envoy:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B9A47DD3-2655-4722-9B9D-3888B590C82F",
+                "versionStartIncluding": "1.39.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.39.3"
+              },
+              {
+                "criteria": "cpe:2.3:a:tianocore:edk2:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C4CFCBFB-4A38-481B-93AE-7D86CCDC6FB5",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": "202608",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:google:woff2:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6D1FC23A-20F7-48F7-ABB8-8D37903DFB58",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:duckdb:duckdb:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0DFA4F95-92F9-4369-BE42-387520F0765B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": "2.0.0",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:clickhouse:clickhouse:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B40EE389-E2AC-4D86-91B2-79A895470317",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": "26.10.2.103",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:apache:arrow:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "46A78CA5-1E4A-4DAA-B40D-387B96C1E2F9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": "26.0.0",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:apache:arrow:27.0.0:dev:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "130A7077-7885-43CB-8AFF-B6056D380156",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:mcmilk:7-zip-zstd:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FB91A353-9BE9-49E7-86FD-6B5FBB291351",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": "26.02-1.5.7-r2",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:7-zip:p7zip:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "76A26292-08BE-459A-B25A-CA14AF8D3C29",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": "16.02",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:andybalholm:brotli:*:*:*:*:*:go:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F3E50F12-AEFE-4B4F-B474-3676F145E032",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.2.7"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/10/adobe-commerce-polyshell-attacks-breach.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.27",
+              "dateReleased": "2026-10-27T19:00:02.2307Z",
+              "retrievedAt": "2026-10-28T17:48:29.453Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-101767%2CCVE-2026-104351%2CCVE-2026-35273%2CCVE-2026-111497%2CCVE-2026-48356",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-111497",
+              "retrievedAt": "2026-10-28T17:48:29.453Z"
+            }
+          }
+        }
+      ],
+      "id": "s39",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "CISA's KEV additions for Adobe Commerce/Magento and Brotli land alongside reports of PolyShell attacks breaching hundreds of storefronts, making patch-or-isolate decisions urgent today."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "PHP2Shell Attack Roots 25 Servers, Breaches U.S. Government-Affiliated Network",
+      "url": "https://thehackernews.com/2026/10/php2shell-attack-roots-25-servers.html",
+      "publishedAt": "2026-10-28T16:02:45.000Z",
+      "excerpt": "Cybersecurity researchers have disclosed details of what appears to be an artificial intelligence (AI)-assisted attack orchestrated by a suspected China-nexus threat actor that has leveraged the PHP2Shell vulnerabilities to breach exposed systems. The activity, which was observed on October 25, 2026, involved an attacker combining PHP2Shell with a kernel privilege escalation exploit to root",
+      "canonicalUrl": "https://thehackernews.com/2026/10/php2shell-attack-roots-25-servers.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/php2shell-attack-roots-25-servers.html"
+      ],
+      "cves": [],
+      "id": "s5",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "A suspected China-nexus actor chained PHP2Shell with a kernel privilege escalation to root 25 servers and reach a US government-affiliated network, reportedly with AI assistance — a concrete blueprint of fast, automated intrusion."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "ShinyHunters-Exploited Oracle PeopleSoft Zero-Day Turns Out to Be Three Chained Flaws",
+      "url": "https://thehackernews.com/2026/10/shinyhunters-exploited-oracle.html",
+      "publishedAt": "2026-10-28T06:04:58.000Z",
+      "excerpt": "The critical Oracle PeopleSoft bug that ShinyHunters has exploited since May is not one flaw but three chained together, the researchers who reported it said this week. Oracle patched all three under a single identifier, CVE-2026-35273, in June. Its root is a server-side request forgery (SSRF) that reaches an internal management interface because PeopleSoft trusts its own loopback address",
+      "canonicalUrl": "https://thehackernews.com/2026/10/shinyhunters-exploited-oracle.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/shinyhunters-exploited-oracle.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-35273",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Oracle",
+            "product": " PeopleSoft Enterprise PeopleTools",
+            "vulnerabilityName": "Oracle PeopleSoft Enterprise PeopleTools Missing Authentication for Critical Function Vulnerability",
+            "dateAdded": "2026-06-12",
+            "shortDescription": "Oracle PeopleSoft Enterprise PeopleTools contains a missing authentication for critical function vulnerability which could allow an unauthenticated attacker to obtain takeover of PeopleSoft Enterprise PeopleTools.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-06-15",
+            "knownRansomwareCampaignUse": "Known",
+            "notes": "https://www.oracle.com/security-alerts/alert-cve-2026-35273.html ; https://support.oracle.com/signin/ ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-35273",
+            "cwes": [
+              "CWE-306"
+            ]
+          },
+          "nvd": {
+            "description": "Vulnerability in the PeopleSoft Enterprise PeopleTools product of Oracle PeopleSoft (component: Updates Environment Management). Supported versions that are affected are 8.61 and 8.62. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise PeopleSoft Enterprise PeopleTools. Successful attacks of this vulnerability can result in takeover of PeopleSoft Enterprise PeopleTools. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts). CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "secalert_us@oracle.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-306"
+            ],
+            "published": "2026-06-11T04:16:53.680",
+            "lastModified": "2026-07-23T09:10:00.113",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://www.oracle.com/security-alerts/alert-cve-2026-35273.html",
+                "source": "secalert_us@oracle.com",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-35273",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory",
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:oracle:peoplesoft_enterprise_peopletools:8.61:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "18F15FC6-947A-462A-8329-C52907799A7C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:oracle:peoplesoft_enterprise_peopletools:8.62:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FF0E4EFC-096B-4861-8D55-D8DAA37A21E9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/10/shinyhunters-exploited-oracle.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.27",
+              "dateReleased": "2026-10-27T19:00:02.2307Z",
+              "retrievedAt": "2026-10-28T17:48:29.453Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-101767%2CCVE-2026-104351%2CCVE-2026-35273%2CCVE-2026-111497%2CCVE-2026-48356",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-35273",
+              "retrievedAt": "2026-10-28T17:48:29.453Z"
+            }
+          }
+        }
+      ],
+      "id": "s37",
+      "section": "exploited",
+      "rank": 3,
+      "angle": "The PeopleSoft bug ShinyHunters has ridden since May is now documented as three chained flaws (SSRF root cause), so defenders can hunt for the loopback-trust pattern rather than a single patch signature."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Hackers Target Critical Oracle E-Business Suite RCE Flaw Days After Security Patch",
+      "url": "https://thehackernews.com/2026/10/hackers-target-critical-oracle-e.html",
+      "publishedAt": "2026-10-28T12:48:03.000Z",
+      "excerpt": "Threat actors are beginning to probe for a newly patched critical vulnerability in Oracle E-Business Suite (EBS), according to threat intelligence firm Defused Cyber. The vulnerability in question is CVE-2026-101767 (CVSS score: 9.8) in the Oracle Application Object Library of Oracle E-Business Suite. It was patched by Oracle last week as part of its Critical Patch Update. Security researchers",
+      "canonicalUrl": "https://thehackernews.com/2026/10/hackers-target-critical-oracle-e.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/hackers-target-critical-oracle-e.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-101767",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Vulnerability in the Oracle Application Object Library product of Oracle E-Business Suite (component: Core).  Supported versions that are affected are 12.2.3-12.2.15. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Application Object Library.  Successful attacks of this vulnerability can result in takeover of Oracle Application Object Library. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "secalert_us@oracle.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-287",
+              "CWE-306"
+            ],
+            "published": "2026-10-20T22:18:32.060",
+            "lastModified": "2026-10-21T18:44:55.490",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://www.oracle.com/security-alerts/cpuoct2026.html",
+                "source": "secalert_us@oracle.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/10/hackers-target-critical-oracle-e.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.27",
+              "dateReleased": "2026-10-27T19:00:02.2307Z",
+              "retrievedAt": "2026-10-28T17:48:29.453Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-101767%2CCVE-2026-104351%2CCVE-2026-35273%2CCVE-2026-111497%2CCVE-2026-48356",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-101767",
+              "retrievedAt": "2026-10-28T17:48:29.453Z"
+            }
+          }
+        }
+      ],
+      "id": "s17",
+      "section": "vulnerabilities",
+      "rank": 4,
+      "angle": "Scanning for CVE-2026-101767 (CVSS 9.8, unauthenticated takeover of Oracle EBS) began days after the Critical Patch Update, leaving little room to stage internet-facing EBS upgrades."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Volt Typhoon hides zero-day attacks using 'Silent Train' framework",
+      "url": "https://www.bleepingcomputer.com/news/security/volt-typhoon-hides-zero-day-attacks-using-silent-train-framework/",
+      "publishedAt": "2026-10-28T16:00:00.000Z",
+      "excerpt": "Chinese state-sponsored hacking group Volt Typhoon has been using a framework that relies on rotating chains of connected devices compromised on demand, including for zero-day attacks targeting high-value systems. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/volt-typhoon-hides-zero-day-attacks-using-silent-train-framework",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/volt-typhoon-hides-zero-day-attacks-using-silent-train-framework"
+      ],
+      "cves": [],
+      "id": "s6",
+      "section": "research",
+      "rank": 5,
+      "angle": "Volt Typhoon's 'Silent Train' framework — rotating chains of on-demand compromised devices — reframes its zero-day tradecraft as reusable infrastructure rather than one-off intrusions."
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "UK to look at making software companies liable for cyber breaches",
+      "url": "https://therecord.media/uk-budget-proposal-software-companies-liable-cyber-breaches",
+      "publishedAt": "2026-10-28T15:37:00.000Z",
+      "excerpt": "The new U.K. budget says the government will \"consider where liability for cyber breaches should sit,\" potentially a landmark shift for a country that has relied on voluntary codes to encourage software vendors to improve security.",
+      "canonicalUrl": "https://therecord.media/uk-budget-proposal-software-companies-liable-cyber-breaches",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/uk-budget-proposal-software-companies-liable-cyber-breaches"
+      ],
+      "cves": [],
+      "id": "s8",
+      "section": "industry",
+      "rank": 6,
+      "angle": "The UK budget's move to examine software vendor liability for breaches would be a landmark break from voluntary codes, and sets the terms of the vendor accountability debate to come."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "UNM Health ransomware attack disrupts patient care, surgeries",
+      "url": "https://www.bleepingcomputer.com/news/security/unm-health-ransomware-attack-disrupts-patient-care-surgeries/",
+      "publishedAt": "2026-10-27T22:07:34.000Z",
+      "excerpt": "The University of New Mexico Health Sciences Center disclosed a cyberattack that caused system outages and disrupted patient care and academic activities. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/unm-health-ransomware-attack-disrupts-patient-care-surgeries",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/unm-health-ransomware-attack-disrupts-patient-care-surgeries"
+      ],
+      "cves": [],
+      "id": "s42",
+      "section": "breaches",
+      "rank": 7,
+      "angle": "A ransomware-driven outage at UNM Health that disrupted patient care and surgeries is a reminder that healthcare operational impact, not data records, is the headline cost."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Chrome and Firefox Updates Patch Over 200 Vulnerabilities",
+      "url": "https://www.securityweek.com/chrome-and-firefox-updates-patch-over-200-vulnerabilities/",
+      "publishedAt": "2026-10-28T13:39:35.000Z",
+      "excerpt": "The Chrome 156 update fixes 52 bugs, while Firefox 159 was rolled out with 167 security patches. The post Chrome and Firefox Updates Patch Over 200 Vulnerabilities appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/chrome-and-firefox-updates-patch-over-200-vulnerabilities",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/chrome-and-firefox-updates-patch-over-200-vulnerabilities"
+      ],
+      "cves": [],
+      "id": "s15",
+      "section": "vulnerabilities",
+      "rank": 8,
+      "angle": "Chrome 156 (52 fixes) and Firefox 159 (167 fixes) push over 200 patches into browsers this cycle, a large enough batch to justify prioritizing the update rollout this week."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Google to Allow One-Tap Android App Installs From Approved Third-Party Stores Outside U.S.",
+      "url": "https://thehackernews.com/2026/10/google-to-allow-one-tap-android-app.html",
+      "publishedAt": "2026-10-28T17:08:09.000Z",
+      "excerpt": "Third-party Android app stores can now apply to Google for permission to install apps with one tap, without Android's usual confirmation screens, and to update them in the background. To qualify, a store must pass identity checks and send Google its full catalog, along with every new app and update, for ongoing malware scanning. Approved stores get the features from December 1, but only on",
+      "canonicalUrl": "https://thehackernews.com/2026/10/google-to-allow-one-tap-android-app.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/google-to-allow-one-tap-android-app.html"
+      ],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Sony ISP subsidiary data breach exposes 2.5 million customer records",
+      "url": "https://www.bleepingcomputer.com/news/security/sony-isp-subsidiary-data-breach-exposes-25-million-customer-records/",
+      "publishedAt": "2026-10-28T16:45:47.000Z",
+      "excerpt": "Sony Network Communications has confirmed a data breach that compromised approximately 2.5 million records containing current and former customers' personal information. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/sony-isp-subsidiary-data-breach-exposes-25-million-customer-records",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/sony-isp-subsidiary-data-breach-exposes-25-million-customer-records"
+      ],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Moldova investigates possible foreign involvement in major government cyberattack",
+      "url": "https://therecord.media/moldova-investigates-possible-foreign-involvement-cyberattacks",
+      "publishedAt": "2026-10-28T16:37:00.000Z",
+      "excerpt": "Prime Minister Vasile Tofan said the incident may be part of a broader campaign targeting both citizens' personal data and government digital infrastructure, according to local media reports.",
+      "canonicalUrl": "https://therecord.media/moldova-investigates-possible-foreign-involvement-cyberattacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/moldova-investigates-possible-foreign-involvement-cyberattacks"
+      ],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Researcher Reveals How Logic Bugs Alone Cracked Microsoft Edge in $175,000 Pwn2Own Win",
+      "url": "https://thehackernews.com/2026/10/researcher-reveals-how-logic-bugs-alone.html",
+      "publishedAt": "2026-10-28T16:23:34.000Z",
+      "excerpt": "A chain of logic flaws, with no memory corruption, can turn a malicious web page into code running on a Windows computer outside Microsoft Edge's sandbox, a security researcher has shown. Orange Tsai of DEVCORE published the full method on October 28, five months after the chain won $175,000 at the Pwn2Own Berlin contest in May. Microsoft fixed the Edge bugs the day after the contest,",
+      "canonicalUrl": "https://thehackernews.com/2026/10/researcher-reveals-how-logic-bugs-alone.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/researcher-reveals-how-logic-bugs-alone.html"
+      ],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "The CISO’s evolving role: Protecting and defending in the agentic era",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/10/28/the-cisos-evolving-role-protecting-and-defending-in-the-agentic-era/",
+      "publishedAt": "2026-10-28T16:00:00.000Z",
+      "excerpt": "As AI and agents reshape the enterprise, CISOs face two critical priorities: enabling innovation with the right identity and data guardrails, and modernizing defense to keep pace with AI-powered threats. Aarti Borkar shares how security leaders can approach both. The post The CISO’s evolving role: Protecting and defending in the agentic era appeared first on Microsoft Security Blog.",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/10/28/the-cisos-evolving-role-protecting-and-defending-in-the-agentic-era",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://microsoft.com/en-us/security/blog/2026/10/28/the-cisos-evolving-role-protecting-and-defending-in-the-agentic-era"
+      ],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Belarusian hackers increasingly acting as proxies for Russia amid war in Ukraine",
+      "url": "https://therecord.media/belarus-russia-hackers-ukraine-war",
+      "publishedAt": "2026-10-28T15:15:00.000Z",
+      "excerpt": "Belarus-linked hackers are increasingly aligning their cyber operations with Russia's interests in Ukraine, researchers said Wednesday.",
+      "canonicalUrl": "https://therecord.media/belarus-russia-hackers-ukraine-war",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/belarus-russia-hackers-ukraine-war"
+      ],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft urges Entra ID admins to migrate users to passkeys",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-reminds-entra-id-admins-to-migrate-users-to-passkeys/",
+      "publishedAt": "2026-10-28T14:48:32.000Z",
+      "excerpt": "Microsoft again asked Entra ID administrators to migrate users to phishing-resistant methods to avoid sign-in disruptions before it retires SMS and voice authentication in February 2027. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-reminds-entra-id-admins-to-migrate-users-to-passkeys",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/microsoft/microsoft-reminds-entra-id-admins-to-migrate-users-to-passkeys"
+      ],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Attacker Relentlessly Scans for Credentials by Impersonating AI Bots",
+      "url": "https://www.darkreading.com/cyber-risk/attacker-impersonates-ai-bots-scans-credentials",
+      "publishedAt": "2026-10-28T14:37:52.000Z",
+      "excerpt": "The threat actor lurked behind bots posing as agents from OpenAI, Anthropic, Meta, and others to find exposed data.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/attacker-impersonates-ai-bots-scans-credentials",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyber-risk/attacker-impersonates-ai-bots-scans-credentials"
+      ],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "InfraTrust report warns of exploited flaws in critical network infrastructure",
+      "url": "https://www.bleepingcomputer.com/news/security/infratrust-report-warns-of-exploited-flaws-in-critical-network-infrastructure/",
+      "publishedAt": "2026-10-28T14:00:00.000Z",
+      "excerpt": "Attackers are actively exploiting vulnerabilities across critical network infrastructure, and PHP flaws known as \"PHP2Shell\" put the web management interfaces of firewalls, VPNs, application delivery controllers, and other appliances at risk. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/infratrust-report-warns-of-exploited-flaws-in-critical-network-infrastructure",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/infratrust-report-warns-of-exploited-flaws-in-critical-network-infrastructure"
+      ],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Upwind Security Raises $400 Million at $3.8 Billion Valuation",
+      "url": "https://www.securityweek.com/upwind-security-raises-400-million-at-3-8-billion-valuation/",
+      "publishedAt": "2026-10-28T13:56:50.000Z",
+      "excerpt": "The massive funding round comes just days after reports emerged that Upwind had attracted acquisition interest from several companies, including Datadog The post Upwind Security Raises $400 Million at $3.8 Billion Valuation appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/upwind-security-raises-400-million-at-3-8-billion-valuation",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/upwind-security-raises-400-million-at-3-8-billion-valuation"
+      ],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Even after PHP2Shell, blast radius matters more than a CVSS score",
+      "url": "https://www.bleepingcomputer.com/news/security/even-after-php2shell-blast-radius-matters-more-than-a-cvss-score/",
+      "publishedAt": "2026-10-28T13:50:59.000Z",
+      "excerpt": "PHP2Shell shows how quickly attackers can exploit critical vulnerabilities, often before organizations have time to patch. Token Security explains why limiting the access of service accounts, API keys, and AI agents is just as important as fixing vulnerabilities to reduce the damage from a breach. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/even-after-php2shell-blast-radius-matters-more-than-a-cvss-score",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/even-after-php2shell-blast-radius-matters-more-than-a-cvss-score"
+      ],
+      "cves": [],
+      "id": "s14"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "TLS Flaws Found in GoAhead Web Server Used in Hundreds of Millions of Devices",
+      "url": "https://www.securityweek.com/tls-flaws-found-in-goahead-web-server-used-in-hundreds-of-millions-of-devices/",
+      "publishedAt": "2026-10-28T13:10:34.000Z",
+      "excerpt": "FoxIO disclosed three GoAhead TLS bugs that can let revoked certificates through or expose some encrypted sessions to eavesdroppers. The post TLS Flaws Found in GoAhead Web Server Used in Hundreds of Millions of Devices appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/tls-flaws-found-in-goahead-web-server-used-in-hundreds-of-millions-of-devices",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/tls-flaws-found-in-goahead-web-server-used-in-hundreds-of-millions-of-devices"
+      ],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers now scanning systems for recently-patched Oracle flaw",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-now-scanning-systems-for-recently-patched-oracle-flaw/",
+      "publishedAt": "2026-10-28T12:19:57.000Z",
+      "excerpt": "Attackers have begun probing the Internet for systems unpatched against a recently disclosed critical Oracle E-Business Suite (EBS) vulnerability. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-now-scanning-systems-for-recently-patched-oracle-flaw",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/hackers-now-scanning-systems-for-recently-patched-oracle-flaw"
+      ],
+      "cves": [],
+      "id": "s18"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "China-Linked Hackers Exploit PHP2Shell to Root Firewalls",
+      "url": "https://www.securityweek.com/china-linked-hackers-exploit-php2shell-to-root-firewalls/",
+      "publishedAt": "2026-10-28T12:00:59.000Z",
+      "excerpt": "The attackers chained PHP2Shell and Fragnesia exploits and hacked two servers of a US government-affiliated organization. The post China-Linked Hackers Exploit PHP2Shell to Root Firewalls appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/china-linked-hackers-exploit-php2shell-to-root-firewalls",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/china-linked-hackers-exploit-php2shell-to-root-firewalls"
+      ],
+      "cves": [],
+      "id": "s19"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "FBI seizes ‘bulletproof’ hosting site accused of facilitating child abuse, money laundering",
+      "url": "https://therecord.media/fbi-seizure-csam-virtualine",
+      "publishedAt": "2026-10-28T12:00:00.000Z",
+      "excerpt": "The FBI seized the domain of a “bulletproof” hosting provider accused of facilitating a range of cybercrimes, including money laundering and the distribution of child sexual abuse material.",
+      "canonicalUrl": "https://therecord.media/fbi-seizure-csam-virtualine",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/fbi-seizure-csam-virtualine"
+      ],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Critical 16-Year-Old UEFI Flaw Can Run Code Before Secure Boot on Network-Booting Servers",
+      "url": "https://thehackernews.com/2026/10/critical-16-year-old-uefi-flaw-can-run.html",
+      "publishedAt": "2026-10-28T11:50:00.000Z",
+      "excerpt": "A critical 16-year-old flaw in EDK II, the open-source code that most hardware makers use to build UEFI firmware, can allow an attacker to run code on a machine before its operating system loads, but only while the machine is booting over the network. UEFI firmware is the software that runs first when a computer is switched on, before the operating system. An attacker who can reach the machine",
+      "canonicalUrl": "https://thehackernews.com/2026/10/critical-16-year-old-uefi-flaw-can-run.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/critical-16-year-old-uefi-flaw-can-run.html"
+      ],
+      "cves": [],
+      "id": "s21"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Wazuh and AI for Enhanced SOC Workflows",
+      "url": "https://thehackernews.com/2026/10/wazuh-and-ai-for-enhanced-soc-workflows.html",
+      "publishedAt": "2026-10-28T11:30:00.000Z",
+      "excerpt": "Artificial Intelligence (AI) has become one of this decade's defining technologies. From healthcare and finance to manufacturing and education, organizations increasingly rely on AI to automate repetitive tasks, uncover patterns hidden within large datasets, and support faster decision-making. Cybersecurity has experienced a similar transformation. While attackers employ AI to automate",
+      "canonicalUrl": "https://thehackernews.com/2026/10/wazuh-and-ai-for-enhanced-soc-workflows.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/wazuh-and-ai-for-enhanced-soc-workflows.html"
+      ],
+      "cves": [],
+      "id": "s22"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Adobe Fixes 8 Critical Campaign Classic Flaws Allowing Code Execution and Security Bypass",
+      "url": "https://thehackernews.com/2026/10/adobe-fixes-8-critical-campaign-classic.html",
+      "publishedAt": "2026-10-28T11:15:51.000Z",
+      "excerpt": "Adobe has released patches to address multiple critical security flaws in Campaign Classic that, if successfully exploited, could result in arbitrary code execution, security feature bypass, and privilege escalation. The list of eight vulnerabilities is as follows - CVE-2026-104351 (CVSS score: 9.9) - A code injection vulnerability that could lead to arbitrary code execution.",
+      "canonicalUrl": "https://thehackernews.com/2026/10/adobe-fixes-8-critical-campaign-classic.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/adobe-fixes-8-critical-campaign-classic.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-104351",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Adobe Campaign Classic (ACC) is affected by an Improper Control of Generation of Code ('Code Injection') vulnerability that could result in arbitrary code execution in the context of the current user. A low-privileged attacker could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction. Scope is changed.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.9,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+              "source": "psirt@adobe.com",
+              "type": "Primary"
+            },
+            "cwes": [
+              "CWE-94"
+            ],
+            "published": "2026-10-27T17:16:55.593",
+            "lastModified": "2026-10-28T14:10:17.240",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://www.adobe.com/trust/security/products/campaign/apsb26-162.html",
+                "source": "psirt@adobe.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/10/adobe-fixes-8-critical-campaign-classic.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.27",
+              "dateReleased": "2026-10-27T19:00:02.2307Z",
+              "retrievedAt": "2026-10-28T17:48:29.453Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-101767%2CCVE-2026-104351%2CCVE-2026-35273%2CCVE-2026-111497%2CCVE-2026-48356",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-104351",
+              "retrievedAt": "2026-10-28T17:48:29.453Z"
+            }
+          }
+        }
+      ],
+      "id": "s23"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Long-Hidden Flaws Patched in EPICS Research Facility Control Software",
+      "url": "https://www.securityweek.com/long-hidden-flaws-patched-in-epics-research-facility-control-software/",
+      "publishedAt": "2026-10-28T10:48:00.000Z",
+      "excerpt": "Four EPICS Base flaws found by an autonomous system could let attackers crash processes at particle accelerators and fusion labs. The post Long-Hidden Flaws Patched in EPICS Research Facility Control Software appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/long-hidden-flaws-patched-in-epics-research-facility-control-software",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/long-hidden-flaws-patched-in-epics-research-facility-control-software"
+      ],
+      "cves": [],
+      "id": "s24"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "CISA warns of hackers now exploiting critical Node2Shell flaw",
+      "url": "https://www.bleepingcomputer.com/news/security/cisa-warns-of-hackers-now-exploiting-critical-node2shell-flaw/",
+      "publishedAt": "2026-10-28T10:46:23.000Z",
+      "excerpt": "On Tuesday, the US Cybersecurity and Infrastructure Security Agency (CISA) confirmed that hackers have begun exploiting a critical Brotli vulnerability known as Node2Shell, Broccoli2Shell, and HTTP2Shell. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/cisa-warns-of-hackers-now-exploiting-critical-node2shell-flaw",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/cisa-warns-of-hackers-now-exploiting-critical-node2shell-flaw"
+      ],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Nobody Trusts the Security Questionnaire. We Rely on It Anyway.",
+      "url": "https://www.securityweek.com/nobody-trusts-the-security-questionnaire-we-rely-on-it-anyway/",
+      "publishedAt": "2026-10-28T10:30:00.000Z",
+      "excerpt": "The process that gates nearly every B2B deal is a self-assessment the sender distrusts and the receiver accepts. There is finally a better basis for trust between companies. The post Nobody Trusts the Security Questionnaire. We Rely on It Anyway. appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/nobody-trusts-the-security-questionnaire-we-rely-on-it-anyway",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/nobody-trusts-the-security-questionnaire-we-rely-on-it-anyway"
+      ],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "American Organizations Under Attack: Skyw4lker Device Code Phishing Campaign Exposed",
+      "url": "https://thehackernews.com/2026/10/american-organizations-under-attack.html",
+      "publishedAt": "2026-10-28T10:30:00.000Z",
+      "excerpt": "Modern phishing campaigns can compromise American businesses without relying on traditional credential theft. Attackers can abuse legitimate cloud services, authentication mechanisms, and trusted business workflows to gain access to corporate accounts while leaving fewer obvious signs behind. ANY.RUN's analysis of Skyw4lker, a device code phishing campaign primarily targeting U.S. organizations",
+      "canonicalUrl": "https://thehackernews.com/2026/10/american-organizations-under-attack.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/american-organizations-under-attack.html"
+      ],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "securelist",
+      "sourceKind": "rss",
+      "title": "Millions of security cameras at risk: DoS vulnerability in Intelbras devices",
+      "url": "https://securelist.com/intelbras-camera-vulnerability/121131/",
+      "publishedAt": "2026-10-28T10:00:18.000Z",
+      "excerpt": "During our research, we discovered a denial-of-service vulnerability that could affect millions of Intelbras IP camera systems built on the platform platform of a popular Chinese manufacturer.",
+      "canonicalUrl": "https://securelist.com/intelbras-camera-vulnerability/121131",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securelist.com/intelbras-camera-vulnerability/121131"
+      ],
+      "cves": [],
+      "id": "s28"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Secrets Management Firm Infisical Valued at $600 Million After $40 Million Raise",
+      "url": "https://www.securityweek.com/secrets-management-firm-infisical-valued-at-600-million-after-40-million-raise/",
+      "publishedAt": "2026-10-28T09:48:24.000Z",
+      "excerpt": "The company will use the Series B funds to expand its platform for securing AI agents’ access to sensitive systems. The post Secrets Management Firm Infisical Valued at $600 Million After $40 Million Raise appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/secrets-management-firm-infisical-valued-at-600-million-after-40-million-raise",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/secrets-management-firm-infisical-valued-at-600-million-after-40-million-raise"
+      ],
+      "cves": [],
+      "id": "s29"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Nefilim and Hive ransomware affiliate gets 70 months in prison",
+      "url": "https://www.bleepingcomputer.com/news/security/nefilim-and-hive-ransomware-affiliate-gets-70-months-in-prison/",
+      "publishedAt": "2026-10-28T09:43:15.000Z",
+      "excerpt": "A Ukrainian national was sentenced to 70 months in prison for his role in ransomware attacks targeting hospitals, government entities, and high-revenue businesses worldwide between 2018 and 2021. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/nefilim-and-hive-ransomware-affiliate-gets-70-months-in-prison",
+      "alsoCoveredBy": [
+        {
+          "sourceId": "securityweek",
+          "name": "SecurityWeek",
+          "url": "https://www.securityweek.com/ukrainian-hive-and-nefilim-ransomware-affiliate-gets-70-months-in-us-prison/"
+        }
+      ],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/nefilim-and-hive-ransomware-affiliate-gets-70-months-in-prison",
+        "https://securityweek.com/ukrainian-hive-and-nefilim-ransomware-affiliate-gets-70-months-in-us-prison"
+      ],
+      "cves": [],
+      "id": "s30"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Hackers Start Probing Fresh Oracle EBS Vulnerability",
+      "url": "https://www.securityweek.com/hackers-start-probing-fresh-oracle-ebs-vulnerability/",
+      "publishedAt": "2026-10-28T09:14:23.000Z",
+      "excerpt": "CVE-2026-101767 is an unauthenticated SQL injection that can be exploited for remote code execution. The post Hackers Start Probing Fresh Oracle EBS Vulnerability appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/hackers-start-probing-fresh-oracle-ebs-vulnerability",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/hackers-start-probing-fresh-oracle-ebs-vulnerability"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-101767",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Vulnerability in the Oracle Application Object Library product of Oracle E-Business Suite (component: Core).  Supported versions that are affected are 12.2.3-12.2.15. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Application Object Library.  Successful attacks of this vulnerability can result in takeover of Oracle Application Object Library. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "secalert_us@oracle.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-287",
+              "CWE-306"
+            ],
+            "published": "2026-10-20T22:18:32.060",
+            "lastModified": "2026-10-21T18:44:55.490",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://www.oracle.com/security-alerts/cpuoct2026.html",
+                "source": "secalert_us@oracle.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/hackers-start-probing-fresh-oracle-ebs-vulnerability/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.27",
+              "dateReleased": "2026-10-27T19:00:02.2307Z",
+              "retrievedAt": "2026-10-28T17:48:29.453Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-101767%2CCVE-2026-104351%2CCVE-2026-35273%2CCVE-2026-111497%2CCVE-2026-48356",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-101767",
+              "retrievedAt": "2026-10-28T17:48:29.453Z"
+            }
+          }
+        }
+      ],
+      "id": "s31"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "CISA Warns of Node2Shell Exploitation as Honeypots Log Attack Attempts",
+      "url": "https://www.securityweek.com/cisa-warns-of-node2shell-exploitation-as-honeypots-log-attack-attempts/",
+      "publishedAt": "2026-10-28T08:37:24.000Z",
+      "excerpt": "CISA added the Brotli flaw to its KEV catalog, and two honeypot operators logged attempts, including one that used a broken exploit. The post CISA Warns of Node2Shell Exploitation as Honeypots Log Attack Attempts appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/cisa-warns-of-node2shell-exploitation-as-honeypots-log-attack-attempts",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/cisa-warns-of-node2shell-exploitation-as-honeypots-log-attack-attempts"
+      ],
+      "cves": [],
+      "id": "s32"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Anthropic's Unreleased AI Model Chains Flaws Into Working Chrome, Safari, Windows and Linux Exploits",
+      "url": "https://thehackernews.com/2026/10/anthropics-unreleased-ai-model-chains.html",
+      "publishedAt": "2026-10-28T08:15:07.000Z",
+      "excerpt": "An unreleased Anthropic AI model found security flaws in Chrome, Safari, Android, Windows, and Linux and chained them into working proof-of-concept exploits, the company said in its latest report. The exploits were built in the lab after the model was prompted, not seen in any real attack, and Anthropic reported every flaw to the vendor first, so all of them are already patched. One proof of",
+      "canonicalUrl": "https://thehackernews.com/2026/10/anthropics-unreleased-ai-model-chains.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/anthropics-unreleased-ai-model-chains.html"
+      ],
+      "cves": [],
+      "id": "s33"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "FBI Seizes Virtualine Domain Over Alleged Criminal Hosting and Bitcoin Money Laundering",
+      "url": "https://thehackernews.com/2026/10/fbi-seizes-virtualine-domain-over.html",
+      "publishedAt": "2026-10-28T07:37:50.000Z",
+      "excerpt": "The U.S. Department of Justice (DoJ) on Tuesday announced the seizure of a domain associated with a bulletproof hosting provider (BPH) named Virtualine. The move was in response to the service being used to commit and facilitate prolific criminal activity, including \"the advertisement of sexually explicit images of minors, the intentional disclosure of nonconsensual intimate visual depictions",
+      "canonicalUrl": "https://thehackernews.com/2026/10/fbi-seizes-virtualine-domain-over.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/fbi-seizes-virtualine-domain-over.html"
+      ],
+      "cves": [],
+      "id": "s34"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Japan's GMO Offers $1 Million Bounty to Catch Hackers Behind FX Trading Cloud Breach",
+      "url": "https://thehackernews.com/2026/10/japans-gmo-offers-1-million-bounty-to.html",
+      "publishedAt": "2026-10-28T07:13:21.000Z",
+      "excerpt": "Japan's GMO Internet Group is offering up to $1 million in total for tips that help catch the attackers who breached its Onamae.com Desktop Cloud service, after refusing to pay an extortion demand. The reward program opened on October 28 and pays only if a tip helps lead to an arrest or an international wanted notice. The service hosts Windows desktops used for FX trading,",
+      "canonicalUrl": "https://thehackernews.com/2026/10/japans-gmo-offers-1-million-bounty-to.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/japans-gmo-offers-1-million-bounty-to.html"
+      ],
+      "cves": [],
+      "id": "s35"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Tailscale Patches SSH Flaws That Could Let Hacked Devices Gain Root Access on Other Servers",
+      "url": "https://thehackernews.com/2026/10/tailscale-patches-ssh-flaws-that-could.html",
+      "publishedAt": "2026-10-28T06:20:37.000Z",
+      "excerpt": "Tailscale has released version 1.104.4 to fix flaws in its built-in SSH server that could let an attacker reach services and files on other servers that only the root user should be able to touch. The flaws are in how Tailscale SSH forwards network connections, a job the Tailscale background process carries out with root privileges. To use them, an attacker must",
+      "canonicalUrl": "https://thehackernews.com/2026/10/tailscale-patches-ssh-flaws-that-could.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/tailscale-patches-ssh-flaws-that-could.html"
+      ],
+      "cves": [],
+      "id": "s36"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Third Serengeti Sweep Tops 1,400 Arrests as Investigations Mature",
+      "url": "https://www.darkreading.com/cybersecurity-operations/third-serengeti-sweep-1400-arrests-investigations-mature",
+      "publishedAt": "2026-10-28T06:00:00.000Z",
+      "excerpt": "Interpol's annual Operation Serengeti, now on its third iteration, led to 1,462 arrests across 20 African countries and the US, recovering $105 million in stolen funds.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/third-serengeti-sweep-1400-arrests-investigations-mature",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cybersecurity-operations/third-serengeti-sweep-1400-arrests-investigations-mature"
+      ],
+      "cves": [],
+      "id": "s38"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Japan's GMO urges customers to shut down PCs amid ransomware threat",
+      "url": "https://www.bleepingcomputer.com/news/security/japans-gmo-urges-customers-to-shut-down-pcs-amid-ransomware-threat/",
+      "publishedAt": "2026-10-27T23:35:51.000Z",
+      "excerpt": "The GMO Group has urged customers to disconnect their systems from the internet and shut down computers after a threat actor who breached the company's Onamae Desktop Cloud threatened to launch a ransomware attack today. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/japans-gmo-urges-customers-to-shut-down-pcs-amid-ransomware-threat",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/japans-gmo-urges-customers-to-shut-down-pcs-amid-ransomware-threat"
+      ],
+      "cves": [],
+      "id": "s40"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "OpenAI's GPT-6.1 Terra is safer overall, but shows more destructive-action flags in tests",
+      "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/openais-gpt-61-terra-is-safer-overall-but-shows-more-destructive-action-flags-in-tests/",
+      "publishedAt": "2026-10-27T22:43:27.000Z",
+      "excerpt": "OpenAI confirmed GPT-6.1 Terra is safer overall than some of its older models, but its safety testing also found other problems. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/artificial-intelligence/openais-gpt-61-terra-is-safer-overall-but-shows-more-destructive-action-flags-in-tests",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/artificial-intelligence/openais-gpt-61-terra-is-safer-overall-but-shows-more-destructive-action-flags-in-tests"
+      ],
+      "cves": [],
+      "id": "s41"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "3 Frameworks to Protect CISOs &amp; Orgs Against AI Liability",
+      "url": "https://www.darkreading.com/cyber-risk/3-frameworks-cisos-ai-liability",
+      "publishedAt": "2026-10-27T21:15:03.000Z",
+      "excerpt": "Cyber leaders can get ahead of AI liability with rigorous documentation, transparency, and smart contract negotiations with AI vendors.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/3-frameworks-cisos-ai-liability",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyber-risk/3-frameworks-cisos-ai-liability"
+      ],
+      "cves": [],
+      "id": "s43"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers hijack Convertr analytics script to steal payment card data",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-hijack-convertr-analytics-script-to-steal-payment-card-data/",
+      "publishedAt": "2026-10-27T20:57:25.000Z",
+      "excerpt": "A credit card skimming group reportedly compromised a shared analytics script used by e-commerce platform Convertr to steal shoppers' payment data during checkout. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-hijack-convertr-analytics-script-to-steal-payment-card-data",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/hackers-hijack-convertr-analytics-script-to-steal-payment-card-data"
+      ],
+      "cves": [],
+      "id": "s44"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "External Teams Chats Anchor 15-Minute Malware Delivery",
+      "url": "https://www.darkreading.com/cloud-security/email-bombing-external-teams-chats-repeatable-access-path",
+      "publishedAt": "2026-10-27T20:42:40.000Z",
+      "excerpt": "Mail bombing is getting a new look with a wide-scale, ongoing social engineering campaign that might be tied to the Black Basta ransomware gang.",
+      "canonicalUrl": "https://darkreading.com/cloud-security/email-bombing-external-teams-chats-repeatable-access-path",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cloud-security/email-bombing-external-teams-chats-repeatable-access-path"
+      ],
+      "cves": [],
+      "id": "s45"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Nefilim, Hive ransomware operator given five-year-plus sentence after guilty plea",
+      "url": "https://therecord.media/nefilim-hive-ransomware-operator-70-months-prison",
+      "publishedAt": "2026-10-27T20:40:00.000Z",
+      "excerpt": "Ukrainian national Artem Stryzhak, 36, had pleaded guilty last year to charges related to participating in at least two well-known ransomware groups.",
+      "canonicalUrl": "https://therecord.media/nefilim-hive-ransomware-operator-70-months-prison",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/nefilim-hive-ransomware-operator-70-months-prison"
+      ],
+      "cves": [],
+      "id": "s46"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "SBOMs Alone Can't Reveal the Scope of a Supply Chain Attack",
+      "url": "https://www.darkreading.com/cyber-risk/sboms-alone-scope-supply-chain-attack",
+      "publishedAt": "2026-10-27T19:58:06.000Z",
+      "excerpt": "A recent Shai-Hulud attack shows defenders need real-time visibility into production code and affected services to respond to supply chain compromises.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/sboms-alone-scope-supply-chain-attack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyber-risk/sboms-alone-scope-supply-chain-attack"
+      ],
+      "cves": [],
+      "id": "s47"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "CyberStrikeAI Uses 44 AI Agents to Automate Hacking Operations Against Japan Targets",
+      "url": "https://thehackernews.com/2026/10/cyberstrikeai-uses-44-ai-agents-to.html",
+      "publishedAt": "2026-10-27T18:26:46.000Z",
+      "excerpt": "Cybersecurity researchers have disclosed details of three cyber attacks targeting organizations in Japan in which artificial intelligence (AI) was a key element, either in the driving seat or to assist a human operator. TrendAI, which analyzed three exposed server environments used by threat actors to conduct the malicious cyber operations, described them as distinct from previously published",
+      "canonicalUrl": "https://thehackernews.com/2026/10/cyberstrikeai-uses-44-ai-agents-to.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/cyberstrikeai-uses-44-ai-agents-to.html"
+      ],
+      "cves": [],
+      "id": "s48"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft releases Windows OOB updates to distrust eMudhra certificates",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-releases-windows-oob-updates-to-distrust-emudhra-certificates/",
+      "publishedAt": "2026-10-27T18:20:28.000Z",
+      "excerpt": "Microsoft has released out-of-band (OOB) Windows updates to remove trust in certificates tied to compromised eMudhra certificate authority keys, protecting systems that do not receive automatic certificate trust updates. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-releases-windows-oob-updates-to-distrust-emudhra-certificates",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/microsoft/microsoft-releases-windows-oob-updates-to-distrust-emudhra-certificates"
+      ],
+      "cves": [],
+      "id": "s49"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Beware the Slasher: AI Could Kill Off Cybersecurity Pros' Skills",
+      "url": "https://www.darkreading.com/cybersecurity-operations/ai-kill-off-cybersecurity-pros-skills",
+      "publishedAt": "2026-10-27T17:43:07.000Z",
+      "excerpt": "Nathan Hamiel outlines potential SecOps horror in the AI midst, as core technical capabilities go the way of reading an atlas or remembering phone numbers.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/ai-kill-off-cybersecurity-pros-skills",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cybersecurity-operations/ai-kill-off-cybersecurity-pros-skills"
+      ],
+      "cves": [],
+      "id": "s50"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "CISA Adds Two Known Exploited Vulnerabilities to Catalog",
+      "url": "https://www.cisa.gov/news-events/alerts/2026/10/27/cisa-adds-two-known-exploited-vulnerabilities-catalog",
+      "publishedAt": "2026-10-27T12:00:00.000Z",
+      "excerpt": "CISA has added two new vulnerabilities to its Known Exploited Vulnerabilities (KEV) Catalog, based on evidence of active exploitation. CVE-2026-48356 Adobe Commerce and Magento Unrestricted Upload of File with Dangerous Type Vulnerability CVE-2026-111497 Google Brotli Unchecked Return Value Vulnerability These types of vulnerabilities are a frequent attack vector for malicious cyber actors and…",
+      "canonicalUrl": "https://cisa.gov/news-events/alerts/2026/10/27/cisa-adds-two-known-exploited-vulnerabilities-catalog",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/alerts/2026/10/27/cisa-adds-two-known-exploited-vulnerabilities-catalog"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-111497",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Google",
+            "product": "Brotli",
+            "vulnerabilityName": "Google Brotli Unchecked Return Value Vulnerability",
+            "dateAdded": "2026-10-27",
+            "shortDescription": "Google Brotli contains an unchecked return value vulnerability that allows a remote unauthenticated attacker to corrupt adjacent decoder state memory, disclose sensitive memory contents, cause a denial of service, or potentially execute arbitrary code using a crafted Brotli-compressed stream.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-10",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "This vulnerability affects an open-source component, third-party library, protocol, or proprietary implementation that could be used by different products. For more information, please see: https://github.com/google/brotli/releases/tag/v1.2.1 ; ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-111497",
+            "cwes": [
+              "CWE-252",
+              "CWE-787"
+            ]
+          },
+          "nvd": {
+            "description": "A buffer overflow vulnerability in the Brotli decoder (c/dec/decode.c) in Google Brotli versions 1.0.3 through 1.2.0 on all platforms allows a remote unauthenticated attacker to corrupt adjacent decoder state memory, disclose sensitive memory contents, cause a denial of service, or potentially execute arbitrary code using a crafted Brotli-compressed stream.\n\n\n\n\n\nUsers need to update any Brotli libraries or binaries between 1.0.3 through 1.2.0 to the latest available version: 1.0.10 or 1.1.1 or 1.2.1.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.2,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "cve-coordination@google.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-252",
+              "CWE-787"
+            ],
+            "published": "2026-10-22T14:17:37.190",
+            "lastModified": "2026-10-28T17:47:31.370",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://github.com/andybalholm/brotli/releases/tag/v1.2.7",
+                "source": "cve-coordination@google.com",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases#nodejs-brotli-decoder-out-of-bounds-write-permits-remote-code-execution-cve-2026-111497---high",
+                "source": "cve-coordination@google.com",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/10/23/25",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/10/24/6",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/10/26/12",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/10/26/13",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/10/26/16",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://broccoli2shell.com",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/advisories/GHSA-9v8h-qqgm-4m35",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/dotnet/announcements/issues/494",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Issue Tracking",
+                  "Mitigation",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/google/brotli/releases/tag/v1.0.10",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://github.com/google/brotli/releases/tag/v1.1.1",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://github.com/google/brotli/releases/tag/v1.2.1",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://lists.debian.org/debian-lts-announce/2026/10/msg00049.html",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://patchtheplanet.org/brotli",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.aikido.dev/blog/node2shell-nodejs-brotli-rce-cve-2026-111497",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://ellio.tech/en/blog/node2shell-cve-2026-111497-rce-on-stock-nodejs-builds/",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-111497",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:google:brotli:*:*:*:*:*:-:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8A7BE60F-21B0-4779-8D59-6E5E58C5826B",
+                "versionStartIncluding": "1.0.3",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.0.10"
+              },
+              {
+                "criteria": "cpe:2.3:a:google:brotli:*:*:*:*:*:-:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "48E72297-AFBD-4460-A732-5A6803CCCDB0",
+                "versionStartIncluding": "1.1.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.1.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:google:brotli:*:*:*:*:*:-:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C8CA5C74-26A8-44E3-B893-1FA01CED49F5",
+                "versionStartIncluding": "1.2.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.2.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:nodejs:node.js:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "02348F18-5E17-4427-8B78-63B4082F2FB4",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "22.23.4"
+              },
+              {
+                "criteria": "cpe:2.3:a:nodejs:node.js:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "852D09BB-A396-4813-81C9-7D89D5DD5FB6",
+                "versionStartIncluding": "23.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "24.22.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:nodejs:node.js:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "219CA855-3A40-42CE-BAB6-79CCFEE7746F",
+                "versionStartIncluding": "25.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "26.12.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:python-hyper:brotlicffi:*:*:*:*:*:python:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E732E75B-4BEF-4D7E-8520-E03B707FB4F6",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.2.1.0"
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "65DCE51C-2CD9-4179-9354-5323D28573AA",
+                "versionStartIncluding": "8.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "8.0.33"
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "98654489-8C4E-4801-8728-29B01A22DEED",
+                "versionStartIncluding": "9.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "9.0.22"
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "27DF5CF4-58E3-4F01-A3AA-D44B7DCC3D67",
+                "versionStartIncluding": "10.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "10.0.14"
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:preview1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5DACF2FE-CF61-43E4-8A3F-F7A358DE8A01",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:preview2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "280B2E64-3163-40AB-A048-14D58DEC42FD",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:preview3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "12357908-3294-46EF-85A0-DA3F86C97489",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:preview4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "849FC8F5-86CD-4B5D-ADFD-9CB16EA75D09",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:preview5:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C86E87E2-B236-4AC9-B6C3-64B9CDEC91EB",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:preview6:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9B14656E-2BB0-4B4B-B518-F3D5108253ED",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:preview7:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E09C9DB3-F42C-4442-9CF0-24A780D094C8",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:rc1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "67035E86-61F5-421E-B243-EF64458AD8BA",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:rc2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C46300CA-BA84-48B3-85C5-C20CB487C733",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:debian:debian_linux:12.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "46D69DCC-AE4D-4EA5-861C-D60951444C6C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:istio:istio:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9F01FA9D-7190-431F-84DD-24D4EBC41A2D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.29.9"
+              },
+              {
+                "criteria": "cpe:2.3:a:istio:istio:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B8DE25CE-AFCB-4685-9836-B8EC9C820975",
+                "versionStartIncluding": "1.30.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.30.6"
+              },
+              {
+                "criteria": "cpe:2.3:a:istio:istio:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "55EBE231-2EB8-4C9C-B279-D07F82EA5B55",
+                "versionStartIncluding": "1.31.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.31.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:anthropic:bun:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "51DD72B3-85F6-4B10-AEB4-41E0679ED0AA",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.4.4"
+              },
+              {
+                "criteria": "cpe:2.3:a:envoyproxy:envoy:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8EE6278D-A48A-427C-8A7E-1D4103E2ADF7",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.37.8"
+              },
+              {
+                "criteria": "cpe:2.3:a:envoyproxy:envoy:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "CDCA301F-83CA-4DDB-AAE4-24D5235EE2D5",
+                "versionStartIncluding": "1.38.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.38.6"
+              },
+              {
+                "criteria": "cpe:2.3:a:envoyproxy:envoy:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B9A47DD3-2655-4722-9B9D-3888B590C82F",
+                "versionStartIncluding": "1.39.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.39.3"
+              },
+              {
+                "criteria": "cpe:2.3:a:tianocore:edk2:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C4CFCBFB-4A38-481B-93AE-7D86CCDC6FB5",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": "202608",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:google:woff2:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6D1FC23A-20F7-48F7-ABB8-8D37903DFB58",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:duckdb:duckdb:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0DFA4F95-92F9-4369-BE42-387520F0765B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": "2.0.0",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:clickhouse:clickhouse:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B40EE389-E2AC-4D86-91B2-79A895470317",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": "26.10.2.103",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:apache:arrow:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "46A78CA5-1E4A-4DAA-B40D-387B96C1E2F9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": "26.0.0",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:apache:arrow:27.0.0:dev:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "130A7077-7885-43CB-8AFF-B6056D380156",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:mcmilk:7-zip-zstd:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FB91A353-9BE9-49E7-86FD-6B5FBB291351",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": "26.02-1.5.7-r2",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:7-zip:p7zip:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "76A26292-08BE-459A-B25A-CA14AF8D3C29",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": "16.02",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:andybalholm:brotli:*:*:*:*:*:go:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F3E50F12-AEFE-4B4F-B474-3676F145E032",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.2.7"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/10/27/cisa-adds-two-known-exploited-vulnerabilities-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.27",
+              "dateReleased": "2026-10-27T19:00:02.2307Z",
+              "retrievedAt": "2026-10-28T17:48:29.453Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-101767%2CCVE-2026-104351%2CCVE-2026-35273%2CCVE-2026-111497%2CCVE-2026-48356",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-111497",
+              "retrievedAt": "2026-10-28T17:48:29.453Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-48356",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Adobe",
+            "product": "Commerce and Magento",
+            "vulnerabilityName": "Adobe Commerce and Magento Unrestricted Upload of File with Dangerous Type Vulnerability",
+            "dateAdded": "2026-10-27",
+            "shortDescription": "Adobe Commerce and Magento contain an unrestricted upload of file with dangerous type vulnerability that could result in arbitrary code execution in the context of the current user, potentially gaining elevated access or control over the victim's account or session.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-10",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://www.adobe.com/trust/security/products/commerce/apsb26-73.html ; ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-48356",
+            "cwes": [
+              "CWE-434"
+            ]
+          },
+          "nvd": {
+            "description": "Adobe Commerce is affected by an Unrestricted Upload of File with Dangerous Type vulnerability that could result in arbitrary code execution in the context of the current user, potentially gaining elevated access or control over the victim's account or session. Exploitation of this issue requires user interaction in that a victim must visit a maliciously crafted URL or interact with a compromised web page. Scope is changed.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.3,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:N",
+              "source": "nvd@nist.gov",
+              "type": "Primary"
+            },
+            "cwes": [
+              "CWE-434"
+            ],
+            "published": "2026-07-14T20:17:08.437",
+            "lastModified": "2026-10-28T13:34:50.330",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://helpx.adobe.com/security/products/magento/apsb26-73.html",
+                "source": "psirt@adobe.com",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://sansec.io/research/magento-cms-block-loader-deepveindrilling#indicators-of-compromise",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://sansec.io/research/polyshell-mass-attack-wave",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-48356",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.4:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D258D9EF-94FB-41F0-A7A5-7F66FA7A0055",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.4:p1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "4E5CF6F0-2388-4D3F-8FE1-43B8AF148564",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.4:p10:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1C3D7164-1C5F-40BC-9EEC-B0E00CD45808",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.4:p11:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "68AAE162-5957-42AF-BE20-40F341837FAC",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.4:p12:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D9D01159-3309-4F6B-93B0-2D89DDD33DEE",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.4:p13:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "91736E79-D8E7-4AF2-8E01-A7B4EB8AD6F4",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.4:p14:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8412C043-64E7-4DFF-A303-13A6FE113BFB",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.4:p15:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "BBDA2BCF-E784-4CF3-B30D-6FF5BEE2055F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.4:p16:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "00909C10-6C93-4735-94ED-18DCBD608A28",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.4:p17:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C6F35FE6-853D-4EC6-8A4F-07F4ABD6301A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.4:p18:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5FD50C55-E296-4F3C-8035-C1E9256D3773",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.4:p2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D6D6F1A7-ABB5-4EDC-9EA8-98B74518847A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.4:p3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "CFEBDDF2-6443-4482-83B2-3CD272CF599F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.4:p4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6661093F-8D22-450F-BC6C-A8894A52E6A9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.4:p5:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2515DA6D-2E74-4A05-BD29-FEEF3322BCB6",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.4:p6:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "69A1F1F7-E53C-40F3-B3D9-DC011FC353BF",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.4:p7:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6A56E96C-6CE5-442C-AA88-F0059B02B5E7",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.4:p8:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8867F510-201C-4199-8554-53DE156CE669",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.4:p9:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "23988132-DD4E-4968-B6B8-954122F76081",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.5:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9B07F7B2-E915-4EFF-8FFC-91143CEF082E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.5:p1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7F5E9DB6-1386-4274-8270-2FE0F0CAF7FD",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.5:p10:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5764CC97-C866-415D-A3A1-5B5B9E1C06A6",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.5:p11:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E82D10D8-2894-4E5B-B47B-F00964DD5CDE",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.5:p12:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B044F2D9-E888-4852-8A40-DCE688860ED3",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.5:p13:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6423C754-36F9-4680-9211-60940ED63E79",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.5:p14:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3472064A-8C79-436B-965A-96834AE8D346",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.5:p15:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "CDA8ABEB-F955-4D34-8219-C518B49F5543",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.5:p16:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "55D6A6BD-9E63-448A-A286-437EA1580CEF",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.5:p17:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5BF962FF-2CCF-48A5-AAA3-85639EAC64BB",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.5:p2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8605E4E6-0F7D-42C8-B35B-2349A0BEFC69",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.5:p3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B6318F97-E59A-4425-8DC7-045C78A644F8",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.5:p4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "324A573E-DBC8-42A0-8CB8-EDD8FBAB7115",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.5:p5:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "54151A00-CFB8-4E6A-8E74-497CB67BF7E2",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.5:p6:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6DF0E74D-9293-4209-97D1-A3BA13C3DDE9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.5:p7:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8922D646-1A97-47ED-91C6-5A426781C98A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.5:p8:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "952787C6-9BF1-49FB-9824-1236678E1902",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.5:p9:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "898A8679-3C46-4718-9EDF-583ADDFCF2EC",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.6:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7C7AFBB1-F9C9-4BDE-BCEF-94C9F0AC6798",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.6:p1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D6086841-C175-46A1-8414-71C6163A0E7A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.6:p10:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E57889CC-3E90-46AF-9CD6-3328DD501AD1",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.6:p11:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "47A86566-DE38-4032-947D-B6181F0BC120",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.6:p12:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B7D1D684-CE7E-4D6D-95B5-1F86A8DB6C66",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.6:p13:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "CABF5BD0-1D06-483D-91D3-A773D99EF217",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.6:p14:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "33512239-B316-4FE7-94F0-ABD30900238B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.6:p15:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "95FD09E4-BB76-47F4-A2B3-569B0E4CB737",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.6:p2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D2E0DDD1-0F4A-4F96-B25D-40A39A1A535A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.6:p3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A576B1B5-73A2-431E-998F-7E5458B51D6A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.6:p4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0E05F4AC-2A28-47E3-96DE-0E31AF73CD43",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.6:p5:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3A9A62EE-1649-4815-8EC9-7AEF7949EB2F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.6:p6:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E58690F9-FA9C-42A0-B4CD-91FD1197A53E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.6:p7:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "77D01D8B-1FBC-43CA-90F9-C89D9B4D18F0",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.6:p8:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8B83729E-80AF-47CE-A70C-32BF83024A40",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.6:p9:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "73D22D42-646D-4955-A6F9-9B7BA63DC0A9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.7:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B5D04853-0C2F-47DD-A939-3A8F6E22CB7D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.7:b1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6EBB0608-034B-4F07-A59B-9E6A989BA260",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.7:b2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B3BF9B08-84E3-4974-9DEB-F4285995D796",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.7:beta3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7771BEDB-05E2-430E-B2A2-E2F7574B7114",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.7:p1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2E05341A-C70C-4B3D-AF30-9520D6B97D30",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.7:p10:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "010DED96-2A96-4FEF-9F20-D6633A0D7BE9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.7:p2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "4D98B52E-3B59-4327-AC7E-DDBB0ADA08F6",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.7:p3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "95026AA9-A28B-4D94-BD77-7628429EBA30",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.7:p4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "83FD1220-7D46-42B2-8110-30A934144572",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.7:p5:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3F1439CE-8A3B-414A-B974-559209FF480C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.7:p6:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "13726DEE-FFCB-447B-9FFF-136F132F2C4C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.7:p7:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1A9443CE-AE1F-4D66-9C88-5E2E3FD28EE6",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.7:p8:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B5E29EF8-2569-4258-A66F-E1E5F621E0D4",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.7:p9:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "141DC3FF-68ED-429D-B10F-3C61B1399513",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.8:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1EE12F4B-5607-4790-A29B-EE23383BCC1A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.8:beta1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6D05A958-9749-486A-A149-C21647CDCADF",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.8:beta2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C9E12B43-AD3E-48A2-9042-5586186CA3BE",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.8:p1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C267AF14-7BA8-4D1F-BCD9-BE3ED0DA3D25",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.8:p2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B4947C63-CFD9-437B-A09E-A197DCE40095",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.8:p3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7FB6D020-2E5C-4789-A063-2C907F3CF3FA",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.8:p4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A607D50D-B385-41F3-B1A9-3B21F52F2386",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.8:p5:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A3C46E6E-8812-49CA-8AF3-52459795092B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce:2.4.9:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "565B7A64-30C3-408D-9AE5-86C4627E8565",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.3:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C4667AA3-4CC9-41C0-8E0C-19B0FCE1CF79",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.3:p1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E396FB4F-B20A-4BF9-8FBD-014A0F197F08",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.3:p10:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2ADE32D1-2845-4030-BE1F-ECE28189D0F9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.3:p11:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F2E771C9-86C4-455C-98D4-6F4FE7A9A822",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.3:p12:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "491AB715-F62A-46DB-A56E-055CF7CB7BEF",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.3:p13:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6FE364A8-4780-426F-9E8A-284A31FE2623",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.3:p14:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F9258027-8A6A-4C6A-BC6F-349B6E03D828",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.3:p15:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "934C52C7-8751-481E-BAA7-F631C4E31F32",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.3:p16:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D3C5847F-57AA-4ADA-8997-5D4F5FDFF50E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.3:p17:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "12F8A820-8F52-4214-9EB3-DFEA5C89D738",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.3:p18:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E6CDCE93-5FFF-4F3F-9067-B96EE93803E2",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.3:p2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5677B7E2-FA07-4536-96A9-2C64BEFD3751",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.3:p3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2DCD1522-6E27-474F-9FC6-413409D6AD55",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.3:p4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B7968FCA-CCFD-4222-8FB8-E6E21107944F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.3:p5:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8C175A1F-7814-4C51-A7B7-AD5140F0688F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.3:p6:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E66CBFB3-40C3-474A-A3A3-12135F610814",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.3:p7:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F51DFA17-1875-41A9-B141-D89BB6238B3F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.3:p8:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5A4D10EF-9137-4DF5-A5DD-97907E8B4C02",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.3:p9:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5CD0DC76-7181-4954-A59E-AB7BB47D0576",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.4:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1C90C433-6655-4038-9AB3-0304C1AFF360",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.4:p1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "374E7EDD-512A-4633-A136-01A656935334",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.4:p10:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "89BAB227-03E6-4776-ADE4-9D9CB666EFD9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.4:p11:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0E5ACABA-D6D6-4F29-A9DD-5A04A44ABE64",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.4:p12:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FA80AFCE-2663-46C0-AEC0-C16C8E675E6A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.4:p13:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "EB9955CA-7E7B-40D3-A85D-58BB0D9AC897",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.4:p14:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5D0A17AC-D433-47C2-A1AC-88291DCCECCD",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.4:p15:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7E0FD85B-E851-436D-A789-852DD26A3B56",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.4:p16:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "435DFE49-8BCF-4F74-856C-141037F8666B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.4:p17:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A99F38A8-7381-4EE7-B882-152C4CE16D61",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.4:p2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0E9D364A-C858-4160-8B8B-33ECF94796D9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.4:p3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "61559E50-581E-40FF-9FD4-10192ECFCD04",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.4:p4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "DE3BFB41-5633-4167-B1EA-9E958BCE9DC2",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.4:p5:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F2C525D2-837D-486A-8B38-5634AE2ECE2B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.4:p6:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6F220229-F2DF-4C9D-90A6-8B09F8BE3391",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.4:p7:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "63AB9506-3F8E-4C2E-A859-2380431C15A6",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.4:p8:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "51B76658-EA6B-4AC9-9D9C-374C5308D069",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.3.4:p9:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6E94B136-7A2C-47F0-BCE4-6BB8E776A305",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.4.2:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "15C638A8-EFE0-47DB-B1F9-34093AF0FC17",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.4.2:p1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "CB863404-A9D7-4692-AB43-08945E669928",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.4.2:p10:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A5CA3D89-11B5-40B5-BF2D-F5586A652AF6",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.4.2:p2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D8CFA8F4-D57D-4D0F-88D5-00A72E3AD8DA",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.4.2:p3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A21F608C-C356-47B8-8FBB-DB28BABFC4C6",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.4.2:p4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E14195F1-5016-46BE-A614-6FB4E312FC93",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.4.2:p5:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9C360EA8-B18F-4327-90EF-7EED2892BE4F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.4.2:p6:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "500E3A54-D7C7-4887-9EA6-7DF85389A831",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.4.2:p7:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "ED6FFC1D-E921-4FF7-9928-015630613FE1",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.4.2:p8:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FB8CAC6E-DA06-4C82-B148-38234D4EB910",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.4.2:p9:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "CEC04530-DA8F-4411-8C55-9291F5CBBC8E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.5.2:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D855D141-7876-4F5A-91BE-6350DD379879",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.5.2:p1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "79CBDF59-EB84-44D3-81CF-5CBF943B411E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.5.2:p2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2117B163-D88E-4EB4-AEA7-F27FB732BD48",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.5.2:p3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "33E56E15-320F-4517-85C1-832A5942944C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.5.2:p4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F50271FB-D419-4F63-A4CE-ED94C202AE8E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.5.2:p5:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1CFBC765-2EB4-4189-A68A-34C55D10E612",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:commerce_b2b:1.5.3:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "37EB4150-23D4-4D3E-ABA0-4D09E4112A4E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.6:-:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "789BD987-9DAD-4EAE-93DE-0E267D54F124",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.6:p1:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A3F113C0-00C5-4BC2-B42B-8AE3756252F2",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.6:p10:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "AE842CC8-7795-4238-B727-0BA2FFFBF62C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.6:p11:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "AE724531-422D-4ABB-98F5-2C0B1BBEF031",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.6:p12:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "BB499397-0E40-45B0-A7E9-BEFCC909DD07",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.6:p13:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0F972E57-B08E-46DF-88F1-A3002F001E83",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.6:p14:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F2DB3C10-65DF-4642-B581-8BE75FA2FAFA",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.6:p15:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8D8002B4-116A-449D-9569-DED474D3CFBE",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.6:p2:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "02592D65-2D2C-460A-A970-8A18F9B156ED",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.6:p3:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "457B89CF-C75E-4ED6-8603-9C52BA462A9E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.6:p4:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A572A2DC-2DAB-4ABE-8FC2-5AF2340C826F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.6:p5:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2A2DD9C6-BAF5-4DF5-9C14-3478923B2019",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.6:p6:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "BA9CFC70-24CF-4DFA-AEF9-9B5A9DAF837D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.6:p7:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2AA0B806-ABB8-4C18-9F9C-8291BE208F52",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.6:p8:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "AA9D4DAB-7567-48D7-BE60-2A10B35CFF27",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.6:p9:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A91E797D-63F6-4DE8-869C-AF0133DC6C03",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.7:-:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0E06FE04-8844-4409-92D9-4972B47C921B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.7:b1:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "99C620F3-40ED-4D7F-B6A1-205E948FD6F5",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.7:b2:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FBCFE5FB-FAB7-4BF0-90AE-79F9590FD872",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.7:beta3:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7EB4B9C5-513C-4039-8087-5E8880894318",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.7:p1:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9C77154A-DBFE-48C3-A274-03075A0DB040",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.7:p10:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "118E249C-662C-4F66-83A5-53B32808487B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.7:p2:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F5AAC414-623C-444F-9BD5-EE0ACE2B2246",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.7:p3:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8292888D-B0B0-4DF3-8719-EA4CDCAB39D1",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.7:p4:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9830E074-FDCF-41E9-98C7-10C20424EF4C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.7:p5:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9D0C8648-B39E-47C7-AA5C-3AFED22F8D40",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.7:p6:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "082F8B60-ECC5-4C55-BBFE-A0C8A3E95590",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.7:p7:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A7B83AD4-3134-414A-80E3-106C3C0F975A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.7:p8:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FAA14D5B-ACF2-497B-ACE7-33C42682D2DF",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.7:p9:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FCD04DB8-77E6-47FA-957C-F41530DC45E2",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.8:-:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "00E8284F-10CD-449C-AEF1-688B8287292F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.8:beta1:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "59C10C74-FDB1-46EC-8F41-F3AC24AEFB7D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.8:beta2:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2957B390-52C5-48D7-A6D7-709BC76B9C69",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.8:p1:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "524F64B6-F7F7-4926-884F-E9448636007C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.8:p2:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9F56F919-69B6-4A77-B8CE-F13409542F14",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.8:p3:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F81D46F6-AEA3-4A83-A6F5-2231FD4CEC46",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.8:p4:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "10A2F717-827A-424E-8DBA-CABED7C70A08",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.8:p5:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9643F300-6432-4C73-BD0E-05C76D36A53E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:magento:2.4.9:-:*:*:open_source:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "54548841-1E84-4D06-BC42-4D073713C6CB",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:adobe:i\\/o_events:*:*:*:*:*:commerce:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A651E64A-A7AC-4F26-A453-9493D256BD8D",
+                "versionStartIncluding": "1.6.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.21.0"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/10/27/cisa-adds-two-known-exploited-vulnerabilities-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.27",
+              "dateReleased": "2026-10-27T19:00:02.2307Z",
+              "retrievedAt": "2026-10-28T17:48:29.453Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-101767%2CCVE-2026-104351%2CCVE-2026-35273%2CCVE-2026-111497%2CCVE-2026-48356",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-48356",
+              "retrievedAt": "2026-10-28T17:48:29.453Z"
+            }
+          }
+        }
+      ],
+      "id": "s51"
+    },
+    {
+      "sourceId": "projectzero",
+      "sourceKind": "rss",
+      "title": "Fuzzers vs. AI: Comparing Fuzzilli and BigSleep on JavaScript Engines",
+      "url": "https://projectzero.google/2026/10/fuzzing-v-AI.html",
+      "publishedAt": "2026-10-27T07:00:00.000Z",
+      "excerpt": "Summary Project Zero compared two automated tools used by Google to find vulnerabilities in Chrome’s JavaScript engine, V8, on a regular basis. Fuzzilli is a generative JavaScript engine fuzzer and BigSleep is an LLM-based bug finding system. In the past six months, BigSleep found more vulnerabilities than Fuzzilli (45 versus 37) with a 25% overlap in the specific bugs reported. Since this…",
+      "canonicalUrl": "https://projectzero.google/2026/10/fuzzing-v-AI.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://projectzero.google/2026/10/fuzzing-v-AI.html"
+      ],
+      "cves": [],
+      "id": "s52"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 640,
+    "promptCacheMissTokens": 20977,
+    "outputTokens": 5047,
+    "estimatedCostUsd": 0.0043517320000000005
+  }
+}

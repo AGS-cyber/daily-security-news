@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-8eJjJoGewI/PAw1tfDgUX01ZwrPFqoQKNueaGjOsRXk='; style-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080b08">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22108%22%20height%3D%22108%22%20viewBox%3D%220%200%20108%20108%22%3E%0A%3Cpath%20d%3D%22M0%2C0h108v108h-108z%22%20fill%3D%22%23080b08%22%2F%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%237dffa4%22%20stroke-width%3D%227%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20transform%3D%22translate(54%2054)%20scale(1.45)%20translate(-54%20-54)%22%3E%0A%3Cpath%20d%3D%22M%2054%2044%20C%2054%2036%2043%2032.5%2036%2036%20C%2029.5%2039.5%2029.5%2048%2037.5%2052%20C%2046%2056%2054%2059.5%2053%2066.5%20C%2052%2073.5%2040.5%2075.5%2033%2071%22%2F%3E%0A%3Cpath%20d%3D%22M%2041.5%2027%20L%2041.5%2080%22%2F%3E%0A%3Cpath%20d%3D%22M%2064.5%2071.5%20L%2078.5%2071.5%22%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E">
+<title>Brotli and PeopleSoft join KEV as storefront attacks and Oracle scanning accelerate — 28 October 2026</title>
+<style>
+:root { color-scheme: dark;
+  --bg:#080b08; --fg:#c9f5d5; --bright:#7dffa4; --muted:#6aa87f; --dim:#4a7f5e;
+  --rule:#1e3327; --link:#79dfff; --warn:#ffb642; --warn-bg:#1e1505; --warn-fg:#ffdca6;
+  --note:#79dfff; --note-bg:#06181f;
+  --mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { background: var(--bg); scrollbar-color: var(--dim) var(--bg);
+  -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { margin: 0; color: var(--fg); line-height: 1.6; font-family: var(--mono); font-size: 1rem;
+  overflow-wrap: anywhere;
+  background: radial-gradient(ellipse at 50% -10%, #0f1c13 0%, var(--bg) 60%) no-repeat; }
+::selection { background: var(--bright); color: var(--bg); }
+main, header, footer { max-width: 76ch; margin: 0 auto; padding: 0 1rem; }
+main:focus { outline: none; }
+.skip { position: absolute; left: .5rem; top: -4rem; z-index: 10; padding: .5rem .75rem;
+  background: var(--bright); color: var(--bg); border: 0; }
+.skip:focus { top: .5rem; }
+header { display: flex; flex-wrap: wrap; gap: .4rem 1.25rem; align-items: baseline;
+  border-bottom: 1px solid var(--rule); padding-top: 1.25rem; padding-bottom: .6rem; }
+header .brand { color: var(--bright); font-weight: 700; }
+header .brand::before { content: "root@sec:~$ "; color: var(--dim); font-weight: 400; }
+.nav { display: flex; flex-wrap: wrap; gap: .25rem .9rem; }
+.nav a { border-bottom: 0; padding: .15rem 0; }
+.nav a::before { content: "["; color: var(--dim); }
+.nav a::after { content: "]"; color: var(--dim); }
+.nav a[aria-current="page"] { color: var(--bright); font-weight: 700; }
+.nav a:hover::before, .nav a:hover::after, .nav a:focus-visible::before, .nav a:focus-visible::after {
+  color: inherit; }
+a { color: var(--link); text-decoration: none; border-bottom: 1px dotted currentColor; }
+a:hover, a:focus-visible { background: var(--link); color: var(--bg); border-bottom-color: transparent; }
+:focus-visible { outline: 2px solid var(--bright); outline-offset: 2px; }
+h1 { font-size: 1.4rem; line-height: 1.35; margin: 1.5rem 0 .75rem; color: var(--bright); }
+h1::before { content: "$ "; color: var(--dim); font-weight: 400; }
+h2 { font-size: 1.05rem; line-height: 1.4; margin: 0 0 .5rem; color: var(--bright); }
+strong { color: var(--bright); }
+hr { border: 0; border-top: 1px dashed var(--rule); margin: 2rem 0; }
+code { color: var(--warn); }
+pre { border: 1px solid var(--rule); padding: .75rem; overflow-x: auto; }
+.summary { color: var(--muted); font-size: .875rem; margin: 0 0 .5rem; }
+.summary::before { content: "// "; color: var(--dim); }
+.summary .warn { color: var(--warn); font-weight: 700; }
+.edition-status { border-left: 2px solid var(--dim); padding: .1rem 0 .1rem .9rem; margin: 0 0 1.5rem;
+  font-size: .875rem; color: var(--muted); }
+.edition-status p { margin: 0 0 .35rem; }
+.edition-status .kind { color: var(--fg); }
+.edition-status[data-state="due"], .edition-status[data-state="stale"],
+.edition-status[data-state="future"], .edition-status[data-state="invalid"] { border-left-color: var(--warn); }
+.age-status p { margin: .35rem 0 0; }
+.age-status .warn-line { color: var(--warn-fg); background: var(--warn-bg); border: 1px solid var(--warn);
+  padding: .5rem .75rem; }
+.age-status .warn-line strong { color: var(--warn); }
+.toc { margin: .35rem 0 0; }
+.toc ul { display: inline; list-style: none; margin: 0; padding: 0; }
+.toc li { display: inline; }
+.toc li + li::before { content: " \00B7 "; color: var(--dim); }
+.notice, .degraded { border: 1px solid; padding: .75rem 1rem; margin: 1.25rem 0; font-size: .9rem; }
+.notice::before, .degraded::before { display: block; letter-spacing: .12em; font-size: .75rem;
+  margin-bottom: .4rem; }
+.notice { border-color: var(--note); background: var(--note-bg); }
+.notice::before { content: "[ NOTICE ]"; color: var(--note); }
+.notice h2 { color: var(--note); font-size: .95rem; }
+.degraded { border-color: var(--warn); background: var(--warn-bg); color: var(--warn-fg); }
+.degraded::before { content: "[ !! DEGRADED ]"; color: var(--warn); }
+.degraded h2 { color: var(--warn); font-size: .95rem; letter-spacing: .04em; text-transform: uppercase; }
+.degraded ul, .notice ul { list-style: none; margin: .5rem 0 0; padding: 0; }
+.degraded li, .notice li { padding-left: 2ch; text-indent: -2ch; }
+.degraded li::before { content: "! "; color: var(--warn); }
+.notice li::before { content: "- "; color: var(--note); }
+.standfirst { color: var(--fg); margin: 0 0 1.75rem; padding-left: 1rem; border-left: 2px solid var(--dim); }
+.article h2 { margin: 2rem 0 .75rem; }
+.article h2::before { content: "## "; color: var(--dim); }
+.article p { margin: 0 0 1.1rem; }
+.article ul, .article ol { padding-left: 2ch; }
+.article li { margin: 0 0 .35rem; }
+.article li::marker { color: var(--dim); }
+.block { border-top: 1px solid var(--rule); margin-top: 2.5rem; padding-top: 1.25rem; }
+.block > h2::before, .stories-block > h2::before { content: "## "; color: var(--dim); }
+.stories-block { margin-top: 1.5rem; }
+.block-intro { color: var(--muted); font-size: .875rem; margin: 0 0 1rem; }
+ol.stories { list-style: none; margin: 0; padding: 0; }
+ol.stories > li { border-top: 1px solid var(--rule); padding: 1rem 0; }
+.story-title { font-size: 1rem; font-weight: 700; margin: 0 0 .3rem; }
+.story-title::before { content: "[" attr(data-n) "] "; color: var(--dim); font-weight: 400; }
+.meta { color: var(--muted); font-size: .875rem; margin: 0 0 .45rem; }
+.excerpt { margin: .4rem 0 0; }
+.also { font-size: .875rem; color: var(--muted); margin: .5rem 0 0; }
+.filters { border: 1px solid var(--rule); padding: .75rem; margin: 0 0 1rem; font-size: .875rem; }
+.filters .controls { display: flex; flex-wrap: wrap; gap: .6rem 1rem; align-items: flex-end; }
+.filters .field { display: flex; flex-direction: column; gap: .2rem; min-width: 0; flex: 1 1 12rem; }
+.filters label { color: var(--muted); }
+.filters input, .filters select, .filters button { font: inherit; font-size: 1rem; color: var(--fg); background: #0d140e;
+  border: 1px solid var(--dim); border-radius: 0; padding: .4rem .5rem; min-height: 2.75rem; max-width: 100%; }
+.filters button { cursor: pointer; color: var(--link); border-color: var(--link); flex: 0 0 auto; }
+.filters button:hover, .filters button:focus-visible { background: var(--link); color: var(--bg); }
+.filters .count { margin: .6rem 0 0; color: var(--fg); }
+.filters[data-active="true"] .count { color: var(--bright); }
+.filters .empty { padding: .5rem 0 0; }
+.vuln-list { list-style: none; margin: 0; padding: 0; }
+.vuln-list > li { color: var(--muted); font-size: .875rem; padding: .2rem 0; }
+.vuln-meta { margin: .35rem 0 0; }
+.vuln-meta > li::before { content: "> "; color: var(--dim); }
+.vuln-head span + span::before { content: " \00B7 "; color: var(--dim); }
+.vuln-summary .vuln-list > li { border-left: 2px solid var(--rule); padding: .5rem 0 .5rem .75rem; margin: 0 0 .75rem; }
+.vuln-summary .vuln-list > li.prio-known_exploited { border-left-color: var(--warn); }
+.vuln-summary .vuln-list > li.prio-critical { border-left-color: var(--bright); }
+.vuln-summary p { margin: .25rem 0; }
+.vuln-head { color: var(--fg); }
+.vuln-action { color: var(--fg); }
+.flag { color: var(--warn); }
+.coverage, .vuln-evidence { margin: .5rem 0; font-size: .875rem; color: var(--muted); }
+.coverage summary, .vuln-evidence summary { cursor: pointer; color: var(--link); padding: .2rem 0; }
+.vuln-evidence p { margin: .4rem 0; }
+.sources ul { list-style: none; margin: .5rem 0 0; padding: 0; font-size: .875rem; }
+.sources li { padding: .3rem 0; border-top: 1px dashed var(--rule); color: var(--muted); }
+.sources .tag { display: inline-block; min-width: 9ch; color: var(--fg); }
+.sources .src-failed .tag, .sources .src-empty .tag, .sources .src-unknown .tag { color: var(--warn); }
+.sources p { font-size: .875rem; color: var(--muted); margin: 0 0 .5rem; }
+table.cal { border-collapse: collapse; table-layout: fixed; width: 100%; margin: 0 0 2rem; }
+table.cal caption { text-align: left; color: var(--bright); font-size: 1.05rem; padding: 1.5rem 0 .6rem; }
+table.cal caption::before { content: "## "; color: var(--dim); }
+table.cal caption .count { color: var(--muted); font-size: .875rem; }
+table.cal th { font-weight: 400; font-size: .75rem; letter-spacing: .1em; color: var(--muted);
+  padding: .35rem 0; text-align: center; }
+table.cal th abbr { text-decoration: none; }
+table.cal td { border: 1px solid var(--rule); padding: 0; text-align: center; font-size: .9rem; }
+table.cal td.pad { border-color: transparent; }
+table.cal td span, table.cal td a { display: block; padding: .6rem 0; }
+table.cal td.off { border-style: dashed; }
+table.cal td.off span { color: var(--muted); }
+table.cal td a { border-bottom: 0; }
+table.cal td a.article { color: var(--bright); font-weight: 700; }
+table.cal td.latest { outline: 2px dashed var(--muted); outline-offset: -4px; }
+table.cal td a:hover, table.cal td a:focus-visible { background: var(--link); color: var(--bg); }
+table.cal td a.article:hover, table.cal td a.article:focus-visible { background: var(--bright); }
+.legend { color: var(--muted); font-size: .875rem; margin: 0 0 .5rem; }
+footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
+  padding-bottom: 3rem; color: var(--muted); font-size: .875rem; }
+footer::before { content: "// "; color: var(--dim); }
+.empty { color: var(--muted); padding: 1rem 0; }
+.empty::before { content: "# "; color: var(--dim); }
+@media (max-width: 30rem) {
+  body { font-size: .95rem; }
+  h1 { font-size: 1.2rem; }
+  main, header, footer { padding: 0 .75rem; }
+  table.cal td { font-size: .85rem; }
+}
+@media print {
+  .skip, .filters, .nav { display: none !important; }
+  body { background: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header>
+<span class="brand">daily-security-news</span>
+<nav class="nav" aria-label="Site">
+<a href="index.html">latest</a>
+<a href="archive.html">archive</a>
+</nav>
+</header>
+<main id="main" tabindex="-1">
+<h1>Brotli and PeopleSoft join KEV as storefront attacks and Oracle scanning accelerate</h1>
+<section class="edition-status" aria-label="Edition date and status" data-age data-role="edition" data-generated-at="2026-10-28T17:48:29.453Z">
+<p class="summary">8 of 52 stories written up · 12 sources configured; feeds 12 with entries · <a href="#edition-sources">source status</a> · generated 17:48 UTC</p>
+<p><strong>Edition 28 October 2026</strong> &middot; Generated <time datetime="2026-10-28T17:48:29.453Z">28 October 2026 17:48 UTC</time><span data-age-out hidden> (<span data-age-text></span>)</span>. Scheduled daily at 12:00 UTC; publication can be delayed.</p>
+<p class="kind"><strong>Stored edition</strong>: the permanent page for 28 October 2026. It is not updated after generation, so newer editions may exist; see <a href="index.html">latest</a> or the <a href="archive.html">archive</a>.</p>
+<div class="age-status" role="status"><p class="warn-line" data-age-when="future" hidden><strong>Clock mismatch.</strong> This page’s generation time is later than this device’s clock, so its age cannot be shown. Check the device’s date and time.</p><p class="warn-line" data-age-when="invalid" hidden><strong>Age unknown.</strong> The stored generation time could not be read.</p></div>
+<nav class="toc" aria-label="On this page"><ul><li><a href="#edition-article">Article</a></li><li><a href="#edition-vulns">Vulnerability intelligence (3)</a></li><li><a href="#edition-stories-h">Also collected (44)</a></li><li><a href="#edition-sources">Source status</a></li></ul></nav>
+</section>
+
+<p class="standfirst">CISA added two entries to its exploited-vulnerability catalog — a critical Brotli decoder overflow that ships inside Node.js, .NET and Debian, and an Adobe Commerce/Magento flaw — while PolyShell storefront attacks, a chained PeopleSoft exploit and fresh Oracle E-Business Suite probing all compress the window between patch and intrusion.</p>
+<div class="article" id="edition-article">
+<h2>Actively exploited</h2>
+<p>The Brotli entry is CVE-2026-111497: a CVSS 4.0 score of 9.2, rated Critical, buffer overflow in the decoder mapped to CWE-252 and CWE-787. A crafted Brotli-compressed stream from a remote, unauthenticated attacker can corrupt adjacent decoder state memory, disclose sensitive memory, cause denial of service or potentially execute arbitrary code. Libraries from 1.0.3 through 1.2.0 are affected; fixed releases are 1.0.10, 1.1.1 and 1.2.1, and the vulnerable code is nested inside Node.js, several .NET versions, the Python brotlicffi binding and Debian 12 — which is what makes a decoder CVE an inventory problem rather than a single upgrade. The second KEV addition covers Adobe Commerce and Magento, but the supplied material provides no CVE identifier for it; both were added citing evidence of active exploitation, alongside reporting of PolyShell attacks that breached hundreds of storefronts and of Brotli exploit traffic <a href="https://thehackernews.com/2026/10/adobe-commerce-polyshell-attacks-breach.html">Adobe Commerce PolyShell Attacks Breach Hundreds of Stores as Brotli Exploit Traffic Emerges</a>. CISA&#39;s remediation due date binds US federal agencies under BOD 26-04, not every estate; everyone else should treat KEV membership as a prioritisation signal, not a deadline.</p>
+<p>Separately, researchers describe what appears to be an AI-assisted intrusion by a suspected China-nexus actor that combined PHP2Shell with a kernel privilege escalation to root 25 servers and reach a U.S. government-affiliated network <a href="https://thehackernews.com/2026/10/php2shell-attack-roots-25-servers.html">PHP2Shell Attack Roots 25 Servers, Breaches U.S. Government-Affiliated Network</a>. The attribution and the AI-assistance characterisation are both hedged in the source; what is concrete is the chain — web-facing flaw to root to adjacent high-value network.</p>
+<p>The PeopleSoft bug ShinyHunters has been riding is not one flaw but three chained together, all patched by Oracle under a single identifier, CVE-2026-35273 <a href="https://thehackernews.com/2026/10/shinyhunters-exploited-oracle.html">ShinyHunters-Exploited Oracle PeopleSoft Zero-Day Turns Out to Be Three Chained Flaws</a>. That CVE is a 9.8 Critical missing-authentication flaw in PeopleTools 8.61 and 8.62, unauthenticated over HTTP with full confidentiality, integrity and availability impact, in KEV since it was added with known ransomware campaign use recorded. The root cause is a server-side request forgery that reaches an internal management interface because PeopleSoft trusts its own loopback address. Analysis: that loopback-trust detail is the more durable takeaway — it is a hunting signature that survives the next single-identifier patch, though whether other deployments share the pattern is not established in the supplied material.</p>
+<h2>Vulnerabilities</h2>
+<p>Probing has begun for CVE-2026-101767, a 9.8 Critical flaw in the Oracle Application Object Library of E-Business Suite, days after Oracle&#39;s Critical Patch Update fixed it <a href="https://thehackernews.com/2026/10/hackers-target-critical-oracle-e.html">Hackers Target Critical Oracle E-Business Suite RCE Flaw Days After Security Patch</a>. It affects 12.2.3 through 12.2.15 and allows an unauthenticated attacker with network access to take over the component. Scanning is not exploitation, and KEV enrichment returned a confirmed catalog miss — which does not establish that no exploitation has occurred. Internet-facing EBS teams have little room to stage the upgrade.</p>
+<p>Browser teams get a large batch this cycle: Chrome 156 fixes 52 bugs and Firefox 159 carries 167 security patches, over 200 fixes in total <a href="https://www.securityweek.com/chrome-and-firefox-updates-patch-over-200-vulnerabilities/">Chrome and Firefox Updates Patch Over 200 Vulnerabilities</a>. No individual CVEs were supplied, so the argument for acting is volume and reach rather than any named flaw.</p>
+<h2>Research</h2>
+<p>Volt Typhoon has been operating with a framework, &quot;Silent Train,&quot; built on rotating chains of connected devices compromised on demand — including for zero-day attacks against high-value systems <a href="https://www.bleepingcomputer.com/news/security/volt-typhoon-hides-zero-day-attacks-using-silent-train-framework/">Volt Typhoon hides zero-day attacks using &#39;Silent Train&#39; framework</a>. The reframing is that this is reusable infrastructure rather than one-off intrusion tradecraft, which complicates the usual advice to hunt for a single actor&#39;s bespoke tooling.</p>
+<h2>Industry</h2>
+<p>The U.K. budget states the government will &quot;consider where liability for cyber breaches should sit&quot; — a potential break from the voluntary codes the country has relied on to push vendors toward better security <a href="https://therecord.media/uk-budget-proposal-software-companies-liable-cyber-breaches">UK to look at making software companies liable for cyber breaches</a>. Nothing is committed yet; the significance is that vendor accountability now has a fiscal-process foothold.</p>
+<h2>Breaches</h2>
+<p>A ransomware attack on the University of New Mexico Health Sciences Center caused system outages and disrupted patient care and academic activities, with surgeries affected <a href="https://www.bleepingcomputer.com/news/security/unm-health-ransomware-attack-disrupts-patient-care-surgeries/">UNM Health ransomware attack disrupts patient care, surgeries</a>. The headline cost is operational: care deferred, not records counted.</p>
+
+</div>
+<section class="block vuln-summary" id="edition-vulns" aria-labelledby="edition-vulns-h">
+<h2 id="edition-vulns-h">Vulnerability intelligence</h2>
+<p class="block-intro">CVEs named in the stories this article covers that CISA lists as known exploited (KEV) or NVD rates High or Critical: KEV listings first, then by NVD CVSS score. Each source is shown as retrieved at the time given, not live.</p>
+<ul class="vuln-list"><li class="prio-known_exploited"><p class="vuln-head"><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-35273">CVE-2026-35273</a></span><span>CVSS 9.8 (3.1)</span><span>Critical</span><span>CISA KEV</span><span>CISA ransomware use: Known</span></p><p>Mentioned in: <a href="https://thehackernews.com/2026/10/shinyhunters-exploited-oracle.html">ShinyHunters-Exploited Oracle PeopleSoft Zero-Day Turns Out to Be Three Chained Flaws</a> (The Hacker News)</p><p class="vuln-action"><strong>CISA required action:</strong> Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset&#39;s internet exposure and ensuring adherence to BOD 26-04 patching guidelines.</p><p>CISA catalog due date: 2026-06-15 (not a universal deadline).</p><details class="vuln-evidence"><summary>Sources</summary><p><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">CISA KEV</a>: record found; retrieved <time datetime="2026-10-28T17:48:29.453Z">28 October 2026 17:48 UTC</time>.</p><p><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-35273">NVD</a>: record found; retrieved <time datetime="2026-10-28T17:48:29.453Z">28 October 2026 17:48 UTC</time>.</p><p>Absence from KEV does not establish absence of exploitation.</p></details></li>
+<li class="prio-known_exploited"><p class="vuln-head"><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-111497">CVE-2026-111497</a></span><span>CVSS 9.2 (4.0)</span><span>Critical</span><span>CISA KEV</span></p><p>Mentioned in: <a href="https://thehackernews.com/2026/10/adobe-commerce-polyshell-attacks-breach.html">Adobe Commerce PolyShell Attacks Breach Hundreds of Stores as Brotli Exploit Traffic Emerges</a> (The Hacker News)</p><p class="vuln-action"><strong>CISA required action:</strong> Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset&#39;s internet exposure and ensuring adherence to BOD 26-04 patching guidelines.</p><p>CISA catalog due date: 2026-11-10 (not a universal deadline).</p><details class="vuln-evidence"><summary>Sources</summary><p><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">CISA KEV</a>: record found; retrieved <time datetime="2026-10-28T17:48:29.453Z">28 October 2026 17:48 UTC</time>.</p><p><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-111497">NVD</a>: record found; retrieved <time datetime="2026-10-28T17:48:29.453Z">28 October 2026 17:48 UTC</time>.</p><p>Absence from KEV does not establish absence of exploitation.</p></details></li>
+<li class="prio-critical"><p class="vuln-head"><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-101767">CVE-2026-101767</a></span><span>CVSS 9.8 (3.1)</span><span>Critical</span></p><p>Mentioned in: <a href="https://thehackernews.com/2026/10/hackers-target-critical-oracle-e.html">Hackers Target Critical Oracle E-Business Suite RCE Flaw Days After Security Patch</a> (The Hacker News)</p><details class="vuln-evidence"><summary>Sources</summary><p><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">CISA KEV</a>: not in retrieved source; retrieved <time datetime="2026-10-28T17:48:29.453Z">28 October 2026 17:48 UTC</time>.</p><p><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-101767">NVD</a>: record found; retrieved <time datetime="2026-10-28T17:48:29.453Z">28 October 2026 17:48 UTC</time>.</p><p>Absence from KEV does not establish absence of exploitation.</p></details></li></ul>
+</section>
+<section class="block" aria-labelledby="edition-stories-h">
+<h2 id="edition-stories-h">Also collected in this edition</h2>
+<div class="filters" role="search" aria-label="Filter these stories" data-filters data-filter-target="edition-stories" hidden>
+<div class="controls">
+<div class="field"><label for="edition-stories-q">Search text</label><input id="edition-stories-q" type="search" data-filter="q" autocomplete="off" spellcheck="false"></div>
+<div class="field"><label for="edition-stories-priority">Vulnerability priority</label><select id="edition-stories-priority" data-filter="priority"><option value="">All stories (44)</option><option value="cve">Mentions any CVE (3)</option><option value="high">High, Critical or CISA KEV (3)</option><option value="critical">Critical or CISA KEV (3)</option><option value="known_exploited">CISA KEV (known exploited) (1)</option></select></div>
+<div class="field"><label for="edition-stories-source">Source</label><select id="edition-stories-source" data-filter="source"><option value="">All sources (44)</option><option value="bleepingcomputer">BleepingComputer (11)</option><option value="cisa-advisories">CISA Advisories (1)</option><option value="darkreading">Dark Reading (6)</option><option value="projectzero">Google Project Zero (1)</option><option value="microsoft-security">Microsoft Security (1)</option><option value="securelist">Securelist (1)</option><option value="securityweek">SecurityWeek (8)</option><option value="thehackernews">The Hacker News (11)</option><option value="therecord">The Record (4)</option></select></div><button type="button" data-filter-reset>Reset filters</button>
+</div>
+<p class="count" role="status" data-filter-count>Showing all 44 stories.</p>
+<p class="empty" data-filter-empty hidden>No stories match. Choose “Reset filters” to show all 44 stories again.</p>
+</div>
+<ol class="stories" id="edition-stories">
+<li id="s1" data-story data-source="thehackernews" data-priority="none">
+<p class="story-title" data-n="01"><a href="https://thehackernews.com/2026/10/google-to-allow-one-tap-android-app.html">Google to Allow One-Tap Android App Installs From Approved Third-Party Stores Outside U.S.</a></p>
+<p class="meta">The Hacker News · <time datetime="2026-10-28T17:08:09.000Z">28 October 2026 17:08 UTC</time></p>
+<p class="excerpt">Third-party Android app stores can now apply to Google for permission to install apps with one tap, without Android&#39;s usual confirmation screens, and to update them in the background. To qualify, a store must pass identity checks and send Google its full catalog, along with every new app and update, for ongoing malware scanning. Approved stores get the features from December 1, but only on</p>
+
+</li>
+<li id="s2" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="02"><a href="https://www.bleepingcomputer.com/news/security/sony-isp-subsidiary-data-breach-exposes-25-million-customer-records/">Sony ISP subsidiary data breach exposes 2.5 million customer records</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-10-28T16:45:47.000Z">28 October 2026 16:45 UTC</time></p>
+<p class="excerpt">Sony Network Communications has confirmed a data breach that compromised approximately 2.5 million records containing current and former customers&#39; personal information. [...]</p>
+
+</li>
+<li id="s3" data-story data-source="therecord" data-priority="none">
+<p class="story-title" data-n="03"><a href="https://therecord.media/moldova-investigates-possible-foreign-involvement-cyberattacks">Moldova investigates possible foreign involvement in major government cyberattack</a></p>
+<p class="meta">The Record · <time datetime="2026-10-28T16:37:00.000Z">28 October 2026 16:37 UTC</time></p>
+<p class="excerpt">Prime Minister Vasile Tofan said the incident may be part of a broader campaign targeting both citizens&#39; personal data and government digital infrastructure, according to local media reports.</p>
+
+</li>
+<li id="s4" data-story data-source="thehackernews" data-priority="none">
+<p class="story-title" data-n="04"><a href="https://thehackernews.com/2026/10/researcher-reveals-how-logic-bugs-alone.html">Researcher Reveals How Logic Bugs Alone Cracked Microsoft Edge in $175,000 Pwn2Own Win</a></p>
+<p class="meta">The Hacker News · <time datetime="2026-10-28T16:23:34.000Z">28 October 2026 16:23 UTC</time></p>
+<p class="excerpt">A chain of logic flaws, with no memory corruption, can turn a malicious web page into code running on a Windows computer outside Microsoft Edge&#39;s sandbox, a security researcher has shown. Orange Tsai of DEVCORE published the full method on October 28, five months after the chain won $175,000 at the Pwn2Own Berlin contest in May. Microsoft fixed the Edge bugs the day after the contest,</p>
+
+</li>
+<li id="s7" data-story data-source="microsoft-security" data-priority="none">
+<p class="story-title" data-n="05"><a href="https://www.microsoft.com/en-us/security/blog/2026/10/28/the-cisos-evolving-role-protecting-and-defending-in-the-agentic-era/">The CISO’s evolving role: Protecting and defending in the agentic era</a></p>
+<p class="meta">Microsoft Security · <time datetime="2026-10-28T16:00:00.000Z">28 October 2026 16:00 UTC</time></p>
+<p class="excerpt">As AI and agents reshape the enterprise, CISOs face two critical priorities: enabling innovation with the right identity and data guardrails, and modernizing defense to keep pace with AI-powered threats. Aarti Borkar shares how security leaders can approach both. The post The CISO’s evolving role: Protecting and defending in the agentic era appeared first on Microsoft Security Blog.</p>
+
+</li>
+<li id="s9" data-story data-source="therecord" data-priority="none">
+<p class="story-title" data-n="06"><a href="https://therecord.media/belarus-russia-hackers-ukraine-war">Belarusian hackers increasingly acting as proxies for Russia amid war in Ukraine</a></p>
+<p class="meta">The Record · <time datetime="2026-10-28T15:15:00.000Z">28 October 2026 15:15 UTC</time></p>
+<p class="excerpt">Belarus-linked hackers are increasingly aligning their cyber operations with Russia&#39;s interests in Ukraine, researchers said Wednesday.</p>
+
+</li>
+<li id="s10" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="07"><a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-reminds-entra-id-admins-to-migrate-users-to-passkeys/">Microsoft urges Entra ID admins to migrate users to passkeys</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-10-28T14:48:32.000Z">28 October 2026 14:48 UTC</time></p>
+<p class="excerpt">Microsoft again asked Entra ID administrators to migrate users to phishing-resistant methods to avoid sign-in disruptions before it retires SMS and voice authentication in February 2027. [...]</p>
+
+</li>
+<li id="s11" data-story data-source="darkreading" data-priority="none">
+<p class="story-title" data-n="08"><a href="https://www.darkreading.com/cyber-risk/attacker-impersonates-ai-bots-scans-credentials">Attacker Relentlessly Scans for Credentials by Impersonating AI Bots</a></p>
+<p class="meta">Dark Reading · <time datetime="2026-10-28T14:37:52.000Z">28 October 2026 14:37 UTC</time></p>
+<p class="excerpt">The threat actor lurked behind bots posing as agents from OpenAI, Anthropic, Meta, and others to find exposed data.</p>
+
+</li>
+<li id="s12" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="09"><a href="https://www.bleepingcomputer.com/news/security/infratrust-report-warns-of-exploited-flaws-in-critical-network-infrastructure/">InfraTrust report warns of exploited flaws in critical network infrastructure</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-10-28T14:00:00.000Z">28 October 2026 14:00 UTC</time></p>
+<p class="excerpt">Attackers are actively exploiting vulnerabilities across critical network infrastructure, and PHP flaws known as &quot;PHP2Shell&quot; put the web management interfaces of firewalls, VPNs, application delivery controllers, and other appliances at risk. [...]</p>
+
+</li>
+<li id="s13" data-story data-source="securityweek" data-priority="none">
+<p class="story-title" data-n="10"><a href="https://www.securityweek.com/upwind-security-raises-400-million-at-3-8-billion-valuation/">Upwind Security Raises $400 Million at $3.8 Billion Valuation</a></p>
+<p class="meta">SecurityWeek · <time datetime="2026-10-28T13:56:50.000Z">28 October 2026 13:56 UTC</time></p>
+<p class="excerpt">The massive funding round comes just days after reports emerged that Upwind had attracted acquisition interest from several companies, including Datadog The post Upwind Security Raises $400 Million at $3.8 Billion Valuation appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s14" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="11"><a href="https://www.bleepingcomputer.com/news/security/even-after-php2shell-blast-radius-matters-more-than-a-cvss-score/">Even after PHP2Shell, blast radius matters more than a CVSS score</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-10-28T13:50:59.000Z">28 October 2026 13:50 UTC</time></p>
+<p class="excerpt">PHP2Shell shows how quickly attackers can exploit critical vulnerabilities, often before organizations have time to patch. Token Security explains why limiting the access of service accounts, API keys, and AI agents is just as important as fixing vulnerabilities to reduce the damage from a breach. [...]</p>
+
+</li>
+<li id="s16" data-story data-source="securityweek" data-priority="none">
+<p class="story-title" data-n="12"><a href="https://www.securityweek.com/tls-flaws-found-in-goahead-web-server-used-in-hundreds-of-millions-of-devices/">TLS Flaws Found in GoAhead Web Server Used in Hundreds of Millions of Devices</a></p>
+<p class="meta">SecurityWeek · <time datetime="2026-10-28T13:10:34.000Z">28 October 2026 13:10 UTC</time></p>
+<p class="excerpt">FoxIO disclosed three GoAhead TLS bugs that can let revoked certificates through or expose some encrypted sessions to eavesdroppers. The post TLS Flaws Found in GoAhead Web Server Used in Hundreds of Millions of Devices appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s18" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="13"><a href="https://www.bleepingcomputer.com/news/security/hackers-now-scanning-systems-for-recently-patched-oracle-flaw/">Hackers now scanning systems for recently-patched Oracle flaw</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-10-28T12:19:57.000Z">28 October 2026 12:19 UTC</time></p>
+<p class="excerpt">Attackers have begun probing the Internet for systems unpatched against a recently disclosed critical Oracle E-Business Suite (EBS) vulnerability. [...]</p>
+
+</li>
+<li id="s19" data-story data-source="securityweek" data-priority="none">
+<p class="story-title" data-n="14"><a href="https://www.securityweek.com/china-linked-hackers-exploit-php2shell-to-root-firewalls/">China-Linked Hackers Exploit PHP2Shell to Root Firewalls</a></p>
+<p class="meta">SecurityWeek · <time datetime="2026-10-28T12:00:59.000Z">28 October 2026 12:00 UTC</time></p>
+<p class="excerpt">The attackers chained PHP2Shell and Fragnesia exploits and hacked two servers of a US government-affiliated organization. The post China-Linked Hackers Exploit PHP2Shell to Root Firewalls appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s20" data-story data-source="therecord" data-priority="none">
+<p class="story-title" data-n="15"><a href="https://therecord.media/fbi-seizure-csam-virtualine">FBI seizes ‘bulletproof’ hosting site accused of facilitating child abuse, money laundering</a></p>
+<p class="meta">The Record · <time datetime="2026-10-28T12:00:00.000Z">28 October 2026 12:00 UTC</time></p>
+<p class="excerpt">The FBI seized the domain of a “bulletproof” hosting provider accused of facilitating a range of cybercrimes, including money laundering and the distribution of child sexual abuse material.</p>
+
+</li>
+<li id="s21" data-story data-source="thehackernews" data-priority="none">
+<p class="story-title" data-n="16"><a href="https://thehackernews.com/2026/10/critical-16-year-old-uefi-flaw-can-run.html">Critical 16-Year-Old UEFI Flaw Can Run Code Before Secure Boot on Network-Booting Servers</a></p>
+<p class="meta">The Hacker News · <time datetime="2026-10-28T11:50:00.000Z">28 October 2026 11:50 UTC</time></p>
+<p class="excerpt">A critical 16-year-old flaw in EDK II, the open-source code that most hardware makers use to build UEFI firmware, can allow an attacker to run code on a machine before its operating system loads, but only while the machine is booting over the network. UEFI firmware is the software that runs first when a computer is switched on, before the operating system. An attacker who can reach the machine</p>
+
+</li>
+<li id="s22" data-story data-source="thehackernews" data-priority="none">
+<p class="story-title" data-n="17"><a href="https://thehackernews.com/2026/10/wazuh-and-ai-for-enhanced-soc-workflows.html">Wazuh and AI for Enhanced SOC Workflows</a></p>
+<p class="meta">The Hacker News · <time datetime="2026-10-28T11:30:00.000Z">28 October 2026 11:30 UTC</time></p>
+<p class="excerpt">Artificial Intelligence (AI) has become one of this decade&#39;s defining technologies. From healthcare and finance to manufacturing and education, organizations increasingly rely on AI to automate repetitive tasks, uncover patterns hidden within large datasets, and support faster decision-making. Cybersecurity has experienced a similar transformation. While attackers employ AI to automate</p>
+
+</li>
+<li id="s23" data-story data-source="thehackernews" data-priority="critical">
+<p class="story-title" data-n="18"><a href="https://thehackernews.com/2026/10/adobe-fixes-8-critical-campaign-classic.html">Adobe Fixes 8 Critical Campaign Classic Flaws Allowing Code Execution and Security Bypass</a></p>
+<p class="meta">The Hacker News · <time datetime="2026-10-28T11:15:51.000Z">28 October 2026 11:15 UTC</time></p>
+<p class="excerpt">Adobe has released patches to address multiple critical security flaws in Campaign Classic that, if successfully exploited, could result in arbitrary code execution, security feature bypass, and privilege escalation. The list of eight vulnerabilities is as follows - CVE-2026-104351 (CVSS score: 9.9) - A code injection vulnerability that could lead to arbitrary code execution.</p>
+<ul class="vuln-list vuln-meta"><li><span class="vuln-head"><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-104351">CVE-2026-104351</a></span><span>CVSS 9.9 (3.1)</span><span>Critical</span></span><details class="vuln-evidence"><summary>Sources</summary><p><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">CISA KEV</a>: not in retrieved source; retrieved <time datetime="2026-10-28T17:48:29.453Z">28 October 2026 17:48 UTC</time>.</p><p><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-104351">NVD</a>: record found; retrieved <time datetime="2026-10-28T17:48:29.453Z">28 October 2026 17:48 UTC</time>.</p><p>Absence from KEV does not establish absence of exploitation.</p></details></li></ul>
+
+</li>
+<li id="s24" data-story data-source="securityweek" data-priority="none">
+<p class="story-title" data-n="19"><a href="https://www.securityweek.com/long-hidden-flaws-patched-in-epics-research-facility-control-software/">Long-Hidden Flaws Patched in EPICS Research Facility Control Software</a></p>
+<p class="meta">SecurityWeek · <time datetime="2026-10-28T10:48:00.000Z">28 October 2026 10:48 UTC</time></p>
+<p class="excerpt">Four EPICS Base flaws found by an autonomous system could let attackers crash processes at particle accelerators and fusion labs. The post Long-Hidden Flaws Patched in EPICS Research Facility Control Software appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s25" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="20"><a href="https://www.bleepingcomputer.com/news/security/cisa-warns-of-hackers-now-exploiting-critical-node2shell-flaw/">CISA warns of hackers now exploiting critical Node2Shell flaw</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-10-28T10:46:23.000Z">28 October 2026 10:46 UTC</time></p>
+<p class="excerpt">On Tuesday, the US Cybersecurity and Infrastructure Security Agency (CISA) confirmed that hackers have begun exploiting a critical Brotli vulnerability known as Node2Shell, Broccoli2Shell, and HTTP2Shell. [...]</p>
+
+</li>
+<li id="s26" data-story data-source="securityweek" data-priority="none">
+<p class="story-title" data-n="21"><a href="https://www.securityweek.com/nobody-trusts-the-security-questionnaire-we-rely-on-it-anyway/">Nobody Trusts the Security Questionnaire. We Rely on It Anyway.</a></p>
+<p class="meta">SecurityWeek · <time datetime="2026-10-28T10:30:00.000Z">28 October 2026 10:30 UTC</time></p>
+<p class="excerpt">The process that gates nearly every B2B deal is a self-assessment the sender distrusts and the receiver accepts. There is finally a better basis for trust between companies. The post Nobody Trusts the Security Questionnaire. We Rely on It Anyway. appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s27" data-story data-source="thehackernews" data-priority="none">
+<p class="story-title" data-n="22"><a href="https://thehackernews.com/2026/10/american-organizations-under-attack.html">American Organizations Under Attack: Skyw4lker Device Code Phishing Campaign Exposed</a></p>
+<p class="meta">The Hacker News · <time datetime="2026-10-28T10:30:00.000Z">28 October 2026 10:30 UTC</time></p>
+<p class="excerpt">Modern phishing campaigns can compromise American businesses without relying on traditional credential theft. Attackers can abuse legitimate cloud services, authentication mechanisms, and trusted business workflows to gain access to corporate accounts while leaving fewer obvious signs behind. ANY.RUN&#39;s analysis of Skyw4lker, a device code phishing campaign primarily targeting U.S. organizations</p>
+
+</li>
+<li id="s28" data-story data-source="securelist" data-priority="none">
+<p class="story-title" data-n="23"><a href="https://securelist.com/intelbras-camera-vulnerability/121131/">Millions of security cameras at risk: DoS vulnerability in Intelbras devices</a></p>
+<p class="meta">Securelist · <time datetime="2026-10-28T10:00:18.000Z">28 October 2026 10:00 UTC</time></p>
+<p class="excerpt">During our research, we discovered a denial-of-service vulnerability that could affect millions of Intelbras IP camera systems built on the platform platform of a popular Chinese manufacturer.</p>
+
+</li>
+<li id="s29" data-story data-source="securityweek" data-priority="none">
+<p class="story-title" data-n="24"><a href="https://www.securityweek.com/secrets-management-firm-infisical-valued-at-600-million-after-40-million-raise/">Secrets Management Firm Infisical Valued at $600 Million After $40 Million Raise</a></p>
+<p class="meta">SecurityWeek · <time datetime="2026-10-28T09:48:24.000Z">28 October 2026 09:48 UTC</time></p>
+<p class="excerpt">The company will use the Series B funds to expand its platform for securing AI agents’ access to sensitive systems. The post Secrets Management Firm Infisical Valued at $600 Million After $40 Million Raise appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s30" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="25"><a href="https://www.bleepingcomputer.com/news/security/nefilim-and-hive-ransomware-affiliate-gets-70-months-in-prison/">Nefilim and Hive ransomware affiliate gets 70 months in prison</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-10-28T09:43:15.000Z">28 October 2026 09:43 UTC</time></p>
+<p class="excerpt">A Ukrainian national was sentenced to 70 months in prison for his role in ransomware attacks targeting hospitals, government entities, and high-revenue businesses worldwide between 2018 and 2021. [...]</p>
+<p class="also">Also covered by: <a href="https://www.securityweek.com/ukrainian-hive-and-nefilim-ransomware-affiliate-gets-70-months-in-us-prison/">SecurityWeek</a></p>
+</li>
+<li id="s31" data-story data-source="securityweek" data-priority="critical">
+<p class="story-title" data-n="26"><a href="https://www.securityweek.com/hackers-start-probing-fresh-oracle-ebs-vulnerability/">Hackers Start Probing Fresh Oracle EBS Vulnerability</a></p>
+<p class="meta">SecurityWeek · <time datetime="2026-10-28T09:14:23.000Z">28 October 2026 09:14 UTC</time></p>
+<p class="excerpt">CVE-2026-101767 is an unauthenticated SQL injection that can be exploited for remote code execution. The post Hackers Start Probing Fresh Oracle EBS Vulnerability appeared first on SecurityWeek.</p>
+<ul class="vuln-list vuln-meta"><li><span class="vuln-head"><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-101767">CVE-2026-101767</a></span><span>CVSS 9.8 (3.1)</span><span>Critical</span></span><details class="vuln-evidence"><summary>Sources</summary><p><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">CISA KEV</a>: not in retrieved source; retrieved <time datetime="2026-10-28T17:48:29.453Z">28 October 2026 17:48 UTC</time>.</p><p><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-101767">NVD</a>: record found; retrieved <time datetime="2026-10-28T17:48:29.453Z">28 October 2026 17:48 UTC</time>.</p><p>Absence from KEV does not establish absence of exploitation.</p></details></li></ul>
+
+</li>
+<li id="s32" data-story data-source="securityweek" data-priority="none">
+<p class="story-title" data-n="27"><a href="https://www.securityweek.com/cisa-warns-of-node2shell-exploitation-as-honeypots-log-attack-attempts/">CISA Warns of Node2Shell Exploitation as Honeypots Log Attack Attempts</a></p>
+<p class="meta">SecurityWeek · <time datetime="2026-10-28T08:37:24.000Z">28 October 2026 08:37 UTC</time></p>
+<p class="excerpt">CISA added the Brotli flaw to its KEV catalog, and two honeypot operators logged attempts, including one that used a broken exploit. The post CISA Warns of Node2Shell Exploitation as Honeypots Log Attack Attempts appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s33" data-story data-source="thehackernews" data-priority="none">
+<p class="story-title" data-n="28"><a href="https://thehackernews.com/2026/10/anthropics-unreleased-ai-model-chains.html">Anthropic&#39;s Unreleased AI Model Chains Flaws Into Working Chrome, Safari, Windows and Linux Exploits</a></p>
+<p class="meta">The Hacker News · <time datetime="2026-10-28T08:15:07.000Z">28 October 2026 08:15 UTC</time></p>
+<p class="excerpt">An unreleased Anthropic AI model found security flaws in Chrome, Safari, Android, Windows, and Linux and chained them into working proof-of-concept exploits, the company said in its latest report. The exploits were built in the lab after the model was prompted, not seen in any real attack, and Anthropic reported every flaw to the vendor first, so all of them are already patched. One proof of</p>
+
+</li>
+<li id="s34" data-story data-source="thehackernews" data-priority="none">
+<p class="story-title" data-n="29"><a href="https://thehackernews.com/2026/10/fbi-seizes-virtualine-domain-over.html">FBI Seizes Virtualine Domain Over Alleged Criminal Hosting and Bitcoin Money Laundering</a></p>
+<p class="meta">The Hacker News · <time datetime="2026-10-28T07:37:50.000Z">28 October 2026 07:37 UTC</time></p>
+<p class="excerpt">The U.S. Department of Justice (DoJ) on Tuesday announced the seizure of a domain associated with a bulletproof hosting provider (BPH) named Virtualine. The move was in response to the service being used to commit and facilitate prolific criminal activity, including &quot;the advertisement of sexually explicit images of minors, the intentional disclosure of nonconsensual intimate visual depictions</p>
+
+</li>
+<li id="s35" data-story data-source="thehackernews" data-priority="none">
+<p class="story-title" data-n="30"><a href="https://thehackernews.com/2026/10/japans-gmo-offers-1-million-bounty-to.html">Japan&#39;s GMO Offers $1 Million Bounty to Catch Hackers Behind FX Trading Cloud Breach</a></p>
+<p class="meta">The Hacker News · <time datetime="2026-10-28T07:13:21.000Z">28 October 2026 07:13 UTC</time></p>
+<p class="excerpt">Japan&#39;s GMO Internet Group is offering up to $1 million in total for tips that help catch the attackers who breached its Onamae.com Desktop Cloud service, after refusing to pay an extortion demand. The reward program opened on October 28 and pays only if a tip helps lead to an arrest or an international wanted notice. The service hosts Windows desktops used for FX trading,</p>
+
+</li>
+<li id="s36" data-story data-source="thehackernews" data-priority="none">
+<p class="story-title" data-n="31"><a href="https://thehackernews.com/2026/10/tailscale-patches-ssh-flaws-that-could.html">Tailscale Patches SSH Flaws That Could Let Hacked Devices Gain Root Access on Other Servers</a></p>
+<p class="meta">The Hacker News · <time datetime="2026-10-28T06:20:37.000Z">28 October 2026 06:20 UTC</time></p>
+<p class="excerpt">Tailscale has released version 1.104.4 to fix flaws in its built-in SSH server that could let an attacker reach services and files on other servers that only the root user should be able to touch. The flaws are in how Tailscale SSH forwards network connections, a job the Tailscale background process carries out with root privileges. To use them, an attacker must</p>
+
+</li>
+<li id="s38" data-story data-source="darkreading" data-priority="none">
+<p class="story-title" data-n="32"><a href="https://www.darkreading.com/cybersecurity-operations/third-serengeti-sweep-1400-arrests-investigations-mature">Third Serengeti Sweep Tops 1,400 Arrests as Investigations Mature</a></p>
+<p class="meta">Dark Reading · <time datetime="2026-10-28T06:00:00.000Z">28 October 2026 06:00 UTC</time></p>
+<p class="excerpt">Interpol&#39;s annual Operation Serengeti, now on its third iteration, led to 1,462 arrests across 20 African countries and the US, recovering $105 million in stolen funds.</p>
+
+</li>
+<li id="s40" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="33"><a href="https://www.bleepingcomputer.com/news/security/japans-gmo-urges-customers-to-shut-down-pcs-amid-ransomware-threat/">Japan&#39;s GMO urges customers to shut down PCs amid ransomware threat</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-10-27T23:35:51.000Z">27 October 2026 23:35 UTC</time></p>
+<p class="excerpt">The GMO Group has urged customers to disconnect their systems from the internet and shut down computers after a threat actor who breached the company&#39;s Onamae Desktop Cloud threatened to launch a ransomware attack today. [...]</p>
+
+</li>
+<li id="s41" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="34"><a href="https://www.bleepingcomputer.com/news/artificial-intelligence/openais-gpt-61-terra-is-safer-overall-but-shows-more-destructive-action-flags-in-tests/">OpenAI&#39;s GPT-6.1 Terra is safer overall, but shows more destructive-action flags in tests</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-10-27T22:43:27.000Z">27 October 2026 22:43 UTC</time></p>
+<p class="excerpt">OpenAI confirmed GPT-6.1 Terra is safer overall than some of its older models, but its safety testing also found other problems. [...]</p>
+
+</li>
+<li id="s43" data-story data-source="darkreading" data-priority="none">
+<p class="story-title" data-n="35"><a href="https://www.darkreading.com/cyber-risk/3-frameworks-cisos-ai-liability">3 Frameworks to Protect CISOs &amp;amp; Orgs Against AI Liability</a></p>
+<p class="meta">Dark Reading · <time datetime="2026-10-27T21:15:03.000Z">27 October 2026 21:15 UTC</time></p>
+<p class="excerpt">Cyber leaders can get ahead of AI liability with rigorous documentation, transparency, and smart contract negotiations with AI vendors.</p>
+
+</li>
+<li id="s44" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="36"><a href="https://www.bleepingcomputer.com/news/security/hackers-hijack-convertr-analytics-script-to-steal-payment-card-data/">Hackers hijack Convertr analytics script to steal payment card data</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-10-27T20:57:25.000Z">27 October 2026 20:57 UTC</time></p>
+<p class="excerpt">A credit card skimming group reportedly compromised a shared analytics script used by e-commerce platform Convertr to steal shoppers&#39; payment data during checkout. [...]</p>
+
+</li>
+<li id="s45" data-story data-source="darkreading" data-priority="none">
+<p class="story-title" data-n="37"><a href="https://www.darkreading.com/cloud-security/email-bombing-external-teams-chats-repeatable-access-path">External Teams Chats Anchor 15-Minute Malware Delivery</a></p>
+<p class="meta">Dark Reading · <time datetime="2026-10-27T20:42:40.000Z">27 October 2026 20:42 UTC</time></p>
+<p class="excerpt">Mail bombing is getting a new look with a wide-scale, ongoing social engineering campaign that might be tied to the Black Basta ransomware gang.</p>
+
+</li>
+<li id="s46" data-story data-source="therecord" data-priority="none">
+<p class="story-title" data-n="38"><a href="https://therecord.media/nefilim-hive-ransomware-operator-70-months-prison">Nefilim, Hive ransomware operator given five-year-plus sentence after guilty plea</a></p>
+<p class="meta">The Record · <time datetime="2026-10-27T20:40:00.000Z">27 October 2026 20:40 UTC</time></p>
+<p class="excerpt">Ukrainian national Artem Stryzhak, 36, had pleaded guilty last year to charges related to participating in at least two well-known ransomware groups.</p>
+
+</li>
+<li id="s47" data-story data-source="darkreading" data-priority="none">
+<p class="story-title" data-n="39"><a href="https://www.darkreading.com/cyber-risk/sboms-alone-scope-supply-chain-attack">SBOMs Alone Can&#39;t Reveal the Scope of a Supply Chain Attack</a></p>
+<p class="meta">Dark Reading · <time datetime="2026-10-27T19:58:06.000Z">27 October 2026 19:58 UTC</time></p>
+<p class="excerpt">A recent Shai-Hulud attack shows defenders need real-time visibility into production code and affected services to respond to supply chain compromises.</p>
+
+</li>
+<li id="s48" data-story data-source="thehackernews" data-priority="none">
+<p class="story-title" data-n="40"><a href="https://thehackernews.com/2026/10/cyberstrikeai-uses-44-ai-agents-to.html">CyberStrikeAI Uses 44 AI Agents to Automate Hacking Operations Against Japan Targets</a></p>
+<p class="meta">The Hacker News · <time datetime="2026-10-27T18:26:46.000Z">27 October 2026 18:26 UTC</time></p>
+<p class="excerpt">Cybersecurity researchers have disclosed details of three cyber attacks targeting organizations in Japan in which artificial intelligence (AI) was a key element, either in the driving seat or to assist a human operator. TrendAI, which analyzed three exposed server environments used by threat actors to conduct the malicious cyber operations, described them as distinct from previously published</p>
+
+</li>
+<li id="s49" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="41"><a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-releases-windows-oob-updates-to-distrust-emudhra-certificates/">Microsoft releases Windows OOB updates to distrust eMudhra certificates</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-10-27T18:20:28.000Z">27 October 2026 18:20 UTC</time></p>
+<p class="excerpt">Microsoft has released out-of-band (OOB) Windows updates to remove trust in certificates tied to compromised eMudhra certificate authority keys, protecting systems that do not receive automatic certificate trust updates. [...]</p>
+
+</li>
+<li id="s50" data-story data-source="darkreading" data-priority="none">
+<p class="story-title" data-n="42"><a href="https://www.darkreading.com/cybersecurity-operations/ai-kill-off-cybersecurity-pros-skills">Beware the Slasher: AI Could Kill Off Cybersecurity Pros&#39; Skills</a></p>
+<p class="meta">Dark Reading · <time datetime="2026-10-27T17:43:07.000Z">27 October 2026 17:43 UTC</time> · 24 hours before this edition</p>
+<p class="excerpt">Nathan Hamiel outlines potential SecOps horror in the AI midst, as core technical capabilities go the way of reading an atlas or remembering phone numbers.</p>
+
+</li>
+<li id="s51" data-story data-source="cisa-advisories" data-priority="known_exploited">
+<p class="story-title" data-n="43"><a href="https://www.cisa.gov/news-events/alerts/2026/10/27/cisa-adds-two-known-exploited-vulnerabilities-catalog">CISA Adds Two Known Exploited Vulnerabilities to Catalog</a></p>
+<p class="meta">CISA Advisories · <time datetime="2026-10-27T12:00:00.000Z">27 October 2026 12:00 UTC</time> · 29 hours before this edition</p>
+<p class="excerpt">CISA has added two new vulnerabilities to its Known Exploited Vulnerabilities (KEV) Catalog, based on evidence of active exploitation. CVE-2026-48356 Adobe Commerce and Magento Unrestricted Upload of File with Dangerous Type Vulnerability CVE-2026-111497 Google Brotli Unchecked Return Value Vulnerability These types of vulnerabilities are a frequent attack vector for malicious cyber actors and…</p>
+<ul class="vuln-list vuln-meta"><li><span class="vuln-head"><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-48356">CVE-2026-48356</a></span><span>CVSS 9.3 (3.1)</span><span>Critical</span><span>CISA KEV</span></span><details class="vuln-evidence"><summary>Sources and required action</summary><p><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">CISA KEV</a>: record found; retrieved <time datetime="2026-10-28T17:48:29.453Z">28 October 2026 17:48 UTC</time>.</p><p><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-48356">NVD</a>: record found; retrieved <time datetime="2026-10-28T17:48:29.453Z">28 October 2026 17:48 UTC</time>.</p><p class="vuln-action"><strong>CISA required action:</strong> Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset&#39;s internet exposure and ensuring adherence to BOD 26-04 patching guidelines.</p><p>CISA catalog due date: 2026-11-10 (not a universal deadline).</p><p>Absence from KEV does not establish absence of exploitation.</p></details></li>
+<li><span class="vuln-head"><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-111497">CVE-2026-111497</a></span><span>CVSS 9.2 (4.0)</span><span>Critical</span><span>CISA KEV</span></span><details class="vuln-evidence"><summary>Sources and required action</summary><p><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">CISA KEV</a>: record found; retrieved <time datetime="2026-10-28T17:48:29.453Z">28 October 2026 17:48 UTC</time>.</p><p><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-111497">NVD</a>: record found; retrieved <time datetime="2026-10-28T17:48:29.453Z">28 October 2026 17:48 UTC</time>.</p><p class="vuln-action"><strong>CISA required action:</strong> Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset&#39;s internet exposure and ensuring adherence to BOD 26-04 patching guidelines.</p><p>CISA catalog due date: 2026-11-10 (not a universal deadline).</p><p>Absence from KEV does not establish absence of exploitation.</p></details></li></ul>
+
+</li>
+<li id="s52" data-story data-source="projectzero" data-priority="none">
+<p class="story-title" data-n="44"><a href="https://projectzero.google/2026/10/fuzzing-v-AI.html">Fuzzers vs. AI: Comparing Fuzzilli and BigSleep on JavaScript Engines</a></p>
+<p class="meta">Google Project Zero · <time datetime="2026-10-27T07:00:00.000Z">27 October 2026 07:00 UTC</time> · 34 hours before this edition</p>
+<p class="excerpt">Summary Project Zero compared two automated tools used by Google to find vulnerabilities in Chrome’s JavaScript engine, V8, on a regular basis. Fuzzilli is a generative JavaScript engine fuzzer and BigSleep is an LLM-based bug finding system. In the past six months, BigSleep found more vulnerabilities than Fuzzilli (45 versus 37) with a 25% overlap in the specific bugs reported. Since this…</p>
+
+</li>
+</ol>
+</section>
+<section class="block sources" id="edition-sources" aria-labelledby="edition-sources-h">
+<h2 id="edition-sources-h">Source status</h2>
+<p>All 12 configured sources have a recorded result: 12 with entries, 0 empty, 0 failed. Failures are listed first.</p>
+<p>Counts precede date validation, deduplication and the seven-day news window. A successful fetch does not establish that a source has new reporting.</p>
+<ul><li class="src-ok"><span class="tag">FETCHED</span> Krebs on Security: 10 entries collected; checked <time datetime="2026-10-28T17:48:29.453Z">28 October 2026 17:48 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> BleepingComputer: 15 entries collected; checked <time datetime="2026-10-28T17:48:29.453Z">28 October 2026 17:48 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> The Hacker News: 50 entries collected; checked <time datetime="2026-10-28T17:48:29.453Z">28 October 2026 17:48 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> The Record: 5 entries collected; checked <time datetime="2026-10-28T17:48:29.453Z">28 October 2026 17:48 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> SecurityWeek: 10 entries collected; checked <time datetime="2026-10-28T17:48:29.453Z">28 October 2026 17:48 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> Dark Reading: 50 entries collected; checked <time datetime="2026-10-28T17:48:29.453Z">28 October 2026 17:48 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> CISA Advisories: 30 entries collected; checked <time datetime="2026-10-28T17:48:29.453Z">28 October 2026 17:48 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> Google Project Zero: 10 entries collected; checked <time datetime="2026-10-28T17:48:29.453Z">28 October 2026 17:48 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> Securelist: 10 entries collected; checked <time datetime="2026-10-28T17:48:29.453Z">28 October 2026 17:48 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> Cisco Talos: 15 entries collected; checked <time datetime="2026-10-28T17:48:29.453Z">28 October 2026 17:48 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> Unit 42: 15 entries collected; checked <time datetime="2026-10-28T17:48:29.453Z">28 October 2026 17:48 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> Microsoft Security: 10 entries collected; checked <time datetime="2026-10-28T17:48:29.453Z">28 October 2026 17:48 UTC</time>.</li></ul>
+<p>No collected entries were excluded during normalization.</p>
+</section>
+</main>
+<footer>Edition generated <time datetime="2026-10-28T17:48:29.453Z">28 October 2026 17:48 UTC</time>; this page shows that run and is not regenerated with newer data. Stored record: <a href="editions/2026-10-28.json">editions/2026-10-28.json</a>.</footer>
+<script>(function () {
+"use strict";
+var ISO = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d{1,3})?)?(?:Z|[+-]\d{2}:\d{2})$/;
+var GRACE = 7200000;
+var SKEW = 300000;
+var DAY = 86400000;
+var RANK = { none: 0, cve: 1, high: 2, critical: 3, known_exploited: 4 };
+function own(o, k) { return Object.prototype.hasOwnProperty.call(o, k); }
+function parseTime(value) {
+  if (typeof value !== "string" || !ISO.test(value)) return NaN;
+  var ms = Date.parse(value);
+  return isFinite(ms) ? ms : NaN;
+}
+function result(state, ageMs) { return { state: state, ageMs: ageMs }; }
+function ageState(role, generatedMs, dueMs, nowMs) {
+  var hasGen = isFinite(generatedMs);
+  var hasDue = role !== "edition" && isFinite(dueMs);
+  if (!isFinite(nowMs)) return result("invalid", NaN);
+  if (hasGen && generatedMs - nowMs > SKEW) return result("future", NaN);
+  if (hasDue && dueMs - nowMs > 1.5 * DAY) return result("future", NaN);
+  var age = hasGen ? Math.max(0, nowMs - generatedMs) : NaN;
+  if (!hasDue) return result(hasGen ? "ok" : "invalid", age);
+  if (nowMs < dueMs) return result("current", age);
+  if (nowMs < dueMs + GRACE) return result("due", age);
+  return result("stale", age);
+}
+function plural(n, unit) { return n + " " + unit + (n === 1 ? "" : "s"); }
+function formatAge(ms) {
+  if (typeof ms !== "number" || !isFinite(ms) || ms < 0) return "";
+  var minutes = Math.floor(ms / 60000);
+  if (minutes < 1) return "less than a minute ago";
+  if (minutes < 60) return plural(minutes, "minute") + " ago";
+  var hours = Math.floor(minutes / 60);
+  if (hours < 48) return plural(hours, "hour") + " ago";
+  return plural(Math.floor(hours / 24), "day") + " ago";
+}
+function queryTokens(query) {
+  var parts = String(query == null ? "" : query).toLowerCase().split(/\s+/);
+  var out = [];
+  for (var i = 0; i < parts.length && out.length < 20; i++) if (parts[i]) out.push(parts[i]);
+  return out;
+}
+function storyMatches(story, filter) {
+  var want = filter.priority || "";
+  if (want && own(RANK, want)) {
+    var have = own(RANK, story.priority) ? RANK[story.priority] : 0;
+    if (want === "known_exploited" ? story.priority !== "known_exploited" : have < RANK[want]) return false;
+  }
+  if (filter.source && story.source !== filter.source) return false;
+  for (var i = 0; i < filter.tokens.length; i++) {
+    if (story.text.indexOf(filter.tokens[i]) === -1) return false;
+  }
+  return true;
+}
+function countText(shown, total) {
+  var noun = total === 1 ? " story." : " stories.";
+  if (total === 0) return "There are no stories in this list.";
+  if (shown === total) return "Showing all " + total + noun;
+  if (shown === 0) return "No stories match these filters (0 of " + total + ").";
+  return "Showing " + shown + " of " + total + noun;
+}
+var logic = {
+  parseTime: parseTime, ageState: ageState, formatAge: formatAge,
+  queryTokens: queryTokens, storyMatches: storyMatches, countText: countText
+};
+
+if (typeof document === "undefined" || !document.querySelectorAll) return;
+var ages = [];
+var filters = [];
+function each(list, fn) { for (var i = 0; i < list.length; i++) fn(list[i]); }
+function show(el, on) { if (el && el.hidden === on) el.hidden = !on; }
+function setText(el, text) { if (el && el.textContent !== text) el.textContent = text; }
+function refreshAges() {
+  var now = Date.now();
+  each(ages, function (box) {
+    var r = logic.ageState(
+      box.getAttribute("data-role") || "edition",
+      logic.parseTime(box.getAttribute("data-generated-at")),
+      logic.parseTime(box.getAttribute("data-next-due")),
+      now
+    );
+    if (box.getAttribute("data-state") !== r.state) box.setAttribute("data-state", r.state);
+    var text = logic.formatAge(r.ageMs);
+    each(box.querySelectorAll("[data-age-text]"), function (el) { setText(el, text); });
+    each(box.querySelectorAll("[data-age-out]"), function (el) { show(el, text !== ""); });
+    each(box.querySelectorAll("[data-age-when]"), function (el) {
+      show(el, el.getAttribute("data-age-when") === r.state);
+    });
+  });
+}
+function bindFilters(box) {
+  var list = document.getElementById(box.getAttribute("data-filter-target") || "");
+  if (!list) return;
+  var q = box.querySelector('[data-filter="q"]');
+  var priority = box.querySelector('[data-filter="priority"]');
+  var source = box.querySelector('[data-filter="source"]');
+  var reset = box.querySelector("[data-filter-reset]");
+  var count = box.querySelector("[data-filter-count]");
+  var empty = box.querySelector("[data-filter-empty]");
+  var stories = [];
+  each(list.querySelectorAll("li[data-story]"), function (el) {
+    stories.push({
+      el: el,
+      text: String(el.textContent || "").toLowerCase(),
+      source: el.getAttribute("data-source") || "",
+      priority: el.getAttribute("data-priority") || "none"
+    });
+  });
+  function value(el) { return el ? String(el.value || "") : ""; }
+  function apply() {
+    var f = { tokens: logic.queryTokens(value(q)), priority: value(priority), source: value(source) };
+    var shown = 0;
+    each(stories, function (s) {
+      var ok = logic.storyMatches(s, f);
+      if (ok) shown++;
+      show(s.el, ok);
+    });
+    setText(count, logic.countText(shown, stories.length));
+    show(empty, shown === 0 && stories.length > 0);
+    var active = f.tokens.length > 0 || f.priority !== "" || f.source !== "";
+    box.setAttribute("data-active", active ? "true" : "false");
+  }
+  if (q) q.addEventListener("input", apply);
+  each([priority, source], function (el) {
+    if (!el) return;
+    el.addEventListener("change", apply);
+    el.addEventListener("input", apply);
+  });
+  if (reset) reset.addEventListener("click", function () {
+    if (q) q.value = "";
+    if (priority) priority.value = "";
+    if (source) source.value = "";
+    apply();
+  });
+  filters.push(apply);
+  box.hidden = false;
+  apply();
+}
+each(document.querySelectorAll("[data-age]"), function (el) { ages.push(el); });
+each(document.querySelectorAll("[data-filters]"), bindFilters);
+refreshAges();
+function resume() {
+  refreshAges();
+  each(filters, function (apply) { apply(); });
+}
+document.addEventListener("visibilitychange", function () { if (!document.hidden) resume(); });
+window.addEventListener("pageshow", resume);
+window.addEventListener("focus", refreshAges);
+if (ages.length) setInterval(function () { if (!document.hidden) refreshAges(); }, 60000);
+})();</script>
+</body>
+</html>
