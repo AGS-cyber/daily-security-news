@@ -1,0 +1,2923 @@
+{
+  "date": "2026-10-29",
+  "generatedAt": "2026-10-29T17:55:35.695Z",
+  "collection": [
+    {
+      "sourceId": "krebs",
+      "attemptedAt": "2026-10-29T17:55:35.695Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "attemptedAt": "2026-10-29T17:55:35.695Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "thehackernews",
+      "attemptedAt": "2026-10-29T17:55:35.695Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "therecord",
+      "attemptedAt": "2026-10-29T17:55:35.695Z",
+      "status": "ok",
+      "items": 5,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securityweek",
+      "attemptedAt": "2026-10-29T17:55:35.695Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "darkreading",
+      "attemptedAt": "2026-10-29T17:55:35.695Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "attemptedAt": "2026-10-29T17:55:35.695Z",
+      "status": "ok",
+      "items": 30,
+      "skipped": 0
+    },
+    {
+      "sourceId": "projectzero",
+      "attemptedAt": "2026-10-29T17:55:35.695Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securelist",
+      "attemptedAt": "2026-10-29T17:55:35.695Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "talos",
+      "attemptedAt": "2026-10-29T17:55:35.695Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "unit42",
+      "attemptedAt": "2026-10-29T17:55:35.695Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "microsoft-security",
+      "attemptedAt": "2026-10-29T17:55:35.695Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    }
+  ],
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 229,
+    "published": 53
+  },
+  "mode": "article",
+  "headline": "Warp Panda's log-blinding VMware bug enters KEV as Cisco and Palo Alto report live attacks",
+  "standfirst": "CISA's catalog addition for a VMware ESX logging flaw confirms exploitation in a legal-sector espionage case, while Cisco and Palo Alto Networks both report live attacks on edge appliances. Also in today's briefing: a critical Linux kernel TCP bug with an AI-written exploit, a reported federal identity breach, and a large Chrome extension hijack.",
+  "bodyMarkdown": "## Actively exploited\n\nCISA added CVE-2026-41709 to its Known Exploited Vulnerabilities catalog after the VMware ESX flaw was tied to attacks on the U.S. legal sector by the China-nexus actor Warp Panda [[s43]]. On paper it is small: NVD describes insufficient logging (CWE-778) that lets a malicious administrator perform operations without them being recorded, scoring 2.7 LOW with high privileges required and no user interaction. KEV membership, not the score, is the signal. CISA's required action — apply vendor mitigations under its risk-based federal patching directive — binds federal agencies, not everyone, and the supplied text does not describe the post-exploitation chain.\n\nCisco released patches for CVE-2026-76418, an 8.6 HIGH flaw in the Remote Access SSL VPN service of Secure Firewall ASA and FTD software, saying it has been exploited in the wild [[s33]]. An unauthenticated remote attacker can send a crafted request that reloads the device, a denial of service, but the trigger requires secondary authentication configured on a tunnel group, so exposure varies by deployment. It is not in KEV; a catalog miss is not proof of safety.\n\nPalo Alto Networks says active exploitation has been observed against management interfaces exposed to the internet, targeting the recently patched PHP2Shell flaws [[s44]]. No CVE identifiers came with this item, so the vendor advisory is the authoritative list. Analysis: an administrative plane reachable from the internet is the exposure itself; patching narrows it, and the supplied text says nothing about what attackers did afterwards.\n\n## Vulnerabilities\n\nCVE-2026-98432, a use-after-free in the Linux kernel's TCP handling, carries a 9.8 CRITICAL rating and affects Ubuntu, RHEL and other distributions [[s6]]. The exploit is the notable part: Anthropic said its AI model wrote one that lets a remote attacker with no credentials run commands as root. The CVE is not in KEV, and the structured record supplies no affected version ranges, so patch status must be checked per distribution rather than inferred. Analysis: the vector — network, no privileges, no user interaction, full confidentiality, integrity and availability impact — is about as bad as kernel bugs get.\n\n## Breaches\n\nMore than 41,000 DHS employee records were reportedly leaked after personal and work information was allegedly stolen from an Okta single sign-on system earlier this year [[s22]]. Both the leak and the theft are described as alleged; no confirmation, additional scope or remediation was supplied. Identity providers stay the centre of federal breach risk for the obvious reason: a compromised SSO tenant sits upstream of everything it authenticates.\n\n## Research\n\n319 Chrome extensions with a combined 13.4 million reported installs were hijacking searches, redirecting queries through tracking servers to generate advertising revenue from Bing and Yahoo [[s3]]. No CVE or extension list was supplied. Analysis: install counts describe the internet, not your estate — the operative question is which of these sit in your browser fleet.\n\nCisco Talos documented NIK C2, a new AI-integrated command-and-control framework observed in the wild [[s36]]. The excerpt offers no victimology, tooling detail or attribution. Analysis: \"AI-integrated\" is a descriptor, not a capability claim; the practical signal is model assistance folded into unglamorous C2 work rather than anything autonomous.\n\n## Industry\n\nU.S. law enforcement seized the primary domain of Virtualine, a bulletproof hosting service advertised on cybercrime forums for facilitating illegal activity [[s47]]. No operator, charges, or hosting footprint beyond the seized domain were supplied. Analysis: a domain seizure removes a storefront and a brand; the underlying capacity usually reappears under a new name.",
+  "selected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "China-Linked Hackers Exploited VMware ESX Zero-Day to Reduce Audit Trail Visibility",
+      "url": "https://thehackernews.com/2026/10/china-linked-hackers-exploited-vmware.html",
+      "publishedAt": "2026-10-29T06:22:33.000Z",
+      "excerpt": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Wednesday added a security flaw impacting Broadcom VMware ESX to its Known Exploited Vulnerabilities (KEV) catalog, after CrowdStrike revealed that it had been weaponized by a China-nexus threat actor known as Warp Panda in attacks targeting the U.S. legal sector. The vulnerability in question is CVE-2026-41709 (CVSS score:",
+      "canonicalUrl": "https://thehackernews.com/2026/10/china-linked-hackers-exploited-vmware.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/china-linked-hackers-exploited-vmware.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-41709",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Broadcom",
+            "product": "VMware ESX",
+            "vulnerabilityName": "Broadcom VMWare ESX Insufficient Logging Vulnerability",
+            "dateAdded": "2026-10-28",
+            "shortDescription": "Broadcom VMWare ESX contains an insufficient logging vulnerability that could allow a malicious actor with admin access to perform certain operations without being logged.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-11",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://support.broadcom.com/web/ecx/support-content-notification/-/external/content/SecurityAdvisories/0/38017 ; ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-41709",
+            "cwes": [
+              "CWE-778"
+            ]
+          },
+          "nvd": {
+            "description": "VMware ESX contains an insufficient logging vulnerability. A malicious administrator could exploit this issue to perform certain operations without them being logged.",
+            "cvss": {
+              "version": "3.1",
+              "score": 2.7,
+              "severity": "LOW",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:L/A:N",
+              "source": "security@vmware.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-778"
+            ],
+            "published": "2026-07-30T14:16:57.420",
+            "lastModified": "2026-10-29T17:29:11.590",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://support.broadcom.com/web/ecx/support-content-notification/-/external/content/SecurityAdvisories/0/38017",
+                "source": "security@vmware.com",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-41709",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D7DC2815-CD13-42DC-96E5-412CFB768A6A",
+                "versionStartIncluding": "9.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "9.0.2.0100"
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7A1A402A-9262-4B97-A0B7-E5AE045E394D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:a:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FE44B379-9943-4DD1-8514-26F87482AFA8",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:b:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2A797377-8945-4D75-AA68-A768855E5842",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:c:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "79D84D76-54BE-49E9-905C-7D65B4B42D68",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:d:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E3BC5C77-258A-4920-B217-396212056B14",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:e:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "17D484EB-037C-46E2-ADDF-846B3A02843F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:f:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9E689385-7521-4A7A-B81E-DD84A3B58238",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:g:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "69E59579-57D6-40BA-98FA-28D3C41BA222",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2F8767F7-7C3D-457D-9EAC-E8A30796F751",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_1a:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "29AF8474-2D7A-4C5A-82B9-7A873AD90C2E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_1c:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7781A2CA-D927-48CD-9932-AE42B7BA1EFE",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_1d:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "18FD08C9-5895-4BF4-BBE0-C2DDA5F6B836",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "360C1B71-5360-4379-B0DE-63BB8F5E6DA2",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_2b:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B16ED7C1-9881-452A-8BE0-EDDEAEFE3D7B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_2c:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "ED92209F-FBD6-43F9-9A15-3842B139FCC9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_2d:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C37C4F29-E18F-439B-83A2-16457D04BEE1",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_2e:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "934CDD6F-E611-4693-AD30-12F35E10A75C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_2f:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5E33AE07-0F0F-4030-B62A-65DD086648D1",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6B701151-1B57-4E2D-A9AB-586FACEA2385",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_3b:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "4230B9AA-9E0C-4AE2-814D-8DD641394879",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_3c:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F2FA150B-93E4-44D2-BF6D-347085A95776",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_3d:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "12356603-13A5-4CC7-813A-7FF3DFC21A95",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_3e:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F0EBA616-FA2A-4A2D-918E-2D32579DA1F3",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_3f:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B275C1D0-9CFF-46DF-9630-1DD7CA060A6A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_3g:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D47EDD24-7244-471B-8752-37AA7BAA38DC",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_3h:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "BEA3431E-7C96-435E-8771-C76386374568",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_3i:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "4802C03A-C3BC-4295-BE05-6E569E9FEB8A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:vmware:cloud_foundation:*:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "E1B59BCD-58B0-4E47-8990-80B03443DB1C",
+                "versionStartIncluding": "5.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.2.4"
+              },
+              {
+                "criteria": "cpe:2.3:a:vmware:telco_cloud_platform:*:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "97FFC2CA-34F4-4822-93F1-0D645075462B",
+                "versionStartIncluding": "5.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:vmware:vsphere_foundation:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "03AD0AB7-45A3-4DC7-923D-1166346EEA12",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/10/china-linked-hackers-exploited-vmware.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.28",
+              "dateReleased": "2026-10-28T19:00:04.8077Z",
+              "retrievedAt": "2026-10-29T17:55:35.695Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-98432%2CCVE-2026-76418%2CCVE-2026-97229%2CCVE-2026-41709%2CCVE-2026-20127%2CCVE-2026-46300",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-41709",
+              "retrievedAt": "2026-10-29T17:55:35.695Z"
+            }
+          }
+        }
+      ],
+      "id": "s43",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "CISA added the VMware ESX flaw to KEV after CrowdStrike tied its exploitation by China-nexus Warp Panda to attacks on the U.S. legal sector, making log-blind virtualization hosts a confirmed espionage target."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Cisco Patches Actively Exploited ASA and FTD VPN Flaw That Can Crash Firewalls",
+      "url": "https://thehackernews.com/2026/10/cisco-patches-actively-exploited-asa.html",
+      "publishedAt": "2026-10-29T10:44:46.000Z",
+      "excerpt": "Cisco has released patches to address a high-severity security flaw in Secure Firewall Adaptive Security Appliance (ASA) Software and Secure Firewall Threat Defense (FTD) Software that it said has been exploited in the wild. The vulnerability, tracked as CVE-2026-76418, is rated 8.6 on the CVSS scoring system. Successful exploitation could allow an unauthenticated, remote attacker to cause the",
+      "canonicalUrl": "https://thehackernews.com/2026/10/cisco-patches-actively-exploited-asa.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/cisco-patches-actively-exploited-asa.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-76418",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "A vulnerability in the Remote Access SSL VPN service of Cisco Secure Firewall Adaptive Security Appliance (ASA) Software and Cisco Secure Firewall Threat Defense (FTD) Software could allow an unauthenticated, remote attacker to cause the device to reload unexpectedly, resulting in a denial of service (DoS) condition. This vulnerability is due to logic errors when secondary authentication is configured on a tunnel group. An attacker could exploit this vulnerability by sending a crafted request when connecting to the SSL remote access VPN. A successful exploit could allow the attacker to cause the affected device to reload, resulting in a DoS condition.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.6,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H",
+              "source": "psirt@cisco.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-690"
+            ],
+            "published": "2026-10-28T20:18:47.063",
+            "lastModified": "2026-10-29T15:04:37.187",
+            "vulnStatus": "Undergoing Analysis",
+            "references": [
+              {
+                "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-asaftd-tunnel-dos-s6mgkb75",
+                "source": "psirt@cisco.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/10/cisco-patches-actively-exploited-asa.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.28",
+              "dateReleased": "2026-10-28T19:00:04.8077Z",
+              "retrievedAt": "2026-10-29T17:55:35.695Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-98432%2CCVE-2026-76418%2CCVE-2026-97229%2CCVE-2026-41709%2CCVE-2026-20127%2CCVE-2026-46300",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-76418",
+              "retrievedAt": "2026-10-29T17:55:35.695Z"
+            }
+          }
+        }
+      ],
+      "id": "s33",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "Cisco's second actively exploited SSL VPN zero-day since August lets an unauthenticated attacker crash ASA and FTD firewalls, so internet-facing VPN appliances need patching now."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Linux Kernel TCP Flaw With 9.8 CVSS Score Affects Ubuntu, Red Hat and Other Distributions",
+      "url": "https://thehackernews.com/2026/10/linux-kernel-tcp-flaw-with-98-cvss.html",
+      "publishedAt": "2026-10-29T15:57:05.000Z",
+      "excerpt": "A flaw in the Linux kernel's TCP code, tracked as CVE-2026-98432, affects Ubuntu, Red Hat Enterprise Linux (RHEL), and other Linux distributions. The kernel's own CVE team rates it 9.8 out of 10 on the CVSS scale. Anthropic said on October 27 that its AI model wrote an exploit that uses the flaw to let a remote attacker with no credentials run commands as root on Linux servers with a",
+      "canonicalUrl": "https://thehackernews.com/2026/10/linux-kernel-tcp-flaw-with-98-cvss.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/linux-kernel-tcp-flaw-with-98-cvss.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-98432",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nipv4: free inet_opt and ireq_opt after an RCU grace period\n\ntcp_v4_syn_recv_sock() transfers ownership of ireq->ireq_opt to the\nchild socket (newinet->inet_opt) without copying it.\n\nAnother cpu can concurrently process a retransmitted SYN for the same\nrequest socket, and send a SYNACK from tcp_check_req().\ntcp_v4_send_synack() and inet_csk_route_req() read ireq->ireq_opt\nunder rcu_read_lock() only, and ip_build_and_send_pkt() and\nip_options_build() then read opt->optlen twice.\n\nNote that the SYNACK timer itself is not an issue: it holds a\nreference on its request socket, and inet_csk_reqsk_queue_drop()\ncalls timer_delete_sync() before the child can be freed.\n\nSince commit 079096f103fa (\"tcp/dccp: install syn_recv requests\ninto ehash table\"), request sockets are processed without holding\nthe listener lock, so nothing prevents the child socket from being\nfreed while the SYNACK is still being built. TCP child sockets do\nnot have SOCK_RCU_FREE, and inet_sock_destruct() frees inet_opt\nwith a plain kfree(), leading to a use-after-free in\nip_options_build().\n\nA similar issue exists with request socket migration\n(net.ipv4.tcp_migrate_req=1, or a BPF_SK_REUSEPORT_SELECT_OR_MIGRATE\nprogram). reqsk_timer_handler() clones the request socket with\ninet_reqsk_clone(), so that the old request socket and its clone\nshare the same ireq_opt, then reqsk_migrate_reset() clears the\npointer in the old one. Another cpu holding a reference on the old\nrequest socket can still be using these options (sending a SYNACK,\nor creating a child in tcp_v4_syn_recv_sock()) when the clone is\nfreed, and tcp_v4_reqsk_destructor() also uses a plain kfree().\n\nReaders already use RCU, and other paths replacing inet_opt\n(do_ip_setsockopt(), cipso_v4_sock_setattr()...) already use\nkfree_rcu(). Use kfree_rcu() in inet_sock_destruct() and\ntcp_v4_reqsk_destructor() as well.\n\nIPv6 is not affected by the first issue, because tcp_v6_syn_recv_sock()\nduplicates the options. tcp_v6_reqsk_destructor() has the same\nmigration issue with ipv6_opt, which is only set by CALIPSO. This\nwill be addressed in a separate patch.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+              "type": "Secondary"
+            },
+            "cwes": [],
+            "published": "2026-10-15T13:17:13.987",
+            "lastModified": "2026-10-24T14:16:41.427",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://git.kernel.org/stable/c/11a03ce3c4a62d84c10ccdfe47f8075006498568",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/26d4c36d318cffbbd160884a0e4cec0da4da4936",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/742f73df544e03744f2981c467d6542fe8172a2a",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/89b5b1eb7d633c33832b7ff2c02e19a144705036",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/95a8c8fa9f27dce64c40c41c062de7728bf34ab5",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/a47406c769f72c070386985488f1c4d057df86b2",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/b3b027ef0cd322bfa839b9aaf5b27551eea54cf6",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/e3f33b0a1d89d738e2b913dab519226eaf76e15b",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/10/linux-kernel-tcp-flaw-with-98-cvss.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.28",
+              "dateReleased": "2026-10-28T19:00:04.8077Z",
+              "retrievedAt": "2026-10-29T17:55:35.695Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-98432%2CCVE-2026-76418%2CCVE-2026-97229%2CCVE-2026-41709%2CCVE-2026-20127%2CCVE-2026-46300",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-98432",
+              "retrievedAt": "2026-10-29T17:55:35.695Z"
+            }
+          }
+        }
+      ],
+      "id": "s6",
+      "section": "vulnerabilities",
+      "rank": 3,
+      "angle": "A 9.8-rated Linux kernel TCP use-after-free spanning Ubuntu and RHEL now has an AI-written exploit that yields root without credentials, raising urgency for kernel patch cycles."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Attackers Exploit PHP2Shell Flaws in Internet-Exposed Palo Alto Networks Management Interfaces",
+      "url": "https://thehackernews.com/2026/10/attackers-exploit-php2shell-flaws-in.html",
+      "publishedAt": "2026-10-29T05:50:17.000Z",
+      "excerpt": "Palo Alto Networks on Wednesday warned that threat actors are exploiting the recently patched PHP2Shell vulnerabilities against publicly-accessible management interfaces. \"Active exploitation has been observed targeting the Palo Alto Networks management interface exposed to the internet,\" the network security company said in an update to its advisory. The vulnerabilities, tracked as",
+      "canonicalUrl": "https://thehackernews.com/2026/10/attackers-exploit-php2shell-flaws-in.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/attackers-exploit-php2shell-flaws-in.html"
+      ],
+      "cves": [],
+      "id": "s44",
+      "section": "exploited",
+      "rank": 4,
+      "angle": "Palo Alto Networks confirms live exploitation of the PHP2Shell flaws against internet-exposed management interfaces, a direct path to full control of the firewall estate."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Over 41,000 DHS Employee Records Leaked Online",
+      "url": "https://www.securityweek.com/over-41000-dhs-employee-records-leaked-online/",
+      "publishedAt": "2026-10-29T12:54:14.000Z",
+      "excerpt": "The personal and work information was allegedly stolen from an Okta single sign-on system earlier this year. The post Over 41,000 DHS Employee Records Leaked Online appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/over-41000-dhs-employee-records-leaked-online",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/over-41000-dhs-employee-records-leaked-online"
+      ],
+      "cves": [],
+      "id": "s22",
+      "section": "breaches",
+      "rank": 5,
+      "angle": "More than 41,000 DHS employee records reportedly leaked after an Okta single sign-on compromise, keeping identity-provider exposure at the center of federal breach risk."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Chrome extensions with 13.4 million installs caught hijacking searches",
+      "url": "https://www.bleepingcomputer.com/news/security/chrome-extensions-with-134-million-installs-caught-hijacking-searches/",
+      "publishedAt": "2026-10-29T16:10:31.000Z",
+      "excerpt": "A massive search-hijacking campaign involving 319 Chrome extensions with a combined 13.4 million reported installations redirected users' searches through tracking servers to generate advertising revenue from Bing and Yahoo. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/chrome-extensions-with-134-million-installs-caught-hijacking-searches",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/chrome-extensions-with-134-million-installs-caught-hijacking-searches"
+      ],
+      "cves": [],
+      "id": "s3",
+      "section": "research",
+      "rank": 6,
+      "angle": "319 Chrome extensions with 13.4 million installs were quietly redirecting searches through tracking servers, a reminder that browser extension inventory is an active attack surface."
+    },
+    {
+      "sourceId": "talos",
+      "sourceKind": "rss",
+      "title": "NIK C2: The new AI-enabled command-and-control framework",
+      "url": "https://blog.talosintelligence.com/nik-c2-new-ai-enabled-framework/",
+      "publishedAt": "2026-10-29T10:00:00.000Z",
+      "excerpt": "Cisco Talos observed a new AI-integrated command-and-control (C2) framework in the wild called “NIK C2.”",
+      "canonicalUrl": "https://blog.talosintelligence.com/nik-c2-new-ai-enabled-framework",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://blog.talosintelligence.com/nik-c2-new-ai-enabled-framework"
+      ],
+      "cves": [],
+      "id": "s36",
+      "section": "research",
+      "rank": 7,
+      "angle": "Talos documents NIK C2, an AI-integrated command-and-control framework seen in the wild, offering a concrete look at how AI is being folded into attacker infrastructure."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Police seize Virtualine bulletproof service tied to ransowmare, cybercrime",
+      "url": "https://www.bleepingcomputer.com/news/security/police-seize-virtualine-bulletproof-service-tied-to-ransowmare-cybercrime/",
+      "publishedAt": "2026-10-28T20:47:22.000Z",
+      "excerpt": "U.S. law enforcement has seized the primary domain of Virtualine, a bulletproof hosting service advertised on cybercrime forums for facilitating illegal activities. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/police-seize-virtualine-bulletproof-service-tied-to-ransowmare-cybercrime",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/police-seize-virtualine-bulletproof-service-tied-to-ransowmare-cybercrime"
+      ],
+      "cves": [],
+      "id": "s47",
+      "section": "industry",
+      "rank": 8,
+      "angle": "U.S. law enforcement seized the Virtualine bulletproof hosting domain, disrupting infrastructure that advertised itself as shelter for ransomware and cybercrime operations."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "When Risk Becomes Personal: What Security Leaders Can Learn From a Cancer Diagnosis",
+      "url": "https://www.securityweek.com/when-risk-becomes-personal-what-security-leaders-can-learn-from-a-cancer-diagnosis/",
+      "publishedAt": "2026-10-29T16:30:00.000Z",
+      "excerpt": "Risk managers are trained to spot weak signals, plan for disruption and make hard decisions under uncertainty. But the discipline looks different when the risk is not a system or an enterprise, but you. The post When Risk Becomes Personal: What Security Leaders Can Learn From a Cancer Diagnosis appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/when-risk-becomes-personal-what-security-leaders-can-learn-from-a-cancer-diagnosis",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/when-risk-becomes-personal-what-security-leaders-can-learn-from-a-cancer-diagnosis"
+      ],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Federal bankruptcy courts contractor says no data stolen during cyber intrusion",
+      "url": "https://therecord.media/us-bankruptcy-courts-it-contractor-says-no-data-stolen-cyberattack",
+      "publishedAt": "2026-10-29T16:13:00.000Z",
+      "excerpt": "\"No data was extracted,” a spokesperson for BAE Systems, a federal contractor, told Recorded Future News about its probe into a cyberattack against its systems for federal bankruptcy courts.",
+      "canonicalUrl": "https://therecord.media/us-bankruptcy-courts-it-contractor-says-no-data-stolen-cyberattack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/us-bankruptcy-courts-it-contractor-says-no-data-stolen-cyberattack"
+      ],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "IDC MarketScape names Microsoft a Leader in the 2026 Worldwide Modern Endpoint Security for Enterprises Vendor Assessment",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/10/29/idc-marketscape-names-microsoft-a-leader-in-the-2026-worldwide-modern-endpoint-security-for-enterprises-vendor-assessment/",
+      "publishedAt": "2026-10-29T16:00:00.000Z",
+      "excerpt": "IDC has named Microsoft a Leader in the 2026 IDC MarketScape for Worldwide Modern Endpoint Security for Enterprises. The post IDC MarketScape names Microsoft a Leader in the 2026 Worldwide Modern Endpoint Security for Enterprises Vendor Assessment appeared first on Microsoft Security Blog.",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/10/29/idc-marketscape-names-microsoft-a-leader-in-the-2026-worldwide-modern-endpoint-security-for-enterprises-vendor-assessment",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://microsoft.com/en-us/security/blog/2026/10/29/idc-marketscape-names-microsoft-a-leader-in-the-2026-worldwide-modern-endpoint-security-for-enterprises-vendor-assessment"
+      ],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "Tracking AI adoption in North Korean threat actor tradecraft",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/10/29/tracking-ai-adoption-in-north-korean-threat-actor-tradecraft/",
+      "publishedAt": "2026-10-29T16:00:00.000Z",
+      "excerpt": "As Microsoft Threat Intelligence continues to track how threat actors operationalize AI to increase the speed and efficiency of attacks, we’ve identified North Korean threat actors expanding their use of AI with varying levels of adoption. This blog breaks down how North Korean threat actors are utilizing AI across their operations, reflecting a broader trend of threat actors incorporating AI…",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/10/29/tracking-ai-adoption-in-north-korean-threat-actor-tradecraft",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://microsoft.com/en-us/security/blog/2026/10/29/tracking-ai-adoption-in-north-korean-threat-actor-tradecraft"
+      ],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Threat Modeling With 4 Simple Questions on a White Board",
+      "url": "https://www.darkreading.com/cyber-risk/threat-modeling-4-simple-questions",
+      "publishedAt": "2026-10-29T15:44:04.000Z",
+      "excerpt": "A four-question exercise that CISOs can use to create a threat model that promises results, without a big spend.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/threat-modeling-4-simple-questions",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyber-risk/threat-modeling-4-simple-questions"
+      ],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Fake ChatGPT and Claude Apps Abuse Signed Executables to Deploy Crypto Miners",
+      "url": "https://thehackernews.com/2026/10/fake-chatgpt-and-claude-apps-abuse.html",
+      "publishedAt": "2026-10-29T15:20:29.000Z",
+      "excerpt": "Threat actors are delivering malicious loaders and cryptocurrency miners under the guise of artificial intelligence (AI) desktop applications for Anthropic Claude and OpenAI ChatGPT as part of a campaign dubbed Yoba. The activity involves creating fake GitHub projects that claim to be desktop applications like GPT-5.6 Sol, GPT-6 Astra, and Claude Opus, only to deliver a malware family called",
+      "canonicalUrl": "https://thehackernews.com/2026/10/fake-chatgpt-and-claude-apps-abuse.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/fake-chatgpt-and-claude-apps-abuse.html"
+      ],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Google Touts Powerful Cybersecurity Capabilities in Gemini 4 Carbon Model",
+      "url": "https://www.securityweek.com/google-says-gemini-4-carbon-leads-in-finding-exploiting-and-fixing-vulnerabilities/",
+      "publishedAt": "2026-10-29T15:01:00.000Z",
+      "excerpt": "Google’s new frontier model scored 88.2% on SEC-bench Pro and is rolling out first to vetted cyber defenders via its Fairwind Program. The post Google Touts Powerful Cybersecurity Capabilities in Gemini 4 Carbon Model appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/google-says-gemini-4-carbon-leads-in-finding-exploiting-and-fixing-vulnerabilities",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/google-says-gemini-4-carbon-leads-in-finding-exploiting-and-fixing-vulnerabilities"
+      ],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "How Secure Are US Elections? Voting Machine Risks and the Growing Threat of AI",
+      "url": "https://www.securityweek.com/how-secure-are-us-elections-voting-machine-risks-and-the-growing-threat-of-ai/",
+      "publishedAt": "2026-10-29T15:00:00.000Z",
+      "excerpt": "Unpatched voting machines, unverifiable QR-coded ballots, and AI-driven influence campaigns leave US elections short of secure. The post How Secure Are US Elections? Voting Machine Risks and the Growing Threat of AI appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/how-secure-are-us-elections-voting-machine-risks-and-the-growing-threat-of-ai",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/how-secure-are-us-elections-voting-machine-risks-and-the-growing-threat-of-ai"
+      ],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft fixes Remote Desktop failures caused by recent Windows updates",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-remote-desktop-failures-caused-by-recent-windows-updates/",
+      "publishedAt": "2026-10-29T14:35:40.000Z",
+      "excerpt": "Microsoft has resolved a known issue that prevents non-admin users from connecting to devices via Remote Desktop when the \"Administrator protection\" security feature is enabled. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-fixes-remote-desktop-failures-caused-by-recent-windows-updates",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/microsoft/microsoft-fixes-remote-desktop-failures-caused-by-recent-windows-updates"
+      ],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Cisco Open Sources Quarry to Catch AI Agent Attacks Hidden in Harmless Steps",
+      "url": "https://www.securityweek.com/cisco-open-sources-quarry-to-catch-ai-agent-attacks-hidden-in-harmless-steps/",
+      "publishedAt": "2026-10-29T14:18:03.000Z",
+      "excerpt": "Cisco open sourced Project Quarry, a rule language for detecting AI agent attacks that only emerge across sequences of benign actions. The post Cisco Open Sources Quarry to Catch AI Agent Attacks Hidden in Harmless Steps appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/cisco-open-sources-quarry-to-catch-ai-agent-attacks-hidden-in-harmless-steps",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/cisco-open-sources-quarry-to-catch-ai-agent-attacks-hidden-in-harmless-steps"
+      ],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "3 Ways AI Agents Already Operate in Your Browser",
+      "url": "https://www.bleepingcomputer.com/news/security/3-ways-ai-agents-already-operate-in-your-browser/",
+      "publishedAt": "2026-10-29T14:00:10.000Z",
+      "excerpt": "AI agents can control authenticated browsers, interact with corporate applications, and access sensitive data while appearing to act as legitimate employees. Keep Aware examines three ways agents operate inside browsers and why traditional security tools may struggle to distinguish their activity from human users. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/3-ways-ai-agents-already-operate-in-your-browser",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/3-ways-ai-agents-already-operate-in-your-browser"
+      ],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "talos",
+      "sourceKind": "rss",
+      "title": "IR trends Q3 2026: Actors impersonate IT help desks in vishing attacks as ransomware activity increases",
+      "url": "https://blog.talosintelligence.com/ir-trends-q3-2026/",
+      "publishedAt": "2026-10-29T14:00:00.000Z",
+      "excerpt": "Phishing remained the leading initial access technique, while percentage of ransomware and pre-ransomware cases increased. Finance and public administration tied as the top-targeted industries.",
+      "canonicalUrl": "https://blog.talosintelligence.com/ir-trends-q3-2026",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://blog.talosintelligence.com/ir-trends-q3-2026"
+      ],
+      "cves": [],
+      "id": "s14"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "CISA warns of Fragnesia Linux flaw chained in PHP2Shell attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/cisa-warns-of-fragnesia-linux-flaw-chained-in-php2shell-attacks/",
+      "publishedAt": "2026-10-29T13:59:48.000Z",
+      "excerpt": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA) warned federal agencies to patch a high-severity Linux kernel privilege escalation bug that attackers are chaining with the PHP2Shell flaws in the wild. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/cisa-warns-of-fragnesia-linux-flaw-chained-in-php2shell-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/cisa-warns-of-fragnesia-linux-flaw-chained-in-php2shell-attacks"
+      ],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "FTC to probe major companies over personalized pricing and pay",
+      "url": "https://therecord.media/ftc-rideshare-airlines-data",
+      "publishedAt": "2026-10-29T13:45:00.000Z",
+      "excerpt": "The Federal Trade Commission ordered nine food delivery, airline and ride-sharing companies to turn over detailed information on how they harness personal data to set individual consumer prices and employee compensation.",
+      "canonicalUrl": "https://therecord.media/ftc-rideshare-airlines-data",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/ftc-rideshare-airlines-data"
+      ],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Adobe, Veeam, Juniper Networks Patch Critical Vulnerabilities",
+      "url": "https://www.securityweek.com/adobe-veeam-juniper-networks-patch-critical-vulnerabilities/",
+      "publishedAt": "2026-10-29T13:42:52.000Z",
+      "excerpt": "The flaws could lead to arbitrary code execution, authorization bypasses, and privilege escalation. The post Adobe, Veeam, Juniper Networks Patch Critical Vulnerabilities appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/adobe-veeam-juniper-networks-patch-critical-vulnerabilities",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/adobe-veeam-juniper-networks-patch-critical-vulnerabilities"
+      ],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Google's Gemini 4 Carbon Leads Benchmarks for Finding, Exploiting, and Patching Vulnerabilities",
+      "url": "https://thehackernews.com/2026/10/googles-gemini-4-carbon-leads.html",
+      "publishedAt": "2026-10-29T13:42:40.000Z",
+      "excerpt": "Google on Wednesday took the wraps off Gemini 4 Carbon, its latest frontier model with state-of-the-art cybersecurity and long-horizon capabilities. \"It shows significant gains across coding and agentic tasks as well as across key capabilities critical for cybersecurity defense, landing a firm lead in SEC-bench Pro (88.2%) for finding vulnerabilities, ExploitGym (54.8%) for exploitation, and",
+      "canonicalUrl": "https://thehackernews.com/2026/10/googles-gemini-4-carbon-leads.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/googles-gemini-4-carbon-leads.html"
+      ],
+      "cves": [],
+      "id": "s18"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Cyberattack disrupts Belgian tax services before filing deadline",
+      "url": "https://therecord.media/cyberattack-disrupts-belgian-tax-services-before-deadline",
+      "publishedAt": "2026-10-29T13:31:00.000Z",
+      "excerpt": "The Federal Public Service Finance (FPS Finance), which oversees taxation and other financial administration, said Wednesday that it was investigating the extent of the attack and had temporarily suspended access to MyMinfin, the country's main online platform for managing tax and financial affairs.",
+      "canonicalUrl": "https://therecord.media/cyberattack-disrupts-belgian-tax-services-before-deadline",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/cyberattack-disrupts-belgian-tax-services-before-deadline"
+      ],
+      "cves": [],
+      "id": "s19"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "University of New Mexico restores hospital systems, urges no contact with hackers",
+      "url": "https://therecord.media/new-mexico-cyberattack-hospital",
+      "publishedAt": "2026-10-29T13:30:00.000Z",
+      "excerpt": "The University of New Mexico was able to restore systems used by its healthcare facilities after a cyberattack forced it to divert ambulances and cancel classes at its medical school.",
+      "canonicalUrl": "https://therecord.media/new-mexico-cyberattack-hospital",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/new-mexico-cyberattack-hospital"
+      ],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "BAE Says No Data Extracted in Incident Hitting Bankruptcy Courts",
+      "url": "https://www.securityweek.com/bae-says-no-data-extracted-in-incident-hitting-bankruptcy-courts/",
+      "publishedAt": "2026-10-29T13:26:49.000Z",
+      "excerpt": "BAE Systems says no data was extracted and no PII was breached in the incident that disrupted US bankruptcy court notices for weeks. The post BAE Says No Data Extracted in Incident Hitting Bankruptcy Courts appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/bae-says-no-data-extracted-in-incident-hitting-bankruptcy-courts",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/bae-says-no-data-extracted-in-incident-hitting-bankruptcy-courts"
+      ],
+      "cves": [],
+      "id": "s21"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Windows 11 KB5127936 update released with 41 changes and fixes",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/windows-11-kb5127936-update-released-with-41-changes-and-fixes/",
+      "publishedAt": "2026-10-29T12:00:07.000Z",
+      "excerpt": "Microsoft released the KB5127936 preview cumulative update for Windows 11 versions 25H2 and 26H2, with 41 changes, including File Explorer and Cloud rebuild improvements. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/windows-11-kb5127936-update-released-with-41-changes-and-fixes",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/microsoft/windows-11-kb5127936-update-released-with-41-changes-and-fixes"
+      ],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Siemens Mendix SAML Module",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-302-01",
+      "publishedAt": "2026-10-29T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Mendix SAML module contains an authentication bypass vulnerability that could allow an unauthenticated remote attacker to gain unauthorized access by replaying a valid SAML assertion in IdP-initiated authentication flows. Siemens has released new versions for the affected products and recommends to update to the latest versions. The following versions of Siemens Mendix SAML…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-302-01",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-advisories/icsa-26-302-01"
+      ],
+      "cves": [],
+      "id": "s24"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Hitachi Energy TRO600 series products",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-302-02",
+      "publishedAt": "2026-10-29T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Hitachi Energy is aware of multiple vulnerabilities that affect the TRO600 series product versions listed in this document. These vulnerabilities can be exploited for remote code execution (RCE) to carry out further attacks and disclosure of sensitive information. Please refer to the Recommended Immediate Actions section for information about the mitigation/remediation. The…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-302-02",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-advisories/icsa-26-302-02"
+      ],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Hitachi Energy CoreTec Product",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-302-03",
+      "publishedAt": "2026-10-29T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Hitachi Energy is aware of OS command injection and Dirty Frag vulnerabilities that affect CoreTec product versions listed in this document. Successful exploitation of these vulnerabilities could result in impact on confidentiality, integrity and availability of the product. Please refer to the Recommended Immediate Actions for information about the mitigation/remediation. The…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-302-03",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-advisories/icsa-26-302-03"
+      ],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Webinar: How to Build AI Threat Readiness Into Your Security Operations",
+      "url": "https://thehackernews.com/2026/08/learn-how-to-build-security-operations.html",
+      "publishedAt": "2026-10-29T11:39:41.000Z",
+      "excerpt": "Security teams have spent years trying to detect threats faster. AI is changing the harder part: how much time defenders have left to act. Advanced AI models can now help attackers discover vulnerabilities, generate exploit code, and move through weaknesses faster than traditional security processes were built to handle. The challenge is no longer just finding another vulnerability or",
+      "canonicalUrl": "https://thehackernews.com/2026/08/learn-how-to-build-security-operations.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/08/learn-how-to-build-security-operations.html"
+      ],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Telegram Android Flaw Lets Attackers Run Code When Users Answer Voice Calls",
+      "url": "https://thehackernews.com/2026/10/telegram-android-flaw-lets-attackers.html",
+      "publishedAt": "2026-10-29T11:39:18.000Z",
+      "excerpt": "A flaw in Telegram for Android allowed an attacker to run code on a victim's phone via a voice call once the victim answered, according to security startup NebuSec. The attacker needed only an ordinary Telegram account. Telegram fixed the flaw in version 12.10.4 of the app, released in late September, and NebuSec disclosed it on October 29. The flaw can be triggered in every version from",
+      "canonicalUrl": "https://thehackernews.com/2026/10/telegram-android-flaw-lets-attackers.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/telegram-android-flaw-lets-attackers.html"
+      ],
+      "cves": [],
+      "id": "s28"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "The Rise of the Threat Operator: How AI Will Redefine Security Operations and Careers",
+      "url": "https://thehackernews.com/2026/10/the-rise-of-threat-operator-how-ai-will.html",
+      "publishedAt": "2026-10-29T11:33:41.000Z",
+      "excerpt": "AI is beginning to take over much of the work that has traditionally defined the security analyst's job. Investigating alerts, collecting evidence, correlating activity across tools, and executing response actions are becoming tasks that AI systems can perform on their own. As these capabilities mature, security operations centers (SOCs) will see major changes in how work is organized, how",
+      "canonicalUrl": "https://thehackernews.com/2026/10/the-rise-of-threat-operator-how-ai-will.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/the-rise-of-threat-operator-how-ai-will.html"
+      ],
+      "cves": [],
+      "id": "s29"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "26,400 Valid Cloud and AI Credentials Found Exposed in Public Gitee Repositories",
+      "url": "https://thehackernews.com/2026/10/26400-valid-cloud-and-ai-credentials.html",
+      "publishedAt": "2026-10-29T11:33:15.000Z",
+      "excerpt": "26,400 credentials that developers left in public code on Gitee, a Chinese code-hosting service, still worked when a researcher tested them. Anyone who copied one from that code could have used it. Independent researcher Ben Zimmermann found them by scanning 7.25 million public Gitee repositories and reported the results on October 28. Most were keys for cloud and AI services, led by",
+      "canonicalUrl": "https://thehackernews.com/2026/10/26400-valid-cloud-and-ai-credentials.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/26400-valid-cloud-and-ai-credentials.html"
+      ],
+      "cves": [],
+      "id": "s30"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "New Cisco firewall zero-day exploited to crash SSL VPN devices",
+      "url": "https://www.bleepingcomputer.com/news/security/cisco-warns-of-firewall-zero-day-exploited-to-crash-ssl-vpn-devices/",
+      "publishedAt": "2026-10-29T11:10:13.000Z",
+      "excerpt": "Cisco released security updates to patch a denial-of-service zero-day in Adaptive Security Appliance (ASA) and Threat Defense (FTD) software that attackers are exploiting to remotely crash vulnerable firewall devices. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/cisco-warns-of-firewall-zero-day-exploited-to-crash-ssl-vpn-devices",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/cisco-warns-of-firewall-zero-day-exploited-to-crash-ssl-vpn-devices"
+      ],
+      "cves": [],
+      "id": "s31"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Hackers Steal 2.6 Million Records From Sony’s Japanese ISP So-net",
+      "url": "https://www.securityweek.com/hackers-steal-2-6-million-records-from-sonys-japanese-isp-so-net/",
+      "publishedAt": "2026-10-29T11:00:00.000Z",
+      "excerpt": "The data of So-net and Plala customers in Japan was exposed, along with 54,401 email account passwords and 16 bank account records. The post Hackers Steal 2.6 Million Records From Sony’s Japanese ISP So-net appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/hackers-steal-2-6-million-records-from-sonys-japanese-isp-so-net",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/hackers-steal-2-6-million-records-from-sonys-japanese-isp-so-net"
+      ],
+      "cves": [],
+      "id": "s32"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Cisco SD-WAN Zero-Day Exploitation Tied to Volt Typhoon’s ‘Silent Train’ Network",
+      "url": "https://www.securityweek.com/cisco-sd-wan-zero-day-exploitation-tied-to-volt-typhoons-silent-train-network/",
+      "publishedAt": "2026-10-29T10:29:25.000Z",
+      "excerpt": "Cisco Talos linked SD-WAN key-stealing malware to infrastructure overlapping Volt Typhoon’s Silent Train network, which Lumen detailed. The post Cisco SD-WAN Zero-Day Exploitation Tied to Volt Typhoon’s ‘Silent Train’ Network appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/cisco-sd-wan-zero-day-exploitation-tied-to-volt-typhoons-silent-train-network",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/cisco-sd-wan-zero-day-exploitation-tied-to-volt-typhoons-silent-train-network"
+      ],
+      "cves": [],
+      "id": "s34"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "GitHub Launches npm Firewall to Block Malicious Packages Before Installation",
+      "url": "https://thehackernews.com/2026/10/github-launches-npm-firewall-to-block.html",
+      "publishedAt": "2026-10-29T10:26:33.000Z",
+      "excerpt": "GitHub has announced that it's introducing a new package firewall as a preview to block installation of suspicious npm packages during installation time. \"The firewall inspects both metadata requests and package downloads for signs of malicious activity, acting as an install-time policy gate,\" GitHub said. The feature, which currently supports only npm packages, is available in public preview",
+      "canonicalUrl": "https://thehackernews.com/2026/10/github-launches-npm-firewall-to-block.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/github-launches-npm-firewall-to-block.html"
+      ],
+      "cves": [],
+      "id": "s35"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Shadowy AI Relay Disables OpenAI Codex, Claude Code Sandboxes",
+      "url": "https://www.darkreading.com/threat-intelligence/ai-relay-service-openai-codex-claude-code-sandboxes",
+      "publishedAt": "2026-10-29T10:00:00.000Z",
+      "excerpt": "The enigmatic service is providing popular AI coding tools to mainland China and other regions where OpenAI and Anthropic products are not officially for sale — but with key security features turned off.",
+      "canonicalUrl": "https://darkreading.com/threat-intelligence/ai-relay-service-openai-codex-claude-code-sandboxes",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/threat-intelligence/ai-relay-service-openai-codex-claude-code-sandboxes"
+      ],
+      "cves": [],
+      "id": "s37"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Attackers Exploit Second Cisco Firewall VPN Zero-Day Since August",
+      "url": "https://www.securityweek.com/attackers-exploit-second-cisco-firewall-vpn-zero-day-since-august/",
+      "publishedAt": "2026-10-29T09:47:10.000Z",
+      "excerpt": "An exploited flaw in the Remote Access SSL VPN service lets unauthenticated attackers remotely force ASA and FTD firewalls to reload. The post Attackers Exploit Second Cisco Firewall VPN Zero-Day Since August appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/attackers-exploit-second-cisco-firewall-vpn-zero-day-since-august",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/attackers-exploit-second-cisco-firewall-vpn-zero-day-since-august"
+      ],
+      "cves": [],
+      "id": "s38"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Attacker Tried to Exploit Alpine Linux’s GitLab via CVSS 10.0 Flaw Its Ruby Left Open",
+      "url": "https://thehackernews.com/2026/10/attacker-tried-to-exploit-alpine-linuxs.html",
+      "publishedAt": "2026-10-29T09:05:39.000Z",
+      "excerpt": "An attacker tried to exploit a critical GitLab vulnerability on the Alpine Linux project's own GitLab server a week after GitLab released a fix, Alpine Linux said on 28 October. The flaw, CVE-2026-97229 (CVSS score: 10.0), can let an attacker run code on a GitLab server through a crafted regular expression in a CI configuration. Alpine found no evidence that the attack worked but",
+      "canonicalUrl": "https://thehackernews.com/2026/10/attacker-tried-to-exploit-alpine-linuxs.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/attacker-tried-to-exploit-alpine-linuxs.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-97229",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "GitLab has remediated an issue in GitLab CE/EE affecting all versions from 19.2 before 19.2.8, 19.3 before 19.3.5, and 19.4 before 19.4.2 that, under certain conditions, could have allowed an unauthenticated user to execute arbitrary code on the GitLab server via a specially crafted regular expression in a CI/CD configuration, due to insufficient regular expression validation.",
+            "cvss": {
+              "version": "3.1",
+              "score": 10,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+              "source": "cve@gitlab.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-190"
+            ],
+            "published": "2026-10-13T02:17:00.840",
+            "lastModified": "2026-10-14T13:55:26.987",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://docs.gitlab.com/releases/patches/patch-release-gitlab-19-4-2-released/",
+                "source": "cve@gitlab.com",
+                "tags": [
+                  "Release Notes",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://gitlab.com/gitlab-org/gitlab/-/work_items/630686",
+                "source": "cve@gitlab.com",
+                "tags": [
+                  "Issue Tracking"
+                ]
+              },
+              {
+                "url": "https://hackerone.com/reports/4055749",
+                "source": "cve@gitlab.com",
+                "tags": [
+                  "Permissions Required"
+                ]
+              },
+              {
+                "url": "https://hackerone.com/reports/4058589",
+                "source": "cve@gitlab.com",
+                "tags": [
+                  "Permissions Required"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:community:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A938C22D-FD14-48A6-B46F-CCA9AC8EBC9F",
+                "versionStartIncluding": "19.2.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.2.8"
+              },
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:enterprise:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "EC585668-21D1-41DF-A4FB-17DD48AB9F12",
+                "versionStartIncluding": "19.2.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.2.8"
+              },
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:community:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1304F38C-8780-4412-AE0B-D0B65319E8E6",
+                "versionStartIncluding": "19.3.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.3.5"
+              },
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:enterprise:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "75C2C2EE-4DF9-4AB5-9E15-2EC799667C6C",
+                "versionStartIncluding": "19.3.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.3.5"
+              },
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:community:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5FD2476C-E11F-4215-A329-C3B189B6611F",
+                "versionStartIncluding": "19.4.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.4.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:enterprise:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FAAF2A38-5C01-490C-A191-8532B58C246B",
+                "versionStartIncluding": "19.4.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.4.2"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/10/attacker-tried-to-exploit-alpine-linuxs.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.28",
+              "dateReleased": "2026-10-28T19:00:04.8077Z",
+              "retrievedAt": "2026-10-29T17:55:35.695Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-98432%2CCVE-2026-76418%2CCVE-2026-97229%2CCVE-2026-41709%2CCVE-2026-20127%2CCVE-2026-46300",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-97229",
+              "retrievedAt": "2026-10-29T17:55:35.695Z"
+            }
+          }
+        }
+      ],
+      "id": "s39"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Hackers Exploited Cisco SD-WAN Flaw to Plant Malware Built to Steal Encryption Keys",
+      "url": "https://thehackernews.com/2026/10/hackers-exploited-cisco-sd-wan-flaw-to.html",
+      "publishedAt": "2026-10-29T08:24:22.000Z",
+      "excerpt": "Hackers exploited a critical Cisco Catalyst SD-WAN flaw, fixed in February, to plant custom malware inside the systems that control an organization's SD-WAN network. The malware, called KeyDrift, is designed to copy the keys that encrypt traffic between sites and store them for later use, Cisco Talos said on October 28. Talos calls the attacks historical but does not specify when they",
+      "canonicalUrl": "https://thehackernews.com/2026/10/hackers-exploited-cisco-sd-wan-flaw-to.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/hackers-exploited-cisco-sd-wan-flaw-to.html"
+      ],
+      "cves": [],
+      "id": "s40"
+    },
+    {
+      "sourceId": "securelist",
+      "sourceKind": "rss",
+      "title": "Unknown APT uses NetamLoader to attack a Win10 OS customized for governments in Asia",
+      "url": "https://securelist.com/netamloader/121676/",
+      "publishedAt": "2026-10-29T08:00:15.000Z",
+      "excerpt": "Kaspersky researchers analyze a complex targeted attack employing NetamLoader, a sophisticated malicious framework and targeting a customized government OS.",
+      "canonicalUrl": "https://securelist.com/netamloader/121676",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securelist.com/netamloader/121676"
+      ],
+      "cves": [],
+      "id": "s41"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Cyber Vulnerabilities Besiege Italy, Absent Clear Cause",
+      "url": "https://www.darkreading.com/cybersecurity-analytics/cyber-vulnerabilities-besiege-italy",
+      "publishedAt": "2026-10-29T08:00:00.000Z",
+      "excerpt": "Researchers can't quite explain why cyber threats look so different in Italy compared with everywhere else.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-analytics/cyber-vulnerabilities-besiege-italy",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cybersecurity-analytics/cyber-vulnerabilities-besiege-italy"
+      ],
+      "cves": [],
+      "id": "s42"
+    },
+    {
+      "sourceId": "talos",
+      "sourceKind": "rss",
+      "title": "Inside KeyDrift: Analyzing historical UAT-11473 activity on Cisco SD-WAN",
+      "url": "https://blog.talosintelligence.com/uat-11473-keydrift/",
+      "publishedAt": "2026-10-28T21:32:02.000Z",
+      "excerpt": "Talos has identified UAT-11473, a highly sophisticated APT, who exploited CVE-2026-20127, an authentication bypass vulnerability in Cisco SD-WAN Catalyst Controller instances to bypass authentication and gain unauthorized access to affected systems to deploy KeyDrift.",
+      "canonicalUrl": "https://blog.talosintelligence.com/uat-11473-keydrift",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://blog.talosintelligence.com/uat-11473-keydrift"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-20127",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Cisco",
+            "product": "Catalyst SD-WAN Controller and Manager",
+            "vulnerabilityName": "Cisco Catalyst SD-WAN Controller and Manager Authentication Bypass Vulnerability",
+            "dateAdded": "2026-02-25",
+            "shortDescription": "Cisco Catalyst SD-WAN Controller, formerly SD-WAN vSmart, and Cisco Catalyst SD-WAN Manager, formerly SD-WAN vManage, contain an authentication bypass vulnerability could allow an unauthenticated, remote attacker to bypass authentication and obtain administrative privileges on an affected system. This vulnerability exists because the peering authentication mechanism in an affected system is not working properly. An attacker could exploit this vulnerability by sending crafted requests to an affected system. A successful exploit could allow the attacker to log in to an affected Cisco Catalyst SD-WAN Controller as an internal, high-privileged, non-root user account. Using this account, the attacker could access NETCONF, which would then allow the attacker to manipulate network configuration for the SD-WAN fabric.",
+            "requiredAction": "Please adhere to CISA’s guidelines to assess exposure and mitigate risks associated with Cisco SD-WAN devices as outlines in CISA’s Emergency Directive 26-03 (URL listed below in Notes) and CISA’s “Hunt & Hardening Guidance for Cisco SD-WAN Devices (URL listed below in Notes). Adhere to the applicable BOD 22-01 guidance for cloud services or discontinue use of the product if mitigations are not available.",
+            "dueDate": "2026-02-27",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "CISA Mitigation Instructions: https://www.cisa.gov/news-events/directives/ed-26-03-mitigate-vulnerabilities-cisco-sd-wan-systems ; https://www.cisa.gov/news-events/directives/supplemental-direction-ed-26-03-hunt-and-hardening-guidance-cisco-sd-wan-systems ; https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-rpa-EHchtZk ; https://nvd.nist.gov/vuln/detail/CVE-2026-20127",
+            "cwes": [
+              "CWE-287"
+            ]
+          },
+          "nvd": {
+            "description": "A vulnerability in the peering authentication in Cisco Catalyst SD-WAN Controller, formerly SD-WAN vSmart, Cisco Catalyst SD-WAN Manager, formerly SD-WAN vManage, and Cisco Catalyst SD-WAN Validator, formerly SD-WAN vBond, could allow an unauthenticated, remote attacker to bypass authentication and obtain administrative privileges on an affected system.\r\n\r\nThis vulnerability exists because the peering authentication mechanism in an affected system is not working properly. An attacker could exploit this vulnerability by sending crafted requests to an affected system. A successful exploit could allow the attacker to log in to an affected Cisco Catalyst SD-WAN Controller as an internal, high-privileged, non-root&nbsp;user account. Using this account, the attacker could access NETCONF, which would then allow the attacker to manipulate network configuration for the SD-WAN fabric.&nbsp;",
+            "cvss": {
+              "version": "3.1",
+              "score": 10,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+              "source": "nvd@nist.gov",
+              "type": "Primary"
+            },
+            "cwes": [
+              "CWE-287"
+            ],
+            "published": "2026-02-25T17:25:29.477",
+            "lastModified": "2026-06-17T15:06:12.607",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-rpa-EHchtZk",
+                "source": "psirt@cisco.com",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-20127",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:cisco:catalyst_sd-wan_manager:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0388BD67-C1AD-4E47-8B1A-22EE1634190E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "20.9.8.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:catalyst_sd-wan_manager:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "344CA479-F60F-4CD6-83F7-4DB38DF2EAEB",
+                "versionStartIncluding": "20.11",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "20.12.5.3"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:catalyst_sd-wan_manager:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D284EA84-6C27-4A9C-BDA2-D1C5BF1F2356",
+                "versionStartIncluding": "20.13",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "20.15.4.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:catalyst_sd-wan_manager:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B94E1DC2-5DA5-4238-8040-6D524DDEAA4F",
+                "versionStartIncluding": "20.16",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "20.18.2.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:catalyst_sd-wan_manager:20.12.6:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F5B6E170-73B8-4838-93B4-AD258F3BCA7C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:sd-wan_vbond_orchestrator:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D22B968F-3AB3-41AA-81CC-A1173654C731",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "20.9.8.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:sd-wan_vbond_orchestrator:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "89D0736B-EA67-44FD-A9E3-6729AB690295",
+                "versionStartIncluding": "20.11",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "20.12.5.3"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:sd-wan_vbond_orchestrator:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "06587810-B5BE-49FE-A009-BB53A2B45825",
+                "versionStartIncluding": "20.13",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "20.15.4.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:sd-wan_vbond_orchestrator:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A896A8B2-1517-4438-819E-DB2CC0214040",
+                "versionStartIncluding": "20.16",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "20.18.2.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:sd-wan_vbond_orchestrator:20.12.6:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "033AC84E-6A5F-4EFF-B610-5C16D4C2CC9D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:sd-wan_vsmart_controller:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9C42E29A-D80E-4303-A33E-660099CF78F7",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "20.9.8.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:sd-wan_vsmart_controller:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7B720BE5-BD1D-4BFA-A899-BFB20C7499FC",
+                "versionStartIncluding": "20.11",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "20.12.5.3"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:sd-wan_vsmart_controller:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "4BDF8CF0-99BA-461F-99D6-4B1ABE9C2FFF",
+                "versionStartIncluding": "20.13",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "20.15.4.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:sd-wan_vsmart_controller:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E709AAB8-3567-49EB-8090-033468743AB4",
+                "versionStartIncluding": "20.16",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "20.18.2.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:sd-wan_vsmart_controller:20.12.6:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3DD7A58E-C95F-48C2-8359-39AFE7FA47BE",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "talos",
+                "url": "https://blog.talosintelligence.com/uat-11473-keydrift/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.28",
+              "dateReleased": "2026-10-28T19:00:04.8077Z",
+              "retrievedAt": "2026-10-29T17:55:35.695Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-98432%2CCVE-2026-76418%2CCVE-2026-97229%2CCVE-2026-41709%2CCVE-2026-20127%2CCVE-2026-46300",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-20127",
+              "retrievedAt": "2026-10-29T17:55:35.695Z"
+            }
+          }
+        }
+      ],
+      "id": "s45"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Court strikes down West Virginia law barring disclosure of public officials’ personal data",
+      "url": "https://therecord.media/west-virginia-daniels-law-struck-down-appellate-court",
+      "publishedAt": "2026-10-28T20:50:00.000Z",
+      "excerpt": "A federal appellate court panel said West Virginia's version of Daniel's Law — meant to shield the personal data of police and other officials — is unconstitutional.",
+      "canonicalUrl": "https://therecord.media/west-virginia-daniels-law-struck-down-appellate-court",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/west-virginia-daniels-law-struck-down-appellate-court"
+      ],
+      "cves": [],
+      "id": "s46"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "GhostAction Hacking Wave Fizzles, but Attackers Lurk on in GitHub",
+      "url": "https://www.darkreading.com/application-security/ghostaction-hacking-wave-fizzles-attackers-github",
+      "publishedAt": "2026-10-28T19:39:00.000Z",
+      "excerpt": "The supply chain attack campaign's shift toward developer endpoints and cloud access signals what could be next for the cybercrime outfit.",
+      "canonicalUrl": "https://darkreading.com/application-security/ghostaction-hacking-wave-fizzles-attackers-github",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/application-security/ghostaction-hacking-wave-fizzles-attackers-github"
+      ],
+      "cves": [],
+      "id": "s48"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Discord to let search engines index public server messages",
+      "url": "https://www.bleepingcomputer.com/news/security/discord-to-let-search-engines-index-public-server-messages/",
+      "publishedAt": "2026-10-28T18:44:16.000Z",
+      "excerpt": "Discord will allow search engines to index discussions in Discoverable Servers and make them accessible on the web to users outside the platform without an account or invitation. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/discord-to-let-search-engines-index-public-server-messages",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/discord-to-let-search-engines-index-public-server-messages"
+      ],
+      "cves": [],
+      "id": "s49"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Volt Typhoon Used Covert Silent Train Network in Four Zero-Day Exploitation Campaigns",
+      "url": "https://thehackernews.com/2026/10/volt-typhoon-used-covert-silent-train.html",
+      "publishedAt": "2026-10-28T18:08:33.000Z",
+      "excerpt": "The China-nexus cyber espionage group known as Volt Typhoon has been attributed to a now-disrupted covert access network dubbed Silent Train that has been put to use for zero-day exploitation and strategic access. \"First identified in late 2023, Silent Train uses rotating chains of compromised SOHO, IoT, and enterprise infrastructure,\" Lumen Technologies Black Lotus Labs said in a report shared",
+      "canonicalUrl": "https://thehackernews.com/2026/10/volt-typhoon-used-covert-silent-train.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/volt-typhoon-used-covert-silent-train.html"
+      ],
+      "cves": [],
+      "id": "s50"
+    },
+    {
+      "sourceId": "unit42",
+      "sourceKind": "rss",
+      "title": "Unwrapping Retail Peak Season Cyber Threats",
+      "url": "https://unit42.paloaltonetworks.com/unwrapping-retail-cyber-threats/",
+      "publishedAt": "2026-10-28T18:00:10.000Z",
+      "excerpt": "Unit 42 explores key peak shopping season retail cyber threats, from ransomware to AI attacks, and shares how to defend operations and customer trust. The post Unwrapping Retail Peak Season Cyber Threats appeared first on Unit 42.",
+      "canonicalUrl": "https://unit42.paloaltonetworks.com/unwrapping-retail-cyber-threats",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://unit42.paloaltonetworks.com/unwrapping-retail-cyber-threats"
+      ],
+      "cves": [],
+      "id": "s51"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "AI Takes Root in Hospital Corridors, Raises Security Stakes",
+      "url": "https://www.darkreading.com/cybersecurity-operations/ai-root-hospital-corridors-raised-security-stakes",
+      "publishedAt": "2026-10-28T15:29:06.000Z",
+      "excerpt": "Artificial intelligence (AI) is everywhere in healthcare, from doctors’ intake forms to cancer screenings. But in some cases, life-and-death uses are outpacing cybersecurity.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/ai-root-hospital-corridors-raised-security-stakes",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cybersecurity-operations/ai-root-hospital-corridors-raised-security-stakes"
+      ],
+      "cves": [],
+      "id": "s52"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "CISA Adds Two Known Exploited Vulnerabilities to Catalog",
+      "url": "https://www.cisa.gov/news-events/alerts/2026/10/28/cisa-adds-two-known-exploited-vulnerabilities-catalog",
+      "publishedAt": "2026-10-28T12:00:00.000Z",
+      "excerpt": "CISA has added two new vulnerabilities to its Known Exploited Vulnerabilities (KEV) Catalog, based on evidence of active exploitation. CVE-2026-41709 Broadcom VMWare ESX Insufficient Logging Vulnerability CVE-2026-46300 Linux Kernel Missing Initialization of a Variable Vulnerability These types of vulnerabilities are a frequent attack vector for malicious cyber actors and pose significant risks…",
+      "canonicalUrl": "https://cisa.gov/news-events/alerts/2026/10/28/cisa-adds-two-known-exploited-vulnerabilities-catalog",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/alerts/2026/10/28/cisa-adds-two-known-exploited-vulnerabilities-catalog"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-41709",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Broadcom",
+            "product": "VMware ESX",
+            "vulnerabilityName": "Broadcom VMWare ESX Insufficient Logging Vulnerability",
+            "dateAdded": "2026-10-28",
+            "shortDescription": "Broadcom VMWare ESX contains an insufficient logging vulnerability that could allow a malicious actor with admin access to perform certain operations without being logged.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-11",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://support.broadcom.com/web/ecx/support-content-notification/-/external/content/SecurityAdvisories/0/38017 ; ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-41709",
+            "cwes": [
+              "CWE-778"
+            ]
+          },
+          "nvd": {
+            "description": "VMware ESX contains an insufficient logging vulnerability. A malicious administrator could exploit this issue to perform certain operations without them being logged.",
+            "cvss": {
+              "version": "3.1",
+              "score": 2.7,
+              "severity": "LOW",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:L/A:N",
+              "source": "security@vmware.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-778"
+            ],
+            "published": "2026-07-30T14:16:57.420",
+            "lastModified": "2026-10-29T17:29:11.590",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://support.broadcom.com/web/ecx/support-content-notification/-/external/content/SecurityAdvisories/0/38017",
+                "source": "security@vmware.com",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-41709",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D7DC2815-CD13-42DC-96E5-412CFB768A6A",
+                "versionStartIncluding": "9.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "9.0.2.0100"
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7A1A402A-9262-4B97-A0B7-E5AE045E394D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:a:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FE44B379-9943-4DD1-8514-26F87482AFA8",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:b:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2A797377-8945-4D75-AA68-A768855E5842",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:c:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "79D84D76-54BE-49E9-905C-7D65B4B42D68",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:d:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E3BC5C77-258A-4920-B217-396212056B14",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:e:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "17D484EB-037C-46E2-ADDF-846B3A02843F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:f:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9E689385-7521-4A7A-B81E-DD84A3B58238",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:g:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "69E59579-57D6-40BA-98FA-28D3C41BA222",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2F8767F7-7C3D-457D-9EAC-E8A30796F751",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_1a:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "29AF8474-2D7A-4C5A-82B9-7A873AD90C2E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_1c:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7781A2CA-D927-48CD-9932-AE42B7BA1EFE",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_1d:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "18FD08C9-5895-4BF4-BBE0-C2DDA5F6B836",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "360C1B71-5360-4379-B0DE-63BB8F5E6DA2",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_2b:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B16ED7C1-9881-452A-8BE0-EDDEAEFE3D7B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_2c:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "ED92209F-FBD6-43F9-9A15-3842B139FCC9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_2d:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C37C4F29-E18F-439B-83A2-16457D04BEE1",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_2e:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "934CDD6F-E611-4693-AD30-12F35E10A75C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_2f:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5E33AE07-0F0F-4030-B62A-65DD086648D1",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6B701151-1B57-4E2D-A9AB-586FACEA2385",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_3b:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "4230B9AA-9E0C-4AE2-814D-8DD641394879",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_3c:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F2FA150B-93E4-44D2-BF6D-347085A95776",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_3d:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "12356603-13A5-4CC7-813A-7FF3DFC21A95",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_3e:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F0EBA616-FA2A-4A2D-918E-2D32579DA1F3",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_3f:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B275C1D0-9CFF-46DF-9630-1DD7CA060A6A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_3g:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D47EDD24-7244-471B-8752-37AA7BAA38DC",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_3h:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "BEA3431E-7C96-435E-8771-C76386374568",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:vmware:esxi:8.0:update_3i:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "4802C03A-C3BC-4295-BE05-6E569E9FEB8A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:vmware:cloud_foundation:*:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "E1B59BCD-58B0-4E47-8990-80B03443DB1C",
+                "versionStartIncluding": "5.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.2.4"
+              },
+              {
+                "criteria": "cpe:2.3:a:vmware:telco_cloud_platform:*:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "97FFC2CA-34F4-4822-93F1-0D645075462B",
+                "versionStartIncluding": "5.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:vmware:vsphere_foundation:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "03AD0AB7-45A3-4DC7-923D-1166346EEA12",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/10/28/cisa-adds-two-known-exploited-vulnerabilities-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.28",
+              "dateReleased": "2026-10-28T19:00:04.8077Z",
+              "retrievedAt": "2026-10-29T17:55:35.695Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-98432%2CCVE-2026-76418%2CCVE-2026-97229%2CCVE-2026-41709%2CCVE-2026-20127%2CCVE-2026-46300",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-41709",
+              "retrievedAt": "2026-10-29T17:55:35.695Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-46300",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Linux",
+            "product": "Kernel",
+            "vulnerabilityName": "Linux Kernel Missing Initialization of a Variable Vulnerability",
+            "dateAdded": "2026-10-28",
+            "shortDescription": "Linux Kernel contains a missing initialization of a variable vulnerability that could allow for unintended modification of page-cache-backed data via failure to preserve the shared-fragment marker during socket buffer coalescing, causing ESP input processing to decrypt shared fragments in place. This vulnerability can be chained with CVE-2026-109618 and CVE-2026-109619 to implant PHP webshells and run commands as root.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-10-31",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "This vulnerability affects an open-source component, third-party library, protocol, or proprietary implementation that could be used by different products. For more information, please see: ; https://git.kernel.org/stable/c/3599e6b3cc1ada96883d496a50a210d3afbb6987 ; https://git.kernel.org/stable/c/2f2b16022a2e10ca7bccfb98db5ed2ec0f72641c ; https://git.kernel.org/stable/c/9d3e5fd19fe1063bf607219e8562fbd567b8e8d5 ; https://git.kernel.org/stable/c/78bf6b6bb19541d19fbda6242e7cfe2c682763c0 ; https://git.kernel.org/stable/c/760e1addc27ba1a7beb4a0a7e8b3e9ec49e7a34e ; https://git.kernel.org/stable/c/3bd9e113d50034db99d7ef69fd8e5242d15e414a ; https://git.kernel.org/stable/c/3884358a9286b17f389a72b1426fc4547c23c111 ; https://git.kernel.org/stable/c/f84eca5817390257cef78013d0112481c503b4a3 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-46300",
+            "cwes": [
+              "CWE-456"
+            ]
+          },
+          "nvd": {
+            "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet: skbuff: preserve shared-frag marker during coalescing\n\nskb_try_coalesce() can attach paged frags from @from to @to.  If @from\nhas SKBFL_SHARED_FRAG set, the resulting @to skb can contain the same\nexternally-owned or page-cache-backed frags, but the shared-frag marker\nis currently lost.\n\nThat breaks the invariant relied on by later in-place writers.  In\nparticular, ESP input checks skb_has_shared_frag() before deciding\nwhether an uncloned nonlinear skb can skip skb_cow_data().  If TCP\nreceive coalescing has moved shared frags into an unmarked skb, ESP can\nsee skb_has_shared_frag() as false and decrypt in place over page-cache\nbacked frags.\n\nPropagate SKBFL_SHARED_FRAG when skb_try_coalesce() transfers paged\nfrags.  The tailroom copy path does not need the marker because it copies\nbytes into @to's linear data rather than transferring frag descriptors.",
+            "cvss": {
+              "version": "3.1",
+              "score": 7.8,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+              "source": "nvd@nist.gov",
+              "type": "Primary"
+            },
+            "cwes": [
+              "CWE-787",
+              "CWE-456",
+              "CWE-123"
+            ],
+            "published": "2026-05-23T12:17:02.660",
+            "lastModified": "2026-10-29T17:30:34.060",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://git.kernel.org/stable/c/2f2b16022a2e10ca7bccfb98db5ed2ec0f72641c",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": [
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/3599e6b3cc1ada96883d496a50a210d3afbb6987",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": [
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/3884358a9286b17f389a72b1426fc4547c23c111",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": [
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/3bd9e113d50034db99d7ef69fd8e5242d15e414a",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": [
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/760e1addc27ba1a7beb4a0a7e8b3e9ec49e7a34e",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": [
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/78bf6b6bb19541d19fbda6242e7cfe2c682763c0",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": [
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/9d3e5fd19fe1063bf607219e8562fbd567b8e8d5",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": [
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/f84eca5817390257cef78013d0112481c503b4a3",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": [
+                  "Patch"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/05/13/5",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/05/21/11",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/05/21/12",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/05/21/13",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHBA-2026:20032",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:19521",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:19540",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:19568",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:19569",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:19664",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:19666",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:19705",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:19711",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:19875",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:20051",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:20054",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:20087",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:20129",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:20130",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:20299",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:20593",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:21656",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:21690",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:21695",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:21702",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:23233",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:23240",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:23245",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:23468",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:23469",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:23470",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:23471",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:24814",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:25044",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:28887",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:33486",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/errata/RHSA-2026:34098",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/security/cve/CVE-2026-46300",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2477015",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://cert-portal.siemens.com/productcert/html/ssa-019113.html",
+                "source": "0b142b55-0307-4c5a-b3c9-f314f3fb7c5e",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://cert-portal.siemens.com/productcert/html/ssa-082556.html",
+                "source": "0b142b55-0307-4c5a-b3c9-f314f3fb7c5e",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://security.access.redhat.com/data/csaf/v2/vex/2026/cve-2026-46300.json",
+                "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c",
+                "tags": [
+                  "Issue Tracking",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-46300",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F9A3A7BF-1E69-475E-AC2B-C86A5C85A4DC",
+                "versionStartIncluding": "3.9",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "5.10.257",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E12545D2-1AE9-4FE1-83B6-2F9BD440AA95",
+                "versionStartIncluding": "5.11",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.15.208"
+              },
+              {
+                "criteria": "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8190F4E2-90A8-4343-8E30-95288912FFD1",
+                "versionStartIncluding": "5.16",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.1.174"
+              },
+              {
+                "criteria": "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "97A9FFFA-22BB-4D5C-9790-5A2286E392F7",
+                "versionStartIncluding": "6.2",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.6.141"
+              },
+              {
+                "criteria": "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C918746B-DE6F-448F-A93E-A04C5481688D",
+                "versionStartIncluding": "6.7",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.12.91"
+              },
+              {
+                "criteria": "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "96D99E49-380D-43AB-BDBA-25C3AD018A9C",
+                "versionStartIncluding": "6.13",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.18.33"
+              },
+              {
+                "criteria": "cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A13475D2-59BF-4716-94B5-7C1D239A2CF4",
+                "versionStartIncluding": "6.19",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "7.0.10"
+              },
+              {
+                "criteria": "cpe:2.3:o:linux:linux_kernel:7.1:rc1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B1EF7059-E670-45F4-B422-54C40FA86390",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:linux:linux_kernel:7.1:rc2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0D38F0BF-A728-4133-A358-D44A2F7EE6D6",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:linux:linux_kernel:7.1:rc3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "EC732D08-5F7B-46D9-B154-E60C7F4F0A97",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:linux:linux_kernel:7.1:rc4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E5910A9D-F60A-409A-B486-FE66BFEBA9B9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:siemens:simatic_s7-1500_cpu_1518-4_pn\\/dp_mfp_firmware:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C1B79754-2664-4CEC-9A7E-1A2A4EA4005D",
+                "versionStartIncluding": "3.1.5",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "3.1.6",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:siemens:simatic_s7-1500_cpu_1518-4_pn\\/dp_mfp:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "3BC4FA01-8DDB-41E4-B759-7B504F78AEBC",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:redhat:openshift_container_platform:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7EB23E0F-11E1-4415-9215-ADB9D8E635A7",
+                "versionStartIncluding": "4.12",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "4.12.91"
+              },
+              {
+                "criteria": "cpe:2.3:a:redhat:openshift_container_platform:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C267E36C-E440-435D-A80E-6F8332521CD3",
+                "versionStartIncluding": "4.13",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "4.13.67"
+              },
+              {
+                "criteria": "cpe:2.3:a:redhat:openshift_container_platform:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "30CAF41A-3275-4BA1-819D-6B88742B5411",
+                "versionStartIncluding": "4.14",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "4.14.68"
+              },
+              {
+                "criteria": "cpe:2.3:a:redhat:openshift_container_platform:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "90190A8C-D11D-4A08-BC4A-7BA1A4B601FD",
+                "versionStartIncluding": "4.15",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "4.15.65"
+              },
+              {
+                "criteria": "cpe:2.3:a:redhat:openshift_container_platform:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5C905459-AB55-448B-B8DF-A032FDD76B71",
+                "versionStartIncluding": "4.16",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "4.16.63"
+              },
+              {
+                "criteria": "cpe:2.3:a:redhat:openshift_container_platform:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8C0FDD6E-EB78-4A88-A47D-2EEFCC73F316",
+                "versionStartIncluding": "4.17",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "4.17.55"
+              },
+              {
+                "criteria": "cpe:2.3:a:redhat:openshift_container_platform:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "86BE3C4B-56E5-4764-BA09-EBF450534F42",
+                "versionStartIncluding": "4.18",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "4.18.43"
+              },
+              {
+                "criteria": "cpe:2.3:a:redhat:openshift_container_platform:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "30AE1FAE-9639-4EC8-899E-1B9B8828E74C",
+                "versionStartIncluding": "4.19",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "4.19.33"
+              },
+              {
+                "criteria": "cpe:2.3:a:redhat:openshift_container_platform:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "41A47A07-8131-48B4-9051-B20C6AF4A2C5",
+                "versionStartIncluding": "4.20",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "4.20.24"
+              },
+              {
+                "criteria": "cpe:2.3:a:redhat:openshift_container_platform:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0A3D71A2-1860-40A6-9B45-B4E9AA8BEB38",
+                "versionStartIncluding": "4.21",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "4.21.17"
+              },
+              {
+                "criteria": "cpe:2.3:o:redhat:enterprise_linux:6.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2F6AB192-9D7D-4A9A-8995-E53A9DE9EAFC",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:redhat:enterprise_linux:7.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "142AD0DD-4CF3-4D74-9442-459CE3347E3A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:redhat:enterprise_linux:8.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F4CFF558-3C47-480D-A2F0-BABF26042943",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:redhat:enterprise_linux:9.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7F6FB57C-2BC7-487C-96DD-132683AEB35D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:redhat:enterprise_linux:10.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D65C2163-CFC2-4ABB-8F4E-CB09CEBD006C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:redhat:enterprise_linux_aus:8.4:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "4D5F4FA7-E5C5-4C23-BDA8-36A36972E4F4",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:redhat:enterprise_linux_aus:8.6:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5CA4F12A-5BC5-4D75-8F20-80D8BB2C5BF2",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:redhat:enterprise_linux_eus:8.4:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0E3F09B5-569F-4C58-9FCA-3C0953D107B5",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:redhat:enterprise_linux_eus:9.4:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B03506D7-0FCD-47B7-90F6-DDEEB5C5A733",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:redhat:enterprise_linux_eus:9.6:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C4CF8D2F-DACA-49C2-A9F4-63496B0A9A80",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:redhat:enterprise_linux_eus:10.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "34990D09-125F-48CA-B85E-9D9F0EB4BC07",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:redhat:enterprise_linux_tus:8.6:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C237415F-33FE-4686-9B19-A0916BF75D2D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:redhat:enterprise_linux_tus:8.8:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "22D28543-C7C5-46B0-B909-20435AF7A501",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:redhat:enterprise_linux_update_services_for_sap_solutions:8.6:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FB096D5D-E8F6-4164-8B76-0217B7151D30",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:redhat:enterprise_linux_update_services_for_sap_solutions:8.8:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "01ED4F33-EBE7-4C04-8312-3DA580EFFB68",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:redhat:enterprise_linux_update_services_for_sap_solutions:9.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "083AAC55-E87B-482A-A1F4-8F2DEB90CB23",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:redhat:enterprise_linux_update_services_for_sap_solutions:9.2:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1FD9BF0E-7ACF-4A83-B754-6E3979ED903F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:redhat:enterprise_linux_update_services_for_sap_solutions:9.4:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "18B7F648-9A31-4EE5-A215-C860616A4AB7",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/10/28/cisa-adds-two-known-exploited-vulnerabilities-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.28",
+              "dateReleased": "2026-10-28T19:00:04.8077Z",
+              "retrievedAt": "2026-10-29T17:55:35.695Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-98432%2CCVE-2026-76418%2CCVE-2026-97229%2CCVE-2026-41709%2CCVE-2026-20127%2CCVE-2026-46300",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-46300",
+              "retrievedAt": "2026-10-29T17:55:35.695Z"
+            }
+          }
+        }
+      ],
+      "id": "s53"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1280,
+    "promptCacheMissTokens": 22217,
+    "outputTokens": 5942,
+    "estimatedCostUsd": 0.0047777240000000006
+  }
+}
