@@ -1,5 +1,7 @@
 import { z } from 'zod';
 import type { DeepSeekClient } from '../llm/client.js';
+import { sumUsage } from '../llm/client.js';
+import { correctionPrompt } from '../llm/retry.js';
 import type { Item, Selection, Usage } from '../types.js';
 import { vulnerabilityContext } from '../vulnerability/context.js';
 
@@ -13,8 +15,8 @@ const responseSchema = z.object({
     z.object({
       id: z.string(),
       section: z.enum(SECTIONS),
-      rank: z.number().int(),
-      angle: z.string(),
+      rank: z.number().int().positive(),
+      angle: z.string().trim().min(1),
     }),
   ),
 });
@@ -111,6 +113,7 @@ export function parseSelections(text: string, items: Item[]): Selection[] {
 
   const known = new Set(items.map((item) => item.id));
   const seen = new Set<string>();
+  const ranks = new Set<number>();
   for (const selection of selections) {
     if (!known.has(selection.id)) {
       throw new SelectionInvalidError(`select chose id "${selection.id}", which is not in this run`);
@@ -119,6 +122,10 @@ export function parseSelections(text: string, items: Item[]): Selection[] {
       throw new SelectionInvalidError(`select chose id "${selection.id}" more than once`);
     }
     seen.add(selection.id);
+    if (ranks.has(selection.rank) || selection.rank > selections.length) {
+      throw new SelectionInvalidError('select ranks must be unique and contiguous from 1');
+    }
+    ranks.add(selection.rank);
   }
 
   return selections;
@@ -129,17 +136,21 @@ export async function select(
   client: DeepSeekClient,
 ): Promise<{ selections: Selection[]; usage: Usage }> {
   const user = promptFor(items);
+  let request = user;
+  let usage: Usage | undefined;
   let lastError: SelectionInvalidError | undefined;
 
   // §8: an invalid response is retried exactly once before the stage gives up.
   // Transport and empty-content retries live in the client.
   for (let attempt = 1; attempt <= 2; attempt++) {
-    const result = await client.complete({ system: SYSTEM, user, responseFormatJson: true });
+    const result = await client.complete({ system: SYSTEM, user: request, responseFormatJson: true });
+    usage = usage ? sumUsage(usage, result.usage) : result.usage;
     try {
-      return { selections: parseSelections(result.text, items), usage: result.usage };
+      return { selections: parseSelections(result.text, items), usage };
     } catch (err) {
       if (!(err instanceof SelectionInvalidError)) throw err;
       lastError = err;
+      request = correctionPrompt(user, err, result.text);
     }
   }
 

@@ -16,19 +16,20 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '22.23.4'
           cache: npm
 
       - run: npm ci
       - run: npm run typecheck
       - run: npm test
       - run: npm start
+        id: generate
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           # Optional. The public NVD API still works without this, at a lower
@@ -49,3 +50,8 @@ jobs:
 
       - name: Confirm Vercel serves this generation
         run: npm run verify:publication -- https://daily-security-news.vercel.app/
+
+      # A useful partial edition still deploys; degradation must not be a green run.
+      - name: Report edition health
+        if: ${{ !cancelled() && steps.generate.outcome == 'success' }}
+        run: npm run check:health

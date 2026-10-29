@@ -5,8 +5,9 @@ const marked = new Marked({ renderer: {
  link({ href, tokens }) { const text = this.parser.parseInline(tokens); try { return `<a href="${escapeHtml(httpUrl(href))}">${text}</a>`; } catch { return text; } },
  image({ text }) { return escapeHtml(text); },
 } });
-import { sources } from '../config/sources.js';
-import type { ArticleEdition, DegradedNotice, DigestEdition, Item, NormalizationExclusion } from '../types.js';
+import type { ArticleEdition, DegradedNotice, DigestEdition, Edition, Item, NormalizationExclusion } from '../types.js';
+import { VULNERABILITY_CACHE_TTL_MS } from '../config/vulnerability.js';
+import { vulnerabilityPriority } from '../vulnerability/priority.js';
 import {
   calendarMonths,
   type ArchiveEntry,
@@ -14,140 +15,66 @@ import {
   type CalendarMonth,
 } from './calendar.js';
 import { substituteCitations } from './citations.js';
+import { CLOCK_SKEW_MS, ENHANCE_SCRIPT_HASH, ENHANCE_SCRIPT_TAG, PRIORITY_FILTERS } from './enhance.js';
 import { escapeHtml } from './escape.js';
+import { formatDate, formatTime, MONTHS, plural, spanText, timestamp } from './format.js';
 import { FAVICON_HREF } from './icon.js';
-import { MONO, PALETTE } from './palette.js';
+import { PALETTE } from './palette.js';
+import {
+  archiveStatus,
+  editionStatus,
+  sourceLabel,
+  sourceSection,
+  sourceSummary,
+  SOURCES_ID,
+  type EditionRole,
+  type StatusLink,
+} from './status.js';
+import { CSS } from './styles.js';
 import { vulnerabilityDisplays } from './vulnerabilities.js';
 
 export { escapeHtml };
+export type { EditionRole };
 
-const NAMES = new Map(sources.map((s) => [s.id, s.name]));
-function sourceLabel(sourceId: string): string {
-  return NAMES.get(sourceId) ?? sourceId;
+/** Options for the edition pages. `role` defaults to the permalink wording. */
+export interface PageOptions {
+  role?: EditionRole;
 }
 
-/**
- * Green-phosphor terminal. Dark only — a light variant of a CRT is a
- * contradiction, so there isn't one (design.md §2).
- *
- * The decorative characters — the shell prompt, the `$` and `##` sigils, the
- * `[01]` story numbers — are CSS `content`, never markup. The document stays
- * readable prose when the stylesheet doesn't apply.
- *
- * The colours come from `palette.ts` rather than being written here, because
- * `email.ts` needs the same values and cannot use custom properties. This is
- * the only place they become CSS variables.
- */
-const CSS = `
-:root { color-scheme: dark;
-  --bg:${PALETTE.bg}; --fg:${PALETTE.fg}; --bright:${PALETTE.bright}; --muted:${PALETTE.muted}; --dim:${PALETTE.dim};
-  --rule:${PALETTE.rule}; --link:${PALETTE.link}; --warn:${PALETTE.warn}; --warn-bg:${PALETTE.warnBg}; --warn-fg:${PALETTE.warnFg};
-  --note:${PALETTE.note}; --note-bg:${PALETTE.noteBg};
-  --mono: ${MONO}; }
-* { box-sizing: border-box; }
-html { background: var(--bg); scrollbar-color: var(--dim) var(--bg); }
-body { margin: 0; color: var(--fg); line-height: 1.6; font-family: var(--mono); font-size: 16px;
-  overflow-wrap: break-word;
-  background: radial-gradient(ellipse at 50% -10%, #0f1c13 0%, var(--bg) 65%) no-repeat fixed; }
-/* Scanlines. Fixed, inert, and subtle enough to survive a full page of reading. */
-body::before { content: ""; position: fixed; inset: 0; z-index: 9; pointer-events: none;
-  background: repeating-linear-gradient(to bottom, rgba(0,0,0,.20) 0 1px, transparent 1px 3px); }
-::selection { background: var(--bright); color: var(--bg); text-shadow: none; }
-main, header, footer { max-width: 76ch; margin: 0 auto; padding: 0 1.25rem; }
-header { display: flex; flex-wrap: wrap; gap: .4rem 1.25rem; align-items: baseline;
-  border-bottom: 1px solid var(--rule); padding-top: 1.5rem; padding-bottom: .6rem; }
-header .brand { color: var(--bright); font-weight: 700; text-shadow: 0 0 10px rgba(125,255,164,.35); }
-header .brand::before { content: "root@sec:~$ "; color: var(--dim); font-weight: 400; }
-.nav { display: flex; gap: .9rem; }
-.nav a { text-decoration: none; border-bottom: 0; }
-.nav a::before { content: "["; color: var(--dim); }
-.nav a::after { content: "]"; color: var(--dim); }
-.nav a:hover::before, .nav a:hover::after, .nav a:focus-visible::before, .nav a:focus-visible::after {
-  color: inherit; }
-a { color: var(--link); text-decoration: none; border-bottom: 1px dotted currentColor; }
-a:hover, a:focus-visible { background: var(--link); color: var(--bg);
-  border-bottom-color: transparent; text-shadow: none; }
-a:focus-visible { outline: 1px solid var(--bright); outline-offset: 2px; }
-h1 { font-size: 1.45rem; line-height: 1.35; margin: 1.75rem 0 .5rem; color: var(--bright);
-  text-shadow: 0 0 12px rgba(125,255,164,.3); }
-h1::before { content: "$ "; color: var(--dim); font-weight: 400; }
-h1::after { content: "\\2588"; margin-left: .15ch; animation: blink 1.1s steps(1) infinite; }
-@keyframes blink { 50% { opacity: 0; } }
-@media (prefers-reduced-motion: reduce) { h1::after { animation: none; } }
-h2 { font-size: 1.05rem; margin: 0 0 .5rem; color: var(--bright); }
-strong { color: var(--bright); }
-hr { border: 0; border-top: 1px dashed var(--rule); margin: 2rem 0; }
-code { color: var(--warn); }
-pre { border: 1px solid var(--rule); padding: .75rem; overflow-x: auto; }
-.summary { color: var(--muted); font-size: .82rem; margin: 0 0 1.5rem; }
-.summary::before { content: "// "; color: var(--dim); }
-.notice, .degraded { border: 1px solid; padding: .85rem 1rem; margin: 1.5rem 0; font-size: .9rem; }
-.notice::before, .degraded::before { display: block; letter-spacing: .12em; font-size: .72rem;
-  margin-bottom: .5rem; }
-.notice { border-color: var(--note); background: var(--note-bg); }
-.notice::before { content: "[ NOTICE ]"; color: var(--note); }
-.degraded { border-color: var(--warn); background: var(--warn-bg); color: var(--warn-fg); }
-.degraded::before { content: "[ !! DEGRADED ]"; color: var(--warn); }
-.degraded h2 { color: var(--warn); font-size: .95rem; letter-spacing: .04em; text-transform: uppercase; }
-.degraded ul { list-style: none; margin: .5rem 0 0; padding: 0; }
-.degraded li { padding-left: 2ch; text-indent: -2ch; }
-.degraded li::before { content: "! "; color: var(--warn); }
-ol.stories { list-style: none; margin: 0; padding: 0; counter-reset: story; }
-ol.stories > li { counter-increment: story; border-top: 1px solid var(--rule); padding: 1.1rem 0; }
-.story-title { font-size: 1rem; font-weight: 700; margin: 0 0 .3rem; }
-.story-title::before { content: "[" counter(story, decimal-leading-zero) "] ";
-  color: var(--dim); font-weight: 400; }
-.meta { color: var(--muted); font-size: .8rem; margin: 0 0 .45rem; }
-.excerpt { margin: .4rem 0 0; }
-.also { font-size: .82rem; color: var(--muted); margin: .5rem 0 0; }
-.vuln-summary { border: 1px solid var(--rule); margin: 0 0 1.75rem; padding: .75rem 1rem; }
-.vuln-summary h2 { margin: 0 0 .4rem; font-size: .9rem; }
-.vuln-summary h2::before { content: "## "; color: var(--dim); }
-.vuln-list { list-style: none; margin: 0; padding: 0; }
-.vuln-list li { color: var(--muted); font-size: .82rem; padding: .15rem 0; }
-.vuln-list li::before { content: "> "; color: var(--dim); }
-.vuln-meta { margin: .35rem 0 0; }
-.vuln-list span + span::before { content: " \\00B7 "; color: var(--dim); }
-.standfirst { color: var(--fg); margin: 0 0 1.75rem; padding-left: 1rem;
-  border-left: 2px solid var(--dim); }
-.article h2 { margin: 2.25rem 0 .75rem; }
-.article h2::before { content: "## "; color: var(--dim); }
-.article p { margin: 0 0 1.1rem; }
-.article ul, .article ol { padding-left: 2ch; }
-.article li { margin: 0 0 .35rem; }
-.article li::marker { color: var(--dim); }
-.also-heading { border-top: 1px solid var(--rule); margin-top: 2.75rem; padding-top: 1.5rem; }
-.also-heading::before { content: "## "; color: var(--dim); }
-table.cal { border-collapse: collapse; table-layout: fixed; width: 100%; margin: 0 0 2.25rem; }
-table.cal caption { text-align: left; color: var(--bright); font-size: 1.05rem;
-  padding: 1.5rem 0 .6rem; }
-table.cal caption::before { content: "## "; color: var(--dim); }
-table.cal caption .count { color: var(--muted); font-size: .82rem; }
-table.cal th { font-weight: 400; font-size: .72rem; letter-spacing: .1em; color: var(--dim);
-  padding: .35rem 0; text-align: center; }
-table.cal th abbr { text-decoration: none; }
-table.cal td { border: 1px solid var(--rule); padding: 0; text-align: center; font-size: .9rem; }
-table.cal td.pad { border-color: transparent; }
-table.cal td span, table.cal td a { display: block; padding: .55rem 0; }
-table.cal td.off span { color: var(--dim); }
-table.cal td a { border-bottom: 0; }
-table.cal td a.article { color: var(--bright); font-weight: 700; }
-table.cal td.latest { outline: 1px dashed var(--dim); outline-offset: -3px; }
-table.cal td a:hover, table.cal td a:focus-visible { background: var(--link); color: var(--bg); }
-table.cal td a.article:hover, table.cal td a.article:focus-visible { background: var(--bright); }
-footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
-  padding-bottom: 3rem; color: var(--muted); font-size: .8rem; }
-footer::before { content: "// "; color: var(--dim); }
-.empty { color: var(--muted); padding: 1.5rem 0; }
-.empty::before { content: "# "; color: var(--dim); }
-`;
+const ARTICLE_ID = 'edition-article';
+const STORIES_ID = 'edition-stories';
+const VULNS_ID = 'edition-vulns';
+const DAY_MS = 24 * 60 * 60 * 1000;
 
-export function layout(o: { title: string; bodyHtml: string; generatedAt: string }): string {
+/**
+ * The policy every page carries. Scripts are limited to the single hashed
+ * enhancement constant; no `unsafe-inline` or `unsafe-eval` for scripts, no
+ * network access of any kind (`connect-src` falls back to `none`).
+ */
+export const CONTENT_SECURITY_POLICY = `default-src 'none'; script-src '${ENHANCE_SCRIPT_HASH}'; style-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'`;
+const STATIC_POLICY = `default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'`;
+
+export interface LayoutOptions {
+  title: string;
+  bodyHtml: string;
+  generatedAt: string;
+  /** Trusted, already-escaped footer markup; defaults to "Generated …". */
+  footerHtml?: string;
+  /** Which site nav link is this page. */
+  current?: 'latest' | 'archive';
+  /** Include the hashed enhancement script (default true). */
+  enhance?: boolean;
+}
+
+export function layout(o: LayoutOptions): string {
+  const enhance = o.enhance !== false;
+  const nav = (key: 'latest' | 'archive', href: string) =>
+    `<a${o.current === key ? ' aria-current="page"' : ''} href="${href}">${key}</a>`;
   return `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="${enhance ? CONTENT_SECURITY_POLICY : STATIC_POLICY}">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="${PALETTE.bg}">
 <link rel="icon" type="image/svg+xml" href="${FAVICON_HREF}">
@@ -155,40 +82,33 @@ export function layout(o: { title: string; bodyHtml: string; generatedAt: string
 <style>${CSS}</style>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 <header>
 <span class="brand">daily-security-news</span>
-<nav class="nav">
-<a href="index.html">today</a>
-<a href="archive.html">archive</a>
+<nav class="nav" aria-label="Site">
+${nav('latest', 'index.html')}
+${nav('archive', 'archive.html')}
 </nav>
 </header>
-<main>
+<main id="main" tabindex="-1">
 ${o.bodyHtml}
 </main>
-<footer>Generated ${escapeHtml(o.generatedAt)}</footer>
-</body>
+<footer>${o.footerHtml ?? `Generated ${escapeHtml(o.generatedAt)}`}</footer>
+${enhance ? `${ENHANCE_SCRIPT_TAG}\n` : ''}</body>
 </html>
 `;
 }
 
-const MONTHS = [
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December',
-];
+const DATE = /^\d{4}-\d{2}-\d{2}$/;
 
-function formatDate(date: string): string {
-  const d = new Date(`${date}T00:00:00Z`);
-  if (Number.isNaN(d.getTime())) return date;
-  return `${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+function editionFooter(edition: Edition): string {
+  const record = DATE.test(edition.date)
+    ? ` Stored record: <a href="editions/${escapeHtml(edition.date)}.json">editions/${escapeHtml(edition.date)}.json</a>.`
+    : '';
+  return `Edition generated ${timestamp(edition.generatedAt)}; this page shows that run and is not regenerated with newer data.${record}`;
 }
 
-function formatTime(iso: string): string {
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return iso;
-  return `${String(d.getUTCHours()).padStart(2, '0')}:${String(d.getUTCMinutes()).padStart(2, '0')} UTC`;
-}
-
-function degradedBanner(notices: DegradedNotice[], exclusions?: NormalizationExclusion[]): string {
+function degradedBanner(notices: DegradedNotice[], exclusions: NormalizationExclusion[] | undefined, hasCollection: boolean): string {
   const expected = exclusions?.filter((item) => item.reason === 'future_event') ?? [];
   const eventNotice = expected.length ? `<aside class="notice">${expected.length} future event ${expected.length === 1 ? 'listing was' : 'listings were'} excluded from the news collection.</aside>` : '';
   if (notices.length === 0) return eventNotice;
@@ -202,57 +122,156 @@ function degradedBanner(notices: DegradedNotice[], exclusions?: NormalizationExc
     const count = Number(n.message.split(' ')[0]);
     return `${count} collected ${count === 1 ? 'item was' : 'items were'} excluded during normalization. The specific rejection reason was not recorded.`;
   }
-  return `${eventNotice}<div class="${collectionOnly ? 'notice' : 'degraded'}">
-<h2>${collectionOnly ? 'Collection notice' : 'This edition is incomplete'}</h2>
+  const more = hasCollection ? `\n<p><a href="#${SOURCES_ID}">Source status</a> lists each feed’s recorded result.</p>` : '';
+  return `${eventNotice}<section class="${collectionOnly ? 'notice' : 'degraded'}" aria-labelledby="edition-degraded-h">
+<h2 id="edition-degraded-h">${collectionOnly ? 'Collection notice' : 'This edition is incomplete'}</h2>
 <ul>
 ${notices.map((n) => `<li>${escapeHtml(message(n))}</li>`).join('\n')}
-</ul>
+</ul>${more}
+</section>`;
+}
+
+type Row = ReturnType<typeof vulnerabilityDisplays>[number];
+
+function evidenceHtml(row: Row, generatedAt: string): string {
+  const generated = Date.parse(generatedAt);
+  return row.evidence.map((source) => {
+    const status = source.status === 'found' ? 'record found'
+      : source.status === 'not_found' ? 'not in retrieved source' : 'unavailable';
+    const retrieved = source.retrievedAt ? Date.parse(source.retrievedAt) : NaN;
+    const stale = Number.isFinite(retrieved) && generated - retrieved > VULNERABILITY_CACHE_TTL_MS;
+    const later = Number.isFinite(retrieved) && retrieved - generated > CLOCK_SKEW_MS;
+    return `<p><a href="${escapeHtml(httpUrl(source.href))}">${escapeHtml(source.name)}</a>: ${status}${source.retrievedAt ? `; retrieved ${timestamp(source.retrievedAt)}` : ''}${stale ? '; older than the refresh window at generation' : ''}${later ? '; recorded as retrieved after generation' : ''}.</p>`;
+  }).join('');
+}
+
+function staleEvidence(row: Row, generatedAt: string): boolean {
+  const generated = Date.parse(generatedAt);
+  return row.evidence.some((source) => {
+    const retrieved = source.retrievedAt ? Date.parse(source.retrievedAt) : NaN;
+    return Number.isFinite(retrieved) && generated - retrieved > VULNERABILITY_CACHE_TTL_MS;
+  });
+}
+
+function idHtml(row: Row): string {
+  return row.href ? `<a href="${escapeHtml(httpUrl(row.href))}">${escapeHtml(row.id)}</a>` : escapeHtml(row.id);
+}
+
+function headSpans(row: Row): string {
+  return [idHtml(row), ...row.labels.map(escapeHtml)].map((part) => `<span>${part}</span>`).join('');
+}
+
+function actionHtml(row: Row): string {
+  if (!row.action) return '';
+  return `<p class="vuln-action"><strong>CISA required action:</strong> ${escapeHtml(row.action.text)}</p>${row.action.dueDate ? `<p>CISA catalog due date: ${escapeHtml(row.action.dueDate)} (not a universal deadline).</p>` : ''}`;
+}
+
+const ABSENCE = '<p>Absence from KEV does not establish absence of exploitation.</p>';
+
+/** Every CVE beside one story, compact, evidence folded away. */
+function storyVulnerabilities(item: Item, generatedAt: string): string {
+  const rows = vulnerabilityDisplays([item], false);
+  if (rows.length === 0) return '';
+  const list = rows.map((row) => `<li><span class="vuln-head">${headSpans(row)}</span><details class="vuln-evidence"><summary>Sources${row.action ? ' and required action' : ''}</summary>${evidenceHtml(row, generatedAt)}${actionHtml(row)}${ABSENCE}</details></li>`);
+  return `\n<ul class="vuln-list vuln-meta">${list.join('\n')}</ul>`;
+}
+
+/**
+ * The prioritised list: only CVEs that are in CISA KEV or rated High/Critical,
+ * each tied back to the stories that named it, with the CISA action shown
+ * rather than folded away.
+ */
+function vulnerabilitySummary(items: Item[], generatedAt: string, scope: string): { html: string; count: number } {
+  const rows = vulnerabilityDisplays(items, true);
+  if (rows.length === 0) return { html: '', count: 0 };
+  const list = rows.map((row) => {
+    const mentions = items.filter((item) => (item.cves ?? []).some((cve) => cve.id === row.id))
+      .map((item) => `<a href="${escapeHtml(httpUrl(item.url))}">${escapeHtml(item.title)}</a> (${escapeHtml(sourceLabel(item.sourceId))})`);
+    const flag = staleEvidence(row, generatedAt)
+      ? '<p class="flag">Evidence was older than the refresh window when this edition was generated.</p>' : '';
+    return `<li class="prio-${escapeHtml(row.priority)}"><p class="vuln-head">${headSpans(row)}</p>${mentions.length ? `<p>Mentioned in: ${mentions.join('; ')}</p>` : ''}${flag}${actionHtml(row)}<details class="vuln-evidence"><summary>Sources</summary>${evidenceHtml(row, generatedAt)}${ABSENCE}</details></li>`;
+  });
+  const html = `<section class="block vuln-summary" id="${VULNS_ID}" aria-labelledby="${VULNS_ID}-h">
+<h2 id="${VULNS_ID}-h">Vulnerability intelligence</h2>
+<p class="block-intro">CVEs named in ${escapeHtml(scope)} that CISA lists as known exploited (KEV) or NVD rates High or Critical: KEV listings first, then by NVD CVSS score. Each source is shown as retrieved at the time given, not live.</p>
+<ul class="vuln-list">${list.join('\n')}</ul>
+</section>`;
+  return { html, count: rows.length };
+}
+
+function storyAge(publishedAt: string, generatedAt: string): string {
+  const published = Date.parse(publishedAt);
+  const generated = Date.parse(generatedAt);
+  if (!Number.isFinite(published) || !Number.isFinite(generated)) return '';
+  if (published - generated > CLOCK_SKEW_MS) return ' · <span class="flag">dated after this edition was generated</span>';
+  if (generated - published >= DAY_MS) return ` · ${escapeHtml(spanText(publishedAt, generatedAt))} before this edition`;
+  return '';
+}
+
+function option(value: string, label: string, n: number): string {
+  return `<option value="${escapeHtml(value)}">${escapeHtml(`${label} (${n})`)}</option>`;
+}
+
+/** Hidden until the script binds it, so a reader without JS meets no dead control. */
+function filterControls(items: Item[], listId: string): string {
+  if (items.length < 2) return '';
+  const priorities = items.map((item) => vulnerabilityPriority(item));
+  const rank = { none: 0, cve: 1, high: 2, critical: 3, known_exploited: 4 } as const;
+  const priorityOptions = PRIORITY_FILTERS.map(([value, label]) => {
+    const n = value === '' ? items.length
+      : value === 'known_exploited' ? priorities.filter((p) => p === 'known_exploited').length
+      : priorities.filter((p) => rank[p] >= rank[value as keyof typeof rank]).length;
+    return option(value, label, n);
+  }).join('');
+  const bySource = new Map<string, number>();
+  for (const item of items) bySource.set(item.sourceId, (bySource.get(item.sourceId) ?? 0) + 1);
+  const sourceField = bySource.size > 1
+    ? `<div class="field"><label for="${listId}-source">Source</label><select id="${listId}-source" data-filter="source">${option('', 'All sources', items.length)}${[...bySource.entries()]
+        .sort(([a], [b]) => sourceLabel(a).localeCompare(sourceLabel(b)))
+        .map(([id, n]) => option(id, sourceLabel(id), n)).join('')}</select></div>`
+    : '';
+  const total = plural(items.length, 'story', 'stories');
+  return `<div class="filters" role="search" aria-label="Filter these stories" data-filters data-filter-target="${listId}" hidden>
+<div class="controls">
+<div class="field"><label for="${listId}-q">Search text</label><input id="${listId}-q" type="search" data-filter="q" autocomplete="off" spellcheck="false"></div>
+<div class="field"><label for="${listId}-priority">Vulnerability priority</label><select id="${listId}-priority" data-filter="priority">${priorityOptions}</select></div>
+${sourceField}<button type="button" data-filter-reset>Reset filters</button>
+</div>
+<p class="count" role="status" data-filter-count>Showing all ${total}.</p>
+<p class="empty" data-filter-empty hidden>No stories match. Choose “Reset filters” to show all ${total} again.</p>
 </div>`;
 }
 
-function vulnerabilityMetadata(items: Item[], summary = false): string {
-  const rows = vulnerabilityDisplays(items);
-  if (rows.length === 0) return '';
-  const list = rows
-    .map((row) => {
-      const id = row.href
-        ? `<a href="${escapeHtml(httpUrl(row.href))}">${escapeHtml(row.id)}</a>`
-        : escapeHtml(row.id);
-      return `<li>${[id, ...row.labels.map(escapeHtml)]
-        .map((part) => `<span>${part}</span>`)
-        .join('')}</li>`;
-    })
-    .join('\n');
-  return summary
-    ? `\n<aside class="vuln-summary"><h2>Vulnerability intelligence</h2><ul class="vuln-list">${list}</ul></aside>`
-    : `\n<ul class="vuln-list vuln-meta">${list}</ul>`;
-}
-
-function storyList(items: Item[], emptyText: string): string {
-  if (items.length === 0) return `<p class="empty">${escapeHtml(emptyText)}</p>`;
-
-  return `<ol class="stories">
-${items
-  .map((item) => {
+function storyList(items: Item[], emptyHtml: string, generatedAt: string, listId: string): string {
+  if (items.length === 0) return `<p class="empty">${emptyHtml}</p>`;
+  const width = Math.max(2, String(items.length).length);
+  const stories = items.map((item, index) => {
     const also = item.alsoCoveredBy.length
       ? `<p class="also">Also covered by: ${item.alsoCoveredBy
           .map((a) => `<a href="${escapeHtml(httpUrl(a.url))}">${escapeHtml(a.name)}</a>`)
           .join(', ')}</p>`
       : '';
     const excerpt = item.excerpt ? `<p class="excerpt">${escapeHtml(item.excerpt)}</p>` : '';
-    const vulnerabilities = vulnerabilityMetadata([item]);
-    return `<li id="${escapeHtml(item.id)}">
-<p class="story-title"><a href="${escapeHtml(httpUrl(item.url))}">${escapeHtml(item.title)}</a></p>
-<p class="meta">${escapeHtml(sourceLabel(item.sourceId))} · ${escapeHtml(formatTime(item.publishedAt))}</p>${vulnerabilities}
-${excerpt}
+    const n = String(index + 1).padStart(width, '0');
+    return `<li id="${escapeHtml(item.id)}" data-story data-source="${escapeHtml(item.sourceId)}" data-priority="${vulnerabilityPriority(item)}">
+<p class="story-title" data-n="${n}"><a href="${escapeHtml(httpUrl(item.url))}">${escapeHtml(item.title)}</a></p>
+<p class="meta">${escapeHtml(sourceLabel(item.sourceId))} · ${timestamp(item.publishedAt)}${storyAge(item.publishedAt, generatedAt)}</p>
+${excerpt}${storyVulnerabilities(item, generatedAt)}
 ${also}
 </li>`;
-  })
-  .join('\n')}
+  });
+  return `${filterControls(items, listId)}
+<ol class="stories" id="${listId}">
+${stories.join('\n')}
 </ol>`;
 }
 
-export function digestPage(edition: DigestEdition): string {
+function summaryLine(lead: string, edition: Edition): string {
+  return `${escapeHtml(lead)} · ${sourceSummary(edition)} · generated ${escapeHtml(formatTime(edition.generatedAt))}`;
+}
+
+export function digestPage(edition: DigestEdition, o: PageOptions = {}): string {
+  const role = o.role ?? 'edition';
   const { stats } = edition;
 
   const disclosure = `<div class="notice">
@@ -261,49 +280,69 @@ Every story collected in the window is listed below in the order it was publishe
 with no editorial selection, ranking, or summarising applied.
 </div>`;
 
-  const degraded = degradedBanner(edition.degraded, edition.normalizationExclusions);
+  const vulns = vulnerabilitySummary(edition.items, edition.generatedAt, 'these stories');
+  const toc: StatusLink[] = [{ href: `#${STORIES_ID}-h`, label: `Stories (${edition.items.length})` }];
+  if (vulns.count) toc.push({ href: `#${VULNS_ID}`, label: `Vulnerability intelligence (${vulns.count})` });
+  toc.push({ href: `#${SOURCES_ID}`, label: 'Source status' });
 
-  const body = storyList(edition.items, 'No new stories in this window.');
-
-  const summary = `${stats.published} ${stats.published === 1 ? 'story' : 'stories'} · ${stats.sourcesOk} of ${stats.sourcesConfigured} sources · generated ${escapeHtml(formatTime(edition.generatedAt))}`;
+  const lead = `${stats.published} ${stats.published === 1 ? 'story' : 'stories'}`;
+  const empty = `No stories were published in this edition. That can mean a quiet window or failed collection; <a href="#${SOURCES_ID}">source status</a> shows what each feed returned.`;
 
   return layout({
     title: `Security digest — ${formatDate(edition.date)}`,
     generatedAt: edition.generatedAt,
+    footerHtml: editionFooter(edition),
+    ...(role === 'latest' ? { current: 'latest' as const } : {}),
     bodyHtml: `<h1>Security digest — ${escapeHtml(formatDate(edition.date))}</h1>
-<p class="summary">${summary}</p>
+${editionStatus(edition, role, summaryLine(lead, edition), toc)}
 ${disclosure}
-${degraded}
-${body}`,
+${degradedBanner(edition.degraded, edition.normalizationExclusions, Boolean(edition.collection))}
+<section class="stories-block" aria-labelledby="${STORIES_ID}-h">
+<h2 id="${STORIES_ID}-h">Stories</h2>
+${storyList(edition.items, empty, edition.generatedAt, STORIES_ID)}
+</section>
+${vulns.html}
+${sourceSection(edition)}`,
   });
 }
 
-export function articlePage(edition: ArticleEdition): string {
+export function articlePage(edition: ArticleEdition, o: PageOptions = {}): string {
+  const role = o.role ?? 'edition';
   const { stats } = edition;
-
-  const degraded = degradedBanner(edition.degraded, edition.normalizationExclusions);
 
   // Render untrusted Markdown with raw HTML escaped, then insert trusted citations.
   const bodyHtml = substituteCitations(marked.parse(edition.bodyMarkdown, {
     async: false,
   }), edition.selected);
 
-  const also = `<h2 class="also-heading">Also collected today</h2>
-${storyList(edition.alsoCollected, 'Every story collected today was written up above.')}`;
+  const vulns = vulnerabilitySummary(edition.selected, edition.generatedAt, 'the stories this article covers');
+  const toc: StatusLink[] = [{ href: `#${ARTICLE_ID}`, label: 'Article' }];
+  if (vulns.count) toc.push({ href: `#${VULNS_ID}`, label: `Vulnerability intelligence (${vulns.count})` });
+  toc.push({ href: `#${STORIES_ID}-h`, label: `Also collected (${edition.alsoCollected.length})` });
+  toc.push({ href: `#${SOURCES_ID}`, label: 'Source status' });
 
-  const summary = `${edition.selected.length} of ${stats.published} ${stats.published === 1 ? 'story' : 'stories'} written up · ${stats.sourcesOk} of ${stats.sourcesConfigured} sources · generated ${escapeHtml(formatTime(edition.generatedAt))}`;
+  const also = `<section class="block" aria-labelledby="${STORIES_ID}-h">
+<h2 id="${STORIES_ID}-h">Also collected in this edition</h2>
+${storyList(edition.alsoCollected, 'Every story collected for this edition is written up above.', edition.generatedAt, STORIES_ID)}
+</section>`;
+
+  const lead = `${edition.selected.length} of ${stats.published} ${stats.published === 1 ? 'story' : 'stories'} written up`;
 
   return layout({
     title: `${edition.headline} — ${formatDate(edition.date)}`,
     generatedAt: edition.generatedAt,
+    footerHtml: editionFooter(edition),
+    ...(role === 'latest' ? { current: 'latest' as const } : {}),
     bodyHtml: `<h1>${escapeHtml(edition.headline)}</h1>
-<p class="summary">${summary}</p>
-${degraded}
-<p class="standfirst">${escapeHtml(edition.standfirst)}</p>${vulnerabilityMetadata(edition.selected, true)}
-<div class="article">
+${editionStatus(edition, role, summaryLine(lead, edition), toc)}
+${degradedBanner(edition.degraded, edition.normalizationExclusions, Boolean(edition.collection))}
+<p class="standfirst">${escapeHtml(edition.standfirst)}</p>
+<div class="article" id="${ARTICLE_ID}">
 ${bodyHtml}
 </div>
-${also}`,
+${vulns.html}
+${also}
+${sourceSection(edition)}`,
   });
 }
 
@@ -328,10 +367,10 @@ const WEEKDAYS: [short: string, long: string][] = [
  * headline is still reachable, so it lives on the link itself rather than
  * being dropped.
  */
-function dayLabel(entry: ArchiveEntry): string {
+function dayLabel(entry: ArchiveEntry, newest: boolean): string {
   const stories = `${entry.count} ${entry.count === 1 ? 'story' : 'stories'}`;
   const what = entry.mode === 'article' ? entry.headline : 'Automated digest';
-  return `${formatDate(entry.date)} — ${what} · ${stories}`;
+  return `${formatDate(entry.date)} — ${what} · ${stories}${newest ? ' · newest stored edition' : ''}`;
 }
 
 function dayCell(cell: CalendarDay | null, latest: string): string {
@@ -341,8 +380,9 @@ function dayCell(cell: CalendarDay | null, latest: string): string {
   // the record should look like a gap.
   if (cell.entry === null) return `<td class="off"><span>${cell.day}</span></td>`;
 
-  const label = escapeHtml(dayLabel(cell.entry));
-  const classes = ['on', cell.date === latest ? 'latest' : ''].filter(Boolean).join(' ');
+  const newest = cell.date === latest;
+  const label = escapeHtml(dayLabel(cell.entry, newest));
+  const classes = ['on', newest ? 'latest' : ''].filter(Boolean).join(' ');
   return `<td class="${classes}"><a class="${cell.entry.mode}" href="${escapeHtml(cell.date)}.html" title="${label}" aria-label="${label}">${cell.day}</a></td>`;
 }
 
@@ -369,25 +409,41 @@ ${rows}
 </table>`;
 }
 
-export function archivePage(entries: ArchiveEntry[]): string {
+export interface ArchiveOptions {
+  /** When this index was rebuilt; defaults to now. Never an edition's time. */
+  builtAt?: string;
+}
+
+export function archivePage(entries: ArchiveEntry[], o: ArchiveOptions = {}): string {
   const months = calendarMonths(entries);
-  const dates = entries.map((e) => e.date).sort();
+  const sorted = [...entries].sort((a, b) => a.date.localeCompare(b.date));
+  const dates = sorted.map((e) => e.date);
   const latest = dates.at(-1) ?? '';
+  const newest = sorted.at(-1);
+  const builtAt = o.builtAt ?? new Date().toISOString();
 
-  // A month is only drawn because it holds an edition, so months and entries
-  // are empty together and the summary line never has to describe nothing.
-  const summary = `${dates.length} ${dates.length === 1 ? 'edition' : 'editions'} · ${escapeHtml(formatDate(dates[0] ?? ''))} to ${escapeHtml(formatDate(latest))} · a bright day is a written article, a plain one an automated digest`;
-
-  const body = months.length
-    ? [
-        `<p class="summary">${summary}</p>`,
-        ...months.map((month) => monthTable(month, latest)),
-      ].join('\n')
-    : `<p class="empty">No editions yet.</p>`;
+  let body: string;
+  if (months.length && newest) {
+    const what = newest.mode === 'article' ? newest.headline : 'Automated digest';
+    const link = `<a href="${escapeHtml(newest.date)}.html">${escapeHtml(`${formatDate(newest.date)} — ${what}`)}</a>`;
+    // A month is only drawn because it holds an edition, so months and entries
+    // are empty together and the summary line never has to describe nothing.
+    const summary = `${dates.length} ${dates.length === 1 ? 'edition' : 'editions'} · ${escapeHtml(formatDate(dates[0] ?? ''))} to ${escapeHtml(formatDate(latest))}`;
+    body = [
+      archiveStatus(newest.date, link),
+      `<p class="summary">${summary}</p>`,
+      '<p class="legend">Bright bold day: written article · plain day: automated digest · dashed outline: newest stored edition · dashed muted cell: no edition stored for that day. Dates are UTC.</p>',
+      ...months.map((month) => monthTable(month, latest)),
+    ].join('\n');
+  } else {
+    body = '<p class="empty">No editions have been stored yet, so there is nothing to list.</p>';
+  }
 
   return layout({
     title: 'Archive — Daily Security News',
-    generatedAt: new Date().toISOString(),
+    generatedAt: builtAt,
+    current: 'archive',
+    footerHtml: `Archive index rebuilt ${timestamp(builtAt)}. Each edition page keeps its own original generation time.`,
     bodyHtml: `<h1>Archive</h1>\n${body}`,
   });
 }

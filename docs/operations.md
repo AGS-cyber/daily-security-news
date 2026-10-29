@@ -70,9 +70,9 @@ never written to a URL, log, cache, edition, or generated page.
 
 A missing `DEEPSEEK_API_KEY` is a **disclosed fallback**, not a crash: the run
 publishes the chronological digest under a banner saying the article is
-missing, and the build stays green (§8). That is deliberate, and it is the only
-credential the daily run has left — nothing in the pipeline now fails red for
-want of a key.
+missing. Generation can complete so readers receive useful news; the workflow's
+post-publication health check then fails visibly (§8). A healthy quiet day needs
+no model credential and stays green.
 
 Locally, export `DEEPSEEK_API_KEY` in your shell. **Nothing breaks without
 it** — a missing key is treated as an LLM failure, so the run publishes the
@@ -257,6 +257,16 @@ Anything that is not an XML content type (`application/rss+xml`, `text/xml`,
 source; do not leave a permanently failing feed in the config, because a
 banner that is always on trains the reader to ignore banners.
 
+### A legitimate feed exceeds the response-size limit
+
+The October 26, 2026 edition omitted CISA Advisories and Google Project Zero
+because both exceeded the original 2 MiB cap. Live checks on October 27 measured
+their decoded response bodies at 5.43 MiB and 10.79 MiB respectively; both parsed
+successfully. The cap in `src/collect/feed.ts` is now **16 MiB per feed** to admit
+these full-content feeds with room to grow. The limit still counts actual decoded
+body bytes as they stream in, and cancels larger responses without retrying.
+The 15-second deadline and other retry rules remain unchanged.
+
 ### The process completes every stage and never exits
 
 **Symptom:** all log lines print, output files are written correctly, and the
@@ -269,9 +279,13 @@ the event loop open with them. It only appeared with all twelve feeds — a
 two-feed probe exited cleanly, which made it look like it was not the HTTP
 layer at all.
 
-**Fix, already in place:** `requestOptions: { agent: false }` in
-`src/collect/rss.ts` gives each request a throwaway agent. We fetch each host
-once per run, so there is no connection worth pooling. **Do not remove it.**
+**Current fix (2026-10-25):** `src/collect/feed.ts` uses native fetch with a
+15-second abort deadline covering headers and body, cancels unsuccessful or
+oversized responses, and parses the resulting XML with rss-parser. The old
+`parseURL` transport and throwaway-agent workaround have been replaced. Fetch
+has one bounded retry for transient failures; see `reliability-review.md` for
+the limits and mocked timeout tests. Do not restore a timeout that only rejects
+a promise while leaving the underlying request alive.
 
 **Diagnose a recurrence:** `process.getActiveResourcesInfo()` after the work
 finishes. A lingering `TCPSocketWrap` is this bug.
@@ -303,12 +317,27 @@ run — 140 became 123 — with an identical `collected` count.
 always return their latest N), while their contents rotate. Meanwhile the
 7-day eligibility window slides forward, so the oldest stories age out.
 
-Consequence worth knowing: a same-day re-run is **non-destructive but not
-idempotent** — the edition reflects whatever was collectible at generation
-time. Harmless for a once-daily job. It becomes a real question at layer 3,
-where a re-run regenerates a different article from a different story set. If
-that ever matters, the fix is to union a re-run's items with the existing
-edition for that date so the day's record only ever grows.
+**Current rerun policy (2026-10-25):** if collection or normalization is degraded
+and any output already exists for the same UTC date, the generator exits nonzero
+before enrichment, model calls, or file writes. It checks the stored edition JSON,
+served edition JSON and dated HTML; any one of them protects an earlier or
+interrupted publication, even when the old JSON is truncated. The error names the
+failed source/stage and states that no replacement was generated. All existing
+content, generation timestamps, vulnerability cache and seen state stay unchanged.
+
+This deliberately blocks even a partial rerun that appears to contain as many or
+more stories: counts alone cannot prove that no story was lost. Recover the failed
+sources, then rerun. There is no silent merge of old stories into a newly dated
+edition and no force-overwrite option. Expected future-event exclusions are
+informational and do not block a rerun.
+
+A first edition for a new UTC date may still publish partial results with its
+source-failure banner. Healthy same-day reruns remain allowed and can change as
+feeds rotate or the eligibility window advances. Later-stage enrichment/writing
+fallbacks keep their existing policy. The guard does not make multi-file writes
+transactional or serialize concurrent local processes; the daily workflow already
+serializes its jobs. An operator must resolve genuinely interrupted output rather
+than bypass the guard during a collection outage.
 
 ### The article is missing and the page is a digest
 
@@ -325,7 +354,7 @@ The banner names the stage and the reason. Read it — it distinguishes the case
 | `DEEPSEEK_API_KEY is set but its value is empty` | The secret exists and holds nothing. See below |
 | `select failed — …` after retries | DeepSeek was unreachable, returned empty content twice, or its JSON failed validation |
 | `write failed — …` | Selection succeeded; prose generation or its citation validation failed |
-| `there are no stories to select from` | The window was genuinely empty — every feed item was already covered |
+| `there are no stories to select from` | Historical behavior; healthy empty windows now skip the model without a failure notice |
 
 **What must never happen:** a half-written article, an article citing a story
 `select` did not choose, or a page that looks like a normal edition when no
@@ -335,7 +364,10 @@ validation in `select.ts` / `write.ts` / `citations.ts` is what prevents it.
 **Retry shape.** Two layers, deliberately: the client retries once on transport
 failure or empty content (§6 documents empty responses as a real DeepSeek
 failure mode), and `select`/`write` each retry once more on a *validation*
-failure. Worst case is two validation attempts, not four transport attempts.
+failure. Validation retries carry the precise error and previous response alongside
+the original evidence. Each stage makes at most four HTTP requests; the two stages
+combined make at most eight. Truncated API responses are retried as incomplete.
+Successful usage totals include the consumed failed attempts that preceded recovery.
 
 **Cost.** A successful run logs a cost per call, summed into `usage` on the
 edition. **Measured on the first real run (2026-08-06): $0.0047** — 16,785
@@ -351,8 +383,9 @@ run will usually miss the cache, so expect the hit count to stay at zero.
 
 **Symptom:** `gh secret list` shows `DEEPSEEK_API_KEY`, the workflow passes it
 through `env:`, and the edition still comes out `mode: "digest"` with
-`select failed — DEEPSEEK_API_KEY is set but its value is empty`. The build is
-green and fast — about 20 seconds, versus roughly two minutes for a real run.
+`select failed — DEEPSEEK_API_KEY is set but its value is empty`. Historically the
+build was green and fast — about 20 seconds, versus roughly two minutes for a real
+run. The post-publication health check now fails the workflow for this fallback.
 
 **Actual cause:** the secret exists but its **value is empty**. `gh secret set`
 takes the value from a blind paste that echoes nothing, so a paste that does
@@ -365,7 +398,8 @@ failed on it. The check was red every single morning and said exactly what was
 wrong; a daily red check on a step that cannot hurt the site is a notification
 people stop reading. The email edition was removed rather than repaired
 (design §12), so this failure mode now applies only to `DEEPSEEK_API_KEY` —
-where it stays green and merely produces a digest, which is harder to spot.
+where generation still produces a disclosed digest, and the health step makes
+the failure visible in the run status and summary.
 
 **Diagnose from the run log,** which settles it in one line:
 
@@ -487,13 +521,15 @@ as designed:
 
 | Failure | Behaviour | Build |
 |---|---|---|
-| A feed times out, 404s, or returns garbage | Notice appended, banner on the page naming the source | green |
-| Items unparseable in `normalize` | One aggregated notice, banner | green |
-| CISA KEV or NVD times out, rate-limits, or returns malformed data | Use fresh/stale cache where possible; otherwise explicit unavailable fields and an `enrich` banner | green |
+| A feed times out, 404s, or returns garbage | First/new-day partial edition is disclosed if input remains usable; an existing same-date edition is preserved with a nonzero exit | **red**, after publishing a first partial edition |
+| Invalid links/dates or unexplained future timestamps | Aggregated notice; same-date replacement is blocked. Expected future-event listings are informational | **red** for real exclusions; green for expected events |
+| No usable collected/normalized input | Stop before enrichment, model calls and output writes | **red** |
+| CISA KEV or NVD times out, rate-limits, or returns malformed data | Use fresh/stale cache where possible; otherwise explicit unavailable fields and an `enrich` banner | **red**, after publishing a first partial edition |
 | A CVE is absent from NVD | Confirmed `not_found`; NVD fields remain null/empty | green |
-| The vulnerability cache cannot be read or written | Rebuild or continue in memory, with an `enrich` banner | green |
-| `select` or `write` fails after one retry | Falls back to the digest under a banner saying why | green |
-| `DEEPSEEK_API_KEY` missing | Same as above — disclosed fallback | green |
+| The vulnerability cache cannot be read or written | Rebuild or continue in memory, with an `enrich` banner | **red** after publication |
+| `select` or `write` fails after one retry | First edition falls back to a disclosed digest; an existing same-day article is preserved | **red** |
+| `DEEPSEEK_API_KEY` missing | Same as above when unseen news exists | **red** |
+| Healthy collection with no unseen stories | Quiet-day digest; no model call or failure notice | green |
 | `dedupe`, `render`, or `publish` fails | Run aborts, nothing deploys, yesterday's edition stays up | **red** |
 | `seen.json` is malformed | Throws — never silently reset, or everything republishes | **red** |
 
@@ -634,3 +670,25 @@ warning with precise reasons. The eligibility window and future-date limit are u
 Historical records remain untouched. Their generic normalize-only notices render as
 Collection notice with an explicit statement that the specific rejection reason was
 not recorded. Current feed evidence cannot retroactively identify historical rejects.
+
+
+## Reader freshness and local validation (2026-10-25)
+
+The front page and dated permalink now render separately. The former warns when
+the next scheduled edition is overdue; the latter is explicitly a stored edition.
+The browser checks age on resume, focus, history restore and every visible minute.
+The two-hour grace is a reader hint, not a promise about Actions completion. A
+clock mismatch or unreadable timestamp is disclosed. Source status is a snapshot
+of that edition's attempts, not a continuous health monitor.
+
+The fixed enhancement script has a SHA-256 CSP hash. Do not minify or otherwise
+rewrite its bytes independently of that hash; an additional HTTP CSP must permit
+the same script. No browser services are called. With scripts unavailable, all
+stories, dates, source evidence and conditional freshness guidance remain visible;
+filters stay hidden rather than becoming dead controls.
+
+The local audit changed source/tests/docs only. Stored editions, caches, seen
+state and generated site files were preserved. Existing generated pages acquire
+the new reader on a later intentional render; this audit did not publish them.
+Use the existing offline test/typecheck scripts before any separately authorized
+publication. The review report records validation and remaining trade-offs.

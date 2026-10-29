@@ -3,6 +3,7 @@ import { sources } from './config/sources.js';
 import { VULNERABILITY_CACHE_PATH } from './config/vulnerability.js';
 import { createClient, sumUsage } from './llm/client.js';
 import { dedupe } from './pipeline/dedupe.js';
+import { assertSafeCollectionRerun, assertSafeEditionRerun, assertUsableCollection } from './pipeline/collection-health.js';
 import { filter } from './pipeline/filter.js';
 import { normalize, normalizationNotices } from './pipeline/normalize.js';
 import { select } from './pipeline/select.js';
@@ -36,7 +37,7 @@ const SITE_DIR = 'site';
 /** The article-only half of an ArticleEdition; the rest is common to both modes. */
 type ArticleParts = Omit<
   ArticleEdition,
-  'date' | 'generatedAt' | 'degraded' | 'stats' | 'mode'
+  'date' | 'generatedAt' | 'degraded' | 'stats' | 'mode' | 'collection'
 >;
 
 /**
@@ -59,10 +60,11 @@ async function writeArticle(
 
   const reason = (err: unknown): string => (err instanceof Error ? err.message : String(err));
 
+  // A successfully collected window with no unseen stories is a healthy quiet day.
+  if (candidates.length === 0) return null;
   const created = createClient();
   if (!created.ok) return fallback('select', created.reason);
   const { client } = created;
-  if (candidates.length === 0) return fallback('select', 'there are no stories to select from');
 
   let selections: Selection[];
   let selectUsage: Usage;
@@ -108,7 +110,7 @@ async function run(): Promise<void> {
 
   const seen = await loadSeen(SEEN_PATH);
 
-  const collected = await collectRss(sources);
+  const collected = await collectRss(sources, { now });
   const degraded: DegradedNotice[] = [...collected.degraded];
   console.log(
     `collect     ${collected.items.length} items · ${collected.sourcesOk}/${sources.length} sources ok`,
@@ -117,6 +119,9 @@ async function run(): Promise<void> {
   const normalized = normalize(collected.items, now);
   degraded.push(...normalizationNotices(normalized.exclusions));
   console.log(`normalize   ${normalized.items.length} items · ${normalized.dropped} dropped`);
+
+  assertUsableCollection(collected.sourcesOk, normalized.items.length, degraded);
+  await assertSafeCollectionRerun({ date, editionsDir: EDITIONS_DIR, siteDir: SITE_DIR, notices: degraded });
 
   const clusters = dedupe(normalized.items);
   console.log(`dedupe      ${clusters.length} clusters`);
@@ -167,6 +172,7 @@ async function run(): Promise<void> {
   const base = {
     date,
     generatedAt: now.toISOString(),
+    collection: collected.collection,
     normalizationExclusions: normalized.exclusions,
     degraded,
     stats: {
@@ -184,6 +190,7 @@ async function run(): Promise<void> {
     ? { ...base, mode: 'article', ...article }
     : { ...base, mode: 'digest', items };
 
+  await assertSafeEditionRerun(edition, { editionsDir: EDITIONS_DIR, siteDir: SITE_DIR });
   await writeEdition(edition, EDITIONS_DIR);
   const written = await writeSite(edition, { siteDir: SITE_DIR, editionsDir: EDITIONS_DIR });
   console.log(`render      ${written.join(' ')}`);
