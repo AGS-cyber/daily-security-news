@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-10-30",
+    "mode": "article",
+    "headline": "GitLab’s 10.0 RCE leads active-exploitation day",
+    "count": 50
+  },
+  {
     "date": "2026-10-29",
     "mode": "article",
     "headline": "Warp Panda's log-blinding VMware bug enters KEV as Cisco and Palo Alto report live attacks",

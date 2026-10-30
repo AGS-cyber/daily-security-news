@@ -1,0 +1,1863 @@
+{
+  "date": "2026-10-30",
+  "generatedAt": "2026-10-30T17:38:34.794Z",
+  "collection": [
+    {
+      "sourceId": "krebs",
+      "attemptedAt": "2026-10-30T17:38:34.794Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "attemptedAt": "2026-10-30T17:38:34.794Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "thehackernews",
+      "attemptedAt": "2026-10-30T17:38:34.794Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "therecord",
+      "attemptedAt": "2026-10-30T17:38:34.794Z",
+      "status": "ok",
+      "items": 5,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securityweek",
+      "attemptedAt": "2026-10-30T17:38:34.794Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "darkreading",
+      "attemptedAt": "2026-10-30T17:38:34.794Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "attemptedAt": "2026-10-30T17:38:34.794Z",
+      "status": "ok",
+      "items": 30,
+      "skipped": 0
+    },
+    {
+      "sourceId": "projectzero",
+      "attemptedAt": "2026-10-30T17:38:34.794Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securelist",
+      "attemptedAt": "2026-10-30T17:38:34.794Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "talos",
+      "attemptedAt": "2026-10-30T17:38:34.794Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "unit42",
+      "attemptedAt": "2026-10-30T17:38:34.794Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "microsoft-security",
+      "attemptedAt": "2026-10-30T17:38:34.794Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    }
+  ],
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 229,
+    "published": 50
+  },
+  "mode": "article",
+  "headline": "GitLab’s 10.0 RCE leads active-exploitation day",
+  "standfirst": "A maximum-severity GitLab flaw already exploited against Alpine Linux, active Drupal Commerce Core exploitation and mass WordPress scanning dominate the vulnerability agenda, while Binance discloses a multi-billion-dollar security incident and a trojanized AI coding extension exposes developer supply-chain risk. Cisco SD-WAN and TeamViewer flaws and an FBI seizure round out the picture.",
+  "bodyMarkdown": "## Actively exploited\n\nGitLab CE/EE contains a CVSS 10.0, unauthenticated remote code execution flaw, CVE-2026-97229, fixed in 19.2.8, 19.3.5 and 19.4.2; the supplied NVD entry ties it to insufficient validation of a specially crafted regular expression in CI/CD configuration. It is confirmed in CISA KEV and the source reports exploitation against Alpine Linux; the supplied CVSS vector indicates no privileges or user interaction are required [[s28]].\n\nDrupal Commerce Core’s missing-authorization flaw, CVE-2026-118539, affects versions 0.0.0 through 2.41 and 3.0.0 through 3.3.13; Drupal warns it is being actively exploited, though no CVSS value is supplied and CISA KEV enrichment shows no catalog match [[s34]].\n\nWordPress Core versions 4.7 through 7.1.3 face a high-severity RCE, CVSS 8.1 and no CVE identifier, with nearly 63,000 attack attempts in 24 hours shortly after patches appeared [[s11]]. Analysis: the attempt count indicates mass scanning, not necessarily successful compromise; the source does not supply exploit prerequisites.\n\n## Breaches\n\nBinance says a security incident affected about $6.3 billion in assets, with nearly $3 billion frozen on-chain; Tether and Circle froze more than 1.567 billion USDT and 800 million USDC respectively [[s36]]. The supplied account gives no cause, attribution or customer-loss confirmation; the operational question is how much remains exposed. Analysis: the stablecoin freezes are the clearest containment lever described, but they do not establish a root cause.\n\nSeparately, a malicious version of Anthropic’s Claude Code VS Code extension was distributed through Cursor’s marketplace for about 11 hours, exposing up to 5,000 developers to malware that installed persistent SSH backdoors [[s8]]. No CVE or technical root cause is supplied. Analysis: the incident makes AI-assisted development tooling a supply-chain target; the source does not say whether the backdoors were used.\n\n## Research\n\nUAT-11473, described as a newly identified APT group, exploited CVE-2026-20127 in Cisco Catalyst SD-WAN Controller, Manager and Validator to deploy a custom KeyDrift framework [[s47]]. The authentication bypass is CVSS 10.0, unauthenticated and remote, and can yield internal high-privileged access and NETCONF configuration control; CISA lists it in KEV, and the supplied NVD ranges cover multiple releases, including branches before 20.9.8.2 and 20.16 before 20.18.2.1. Analysis: pairing a control-plane bypass with bespoke malware suggests the access is being used for persistence, not just initial entry; the source does not describe KeyDrift’s capabilities beyond the framework label.\n\n## Vulnerabilities\n\nTeamViewer Full Client, Portable and Remote Control App before 15.83 contain CVE-2026-111585, an integer overflow in remote-control screen processing rated CVSS 8.8 High [[s31]]. Exploitation requires the user to establish a remote-control session to an attacker-controlled or compromised host and can cause denial of service or, depending on platform, code execution with viewer privileges. The flaw is not listed in KEV. Analysis: the direction of attack turns a support session against the technician’s machine, but the user-initiated session requirement limits mass exploitation.\n\n## Industry\n\nThe FBI seized the domain of Virtualine, a bulletproof host that the source says catered to hack-for-hire services, supported ransomware and infostealer operators, and accepted crypto payments [[s14]]. No arrest, charge or customer count is supplied. Analysis: domain seizure disrupts a named service but does not by itself show the underlying criminal operations have been dismantled.",
+  "selected": [
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Max-Severity GitLab Vulnerability Exploited Against Alpine Linux",
+      "url": "https://www.securityweek.com/max-severity-gitlab-vulnerability-exploited-against-alpine-linux/",
+      "publishedAt": "2026-10-30T09:32:27.000Z",
+      "excerpt": "Tracked as CVE-2026-97229, the bug allows unauthenticated attackers to execute arbitrary code on the server. The post Max-Severity GitLab Vulnerability Exploited Against Alpine Linux appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/max-severity-gitlab-vulnerability-exploited-against-alpine-linux",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/max-severity-gitlab-vulnerability-exploited-against-alpine-linux"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-97229",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "GitLab",
+            "product": "Community Edition and Enterprise Edition",
+            "vulnerabilityName": "GitLab Community Edition and Enterprise Edition Integer Overflow or Wraparound Vulnerability",
+            "dateAdded": "2026-10-29",
+            "shortDescription": "GitLab Community Edition and Enterprise Edition contain a integer overflow or wraparound vulnerability that could allow an unauthenticated user to execute arbitrary code on the GitLab server via a specially crafted regular expression in a CI/CD configuration, due to insufficient regular expression validation.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-01",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "Other products can potentially be affected by the same underlying Ruby/Onigmo Integer Overflow issue in CI/CD Regular Expression Compiler. For more information please see: https://www.ruby-lang.org/en/news/2026/10/23/regexp-fixes-for-gitlab-cves ; https://docs.gitlab.com/releases/patches/patch-release-gitlab-19-4-2-released/ ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-97229",
+            "cwes": [
+              "CWE-190"
+            ]
+          },
+          "nvd": {
+            "description": "GitLab has remediated an issue in GitLab CE/EE affecting all versions from 19.2 before 19.2.8, 19.3 before 19.3.5, and 19.4 before 19.4.2 that, under certain conditions, could have allowed an unauthenticated user to execute arbitrary code on the GitLab server via a specially crafted regular expression in a CI/CD configuration, due to insufficient regular expression validation.",
+            "cvss": {
+              "version": "3.1",
+              "score": 10,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+              "source": "cve@gitlab.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-190"
+            ],
+            "published": "2026-10-13T02:17:00.840",
+            "lastModified": "2026-10-30T10:36:26.950",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://docs.gitlab.com/releases/patches/patch-release-gitlab-19-4-2-released/",
+                "source": "cve@gitlab.com",
+                "tags": [
+                  "Release Notes",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://gitlab.com/gitlab-org/gitlab/-/work_items/630686",
+                "source": "cve@gitlab.com",
+                "tags": [
+                  "Broken Link"
+                ]
+              },
+              {
+                "url": "https://hackerone.com/reports/4055749",
+                "source": "cve@gitlab.com",
+                "tags": [
+                  "Permissions Required"
+                ]
+              },
+              {
+                "url": "https://hackerone.com/reports/4058589",
+                "source": "cve@gitlab.com",
+                "tags": [
+                  "Permissions Required"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-97229",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:community:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A938C22D-FD14-48A6-B46F-CCA9AC8EBC9F",
+                "versionStartIncluding": "19.2.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.2.8"
+              },
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:enterprise:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "EC585668-21D1-41DF-A4FB-17DD48AB9F12",
+                "versionStartIncluding": "19.2.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.2.8"
+              },
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:community:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1304F38C-8780-4412-AE0B-D0B65319E8E6",
+                "versionStartIncluding": "19.3.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.3.5"
+              },
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:enterprise:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "75C2C2EE-4DF9-4AB5-9E15-2EC799667C6C",
+                "versionStartIncluding": "19.3.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.3.5"
+              },
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:community:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5FD2476C-E11F-4215-A329-C3B189B6611F",
+                "versionStartIncluding": "19.4.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.4.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:enterprise:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FAAF2A38-5C01-490C-A191-8532B58C246B",
+                "versionStartIncluding": "19.4.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.4.2"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/max-severity-gitlab-vulnerability-exploited-against-alpine-linux/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.30",
+              "dateReleased": "2026-10-30T17:02:45.3665Z",
+              "retrievedAt": "2026-10-30T17:38:34.794Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-97229%2CCVE-2026-111585%2CCVE-2026-118539%2CCVE-2026-20127%2CCVE-2026-76418",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-97229",
+              "retrievedAt": "2026-10-30T17:38:34.794Z"
+            }
+          }
+        }
+      ],
+      "id": "s28",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "CVE-2026-97229 is a CVSS 10.0 unauthenticated RCE in GitLab CE/EE (fixed in 19.2.8, 19.3.5, 19.4.2) now confirmed in KEV and already used against Alpine Linux, so internet-facing GitLab needs patching today."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Binance Suffers Security Breach Affecting $6.3 Billion in Assets, Nearly $3 Billion Frozen",
+      "url": "https://thehackernews.com/2026/10/binance-suffers-security-breach.html",
+      "publishedAt": "2026-10-30T04:14:59.000Z",
+      "excerpt": "Cryptocurrency giant Binance said on Thursday that a \"security incident\" on its platform has impacted about $6.3 billion worth of assets. The world's biggest cryptocurrency exchange said nearly $3 billion of those assets have been frozen on-chain so far. Tether and Circle said they have frozen more than 1.567 billion USDT and 800 million USDC related to the incident, respectively. The",
+      "canonicalUrl": "https://thehackernews.com/2026/10/binance-suffers-security-breach.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/binance-suffers-security-breach.html"
+      ],
+      "cves": [],
+      "id": "s36",
+      "section": "breaches",
+      "rank": 2,
+      "angle": "Binance's incident touches roughly $6.3 billion in assets with nearly $3 billion frozen on-chain, making it the largest crypto theft on record and a test of exchange operational security."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Hackers Actively Exploit Highly Critical Drupal Commerce Core Authorization Bypass Flaw",
+      "url": "https://thehackernews.com/2026/10/hackers-actively-exploit-highly.html",
+      "publishedAt": "2026-10-30T07:45:30.000Z",
+      "excerpt": "Drupal has warned that threat actors are exploiting a \"highly critical\" security flaw in its Commerce Core component. The vulnerability, tracked as CVE-2026-118539 (CVSS score: N/A), is a case of missing authorization affecting Commerce Core versions from 0.0.0 to 2.41 and from 3.0.0 to 3.3.13. \"This module enables you to sell goods and services to customers through an included shopping cart",
+      "canonicalUrl": "https://thehackernews.com/2026/10/hackers-actively-exploit-highly.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/hackers-actively-exploit-highly.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-118539",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Missing Authorization vulnerability in Drupal Commerce Core allows Forceful Browsing. This issue affects Commerce Core versions: from 0.0.0 to 2.41, from 3.0.0 to 3.3.13.",
+            "cvss": null,
+            "cwes": [
+              "CWE-862"
+            ],
+            "published": "2026-10-30T04:18:18.830",
+            "lastModified": "2026-10-30T04:18:18.830",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://www.drupal.org/sa-contrib-2026-254",
+                "source": "mlhess@drupal.org",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/10/hackers-actively-exploit-highly.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.30",
+              "dateReleased": "2026-10-30T17:02:45.3665Z",
+              "retrievedAt": "2026-10-30T17:38:34.794Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-97229%2CCVE-2026-111585%2CCVE-2026-118539%2CCVE-2026-20127%2CCVE-2026-76418",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-118539",
+              "retrievedAt": "2026-10-30T17:38:34.794Z"
+            }
+          }
+        }
+      ],
+      "id": "s34",
+      "section": "exploited",
+      "rank": 3,
+      "angle": "The missing-authorization flaw in Drupal Commerce Core (CVE-2026-118539, versions 0.0.0-2.41 and 3.0.0-3.3.13) is already being exploited, so store owners should patch and audit orders now."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Malicious Claude Code extension on Cursor planted SSH backdoors",
+      "url": "https://www.bleepingcomputer.com/news/security/malicious-claude-code-extension-on-cursor-planted-ssh-backdoors/",
+      "publishedAt": "2026-10-30T14:36:54.000Z",
+      "excerpt": "A malicious version of Anthropic's Claude Code VS Code extension was distributed through Cursor's extension marketplace for approximately 11 hours on October 29, exposing up to 5,000 developers to malware designed to install persistent SSH backdoors. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/malicious-claude-code-extension-on-cursor-planted-ssh-backdoors",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/malicious-claude-code-extension-on-cursor-planted-ssh-backdoors"
+      ],
+      "cves": [],
+      "id": "s8",
+      "section": "breaches",
+      "rank": 4,
+      "angle": "A trojanized Claude Code extension sat in Cursor's marketplace for about 11 hours and planted persistent SSH backdoors, exposing up to 5,000 developers and showing AI tooling is the new supply-chain soft spot."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers exploit Cisco SD-WAN flaw to deploy custom KeyDrift malware",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-cisco-sd-wan-flaw-to-deploy-custom-keydrift-malware/",
+      "publishedAt": "2026-10-29T18:38:26.000Z",
+      "excerpt": "A newly identified advanced persistent threat (APT) group tracked as UAT-11473 was observed exploiting CVE-2026-20127, an authentication-bypass flaw in Cisco Catalyst SD-WAN Controllers, to deploy a custom malware framework called KeyDrift. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-exploit-cisco-sd-wan-flaw-to-deploy-custom-keydrift-malware",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/hackers-exploit-cisco-sd-wan-flaw-to-deploy-custom-keydrift-malware"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-20127",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Cisco",
+            "product": "Catalyst SD-WAN Controller and Manager",
+            "vulnerabilityName": "Cisco Catalyst SD-WAN Controller and Manager Authentication Bypass Vulnerability",
+            "dateAdded": "2026-02-25",
+            "shortDescription": "Cisco Catalyst SD-WAN Controller, formerly SD-WAN vSmart, and Cisco Catalyst SD-WAN Manager, formerly SD-WAN vManage, contain an authentication bypass vulnerability could allow an unauthenticated, remote attacker to bypass authentication and obtain administrative privileges on an affected system. This vulnerability exists because the peering authentication mechanism in an affected system is not working properly. An attacker could exploit this vulnerability by sending crafted requests to an affected system. A successful exploit could allow the attacker to log in to an affected Cisco Catalyst SD-WAN Controller as an internal, high-privileged, non-root user account. Using this account, the attacker could access NETCONF, which would then allow the attacker to manipulate network configuration for the SD-WAN fabric.",
+            "requiredAction": "Please adhere to CISA’s guidelines to assess exposure and mitigate risks associated with Cisco SD-WAN devices as outlines in CISA’s Emergency Directive 26-03 (URL listed below in Notes) and CISA’s “Hunt & Hardening Guidance for Cisco SD-WAN Devices (URL listed below in Notes). Adhere to the applicable BOD 22-01 guidance for cloud services or discontinue use of the product if mitigations are not available.",
+            "dueDate": "2026-02-27",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "CISA Mitigation Instructions: https://www.cisa.gov/news-events/directives/ed-26-03-mitigate-vulnerabilities-cisco-sd-wan-systems ; https://www.cisa.gov/news-events/directives/supplemental-direction-ed-26-03-hunt-and-hardening-guidance-cisco-sd-wan-systems ; https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-rpa-EHchtZk ; https://nvd.nist.gov/vuln/detail/CVE-2026-20127",
+            "cwes": [
+              "CWE-287"
+            ]
+          },
+          "nvd": {
+            "description": "A vulnerability in the peering authentication in Cisco Catalyst SD-WAN Controller, formerly SD-WAN vSmart, Cisco Catalyst SD-WAN Manager, formerly SD-WAN vManage, and Cisco Catalyst SD-WAN Validator, formerly SD-WAN vBond, could allow an unauthenticated, remote attacker to bypass authentication and obtain administrative privileges on an affected system.\r\n\r\nThis vulnerability exists because the peering authentication mechanism in an affected system is not working properly. An attacker could exploit this vulnerability by sending crafted requests to an affected system. A successful exploit could allow the attacker to log in to an affected Cisco Catalyst SD-WAN Controller as an internal, high-privileged, non-root&nbsp;user account. Using this account, the attacker could access NETCONF, which would then allow the attacker to manipulate network configuration for the SD-WAN fabric.&nbsp;",
+            "cvss": {
+              "version": "3.1",
+              "score": 10,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+              "source": "nvd@nist.gov",
+              "type": "Primary"
+            },
+            "cwes": [
+              "CWE-287"
+            ],
+            "published": "2026-02-25T17:25:29.477",
+            "lastModified": "2026-06-17T15:06:12.607",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-rpa-EHchtZk",
+                "source": "psirt@cisco.com",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-20127",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:cisco:catalyst_sd-wan_manager:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0388BD67-C1AD-4E47-8B1A-22EE1634190E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "20.9.8.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:catalyst_sd-wan_manager:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "344CA479-F60F-4CD6-83F7-4DB38DF2EAEB",
+                "versionStartIncluding": "20.11",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "20.12.5.3"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:catalyst_sd-wan_manager:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D284EA84-6C27-4A9C-BDA2-D1C5BF1F2356",
+                "versionStartIncluding": "20.13",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "20.15.4.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:catalyst_sd-wan_manager:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B94E1DC2-5DA5-4238-8040-6D524DDEAA4F",
+                "versionStartIncluding": "20.16",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "20.18.2.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:catalyst_sd-wan_manager:20.12.6:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F5B6E170-73B8-4838-93B4-AD258F3BCA7C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:sd-wan_vbond_orchestrator:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D22B968F-3AB3-41AA-81CC-A1173654C731",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "20.9.8.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:sd-wan_vbond_orchestrator:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "89D0736B-EA67-44FD-A9E3-6729AB690295",
+                "versionStartIncluding": "20.11",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "20.12.5.3"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:sd-wan_vbond_orchestrator:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "06587810-B5BE-49FE-A009-BB53A2B45825",
+                "versionStartIncluding": "20.13",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "20.15.4.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:sd-wan_vbond_orchestrator:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A896A8B2-1517-4438-819E-DB2CC0214040",
+                "versionStartIncluding": "20.16",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "20.18.2.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:sd-wan_vbond_orchestrator:20.12.6:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "033AC84E-6A5F-4EFF-B610-5C16D4C2CC9D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:sd-wan_vsmart_controller:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9C42E29A-D80E-4303-A33E-660099CF78F7",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "20.9.8.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:sd-wan_vsmart_controller:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7B720BE5-BD1D-4BFA-A899-BFB20C7499FC",
+                "versionStartIncluding": "20.11",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "20.12.5.3"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:sd-wan_vsmart_controller:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "4BDF8CF0-99BA-461F-99D6-4B1ABE9C2FFF",
+                "versionStartIncluding": "20.13",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "20.15.4.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:sd-wan_vsmart_controller:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E709AAB8-3567-49EB-8090-033468743AB4",
+                "versionStartIncluding": "20.16",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "20.18.2.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:sd-wan_vsmart_controller:20.12.6:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3DD7A58E-C95F-48C2-8359-39AFE7FA47BE",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "bleepingcomputer",
+                "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-cisco-sd-wan-flaw-to-deploy-custom-keydrift-malware/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.30",
+              "dateReleased": "2026-10-30T17:02:45.3665Z",
+              "retrievedAt": "2026-10-30T17:38:34.794Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-97229%2CCVE-2026-111585%2CCVE-2026-118539%2CCVE-2026-20127%2CCVE-2026-76418",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-20127",
+              "retrievedAt": "2026-10-30T17:38:34.794Z"
+            }
+          }
+        }
+      ],
+      "id": "s47",
+      "section": "research",
+      "rank": 5,
+      "angle": "UAT-11473 pairing the long-known CVE-2026-20127 SD-WAN authentication bypass with a custom KeyDrift framework shows controllers remain a durable APT foothold."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "WordPress RCE Flaw Draws Nearly 63,000 Attack Attempts in Just 24 Hours",
+      "url": "https://thehackernews.com/2026/10/wordpress-rce-flaw-draws-nearly-63000.html",
+      "publishedAt": "2026-10-30T14:08:14.000Z",
+      "excerpt": "Threat actors have been observed attempting to exploit a high-severity security flaw in WordPress Core shortly after patches were released. The vulnerability, which does not have a CVE identifier, relates to a case of remote code execution impacting WordPress Core versions 4.7 through 7.1.3. It carries a CVSS score of 8.1 on the CVSS scoring system. Patches for the flaw were released on October",
+      "canonicalUrl": "https://thehackernews.com/2026/10/wordpress-rce-flaw-draws-nearly-63000.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/wordpress-rce-flaw-draws-nearly-63000.html"
+      ],
+      "cves": [],
+      "id": "s11",
+      "section": "exploited",
+      "rank": 6,
+      "angle": "Nearly 63,000 exploit attempts in 24 hours against the WordPress Core RCE (CVSS 8.1, no CVE, versions 4.7 through 7.1.3) shows how fast mass scanning follows a patch release."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "TeamViewer Flaw Could Let Malicious Hosts Take Over Support Technicians’ Machines",
+      "url": "https://www.securityweek.com/teamviewer-flaw-could-let-malicious-hosts-take-over-support-technicians-machines/",
+      "publishedAt": "2026-10-30T08:44:49.000Z",
+      "excerpt": "An integer overflow tracked as CVE-2026-111585 could be used to execute arbitrary code on the viewer’s system. The post TeamViewer Flaw Could Let Malicious Hosts Take Over Support Technicians’ Machines appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/teamviewer-flaw-could-let-malicious-hosts-take-over-support-technicians-machines",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/teamviewer-flaw-could-let-malicious-hosts-take-over-support-technicians-machines"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-111585",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "An integer overflow in the remote-control\nscreen processing component of TeamViewer clients (Full Client, Portable and Remote\nControl App) prior to version 15.83 may allow a malicious remote host to cause\na denial of service or, depending on the platform, potentially execute\narbitrary code with the privileges of the viewer process. Exploitation requires\na user to establish a remote-control session to an attacker-controlled or\ncompromised host.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.8,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+              "source": "psirt@teamviewer.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-190"
+            ],
+            "published": "2026-10-27T16:17:29.870",
+            "lastModified": "2026-10-28T14:45:23.073",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://www.teamviewer.com/en/resources/trust-center/security-bulletins/tv-2026-1011/",
+                "source": "psirt@teamviewer.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/teamviewer-flaw-could-let-malicious-hosts-take-over-support-technicians-machines/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.30",
+              "dateReleased": "2026-10-30T17:02:45.3665Z",
+              "retrievedAt": "2026-10-30T17:38:34.794Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-97229%2CCVE-2026-111585%2CCVE-2026-118539%2CCVE-2026-20127%2CCVE-2026-76418",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-111585",
+              "retrievedAt": "2026-10-30T17:38:34.794Z"
+            }
+          }
+        }
+      ],
+      "id": "s31",
+      "section": "vulnerabilities",
+      "rank": 7,
+      "angle": "CVE-2026-111585 is an integer overflow in TeamViewer clients before 15.83 that lets a malicious or compromised host attack the viewer's machine, inverting the trust model support technicians rely on."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Bulletproof Host Virtualine Loses Its Domain to FBI Seizure",
+      "url": "https://www.securityweek.com/bulletproof-host-virtualine-loses-its-domain-to-fbi-seizure/",
+      "publishedAt": "2026-10-30T13:36:12.000Z",
+      "excerpt": "It allowed customers to host hack-for-hire services, supported ransomware and infostealer operators, and accepted crypto payments. The post Bulletproof Host Virtualine Loses Its Domain to FBI Seizure appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/bulletproof-host-virtualine-loses-its-domain-to-fbi-seizure",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/bulletproof-host-virtualine-loses-its-domain-to-fbi-seizure"
+      ],
+      "cves": [],
+      "id": "s14",
+      "section": "industry",
+      "rank": 8,
+      "angle": "The FBI's seizure of Virtualine's domain is a concrete disruption of a bulletproof host that catered to hack-for-hire services and ransomware and infostealer operators."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "From help desk impersonation to AD CS abuse: Investigating ESC1 and ESC8 intrusion paths",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/10/30/help-desk-impersonation-ad-cs-abuse-investigating-esc1-esc8-intrusion-paths/",
+      "publishedAt": "2026-10-30T16:11:44.000Z",
+      "excerpt": "Teams support impersonation led to remote access, malicious runtime execution, and Certificate Services abuse through authentication relay and Kerberos. The post From help desk impersonation to AD CS abuse: Investigating ESC1 and ESC8 intrusion paths appeared first on Microsoft Security Blog.",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/10/30/help-desk-impersonation-ad-cs-abuse-investigating-esc1-esc8-intrusion-paths",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://microsoft.com/en-us/security/blog/2026/10/30/help-desk-impersonation-ad-cs-abuse-investigating-esc1-esc8-intrusion-paths"
+      ],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Trezor warns of suspected crypto-theft implant in hardware wallet",
+      "url": "https://www.bleepingcomputer.com/news/security/trezor-warns-of-suspected-crypto-theft-implant-in-hardware-wallet/",
+      "publishedAt": "2026-10-30T15:58:20.000Z",
+      "excerpt": "Hardware wallet device maker Trezor has received credible reports about a suspected hardware crypto-theft implant in a Trezor Safe 5 sold by its reseller CryptoBilis in Southeast Asia. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/trezor-warns-of-suspected-crypto-theft-implant-in-hardware-wallet",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/trezor-warns-of-suspected-crypto-theft-implant-in-hardware-wallet"
+      ],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Florida warns that 4.9 million people had Social Security numbers leaked in financial aid site breach",
+      "url": "https://therecord.media/florida-warns-5-million-affected-financial-aid-site-breach",
+      "publishedAt": "2026-10-30T15:54:00.000Z",
+      "excerpt": "The state’s Department of Education (FLDOE) said on Thursday it became aware of a data breach involving the Florida Student Financial Aid website on October 19.",
+      "canonicalUrl": "https://therecord.media/florida-warns-5-million-affected-financial-aid-site-breach",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/florida-warns-5-million-affected-financial-aid-site-breach"
+      ],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "L’Italia è afflitta da vulnerabilità informatiche, senza una causa chiara",
+      "url": "https://www.darkreading.com/cybersecurity-analytics/cyber-vulnerabilities-besiege-italy-italian",
+      "publishedAt": "2026-10-30T15:39:54.000Z",
+      "excerpt": "I ricercatori non riescono a spiegare del tutto perché le minacce informatiche in Italia siano così diverse rispetto a quelle di qualsiasi altro Paese.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-analytics/cyber-vulnerabilities-besiege-italy-italian",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cybersecurity-analytics/cyber-vulnerabilities-besiege-italy-italian"
+      ],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "TeamViewer Flaw Lets Remote Computers Attack Users Who Connect to Control Them",
+      "url": "https://thehackernews.com/2026/10/teamviewer-flaw-lets-remote-computers.html",
+      "publishedAt": "2026-10-30T15:17:28.000Z",
+      "excerpt": "TeamViewer has fixed a flaw that lets the machine being controlled in a remote session attack the computer that connected to control it. In a TeamViewer session, the computer that connects and takes control is the viewer, and the machine it controls is the host. A malicious or compromised host can exploit the flaw to crash the viewer's TeamViewer and, depending on the platform, may also run",
+      "canonicalUrl": "https://thehackernews.com/2026/10/teamviewer-flaw-lets-remote-computers.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/teamviewer-flaw-lets-remote-computers.html"
+      ],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "PHP2Shell Attacks Root Palo Alto Firewalls but Fail Against WordPress",
+      "url": "https://www.securityweek.com/php2shell-attacks-root-palo-alto-firewalls-but-fail-against-wordpress/",
+      "publishedAt": "2026-10-30T15:09:25.000Z",
+      "excerpt": "Over 22.6 million exposed instances are potentially affected by the critical PHP flaws that have been targeted for over a week. The post PHP2Shell Attacks Root Palo Alto Firewalls but Fail Against WordPress appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/php2shell-attacks-root-palo-alto-firewalls-but-fail-against-wordpress",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/php2shell-attacks-root-palo-alto-firewalls-but-fail-against-wordpress"
+      ],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "In Other News: Anthropic Breach Dispute, UEFI Flaw Hits Most Servers, Cloudflare AI Data Leak",
+      "url": "https://www.securityweek.com/in-other-news-anthropic-breach-dispute-uefi-flaw-hits-most-servers-cloudflare-ai-data-leak/",
+      "publishedAt": "2026-10-30T14:41:35.000Z",
+      "excerpt": "Noteworthy stories that might have slipped under the radar: Iran eyed in military freezer hacks, Copenhagen University breach, AI-powered malware. The post In Other News: Anthropic Breach Dispute, UEFI Flaw Hits Most Servers, Cloudflare AI Data Leak appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/in-other-news-anthropic-breach-dispute-uefi-flaw-hits-most-servers-cloudflare-ai-data-leak",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/in-other-news-anthropic-breach-dispute-uefi-flaw-hits-most-servers-cloudflare-ai-data-leak"
+      ],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Syrian Electronic Army hacker gets prison time for attacks on Western targets",
+      "url": "https://therecord.media/syrian-electronic-army-hacker-sentenced-three-years",
+      "publishedAt": "2026-10-30T14:24:00.000Z",
+      "excerpt": "Ahmad Umar Agha, known online as “Th3Pr0,” was sentenced Thursday in federal court in Virginia to 42 months behind bars for his role in a conspiracy that was organized by former Syrian President Bashar al-Assad's closest advisers.",
+      "canonicalUrl": "https://therecord.media/syrian-electronic-army-hacker-sentenced-three-years",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/syrian-electronic-army-hacker-sentenced-three-years"
+      ],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Undead Software Projects Continue to Raise Security Risks",
+      "url": "https://www.darkreading.com/application-security/undead-software-projects-raise-security-risks",
+      "publishedAt": "2026-10-30T14:10:37.000Z",
+      "excerpt": "A security firm patched a decade-old app to prevent the takeover of millions of machines, highlighting that abandoned domains remain a boon to attackers.",
+      "canonicalUrl": "https://darkreading.com/application-security/undead-software-projects-raise-security-risks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/application-security/undead-software-projects-raise-security-risks"
+      ],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "SS7 and Diameter Attacks: How Signaling Flaws Expose Your Phone",
+      "url": "https://www.bleepingcomputer.com/news/security/ss7-and-diameter-attacks-how-signaling-flaws-expose-your-phone/",
+      "publishedAt": "2026-10-30T14:00:10.000Z",
+      "excerpt": "Flaws in SS7 and Diameter signaling protocols can allow attackers to track phone locations, intercept calls and SMS verification codes, and impersonate subscribers without compromising their devices. Cape explains how these attacks exploit trust between networks and how its security-focused mobile service helps defend against them. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/ss7-and-diameter-attacks-how-signaling-flaws-expose-your-phone",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/ss7-and-diameter-attacks-how-signaling-flaws-expose-your-phone"
+      ],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Passkeys Are Better Than Passwords. But They Are Not Enough.",
+      "url": "https://www.securityweek.com/passkeys-are-better-than-passwords-but-they-are-not-enough/",
+      "publishedAt": "2026-10-30T14:00:00.000Z",
+      "excerpt": "As organizations eliminate passwords, attackers will adapt. Instead of attacking the authenticator directly, they will look for opportunities around it. The post Passkeys Are Better Than Passwords. But They Are Not Enough. appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/passkeys-are-better-than-passwords-but-they-are-not-enough",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/passkeys-are-better-than-passwords-but-they-are-not-enough"
+      ],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "CISA says max severity GitLab flaw now exploited in the wild",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-now-exploiting-max-severity-gitlab-flaw-in-attacks/",
+      "publishedAt": "2026-10-30T13:00:32.000Z",
+      "excerpt": "Attackers have started exploiting a maximum-severity GitLab vulnerability patched earlier this month, according to the US Cybersecurity and Infrastructure Security Agency (CISA). [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-now-exploiting-max-severity-gitlab-flaw-in-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/hackers-now-exploiting-max-severity-gitlab-flaw-in-attacks"
+      ],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "British spy agency cannot account for thousands of data storage devices, watchdog says",
+      "url": "https://therecord.media/gchq-cannot-account-for-thousands-of-data-devices",
+      "publishedAt": "2026-10-30T12:52:00.000Z",
+      "excerpt": "The Investigatory Powers Commissioner’s Office (IPCO) in its annual report for 2025, published Thursday, said it was “very concerned” and “disappointed with the time it has taken GCHQ to investigate” the issue.",
+      "canonicalUrl": "https://therecord.media/gchq-cannot-account-for-thousands-of-data-devices",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/gchq-cannot-account-for-thousands-of-data-devices"
+      ],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Hackers target government Windows systems in Asia with new malware",
+      "url": "https://therecord.media/hackers-target-government-windows-systems-asia-new-malware",
+      "publishedAt": "2026-10-30T12:36:00.000Z",
+      "excerpt": "The previously unknown malware, dubbed NetamLoader, uses legitimate Microsoft software components to execute malicious code, evade security tools and download additional programs onto infected computers.",
+      "canonicalUrl": "https://therecord.media/hackers-target-government-windows-systems-asia-new-malware",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/hackers-target-government-windows-systems-asia-new-malware"
+      ],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Trezor Warns of Suspected Hardware Implant in One of Its Wallets Sold by CryptoBilis",
+      "url": "https://thehackernews.com/2026/10/trezor-warns-of-suspected-hardware.html",
+      "publishedAt": "2026-10-30T12:21:56.000Z",
+      "excerpt": "A Trezor Safe 5 hardware wallet bought from the reseller CryptoBilis has an extra circuit board that sends out the recovery phrase over a mobile network, a customer has reported. Trezor has not yet examined the device. It is telling everyone who bought a Trezor from CryptoBilis since March 2026 to move their funds to a new wallet with a new recovery phrase. Trezor said in a blog post",
+      "canonicalUrl": "https://thehackernews.com/2026/10/trezor-warns-of-suspected-hardware.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/trezor-warns-of-suspected-hardware.html"
+      ],
+      "cves": [],
+      "id": "s18"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Fresh WordPress Vulnerability in Attackers’ Crosshairs",
+      "url": "https://www.securityweek.com/fresh-wordpress-vulnerability-in-attackers-crosshairs/",
+      "publishedAt": "2026-10-30T12:04:13.000Z",
+      "excerpt": "Threat actors are attempting to exploit a high-severity unauthenticated race condition leading to remote code execution. The post Fresh WordPress Vulnerability in Attackers’ Crosshairs appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/fresh-wordpress-vulnerability-in-attackers-crosshairs",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/fresh-wordpress-vulnerability-in-attackers-crosshairs"
+      ],
+      "cves": [],
+      "id": "s19"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Why Urgent Security Fixes Aren't Fixed. Observe, Prove, Act, Confirm Gets Them Moving",
+      "url": "https://thehackernews.com/2026/10/why-urgent-security-fixes-arent-fixed.html",
+      "publishedAt": "2026-10-30T11:58:53.000Z",
+      "excerpt": "The alert is critical. The fix is known. And the ticket sits in a queue for days. Security teams understand the risk, but the people who keep applications available need proof that the change won’t break anything. Their concerns are practical. An IPS protection could block legitimate traffic. A configuration change could interrupt a service. An endpoint policy could affect an application",
+      "canonicalUrl": "https://thehackernews.com/2026/10/why-urgent-security-fixes-arent-fixed.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/why-urgent-security-fixes-arent-fixed.html"
+      ],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Polymarket confirms cyberattack on third-party provider after outages",
+      "url": "https://therecord.media/polymarket-confirms-cyberattack-third-party",
+      "publishedAt": "2026-10-30T11:33:00.000Z",
+      "excerpt": "The company suffered outages starting at 2 p.m. Eastern U.S. time on Thursday and eventually attributed the downtime to a compromise involving an unnamed provider.",
+      "canonicalUrl": "https://therecord.media/polymarket-confirms-cyberattack-third-party",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/polymarket-confirms-cyberattack-third-party"
+      ],
+      "cves": [],
+      "id": "s21"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft finally fixes VPN issues caused by September updates",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-finally-fixes-vpn-issues-caused-by-september-updates/",
+      "publishedAt": "2026-10-30T11:20:26.000Z",
+      "excerpt": "Microsoft has resolved Always On VPN connection failures triggered after installing the September 2026 Windows 11 security updates. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-finally-fixes-vpn-issues-caused-by-september-updates",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/microsoft/microsoft-finally-fixes-vpn-issues-caused-by-september-updates"
+      ],
+      "cves": [],
+      "id": "s22"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Drupal Commerce Core Vulnerability Exploited Against Online Stores",
+      "url": "https://www.securityweek.com/drupal-commerce-core-vulnerability-exploited-against-online-stores/",
+      "publishedAt": "2026-10-30T11:07:11.000Z",
+      "excerpt": "Drupal says a highly critical Commerce Core access bypass is exploited in the wild and urges store owners to audit their orders. The post Drupal Commerce Core Vulnerability Exploited Against Online Stores appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/drupal-commerce-core-vulnerability-exploited-against-online-stores",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/drupal-commerce-core-vulnerability-exploited-against-online-stores"
+      ],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Syrian Hacker Behind Fake Tweet That Triggered $136 Billion Market Drop Gets 42 Months in Prison",
+      "url": "https://thehackernews.com/2026/10/syrian-hacker-behind-fake-tweet-that.html",
+      "publishedAt": "2026-10-30T10:40:45.000Z",
+      "excerpt": "Ahmad Umar Agha, a Syrian Electronic Army hacker known online as \"Th3Pr0,\" has been sentenced by a U.S. federal court to 42 months in prison for his role in a hacking conspiracy that targeted Western news outlets. The conspiracy was organized and led by members of former Syrian President Bashar al-Assad's inner circle, including the commander of Syria's General Intelligence",
+      "canonicalUrl": "https://thehackernews.com/2026/10/syrian-hacker-behind-fake-tweet-that.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/syrian-hacker-behind-fake-tweet-that.html"
+      ],
+      "cves": [],
+      "id": "s24"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Drupal warns of critical Commerce Core flaw exploited in attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/drupal-warns-of-critical-commerce-core-flaw-exploited-in-attacks/",
+      "publishedAt": "2026-10-30T10:16:07.000Z",
+      "excerpt": "Drupal warned admins to patch a critical access bypass vulnerability in the Commerce Core module that attackers are exploiting in the wild. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/drupal-warns-of-critical-commerce-core-flaw-exploited-in-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/drupal-warns-of-critical-commerce-core-flaw-exploited-in-attacks"
+      ],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "securelist",
+      "sourceKind": "rss",
+      "title": "Filter generation in practice: from algorithms to LLMs",
+      "url": "https://securelist.com/practical-filter-generation/121697/",
+      "publishedAt": "2026-10-30T10:00:44.000Z",
+      "excerpt": "We automate filter generation for security alerts using an algorithm, a large language model, and a group of LLM agents.",
+      "canonicalUrl": "https://securelist.com/practical-filter-generation/121697",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securelist.com/practical-filter-generation/121697"
+      ],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "$2 Million+ Drained From Polymarket Traders in New Supply Chain Attack",
+      "url": "https://www.securityweek.com/2-million-drained-from-polymarket-traders-in-new-supply-chain-attack/",
+      "publishedAt": "2026-10-30T09:41:36.000Z",
+      "excerpt": "Malicious code linked to a website monitoring tool was designed to hijack logged-in Polymarket sessions and siphon user funds. The post $2 Million+ Drained From Polymarket Traders in New Supply Chain Attack appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/2-million-drained-from-polymarket-traders-in-new-supply-chain-attack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/2-million-drained-from-polymarket-traders-in-new-supply-chain-attack"
+      ],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Binance links $6.3 billion crypto theft to compromised DevOps laptop",
+      "url": "https://www.bleepingcomputer.com/news/security/binance-links-63-billion-crypto-theft-to-compromised-devops-laptop/",
+      "publishedAt": "2026-10-30T09:18:13.000Z",
+      "excerpt": "Binance, the world's largest crypto exchange, has linked the theft of about $6.3 billion in cryptocurrency to a DevOps engineer's compromised laptop. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/binance-links-63-billion-crypto-theft-to-compromised-devops-laptop",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/binance-links-63-billion-crypto-theft-to-compromised-devops-laptop"
+      ],
+      "cves": [],
+      "id": "s29"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Official Claude Code Extension on Cursor Marketplace Trojanized with Persistent SSH Backdoor",
+      "url": "https://thehackernews.com/2026/10/official-claude-code-vs-code-extension.html",
+      "publishedAt": "2026-10-30T08:55:47.000Z",
+      "excerpt": "Cybersecurity researchers have disclosed that a trojanized version of Anthropic's official Claude Code extension was distributed through the Cursor Marketplace as a legitimate update, attempting to install a persistent SSH backdoor on affected systems. The malicious update, version 2.1.313, was distributed under the extension's legitimate publisher identity, prompting Cursor to temporarily shut",
+      "canonicalUrl": "https://thehackernews.com/2026/10/official-claude-code-vs-code-extension.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/official-claude-code-vs-code-extension.html"
+      ],
+      "cves": [],
+      "id": "s30"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "$6 Billion Binance Hack Bears Hallmarks of North Korea’s TraderTraitor",
+      "url": "https://www.securityweek.com/6-billion-binance-hack-bears-hallmarks-of-north-koreas-tradertraitor/",
+      "publishedAt": "2026-10-30T08:16:26.000Z",
+      "excerpt": "Blockchain analysts link the record crypto theft to North Korean hackers, as Binance probes a possibly compromised engineer laptop. The post $6 Billion Binance Hack Bears Hallmarks of North Korea’s TraderTraitor appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/6-billion-binance-hack-bears-hallmarks-of-north-koreas-tradertraitor",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/6-billion-binance-hack-bears-hallmarks-of-north-koreas-tradertraitor"
+      ],
+      "cves": [],
+      "id": "s32"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "As Russia's Cyberwar Evolves, Belarus Steps Forward",
+      "url": "https://www.darkreading.com/physical-security/russia-cyber-war-belarus-steps-forward",
+      "publishedAt": "2026-10-30T08:00:00.000Z",
+      "excerpt": "The \"FrostyNeighbor\" advanced persistent threat (APT) launched a destructive attack in Ukraine and is raising concerns about deeper alignment with Russian cyber objectives.",
+      "canonicalUrl": "https://darkreading.com/physical-security/russia-cyber-war-belarus-steps-forward",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/physical-security/russia-cyber-war-belarus-steps-forward"
+      ],
+      "cves": [],
+      "id": "s33"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "CISA Adds Actively Exploited GitLab RCE and Cisco Firewall DoS Flaws to KEV",
+      "url": "https://thehackernews.com/2026/10/cisa-adds-actively-exploited-gitlab-rce.html",
+      "publishedAt": "2026-10-30T07:27:05.000Z",
+      "excerpt": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Thursday added two security flaws impacting Cisco and GitLab software to its Known Exploited Vulnerabilities (KEV), citing evidence of active exploitation. The vulnerabilities are listed below - CVE-2026-97229 (CVSS score: 10.0) - An integer overflow or wraparound vulnerability in GitLab Community Edition and Enterprise",
+      "canonicalUrl": "https://thehackernews.com/2026/10/cisa-adds-actively-exploited-gitlab-rce.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/cisa-adds-actively-exploited-gitlab-rce.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-97229",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "GitLab",
+            "product": "Community Edition and Enterprise Edition",
+            "vulnerabilityName": "GitLab Community Edition and Enterprise Edition Integer Overflow or Wraparound Vulnerability",
+            "dateAdded": "2026-10-29",
+            "shortDescription": "GitLab Community Edition and Enterprise Edition contain a integer overflow or wraparound vulnerability that could allow an unauthenticated user to execute arbitrary code on the GitLab server via a specially crafted regular expression in a CI/CD configuration, due to insufficient regular expression validation.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-01",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "Other products can potentially be affected by the same underlying Ruby/Onigmo Integer Overflow issue in CI/CD Regular Expression Compiler. For more information please see: https://www.ruby-lang.org/en/news/2026/10/23/regexp-fixes-for-gitlab-cves ; https://docs.gitlab.com/releases/patches/patch-release-gitlab-19-4-2-released/ ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-97229",
+            "cwes": [
+              "CWE-190"
+            ]
+          },
+          "nvd": {
+            "description": "GitLab has remediated an issue in GitLab CE/EE affecting all versions from 19.2 before 19.2.8, 19.3 before 19.3.5, and 19.4 before 19.4.2 that, under certain conditions, could have allowed an unauthenticated user to execute arbitrary code on the GitLab server via a specially crafted regular expression in a CI/CD configuration, due to insufficient regular expression validation.",
+            "cvss": {
+              "version": "3.1",
+              "score": 10,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+              "source": "cve@gitlab.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-190"
+            ],
+            "published": "2026-10-13T02:17:00.840",
+            "lastModified": "2026-10-30T10:36:26.950",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://docs.gitlab.com/releases/patches/patch-release-gitlab-19-4-2-released/",
+                "source": "cve@gitlab.com",
+                "tags": [
+                  "Release Notes",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://gitlab.com/gitlab-org/gitlab/-/work_items/630686",
+                "source": "cve@gitlab.com",
+                "tags": [
+                  "Broken Link"
+                ]
+              },
+              {
+                "url": "https://hackerone.com/reports/4055749",
+                "source": "cve@gitlab.com",
+                "tags": [
+                  "Permissions Required"
+                ]
+              },
+              {
+                "url": "https://hackerone.com/reports/4058589",
+                "source": "cve@gitlab.com",
+                "tags": [
+                  "Permissions Required"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-97229",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:community:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A938C22D-FD14-48A6-B46F-CCA9AC8EBC9F",
+                "versionStartIncluding": "19.2.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.2.8"
+              },
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:enterprise:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "EC585668-21D1-41DF-A4FB-17DD48AB9F12",
+                "versionStartIncluding": "19.2.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.2.8"
+              },
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:community:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1304F38C-8780-4412-AE0B-D0B65319E8E6",
+                "versionStartIncluding": "19.3.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.3.5"
+              },
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:enterprise:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "75C2C2EE-4DF9-4AB5-9E15-2EC799667C6C",
+                "versionStartIncluding": "19.3.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.3.5"
+              },
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:community:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5FD2476C-E11F-4215-A329-C3B189B6611F",
+                "versionStartIncluding": "19.4.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.4.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:enterprise:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FAAF2A38-5C01-490C-A191-8532B58C246B",
+                "versionStartIncluding": "19.4.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.4.2"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/10/cisa-adds-actively-exploited-gitlab-rce.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.30",
+              "dateReleased": "2026-10-30T17:02:45.3665Z",
+              "retrievedAt": "2026-10-30T17:38:34.794Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-97229%2CCVE-2026-111585%2CCVE-2026-118539%2CCVE-2026-20127%2CCVE-2026-76418",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-97229",
+              "retrievedAt": "2026-10-30T17:38:34.794Z"
+            }
+          }
+        }
+      ],
+      "id": "s35"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "OpenAI doubles ChatGPT Pro usage limits after backlash over planned 50% cut",
+      "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/openai-doubles-chatgpt-pro-usage-limits-after-backlash-over-planned-50-percent-cut/",
+      "publishedAt": "2026-10-29T23:35:52.000Z",
+      "excerpt": "OpenAI says it won't reduce usage limits for the $100, $200, and $500 ChatGPT Pro plans, as well as Business Premium, and it also promised to keep Dots usage independent. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/artificial-intelligence/openai-doubles-chatgpt-pro-usage-limits-after-backlash-over-planned-50-percent-cut",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/artificial-intelligence/openai-doubles-chatgpt-pro-usage-limits-after-backlash-over-planned-50-percent-cut"
+      ],
+      "cves": [],
+      "id": "s37"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Binance probes potential $5.8 billion crypto-theft hack",
+      "url": "https://www.bleepingcomputer.com/news/security/binance-probes-potential-58-billion-crypto-theft-hack/",
+      "publishedAt": "2026-10-29T22:45:23.000Z",
+      "excerpt": "Cryptocurrency exchange Binance is investigating a potential security breach involving up to $5.8 billion in digital assets, in what could become the largest cryptocurrency hack in history. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/binance-probes-potential-58-billion-crypto-theft-hack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/binance-probes-potential-58-billion-crypto-theft-hack"
+      ],
+      "cves": [],
+      "id": "s38"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hugging Face malware campaign returns to hijack GPUs for crypto mining",
+      "url": "https://www.bleepingcomputer.com/news/security/hugging-face-malware-campaign-returns-to-hijack-gpus-for-crypto-mining/",
+      "publishedAt": "2026-10-29T22:09:24.000Z",
+      "excerpt": "A crypto-mining campaign abusing Hugging Face models returned days after takedown, hijacking GPU servers and planting backdoors, with one model downloaded over 28,000 times. Separately, a fake Solana starter kit on GitHub is positioned to trick AI coding agents into installing a NetSupport RAT. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hugging-face-malware-campaign-returns-to-hijack-gpus-for-crypto-mining",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/hugging-face-malware-campaign-returns-to-hijack-gpus-for-crypto-mining"
+      ],
+      "cves": [],
+      "id": "s39"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Japan Airlines suffers third-party data breach exposing passenger info",
+      "url": "https://www.bleepingcomputer.com/news/security/japan-airlines-suffers-third-party-data-breach-exposing-passenger-info/",
+      "publishedAt": "2026-10-29T22:08:04.000Z",
+      "excerpt": "Japan Airlines (JAL) has announced that a data breach at Amadeus's Passenger Service System exposed the data of about 92,000 customers. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/japan-airlines-suffers-third-party-data-breach-exposing-passenger-info",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/japan-airlines-suffers-third-party-data-breach-exposing-passenger-info"
+      ],
+      "cves": [],
+      "id": "s40"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Polymarket halts trading after crypto-draining script breach, $2.5M traced",
+      "url": "https://www.bleepingcomputer.com/news/security/polymarket-halts-trading-after-crypto-draining-script-breach-25m-traced/",
+      "publishedAt": "2026-10-29T21:47:25.000Z",
+      "excerpt": "Prediction market platform Polymarket temporarily suspended trading on Thursday after hackers compromised a third-party service to distribute cryptocurrency-draining JavaScript, with approximately $2.5 million in assets traced to a suspected attacker wallet. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/polymarket-halts-trading-after-crypto-draining-script-breach-25m-traced",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/polymarket-halts-trading-after-crypto-draining-script-breach-25m-traced"
+      ],
+      "cves": [],
+      "id": "s41"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Anthropic-Themed Phishing Emails Bypass Top Security Tools",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/anthropic-phishing-emails-bypass-security-tools",
+      "publishedAt": "2026-10-29T21:21:56.000Z",
+      "excerpt": "Obvious phishing emails with numerous red flags are somehow getting past some of the industry-leading secure email gateway (SEG) products.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/anthropic-phishing-emails-bypass-security-tools",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyberattacks-data-breaches/anthropic-phishing-emails-bypass-security-tools"
+      ],
+      "cves": [],
+      "id": "s42"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Rethinking Cybersecurity Awareness in the AI Era",
+      "url": "https://www.darkreading.com/cyber-risk/rethinking-cybersecurity-awareness-ai-era",
+      "publishedAt": "2026-10-29T20:15:37.000Z",
+      "excerpt": "This installment of the Reporters' Notebook video series discusses some of the trends and topics from Cybersecurity Awareness Month, from using AI for better training to educating next-generation workforces on modern risks and emerging threats.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/rethinking-cybersecurity-awareness-ai-era",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyber-risk/rethinking-cybersecurity-awareness-ai-era"
+      ],
+      "cves": [],
+      "id": "s43"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Why CTF Competitions May Be More Important Than Ever",
+      "url": "https://www.darkreading.com/cybersecurity-operations/why-ctf-more-important-than-ever",
+      "publishedAt": "2026-10-29T19:56:44.000Z",
+      "excerpt": "As artificial intelligence squeezes early-career learning opportunities, capture-the-flag contests could be one way to help pick up the slack.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/why-ctf-more-important-than-ever",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cybersecurity-operations/why-ctf-more-important-than-ever"
+      ],
+      "cves": [],
+      "id": "s44"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Fake crypto app on Apple App Store linked to $23K wallet theft",
+      "url": "https://www.bleepingcomputer.com/news/security/fake-crypto-app-on-apple-app-store-linked-to-23k-wallet-theft/",
+      "publishedAt": "2026-10-29T19:23:41.000Z",
+      "excerpt": "A fake cryptocurrency trading app called Padre Terminal, previously available on the Apple App Store for iOS devices, has been linked to the theft of approximately $23,000 from 27 Solana wallets. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/fake-crypto-app-on-apple-app-store-linked-to-23k-wallet-theft",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/fake-crypto-app-on-apple-app-store-linked-to-23k-wallet-theft"
+      ],
+      "cves": [],
+      "id": "s45"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "ThreatsDay: Critical Firewall Flaws, Banking Trojans Rented, Weaponized PDF, Token Theft + 26 More Stories",
+      "url": "https://thehackernews.com/2026/10/threatsday-critical-firewall-flaws.html",
+      "publishedAt": "2026-10-29T19:11:58.000Z",
+      "excerpt": "Some attacks take real skill. Others just need someone to leave a door open. This week has both. Exposed passwords, old bugs still getting exploited, and trusted software doing things it shouldn't. There's a strange mix of clever tricks and careless mistakes. Hackers are borrowing trust from familiar apps, websites, and AI tools. Some are using AI to speed things up. Others are leaving their",
+      "canonicalUrl": "https://thehackernews.com/2026/10/threatsday-critical-firewall-flaws.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/threatsday-critical-firewall-flaws.html"
+      ],
+      "cves": [],
+      "id": "s46"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Claude Model Builds Exploits Across Major Browsers &amp; OSes",
+      "url": "https://www.darkreading.com/application-security/claude-model-exploits-major-browsers-oses",
+      "publishedAt": "2026-10-29T18:15:59.000Z",
+      "excerpt": "An unreleased version of the AI model has found and chained multiple vulnerabilities in Chrome, Safari, Android, Windows, and Linux, Anthropic says.",
+      "canonicalUrl": "https://darkreading.com/application-security/claude-model-exploits-major-browsers-oses",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/application-security/claude-model-exploits-major-browsers-oses"
+      ],
+      "cves": [],
+      "id": "s48"
+    },
+    {
+      "sourceId": "talos",
+      "sourceKind": "rss",
+      "title": "A quiet week in infosec <.<",
+      "url": "https://blog.talosintelligence.com/a-quiet-week-in-infosec/",
+      "publishedAt": "2026-10-29T18:00:00.000Z",
+      "excerpt": "In this edition of the Threat Source newsletter, William explores how PHP has taken over the conversation, Node.js has joined in, but underneath it all, there are still good people doing good work.",
+      "canonicalUrl": "https://blog.talosintelligence.com/a-quiet-week-in-infosec",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://blog.talosintelligence.com/a-quiet-week-in-infosec"
+      ],
+      "cves": [],
+      "id": "s49"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "CISA Adds Two Known Exploited Vulnerabilities to Catalog",
+      "url": "https://www.cisa.gov/news-events/alerts/2026/10/29/cisa-adds-two-known-exploited-vulnerabilities-catalog",
+      "publishedAt": "2026-10-29T12:00:00.000Z",
+      "excerpt": "CISA has added two new vulnerabilities to its Known Exploited Vulnerabilities (KEV) Catalog, based on evidence of active exploitation. CVE-2026-97229 GitLab Community Edition and Enterprise Edition Integer Overflow or Wraparound vulnerability CVE-2026-76418 Cisco Secure Firewall ASA Software and Cisco Secure FTD Software Unchecked Return Value to NULL Pointer Dereference Vulnerability These types…",
+      "canonicalUrl": "https://cisa.gov/news-events/alerts/2026/10/29/cisa-adds-two-known-exploited-vulnerabilities-catalog",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/alerts/2026/10/29/cisa-adds-two-known-exploited-vulnerabilities-catalog"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-76418",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Cisco",
+            "product": "Secure Firewall ASA Software and Cisco Secure FTD Software",
+            "vulnerabilityName": "Cisco Secure Firewall ASA Software and Cisco Secure FTD Software Unchecked Return Value to NULL Pointer Dereference Vulnerability",
+            "dateAdded": "2026-10-29",
+            "shortDescription": "Cisco Secure Firewall ASA Software and Cisco Secure FTD Software contains an unchecked return value to NULL pointer dereference vulnerability that could allow an unauthenticated, remote attacker to cause the device to reload unexpectedly, resulting in a denial of service (DoS) condition.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-01",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-asaftd-tunnel-dos-s6mgkb75 ; ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-76418",
+            "cwes": [
+              "CWE-690"
+            ]
+          },
+          "nvd": {
+            "description": "A vulnerability in the Remote Access SSL VPN service of Cisco Secure Firewall Adaptive Security Appliance (ASA) Software and Cisco Secure Firewall Threat Defense (FTD) Software could allow an unauthenticated, remote attacker to cause the device to reload unexpectedly, resulting in a denial of service (DoS) condition. This vulnerability is due to logic errors when secondary authentication is configured on a tunnel group. An attacker could exploit this vulnerability by sending a crafted request when connecting to the SSL remote access VPN. A successful exploit could allow the attacker to cause the affected device to reload, resulting in a DoS condition.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.6,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H",
+              "source": "psirt@cisco.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-690"
+            ],
+            "published": "2026-10-28T20:18:47.063",
+            "lastModified": "2026-10-30T10:36:01.130",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-asaftd-tunnel-dos-s6mgkb75",
+                "source": "psirt@cisco.com",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-76418",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:o:cisco:adaptive_security_appliance_software:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "805F181F-FE27-4ABF-AC29-559C6809FD27",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "9.16.4.104"
+              },
+              {
+                "criteria": "cpe:2.3:o:cisco:adaptive_security_appliance_software:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C29AE7AB-46AA-40AC-A049-8C9C0F245501",
+                "versionStartIncluding": "9.18",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "9.18.4.96"
+              },
+              {
+                "criteria": "cpe:2.3:o:cisco:adaptive_security_appliance_software:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6A4F41AE-BD2D-4DFE-85CA-241E16CA2914",
+                "versionStartIncluding": "9.19",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "9.20.4.50"
+              },
+              {
+                "criteria": "cpe:2.3:o:cisco:adaptive_security_appliance_software:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "DB422EAF-D8B7-48B8-8725-EC841A376092",
+                "versionStartIncluding": "9.22",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "9.22.3.200"
+              },
+              {
+                "criteria": "cpe:2.3:o:cisco:adaptive_security_appliance_software:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D2C12B2A-5E17-4FB0-945A-9D276C7C1CB8",
+                "versionStartIncluding": "9.23",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "9.23.1.48"
+              },
+              {
+                "criteria": "cpe:2.3:o:cisco:adaptive_security_appliance_software:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "4941C4C8-8178-4C9C-AF37-92FE80C18446",
+                "versionStartIncluding": "9.24.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "9.24.1.27"
+              },
+              {
+                "criteria": "cpe:2.3:o:cisco:adaptive_security_appliance_software:9.24.10:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "55397A10-5201-4F54-9640-B8F9E3903A50",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_threat_defense:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "60DFD7DE-3F86-4445-861E-43707945522E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "7.0.11"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_threat_defense:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "BA819EC0-042F-40BD-A894-5F79FEA7A950",
+                "versionStartIncluding": "7.2.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "7.2.13"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_threat_defense:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C52DB437-B0EE-4144-8207-46AAB05E9E6E",
+                "versionStartIncluding": "7.3.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "7.4.9"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_threat_defense:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0AAD421F-AFB6-4544-9C69-13492E9A92D7",
+                "versionStartIncluding": "7.6.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "7.6.7",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_threat_defense:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5C2723CE-3F8A-424D-AEA9-6BEC6BA81998",
+                "versionStartIncluding": "7.7.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "7.7.14"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_threat_defense:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3050C93D-1E56-4D1B-BAB9-53862EE7E0FB",
+                "versionStartIncluding": "10.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "10.0.3"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:secure_firewall_threat_defense:10.1.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "CE4A0681-8718-4EAE-889E-57E081D6C2C6",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/10/29/cisa-adds-two-known-exploited-vulnerabilities-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.30",
+              "dateReleased": "2026-10-30T17:02:45.3665Z",
+              "retrievedAt": "2026-10-30T17:38:34.794Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-97229%2CCVE-2026-111585%2CCVE-2026-118539%2CCVE-2026-20127%2CCVE-2026-76418",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-76418",
+              "retrievedAt": "2026-10-30T17:38:34.794Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-97229",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "GitLab",
+            "product": "Community Edition and Enterprise Edition",
+            "vulnerabilityName": "GitLab Community Edition and Enterprise Edition Integer Overflow or Wraparound Vulnerability",
+            "dateAdded": "2026-10-29",
+            "shortDescription": "GitLab Community Edition and Enterprise Edition contain a integer overflow or wraparound vulnerability that could allow an unauthenticated user to execute arbitrary code on the GitLab server via a specially crafted regular expression in a CI/CD configuration, due to insufficient regular expression validation.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-01",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "Other products can potentially be affected by the same underlying Ruby/Onigmo Integer Overflow issue in CI/CD Regular Expression Compiler. For more information please see: https://www.ruby-lang.org/en/news/2026/10/23/regexp-fixes-for-gitlab-cves ; https://docs.gitlab.com/releases/patches/patch-release-gitlab-19-4-2-released/ ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-97229",
+            "cwes": [
+              "CWE-190"
+            ]
+          },
+          "nvd": {
+            "description": "GitLab has remediated an issue in GitLab CE/EE affecting all versions from 19.2 before 19.2.8, 19.3 before 19.3.5, and 19.4 before 19.4.2 that, under certain conditions, could have allowed an unauthenticated user to execute arbitrary code on the GitLab server via a specially crafted regular expression in a CI/CD configuration, due to insufficient regular expression validation.",
+            "cvss": {
+              "version": "3.1",
+              "score": 10,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+              "source": "cve@gitlab.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-190"
+            ],
+            "published": "2026-10-13T02:17:00.840",
+            "lastModified": "2026-10-30T10:36:26.950",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://docs.gitlab.com/releases/patches/patch-release-gitlab-19-4-2-released/",
+                "source": "cve@gitlab.com",
+                "tags": [
+                  "Release Notes",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://gitlab.com/gitlab-org/gitlab/-/work_items/630686",
+                "source": "cve@gitlab.com",
+                "tags": [
+                  "Broken Link"
+                ]
+              },
+              {
+                "url": "https://hackerone.com/reports/4055749",
+                "source": "cve@gitlab.com",
+                "tags": [
+                  "Permissions Required"
+                ]
+              },
+              {
+                "url": "https://hackerone.com/reports/4058589",
+                "source": "cve@gitlab.com",
+                "tags": [
+                  "Permissions Required"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-97229",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:community:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A938C22D-FD14-48A6-B46F-CCA9AC8EBC9F",
+                "versionStartIncluding": "19.2.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.2.8"
+              },
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:enterprise:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "EC585668-21D1-41DF-A4FB-17DD48AB9F12",
+                "versionStartIncluding": "19.2.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.2.8"
+              },
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:community:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1304F38C-8780-4412-AE0B-D0B65319E8E6",
+                "versionStartIncluding": "19.3.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.3.5"
+              },
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:enterprise:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "75C2C2EE-4DF9-4AB5-9E15-2EC799667C6C",
+                "versionStartIncluding": "19.3.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.3.5"
+              },
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:community:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5FD2476C-E11F-4215-A329-C3B189B6611F",
+                "versionStartIncluding": "19.4.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.4.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:gitlab:gitlab:*:*:*:*:enterprise:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FAAF2A38-5C01-490C-A191-8532B58C246B",
+                "versionStartIncluding": "19.4.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "19.4.2"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/10/29/cisa-adds-two-known-exploited-vulnerabilities-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.30",
+              "dateReleased": "2026-10-30T17:02:45.3665Z",
+              "retrievedAt": "2026-10-30T17:38:34.794Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-97229%2CCVE-2026-111585%2CCVE-2026-118539%2CCVE-2026-20127%2CCVE-2026-76418",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-97229",
+              "retrievedAt": "2026-10-30T17:38:34.794Z"
+            }
+          }
+        }
+      ],
+      "id": "s50"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1280,
+    "promptCacheMissTokens": 18893,
+    "outputTokens": 10620,
+    "estimatedCostUsd": 0.0056222040000000004
+  }
+}
