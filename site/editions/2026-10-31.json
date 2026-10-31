@@ -1,0 +1,779 @@
+{
+  "date": "2026-10-31",
+  "generatedAt": "2026-10-31T16:41:54.351Z",
+  "collection": [
+    {
+      "sourceId": "krebs",
+      "attemptedAt": "2026-10-31T16:41:54.351Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "attemptedAt": "2026-10-31T16:41:54.351Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "thehackernews",
+      "attemptedAt": "2026-10-31T16:41:54.351Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "therecord",
+      "attemptedAt": "2026-10-31T16:41:54.351Z",
+      "status": "ok",
+      "items": 5,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securityweek",
+      "attemptedAt": "2026-10-31T16:41:54.351Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "darkreading",
+      "attemptedAt": "2026-10-31T16:41:54.351Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "attemptedAt": "2026-10-31T16:41:54.351Z",
+      "status": "ok",
+      "items": 30,
+      "skipped": 0
+    },
+    {
+      "sourceId": "projectzero",
+      "attemptedAt": "2026-10-31T16:41:54.351Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securelist",
+      "attemptedAt": "2026-10-31T16:41:54.351Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "talos",
+      "attemptedAt": "2026-10-31T16:41:54.351Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "unit42",
+      "attemptedAt": "2026-10-31T16:41:54.351Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "microsoft-security",
+      "attemptedAt": "2026-10-31T16:41:54.351Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    }
+  ],
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 229,
+    "published": 18
+  },
+  "mode": "article",
+  "headline": "Ivanti gateways lead a day of AI-wrapped attacker tooling",
+  "standfirst": "CISA confirms in-the-wild exploitation of an Ivanti Connect Secure flaw, Anthropic researchers build a remote-root Linux exploit, and several reports trace AI through both attacker and defender tooling.",
+  "bodyMarkdown": "## Actively exploited\n\nIvanti Connect Secure flaws were added to CISA's Known Exploited Vulnerabilities catalog on evidence of active exploitation, with reporting describing attackers chaining three bugs to reach root on internet-facing gateways [[s8]]. Only one is identified in the supplied material: CVE-2026-111357, carried there at CVSS 8.8 as a missing-authentication flaw. The NVD record for the same CVE is lower and narrower — 7.0 High, CWE-829, a local vector needing low privileges and no user interaction — describing 22.8R2.4 mishandling how the dsinvoked broker trusts DSCache configuration data to escalate to root, exploited in the wild. The 8.8 unauthenticated-network framing and the 7.0 local vector are unreconciled in the supplied text; treat the entry path as unconfirmed. Configurations run from 25.1.0.0 up to below 25.1.1.3, plus 22.8 R2 through R2.5. CISA's required action and due date bind federal agencies under a directive, not every operator.\n\n## Vulnerabilities\n\nResearchers built a working exploit for a critical Linux kernel flaw in Multipath TCP that yields root-level remote command execution against servers exposing MPTCP listeners, with no authentication required [[s12]]. No CVE or version range is supplied, so triage starts from an inventory of hosts with MPTCP enabled rather than from a patch list.\n\n## Breaches\n\nChainalysis disclosed a breach in which attackers used what it called \"offensive agentic techniques\" to reach internal systems and tools, exposing customer names, email addresses, user IDs and organisational roles [[s4]]. Analysis: the data is low-sensitivity identity material, but the method — described in the vendor's own words and not independently verified — is the point when the victim is a security vendor.\n\n## Research\n\nA crafted ChatGPT share link could run attacker code inside the logged-in session of anyone who opened it and expose private conversations; the researchers reported it through a bug bounty, and it was rated P1 and fixed within eight days [[s9]]. Share surfaces are the under-watched edge of assistant security: a link is the delivery mechanism, and trust in a familiar domain is the precondition.\n\nCrowdStrike attributes a Go-based, AI-powered penetration-testing framework called ARTEX to a China-based targeted intrusion adversary it tracks as Vapor Panda, used against more than 200 organisations [[s17]]. A malicious Claude Code–branded extension, analysed alongside detection and remediation guidance, plants a persistent SSH backdoor [[s11]]. Analysis: both ride legitimate developer and AI workflows, so extension and package provenance plus SSH persistence hunting are the levers.\n\nTalos shows the self-deleting VOLTA infostealer taking credentials, sessions and crypto wallets, then using LLMs to profile victims and rank their most valuable assets [[s6]]. Ranking inside the stealer collapses the gap between collection and monetisation.\n\n## Industry\n\nA court sentenced Syrian hacker Ahmad Umar Agha to 42 months for pro-Assad attacks on media, businesses and government entities, after more than a decade on the run [[s7]]. The supplied detail does not map the sentence to specific campaigns.",
+  "selected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Attackers Chain Three Ivanti Connect Secure Flaws to Gain Unauthenticated Root Access",
+      "url": "https://thehackernews.com/2026/10/attackers-chain-three-ivanti-connect.html",
+      "publishedAt": "2026-10-31T08:27:43.000Z",
+      "excerpt": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Friday added two security flaws impacting Ivanti Connect Secure (ICS) to its Known Exploited Vulnerabilities (KEV) catalog, following active exploitation in the wild. The vulnerabilities are listed below - CVE-2026-111357 (CVSS score: 8.8) - A missing authentication for a critical function vulnerability that could allow a",
+      "canonicalUrl": "https://thehackernews.com/2026/10/attackers-chain-three-ivanti-connect.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/attackers-chain-three-ivanti-connect.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-111357",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Ivanti",
+            "product": "Connect Secure",
+            "vulnerabilityName": "Ivanti Connect Secure Missing Authentication for Critical Function Vulnerability",
+            "dateAdded": "2026-10-30",
+            "shortDescription": "Ivanti Connect Secure contains a missing authentication for critical function vulnerability that could allow a local authenticated attacker to escalate their privileges. This vulnerability can be chained with CVE-2026-104935 and CVE-2026-118527.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-02",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://hub.ivanti.com/s/article/Security-Advisory-Ivanti-Connect-Secure-CVE-2026-104935?language=en_US ; https://www.cisa.gov/news-events/alerts/2026/10/13/cisa-urges-patching-newly-exploited-vulnerability-ivanti-connect-secure ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-111357",
+            "cwes": [
+              "CWE-306",
+              "CWE-862",
+              "CWE-345"
+            ]
+          },
+          "nvd": {
+            "description": "Ivanti Connect Secure 22.8R2.4 mishandles the manner in which the dsinvoked broker trusts DSCache configuration data, leading to privilege escalation to root, as exploited in the wild in October 2026.",
+            "cvss": {
+              "version": "3.1",
+              "score": 7,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+              "source": "cve@mitre.org",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-829"
+            ],
+            "published": "2026-10-15T21:17:13.190",
+            "lastModified": "2026-10-31T04:18:16.040",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://hub.ivanti.com/s/article/Security-Advisory-Ivanti-Connect-Secure-CVE-2026-104935",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.volexity.com/blog/2026/10/13/a-series-of-unauthenticated-events-chained-exploitation-of-ivanti-connect-secure-zero-days/",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-111357",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B04FDDB3-6879-4C9B-AB2D-6A54884797E0",
+                "versionStartIncluding": "25.1.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "25.1.1.3"
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:22.8:r2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "56FEC223-8FF7-4A05-9577-CFFE0AA6526C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:22.8:r2.1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5569D323-6ADF-4B16-822D-FBA6760356C3",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:22.8:r2.2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FF4D400F-49DA-4C5F-8F63-5A15738360AE",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:22.8:r2.3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9CA7EF35-D0BC-4714-A38A-91660BE1BA55",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:22.8:r2.4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F22EC396-A447-4175-8A30-C8DC10ACFFE9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:22.8:r2.5:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8B173211-BFCF-40E7-8651-4E8C4CEFAFFF",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/10/attackers-chain-three-ivanti-connect.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.30",
+              "dateReleased": "2026-10-30T17:02:45.3665Z",
+              "retrievedAt": "2026-10-31T16:41:54.351Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-58882%2CCVE-2026-111357%2CCVE-2026-118527",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-111357",
+              "retrievedAt": "2026-10-31T16:41:54.351Z"
+            }
+          }
+        }
+      ],
+      "id": "s8",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "CISA added two Ivanti Connect Secure flaws to KEV on evidence of active exploitation, and attackers are chaining three bugs to reach unauthenticated root on internet-facing gateways with a Nov 2 remediation deadline."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Critical Linux kernel flaw allows remote root attacks on MPTCP servers",
+      "url": "https://www.bleepingcomputer.com/news/security/critical-linux-kernel-flaw-allows-remote-root-attacks-on-mptcp-servers/",
+      "publishedAt": "2026-10-30T21:09:46.000Z",
+      "excerpt": "Security researchers at Anthropic have developed an exploit for a critical Linux kernel vulnerability that allows unauthenticated attackers to remotely execute commands as root on servers running Multipath TCP (MPTCP) listeners. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/critical-linux-kernel-flaw-allows-remote-root-attacks-on-mptcp-servers",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/critical-linux-kernel-flaw-allows-remote-root-attacks-on-mptcp-servers"
+      ],
+      "cves": [],
+      "id": "s12",
+      "section": "vulnerabilities",
+      "rank": 2,
+      "angle": "Anthropic researchers built a working exploit for a critical Linux kernel MPTCP flaw that yields remote root on unauthenticated servers, putting patch urgency on any host exposing MPTCP listeners."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Chainalysis discloses data breach from \"offensive agentic techniques\"",
+      "url": "https://www.bleepingcomputer.com/news/security/chainalysis-discloses-data-breach-from-offensive-agentic-techniques/",
+      "publishedAt": "2026-10-31T12:50:09.000Z",
+      "excerpt": "Blockchain analytics firm Chainalysis disclosed a data breach after attackers used \"offensive agentic techniques\" to access internal systems and tools, exposing customer names, email addresses, user IDs, and organizational roles. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/chainalysis-discloses-data-breach-from-offensive-agentic-techniques",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/chainalysis-discloses-data-breach-from-offensive-agentic-techniques"
+      ],
+      "cves": [],
+      "id": "s4",
+      "section": "breaches",
+      "rank": 3,
+      "angle": "Chainalysis says attackers used 'offensive agentic techniques' to reach internal tools and customer identity data — a notable case of AI-driven intrusion against a security vendor itself."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "A Shared ChatGPT Link Could Run Attacker Code in Your Session and Read Private Chats",
+      "url": "https://thehackernews.com/2026/10/a-shared-chatgpt-link-could-run.html",
+      "publishedAt": "2026-10-31T05:33:41.000Z",
+      "excerpt": "A malicious ChatGPT share link could run an attacker's code in the logged-in session of anyone who opened it, allowing them to read their private conversations, researchers at the security firm Parameter showed. The researchers reported the flaw through OpenAI's bug bounty program on October 18, and OpenAI fixed it eight days later and rated it P1, its most serious category.",
+      "canonicalUrl": "https://thehackernews.com/2026/10/a-shared-chatgpt-link-could-run.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/a-shared-chatgpt-link-could-run.html"
+      ],
+      "cves": [],
+      "id": "s9",
+      "section": "research",
+      "rank": 4,
+      "angle": "A crafted ChatGPT share link could execute attacker code inside a logged-in session and expose private chats; OpenAI rated it P1 and fixed it in eight days, but it shows how share surfaces widen AI assistant attack surface."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Chinese Hackers Use AI-Powered ARTEX to Target Over 200 Organizations Worldwide",
+      "url": "https://thehackernews.com/2026/10/chinese-hackers-use-ai-powered-artex-to.html",
+      "publishedAt": "2026-10-30T16:58:44.000Z",
+      "excerpt": "Chinese state-sponsored threat actors have been observed using a Go-based artificial intelligence (AI)-powered penetration testing framework called ARTEX in attacks aimed at high-value targets simultaneously. The activity has been attributed by CrowdStrike to a China-based \"targeted intrusion adversary\" it tracks under the moniker Vapor Panda (previously VexatiousTemper). First identified in",
+      "canonicalUrl": "https://thehackernews.com/2026/10/chinese-hackers-use-ai-powered-artex-to.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/chinese-hackers-use-ai-powered-artex-to.html"
+      ],
+      "cves": [],
+      "id": "s17",
+      "section": "research",
+      "rank": 5,
+      "angle": "CrowdStrike attributes a Go-based, AI-powered pentest framework called ARTEX to Chinese state-sponsored Vapor Panda, used against 200+ high-value targets — evidence of adversaries industrializing AI tooling."
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "Inside a malicious Claude Code-branded extension and its persistent SSH backdoor",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/10/30/inside-malicious-claude-code-branded-cursor-extension-persistent-ssh-backdoor/",
+      "publishedAt": "2026-10-31T01:02:57.000Z",
+      "excerpt": "Microsoft analyzes a malicious Claude Code–branded extension, its persistent SSH backdoor, and guidance to detect and remediate it. The post Inside a malicious Claude Code-branded extension and its persistent SSH backdoor appeared first on Microsoft Security Blog.",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/10/30/inside-malicious-claude-code-branded-cursor-extension-persistent-ssh-backdoor",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://microsoft.com/en-us/security/blog/2026/10/30/inside-malicious-claude-code-branded-cursor-extension-persistent-ssh-backdoor"
+      ],
+      "cves": [],
+      "id": "s11",
+      "section": "research",
+      "rank": 6,
+      "angle": "Microsoft dissects a Claude Code-branded malicious extension that plants a persistent SSH backdoor, a concrete detection-and-remediation guide for the fast-growing AI developer-tool supply chain risk."
+    },
+    {
+      "sourceId": "talos",
+      "sourceKind": "rss",
+      "title": "Appraisal by AI: Model-driven victim prioritization in the VOLTA infostealer",
+      "url": "https://blog.talosintelligence.com/appraisal-by-ai-model-driven-victim-prioritization-in-the-volta-infostealer/",
+      "publishedAt": "2026-10-31T12:00:00.000Z",
+      "excerpt": "The self-deleting VOLTA infostealer steals credentials, sessions, and cryptocurrency wallets. Then, it uses LLMs to profile victims and rank their most valuable assets.",
+      "canonicalUrl": "https://blog.talosintelligence.com/appraisal-by-ai-model-driven-victim-prioritization-in-the-volta-infostealer",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://blog.talosintelligence.com/appraisal-by-ai-model-driven-victim-prioritization-in-the-volta-infostealer"
+      ],
+      "cves": [],
+      "id": "s6",
+      "section": "research",
+      "rank": 7,
+      "angle": "Talos shows the self-deleting VOLTA infostealer using LLMs to profile victims and rank their most valuable assets, shifting stealer tradecraft from bulk collection to prioritized targeting."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Syrian Hacker Gets Prison Time in US After Over a Decade on the Run",
+      "url": "https://www.securityweek.com/syrian-hacker-gets-prison-time-in-us-after-over-a-decade-on-the-run/",
+      "publishedAt": "2026-10-31T11:00:00.000Z",
+      "excerpt": "A US court sentenced Syrian hacker Ahmad Umar Agha to 42 months for pro-Assad attacks on media, businesses, and government entities. The post Syrian Hacker Gets Prison Time in US After Over a Decade on the Run appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/syrian-hacker-gets-prison-time-in-us-after-over-a-decade-on-the-run",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/syrian-hacker-gets-prison-time-in-us-after-over-a-decade-on-the-run"
+      ],
+      "cves": [],
+      "id": "s7",
+      "section": "industry",
+      "rank": 8,
+      "angle": "A US court sentenced Syrian hacker Ahmad Umar Agha to 42 months after more than a decade on the run, closing a long-running pro-Assad hacking case and signaling sustained pursuit of state-aligned actors."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "New Android SMS of Death exploit can remotely crash unpatched phones",
+      "url": "https://www.bleepingcomputer.com/news/security/new-android-sms-of-death-exploit-can-remotely-crash-unpatched-phones/",
+      "publishedAt": "2026-10-31T15:35:11.000Z",
+      "excerpt": "A security researcher has released a proof-of-concept exploit for a recently patched Android vulnerability, dubbed \"SMS of Death\" and tracked as CVE-2026-58882, that lets attackers remotely disrupt cellular service or crash phones by sending a specially crafted text message. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/new-android-sms-of-death-exploit-can-remotely-crash-unpatched-phones",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/new-android-sms-of-death-exploit-can-remotely-crash-unpatched-phones"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-58882",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "bleepingcomputer",
+                "url": "https://www.bleepingcomputer.com/news/security/new-android-sms-of-death-exploit-can-remotely-crash-unpatched-phones/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.30",
+              "dateReleased": "2026-10-30T17:02:45.3665Z",
+              "retrievedAt": "2026-10-31T16:41:54.351Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-58882%2CCVE-2026-111357%2CCVE-2026-118527",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-58882",
+              "retrievedAt": "2026-10-31T16:41:54.351Z"
+            }
+          }
+        }
+      ],
+      "id": "s1"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Reddit to lock content behind logins to fight scrapers",
+      "url": "https://www.bleepingcomputer.com/news/security/reddit-to-lock-content-behind-logins-to-fight-scrapers/",
+      "publishedAt": "2026-10-31T14:05:15.000Z",
+      "excerpt": "Reddit announced in a post by co-founder Steve Huffman that the site will gradually become a \"logged-in service,\" offering limited access to visitors without accounts. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/reddit-to-lock-content-behind-logins-to-fight-scrapers",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/reddit-to-lock-content-behind-logins-to-fight-scrapers"
+      ],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "From Beginner to Bug Hunter: Learning Cybersecurity in the AI Era.",
+      "url": "https://www.bleepingcomputer.com/news/security/from-beginner-to-bug-hunter-learning-cybersecurity-in-the-ai-era/",
+      "publishedAt": "2026-10-31T13:10:19.000Z",
+      "excerpt": "AI-generated vulnerability reports are overwhelming some bug bounty programs, making it harder for aspiring security researchers to know where to start. TryHackMe explains how beginners can build practical cybersecurity skills, use AI responsibly, and produce reproducible findings that stand up to scrutiny. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/from-beginner-to-bug-hunter-learning-cybersecurity-in-the-ai-era",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/from-beginner-to-bug-hunter-learning-cybersecurity-in-the-ai-era"
+      ],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Chainalysis Confirms Intrusion Into Internal Tools and Exposure of Customer Identity Data",
+      "url": "https://thehackernews.com/2026/10/chainalysis-confirms-intrusion-into.html",
+      "publishedAt": "2026-10-31T12:01:56.000Z",
+      "excerpt": "American blockchain analysis firm Chainalysis said it was the target of a cybersecurity incident in which an external actor accessed non-sensitive customer data. However, the company noted that the breach did not result in unauthorized access to its investigation content, authentication credentials, or session tokens. \"This month, Chainalysis detected an external actor using offensive agentic",
+      "canonicalUrl": "https://thehackernews.com/2026/10/chainalysis-confirms-intrusion-into.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/chainalysis-confirms-intrusion-into.html"
+      ],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Cloudflare Reports 18.2 Million Network-Layer DDoS Attacks in Q3, Up 38%",
+      "url": "https://thehackernews.com/2026/10/cloudflare-reports-182-million-network.html",
+      "publishedAt": "2026-10-31T04:56:12.000Z",
+      "excerpt": "Threat actors are launching about 8,226 network-layer distributed denial-of-service (DDoS) attacks per hour, Cloudflare revealed Thursday. The web infrastructure and security company said it autonomously mitigated 18.2 million network-layer (L3) DDoS attacks and 14.4 trillion HTTP DDoS requests in the third quarter of 2026. That amounts to 197,400 attacks per day, or one attack every 0.44",
+      "canonicalUrl": "https://thehackernews.com/2026/10/cloudflare-reports-182-million-network.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/10/cloudflare-reports-182-million-network.html"
+      ],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "DOJ raises privacy concerns over potential sale of Character.AI chats",
+      "url": "https://therecord.media/doj-raises-privacy-concerns-over-character-ai-sale",
+      "publishedAt": "2026-10-30T20:45:00.000Z",
+      "excerpt": "The DOJ’s Executive Office for U.S. Trustees said a consumer privacy ombudsman is needed to advise the court on how to regulate what data from Character.AI can be sold and under what terms.",
+      "canonicalUrl": "https://therecord.media/doj-raises-privacy-concerns-over-character-ai-sale",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/doj-raises-privacy-concerns-over-character-ai-sale"
+      ],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Devs Hit by Trojanized Claude Code Extension for Cursor",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/devs-trojanized-claude-code-extension-cursor",
+      "publishedAt": "2026-10-30T20:05:58.000Z",
+      "excerpt": "Two serious security issues hit Cursor on the same day, highlighting the risks for AI-powered integrated development environments (IDEs).",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/devs-trojanized-claude-code-extension-cursor",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyberattacks-data-breaches/devs-trojanized-claude-code-extension-cursor"
+      ],
+      "cves": [],
+      "id": "s14"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Behind the Scenes of How Operation Blackout Went Down",
+      "url": "https://www.darkreading.com/cybersecurity-operations/behind-the-scenes-how-operation-blackout-went-down",
+      "publishedAt": "2026-10-30T19:46:08.000Z",
+      "excerpt": "A recent law enforcement operation to dismantle harmful scam centers was a big success. A threat intelligence expert walks us through what happened and why he wants more of the same.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/behind-the-scenes-how-operation-blackout-went-down",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cybersecurity-operations/behind-the-scenes-how-operation-blackout-went-down"
+      ],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Fashion retailer Resolve says hackers stole payment card information",
+      "url": "https://therecord.media/resolve-fashion-retailer-data-breach-payment-cards",
+      "publishedAt": "2026-10-30T19:00:00.000Z",
+      "excerpt": "The company, billing itself as “the next-generation fashion retailer for Millennial and Generation Z consumers,” said a recent hack exposed customer payment card numbers.",
+      "canonicalUrl": "https://therecord.media/resolve-fashion-retailer-data-breach-payment-cards",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/resolve-fashion-retailer-data-breach-payment-cards"
+      ],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "CISA Adds Two Known Exploited Vulnerabilities to Catalog",
+      "url": "https://www.cisa.gov/news-events/alerts/2026/10/30/cisa-adds-two-known-exploited-vulnerabilities-catalog",
+      "publishedAt": "2026-10-30T12:00:00.000Z",
+      "excerpt": "CISA has added two new vulnerabilities to its Known Exploited Vulnerabilities (KEV) Catalog, based on evidence of active exploitation. CVE-2026-111357 Ivanti Connect Secure Missing Authentication for Critical Function Vulnerability CVE-2026-118527 Ivanti Connect Secure Generation of Predictable Numbers or Identifiers Vulnerability These types of vulnerabilities are a frequent attack vector for…",
+      "canonicalUrl": "https://cisa.gov/news-events/alerts/2026/10/30/cisa-adds-two-known-exploited-vulnerabilities-catalog",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/alerts/2026/10/30/cisa-adds-two-known-exploited-vulnerabilities-catalog"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-111357",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Ivanti",
+            "product": "Connect Secure",
+            "vulnerabilityName": "Ivanti Connect Secure Missing Authentication for Critical Function Vulnerability",
+            "dateAdded": "2026-10-30",
+            "shortDescription": "Ivanti Connect Secure contains a missing authentication for critical function vulnerability that could allow a local authenticated attacker to escalate their privileges. This vulnerability can be chained with CVE-2026-104935 and CVE-2026-118527.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-02",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://hub.ivanti.com/s/article/Security-Advisory-Ivanti-Connect-Secure-CVE-2026-104935?language=en_US ; https://www.cisa.gov/news-events/alerts/2026/10/13/cisa-urges-patching-newly-exploited-vulnerability-ivanti-connect-secure ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-111357",
+            "cwes": [
+              "CWE-306",
+              "CWE-862",
+              "CWE-345"
+            ]
+          },
+          "nvd": {
+            "description": "Ivanti Connect Secure 22.8R2.4 mishandles the manner in which the dsinvoked broker trusts DSCache configuration data, leading to privilege escalation to root, as exploited in the wild in October 2026.",
+            "cvss": {
+              "version": "3.1",
+              "score": 7,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+              "source": "cve@mitre.org",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-829"
+            ],
+            "published": "2026-10-15T21:17:13.190",
+            "lastModified": "2026-10-31T04:18:16.040",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://hub.ivanti.com/s/article/Security-Advisory-Ivanti-Connect-Secure-CVE-2026-104935",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.volexity.com/blog/2026/10/13/a-series-of-unauthenticated-events-chained-exploitation-of-ivanti-connect-secure-zero-days/",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-111357",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B04FDDB3-6879-4C9B-AB2D-6A54884797E0",
+                "versionStartIncluding": "25.1.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "25.1.1.3"
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:22.8:r2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "56FEC223-8FF7-4A05-9577-CFFE0AA6526C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:22.8:r2.1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5569D323-6ADF-4B16-822D-FBA6760356C3",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:22.8:r2.2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FF4D400F-49DA-4C5F-8F63-5A15738360AE",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:22.8:r2.3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9CA7EF35-D0BC-4714-A38A-91660BE1BA55",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:22.8:r2.4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F22EC396-A447-4175-8A30-C8DC10ACFFE9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:22.8:r2.5:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8B173211-BFCF-40E7-8651-4E8C4CEFAFFF",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/10/30/cisa-adds-two-known-exploited-vulnerabilities-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.30",
+              "dateReleased": "2026-10-30T17:02:45.3665Z",
+              "retrievedAt": "2026-10-31T16:41:54.351Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-58882%2CCVE-2026-111357%2CCVE-2026-118527",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-111357",
+              "retrievedAt": "2026-10-31T16:41:54.351Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-118527",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Ivanti",
+            "product": "Connect Secure",
+            "vulnerabilityName": "Ivanti Connect Secure Generation of Predictable Numbers or Identifiers Vulnerability",
+            "dateAdded": "2026-10-30",
+            "shortDescription": "Ivanti Connect Secure contains a generation of predictable numbers or identifiers vulnerability that allows a remote authenticated attacker to upload files with attacker-controlled content to a known location on disk. This vulnerability can be chained with CVE-2026-104935 and CVE-2026-111357.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-13",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://hub.ivanti.com/s/article/Security-Advisory-Ivanti-Connect-Secure-CVE-2026-104935?language=en_US ; ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-118527",
+            "cwes": [
+              "CWE-340"
+            ]
+          },
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/10/30/cisa-adds-two-known-exploited-vulnerabilities-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.30",
+              "dateReleased": "2026-10-30T17:02:45.3665Z",
+              "retrievedAt": "2026-10-31T16:41:54.351Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-58882%2CCVE-2026-111357%2CCVE-2026-118527",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-118527",
+              "retrievedAt": "2026-10-31T16:41:54.351Z"
+            }
+          }
+        }
+      ],
+      "id": "s18"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1280,
+    "promptCacheMissTokens": 7400,
+    "outputTokens": 5898,
+    "estimatedCostUsd": 0.002691024
+  }
+}

@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-10-31",
+    "mode": "article",
+    "headline": "Ivanti gateways lead a day of AI-wrapped attacker tooling",
+    "count": 18
+  },
+  {
     "date": "2026-10-30",
     "mode": "article",
     "headline": "GitLab’s 10.0 RCE leads active-exploitation day",
