@@ -1,0 +1,253 @@
+{
+  "date": "2026-11-01",
+  "generatedAt": "2026-11-01T17:31:39.734Z",
+  "collection": [
+    {
+      "sourceId": "krebs",
+      "attemptedAt": "2026-11-01T17:31:39.734Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "attemptedAt": "2026-11-01T17:31:39.734Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "thehackernews",
+      "attemptedAt": "2026-11-01T17:31:39.734Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "therecord",
+      "attemptedAt": "2026-11-01T17:31:39.734Z",
+      "status": "ok",
+      "items": 5,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securityweek",
+      "attemptedAt": "2026-11-01T17:31:39.734Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "darkreading",
+      "attemptedAt": "2026-11-01T17:31:39.734Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "attemptedAt": "2026-11-01T17:31:39.734Z",
+      "status": "ok",
+      "items": 30,
+      "skipped": 0
+    },
+    {
+      "sourceId": "projectzero",
+      "attemptedAt": "2026-11-01T17:31:39.734Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securelist",
+      "attemptedAt": "2026-11-01T17:31:39.734Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "talos",
+      "attemptedAt": "2026-11-01T17:31:39.734Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "unit42",
+      "attemptedAt": "2026-11-01T17:31:39.734Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "microsoft-security",
+      "attemptedAt": "2026-11-01T17:31:39.734Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    }
+  ],
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 229,
+    "published": 8
+  },
+  "mode": "article",
+  "headline": "FBI pins $6B Binance theft on North Korea; CVSS 10.0 LXD flaw surfaces",
+  "standfirst": "The lead is an official attribution of a multi-billion-dollar crypto theft, alongside a CVSS 10.0 LXD/MicroCloud impersonation flaw, a hosting-platform breach that forced credential rotation, a third-party script theft at Polymarket, attempted GitLab exploitation at Alpine Linux, and a new .NET loader targeting Asian government systems.",
+  "bodyMarkdown": "## Industry\n\nFBI attributed the theft of more than $6 billion in virtual assets to TraderTraitor, a North Korea-aligned group also tracked under several aliases [[s6]]. Other U.S. agencies joined the attribution, but the excerpt gives no intrusion details. Analysis: official attribution raises this beyond a private crypto loss, though the supplied text does not explain how the theft was carried out.\n\n## Vulnerabilities\n\nA CVSS 10.0 flaw in Canonical's LXD and MicroCloud let an attacker log in as a trusted client without that client's private key [[s4]]. The attacker needed network access to the HTTPS API and the trusted client's public certificate; once in, they could access the cluster and its virtual machines. No affected versions or remediation are supplied.\n\n## Breaches\n\nNorthflank told customers to rotate all credentials and secrets stored on its platform after a breach led to unauthorized use of customers' AI API keys [[s8]]. The excerpt does not state the cause or scale; the rotation instruction is the concrete action supplied.\n\nPolymarket is refunding about $2.7 million to 726 affected wallets after malicious code sold signed-in traders' positions and moved funds to attackers [[s5]]. The code replaced a page-speed script loaded from an outside company. Analysis: this is direct supply-chain risk for crypto and web applications, though the excerpt does not identify how the third party was compromised.\n\nAlpine Linux rebuilt its GitLab server and reset all passwords after attackers attempted to exploit a critical GitLab vulnerability in its development infrastructure [[s1]]. The excerpt cites possible compromise, not confirmed successful exploitation. Analysis: development infrastructure is a high-value target, but the facts support an attempted attack and a rebuild over possible compromise.\n\n## Research\n\nResearchers disclosed NetamLoader, a previously undocumented .NET assembly-loading framework, in a \"highly sophisticated infection chain\" targeting government organizations in Asia [[s7]]. It targeted a custom Windows 10 build used exclusively by government entities in Asia. Initial access, final payload, and attribution were not supplied.",
+  "selected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "FBI Links North Korea's TraderTraitor to Record $6.43 Billion Binance Crypto Heist",
+      "url": "https://thehackernews.com/2026/11/fbi-links-north-koreas-tradertraitor-to.html",
+      "publishedAt": "2026-11-01T07:03:00.000Z",
+      "excerpt": "The U.S. Federal Bureau of Investigation (FBI) has officially attributed the theft of more than $6 billion in virtual assets to TraderTraitor, a North Korea-aligned elite hacking group also tracked as Jade Sleet, Pressure Chollima, PUKCHONG, Slow Pisces, and UNC4899. The FBI, along with the U.S. Secret Service (USSS) and the Internal Revenue Service Criminal Investigation (IRS-CI), said it",
+      "canonicalUrl": "https://thehackernews.com/2026/11/fbi-links-north-koreas-tradertraitor-to.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/fbi-links-north-koreas-tradertraitor-to.html"
+      ],
+      "cves": [],
+      "id": "s6",
+      "section": "industry",
+      "rank": 1,
+      "angle": "FBI attribution of a record $6.43B Binance theft to North Korea's TraderTraitor makes crypto heists a top-tier law-enforcement and sanctions issue."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "CVSS 10.0 LXD, MicroCloud Flaw Lets Attackers Impersonate Trusted Clients Without a Private Key",
+      "url": "https://thehackernews.com/2026/11/critical-lxd-and-microcloud-flaw-cvss.html",
+      "publishedAt": "2026-11-01T08:51:31.000Z",
+      "excerpt": "A critical flaw in Canonical's LXD and MicroCloud let an attacker log in as a trusted client without holding that client's private key. To do it, the attacker had to reach their HTTPS API over the network and have the trusted client's public certificate. Once in, the attacker would act as that client, with access to the cluster and its virtual machines. If the impersonated account is",
+      "canonicalUrl": "https://thehackernews.com/2026/11/critical-lxd-and-microcloud-flaw-cvss.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/critical-lxd-and-microcloud-flaw-cvss.html"
+      ],
+      "cves": [],
+      "id": "s4",
+      "section": "vulnerabilities",
+      "rank": 2,
+      "angle": "A CVSS 10.0 flaw that lets attackers impersonate trusted clients without a private key puts LXD/MicroCloud clusters and their VMs at serious risk."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Northflank security breach leads to abuse of customers' AI API keys",
+      "url": "https://www.bleepingcomputer.com/news/security/northflank-security-breach-leads-to-abuse-of-customers-ai-api-keys/",
+      "publishedAt": "2026-10-31T18:01:12.000Z",
+      "excerpt": "Cloud application hosting platform Northflank is warning customers to rotate all credentials and secrets stored on its platform after a security breach led to unauthorized use of customers' AI API keys. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/northflank-security-breach-leads-to-abuse-of-customers-ai-api-keys",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/northflank-security-breach-leads-to-abuse-of-customers-ai-api-keys"
+      ],
+      "cves": [],
+      "id": "s8",
+      "section": "breaches",
+      "rank": 3,
+      "angle": "A hosting-platform breach that forced credential and secret rotation shows AI API keys are now high-value targets for attackers."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Hackers Steal About $2.7 Million From Polymarket Traders via Hijacked DebugBear Script",
+      "url": "https://thehackernews.com/2026/11/hackers-steal-about-27-million-from.html",
+      "publishedAt": "2026-11-01T07:25:40.000Z",
+      "excerpt": "Malicious code on the website of prediction market Polymarket sold some signed-in traders' positions and moved their funds to the hackers on October 29. The code had replaced a page-speed script that the site loaded from an outside company. Polymarket says it is refunding about $2.7 million to 726 affected wallets. Blockchain records show crypto worth about $2.64 million reached",
+      "canonicalUrl": "https://thehackernews.com/2026/11/hackers-steal-about-27-million-from.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/hackers-steal-about-27-million-from.html"
+      ],
+      "cves": [],
+      "id": "s5",
+      "section": "breaches",
+      "rank": 4,
+      "angle": "A hijacked third-party script led to direct wallet theft at Polymarket, underscoring supply-chain risk for crypto and web applications."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "NetamLoader Malware Targets Government Windows 10 Systems in Asia via .NET Injection",
+      "url": "https://thehackernews.com/2026/11/netamloader-malware-targets-government.html",
+      "publishedAt": "2026-11-01T07:02:58.000Z",
+      "excerpt": "Cybersecurity researchers have disclosed details of what has been described as a \"highly sophisticated infection chain\" targeting government organizations in Asia. The activity, detailed by Kaspersky this week, targeted a custom Windows 10 build used exclusively by government entities in Asia and involves the deployment of a previously undocumented .NET assembly-loading framework codenamed",
+      "canonicalUrl": "https://thehackernews.com/2026/11/netamloader-malware-targets-government.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/netamloader-malware-targets-government.html"
+      ],
+      "cves": [],
+      "id": "s7",
+      "section": "research",
+      "rank": 5,
+      "angle": "A previously undocumented .NET loader aimed at Asian government Windows 10 systems highlights continued targeting of custom government builds."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Alpine Linux rebuilds GitLab after attempted RCE attack",
+      "url": "https://www.bleepingcomputer.com/news/security/alpine-linux-rebuilds-gitlab-after-attempted-rce-attack/",
+      "publishedAt": "2026-11-01T15:11:21.000Z",
+      "excerpt": "Hackers attempted to exploit a critical GitLab vulnerability in Alpine Linux's development infrastructure on October 20-21, prompting the open-source project to rebuild its GitLab server and reset all passwords over concerns of a possible compromise. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/alpine-linux-rebuilds-gitlab-after-attempted-rce-attack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/alpine-linux-rebuilds-gitlab-after-attempted-rce-attack"
+      ],
+      "cves": [],
+      "id": "s1",
+      "section": "breaches",
+      "rank": 6,
+      "angle": "An attempted RCE against Alpine's GitLab prompted a full rebuild and password reset, showing development infrastructure remains a high-value target."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "OpenAI says it's doubling Pro usage limits and bringing Work features to Chat",
+      "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/openai-says-its-doubling-pro-usage-limits-and-bringing-work-features-to-chat/",
+      "publishedAt": "2026-11-01T13:53:11.000Z",
+      "excerpt": "OpenAI has just confirmed that it's rolling out ChatGPT Work capabilities directly into regular Chat, while also combining usage allowances across ChatGPT and Codex. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/artificial-intelligence/openai-says-its-doubling-pro-usage-limits-and-bringing-work-features-to-chat",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/artificial-intelligence/openai-says-its-doubling-pro-usage-limits-and-bringing-work-features-to-chat"
+      ],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Northstar Security Exits Stealth With $7M to Expose Toxic Risk Combinations",
+      "url": "https://www.securityweek.com/northstar-security-exits-stealth-with-7m-to-expose-toxic-risk-combinations/",
+      "publishedAt": "2026-11-01T11:15:00.000Z",
+      "excerpt": "The startup maps how identities, assets and vulnerabilities connect, and uses AI agents to find and fix risky combinations of issues. The post Northstar Security Exits Stealth With $7M to Expose Toxic Risk Combinations appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/northstar-security-exits-stealth-with-7m-to-expose-toxic-risk-combinations",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/northstar-security-exits-stealth-with-7m-to-expose-toxic-risk-combinations"
+      ],
+      "cves": [],
+      "id": "s3"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1280,
+    "promptCacheMissTokens": 2511,
+    "outputTokens": 9599,
+    "estimatedCostUsd": 0.0030428440000000003
+  }
+}
