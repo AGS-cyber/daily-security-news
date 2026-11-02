@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-11-02",
+    "mode": "article",
+    "headline": "Ivanti's chained Connect Secure zero-days join CISA's exploited catalog as unpatched GitLab servers keep taking RCE attacks",
+    "count": 35
+  },
+  {
     "date": "2026-11-01",
     "mode": "article",
     "headline": "FBI pins $6B Binance theft on North Korea; CVSS 10.0 LXD flaw surfaces",

@@ -1,0 +1,862 @@
+{
+  "date": "2026-11-02",
+  "generatedAt": "2026-11-02T21:17:57.169Z",
+  "collection": [
+    {
+      "sourceId": "krebs",
+      "attemptedAt": "2026-11-02T21:17:57.169Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "attemptedAt": "2026-11-02T21:17:57.169Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "thehackernews",
+      "attemptedAt": "2026-11-02T21:17:57.169Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "therecord",
+      "attemptedAt": "2026-11-02T21:17:57.169Z",
+      "status": "ok",
+      "items": 5,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securityweek",
+      "attemptedAt": "2026-11-02T21:17:57.169Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "darkreading",
+      "attemptedAt": "2026-11-02T21:17:57.169Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "attemptedAt": "2026-11-02T21:17:57.169Z",
+      "status": "ok",
+      "items": 30,
+      "skipped": 0
+    },
+    {
+      "sourceId": "projectzero",
+      "attemptedAt": "2026-11-02T21:17:57.169Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securelist",
+      "attemptedAt": "2026-11-02T21:17:57.169Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "talos",
+      "attemptedAt": "2026-11-02T21:17:57.169Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "unit42",
+      "attemptedAt": "2026-11-02T21:17:57.169Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "microsoft-security",
+      "attemptedAt": "2026-11-02T21:17:57.169Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    }
+  ],
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 228,
+    "published": 35
+  },
+  "mode": "article",
+  "headline": "Ivanti's chained Connect Secure zero-days join CISA's exploited catalog as unpatched GitLab servers keep taking RCE attacks",
+  "standfirst": "CISA has added two Ivanti Connect Secure flaws to its known-exploited catalog after they were chained in zero-day attacks, while more than a thousand internet-exposed GitLab servers remain unpatched against an actively exploited maximum-severity RCE. Also in the file: a 1.3 million-device Android TV botnet, a $6 billion crypto heist attributed to North Korea, Apple's 99-country spyware warnings, an SSN-exposing student-aid breach, remotely sabotaged supermarket freezers, and critical Langflow flaws with no KEV listing.",
+  "bodyMarkdown": "## Actively exploited\n\nBoth of the day's CVE IDs sit in one story: Ivanti Connect Secure flaws chained in zero-day attacks and now in CISA's catalog [[s32]]. CVE-2026-111357 is catalogued as a missing-authentication weakness for a critical function and scored 7.0 HIGH (CVSS 3.1, MITRE); NVD's description says the broker's handling of DSCache configuration data lets an attacker escalate to root, and states it has been exploited in the wild. CVE-2026-118527, a predictable-numbers-or-identifiers flaw, has a KEV entry but no NVD record in the supplied evidence, so its severity and affected versions are unknown here. Configuration data for the first flaw covers Connect Secure 25.1.0.0 up to but excluding 25.1.1.3, plus the 22.8 R2 line through R2.5. One inconsistency is worth flagging rather than resolving by convenience: the KEV entry names missing authentication, while the NVD vector is local, high-complexity and low-privilege. CISA's required action is to apply vendor mitigations, follow its risk-based patching guidance, or discontinue the product; the two carry separate federal deadlines, and ransomware use is listed as unknown for both. Analysis: the chaining is the story — an escalation primitive paired with a predictable-identifier flaw is what turns a single appliance bug into an intrusion path — though nothing supplied attributes this to a named actor.\n\nMore than 1,000 internet-exposed GitLab servers are still unpatched against a maximum-severity remote code execution flaw under ongoing attack [[s21]]. No CVE ID or version range appears in the supplied excerpt, so identification has to come from the vendor's own advisory; the exposed-instance count is the actionable signal.\n\n## Industry\n\nGoogle and partners have dismantled XCPE, a botnet of more than 1.3 million Android TV streaming boxes that Google says the manufacturer intentionally infected to earn cybercrime revenue; the manufacturer has been banned [[s3]]. The FBI has attributed the $6 billion Binance hack to North Korea's TraderTraitor and flagged more than 600 addresses as the proceeds are laundered [[s30]]. Apple has warned users in 99 countries of mercenary spyware, declining to name actors or regions and citing the cost, sophistication and worldwide nature of such attacks [[s14]].\n\n## Breaches\n\nThe Florida Department of Education says Social Security numbers and other personal data may have been exposed in a breach of its financial aid website, putting data on 4.9 million people at risk [[s13]]. Separately, a cyberattack on refrigeration systems disrupted stores run by multiple supermarket chains across several European countries after attackers remotely changed temperature settings on freezers and cooling systems [[s16]] — Analysis: the supplied facts describe immediate operational disruption rather than data loss, which is the notable part.\n\n## Vulnerabilities\n\nTwo critical Langflow flaws could let a remote attacker with no account bypass authentication or run arbitrary code, according to IBM [[s22]]. Every release from 1.0.0 through 1.12.8 is affected and 1.13.0 is the only fix. Neither flaw is listed in CISA's KEV catalog, and the excerpt reports no in-the-wild exploitation — which is a catalog miss, not proof that none has occurred.",
+  "selected": [
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Ivanti Patches Two More Zero-Days Exploited in Connect Secure Attack Chain",
+      "url": "https://www.securityweek.com/ivanti-patches-two-more-zero-days-exploited-in-connect-secure-attack-chain/",
+      "publishedAt": "2026-11-02T07:57:49.000Z",
+      "excerpt": "CISA has added CVE-2026-111357 and CVE-2026-118527 to its KEV catalog after the Ivanti VPN flaws were chained in zero-day attacks. The post Ivanti Patches Two More Zero-Days Exploited in Connect Secure Attack Chain appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/ivanti-patches-two-more-zero-days-exploited-in-connect-secure-attack-chain",
+      "alsoCoveredBy": [
+        {
+          "sourceId": "bleepingcomputer",
+          "name": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/ivanti-patches-two-more-connect-secure-zero-days-chained-in-attacks/"
+        }
+      ],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/ivanti-patches-two-more-zero-days-exploited-in-connect-secure-attack-chain",
+        "https://bleepingcomputer.com/news/security/ivanti-patches-two-more-connect-secure-zero-days-chained-in-attacks"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-111357",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Ivanti",
+            "product": "Connect Secure",
+            "vulnerabilityName": "Ivanti Connect Secure Missing Authentication for Critical Function Vulnerability",
+            "dateAdded": "2026-10-30",
+            "shortDescription": "Ivanti Connect Secure contains a missing authentication for critical function vulnerability that could allow a local authenticated attacker to escalate their privileges. This vulnerability can be chained with CVE-2026-104935 and CVE-2026-118527.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-02",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://hub.ivanti.com/s/article/Security-Advisory-Ivanti-Connect-Secure-CVE-2026-104935?language=en_US ; https://www.cisa.gov/news-events/alerts/2026/10/13/cisa-urges-patching-newly-exploited-vulnerability-ivanti-connect-secure ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-111357",
+            "cwes": [
+              "CWE-306",
+              "CWE-862",
+              "CWE-345"
+            ]
+          },
+          "nvd": {
+            "description": "Ivanti Connect Secure 22.8R2.4 mishandles the manner in which the dsinvoked broker trusts DSCache configuration data, leading to privilege escalation to root, as exploited in the wild in October 2026.",
+            "cvss": {
+              "version": "3.1",
+              "score": 7,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+              "source": "cve@mitre.org",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-829"
+            ],
+            "published": "2026-10-15T21:17:13.190",
+            "lastModified": "2026-10-31T04:18:16.040",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://hub.ivanti.com/s/article/Security-Advisory-Ivanti-Connect-Secure-CVE-2026-104935",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.volexity.com/blog/2026/10/13/a-series-of-unauthenticated-events-chained-exploitation-of-ivanti-connect-secure-zero-days/",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-111357",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B04FDDB3-6879-4C9B-AB2D-6A54884797E0",
+                "versionStartIncluding": "25.1.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "25.1.1.3"
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:22.8:r2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "56FEC223-8FF7-4A05-9577-CFFE0AA6526C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:22.8:r2.1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5569D323-6ADF-4B16-822D-FBA6760356C3",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:22.8:r2.2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FF4D400F-49DA-4C5F-8F63-5A15738360AE",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:22.8:r2.3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9CA7EF35-D0BC-4714-A38A-91660BE1BA55",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:22.8:r2.4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F22EC396-A447-4175-8A30-C8DC10ACFFE9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:ivanti:connect_secure:22.8:r2.5:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8B173211-BFCF-40E7-8651-4E8C4CEFAFFF",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/ivanti-patches-two-more-zero-days-exploited-in-connect-secure-attack-chain/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.30",
+              "dateReleased": "2026-10-30T17:02:45.3665Z",
+              "retrievedAt": "2026-11-02T21:17:57.169Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-111357%2CCVE-2026-118527",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-111357",
+              "retrievedAt": "2026-11-02T21:17:57.169Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-118527",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Ivanti",
+            "product": "Connect Secure",
+            "vulnerabilityName": "Ivanti Connect Secure Generation of Predictable Numbers or Identifiers Vulnerability",
+            "dateAdded": "2026-10-30",
+            "shortDescription": "Ivanti Connect Secure contains a generation of predictable numbers or identifiers vulnerability that allows a remote authenticated attacker to upload files with attacker-controlled content to a known location on disk. This vulnerability can be chained with CVE-2026-104935 and CVE-2026-111357.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-13",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://hub.ivanti.com/s/article/Security-Advisory-Ivanti-Connect-Secure-CVE-2026-104935?language=en_US ; ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-118527",
+            "cwes": [
+              "CWE-340"
+            ]
+          },
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/ivanti-patches-two-more-zero-days-exploited-in-connect-secure-attack-chain/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.30",
+              "dateReleased": "2026-10-30T17:02:45.3665Z",
+              "retrievedAt": "2026-11-02T21:17:57.169Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-111357%2CCVE-2026-118527",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-118527",
+              "retrievedAt": "2026-11-02T21:17:57.169Z"
+            }
+          }
+        }
+      ],
+      "id": "s32",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "CISA KEV listing and a due date of today make these chained Ivanti Connect Secure zero-days an urgent patch-or-mitigate decision."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Over 1,000 GitLab servers vulnerable to ongoing RCE attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/over-1-000-gitlab-servers-vulnerable-to-code-execution-attacks/",
+      "publishedAt": "2026-11-02T12:47:00.000Z",
+      "excerpt": "Over 1,000 Internet-exposed GitLab servers are still unpatched against a maximum-severity flaw actively exploited in remote code execution attacks. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/over-1-000-gitlab-servers-vulnerable-to-code-execution-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/over-1-000-gitlab-servers-vulnerable-to-code-execution-attacks"
+      ],
+      "cves": [],
+      "id": "s21",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "More than 1,000 internet-exposed GitLab servers remain unpatched against an actively exploited maximum-severity RCE."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Google disrupts million-device XCPE Android malware botnet, bans TV box maker",
+      "url": "https://www.bleepingcomputer.com/news/security/google-disrupts-million-device-xcpe-android-malware-botnet-bans-tv-box-maker/",
+      "publishedAt": "2026-11-02T18:16:34.000Z",
+      "excerpt": "Google and industry partners have dismantled the XCPE malware botnet consisting of more than 1.3 million Android TV streaming TV boxes that Google says its manufacturer intentionally infected with malware to generate revenue through cybercrime activities. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/google-disrupts-million-device-xcpe-android-malware-botnet-bans-tv-box-maker",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/google-disrupts-million-device-xcpe-android-malware-botnet-bans-tv-box-maker"
+      ],
+      "cves": [],
+      "id": "s3",
+      "section": "industry",
+      "rank": 3,
+      "angle": "A 1.3 million-device Android botnet allegedly seeded by the manufacturer highlights supply-chain criminality in cheap TV boxes."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Florida Student Aid Website Hack Puts Data of 4.9 Million People at Risk",
+      "url": "https://www.securityweek.com/florida-student-aid-website-hack-puts-data-of-4-9-million-people-at-risk/",
+      "publishedAt": "2026-11-02T14:44:18.000Z",
+      "excerpt": "The Florida Department of Education says SSNs and other personal data may have been exposed in a breach of its financial aid website. The post Florida Student Aid Website Hack Puts Data of 4.9 Million People at Risk appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/florida-student-aid-website-hack-puts-data-of-4-9-million-people-at-risk",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/florida-student-aid-website-hack-puts-data-of-4-9-million-people-at-risk"
+      ],
+      "cves": [],
+      "id": "s13",
+      "section": "breaches",
+      "rank": 4,
+      "angle": "Exposed SSNs and personal data for 4.9 million people at Florida's student aid site raise immediate identity-theft risk."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "FBI Flags Over 600 Addresses Tied to North Korea’s Binance Heist",
+      "url": "https://www.securityweek.com/fbi-flags-over-600-addresses-tied-to-north-koreas-binance-heist/",
+      "publishedAt": "2026-11-02T08:40:36.000Z",
+      "excerpt": "The FBI has officially pinned the $6 billion Binance hack on North Korea’s TraderTraitor as the attackers launder the stolen crypto. The post FBI Flags Over 600 Addresses Tied to North Korea’s Binance Heist appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/fbi-flags-over-600-addresses-tied-to-north-koreas-binance-heist",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/fbi-flags-over-600-addresses-tied-to-north-koreas-binance-heist"
+      ],
+      "cves": [],
+      "id": "s30",
+      "section": "industry",
+      "rank": 5,
+      "angle": "FBI attribution and 600-plus flagged addresses give defenders concrete laundering indicators for the $6 billion Binance hack."
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Apple warns users in 99 countries of mercenary spyware",
+      "url": "https://therecord.media/apple-warns-users-99-countries-mercenary-spyware",
+      "publishedAt": "2026-11-02T14:42:00.000Z",
+      "excerpt": "Apple does not attribute attacks or the notices to specific malicious actors or geographical regions, the notification said, due to the “extreme cost, sophistication, and worldwide nature of mercenary spyware attacks [which] make them some of the most advanced digital threats in existence today.”",
+      "canonicalUrl": "https://therecord.media/apple-warns-users-99-countries-mercenary-spyware",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/apple-warns-users-99-countries-mercenary-spyware"
+      ],
+      "cves": [],
+      "id": "s14",
+      "section": "industry",
+      "rank": 6,
+      "angle": "Apple's warnings across 99 countries show mercenary spyware remains a broad threat to high-risk users worldwide."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers disrupt refrigeration systems at European supermarkets",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-disrupt-refrigeration-systems-at-european-supermarkets/",
+      "publishedAt": "2026-11-02T14:28:39.000Z",
+      "excerpt": "A cyberattack on refrigeration systems has disrupted stores run by multiple supermarket chains across several European countries after hackers remotely changed temperature settings on freezers and cooling systems. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-disrupt-refrigeration-systems-at-european-supermarkets",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/hackers-disrupt-refrigeration-systems-at-european-supermarkets"
+      ],
+      "cves": [],
+      "id": "s16",
+      "section": "breaches",
+      "rank": 7,
+      "angle": "Remote tampering with freezer settings shows cyberattacks can cause immediate operational disruption across European retailers."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Critical Langflow Flaws Could Let Unauthenticated Attackers Run Code on Servers",
+      "url": "https://thehackernews.com/2026/11/critical-langflow-flaws-could-let.html",
+      "publishedAt": "2026-11-02T11:50:00.000Z",
+      "excerpt": "Two critical flaws in Langflow could let a remote attacker with no account bypass authentication or run arbitrary code, IBM said last week. Langflow is an open-source tool for building AI agents and workflows, and its vulnerability reports go to IBM. Every release from 1.0.0 through 1.12.8 has the flaws, and the only fix is version 1.13.0. Neither flaw is in CISA's Known",
+      "canonicalUrl": "https://thehackernews.com/2026/11/critical-langflow-flaws-could-let.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/critical-langflow-flaws-could-let.html"
+      ],
+      "cves": [],
+      "id": "s22",
+      "section": "vulnerabilities",
+      "rank": 8,
+      "angle": "Unauthenticated RCE in every Langflow release through 1.12.8 puts AI workflow servers at risk, with 1.13.0 as the only fix."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Michigan State cyber incident claimed by ransomware gang behind recent hospital attack",
+      "url": "https://therecord.media/michigan-state-university-byod-gang-cyber-incident",
+      "publishedAt": "2026-11-02T19:54:00.000Z",
+      "excerpt": "A recent post by the BYOD gang appears to line up with a security incident that prompted campus-wide action at Michigan State University. BYOD drew attention in October for an attack on the University of New Mexico.",
+      "canonicalUrl": "https://therecord.media/michigan-state-university-byod-gang-cyber-incident",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/michigan-state-university-byod-gang-cyber-incident"
+      ],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Fintech platform Sageworks taken offline after suspected cyberattack",
+      "url": "https://www.bleepingcomputer.com/news/security/fintech-platform-sageworks-taken-offline-after-suspected-cyberattack/",
+      "publishedAt": "2026-11-02T19:00:45.000Z",
+      "excerpt": "Financial technology company Abrigo has restored its Sageworks risk management application, except for borrower-facing capabilities, following an outage triggered by \"irregular activity\" in its environment. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/fintech-platform-sageworks-taken-offline-after-suspected-cyberattack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/fintech-platform-sageworks-taken-offline-after-suspected-cyberattack"
+      ],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Polymarket pledges to give $3.9 million back to victims after site compromise",
+      "url": "https://therecord.media/polymarket-returning-funds-to-customers-after-site-compromise",
+      "publishedAt": "2026-11-02T17:05:20.000Z",
+      "excerpt": "In a post-mortem about an October 29 incident, prediction market Polymarket said it will pay people back what they lost, as well as compensate them for the site's downtime.",
+      "canonicalUrl": "https://therecord.media/polymarket-returning-funds-to-customers-after-site-compromise",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/polymarket-returning-funds-to-customers-after-site-compromise"
+      ],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "⚡ Weekly Recap: Critical CVEs, Linux DDoS Botnet, Device-Code Phishing, Android Spyware and More",
+      "url": "https://thehackernews.com/2026/11/weekly-recap-critical-cves-linux-ddos.html",
+      "publishedAt": "2026-11-02T16:57:56.000Z",
+      "excerpt": "Some attacks this week didn't need much of a trick. A fake support call, a trusted extension, a shared link, or a device with no password. Small things that people barely think about. Yet each was enough to cause serious trouble. Then there were the bigger messes. Billions stolen, hidden networks of hacked devices, poisoned software, and attackers finding new ways to turn normal tools against",
+      "canonicalUrl": "https://thehackernews.com/2026/11/weekly-recap-critical-cves-linux-ddos.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/weekly-recap-critical-cves-linux-ddos.html"
+      ],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Russia's statistics agency confirms cyberattack claimed by Belarusian and Ukrainian hackers",
+      "url": "https://therecord.media/hackers-ukraine-belarus-russia",
+      "publishedAt": "2026-11-02T16:30:00.000Z",
+      "excerpt": "An alliance of Belarusian and pro-Ukrainian hackers claimed to have taken out Russia's federal statistics agency, Rosstat, and stolen vast amounts of sensitive government data in a cyberattack.",
+      "canonicalUrl": "https://therecord.media/hackers-ukraine-belarus-russia",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/hackers-ukraine-belarus-russia"
+      ],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Google Disrupts 1.3 Million-Device Android Botnet, Says TV Box Maker Sold Criminal Access",
+      "url": "https://thehackernews.com/2026/11/google-disrupts-13-million-device.html",
+      "publishedAt": "2026-11-02T15:50:26.000Z",
+      "excerpt": "A botnet of more than 1.3 million Android devices, mostly TV set-top boxes, lost control of its servers in late October in a takedown led by Google. Google says it is highly confident that device maker Videostrong intentionally put a backdoor in the boxes and sold access to criminals. They used the boxes for ad fraud and to pass other people's internet traffic through owners' home",
+      "canonicalUrl": "https://thehackernews.com/2026/11/google-disrupts-13-million-device.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/google-disrupts-13-million-device.html"
+      ],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "BTCPay Server warns of hot wallet crypto thefts on outdated instances",
+      "url": "https://www.bleepingcomputer.com/news/security/btcpay-server-warns-of-hot-wallet-thefts-targeting-outdated-instances/",
+      "publishedAt": "2026-11-02T15:03:07.000Z",
+      "excerpt": "The maintainer of BTCPay Server, an open-source cryptocurrency payment processor, has urged users to install the latest version as hackers have been draining \"hot wallets\" on instances running older versions. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/btcpay-server-warns-of-hot-wallet-thefts-targeting-outdated-instances",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/btcpay-server-warns-of-hot-wallet-thefts-targeting-outdated-instances"
+      ],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Your Mobile Carrier Stores Your Call Logs for Years",
+      "url": "https://www.bleepingcomputer.com/news/security/your-mobile-carrier-stores-your-call-logs-for-years/",
+      "publishedAt": "2026-11-02T15:01:11.000Z",
+      "excerpt": "Mobile carriers can retain years of call and text metadata, exposing sensitive details about customers' relationships, locations, and daily routines if breached. Cape examines the privacy risks of long-term telecom data retention and how its mobile service reduces exposure by automatically deleting call records. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/your-mobile-carrier-stores-your-call-logs-for-years",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/your-mobile-carrier-stores-your-call-logs-for-years"
+      ],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Cybersecurity M&A Roundup: 37 Deals Announced in October 2026",
+      "url": "https://www.securityweek.com/cybersecurity-ma-roundup-37-deals-announced-in-october-2026/",
+      "publishedAt": "2026-11-02T15:01:11.000Z",
+      "excerpt": "Significant cybersecurity deals were announced by Absolute Security, Aikido, Anthropic, Cohere, Hex-Rays, and Proofpoint. The post Cybersecurity M&A Roundup: 37 Deals Announced in October 2026 appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/cybersecurity-ma-roundup-37-deals-announced-in-october-2026",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/cybersecurity-ma-roundup-37-deals-announced-in-october-2026"
+      ],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Microsoft's AI Risk Report Misses This Key Detail",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/microsoft-ai-cyber-risk-report-miss",
+      "publishedAt": "2026-11-02T15:00:00.000Z",
+      "excerpt": "The latest \"Digital Defense Report\" identifies government agencies as prime targets for AI attacks but doesn't mention that they are broadly being targeted through Microsoft bugs.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/microsoft-ai-cyber-risk-report-miss",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyberattacks-data-breaches/microsoft-ai-cyber-risk-report-miss"
+      ],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "DarkBlinders Compromises Israeli Target and Iraqi Kurdish Government Cloud Environment",
+      "url": "https://thehackernews.com/2026/11/darkblinders-compromises-israeli-target.html",
+      "publishedAt": "2026-11-02T14:46:05.000Z",
+      "excerpt": "Cybersecurity researchers have disclosed details of a cyber espionage campaign targeting Israel and the Kurdistan Region of Iraq by an Iran state-aligned threat actor between August and October 2026. According to a report published by Dream Research Labs, the campaign has led to the compromise of a high-profile individual in Israel, along with additional compromises affecting a government cloud",
+      "canonicalUrl": "https://thehackernews.com/2026/11/darkblinders-compromises-israeli-target.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/darkblinders-compromises-israeli-target.html"
+      ],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Russian and Ukrainian hackers hijack emergency apps to spread fake nuclear attack warnings",
+      "url": "https://therecord.media/ukraine-hackers-russia-alert-system",
+      "publishedAt": "2026-11-02T14:30:00.000Z",
+      "excerpt": "A popular Ukrainian air raid alert system was hacked over the weekend, prompting a cyber group to breach a similar Russian system in retaliation.",
+      "canonicalUrl": "https://therecord.media/ukraine-hackers-russia-alert-system",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/ukraine-hackers-russia-alert-system"
+      ],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "PapRAT Cyber-Espionage Campaign Leaves a 'Bitter' Taste in South Asia",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/paprat-cyberespionage-campaign-bitter-south-asia",
+      "publishedAt": "2026-11-02T14:00:00.000Z",
+      "excerpt": "Organizations in the region face growing cyberattacks from the known India-linked threat group, which leverages legitimate Windows functionality in three distinct attack chains.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/paprat-cyberespionage-campaign-bitter-south-asia",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyberattacks-data-breaches/paprat-cyberespionage-campaign-bitter-south-asia"
+      ],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft fixes Smart App Control broken by October Windows update",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-smart-app-control-broken-by-october-windows-update/",
+      "publishedAt": "2026-11-02T13:57:29.000Z",
+      "excerpt": "Microsoft has resolved a known issue that prevented some users from activating the Smart App Control security feature after installing the October 2026 KB5127648 Windows 11 security update. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-fixes-smart-app-control-broken-by-october-windows-update",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/microsoft/microsoft-fixes-smart-app-control-broken-by-october-windows-update"
+      ],
+      "cves": [],
+      "id": "s18"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Revolve Data Breach Impacts at Least 180,000 People",
+      "url": "https://www.securityweek.com/revolve-data-breach-impacts-at-least-180000-people/",
+      "publishedAt": "2026-11-02T13:35:21.000Z",
+      "excerpt": "Hackers accessed its online shopping platform and stole customers’ personal and payment card information. The post Revolve Data Breach Impacts at Least 180,000 People appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/revolve-data-breach-impacts-at-least-180000-people",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/revolve-data-breach-impacts-at-least-180000-people"
+      ],
+      "cves": [],
+      "id": "s19"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Google Introduces $250,000 Root-in-Cloud Bug Bounty Reward",
+      "url": "https://www.securityweek.com/google-introduces-250000-root-in-cloud-bug-bounty-reward/",
+      "publishedAt": "2026-11-02T13:25:11.000Z",
+      "excerpt": "The top payout is for high-impact architectural research demonstrating full administrative control. The post Google Introduces $250,000 Root-in-Cloud Bug Bounty Reward appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/google-introduces-250000-root-in-cloud-bug-bounty-reward",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/google-introduces-250000-root-in-cloud-bug-bounty-reward"
+      ],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Is Your SOC Ready for AI Agents? A Maturity Check Before You Deploy",
+      "url": "https://thehackernews.com/2026/11/is-your-soc-ready-for-ai-agents.html",
+      "publishedAt": "2026-11-02T11:30:00.000Z",
+      "excerpt": "Forty percent of security teams now use AI every day, and another 56% are testing it. Only 4% have no plans to adopt it, according to Prophet Security's State of AI in Security Operations 2026 survey of more than 250 CISOs, SOC leaders and practitioners. For the teams still testing, the next decision is whether their own SOC is ready. AI SOC readiness has two parts: whether a SOC has the",
+      "canonicalUrl": "https://thehackernews.com/2026/11/is-your-soc-ready-for-ai-agents.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/is-your-soc-ready-for-ai-agents.html"
+      ],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Malicious Claude Code Extension Served in Cursor Supply Chain Attack",
+      "url": "https://www.securityweek.com/malicious-claude-code-extension-served-in-cursor-supply-chain-attack/",
+      "publishedAt": "2026-11-02T11:29:39.000Z",
+      "excerpt": "The extension performed host reconnaissance and attempted to create a reverse SSH tunnel. The post Malicious Claude Code Extension Served in Cursor Supply Chain Attack appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/malicious-claude-code-extension-served-in-cursor-supply-chain-attack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/malicious-claude-code-extension-served-in-cursor-supply-chain-attack"
+      ],
+      "cves": [],
+      "id": "s24"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Synology warns of C3RB3R ransomware attacks targeting NAS devices",
+      "url": "https://www.bleepingcomputer.com/news/security/synology-warns-customers-of-ongoing-c3rb3r-ransomware-attacks/",
+      "publishedAt": "2026-11-02T11:28:42.000Z",
+      "excerpt": "Taiwanese network-attached storage (NAS) appliance maker Synology warned customers to update their devices immediately due to a surge in C3RB3r ransomware attacks. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/synology-warns-customers-of-ongoing-c3rb3r-ransomware-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/synology-warns-customers-of-ongoing-c3rb3r-ransomware-attacks"
+      ],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Attackers Pose as IT Support on Microsoft Teams, Abuse AD CS to Steal Company Data",
+      "url": "https://thehackernews.com/2026/11/attackers-pose-as-it-support-on.html",
+      "publishedAt": "2026-11-02T11:08:45.000Z",
+      "excerpt": "Attackers posing as IT support on Microsoft Teams talked employees into giving them remote control of their PCs. They then used insecure Active Directory Certificate Services (AD CS) settings to obtain login certificates for privileged accounts, including one for a domain controller. Microsoft said in a report that it investigated two such intrusions, one of which resulted in company",
+      "canonicalUrl": "https://thehackernews.com/2026/11/attackers-pose-as-it-support-on.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/attackers-pose-as-it-support-on.html"
+      ],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Government Linux Servers Targeted With SysGoRAT and Suspected AI-Generated Scripts",
+      "url": "https://thehackernews.com/2026/11/government-linux-servers-targeted-with.html",
+      "publishedAt": "2026-11-02T10:49:59.000Z",
+      "excerpt": "Cybersecurity researchers have disclosed details of a cyber espionage campaign specifically targeting Linux infrastructure associated with government entities and state-affiliated infrastructure. The activity, observed by Palo Alto Networks Unit 42 between October 2025 and April 2026, has been tracked under the moniker CL-UNK-1211, where \"CL\" refers to cluster and \"UNK\" stands for unknown",
+      "canonicalUrl": "https://thehackernews.com/2026/11/government-linux-servers-targeted-with.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/government-linux-servers-targeted-with.html"
+      ],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Chainalysis Discloses Data Breach Following AI-Driven Cyberattack",
+      "url": "https://www.securityweek.com/chainalysis-discloses-data-breach-following-ai-driven-cyberattack/",
+      "publishedAt": "2026-11-02T10:27:49.000Z",
+      "excerpt": "The attackers used offensive agentic techniques to access the company’s systems and internal tools. The post Chainalysis Discloses Data Breach Following AI-Driven Cyberattack appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/chainalysis-discloses-data-breach-following-ai-driven-cyberattack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/chainalysis-discloses-data-breach-following-ai-driven-cyberattack"
+      ],
+      "cves": [],
+      "id": "s28"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Polymarket Returns $3.9 Million to Traders as DebugBear Cites DNS Hijack",
+      "url": "https://www.securityweek.com/polymarket-returns-3-9-million-to-traders-as-debugbear-cites-dns-hijack/",
+      "publishedAt": "2026-11-02T09:33:15.000Z",
+      "excerpt": "DebugBear says its DNS records were compromised via its domain registrar, and early findings show a single customer was targeted. The post Polymarket Returns $3.9 Million to Traders as DebugBear Cites DNS Hijack appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/polymarket-returns-3-9-million-to-traders-as-debugbear-cites-dns-hijack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/polymarket-returns-3-9-million-to-traders-as-debugbear-cites-dns-hijack"
+      ],
+      "cves": [],
+      "id": "s29"
+    },
+    {
+      "sourceId": "securelist",
+      "sourceKind": "rss",
+      "title": "CyberStrikeAI in the wild: the use of AI in real-world attacks on organizations",
+      "url": "https://securelist.com/tr/cyberstrikeai-attacks/121715/",
+      "publishedAt": "2026-11-02T08:00:24.000Z",
+      "excerpt": "We analyze a series of attacks on educational institutions that were fully automated during the post-exploitation phase using the CyberStrikeAI penetration testing framework.",
+      "canonicalUrl": "https://securelist.com/tr/cyberstrikeai-attacks/121715",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securelist.com/tr/cyberstrikeai-attacks/121715"
+      ],
+      "cves": [],
+      "id": "s31"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "New VOLTA Infostealer Uses Claude, Gemini, and Kimi AI to Rank Victims by Financial Value",
+      "url": "https://thehackernews.com/2026/11/new-volta-infostealer-uses-claude.html",
+      "publishedAt": "2026-11-02T05:51:07.000Z",
+      "excerpt": "Cybersecurity researchers have discovered a new Windows infostealer malware called VOLTA-AUTODOXER (aka VOLTA) that makes use of a large language model (LLM) to rank a victim's stolen data by their monetization value. Like other typical stealer families, VOLTA is equipped to harvest passwords and cookies from Chromium-based web browsers; data from Outlook profiles and Slack workspaces;",
+      "canonicalUrl": "https://thehackernews.com/2026/11/new-volta-infostealer-uses-claude.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/new-volta-infostealer-uses-claude.html"
+      ],
+      "cves": [],
+      "id": "s33"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "FBI links $6.3 billion Binance crypto heist to North Korean hackers",
+      "url": "https://www.bleepingcomputer.com/news/security/fbi-links-63-billion-binance-crypto-heist-to-north-korean-hackers/",
+      "publishedAt": "2026-11-01T19:57:53.000Z",
+      "excerpt": "The FBI has confirmed that North Korean state-sponsored hackers known as TraderTraitor were behind the $6.3 billion crypto-theft attack on Binance, making it the largest cryptocurrency heist on record. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/fbi-links-63-billion-binance-crypto-heist-to-north-korean-hackers",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/fbi-links-63-billion-binance-crypto-heist-to-north-korean-hackers"
+      ],
+      "cves": [],
+      "id": "s34"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Investors Dish on New Startups &amp; What They'd Back Next",
+      "url": "https://www.darkreading.com/cybersecurity-operations/investors-dish-new-startsup-what-back-next",
+      "publishedAt": "2026-10-30T21:08:25.000Z",
+      "excerpt": "The cybersecurity market is difficult to predict, but a glimpse into the annual DataTribe Challenge shows what's trending and what's not.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/investors-dish-new-startsup-what-back-next",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cybersecurity-operations/investors-dish-new-startsup-what-back-next"
+      ],
+      "cves": [],
+      "id": "s35"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1280,
+    "promptCacheMissTokens": 8429,
+    "outputTokens": 8375,
+    "estimatedCostUsd": 0.0035286440000000005
+  }
+}
