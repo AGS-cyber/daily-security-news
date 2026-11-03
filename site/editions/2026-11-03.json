@@ -1,0 +1,1103 @@
+{
+  "date": "2026-11-03",
+  "generatedAt": "2026-11-03T18:57:22.817Z",
+  "collection": [
+    {
+      "sourceId": "krebs",
+      "attemptedAt": "2026-11-03T18:57:22.817Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "attemptedAt": "2026-11-03T18:57:22.817Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "thehackernews",
+      "attemptedAt": "2026-11-03T18:57:22.817Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "therecord",
+      "attemptedAt": "2026-11-03T18:57:22.817Z",
+      "status": "ok",
+      "items": 5,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securityweek",
+      "attemptedAt": "2026-11-03T18:57:22.817Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "darkreading",
+      "attemptedAt": "2026-11-03T18:57:22.817Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "attemptedAt": "2026-11-03T18:57:22.817Z",
+      "status": "ok",
+      "items": 30,
+      "skipped": 0
+    },
+    {
+      "sourceId": "projectzero",
+      "attemptedAt": "2026-11-03T18:57:22.817Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securelist",
+      "attemptedAt": "2026-11-03T18:57:22.817Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "talos",
+      "attemptedAt": "2026-11-03T18:57:22.817Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "unit42",
+      "attemptedAt": "2026-11-03T18:57:22.817Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "microsoft-security",
+      "attemptedAt": "2026-11-03T18:57:22.817Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    }
+  ],
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 229,
+    "published": 46
+  },
+  "mode": "article",
+  "headline": "Binance ties $6.43bn theft to a poisoned Homebrew install",
+  "standfirst": "The largest single loss in this run is a developer-tooling story: a record-setting crypto theft traced to a tampered package install and a fake interview loop. Elsewhere, a 10.0-rated Siemens flaw is being used to backdoor industrial devices, a security vendor's own update channel was turned against its customers, and fixes land for Barracuda and Linux kernel issues.",
+  "bodyMarkdown": "## Breaches\n\nBinance describes the $6.43 billion theft as the culmination of a \"sophisticated, multi-stage campaign\" rather than an isolated breach or simple phishing, and points to two entry lures: a tampered Homebrew installation and recruitment-themed social engineering aimed at two of its engineers [[s8]]. The excerpt stops short of describing what the modified package did once installed, how long the intrusion persisted, or how the funds were moved — those details were not supplied. Analysis: the notable signal is the target class. Developer tooling and hiring pretexts sit on the workstation where credentials, keys and build access concentrate, which is consistent with the exchange's own framing of a multi-stage campaign, though the supplied text does not establish the sequence beyond the two named lures.\n\nSeparately, the maker of cPGuard says an attacker broke into the product's update system and used it to push a malicious script to customers' Linux servers, installing a backdoor and collecting password hashes and other sensitive files — with some of that data since taken [[s14]]. The advisory excerpt begins listing a cPGuard version but is truncated, so the exact fixed-release guidance was not supplied. Analysis: an update channel is the highest-trust path into a security product's install base, and this is a live supply-chain compromise rather than a theoretical one.\n\n## Actively exploited\n\nA maximum-severity flaw in Siemens SIMATIC IoT2050 Advanced devices is under active exploitation according to VulnCheck, which reported attackers planting remote command backdoors [[s40]]. CVE-2026-58115 carries a CVSS 4.0 score of 10.0 and is a CWE-306 missing-authentication bug: the Node-RED HTTP interface does not enforce authentication, so an unauthenticated remote attacker can reach programming nodes capable of executing system commands and create malicious flows that run arbitrary code with maximum privileges. The affected configuration is devices running Industrial OS with Node-RED installed, versions earlier than V4.3.4.1. The CVE was not found in CISA's KEV catalog at enrichment; that is a confirmed catalog miss for this record, not evidence that exploitation has not occurred — and here the source reports exploitation directly.\n\nRansomware operators are encrypting Synology NAS devices by exploiting an already-patched DiskStation Manager vulnerability against systems running outdated DSM versions, with the vendor urging customers to update [[s38]]. No CVE identifier or exploitation mechanics were included in the supplied excerpt, so the specific flaw and the affected builds cannot be stated here.\n\n## Vulnerabilities\n\nBarracuda has disclosed two flaws that chain together: a pre-authentication authorization bypass and a command injection, together reaching root on a susceptible device [[s10]]. CVE-2026-116606 is the bypass, rated 9.3 under CVSS 4.0, and per NVD it affects Email Security Gateway versions earlier than 9.4.0.030, letting an unauthenticated remote attacker invoke a configuration-import function and restore a crafted, compatible backup archive — resulting in unauthorized modification of the appliance's global configuration. The command-injection half's CVE ID and score fall outside the truncated excerpt, so only the first is detailed here. Neither is in KEV, and no in-the-wild exploitation is reported. Analysis: the pre-auth bypass is the interesting half — it needs no credentials, but the described path is a crafted backup archive rather than a bare network probe.\n\nRed Hat has shipped fixed kernels for a use-after-free in the Linux kernel's IPv4 TCP code, CVE-2026-98432, rated 9.8 under CVSS 3.1 and reachable by a remote, unauthenticated attacker [[s28]]. Kernels are available for the three most recent major Red Hat Enterprise Linux releases; Ubuntu's fixes for its three newest long-term-support releases remain in an opt-in testing channel with no date given for a regular update. Analysis: the asymmetry matters more than the score — one distribution's users can patch on a normal cadence while another's must opt in to testing to get the fix.\n\n## Industry\n\nGoogle has dismantled the XCPE botnet, which it says comprised 1.3 million Android devices and was created and operated for financial gain by Videostrong Technology, an Android OEM/ODM [[s34]]. Analysis: an operator that also manufactures the hardware sits upstream of any device-level control, which is the supply-chain risk the takedown illustrates; the supplied excerpt does not describe the botnet's capabilities or how devices were conscripted.\n\n## Research\n\nGoogle is warning that LLMjacking — hijacking enterprise access to large language models to burn expensive compute and AI services — is costing some enterprises up to $1 million in cloud charges [[s11]]. API keys are obtained through phishing, source code leaks, misconfigured environments or exposed client-side code. Analysis: the significant number is the bill, not the technique; resource hijacking that shows up first on a cloud invoice rather than in an EDR alert is easy to miss for exactly as long as it takes finance to notice.",
+  "selected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Binance Reveals How Fake Job Interviews and AI Tool Abuse Led to $6.43 Billion Theft",
+      "url": "https://thehackernews.com/2026/11/binance-reveals-how-fake-job-interviews.html",
+      "publishedAt": "2026-11-03T16:55:58.000Z",
+      "excerpt": "Binance on Tuesday said the record-setting theft of $6.43 billion in assets from the world's largest cryptocurrency exchange was the culmination of a \"sophisticated, multi-stage campaign\" that involved the use of a tampered Homebrew installation and recruitment-themed social engineering attack targeting two of its engineers. \"It was not a single isolated breach or a simple phishing incident,\"",
+      "canonicalUrl": "https://thehackernews.com/2026/11/binance-reveals-how-fake-job-interviews.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/binance-reveals-how-fake-job-interviews.html"
+      ],
+      "cves": [],
+      "id": "s8",
+      "section": "breaches",
+      "rank": 1,
+      "angle": "The record $6.43 billion Binance theft traces back to a tampered Homebrew install and fake job interviews, showing how developer-tooling and hiring lures can cascade into systemic loss."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Attackers Exploit Critical Siemens IoT2050 Flaw to Plant Remote Command Backdoors",
+      "url": "https://thehackernews.com/2026/11/attackers-exploit-critical-siemens.html",
+      "publishedAt": "2026-11-03T05:34:41.000Z",
+      "excerpt": "A maximum-severity security flaw impacting Siemens SIMATIC IoT2050 Advanced devices has come under active exploitation, VulnCheck has revealed. The vulnerability, tracked as CVE-2026-58115 (CVSS score: 10.0), is a case of missing authentication for a critical function that could be exploited by an unauthenticated remote attacker to run arbitrary code. \"SIMATIC IoT2050 Advanced devices running",
+      "canonicalUrl": "https://thehackernews.com/2026/11/attackers-exploit-critical-siemens.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/attackers-exploit-critical-siemens.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-58115",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "A vulnerability has been identified in SIMATIC IoT2050 Advanced (6ES7647-0BA00-1YA2) (All versions < V4.3.4.1 running Industrial OS with Node-RED installed). Affected devices do not enforce authentication on the Node-RED HTTP interface, allowing unauthenticated access to programming nodes that are capable of executing system commands on the server.\r\nThis could allow an unauthenticated remote attacker to create malicious flows through the HTTP interface in order to execute arbitrary code on the underlying server with maximum privileges.",
+            "cvss": {
+              "version": "4.0",
+              "score": 10,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "productcert@siemens.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-306"
+            ],
+            "published": "2026-08-11T13:19:00.190",
+            "lastModified": "2026-10-23T21:10:00.157",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://cert-portal.siemens.com/productcert/html/ssa-834709.html",
+                "source": "productcert@siemens.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/11/attackers-exploit-critical-siemens.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.30",
+              "dateReleased": "2026-10-30T17:02:45.3665Z",
+              "retrievedAt": "2026-11-03T18:57:22.817Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-116606%2CCVE-2026-98432%2CCVE-2026-58115%2CCVE-2026-81648",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-58115",
+              "retrievedAt": "2026-11-03T18:57:22.817Z"
+            }
+          }
+        }
+      ],
+      "id": "s40",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "A maximum-severity missing-authentication flaw in Siemens SIMATIC IoT2050's Node-RED interface is already being exploited to plant remote command backdoors on industrial devices."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "cPGuard Update Channel Hijacked to Backdoor Linux Servers and Collect Password Hashes",
+      "url": "https://thehackernews.com/2026/11/cpguard-update-channel-hijacked-to.html",
+      "publishedAt": "2026-11-03T15:16:32.000Z",
+      "excerpt": "An attacker broke into the update system of the cPGuard security tool on November 2 and used it to send a malicious script to customers' Linux servers. The script installed a backdoor and collected password hashes and other sensitive files from servers that ran it, cPGuard maker OPSSHIELD said in an advisory. The attacker has since taken some of that data. cPGuard 5.88.25 and later versions",
+      "canonicalUrl": "https://thehackernews.com/2026/11/cpguard-update-channel-hijacked-to.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/cpguard-update-channel-hijacked-to.html"
+      ],
+      "cves": [],
+      "id": "s14",
+      "section": "breaches",
+      "rank": 3,
+      "angle": "An attacker used cPGuard's own update channel to push a backdoor that harvested password hashes from customer Linux servers, a live supply-chain compromise of a security product."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Barracuda Flaws Could Be Chained to Bypass Authorization and Gain Root Access",
+      "url": "https://thehackernews.com/2026/11/barracuda-flaws-could-be-chained-to.html",
+      "publishedAt": "2026-11-03T15:59:19.000Z",
+      "excerpt": "Barracuda has disclosed details of two vulnerabilities affecting its products that, if chained together, could allow an attacker to bypass authorization controls and gain root access to a susceptible device. The vulnerabilities, a pre-authentication authorization bypass vulnerability and a command injection vulnerability, have been assigned the CVE identifiers CVE-2026-116606 (CVSS score: 9.3)",
+      "canonicalUrl": "https://thehackernews.com/2026/11/barracuda-flaws-could-be-chained-to.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/barracuda-flaws-could-be-chained-to.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-116606",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "An authentication bypass in Barracuda Email Security Gateway versions earlier than 9.4.0.030 allows an unauthenticated remote attacker to invoke a configuration-import function and restore a crafted, compatible backup archive, resulting in unauthorized modification of the appliance’s global configuration.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.3,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "mandiant-cve@google.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-288"
+            ],
+            "published": "2026-11-02T13:17:37.017",
+            "lastModified": "2026-11-03T05:18:31.200",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://github.com/mandiant/Vulnerability-Disclosures/blob/master/2026/MNDT-2026-0042.md",
+                "source": "mandiant-cve@google.com",
+                "tags": []
+              },
+              {
+                "url": "https://trust.barracuda.com/security/pre-authentication-authorization-bypass-command-injection",
+                "source": "mandiant-cve@google.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/11/barracuda-flaws-could-be-chained-to.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.30",
+              "dateReleased": "2026-10-30T17:02:45.3665Z",
+              "retrievedAt": "2026-11-03T18:57:22.817Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-116606%2CCVE-2026-98432%2CCVE-2026-58115%2CCVE-2026-81648",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-116606",
+              "retrievedAt": "2026-11-03T18:57:22.817Z"
+            }
+          }
+        }
+      ],
+      "id": "s10",
+      "section": "vulnerabilities",
+      "rank": 4,
+      "angle": "Barracuda customers face a pre-auth authorization bypass chainable with command injection to reach root, tracked as CVE-2026-116606 at CVSS 9.3."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Red Hat Patches 9.8-Rated Linux TCP RCE Flaw While Ubuntu Releases Fixes for Testing",
+      "url": "https://thehackernews.com/2026/11/red-hat-patches-98-rated-linux-tcp-rce.html",
+      "publishedAt": "2026-11-03T11:23:53.000Z",
+      "excerpt": "Fixed kernels for a use-after-free vulnerability in the Linux kernel's IPv4 TCP code are now available for Red Hat Enterprise Linux 8, 9, and 10, while Ubuntu's fixes for its three newest long-term-support releases remain in its opt-in testing channel with no date for a regular update. The flaw, tracked as CVE-2026-98432, can be reached by a remote, unauthenticated attacker and can",
+      "canonicalUrl": "https://thehackernews.com/2026/11/red-hat-patches-98-rated-linux-tcp-rce.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/red-hat-patches-98-rated-linux-tcp-rce.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-98432",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nipv4: free inet_opt and ireq_opt after an RCU grace period\n\ntcp_v4_syn_recv_sock() transfers ownership of ireq->ireq_opt to the\nchild socket (newinet->inet_opt) without copying it.\n\nAnother cpu can concurrently process a retransmitted SYN for the same\nrequest socket, and send a SYNACK from tcp_check_req().\ntcp_v4_send_synack() and inet_csk_route_req() read ireq->ireq_opt\nunder rcu_read_lock() only, and ip_build_and_send_pkt() and\nip_options_build() then read opt->optlen twice.\n\nNote that the SYNACK timer itself is not an issue: it holds a\nreference on its request socket, and inet_csk_reqsk_queue_drop()\ncalls timer_delete_sync() before the child can be freed.\n\nSince commit 079096f103fa (\"tcp/dccp: install syn_recv requests\ninto ehash table\"), request sockets are processed without holding\nthe listener lock, so nothing prevents the child socket from being\nfreed while the SYNACK is still being built. TCP child sockets do\nnot have SOCK_RCU_FREE, and inet_sock_destruct() frees inet_opt\nwith a plain kfree(), leading to a use-after-free in\nip_options_build().\n\nA similar issue exists with request socket migration\n(net.ipv4.tcp_migrate_req=1, or a BPF_SK_REUSEPORT_SELECT_OR_MIGRATE\nprogram). reqsk_timer_handler() clones the request socket with\ninet_reqsk_clone(), so that the old request socket and its clone\nshare the same ireq_opt, then reqsk_migrate_reset() clears the\npointer in the old one. Another cpu holding a reference on the old\nrequest socket can still be using these options (sending a SYNACK,\nor creating a child in tcp_v4_syn_recv_sock()) when the clone is\nfreed, and tcp_v4_reqsk_destructor() also uses a plain kfree().\n\nReaders already use RCU, and other paths replacing inet_opt\n(do_ip_setsockopt(), cipso_v4_sock_setattr()...) already use\nkfree_rcu(). Use kfree_rcu() in inet_sock_destruct() and\ntcp_v4_reqsk_destructor() as well.\n\nIPv6 is not affected by the first issue, because tcp_v6_syn_recv_sock()\nduplicates the options. tcp_v6_reqsk_destructor() has the same\nmigration issue with ipv6_opt, which is only set by CALIPSO. This\nwill be addressed in a separate patch.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+              "type": "Secondary"
+            },
+            "cwes": [],
+            "published": "2026-10-15T13:17:13.987",
+            "lastModified": "2026-11-03T07:20:59.297",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://git.kernel.org/stable/c/11a03ce3c4a62d84c10ccdfe47f8075006498568",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/26d4c36d318cffbbd160884a0e4cec0da4da4936",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/742f73df544e03744f2981c467d6542fe8172a2a",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/89b5b1eb7d633c33832b7ff2c02e19a144705036",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/95a8c8fa9f27dce64c40c41c062de7728bf34ab5",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/a47406c769f72c070386985488f1c4d057df86b2",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/b3b027ef0cd322bfa839b9aaf5b27551eea54cf6",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/e3f33b0a1d89d738e2b913dab519226eaf76e15b",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/10/30/1",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": []
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/10/30/6",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": []
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/10/31/5",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": []
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/11/03/1",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/11/red-hat-patches-98-rated-linux-tcp-rce.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.30",
+              "dateReleased": "2026-10-30T17:02:45.3665Z",
+              "retrievedAt": "2026-11-03T18:57:22.817Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-116606%2CCVE-2026-98432%2CCVE-2026-58115%2CCVE-2026-81648",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-98432",
+              "retrievedAt": "2026-11-03T18:57:22.817Z"
+            }
+          }
+        }
+      ],
+      "id": "s28",
+      "section": "vulnerabilities",
+      "rank": 5,
+      "angle": "Fixes are shipping for a 9.8-rated remote unauthenticated use-after-free in the Linux kernel's IPv4 TCP code (CVE-2026-98432), with Ubuntu still in opt-in testing."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Synology NAS Devices Targeted in Ransomware Attacks Exploiting Patched DSM Flaw",
+      "url": "https://thehackernews.com/2026/11/synology-nas-devices-targeted-in.html",
+      "publishedAt": "2026-11-03T07:43:07.000Z",
+      "excerpt": "Synology is urging customers to update the DiskStation Manager (DSM) software powering its Network Attached Storage (NAS) devices following ransomware attacks. The Taiwanese vendor said it observed threat actors exploiting a vulnerability patched in December 2024 to target devices running outdated versions of DSM. \"These attacks aim to encrypt data and extort ransom,\" it said in a statement",
+      "canonicalUrl": "https://thehackernews.com/2026/11/synology-nas-devices-targeted-in.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/synology-nas-devices-targeted-in.html"
+      ],
+      "cves": [],
+      "id": "s38",
+      "section": "exploited",
+      "rank": 6,
+      "angle": "Ransomware crews are encrypting Synology NAS devices by exploiting a DSM flaw patched back in December 2024, punishing unpatched storage appliances."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Google Dismantles XCPE Botnet of 1.3 Million Android Devices",
+      "url": "https://www.securityweek.com/google-dismantles-xcpe-botnet-of-1-3-million-android-devices/",
+      "publishedAt": "2026-11-03T09:22:09.000Z",
+      "excerpt": "The botnet was created and operated for financial gain by Android OEM/ODM Videostrong Technology. The post Google Dismantles XCPE Botnet of 1.3 Million Android Devices appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/google-dismantles-xcpe-botnet-of-1-3-million-android-devices",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/google-dismantles-xcpe-botnet-of-1-3-million-android-devices"
+      ],
+      "cves": [],
+      "id": "s34",
+      "section": "industry",
+      "rank": 7,
+      "angle": "Google's takedown of the 1.3-million-device XCPE Android botnet, run by an OEM for profit, exposes the supply-chain risk sitting in cheap connected devices."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Google Warns LLMjacking Attacks Are Costing Some Enterprises Up to $1 Million in Cloud Charges",
+      "url": "https://thehackernews.com/2026/11/google-warns-llmjacking-attacks-are.html",
+      "publishedAt": "2026-11-03T15:41:53.000Z",
+      "excerpt": "Google on Monday warned that threat actors are hijacking enterprise access to Large Language Models (LLMs) to fraudulently leverage expensive computing resources and AI services. The tactic is called LLMjacking, a form of resource hijacking adapted for the LLM era, where an attacker obtains an API key through phishing, source code leaks, misconfigured environments, or exposed client-side code",
+      "canonicalUrl": "https://thehackernews.com/2026/11/google-warns-llmjacking-attacks-are.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/google-warns-llmjacking-attacks-are.html"
+      ],
+      "cves": [],
+      "id": "s11",
+      "section": "research",
+      "rank": 8,
+      "angle": "Google's warning on LLMjacking quantifies a maturing criminal business model where stolen cloud AI access runs up enterprise bills approaching $1 million."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Google: LLMjacking attacks rack up $1 million in cloud AI charges",
+      "url": "https://www.bleepingcomputer.com/news/security/google-llmjacking-attacks-rack-up-1-million-in-cloud-ai-charges/",
+      "publishedAt": "2026-11-03T18:51:04.000Z",
+      "excerpt": "Large language model hijacking attacks, also known as LLMjacking, are generating large fraudulent cloud charges, with some organizations losing more than $100,000 per day. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/google-llmjacking-attacks-rack-up-1-million-in-cloud-ai-charges",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/google-llmjacking-attacks-rack-up-1-million-in-cloud-ai-charges"
+      ],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "mSecure Warns Users to Change Passwords, Reset 2FA and Passkeys After Suspicious Activity",
+      "url": "https://thehackernews.com/2026/11/msecure-warns-users-to-change-passwords.html",
+      "publishedAt": "2026-11-03T18:46:38.000Z",
+      "excerpt": "Customers of the mSecure password manager are being urged to act now to protect the confidential information they store in it, possibly by changing passwords, resetting two-factor authentication (2FA), and removing passkeys. The warning came in an email sent on November 3 in the name of developer mSeven Software. It says the company recently learned of suspicious activity linked to the app but",
+      "canonicalUrl": "https://thehackernews.com/2026/11/msecure-warns-users-to-change-passwords.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/msecure-warns-users-to-change-passwords.html"
+      ],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Several German lawmakers and foreign policy staff received Apple warnings on spyware",
+      "url": "https://therecord.media/german-officials-among-apple-spyware-warning-recipients",
+      "publishedAt": "2026-11-03T18:44:00.000Z",
+      "excerpt": "Members of Germany's political elite were among the spyware targets in 99 countries that Apple personally warned recently.",
+      "canonicalUrl": "https://therecord.media/german-officials-among-apple-spyware-warning-recipients",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/german-officials-among-apple-spyware-warning-recipients"
+      ],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Chainstack Reports Production Systems Breach Exposing Customer Data and Password Hashes",
+      "url": "https://thehackernews.com/2026/11/chainstack-reports-production-systems.html",
+      "publishedAt": "2026-11-03T18:16:19.000Z",
+      "excerpt": "Blockchain infrastructure provider Chainstack on Tuesday disclosed that it was targeted in a cyber attack that allowed an unauthorized party to gain access to some parts of its infrastructure. The incident is assessed to be part of a large-scale, artificial intelligence (AI)-powered attack campaign that came to light last week. \"An external attacker gained unauthorized access to part of",
+      "canonicalUrl": "https://thehackernews.com/2026/11/chainstack-reports-production-systems.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/chainstack-reports-production-systems.html"
+      ],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "British businesses caught in Europe-wide supermarket fridge attacks",
+      "url": "https://therecord.media/british-businesses-caught-in-europe-wide-supermarket-fridge-attacks",
+      "publishedAt": "2026-11-03T17:43:00.000Z",
+      "excerpt": "Supermarket and grocery store refrigerator controls across Europe were hacked in the early hours of Monday in the second such wave of attacks in recent weeks — following a first wave in France — with unidentified perpetrators defrosting fridges and causing stock to spoil.",
+      "canonicalUrl": "https://therecord.media/british-businesses-caught-in-europe-wide-supermarket-fridge-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/british-businesses-caught-in-europe-wide-supermarket-fridge-attacks"
+      ],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "Fake-download campaign uses trojanized installers to deliver monetization payloads",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/11/03/fake-download-campaign-uses-trojanized-installers-deliver-monetization-payloads/",
+      "publishedAt": "2026-11-03T17:32:47.000Z",
+      "excerpt": "Microsoft Threat Intelligence tracks a fake-download campaign that uses trojanized Inno installers to deliver multiple monetization offers and provides detection and investigation guidance across the complete installer session. The post Fake-download campaign uses trojanized installers to deliver monetization payloads appeared first on Microsoft Security Blog.",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/11/03/fake-download-campaign-uses-trojanized-installers-deliver-monetization-payloads",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://microsoft.com/en-us/security/blog/2026/11/03/fake-download-campaign-uses-trojanized-installers-deliver-monetization-payloads"
+      ],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "Microsoft named a Leader in the 2026 Gartner® Magic Quadrant™ for AI Agent Management Platforms",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/11/03/microsoft-named-a-leader-in-the-2026-gartner-magic-quadrant-for-ai-agent-management-platforms/",
+      "publishedAt": "2026-11-03T17:00:00.000Z",
+      "excerpt": "Read why Gartner named Microsoft a Leader in the inaugural 2026 Magic Quadrant for AI Agent Management Platforms. The post Microsoft named a Leader in the 2026 Gartner® Magic Quadrant™ for AI Agent Management Platforms appeared first on Microsoft Security Blog.",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/11/03/microsoft-named-a-leader-in-the-2026-gartner-magic-quadrant-for-ai-agent-management-platforms",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://microsoft.com/en-us/security/blog/2026/11/03/microsoft-named-a-leader-in-the-2026-gartner-magic-quadrant-for-ai-agent-management-platforms"
+      ],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Binance CEO says ‘months-long campaign’ led to $6.3 billion theft as N. Korea denies responsibility",
+      "url": "https://therecord.media/binance-cryptocurrency-theft-months-long-campaign-nkorea",
+      "publishedAt": "2026-11-03T16:42:00.000Z",
+      "excerpt": "North Korean attackers \"combined a range of techniques, including social engineering by fake recruitment interviews,\" Binance said about the multibillion-dollar crypto heist it discovered in October.",
+      "canonicalUrl": "https://therecord.media/binance-cryptocurrency-theft-months-long-campaign-nkorea",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/binance-cryptocurrency-theft-months-long-campaign-nkorea"
+      ],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "9 Cyber Awareness Tips That Actually Match Today's Maze of Threats",
+      "url": "https://www.darkreading.com/cyber-risk/9-cyber-awareness-tips-todays-maze-threats",
+      "publishedAt": "2026-11-03T15:38:20.000Z",
+      "excerpt": "Practical guidance on safer search, stronger login security, better executive protection, and other habits that help reduce enterprise risk.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/9-cyber-awareness-tips-todays-maze-threats",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyber-risk/9-cyber-awareness-tips-todays-maze-threats"
+      ],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "LLMJacking Emerges as Thriving Cybercriminal Enterprise",
+      "url": "https://www.darkreading.com/cloud-security/llmjacking-thriving-cybercriminal-enterprise",
+      "publishedAt": "2026-11-03T15:35:50.000Z",
+      "excerpt": "Cybercriminals have turned reselling cloud access to LLMs into a lucrative business model, with some victims paying as much as $1 million in resource consumption before access was revoked.",
+      "canonicalUrl": "https://darkreading.com/cloud-security/llmjacking-thriving-cybercriminal-enterprise",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cloud-security/llmjacking-thriving-cybercriminal-enterprise"
+      ],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Barracuda warns of critical flaws allowing root access to devices",
+      "url": "https://www.bleepingcomputer.com/news/security/barracuda-warns-of-critical-flaws-allowing-root-access-to-devices/",
+      "publishedAt": "2026-11-03T15:06:16.000Z",
+      "excerpt": "Cybersecurity company Barracuda Networks warned customers to patch two vulnerabilities that can let attackers run commands with root privileges. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/barracuda-warns-of-critical-flaws-allowing-root-access-to-devices",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/barracuda-warns-of-critical-flaws-allowing-root-access-to-devices"
+      ],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Gartner Predicts SOCs Will Have 50% More Engineers Than Analysts by 2028",
+      "url": "https://www.bleepingcomputer.com/news/security/gartner-predicts-socs-will-have-50-percent-more-engineers-than-analysts-by-2028/",
+      "publishedAt": "2026-11-03T15:00:10.000Z",
+      "excerpt": "Gartner predicts that security operations centers will have 50% more engineers than analysts by 2028 as AI agents take over routine alert handling. Prophet Security examines how AI is reshaping SOC roles, from analyst responsibilities and detection engineering to threat hunting and exposure management. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/gartner-predicts-socs-will-have-50-percent-more-engineers-than-analysts-by-2028",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/gartner-predicts-socs-will-have-50-percent-more-engineers-than-analysts-by-2028"
+      ],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Frontline Education Data Breach Impacts Over 1.3 Million",
+      "url": "https://www.securityweek.com/frontline-education-data-breach-impacts-over-1-3-million/",
+      "publishedAt": "2026-11-03T14:32:38.000Z",
+      "excerpt": "Hackers exploited a flaw in third-party software and stole the personal information of school district staff and students. The post Frontline Education Data Breach Impacts Over 1.3 Million appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/frontline-education-data-breach-impacts-over-1-3-million",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/frontline-education-data-breach-impacts-over-1-3-million"
+      ],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "CrowdStrike Reportedly Paying $495 Million for AI Security Firms Fiddler, Dreadnode",
+      "url": "https://www.securityweek.com/crowdstrike-reportedly-paying-495-million-for-ai-security-firms-fiddler-dreadnode/",
+      "publishedAt": "2026-11-03T14:12:44.000Z",
+      "excerpt": "The acquisitions will add AI agent observability and automated AI security testing capabilities to the CrowdStrike Falcon platform. The post CrowdStrike Reportedly Paying $495 Million for AI Security Firms Fiddler, Dreadnode appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/crowdstrike-reportedly-paying-495-million-for-ai-security-firms-fiddler-dreadnode",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/crowdstrike-reportedly-paying-495-million-for-ai-security-firms-fiddler-dreadnode"
+      ],
+      "cves": [],
+      "id": "s18"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "UK school estate hit by 3AM ransomware in suspected AI-assisted attack",
+      "url": "https://www.bleepingcomputer.com/news/security/uk-school-estate-hit-by-3am-ransomware-in-suspected-ai-assisted-attack/",
+      "publishedAt": "2026-11-03T14:00:00.000Z",
+      "excerpt": "A 3AM ransomware affiliate targeted a school estate in the UK and successfully encrypted around 37 of nearly 50 machines reached from an unmanaged host. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/uk-school-estate-hit-by-3am-ransomware-in-suspected-ai-assisted-attack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/uk-school-estate-hit-by-3am-ransomware-in-suspected-ai-assisted-attack"
+      ],
+      "cves": [],
+      "id": "s19"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "3AM Affiliate Embraces AI-Like Loops in European School Attack",
+      "url": "https://www.darkreading.com/data-privacy/3am-affiliate-ai-loops-european-school-attack",
+      "publishedAt": "2026-11-03T14:00:00.000Z",
+      "excerpt": "Evidence suggests a model may have generated and revised commands during the ransom gang's breach, though researchers stopped short of claiming full automation.",
+      "canonicalUrl": "https://darkreading.com/data-privacy/3am-affiliate-ai-loops-european-school-attack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/data-privacy/3am-affiliate-ai-loops-european-school-attack"
+      ],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Russia dismantles infrastructure of VasyGrek cybercrime group, detains three suspects",
+      "url": "https://therecord.media/russia-dismantles-vasygrek-infrastructure-detains-three",
+      "publishedAt": "2026-11-03T13:50:00.000Z",
+      "excerpt": "Russia's Interior Ministry said Monday that police had dismantled the group's infrastructure and identified its suspected members following an investigation conducted with assistance from cybersecurity firm Kaspersky.",
+      "canonicalUrl": "https://therecord.media/russia-dismantles-vasygrek-infrastructure-detains-three",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/russia-dismantles-vasygrek-infrastructure-detains-three"
+      ],
+      "cves": [],
+      "id": "s21"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Russia-linked cyber spies target Ukraine's war crimes investigations, military aid routes",
+      "url": "https://therecord.media/russia-linked-cyber-spies-target-ukraine-war-support",
+      "publishedAt": "2026-11-03T13:39:00.000Z",
+      "excerpt": "The hackers use relatively simple malware to steal sensitive documents, login credentials and other information from Ukrainian organizations, particularly those near the front line and the Russian border.",
+      "canonicalUrl": "https://therecord.media/russia-linked-cyber-spies-target-ukraine-war-support",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/russia-linked-cyber-spies-target-ukraine-war-support"
+      ],
+      "cves": [],
+      "id": "s22"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Police seizes over 100 servers in investment scam crackdown",
+      "url": "https://www.bleepingcomputer.com/news/security/police-seizes-over-100-servers-in-investment-scam-crackdown/",
+      "publishedAt": "2026-11-03T13:33:49.000Z",
+      "excerpt": "European law enforcement authorities arrested seven suspects and seized more than 100 servers in a joint action targeting an unnamed company suspected of providing fraudulent trading websites to criminal gangs. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/police-seizes-over-100-servers-in-investment-scam-crackdown",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/police-seizes-over-100-servers-in-investment-scam-crackdown"
+      ],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Android’s November 2026 Updates Patch Over 200 Vulnerabilities",
+      "url": "https://www.securityweek.com/androids-november-2026-updates-patch-over-200-vulnerabilities/",
+      "publishedAt": "2026-11-03T12:21:49.000Z",
+      "excerpt": "The most severe is a critical flaw in Framework leading to remote code execution without user interaction. The post Android’s November 2026 Updates Patch Over 200 Vulnerabilities appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/androids-november-2026-updates-patch-over-200-vulnerabilities",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/androids-november-2026-updates-patch-over-200-vulnerabilities"
+      ],
+      "cves": [],
+      "id": "s24"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Critical Node-RED Flaw Exploited in Attacks",
+      "url": "https://www.securityweek.com/critical-node-red-flaw-exploited-in-attacks/",
+      "publishedAt": "2026-11-03T12:10:19.000Z",
+      "excerpt": "Multiple attacks from the same IP address attempted to deploy various payloads, including a Linux bot and webshells. The post Critical Node-RED Flaw Exploited in Attacks appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/critical-node-red-flaw-exploited-in-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/critical-node-red-flaw-exploited-in-attacks"
+      ],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Google adds new $250,000 Cloud VRP reward for Root-in-Cloud bugs",
+      "url": "https://www.bleepingcomputer.com/news/google/google-adds-new-250-000-cloud-vrp-reward-for-root-in-cloud-bugs/",
+      "publishedAt": "2026-11-03T12:05:52.000Z",
+      "excerpt": "Google has expanded its Cloud Vulnerability Reward Program (VRP) with a new top-tier reward for high-impact architectural security flaws. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/google/google-adds-new-250-000-cloud-vrp-reward-for-root-in-cloud-bugs",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/google/google-adds-new-250-000-cloud-vrp-reward-for-root-in-cloud-bugs"
+      ],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Subnet Solutions PowerSYSTEM Center",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-307-01",
+      "publishedAt": "2026-11-03T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of these vulnerabilities could allow an attacker to execute unauthorized SQL commands and gain access to unauthorized resources. The following versions of Subnet Solutions PowerSYSTEM Center are affected: PowerSYSTEM Center 2020 =6.0.x| =7.0.x| =6.0.x| =7.0.x| =6.0.x| =7.0.x| =6.0.x| =7.0.x|<=7.1.x Product Status: known_affected Remediations Mitigation…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-307-01",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-advisories/icsa-26-307-01"
+      ],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "The 4 Elements of Exposure Prioritization and How to Operationalize Them",
+      "url": "https://thehackernews.com/2026/11/the-4-elements-of-exposure.html",
+      "publishedAt": "2026-11-03T11:18:20.000Z",
+      "excerpt": "Your team is remediating more vulnerabilities than ever, yet your breach risk has barely changed. You’re spending too much time and effort on exposures attackers may never exploit, while higher-risk exposures sit, waiting in the queue. Gartner®’s report on exposure prioritization states that fewer than 10% of vulnerabilities are exploited, yet most are treated as urgent. The report also argues",
+      "canonicalUrl": "https://thehackernews.com/2026/11/the-4-elements-of-exposure.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/the-4-elements-of-exposure.html"
+      ],
+      "cves": [],
+      "id": "s29"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Russia-Aligned Gorbag Hackers Exploit WinRAR Flaw to Deploy Data-Stealing Malware",
+      "url": "https://thehackernews.com/2026/11/russia-aligned-gorbag-hackers-exploit.html",
+      "publishedAt": "2026-11-03T11:00:45.000Z",
+      "excerpt": "A Russia-aligned threat actor known as Gorbag has been observed using simple information stealer malware in attacks targeting Ukrainian organizations. \"Active since at least February 2025, the group has focused exclusively on Ukrainian targets, with a clear preference for law enforcement and justice entities, local administrations near the front line, and the defense sector,\" ESET researcher",
+      "canonicalUrl": "https://thehackernews.com/2026/11/russia-aligned-gorbag-hackers-exploit.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/russia-aligned-gorbag-hackers-exploit.html"
+      ],
+      "cves": [],
+      "id": "s30"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Harvard University data breach exposed info of 851,000 accounts",
+      "url": "https://www.bleepingcomputer.com/news/security/harvard-university-data-breach-exposed-info-of-851-000-accounts/",
+      "publishedAt": "2026-11-03T10:53:25.000Z",
+      "excerpt": "Hackers who breached Harvard University's Alumni Affairs and Development systems in November 2025 stole data linked to more than 850,000 unique email addresses, according to breach notification service Have I Been Pwned. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/harvard-university-data-breach-exposed-info-of-851-000-accounts",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/harvard-university-data-breach-exposed-info-of-851-000-accounts"
+      ],
+      "cves": [],
+      "id": "s31"
+    },
+    {
+      "sourceId": "securelist",
+      "sourceKind": "rss",
+      "title": "MLEP in KICS for Networks 5.0: how machine learning helps track network behavior of OT devices",
+      "url": "https://securelist.com/tr/machine-learning-event-processor-in-kics-for-networks/121794/",
+      "publishedAt": "2026-11-03T10:00:07.000Z",
+      "excerpt": "We explain how Kaspersky Industrial CyberSecurity for Networks uses Machine Learning Event Processor (MLEP) technology to help take inventory of assets and detect anomalies in industrial networks.",
+      "canonicalUrl": "https://securelist.com/tr/machine-learning-event-processor-in-kics-for-networks/121794",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securelist.com/tr/machine-learning-event-processor-in-kics-for-networks/121794"
+      ],
+      "cves": [],
+      "id": "s32"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "UK Cyber Chief Says the UK Will Face AI Cyberattacks on Critical Infrastructure by 2028",
+      "url": "https://www.securityweek.com/uk-cyber-chief-says-the-uk-will-face-ai-cyberattacks-on-critical-infrastructure-by-2028/",
+      "publishedAt": "2026-11-03T09:49:12.000Z",
+      "excerpt": "The U.K. will likely face AI cyberattacks on its critical infrastructure by 2028 as criminals and states, including China and Russia, increasingly use AI in their cyber activity. The post UK Cyber Chief Says the UK Will Face AI Cyberattacks on Critical Infrastructure by 2028 appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/uk-cyber-chief-says-the-uk-will-face-ai-cyberattacks-on-critical-infrastructure-by-2028",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/uk-cyber-chief-says-the-uk-will-face-ai-cyberattacks-on-critical-infrastructure-by-2028"
+      ],
+      "cves": [],
+      "id": "s33"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "NATO’s Crossed Swords Exercise Brings AI Agents Into Cyber Operations Training",
+      "url": "https://www.securityweek.com/natos-crossed-swords-exercise-brings-ai-agents-into-cyber-operations-training/",
+      "publishedAt": "2026-11-03T08:49:03.000Z",
+      "excerpt": "The NATO CCDCOE exercise in Estonia introduces AI agents and OpenAI Daybreak into joint cyber and kinetic operations training. The post NATO’s Crossed Swords Exercise Brings AI Agents Into Cyber Operations Training appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/natos-crossed-swords-exercise-brings-ai-agents-into-cyber-operations-training",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/natos-crossed-swords-exercise-brings-ai-agents-into-cyber-operations-training"
+      ],
+      "cves": [],
+      "id": "s35"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Hackers Exploit BTCPay Server Flaw to Steal Bitcoin and Litecoin From Hot Wallets",
+      "url": "https://thehackernews.com/2026/11/hackers-exploit-btcpay-server-flaw-to.html",
+      "publishedAt": "2026-11-03T08:31:48.000Z",
+      "excerpt": "BTCPay Server, a self-hosted, open-source cryptocurrency payment processor, has urged users to install the latest version of its software in response to reports of Bitcoin and Litecoin being stolen from hot wallets on instances running older versions. \"Our investigation found that these attacks targeted servers running BTCPay Server 2.4.1 (released on 23 July 2026) or earlier,\" BTCPay Server",
+      "canonicalUrl": "https://thehackernews.com/2026/11/hackers-exploit-btcpay-server-flaw-to.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/hackers-exploit-btcpay-server-flaw-to.html"
+      ],
+      "cves": [],
+      "id": "s36"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Over 100 European Stores Hit as Supermarket Fridge Attacks Return",
+      "url": "https://www.securityweek.com/over-100-european-stores-hit-as-supermarket-fridge-attacks-resume/",
+      "publishedAt": "2026-11-03T07:43:24.000Z",
+      "excerpt": "Attackers again tampered with internet-exposed refrigeration controllers, this time at stores in Belgium, Sweden, Ireland and beyond. The post Over 100 European Stores Hit as Supermarket Fridge Attacks Return appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/over-100-european-stores-hit-as-supermarket-fridge-attacks-resume",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/over-100-european-stores-hit-as-supermarket-fridge-attacks-resume"
+      ],
+      "cves": [],
+      "id": "s37"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "New Wave of Refrigeration Cyberattacks Hits Supermarkets Across Europe, Forcing Stores to Pull Food",
+      "url": "https://thehackernews.com/2026/11/second-wave-of-cyberattacks-hits.html",
+      "publishedAt": "2026-11-03T07:27:07.000Z",
+      "excerpt": "Attackers remotely changed the settings on refrigeration controls at supermarkets in Belgium, Sweden, Estonia and other European countries overnight into Monday, November 2, warming fridges and freezers. No chain reported more than several dozen affected stores, and some had to throw away chilled and frozen food or take it off the shelf. Danfoss, a Danish maker of refrigeration controls,",
+      "canonicalUrl": "https://thehackernews.com/2026/11/second-wave-of-cyberattacks-hits.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/second-wave-of-cyberattacks-hits.html"
+      ],
+      "cves": [],
+      "id": "s39"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Attackers Target Unpatched CryptoPayment Gateway Flaw That Can Expose Wallet Credentials",
+      "url": "https://thehackernews.com/2026/11/attackers-target-unpatched.html",
+      "publishedAt": "2026-11-03T05:34:37.000Z",
+      "excerpt": "Threat actors are attempting to exploit an unpatched maximum-severity security vulnerability in the CryptoPayment Gateway WordPress plugin, according to findings from Defused Cyber. The vulnerability in question is CVE-2026-81648, which carries a CVSS score of 10.0. Successful exploitation of the flaw could permit unauthenticated users to delete arbitrary files on the server and extract",
+      "canonicalUrl": "https://thehackernews.com/2026/11/attackers-target-unpatched.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/attackers-target-unpatched.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-81648",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "The CryptoPayment Gateway WordPress plugin from 1.2.1 to 1.2.2 does not apply an authorization check on one of its AJAX endpoints, allowing unauthenticated users to invoke administrative operations, including deleting arbitrary files on the server, overwriting the payment gateway configuration and recovering stored wallet credentials in cleartext.",
+            "cvss": {
+              "version": "3.1",
+              "score": 10,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+              "source": "contact@wpscan.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-862"
+            ],
+            "published": "2026-09-13T21:17:01.930",
+            "lastModified": "2026-11-03T15:17:40.400",
+            "vulnStatus": "Deferred",
+            "references": [
+              {
+                "url": "https://wpscan.com/vulnerability/9b1490a0-1381-4d22-8086-f75aade4e898/",
+                "source": "contact@wpscan.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/11/attackers-target-unpatched.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.10.30",
+              "dateReleased": "2026-10-30T17:02:45.3665Z",
+              "retrievedAt": "2026-11-03T18:57:22.817Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-116606%2CCVE-2026-98432%2CCVE-2026-58115%2CCVE-2026-81648",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-81648",
+              "retrievedAt": "2026-11-03T18:57:22.817Z"
+            }
+          }
+        }
+      ],
+      "id": "s41"
+    },
+    {
+      "sourceId": "krebs",
+      "sourceKind": "rss",
+      "title": "Tech Firms Dismantle Botnet That Turned 1.3M TV Boxes Into Proxies",
+      "url": "https://krebsonsecurity.com/2026/11/tech-firms-dismantle-botnet-that-turned-1-3m-tv-boxes-into-proxies/",
+      "publishedAt": "2026-11-03T02:24:31.000Z",
+      "excerpt": "Google said today it worked with industry partners to dismantle a botnet made up of more than 1.3 million Android TV set-top boxes that ship with malicious software which secretly rents the user's Internet connection out to strangers and conducts advertising fraud. Experts involved in the takedown say the action is likely to sever the botnet's access to more than 10 million additional compromised…",
+      "canonicalUrl": "https://krebsonsecurity.com/2026/11/tech-firms-dismantle-botnet-that-turned-1-3m-tv-boxes-into-proxies",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://krebsonsecurity.com/2026/11/tech-firms-dismantle-botnet-that-turned-1-3m-tv-boxes-into-proxies"
+      ],
+      "cves": [],
+      "id": "s42"
+    },
+    {
+      "sourceId": "unit42",
+      "sourceKind": "rss",
+      "title": "Unit 42 Threat Intelligence Highlights - Nov. 2, 2026",
+      "url": "https://unit42.paloaltonetworks.com/u42-threat-intelligence-highlights-oct-2026/",
+      "publishedAt": "2026-11-02T23:00:45.000Z",
+      "excerpt": "Unit 42 details recent threat intelligence, highlighting cyberespionage, financial extortion, and the rapid adoption of AI across offensive workflows. The post Unit 42 Threat Intelligence Highlights - Nov. 2, 2026 appeared first on Unit 42.",
+      "canonicalUrl": "https://unit42.paloaltonetworks.com/u42-threat-intelligence-highlights-oct-2026",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://unit42.paloaltonetworks.com/u42-threat-intelligence-highlights-oct-2026"
+      ],
+      "cves": [],
+      "id": "s43"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "One Compromised Laptop, Billions Lost: The Binance Attack-Path Warning",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/binance-hack-test-attack-paths",
+      "publishedAt": "2026-11-02T22:27:24.000Z",
+      "excerpt": "The record theft shows how weak system separation, inadequate controls, and untested attack possibilities can turn one breach into systemic loss.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/binance-hack-test-attack-paths",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyberattacks-data-breaches/binance-hack-test-attack-paths"
+      ],
+      "cves": [],
+      "id": "s44"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Chinese hackers use ARTEX AI in automated attacks against 200 orgs",
+      "url": "https://www.bleepingcomputer.com/news/security/chinese-hackers-use-artex-ai-in-automated-attacks-against-200-orgs/",
+      "publishedAt": "2026-11-02T21:40:14.000Z",
+      "excerpt": "Chinese hackers used ARTEX, an open-source, multi-agent AI penetration-testing framework, in attacks against more than 200 organizations across 14 countries. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/chinese-hackers-use-artex-ai-in-automated-attacks-against-200-orgs",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/chinese-hackers-use-artex-ai-in-automated-attacks-against-200-orgs"
+      ],
+      "cves": [],
+      "id": "s45"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "What exploited vulnerabilities have in common: A data-driven analysis of real-world attacks",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/11/02/exploited-vulnerabilities-common-data-driven-analysis-real-world-attacks/",
+      "publishedAt": "2026-11-02T20:20:59.000Z",
+      "excerpt": "Real-world exploitation concentrates in a small, high-impact subset of CVEs. Learn how defenders can prioritize vulnerabilities based on exploitation likelihood, exposure, and potential blast radius. The post What exploited vulnerabilities have in common: A data-driven analysis of real-world attacks appeared first on Microsoft Security Blog.",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/11/02/exploited-vulnerabilities-common-data-driven-analysis-real-world-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://microsoft.com/en-us/security/blog/2026/11/02/exploited-vulnerabilities-common-data-driven-analysis-real-world-attacks"
+      ],
+      "cves": [],
+      "id": "s46"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1280,
+    "promptCacheMissTokens": 10441,
+    "outputTokens": 4615,
+    "estimatedCostUsd": 0.002757524
+  }
+}

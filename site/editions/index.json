@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-11-03",
+    "mode": "article",
+    "headline": "Binance ties $6.43bn theft to a poisoned Homebrew install",
+    "count": 46
+  },
+  {
     "date": "2026-11-02",
     "mode": "article",
     "headline": "Ivanti's chained Connect Secure zero-days join CISA's exploited catalog as unpatched GitLab servers keep taking RCE attacks",
