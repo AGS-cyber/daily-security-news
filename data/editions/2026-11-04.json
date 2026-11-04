@@ -1,0 +1,1629 @@
+{
+  "date": "2026-11-04",
+  "generatedAt": "2026-11-04T19:15:17.860Z",
+  "collection": [
+    {
+      "sourceId": "krebs",
+      "attemptedAt": "2026-11-04T19:15:17.860Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "attemptedAt": "2026-11-04T19:15:17.860Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "thehackernews",
+      "attemptedAt": "2026-11-04T19:15:17.860Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "therecord",
+      "attemptedAt": "2026-11-04T19:15:17.860Z",
+      "status": "ok",
+      "items": 5,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securityweek",
+      "attemptedAt": "2026-11-04T19:15:17.860Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "darkreading",
+      "attemptedAt": "2026-11-04T19:15:17.860Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "attemptedAt": "2026-11-04T19:15:17.860Z",
+      "status": "ok",
+      "items": 30,
+      "skipped": 0
+    },
+    {
+      "sourceId": "projectzero",
+      "attemptedAt": "2026-11-04T19:15:17.860Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securelist",
+      "attemptedAt": "2026-11-04T19:15:17.860Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "talos",
+      "attemptedAt": "2026-11-04T19:15:17.860Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "unit42",
+      "attemptedAt": "2026-11-04T19:15:17.860Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "microsoft-security",
+      "attemptedAt": "2026-11-04T19:15:17.860Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    }
+  ],
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 229,
+    "published": 45
+  },
+  "mode": "article",
+  "headline": "WordPress Core RCE enters KEV as a $6bn crypto heist and a blood-bank intrusion land",
+  "standfirst": "CISA's confirmation that an unauthenticated WordPress Core race condition is being exploited in the wild leads a day otherwise dominated by breaches: altered refrigeration settings at a French blood service, a nine-figure bank theft traced to a supplier, and Binance's own account of a fake-interview malware chain.",
+  "bodyMarkdown": "## Actively exploited\n\nCISA added CVE-2026-119977, a WordPress Core TOCTOU race condition, to its KEV catalog citing evidence of active exploitation [[s36]]. Scored 8.1 HIGH (CWE-367), it stems from predictable, web-accessible staging paths used during full-package core upgrades, and the NVD description says unauthenticated attackers can execute code on the server during the upgrade window. The vector is network-reachable with no privileges or user interaction required, but high attack complexity — exploitation depends on hitting an upgrade in progress, not a fire-and-forget request. Supplied affected ranges run from 4.7 through the 6.6 branch, each with its own fixed release; the description's reference to versions up to 7.1.3 does not match those ranges, so verify against the vendor advisory. CISA's required action cites BOD 26-04 and forensics triage guidance, with a due date that binds federal agencies only. Analysis: for a platform this ubiquitous, KEV status moves this from the monthly patch cycle to this week, and upgrade logs are worth a look.\n\n## Breaches\n\nFrance's national blood service said a cyberattack on a refrigeration equipment provider altered temperature and defrost settings at three facilities, threatening stored blood products [[s3]]. The intrusion reached into physical safety controls rather than data, which is the part worth escalating internally.\n\nBinance attributes an approximately $6.34 billion theft to North Korean hackers who used a fake job interview to get an employee to install malware, then compromised wallet infrastructure [[s43]]. The transferable detail is the path: recruiting pipeline to engineer endpoint to custody systems.\n\nCrédit Mutuel Arkéa confirmed attackers made transfers using the bank's own accounts after compromising an unnamed supplier, with an estimated $133 million taken [[s2]]. Third-party access converging with transfer authority, again.\n\n## Vulnerabilities\n\nTwo Xen flaws let a malicious guest VM read and write the memory of other guests on the same host, including dom0 [[s25]]. Patches are out, every version from 4.6 onward is affected, and the project says there is no known mitigation; no CVE identifiers appear in the supplied excerpt, so track fixes through the advisory. Hypervisor isolation is the assumption much else rests on.\n\nRuby on Rails fixed a critical Active Storage flaw that let an unauthenticated attacker write arbitrary files to an app's server via a crafted upload where ImageMagick processes files, with fixes in 8.1.4.1 and 8.0.5.2 [[s24]]. Anyone piping user uploads through ImageMagick should treat this as immediate work.\n\n## Research\n\nResearchers attribute a large-scale watering-hole campaign to APT29-linked activity, using compromised sites, fake domains and a supply-chain compromise of a Ukrainian web analytics service, with injected JavaScript harvesting browser and device attributes before serving iOS and Android exploits [[s14]]. The attribution is theirs and should be read as such; the mechanism — analytics script as delivery vehicle — is the durable lesson.\n\n## Industry\n\nGoogle disrupted the XCPE botnet, saying it had grown to 1.3 million devices — set-top boxes and IoT gear backdoored into criminal infrastructure — and alleges manufacturer Videostrong ran the operation [[s7]]. Consumer IoT defaults keep seeding other people's botnets; accountability for that is the story.",
+  "selected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "CISA Confirms Hackers Exploiting WordPress Core Flaw During Software Upgrades",
+      "url": "https://thehackernews.com/2026/11/cisa-confirms-hackers-exploiting.html",
+      "publishedAt": "2026-11-04T05:43:11.000Z",
+      "excerpt": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA) has added a security flaw in WordPress Core to the Known Exploited Vulnerabilities (KEV) catalog, citing evidence of active exploitation. The high-severity vulnerability, tracked as CVE-2026-119977 (CVSS score: 8.1), is a case of Time-of-check Time-of-use (TOCTOU) race condition that could be exploited to achieve arbitrary code",
+      "canonicalUrl": "https://thehackernews.com/2026/11/cisa-confirms-hackers-exploiting.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/cisa-confirms-hackers-exploiting.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-119977",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "WordPress",
+            "product": "WordPress Core",
+            "vulnerabilityName": "WordPress WordPress Core Time-of-check Time-of-use (TOCTOU) Race Condition Vulnerability",
+            "dateAdded": "2026-11-03",
+            "shortDescription": "WordPress WordPress Core contains a time-of-check time-of-use (TOCTOU) race condition vulnerability that could allow unauthenticated attackers to execute code on the server during the upgrade window. This is due to predictable, web-accessible staging paths used during full-package core upgrades.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-06",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://wordpress.org/news/2026/10/wordpress-7-1-4 ; https://www.wordfence.com/threat-intel/vulnerabilities/wordpress-core/wordpress-core-470-713-unauthenticated-upgrade-window-staged-installer-remote-code-execution ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-119977",
+            "cwes": [
+              "CWE-367"
+            ]
+          },
+          "nvd": {
+            "description": "WordPress Core is vulnerable to Remote Code Execution in versions 4.7 through 7.1.3. This is due to predictable, web-accessible staging paths used during full-package core upgrades. This makes it possible for unauthenticated attackers to execute code on the server during the upgrade window.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.1,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "security@wordfence.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-367"
+            ],
+            "published": "2026-10-31T06:16:34.550",
+            "lastModified": "2026-11-04T12:52:38.683",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://core.trac.wordpress.org/browser/tags/7.1.3/src/wp-admin/includes/class-core-upgrader.php#L162",
+                "source": "security@wordfence.com",
+                "tags": [
+                  "Product"
+                ]
+              },
+              {
+                "url": "https://core.trac.wordpress.org/browser/tags/7.1.3/src/wp-admin/includes/class-wp-upgrader.php#L378",
+                "source": "security@wordfence.com",
+                "tags": [
+                  "Product"
+                ]
+              },
+              {
+                "url": "https://core.trac.wordpress.org/browser/tags/7.1.3/src/wp-admin/includes/update-core.php#L1549",
+                "source": "security@wordfence.com",
+                "tags": [
+                  "Product"
+                ]
+              },
+              {
+                "url": "https://core.trac.wordpress.org/browser/tags/7.1.3/src/wp-admin/setup-config.php#L282",
+                "source": "security@wordfence.com",
+                "tags": [
+                  "Product"
+                ]
+              },
+              {
+                "url": "https://core.trac.wordpress.org/browser/tags/7.1.4/src/wp-admin/includes/class-wp-upgrader.php#L346",
+                "source": "security@wordfence.com",
+                "tags": [
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://core.trac.wordpress.org/browser/tags/7.1.4/src/wp-admin/includes/update-core.php#L1545",
+                "source": "security@wordfence.com",
+                "tags": [
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://wordpress.org/news/2026/10/wordpress-7-1-4/",
+                "source": "security@wordfence.com",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/4b4da0cf-d9f4-47c4-a0e8-6c4dc5a6f250?source=cve",
+                "source": "security@wordfence.com",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-119977",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              },
+              {
+                "url": "https://www.wordfence.com/threat-intel/vulnerabilities/wordpress-core/wordpress-core-470-713-unauthenticated-upgrade-window-staged-installer-remote-code-execution",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F9A3BB19-029C-4289-9D7E-3AAED10673D6",
+                "versionStartIncluding": "4.7",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "4.7.39"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9998D1B3-DEF0-4728-B2C4-D3D6792CDF0E",
+                "versionStartIncluding": "4.8",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "4.8.34"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "4A996748-2A2D-48B9-8AB7-CB138018CD8A",
+                "versionStartIncluding": "4.9",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "4.9.35"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1A8E7D30-6E7F-41A8-80DF-AF11BD6884C8",
+                "versionStartIncluding": "5.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.0.31"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2C1E9F24-71B2-46E4-B24D-EA10E298D1AC",
+                "versionStartIncluding": "5.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.1.28"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7EF4C0E7-7A64-4270-96C7-C0BD05F3FCDE",
+                "versionStartIncluding": "5.2",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.2.30"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3C86DD96-D9A4-45AA-81A6-5695AA08A689",
+                "versionStartIncluding": "5.3",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.3.27"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A46E8759-8A85-414F-9C46-A34BC060C111",
+                "versionStartIncluding": "5.4",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.4.25"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "01531FD1-8548-4949-8256-E10A8FAFC3B5",
+                "versionStartIncluding": "5.5",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.5.24"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "778551C7-722F-4366-9D86-736A924C6062",
+                "versionStartIncluding": "5.6",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.6.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B4D242D6-693F-4338-AB59-0FB4C2EC01F6",
+                "versionStartIncluding": "5.7",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.7.21"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "72DFACDD-FAE4-4DD5-A1A3-57C0597251D3",
+                "versionStartIncluding": "5.8",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.8.19"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3BE2DE77-1F2A-40F7-8DE9-EEE29D883337",
+                "versionStartIncluding": "5.9",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.9.20"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C52767EC-E4F4-4F16-9BE7-2CE4495C9BE7",
+                "versionStartIncluding": "6.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.0.18"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F5E86746-433B-4158-95CE-8B58F37CDD69",
+                "versionStartIncluding": "6.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.1.16"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "DE25F568-450E-4A22-8632-523712F46194",
+                "versionStartIncluding": "6.2",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.2.15"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "314E0CC8-537E-4BF4-9CBC-6BC455B258A6",
+                "versionStartIncluding": "6.3",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.3.14"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D7853BDB-8F3A-4019-B0EB-E5D1A9CB3AB4",
+                "versionStartIncluding": "6.4",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.4.14"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A52505F2-B26E-4831-AD05-2F0905F85CDB",
+                "versionStartIncluding": "6.5",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.5.14"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B2A16228-BBEF-467D-B934-6A4CE0308E20",
+                "versionStartIncluding": "6.6",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.6.11"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9E165096-E752-4DC2-8666-830F87725FDC",
+                "versionStartIncluding": "6.7",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.7.11"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "903E5D89-7D08-4232-887B-6874DCB17070",
+                "versionStartIncluding": "6.8",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.8.12"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "27559BDC-624A-4D07-BC9E-069CABCAE64C",
+                "versionStartIncluding": "6.9",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.9.11"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F5BD7802-3450-4A82-9960-23A8F85DB2D7",
+                "versionStartIncluding": "7.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "7.0.8"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "BF4C2627-2EF5-4D3B-B857-FC103D4E3E7E",
+                "versionStartIncluding": "7.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "7.1.4"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/11/cisa-confirms-hackers-exploiting.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.03",
+              "dateReleased": "2026-11-03T20:00:24.8741Z",
+              "retrievedAt": "2026-11-04T19:15:17.860Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-109593%2CCVE-2026-58868%2CCVE-2026-119977",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-119977",
+              "retrievedAt": "2026-11-04T19:15:17.860Z"
+            }
+          }
+        }
+      ],
+      "id": "s36",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "CISA added CVE-2026-119977 to KEV with a November 6 federal remediation deadline, confirming in-the-wild abuse of an unauthenticated WordPress Core RCE during upgrade windows — a near-universal web platform."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Cyberattack disrupts blood storage refrigeration systems in France",
+      "url": "https://www.bleepingcomputer.com/news/security/cyberattack-disrupts-blood-storage-refrigeration-systems-in-france/",
+      "publishedAt": "2026-11-04T18:02:56.000Z",
+      "excerpt": "France's national blood service has confirmed that a cyberattack targeting a refrigeration equipment provider raised temperature and defrost settings at three of its facilities, threatening stored blood products. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/cyberattack-disrupts-blood-storage-refrigeration-systems-in-france",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/cyberattack-disrupts-blood-storage-refrigeration-systems-in-france"
+      ],
+      "cves": [],
+      "id": "s3",
+      "section": "breaches",
+      "rank": 2,
+      "angle": "Attackers reached into a refrigeration provider and changed temperature and defrost settings at three French blood service sites, the clearest recent case of a cyber intrusion turning into a physical safety threat."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Binance says fake job interview led to $6.3 billion crypto heist",
+      "url": "https://www.bleepingcomputer.com/news/security/binance-says-fake-job-interview-led-to-63-billion-crypto-heist/",
+      "publishedAt": "2026-11-03T20:05:50.000Z",
+      "excerpt": "Cryptocurrency exchange Binance says North Korean hackers used a fake job interview to trick an employee into installing malware that ultimately let them compromise the company's wallet infrastructure and steal about $6.34 billion in digital assets. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/binance-says-fake-job-interview-led-to-63-billion-crypto-heist",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/binance-says-fake-job-interview-led-to-63-billion-crypto-heist"
+      ],
+      "cves": [],
+      "id": "s43",
+      "section": "breaches",
+      "rank": 3,
+      "angle": "Binance's first incident report ties an approximately $6.34 billion theft to a fake job interview and malware on engineers' machines, a detailed blueprint of DPRK-style targeting of crypto infrastructure."
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "French bank confirms cyber heist, hackers suspected to have stolen an estimated $133 million",
+      "url": "https://therecord.media/french-bank-confirms-cyber-heist",
+      "publishedAt": "2026-11-04T18:58:00.000Z",
+      "excerpt": "Crédit Mutuel Arkéa said in a press notice that the attackers were able to make transfers using the bank’s own account after compromising an unnamed supplier.",
+      "canonicalUrl": "https://therecord.media/french-bank-confirms-cyber-heist",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/french-bank-confirms-cyber-heist"
+      ],
+      "cves": [],
+      "id": "s2",
+      "section": "breaches",
+      "rank": 4,
+      "angle": "Crédit Mutuel Arkéa confirms attackers moved an estimated $133 million through its own accounts after compromising a supplier, putting third-party risk and transfer controls squarely on the agenda."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Xen Hypervisor Flaws Let One Malicious VM Read and Write Any Other VM's Memory",
+      "url": "https://thehackernews.com/2026/11/xen-hypervisor-flaws-let-one-malicious.html",
+      "publishedAt": "2026-11-04T11:46:27.000Z",
+      "excerpt": "Two flaws in the Xen hypervisor allow a malicious guest virtual machine (VM) to read and write the memory of other VMs on the same host, including dom0. Dom0 is the VM that, by default, has full permissions and manages the others. Patches are out, and there is no known mitigation, the Xen Project said in an advisory on November 3. All Xen versions from 4.6 onward are vulnerable,",
+      "canonicalUrl": "https://thehackernews.com/2026/11/xen-hypervisor-flaws-let-one-malicious.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/xen-hypervisor-flaws-let-one-malicious.html"
+      ],
+      "cves": [],
+      "id": "s25",
+      "section": "vulnerabilities",
+      "rank": 5,
+      "angle": "Two Xen flaws let one malicious guest VM read and write memory of other VMs including dom0, with patches released but no known mitigation — a serious blow to hypervisor isolation assumptions."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Critical Rails Flaw Lets Attackers Write Server Files via Crafted ImageMagick Uploads",
+      "url": "https://thehackernews.com/2026/11/critical-rails-flaw-lets-attackers.html",
+      "publishedAt": "2026-11-04T12:07:04.000Z",
+      "excerpt": "A critical flaw in Ruby on Rails could allow an unauthenticated attacker to write arbitrary files on an app's server by uploading a crafted file if the app processes uploads using ImageMagick. The Rails project disclosed the flaw in an advisory and fixed it in versions 8.1.4.1 and 8.0.5.2. The flaw is in Active Storage, the part of Rails that handles file uploads. Some apps store",
+      "canonicalUrl": "https://thehackernews.com/2026/11/critical-rails-flaw-lets-attackers.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/critical-rails-flaw-lets-attackers.html"
+      ],
+      "cves": [],
+      "id": "s24",
+      "section": "vulnerabilities",
+      "rank": 6,
+      "angle": "A critical Active Storage flaw in Ruby on Rails allows unauthenticated arbitrary file writes via crafted ImageMagick uploads; fixes are in 8.1.4.1 and 8.0.5.2, so Rails shops should patch now."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "APT29-Linked Hackers Hijack Web Analytics Script to Deliver iOS and Android Exploits",
+      "url": "https://thehackernews.com/2026/11/apt29-linked-hackers-hijack-web.html",
+      "publishedAt": "2026-11-04T14:27:52.000Z",
+      "excerpt": "The Russia-linked threat actor known as APT29 is said to be behind a large-scale watering hole campaign targeting iOS and Android users through compromised websites, fake domains, and a supply chain attack involving a Ukrainian web analytics service called Plerdy SEO Tracker. \"The injected JavaScript code collects browser and device attributes,\" Sekoia researchers Amaury-Jacques Garçon and",
+      "canonicalUrl": "https://thehackernews.com/2026/11/apt29-linked-hackers-hijack-web.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/apt29-linked-hackers-hijack-web.html"
+      ],
+      "cves": [],
+      "id": "s14",
+      "section": "research",
+      "rank": 7,
+      "angle": "Sekoia attributes a large watering hole campaign abusing a compromised Ukrainian analytics script to APT29, connecting web supply-chain compromise to iOS and Android exploit delivery."
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Google, Partners Disrupt 1.3 Million-Device-Strong XCPE Botnet",
+      "url": "https://www.darkreading.com/endpoint-security/google-13-million-device-strong-xcpe-botnet",
+      "publishedAt": "2026-11-04T16:24:08.000Z",
+      "excerpt": "Google alleges that Android device manufacturer Videostrong ran the operation, which infected set-top boxes and IoT devices with a backdoor to create infrastructure for criminal activity.",
+      "canonicalUrl": "https://darkreading.com/endpoint-security/google-13-million-device-strong-xcpe-botnet",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/endpoint-security/google-13-million-device-strong-xcpe-botnet"
+      ],
+      "cves": [],
+      "id": "s7",
+      "section": "industry",
+      "rank": 8,
+      "angle": "Google's disruption of the 1.3-million-device XCPE botnet and its attribution to set-top-box maker Videostrong highlights accountability for consumer IoT providers whose devices seed criminal infrastructure."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "DreamHost confirms data breach exposed FTP logins and webmail sessions",
+      "url": "https://www.bleepingcomputer.com/news/security/dreamhost-confirms-data-breach-exposed-ftp-logins-and-webmail-sessions/",
+      "publishedAt": "2026-11-04T19:05:19.000Z",
+      "excerpt": "DreamHost is warning of a data breach after attackers gained access to its File Manager platform for two months and stole customers' FTP/SFTP usernames and passwords. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/dreamhost-confirms-data-breach-exposed-ftp-logins-and-webmail-sessions",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/dreamhost-confirms-data-breach-exposed-ftp-logins-and-webmail-sessions"
+      ],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Debian and Ubuntu APT Flaw Lets MitM Attackers Swap Verified Packages and Run Code as Root",
+      "url": "https://thehackernews.com/2026/11/debian-and-ubuntu-apt-flaw-lets-mitm.html",
+      "publishedAt": "2026-11-04T17:00:46.000Z",
+      "excerpt": "A flaw in APT, the package manager for Debian and Ubuntu, allows an attacker who can modify package downloads to swap a checked package for their own. The attacker's code then runs as root, according to advisories that Debian, Ubuntu, and APT's developers published on November 4. The attack needs APT to retry failed downloads, which it does by default from Debian 12 and",
+      "canonicalUrl": "https://thehackernews.com/2026/11/debian-and-ubuntu-apt-flaw-lets-mitm.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/debian-and-ubuntu-apt-flaw-lets-mitm.html"
+      ],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "SonicWall Won't Patch EoL GMS Flaws That Could Expose Files, Alter Database Records",
+      "url": "https://thehackernews.com/2026/11/sonicwall-wont-patch-eol-gms-flaws-that.html",
+      "publishedAt": "2026-11-04T17:00:38.000Z",
+      "excerpt": "SonicWall has warned of two vulnerabilities impacting end-of-life Global Management System (GMS) systems that it said will not be patched. Details of the security flaws, which affect SonicWall GMS 9.5.2 and earlier versions, are below - CVE-2026-109593 (CVSS score: 9.1) - An unauthenticated file read vulnerability that could allow an attacker with network access to read internal GMS files,",
+      "canonicalUrl": "https://thehackernews.com/2026/11/sonicwall-wont-patch-eol-gms-flaws-that.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/sonicwall-wont-patch-eol-gms-flaws-that.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-109593",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "An unauthenticated attacker with network access to the SonicWall GMS 9.5.2 and earlier versions may be able to read internal GMS files, potentially exposing sensitive information.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.1,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:H",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-636"
+            ],
+            "published": "2026-11-03T17:17:53.690",
+            "lastModified": "2026-11-03T20:32:50.687",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://psirt.global.sonicwall.com/vuln-detail/SNWLID-2026-0019",
+                "source": "PSIRT@sonicwall.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/11/sonicwall-wont-patch-eol-gms-flaws-that.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.03",
+              "dateReleased": "2026-11-03T20:00:24.8741Z",
+              "retrievedAt": "2026-11-04T19:15:17.860Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-109593%2CCVE-2026-58868%2CCVE-2026-119977",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-109593",
+              "retrievedAt": "2026-11-04T19:15:17.860Z"
+            }
+          }
+        }
+      ],
+      "id": "s5"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "NIKKE PC game launcher hacked to spread remote access, data-stealing malware",
+      "url": "https://www.bleepingcomputer.com/news/security/nikke-pc-game-launcher-hacked-to-spread-remote-access-data-stealing-malware/",
+      "publishedAt": "2026-11-04T16:58:46.000Z",
+      "excerpt": "The developers of Goddess of Victory: NIKKE have confirmed that hackers tampered with the game's PC launcher scripts in a supply-chain attack, distributing malware capable of stealing credentials and cryptocurrency wallet data. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/nikke-pc-game-launcher-hacked-to-spread-remote-access-data-stealing-malware",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/nikke-pc-game-launcher-hacked-to-spread-remote-access-data-stealing-malware"
+      ],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Ukrainian news outlet Kyiv Independent hit by suspected Russian cyberattack",
+      "url": "https://therecord.media/ukraine-kyiv-independent-cyberattack",
+      "publishedAt": "2026-11-04T16:15:00.000Z",
+      "excerpt": "A suspected Russian cyberattack disrupted the website of The Kyiv Independent, one of Ukraine’s leading English-language news outlets.",
+      "canonicalUrl": "https://therecord.media/ukraine-kyiv-independent-cyberattack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/ukraine-kyiv-independent-cyberattack"
+      ],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Researchers Uncover Prompt Adware Hidden in OpenAI Codex Jailbreak Toolkit",
+      "url": "https://thehackernews.com/2026/11/researchers-uncover-prompt-adware.html",
+      "publishedAt": "2026-11-04T16:06:43.000Z",
+      "excerpt": "Cybersecurity researchers have disclosed details of an OpenAI Codex jailbreak bundle that's designed to modify an artificial intelligence (AI) agent's trusted instructions to insert advertisements for a third-party AI gateway. The phenomenon has been codenamed prompt adware by Check Point Research. Called Haiou (meaning Seagull in Chinese), the jailbreak modifies OpenAI Codex's configuration",
+      "canonicalUrl": "https://thehackernews.com/2026/11/researchers-uncover-prompt-adware.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/researchers-uncover-prompt-adware.html"
+      ],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "mSecure password manager hack prompts password reset warnings",
+      "url": "https://www.bleepingcomputer.com/news/security/msecure-password-manager-hack-prompts-password-reset-warnings/",
+      "publishedAt": "2026-11-04T16:00:18.000Z",
+      "excerpt": "mSeven Software is warning current and former mSecure password manager customers to change passwords, reset two-factor authentication, and remove passkeys following a cyberattack that reportedly exposed an encrypted customer database. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/msecure-password-manager-hack-prompts-password-reset-warnings",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/msecure-password-manager-hack-prompts-password-reset-warnings"
+      ],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Google Calendar phishing campaign hijacks sessions, bypasses MFA",
+      "url": "https://www.bleepingcomputer.com/news/security/google-calendar-phishing-campaign-hijacks-sessions-bypasses-mfa/",
+      "publishedAt": "2026-11-04T15:00:10.000Z",
+      "excerpt": "A phishing campaign used Google Calendar invites, trusted redirects, and fake login pages to hijack corporate Google sessions and bypass MFA protections. Material Security examines how Operation CloudFire tracked the attacks, blocked malicious messages, and helped take down nearly 900 domains used by the attackers. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/google-calendar-phishing-campaign-hijacks-sessions-bypasses-mfa",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/google-calendar-phishing-campaign-hijacks-sessions-bypasses-mfa"
+      ],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "SonicWall warns of unpatched flaws in end-of-life GMS software",
+      "url": "https://www.bleepingcomputer.com/news/security/sonicwall-warns-of-unpatched-flaws-in-end-of-life-gms-software/",
+      "publishedAt": "2026-11-04T14:42:25.000Z",
+      "excerpt": "SonicWall warned customers of two security flaws affecting end-of-life Global Management System (GMS) systems that will not be patched. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/sonicwall-warns-of-unpatched-flaws-in-end-of-life-gms-software",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/sonicwall-warns-of-unpatched-flaws-in-end-of-life-gms-software"
+      ],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Sysdig Adds Runtime Security and Governance for AI Agents",
+      "url": "https://www.securityweek.com/sysdig-adds-runtime-security-and-governance-for-ai-agents/",
+      "publishedAt": "2026-11-04T14:34:44.000Z",
+      "excerpt": "Sysdig’s platform uses runtime visibility to track AI agent actions and block risky behavior before it reaches production systems. The post Sysdig Adds Runtime Security and Governance for AI Agents appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/sysdig-adds-runtime-security-and-governance-for-ai-agents",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/sysdig-adds-runtime-security-and-governance-for-ai-agents"
+      ],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Barracuda ESG Authentication Bypass Flaw Opens Path to Root",
+      "url": "https://www.securityweek.com/barracuda-email-security-gateway-authentication-bypass-opens-path-to-root/",
+      "publishedAt": "2026-11-04T14:24:54.000Z",
+      "excerpt": "An authentication bypass and a command injection flaw can be chained for root access on Barracuda’s Email Security Gateway appliances. The post Barracuda ESG Authentication Bypass Flaw Opens Path to Root appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/barracuda-email-security-gateway-authentication-bypass-opens-path-to-root",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/barracuda-email-security-gateway-authentication-bypass-opens-path-to-root"
+      ],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Incidents Move Too Fast for Pen &amp; Paper",
+      "url": "https://www.darkreading.com/cybersecurity-operations/incidents-move-fast-pen-paper",
+      "publishedAt": "2026-11-04T14:17:00.000Z",
+      "excerpt": "Organizations may not be ready for completely autonomous communication processes, but there are places where automating information updates would alleviate pressure.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/incidents-move-fast-pen-paper",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cybersecurity-operations/incidents-move-fast-pen-paper"
+      ],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Agentic Data Security Firm Sentra Raises $150 Million",
+      "url": "https://www.securityweek.com/agentic-data-security-firm-sentra-raises-150-million/",
+      "publishedAt": "2026-11-04T14:09:20.000Z",
+      "excerpt": "The company will invest in agentic data security capabilities and expand its go-to-market organization. The post Agentic Data Security Firm Sentra Raises $150 Million appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/agentic-data-security-firm-sentra-raises-150-million",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/agentic-data-security-firm-sentra-raises-150-million"
+      ],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Cyberattack wipes cloud data at major Russian hosting provider Beget",
+      "url": "https://therecord.media/russia-cyberattack-beget-cloud",
+      "publishedAt": "2026-11-04T14:00:00.000Z",
+      "excerpt": "A major Russian web hosting provider is struggling to restore its services after a cyberattack destroyed data across its cloud infrastructure and disrupted hundreds of websites.",
+      "canonicalUrl": "https://therecord.media/russia-cyberattack-beget-cloud",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/russia-cyberattack-beget-cloud"
+      ],
+      "cves": [],
+      "id": "s18"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "French blood service hit by Europe-wide cyberattacks on refrigeration",
+      "url": "https://therecord.media/france-cyberattack-blood-refrigeration",
+      "publishedAt": "2026-11-04T13:45:00.000Z",
+      "excerpt": "Temperature controls were altered at three of France’s national blood service sites this week amid a wave of cyberattacks affecting refrigeration systems across Europe.",
+      "canonicalUrl": "https://therecord.media/france-cyberattack-blood-refrigeration",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/france-cyberattack-blood-refrigeration"
+      ],
+      "cves": [],
+      "id": "s19"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "US charges two Canadians accused of hacking US universities",
+      "url": "https://www.bleepingcomputer.com/news/security/us-charges-two-canadians-accused-of-hacking-us-universities/",
+      "publishedAt": "2026-11-04T13:13:20.000Z",
+      "excerpt": "A federal grand jury indicted two Canadians suspected of hacking multiple US universities and using the compromised systems to mine for cryptocurrency. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/us-charges-two-canadians-accused-of-hacking-us-universities",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/us-charges-two-canadians-accused-of-hacking-us-universities"
+      ],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "AI-Linked Breaches Mount as WorkOS, Northflank, Trigger.dev Disclose Hacks",
+      "url": "https://www.securityweek.com/ai-linked-breaches-mount-as-workos-northflank-trigger-dev-disclose-hacks/",
+      "publishedAt": "2026-11-04T12:43:20.000Z",
+      "excerpt": "Hackers have been harvesting AI access tokens and have been using AI-assisted offensive tools to automate attacks. The post AI-Linked Breaches Mount as WorkOS, Northflank, Trigger.dev Disclose Hacks appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/ai-linked-breaches-mount-as-workos-northflank-trigger-dev-disclose-hacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/ai-linked-breaches-mount-as-workos-northflank-trigger-dev-disclose-hacks"
+      ],
+      "cves": [],
+      "id": "s21"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Canadian Extradited to US Over Cryptomining Hacks on University Supercomputers",
+      "url": "https://www.securityweek.com/canadian-extradited-to-us-over-cryptomining-hacks-on-university-supercomputers/",
+      "publishedAt": "2026-11-04T12:27:58.000Z",
+      "excerpt": "A federal grand jury indicted two Canadian men for hijacking university supercomputers to secretly mine Electroneum cryptocurrency. The post Canadian Extradited to US Over Cryptomining Hacks on University Supercomputers appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/canadian-extradited-to-us-over-cryptomining-hacks-on-university-supercomputers",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/canadian-extradited-to-us-over-cryptomining-hacks-on-university-supercomputers"
+      ],
+      "cves": [],
+      "id": "s22"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "CISA flags WordPress RCE flaw as actively exploited in attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/cisa-flags-wordpress-rce-flaw-as-actively-exploited-in-attacks/",
+      "publishedAt": "2026-11-04T12:11:05.000Z",
+      "excerpt": "The US Cybersecurity and Infrastructure Security Agency (CISA) warned federal agencies that attackers have started exploiting a recently patched high-severity WordPress vulnerability in the wild. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/cisa-flags-wordpress-rce-flaw-as-actively-exploited-in-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/cisa-flags-wordpress-rce-flaw-as-actively-exploited-in-attacks"
+      ],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Radio With No Radar: Why Agent Runtime Security Fails Without the Layers Beneath It",
+      "url": "https://thehackernews.com/2026/11/radio-with-no-radar-why-agent-runtime.html",
+      "publishedAt": "2026-11-04T11:34:20.000Z",
+      "excerpt": "Nearly every agent security pitch now ends on the same promise: the product stops the bad action in real time. The promise holds for one kind of agent, the kind whose traffic passes through a gateway the enterprise owns. Most agents never touch one. One recent case shows what that gap looks like in practice. An employee asked an AI assistant to trigger a mass-email automation. The automation",
+      "canonicalUrl": "https://thehackernews.com/2026/11/radio-with-no-radar-why-agent-runtime.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/radio-with-no-radar-why-agent-runtime.html"
+      ],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "China-Aligned Hackers Hijack Sogou Input Method DNS Requests to Deploy DarkVigil Backdoor",
+      "url": "https://thehackernews.com/2026/11/china-aligned-hackers-hijack-sogou.html",
+      "publishedAt": "2026-11-04T11:24:31.000Z",
+      "excerpt": "A China-aligned threat actor known as SlippyNunchucks has been attributed to a Domain Name System (DNS) hijacking operation abusing insecure HTTP communications in Windows versions of Sogou Input Method as part of a surveillance campaign designed to deploy an implant called DarkVigil (aka FDMTP). The campaign, observed starting July 1, 2026, is assessed to have targeted organizations and",
+      "canonicalUrl": "https://thehackernews.com/2026/11/china-aligned-hackers-hijack-sogou.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/china-aligned-hackers-hijack-sogou.html"
+      ],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Malicious cPGuard Updates Served in OpsShield Supply Chain Attack",
+      "url": "https://www.securityweek.com/malicious-cpguard-updates-served-in-opsshield-supply-chain-attack/",
+      "publishedAt": "2026-11-04T10:54:48.000Z",
+      "excerpt": "Using compromised credentials, the attackers accessed OpsShield’s update servers and poisoned multiple cPGuard versions. The post Malicious cPGuard Updates Served in OpsShield Supply Chain Attack appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/malicious-cpguard-updates-served-in-opsshield-supply-chain-attack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/malicious-cpguard-updates-served-in-opsshield-supply-chain-attack"
+      ],
+      "cves": [],
+      "id": "s28"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Chrome 157 Rolls Out With 213 Security Fixes, Seven Rated Critical",
+      "url": "https://www.securityweek.com/chrome-157-rolls-out-with-213-security-fixes-seven-rated-critical/",
+      "publishedAt": "2026-11-04T10:38:46.000Z",
+      "excerpt": "The browser update resolves dozens of memory safety bugs and incorrect/missing authorization issues. The post Chrome 157 Rolls Out With 213 Security Fixes, Seven Rated Critical appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/chrome-157-rolls-out-with-213-security-fixes-seven-rated-critical",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/chrome-157-rolls-out-with-213-security-fixes-seven-rated-critical"
+      ],
+      "cves": [],
+      "id": "s29"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Rigged Coding Assignment, Abused AI Tool Opened Path to $6 Billion Binance Heist",
+      "url": "https://www.securityweek.com/rigged-coding-assignment-abused-ai-tool-opened-path-to-6-billion-binance-heist/",
+      "publishedAt": "2026-11-04T10:36:32.000Z",
+      "excerpt": "Binance’s first incident report traces the record theft to a months-long campaign that compromised three engineers’ computers. The post Rigged Coding Assignment, Abused AI Tool Opened Path to $6 Billion Binance Heist appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/rigged-coding-assignment-abused-ai-tool-opened-path-to-6-billion-binance-heist",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/rigged-coding-assignment-abused-ai-tool-opened-path-to-6-billion-binance-heist"
+      ],
+      "cves": [],
+      "id": "s30"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers use n-day exploits in zero-click attacks on iOS, Android devices",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-use-n-day-exploits-in-zero-click-attacks-on-ios-android-devices/",
+      "publishedAt": "2026-11-04T09:39:54.000Z",
+      "excerpt": "A large-scale watering hole attack associated with Russian hackers has been targeting iOS and Android users visiting compromised sites or fake ones impersonating legitimate portals. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-use-n-day-exploits-in-zero-click-attacks-on-ios-android-devices",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/hackers-use-n-day-exploits-in-zero-click-attacks-on-ios-android-devices"
+      ],
+      "cves": [],
+      "id": "s31"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "North Korea Launches Missiles Toward the Sea as Pyongyang Protests Against US Claims on Binance Hack",
+      "url": "https://www.securityweek.com/north-korea-launches-missiles-toward-the-sea-as-pyongyang-protests-against-us-claims-on-binance-hack/",
+      "publishedAt": "2026-11-04T09:23:22.000Z",
+      "excerpt": "In recent months, North Korea has accelerated its weapons tests in a likely bid to increase its leverage in potential diplomacy with the US. The post North Korea Launches Missiles Toward the Sea as Pyongyang Protests Against US Claims on Binance Hack appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/north-korea-launches-missiles-toward-the-sea-as-pyongyang-protests-against-us-claims-on-binance-hack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/north-korea-launches-missiles-toward-the-sea-as-pyongyang-protests-against-us-claims-on-binance-hack"
+      ],
+      "cves": [],
+      "id": "s32"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Meta Shares Top Muse Bug Bounty Findings as Payouts Reach $1.2 Million",
+      "url": "https://www.securityweek.com/meta-shares-top-muse-bug-bounty-findings-as-payouts-reach-1-2-million/",
+      "publishedAt": "2026-11-04T08:27:05.000Z",
+      "excerpt": "A $300,000 award went to a pre-launch flaw that exposed conversations and tokens on internal Muse test VMs used by Meta staff. The post Meta Shares Top Muse Bug Bounty Findings as Payouts Reach $1.2 Million appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/meta-shares-top-muse-bug-bounty-findings-as-payouts-reach-1-2-million",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/meta-shares-top-muse-bug-bounty-findings-as-payouts-reach-1-2-million"
+      ],
+      "cves": [],
+      "id": "s33"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Russian Police Arrest 3 Suspected VasyGrek Hackers, Dismantle Criminal Infrastructure",
+      "url": "https://thehackernews.com/2026/11/russian-police-arrest-3-suspected.html",
+      "publishedAt": "2026-11-04T08:17:11.000Z",
+      "excerpt": "Russian authorities have arrested three suspected members of a threat group known as VasyGrek and dismantled its criminal infrastructure. Also known as Fluffy Wolf, the threat actor has a history of targeting Russian and international companies since 2016. The Ministry of Internal Affairs of the Russian Federation (MVD) said members of the group are \"suspected of embezzling funds from the",
+      "canonicalUrl": "https://thehackernews.com/2026/11/russian-police-arrest-3-suspected.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/russian-police-arrest-3-suspected.html"
+      ],
+      "cves": [],
+      "id": "s34"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Google Issues Patches for Critical Android Flaw That Could Allow RCE Without User Interaction",
+      "url": "https://thehackernews.com/2026/11/google-patches-critical-android-flaw.html",
+      "publishedAt": "2026-11-04T07:46:15.000Z",
+      "excerpt": "A critical Android flaw could allow an attacker to run code on a phone without any user action remotely, Google said in its November security bulletin. The flaw, CVE-2026-58868, affects Android 14 through 17. Phones get the fix with security patch level 2026-11-01 or later, which phone makers and carriers send on their own schedules. As of November 4, Google's bulletin did not report",
+      "canonicalUrl": "https://thehackernews.com/2026/11/google-patches-critical-android-flaw.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/google-patches-critical-android-flaw.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-58868",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "In onOutputReceived of FrameDecoder.cpp, there is a possible out-of-bounds write due to a heap buffer overflow. This could lead to remote code execution with no additional execution privileges needed. User interaction is not needed for exploitation.",
+            "cvss": null,
+            "cwes": [],
+            "published": "2026-11-02T20:17:49.247",
+            "lastModified": "2026-11-03T14:52:42.467",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://source.android.com/docs/security/bulletin/2026/2026-11-01",
+                "source": "security@android.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/11/google-patches-critical-android-flaw.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.03",
+              "dateReleased": "2026-11-03T20:00:24.8741Z",
+              "retrievedAt": "2026-11-04T19:15:17.860Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-109593%2CCVE-2026-58868%2CCVE-2026-119977",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-58868",
+              "retrievedAt": "2026-11-04T19:15:17.860Z"
+            }
+          }
+        }
+      ],
+      "id": "s35"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Philippine Migrant Worker Data Likely Leaked in 69GB Government Breach",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/philippine-migrant-worker-data-69gb-government-breach",
+      "publishedAt": "2026-11-04T02:00:00.000Z",
+      "excerpt": "An unknown operator appears to have exfiltrated SQL Server backups from the Philippine Overseas Employment Administration in under a half hour.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/philippine-migrant-worker-data-69gb-government-breach",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyberattacks-data-breaches/philippine-migrant-worker-data-69gb-government-breach"
+      ],
+      "cves": [],
+      "id": "s37"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Phishing-Resistant Isn't Enough; Yubico Takes Aim at Identity-Verification Gap",
+      "url": "https://www.darkreading.com/identity-access-management-security/beyond-phishing-resistant-yubico-identity-verification-gap",
+      "publishedAt": "2026-11-04T01:05:40.000Z",
+      "excerpt": "The new YubiID service bridges identity verification with credential enrollment and recovery across existing identity platforms, closing a phishing-resistant authentication gap. Plus: post-quantum YubiKey beta.",
+      "canonicalUrl": "https://darkreading.com/identity-access-management-security/beyond-phishing-resistant-yubico-identity-verification-gap",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/identity-access-management-security/beyond-phishing-resistant-yubico-identity-verification-gap"
+      ],
+      "cves": [],
+      "id": "s38"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers hijack cPGuard autoupdate to deploy backdoor, steal data",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-hijack-cpguard-autoupdate-to-deploy-backdoor-steal-data/",
+      "publishedAt": "2026-11-03T22:18:50.000Z",
+      "excerpt": "Attackers have compromised the update infrastructure for the cPGuard web security suite to distribute a backdoor and a data-stealing script. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-hijack-cpguard-autoupdate-to-deploy-backdoor-steal-data",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/hackers-hijack-cpguard-autoupdate-to-deploy-backdoor-steal-data"
+      ],
+      "cves": [],
+      "id": "s39"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Fresh European Fridge Attacks Put Cold-Chain Security in Focus",
+      "url": "https://www.darkreading.com/ics-ot-security/fresh-european-fridge-attacks-cold-chain-security",
+      "publishedAt": "2026-11-03T22:16:49.000Z",
+      "excerpt": "Beyond food storage, the same combination of Internet connectivity, remote access, and inadequate security practices can put temperature-controlled infrastructure across other critical sectors at risk.",
+      "canonicalUrl": "https://darkreading.com/ics-ot-security/fresh-european-fridge-attacks-cold-chain-security",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/ics-ot-security/fresh-european-fridge-attacks-cold-chain-security"
+      ],
+      "cves": [],
+      "id": "s40"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Germany Busts 'Crime-as-a-Service' Investment Fraud Outfit",
+      "url": "https://www.darkreading.com/cybersecurity-operations/germany-crime-service-investment-fraud",
+      "publishedAt": "2026-11-03T21:57:12.000Z",
+      "excerpt": "Authorities seized more than 100 servers and arrested seven as part of a crackdown on a fraud network spanning more than 50 countries.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/germany-crime-service-investment-fraud",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cybersecurity-operations/germany-crime-service-investment-fraud"
+      ],
+      "cves": [],
+      "id": "s41"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "WorkOS says attacker used ARTEX AI to breach internal sales app",
+      "url": "https://www.bleepingcomputer.com/news/security/workos-says-attacker-used-artex-ai-to-breach-internal-sales-app/",
+      "publishedAt": "2026-11-03T21:28:44.000Z",
+      "excerpt": "Developer platform WorkOS suffered a data breach after a threat actor accessed business contact records and summaries of customer communications. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/workos-says-attacker-used-artex-ai-to-breach-internal-sales-app",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/workos-says-attacker-used-artex-ai-to-breach-internal-sales-app"
+      ],
+      "cves": [],
+      "id": "s42"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Google dismantles massive botnet hidden in Android TV boxes",
+      "url": "https://therecord.media/google-dismantles-botnet-hidden-android-tv-boxes",
+      "publishedAt": "2026-11-03T19:48:00.000Z",
+      "excerpt": "The overwhelming majority of the infected devices in the X.CPE botnet are Android TV set-top boxes, Google said, adding that they observed a number of other infected Android-based IoT devices, including telehealth devices, karaoke machines and digital signage devices.",
+      "canonicalUrl": "https://therecord.media/google-dismantles-botnet-hidden-android-tv-boxes",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/google-dismantles-botnet-hidden-android-tv-boxes"
+      ],
+      "cves": [],
+      "id": "s44"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "CISA Adds One Known Exploited Vulnerability to Catalog",
+      "url": "https://www.cisa.gov/news-events/alerts/2026/11/03/cisa-adds-one-known-exploited-vulnerability-catalog",
+      "publishedAt": "2026-11-03T12:00:00.000Z",
+      "excerpt": "CISA has added one new vulnerability to its Known Exploited Vulnerabilities (KEV) Catalog, based on evidence of active exploitation. CVE-2026-119977 WordPress Core Time-of-check Time-of-use (TOCTOU) Race Condition Vulnerability This type of vulnerability is a frequent attack vector for malicious cyber actors and poses significant risks to the federal enterprise. Binding Operational Directive…",
+      "canonicalUrl": "https://cisa.gov/news-events/alerts/2026/11/03/cisa-adds-one-known-exploited-vulnerability-catalog",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/alerts/2026/11/03/cisa-adds-one-known-exploited-vulnerability-catalog"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-119977",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "WordPress",
+            "product": "WordPress Core",
+            "vulnerabilityName": "WordPress WordPress Core Time-of-check Time-of-use (TOCTOU) Race Condition Vulnerability",
+            "dateAdded": "2026-11-03",
+            "shortDescription": "WordPress WordPress Core contains a time-of-check time-of-use (TOCTOU) race condition vulnerability that could allow unauthenticated attackers to execute code on the server during the upgrade window. This is due to predictable, web-accessible staging paths used during full-package core upgrades.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-06",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://wordpress.org/news/2026/10/wordpress-7-1-4 ; https://www.wordfence.com/threat-intel/vulnerabilities/wordpress-core/wordpress-core-470-713-unauthenticated-upgrade-window-staged-installer-remote-code-execution ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-119977",
+            "cwes": [
+              "CWE-367"
+            ]
+          },
+          "nvd": {
+            "description": "WordPress Core is vulnerable to Remote Code Execution in versions 4.7 through 7.1.3. This is due to predictable, web-accessible staging paths used during full-package core upgrades. This makes it possible for unauthenticated attackers to execute code on the server during the upgrade window.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.1,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "security@wordfence.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-367"
+            ],
+            "published": "2026-10-31T06:16:34.550",
+            "lastModified": "2026-11-04T12:52:38.683",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://core.trac.wordpress.org/browser/tags/7.1.3/src/wp-admin/includes/class-core-upgrader.php#L162",
+                "source": "security@wordfence.com",
+                "tags": [
+                  "Product"
+                ]
+              },
+              {
+                "url": "https://core.trac.wordpress.org/browser/tags/7.1.3/src/wp-admin/includes/class-wp-upgrader.php#L378",
+                "source": "security@wordfence.com",
+                "tags": [
+                  "Product"
+                ]
+              },
+              {
+                "url": "https://core.trac.wordpress.org/browser/tags/7.1.3/src/wp-admin/includes/update-core.php#L1549",
+                "source": "security@wordfence.com",
+                "tags": [
+                  "Product"
+                ]
+              },
+              {
+                "url": "https://core.trac.wordpress.org/browser/tags/7.1.3/src/wp-admin/setup-config.php#L282",
+                "source": "security@wordfence.com",
+                "tags": [
+                  "Product"
+                ]
+              },
+              {
+                "url": "https://core.trac.wordpress.org/browser/tags/7.1.4/src/wp-admin/includes/class-wp-upgrader.php#L346",
+                "source": "security@wordfence.com",
+                "tags": [
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://core.trac.wordpress.org/browser/tags/7.1.4/src/wp-admin/includes/update-core.php#L1545",
+                "source": "security@wordfence.com",
+                "tags": [
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://wordpress.org/news/2026/10/wordpress-7-1-4/",
+                "source": "security@wordfence.com",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/4b4da0cf-d9f4-47c4-a0e8-6c4dc5a6f250?source=cve",
+                "source": "security@wordfence.com",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-119977",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              },
+              {
+                "url": "https://www.wordfence.com/threat-intel/vulnerabilities/wordpress-core/wordpress-core-470-713-unauthenticated-upgrade-window-staged-installer-remote-code-execution",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F9A3BB19-029C-4289-9D7E-3AAED10673D6",
+                "versionStartIncluding": "4.7",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "4.7.39"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9998D1B3-DEF0-4728-B2C4-D3D6792CDF0E",
+                "versionStartIncluding": "4.8",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "4.8.34"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "4A996748-2A2D-48B9-8AB7-CB138018CD8A",
+                "versionStartIncluding": "4.9",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "4.9.35"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1A8E7D30-6E7F-41A8-80DF-AF11BD6884C8",
+                "versionStartIncluding": "5.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.0.31"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2C1E9F24-71B2-46E4-B24D-EA10E298D1AC",
+                "versionStartIncluding": "5.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.1.28"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7EF4C0E7-7A64-4270-96C7-C0BD05F3FCDE",
+                "versionStartIncluding": "5.2",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.2.30"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3C86DD96-D9A4-45AA-81A6-5695AA08A689",
+                "versionStartIncluding": "5.3",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.3.27"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A46E8759-8A85-414F-9C46-A34BC060C111",
+                "versionStartIncluding": "5.4",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.4.25"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "01531FD1-8548-4949-8256-E10A8FAFC3B5",
+                "versionStartIncluding": "5.5",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.5.24"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "778551C7-722F-4366-9D86-736A924C6062",
+                "versionStartIncluding": "5.6",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.6.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B4D242D6-693F-4338-AB59-0FB4C2EC01F6",
+                "versionStartIncluding": "5.7",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.7.21"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "72DFACDD-FAE4-4DD5-A1A3-57C0597251D3",
+                "versionStartIncluding": "5.8",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.8.19"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3BE2DE77-1F2A-40F7-8DE9-EEE29D883337",
+                "versionStartIncluding": "5.9",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.9.20"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C52767EC-E4F4-4F16-9BE7-2CE4495C9BE7",
+                "versionStartIncluding": "6.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.0.18"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F5E86746-433B-4158-95CE-8B58F37CDD69",
+                "versionStartIncluding": "6.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.1.16"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "DE25F568-450E-4A22-8632-523712F46194",
+                "versionStartIncluding": "6.2",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.2.15"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "314E0CC8-537E-4BF4-9CBC-6BC455B258A6",
+                "versionStartIncluding": "6.3",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.3.14"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D7853BDB-8F3A-4019-B0EB-E5D1A9CB3AB4",
+                "versionStartIncluding": "6.4",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.4.14"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A52505F2-B26E-4831-AD05-2F0905F85CDB",
+                "versionStartIncluding": "6.5",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.5.14"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B2A16228-BBEF-467D-B934-6A4CE0308E20",
+                "versionStartIncluding": "6.6",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.6.11"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9E165096-E752-4DC2-8666-830F87725FDC",
+                "versionStartIncluding": "6.7",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.7.11"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "903E5D89-7D08-4232-887B-6874DCB17070",
+                "versionStartIncluding": "6.8",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.8.12"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "27559BDC-624A-4D07-BC9E-069CABCAE64C",
+                "versionStartIncluding": "6.9",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.9.11"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F5BD7802-3450-4A82-9960-23A8F85DB2D7",
+                "versionStartIncluding": "7.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "7.0.8"
+              },
+              {
+                "criteria": "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "BF4C2627-2EF5-4D3B-B857-FC103D4E3E7E",
+                "versionStartIncluding": "7.1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "7.1.4"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/11/03/cisa-adds-one-known-exploited-vulnerability-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.03",
+              "dateReleased": "2026-11-03T20:00:24.8741Z",
+              "retrievedAt": "2026-11-04T19:15:17.860Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-109593%2CCVE-2026-58868%2CCVE-2026-119977",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-119977",
+              "retrievedAt": "2026-11-04T19:15:17.860Z"
+            }
+          }
+        }
+      ],
+      "id": "s45"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1280,
+    "promptCacheMissTokens": 14622,
+    "outputTokens": 4455,
+    "estimatedCostUsd": 0.0032980640000000003
+  }
+}
