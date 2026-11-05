@@ -1,0 +1,1531 @@
+{
+  "date": "2026-11-05",
+  "generatedAt": "2026-11-05T19:23:16.369Z",
+  "collection": [
+    {
+      "sourceId": "krebs",
+      "attemptedAt": "2026-11-05T19:23:16.369Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "attemptedAt": "2026-11-05T19:23:16.369Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "thehackernews",
+      "attemptedAt": "2026-11-05T19:23:16.369Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "therecord",
+      "attemptedAt": "2026-11-05T19:23:16.369Z",
+      "status": "ok",
+      "items": 5,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securityweek",
+      "attemptedAt": "2026-11-05T19:23:16.369Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "darkreading",
+      "attemptedAt": "2026-11-05T19:23:16.369Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "attemptedAt": "2026-11-05T19:23:16.369Z",
+      "status": "ok",
+      "items": 30,
+      "skipped": 0
+    },
+    {
+      "sourceId": "projectzero",
+      "attemptedAt": "2026-11-05T19:23:16.369Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securelist",
+      "attemptedAt": "2026-11-05T19:23:16.369Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "talos",
+      "attemptedAt": "2026-11-05T19:23:16.369Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "unit42",
+      "attemptedAt": "2026-11-05T19:23:16.369Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "microsoft-security",
+      "attemptedAt": "2026-11-05T19:23:16.369Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    }
+  ],
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 229,
+    "published": 40
+  },
+  "mode": "article",
+  "headline": "CISA lists a patched Apple auth bypass as exploited, as a Zyxel zero-day's toll nears 1,000 switches",
+  "standfirst": "A medium-severity Apple authentication bypass joins the federal exploited list, a Russia-linked watering-hole operation turns mobile exploit chains on Ukraine and its partners, and two trust-dependent vendors disclose breaches. Plus an AI exploit pipeline, a cold-chain warning and an OpenSSH bypass.",
+  "bodyMarkdown": "## Actively exploited\n\nCISA added CVE-2024-27834 to its Known Exploited Vulnerabilities catalog after reports of active exploitation — the day's only enriched CVE, and a MEDIUM at 5.5 [[s31]]. The national vulnerability database describes an improper-authentication (CWE-287) issue letting an attacker with arbitrary read and write capability bypass Pointer Authentication; the vector requires local access and low privileges, with no user interaction. Fixes shipped in Safari 17.5, iOS and iPadOS 16.7.8 and 17.5, macOS Sonoma 14.5, tvOS 17.5 and watchOS 10.5. The excerpt credits the flaw with delivering info-stealing malware but is truncated, and CISA's remediation deadline binds federal agencies, not everyone.\n\nSeparately, a Russia-linked watering-hole campaign is using mobile exploit chains against iOS and Android devices, aimed at entities in the US and Europe and mainly Ukraine [[s23]]. Analysis: the two stories share a theme — device-level exploitation as an entry point — but the Apple vector needs local access and nothing supplied links them. The campaign's attribution is the reporting's; its exploit details were not supplied.\n\nZyxel patched a GS1900 series switch zero-day that attackers had used to compromise nearly 1,000 devices worldwide and steal configuration files and credentials [[s38]]. No CVE was supplied, so the identifier and fixed firmware range are unconfirmed here.\n\n## Breaches\n\nChainalysis said some information belonging to all of its users was exposed in a cyberattack; its customers reportedly include law enforcement and national security bodies, and the reporting labels the techniques \"agentic\" without supplied detail on what that means [[s33]]. DigiCert traced its breach to a server migration that mistakenly exposed an internal business system to the internet, allowing access to customer information and identity documents [[s9]]. Analysis: for a certificate authority, leaked identity documents matter more than email addresses — they feed impersonation and account-recovery fraud — though no misuse is reported in the supplied text.\n\n## Research\n\nOpenAI detailed a prototype pipeline that analysed 2,308 candidate Linux kernel findings, dynamically reproduced 1,724, and validated and patched 948 local privilege-escalation vulnerabilities for $1.2 million in API costs [[s17]]. These are prototype results, not a shipped product; upstream reporting of the fixes is not in the excerpt.\n\n## Industry\n\nCISA, the FBI and the health, agriculture and transport departments said they are aware of malicious activity against industrial refrigeration and cold-chain monitoring systems worldwide [[s19]]. No actor, motive or CVE accompanies the warning in the supplied text. Analysis: the value is in the asset class it names — internet-reachable cold-storage monitoring — not in technical detail, which was not supplied.\n\n## Vulnerabilities\n\nA newly disclosed OpenSSH flaw dubbed \"*sshole\" lets attackers log into certain Alpine Linux and other musl-based accounts that block password authentication, by entering an oversized password [[s2]]. Affected versions, a CVE and patch status were not supplied; container and Alpine hosts are the stated exposure.",
+  "selected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Hackers Exploit Patched Apple Flaw to Deliver Info-Stealing Malware, CISA Says",
+      "url": "https://thehackernews.com/2026/11/hackers-exploit-patched-apple-flaw-to.html",
+      "publishedAt": "2026-11-05T05:17:04.000Z",
+      "excerpt": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Wednesday added a medium-severity security flaw impacting multiple Apple operating systems to its Known Exploited Vulnerabilities (KEV) catalog, following reports of active exploitation. The vulnerability in question is CVE-2024-27834 (CVSS score: 5.5), a case of improper authentication that could allow an attacker with",
+      "canonicalUrl": "https://thehackernews.com/2026/11/hackers-exploit-patched-apple-flaw-to.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/hackers-exploit-patched-apple-flaw-to.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2024-27834",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Apple",
+            "product": "Multiple Products",
+            "vulnerabilityName": "Apple Multiple Products Improper Authentication Vulnerability",
+            "dateAdded": "2026-11-04",
+            "shortDescription": "Apple iOS, iPadOS, macOS, Safari, tvOS and watchOS 10.5 contain an improper authentication vulnerability which could allow an attacker with arbitrary read and write capability to bypass pointer authentication.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-18",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://support.apple.com/en-us/120896 ; https://support.apple.com/en-us/120898 ; https://support.apple.com/en-us/120901 ; https://support.apple.com/en-us/120902 ; https://support.apple.com/en-us/120903 ; https://support.apple.com/en-us/120905 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2024-27834",
+            "cwes": [
+              "CWE-287"
+            ]
+          },
+          "nvd": {
+            "description": "The issue was addressed with improved checks. This issue is fixed in Safari 17.5, iOS 16.7.8 and iPadOS 16.7.8, iOS 17.5 and iPadOS 17.5, macOS Sonoma 14.5, tvOS 17.5, watchOS 10.5. An attacker with arbitrary read and write capability may be able to bypass Pointer Authentication.",
+            "cvss": {
+              "version": "3.1",
+              "score": 5.5,
+              "severity": "MEDIUM",
+              "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+              "source": "nvd@nist.gov",
+              "type": "Primary"
+            },
+            "cwes": [
+              "CWE-287"
+            ],
+            "published": "2024-05-14T15:13:06.953",
+            "lastModified": "2026-11-05T12:56:20.313",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://support.apple.com/en-us/120896",
+                "source": "product-security@apple.com",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/120898",
+                "source": "product-security@apple.com",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/120901",
+                "source": "product-security@apple.com",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/120902",
+                "source": "product-security@apple.com",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/120903",
+                "source": "product-security@apple.com",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/120905",
+                "source": "product-security@apple.com",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "http://seclists.org/fulldisclosure/2024/May/10",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://seclists.org/fulldisclosure/2024/May/12",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://seclists.org/fulldisclosure/2024/May/16",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://seclists.org/fulldisclosure/2024/May/17",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://seclists.org/fulldisclosure/2024/May/9",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2024/05/21/1",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ADCLQW54XN37VJZNYD3UKCYATJFIMYXG/",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/WKIXADCW3O4R2OOSDZGPU55XQFE6NA3M/",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/HT214101",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/HT214102",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/HT214103",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/HT214104",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/HT214106",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/kb/HT214100",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/kb/HT214102",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/kb/HT214104",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/kb/HT214106",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2024-27834",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              },
+              {
+                "url": "https://www.sekoia.com/blog/poisoned-source-apt29-watering-holes-targets-mobile-devices-with-n-day-exploits",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:apple:safari:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D80D1AA1-D37A-4ABD-87A0-2C3B12EDA955",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "17.5"
+              },
+              {
+                "criteria": "cpe:2.3:o:apple:ipados:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "732206AE-D798-41FB-8D91-F796820F912D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "16.7.8"
+              },
+              {
+                "criteria": "cpe:2.3:o:apple:ipados:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0C520138-1984-4369-8615-09FF57F0BB70",
+                "versionStartIncluding": "17.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "17.5"
+              },
+              {
+                "criteria": "cpe:2.3:o:apple:iphone_os:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0EDF6AF0-A238-47E5-9A9D-F6FDB832DD8C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "16.7.8"
+              },
+              {
+                "criteria": "cpe:2.3:o:apple:iphone_os:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "DEC0ACF3-F486-4536-8415-A176C68CE183",
+                "versionStartIncluding": "17.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "17.5"
+              },
+              {
+                "criteria": "cpe:2.3:o:apple:macos:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "018F7001-D2CD-4A28-853F-749408A7D1AF",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.5"
+              },
+              {
+                "criteria": "cpe:2.3:o:apple:tvos:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "003383BF-F06C-4300-908D-D1C8498C6BCD",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "17.5"
+              },
+              {
+                "criteria": "cpe:2.3:o:apple:watchos:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "CC4B1E01-BE73-48F8-9BD5-32F7C57EB45A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "10.5"
+              },
+              {
+                "criteria": "cpe:2.3:a:webkitgtk:webkitgtk:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "AA94B870-B434-4F05-B149-71C7F45683D4",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "2.44.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:wpewebkit:wpe_webkit:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F141E2F3-8281-4400-BE1E-D48F174EA615",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "2.44.2"
+              },
+              {
+                "criteria": "cpe:2.3:o:fedoraproject:fedora:39:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B8EDB836-4E6A-4B71-B9B2-AA3E03E0F646",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:fedoraproject:fedora:40:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "CA277A6C-83EC-4536-9125-97B84C4FAF59",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/11/hackers-exploit-patched-apple-flaw-to.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.04",
+              "dateReleased": "2026-11-04T20:00:05.774Z",
+              "retrievedAt": "2026-11-05T19:23:16.369Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-107441%2CCVE-2024-27834",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2024-27834",
+              "retrievedAt": "2026-11-05T19:23:16.369Z"
+            }
+          }
+        }
+      ],
+      "id": "s31",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "CISA's KEV addition confirms active exploitation of CVE-2024-27834 in Apple operating systems to deliver info-stealing malware, so unpatched iPhone and Mac fleets remain exposed."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Russia-Linked Hackers Hit iOS, Android Devices With Exploit Chains via Watering Holes",
+      "url": "https://www.securityweek.com/russia-linked-hackers-hit-ios-android-devices-with-exploit-chains-via-watering-holes/",
+      "publishedAt": "2026-11-05T10:37:13.000Z",
+      "excerpt": "The large-scale watering hole campaign has been targeting entities in the US and Europe, mainly in Ukraine. The post Russia-Linked Hackers Hit iOS, Android Devices With Exploit Chains via Watering Holes appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/russia-linked-hackers-hit-ios-android-devices-with-exploit-chains-via-watering-holes",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/russia-linked-hackers-hit-ios-android-devices-with-exploit-chains-via-watering-holes"
+      ],
+      "cves": [],
+      "id": "s23",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "A Russian state-linked watering-hole campaign is using mobile exploit chains against iOS and Android targets in Ukraine, the US and Europe, elevating nation-state espionage risk."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Zyxel fixes zero-day exploited to hack nearly 1,000 network switches",
+      "url": "https://www.bleepingcomputer.com/news/security/zyxel-fixes-zero-day-exploited-to-hack-nearly-1-000-network-switches/",
+      "publishedAt": "2026-11-04T20:58:19.000Z",
+      "excerpt": "Zyxel has patched a zero-day vulnerability in its GS1900 series network switches that hackers exploited to compromise nearly 1,000 devices worldwide and steal configuration files and credentials. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/zyxel-fixes-zero-day-exploited-to-hack-nearly-1-000-network-switches",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/zyxel-fixes-zero-day-exploited-to-hack-nearly-1-000-network-switches"
+      ],
+      "cves": [],
+      "id": "s38",
+      "section": "exploited",
+      "rank": 3,
+      "angle": "Zyxel patched a GS1900 zero-day after attackers used it to compromise nearly 1,000 switches and steal configuration files and credentials."
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Chainalysis warns all users hit in cyber breach involving ‘agentic’ techniques",
+      "url": "https://therecord.media/chainalysis-all-users-hit-by-agentic-cyberattack",
+      "publishedAt": "2026-11-05T00:00:00.000Z",
+      "excerpt": "Chainalysis, the blockchain analytics company, said Wednesday night that some information belonging to all its users — which its website says include those in the law enforcement and national security sectors — had been exposed in a cyberattack.",
+      "canonicalUrl": "https://therecord.media/chainalysis-all-users-hit-by-agentic-cyberattack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/chainalysis-all-users-hit-by-agentic-cyberattack"
+      ],
+      "cves": [],
+      "id": "s33",
+      "section": "breaches",
+      "rank": 4,
+      "angle": "Chainalysis says all users had information exposed in an attack involving 'agentic' techniques, a serious trust hit for law-enforcement and national-security customers."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "DigiCert data breach exposes customer information, identity documents",
+      "url": "https://www.bleepingcomputer.com/news/security/digicert-data-breach-exposes-customer-information-identity-documents/",
+      "publishedAt": "2026-11-05T16:12:46.000Z",
+      "excerpt": "DigiCert warns it suffered a data breach after a server migration mistakenly exposed an internal business system to the internet, allowing unauthorized access to customer information and identity documents. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/digicert-data-breach-exposes-customer-information-identity-documents",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/digicert-data-breach-exposes-customer-information-identity-documents"
+      ],
+      "cves": [],
+      "id": "s9",
+      "section": "breaches",
+      "rank": 5,
+      "angle": "DigiCert's server-migration mistake exposed customer identity documents, raising impersonation and credential risks from a major certificate authority."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "OpenAI AI Pipeline Generates 948 Linux Root Escalation Exploits in 30-Hour Run",
+      "url": "https://thehackernews.com/2026/11/openai-ai-pipeline-generates-948-linux.html",
+      "publishedAt": "2026-11-05T12:08:54.000Z",
+      "excerpt": "OpenAI on Wednesday detailed a pipeline that employed an upcoming cyber-focused artificial intelligence (AI) model to validate and patch 948 local privilege escalation vulnerabilities in Linux for $1.2 million in API costs. \"Our prototype identified and analyzed 2,308 candidate Linux kernel findings, dynamically reproduced 1,724 vulnerabilities, and produced 948 local privilege escalation (LPE)",
+      "canonicalUrl": "https://thehackernews.com/2026/11/openai-ai-pipeline-generates-948-linux.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/openai-ai-pipeline-generates-948-linux.html"
+      ],
+      "cves": [],
+      "id": "s17",
+      "section": "research",
+      "rank": 6,
+      "angle": "OpenAI's prototype shows AI can mass-generate and validate Linux local privilege escalation exploits at low cost, changing the economics of vulnerability discovery and patching."
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "US Government Partners Urge Hardening Industrial Refrigeration and Cold Chain Monitoring Systems",
+      "url": "https://www.cisa.gov/resources-tools/resources/us-government-partners-urge-hardening-industrial-refrigeration-and-cold-chain-monitoring-systems",
+      "publishedAt": "2026-11-05T12:00:00.000Z",
+      "excerpt": "Overview The Cybersecurity and Infrastructure Security Agency (CISA), Federal Bureau of Investigation (FBI), Health and Human Services (HHS), U.S. Department of Agriculture (USDA), and the Department of Transportation (DoT)—hereafter referred to as “the authoring organizations”—are aware of malicious cyber activity targeting industrial refrigeration and cold chain monitoring systems globally.…",
+      "canonicalUrl": "https://cisa.gov/resources-tools/resources/us-government-partners-urge-hardening-industrial-refrigeration-and-cold-chain-monitoring-systems",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/resources-tools/resources/us-government-partners-urge-hardening-industrial-refrigeration-and-cold-chain-monitoring-systems"
+      ],
+      "cves": [],
+      "id": "s19",
+      "section": "industry",
+      "rank": 7,
+      "angle": "CISA and federal partners warn of malicious activity targeting industrial refrigeration and cold-chain monitoring systems worldwide, putting OT cold-storage operations on notice."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "OpenSSH flaw lets attackers log into password-disabled Linux accounts",
+      "url": "https://www.bleepingcomputer.com/news/security/openssh-flaw-lets-attackers-log-into-password-disabled-linux-accounts/",
+      "publishedAt": "2026-11-05T17:45:29.000Z",
+      "excerpt": "A newly disclosed OpenSSH vulnerability dubbed \"*sshole\" allows attackers to log in to certain Alpine Linux and other musl-based Linux accounts that are configured to block password authentication, simply by entering an oversized password. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/openssh-flaw-lets-attackers-log-into-password-disabled-linux-accounts",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/openssh-flaw-lets-attackers-log-into-password-disabled-linux-accounts"
+      ],
+      "cves": [],
+      "id": "s2",
+      "section": "vulnerabilities",
+      "rank": 8,
+      "angle": "A newly disclosed OpenSSH flaw can bypass password-disabled authentication on musl-based Linux, putting Alpine and container hosts at risk."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "talos",
+      "sourceKind": "rss",
+      "title": "Bring a tent, I've got the coffee: Lessons from it-sa",
+      "url": "https://blog.talosintelligence.com/bring-a-tent-ive-got-the-coffee-lessons-from-it-sa/",
+      "publishedAt": "2026-11-05T19:00:00.000Z",
+      "excerpt": "Thorsten may have had to camp out in Nuremberg to attend it-sa, but the real story is the initiative to add a formal IT Security apprenticeship program in Germany for the thousands of young hackers ready to join our side.",
+      "canonicalUrl": "https://blog.talosintelligence.com/bring-a-tent-ive-got-the-coffee-lessons-from-it-sa",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://blog.talosintelligence.com/bring-a-tent-ive-got-the-coffee-lessons-from-it-sa"
+      ],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "AI Agents Got Root on Linux via 948 Kernel Flaws in OpenAI Research",
+      "url": "https://www.securityweek.com/ai-agents-got-root-on-linux-via-948-kernel-flaws-in-openai-research/",
+      "publishedAt": "2026-11-05T17:32:37.000Z",
+      "excerpt": "An unreleased OpenAI cyber model found and exploited 948 distinct Linux kernel privilege escalation bugs for about $1.2 million. The post AI Agents Got Root on Linux via 948 Kernel Flaws in OpenAI Research appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/ai-agents-got-root-on-linux-via-948-kernel-flaws-in-openai-research",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/ai-agents-got-root-on-linux-via-948-kernel-flaws-in-openai-research"
+      ],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "New investments to reduce on-premises security risk",
+      "url": "https://techcommunity.microsoft.com/blog/microsoft-security-blog/new-investments-to-reduce-on-premises-security-risk/4570381",
+      "publishedAt": "2026-11-05T17:10:14.000Z",
+      "excerpt": "We’re announcing a new on-premises security initiative, bringing together guidance, migration, and product investments. The post New investments to reduce on-premises security risk appeared first on Microsoft Security Blog.",
+      "canonicalUrl": "https://techcommunity.microsoft.com/blog/microsoft-security-blog/new-investments-to-reduce-on-premises-security-risk/4570381",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://techcommunity.microsoft.com/blog/microsoft-security-blog/new-investments-to-reduce-on-premises-security-risk/4570381"
+      ],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "​​​​What’s new in Microsoft Security: November 2026",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/11/05/whats-new-in-microsoft-security-november-2026/",
+      "publishedAt": "2026-11-05T17:00:00.000Z",
+      "excerpt": "Microsoft Security’s November 2026 updates strengthen AI agent security, least privilege, threat protection, and exposure management. The post ​​​​What’s new in Microsoft Security: November 2026 appeared first on Microsoft Security Blog.",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/11/05/whats-new-in-microsoft-security-november-2026",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://microsoft.com/en-us/security/blog/2026/11/05/whats-new-in-microsoft-security-november-2026"
+      ],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Russian state-linked hackers target iPhone, Android devices in zero-click espionage campaign",
+      "url": "https://therecord.media/russia-hackers-smartphone-cyberattacks",
+      "publishedAt": "2026-11-05T17:00:00.000Z",
+      "excerpt": "Russian state-linked hackers targeted users in Ukraine, the United States and Europe in a campaign to steal sensitive information from iPhone and Android devices, researchers found.",
+      "canonicalUrl": "https://therecord.media/russia-hackers-smartphone-cyberattacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/russia-hackers-smartphone-cyberattacks"
+      ],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "SecurityDataPipeline.com Launches as a New Educational Resource for the AI Era",
+      "url": "https://www.darkreading.com/cybersecurity-operations/securitydatapipeline-com-launches-as-a-new-educational-resource-for-the-ai-era",
+      "publishedAt": "2026-11-05T16:48:36.000Z",
+      "excerpt": "The ungated resource explains how security data pipelines reduce SIEM ingestion costs, preserve detection coverage, and prepare the data layer for AI-driven security operations.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/securitydatapipeline-com-launches-as-a-new-educational-resource-for-the-ai-era",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cybersecurity-operations/securitydatapipeline-com-launches-as-a-new-educational-resource-for-the-ai-era"
+      ],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers backdoor Linux servers using trojanized CWP web server",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-backdoor-linux-servers-using-trojanized-cwp-web-server/",
+      "publishedAt": "2026-11-05T16:24:26.000Z",
+      "excerpt": "A new Linux malware called CWPdoor is being distributed through a trojanized version of cwpsrv, the web server behind the Control Web Panel (CWP) management interface. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-backdoor-linux-servers-using-trojanized-cwp-web-server",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/hackers-backdoor-linux-servers-using-trojanized-cwp-web-server"
+      ],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "Email threat landscape: Q3 2026 trends and insights",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/11/05/email-threat-landscape-q3-2026-trends-and-insights/",
+      "publishedAt": "2026-11-05T16:00:00.000Z",
+      "excerpt": "Microsoft Threat Intelligence observed a sharp rise in email-based phishing activity at the end of Q3 2026 (July – September), even as QR code phishing declined, CAPTCHA-gated phishing recovered, and malicious messages spoofing familiar business-service sender domains exposed risks associated with security overrides. The post Email threat landscape: Q3 2026 trends and insights appeared first on…",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/11/05/email-threat-landscape-q3-2026-trends-and-insights",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://microsoft.com/en-us/security/blog/2026/11/05/email-threat-landscape-q3-2026-trends-and-insights"
+      ],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Closing the Identity Gap at the Service Desk",
+      "url": "https://www.bleepingcomputer.com/news/security/closing-the-identity-gap-at-the-service-desk/",
+      "publishedAt": "2026-11-05T15:00:10.000Z",
+      "excerpt": "Attackers target IT service desks to bypass MFA by impersonating employees and convincing staff to reset passwords or register new authentication devices. Specops Software explains why traditional identity verification methods are no longer sufficient and how organizations can secure account recovery against social engineering risks. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/closing-the-identity-gap-at-the-service-desk",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/closing-the-identity-gap-at-the-service-desk"
+      ],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "ThreatsDay: Apache OFBiz RCE, DreamHost Breach, DeFi Site Hijacks + 17 More Stories",
+      "url": "https://thehackernews.com/2026/11/threatsday-apache-ofbiz-rce-dreamhost.html",
+      "publishedAt": "2026-11-05T14:41:10.000Z",
+      "excerpt": "How much damage can someone do without breaking much? Quite a lot, it seems. A stolen login can open doors across several systems. A trusted setting can be used to lock people out. Even a simple file copy can reach places it shouldn't. And while new tools are helping find security holes faster, some important systems are still taking months, sometimes over a year, to get patched. Not exactly a",
+      "canonicalUrl": "https://thehackernews.com/2026/11/threatsday-apache-ofbiz-rce-dreamhost.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/threatsday-apache-ofbiz-rce-dreamhost.html"
+      ],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Bank Phishing Sites Show Fake ‘Suspended’ Pages to Evade Takedowns",
+      "url": "https://www.securityweek.com/bank-phishing-sites-show-fake-suspended-pages-to-evade-takedowns/",
+      "publishedAt": "2026-11-05T13:22:12.000Z",
+      "excerpt": "More than 200 sites were seen serving phishing content to first-time visitors but not to those who revisit. The post Bank Phishing Sites Show Fake ‘Suspended’ Pages to Evade Takedowns appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/bank-phishing-sites-show-fake-suspended-pages-to-evade-takedowns",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/bank-phishing-sites-show-fake-suspended-pages-to-evade-takedowns"
+      ],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Cyberattack Hits French Blood Bank Site but No Blood Products Are Compromised",
+      "url": "https://www.securityweek.com/cyberattack-hits-french-blood-bank-site-but-no-blood-products-are-compromised/",
+      "publishedAt": "2026-11-05T12:58:32.000Z",
+      "excerpt": "The incident comes after supermarkets in a number of European countries reported this week that their fridges and freezers warmed up after they were remotely hacked. The post Cyberattack Hits French Blood Bank Site but No Blood Products Are Compromised appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/cyberattack-hits-french-blood-bank-site-but-no-blood-products-are-compromised",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/cyberattack-hits-french-blood-bank-site-but-no-blood-products-are-compromised"
+      ],
+      "cves": [],
+      "id": "s14"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Cisco, WatchGuard Release Patches; SonicWall Won’t Fix GMS Flaws",
+      "url": "https://www.securityweek.com/cisco-watchguard-release-patches-sonicwall-wont-fix-gms-flaws/",
+      "publishedAt": "2026-11-05T12:33:49.000Z",
+      "excerpt": "Cisco patched an RCE in UCS Central Software; WatchGuard fixed authentication and MitM flaws. The post Cisco, WatchGuard Release Patches; SonicWall Won’t Fix GMS Flaws appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/cisco-watchguard-release-patches-sonicwall-wont-fix-gms-flaws",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/cisco-watchguard-release-patches-sonicwall-wont-fix-gms-flaws"
+      ],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Is Your Exposure Management Platform Leaving You Exposed? Five Tests to Find Out",
+      "url": "https://thehackernews.com/2026/11/is-your-exposure-management-platform.html",
+      "publishedAt": "2026-11-05T12:25:00.000Z",
+      "excerpt": "A critical finding can move through several security tools and still leave the organization exposed. The vulnerability has a severity score, and a ticket has reached the queue. Progress then depends on information the finding may lack: who owns the system, whether attackers can reach it, what protection exists, and how a change could affect the business. Each missing detail creates",
+      "canonicalUrl": "https://thehackernews.com/2026/11/is-your-exposure-management-platform.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/is-your-exposure-management-platform.html"
+      ],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Post-Quantum Questions to Ask Your Vendors",
+      "url": "https://www.cisa.gov/resources-tools/resources/post-quantum-questions-ask-your-vendors",
+      "publishedAt": "2026-11-05T12:00:00.000Z",
+      "excerpt": "CISA, the Australian Signals Directorate’s Australian Cyber Security Centre (ASD’s ACSC) and the National Security Agency (NSA) released joint guidance and an accompanying quick-reference list to help organizations assess vendor readiness for transitioning to post-quantum cryptography (PQC). As quantum computing advances, widely used public-key cryptography will become vulnerable to compromise…",
+      "canonicalUrl": "https://cisa.gov/resources-tools/resources/post-quantum-questions-ask-your-vendors",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/resources-tools/resources/post-quantum-questions-ask-your-vendors"
+      ],
+      "cves": [],
+      "id": "s18"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "The Agent Smith Dilemma: Governing Agentic Identities",
+      "url": "https://www.securityweek.com/the-agent-smith-dilemma-governing-agentic-identities/",
+      "publishedAt": "2026-11-05T11:15:00.000Z",
+      "excerpt": "Every autonomous AI agent deployed across your enterprise today is a new proxy identity operating inside your perimeter. The post The Agent Smith Dilemma: Governing Agentic Identities appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/the-agent-smith-dilemma-governing-agentic-identities",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/the-agent-smith-dilemma-governing-agentic-identities"
+      ],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "CISO Conversations: Ryan Davis – The Unknown Is Where Security Meets Reality",
+      "url": "https://www.securityweek.com/ciso-conversations-ryan-davis-the-unknown-is-where-security-meets-reality/",
+      "publishedAt": "2026-11-05T11:00:00.000Z",
+      "excerpt": "Ryan Davis went from hacking his school’s network to running security at New Charter Technologies. What worries him now is shadow AI. The post CISO Conversations: Ryan Davis – The Unknown Is Where Security Meets Reality appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/ciso-conversations-ryan-davis-the-unknown-is-where-security-meets-reality",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/ciso-conversations-ryan-davis-the-unknown-is-where-security-meets-reality"
+      ],
+      "cves": [],
+      "id": "s21"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Zyxel Switch Hacks Blamed on Patched Flaw Actually Exploited a Zero-Day",
+      "url": "https://www.securityweek.com/zyxel-switch-hacks-blamed-on-patched-flaw-actually-exploited-a-zero-day/",
+      "publishedAt": "2026-11-05T10:56:41.000Z",
+      "excerpt": "Tracked as CVE-2026-107441, the out-of-bounds write flaw could allow attackers to execute OS commands via crafted HTTP requests. The post Zyxel Switch Hacks Blamed on Patched Flaw Actually Exploited a Zero-Day appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/zyxel-switch-hacks-blamed-on-patched-flaw-actually-exploited-a-zero-day",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/zyxel-switch-hacks-blamed-on-patched-flaw-actually-exploited-a-zero-day"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-107441",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "An out-of-bounds write vulnerability in the CGI program of Zyxel GS1900-24E firmware versions through 2.90(AAHK.2)C0 could allow an unauthenticated adjacent attacker  to exploit the flaw and potentially execute OS commands via a crafted HTTP request.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.8,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "security@zyxel.com.tw",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-787"
+            ],
+            "published": "2026-11-03T02:16:52.617",
+            "lastModified": "2026-11-05T05:18:18.850",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://www.zyxel.com/global/en/support/security-advisories/zyxel-security-advisory-for-out-of-bounds-write-vulnerability-in-gs1900-series-switches-11-03-2026",
+                "source": "security@zyxel.com.tw",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/zyxel-switch-hacks-blamed-on-patched-flaw-actually-exploited-a-zero-day/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.04",
+              "dateReleased": "2026-11-04T20:00:05.774Z",
+              "retrievedAt": "2026-11-05T19:23:16.369Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-107441%2CCVE-2024-27834",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-107441",
+              "retrievedAt": "2026-11-05T19:23:16.369Z"
+            }
+          }
+        }
+      ],
+      "id": "s22"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "5 Active Cyber Threats That Put US Enterprises at Risk in October 2026",
+      "url": "https://thehackernews.com/2026/11/5-active-cyber-threats-that-put-us.html",
+      "publishedAt": "2026-11-05T10:06:19.000Z",
+      "excerpt": "October 2026 brought another wave of cyber threats targeting US businesses, with attackers exploiting trusted platforms, legitimate authentication processes, and everyday business workflows. For enterprises, these campaigns raise the stakes beyond individual security incidents, increasing the risk of financial losses, data breaches, and costly operational disruption. Below, we examine five",
+      "canonicalUrl": "https://thehackernews.com/2026/11/5-active-cyber-threats-that-put-us.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/5-active-cyber-threats-that-put-us.html"
+      ],
+      "cves": [],
+      "id": "s24"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "OpenAI Finds GPT-6 Astra Quietly Holding Back on Internal Red-Teaming, Exploit Tasks",
+      "url": "https://www.securityweek.com/openai-finds-gpt-6-astra-quietly-holding-back-on-internal-red-teaming-exploit-tasks/",
+      "publishedAt": "2026-11-05T10:02:00.000Z",
+      "excerpt": "OpenAI says its Critical-rated cyber model met fewer hidden task goals when work was framed as AI safety research, often silently. The post OpenAI Finds GPT-6 Astra Quietly Holding Back on Internal Red-Teaming, Exploit Tasks appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/openai-finds-gpt-6-astra-quietly-holding-back-on-internal-red-teaming-exploit-tasks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/openai-finds-gpt-6-astra-quietly-holding-back-on-internal-red-teaming-exploit-tasks"
+      ],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "securelist",
+      "sourceKind": "rss",
+      "title": "The SOC Files 5: Ghost in the pipeline, or a fileless SharePoint breach by Storm-2603",
+      "url": "https://securelist.com/storm-2603-fileless-toolshell-attack/121467/",
+      "publishedAt": "2026-11-05T10:00:11.000Z",
+      "excerpt": "Kaspersky researchers analyze a complex fileless cyberattack by Storm-2603 involving ToolShell exploitation and subsequent runtime subversion, and discuss how to detect such intrusions.",
+      "canonicalUrl": "https://securelist.com/storm-2603-fileless-toolshell-attack/121467",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securelist.com/storm-2603-fileless-toolshell-attack/121467"
+      ],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "GhostMap Android flaw lets malicious app trigger persistent boot loop",
+      "url": "https://www.bleepingcomputer.com/news/security/ghostmap-android-flaw-lets-malicious-app-trigger-persistent-boot-loop/",
+      "publishedAt": "2026-11-05T09:18:29.000Z",
+      "excerpt": "Attackers can force Android devices into a continuous boot loop using a specially crafted app that requires no permissions and only needs to be installed. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/ghostmap-android-flaw-lets-malicious-app-trigger-persistent-boot-loop",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/ghostmap-android-flaw-lets-malicious-app-trigger-persistent-boot-loop"
+      ],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Apple to Start Scanning Publicly Shared iCloud Photos and Files for Harmful Content",
+      "url": "https://thehackernews.com/2026/11/apple-to-start-scanning-publicly-shared.html",
+      "publishedAt": "2026-11-05T09:13:28.000Z",
+      "excerpt": "Apple has revealed that it plans to start checking public iCloud links for harmful content starting with iOS 27.3, iPadOS 27.3, macOS 27.3, and visionOS 27.3. The change specifically applies to scenarios where users share iCloud content, such as photos in iCloud Photos or files in iCloud Drive, by sharing a link and making it accessible to \"Anyone with the link.\" When users choose this option,",
+      "canonicalUrl": "https://thehackernews.com/2026/11/apple-to-start-scanning-publicly-shared.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/apple-to-start-scanning-publicly-shared.html"
+      ],
+      "cves": [],
+      "id": "s28"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "CERT-In Flags AI-Driven Attacks as Backdoored ARTEX Exposes 62 Consoles to Root Access",
+      "url": "https://thehackernews.com/2026/11/backdoored-docker-image-for-artex-ai.html",
+      "publishedAt": "2026-11-05T08:42:03.000Z",
+      "excerpt": "The Indian Computer Emergency Response Team (CERT-In) has disclosed that an artificial intelligence (AI)-assisted threat actor it tracks as Crafty Falcon is targeting organizations in the Banking, Financial Services, and Insurance (BFSI) sectors in the country. Describing the threat as active and ongoing, the activity involves the use of publicly-available AI-driven offensive security tools",
+      "canonicalUrl": "https://thehackernews.com/2026/11/backdoored-docker-image-for-artex-ai.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/backdoored-docker-image-for-artex-ai.html"
+      ],
+      "cves": [],
+      "id": "s29"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Zyxel GS1900 Patch Fails to Block Zero-Day Exploit Allowing Root Command Execution",
+      "url": "https://thehackernews.com/2026/11/zyxel-gs1900-patch-fails-to-block-zero.html",
+      "publishedAt": "2026-11-05T07:06:33.000Z",
+      "excerpt": "Zyxel GS1900 network switches that received the vendor's earlier fix for an actively exploited flaw are still open to the exploit attackers used, researchers at Binarly found. The exploit lets anyone who can reach a switch's web management interface run commands on it without logging in. Zyxel has released new firmware for 10 GS1900 models that closes the hole. The earlier fix is the 2.90",
+      "canonicalUrl": "https://thehackernews.com/2026/11/zyxel-gs1900-patch-fails-to-block-zero.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/zyxel-gs1900-patch-fails-to-block-zero.html"
+      ],
+      "cves": [],
+      "id": "s30"
+    },
+    {
+      "sourceId": "krebs",
+      "sourceKind": "rss",
+      "title": "Want to Rent an Internet Address at the White House?",
+      "url": "https://krebsonsecurity.com/2026/11/want-to-rent-an-internet-address-at-the-white-house/",
+      "publishedAt": "2026-11-05T04:36:17.000Z",
+      "excerpt": "Several staffers at the White House are using computers or mobile devices equipped with residential proxy services that render their internet address available for others to rent, security experts warned today. One of the proxy services is a Russian company whose founder's web hosting business was ground zero for cyberattacks against election systems in Arizona and Illinois in 2016.",
+      "canonicalUrl": "https://krebsonsecurity.com/2026/11/want-to-rent-an-internet-address-at-the-white-house",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://krebsonsecurity.com/2026/11/want-to-rent-an-internet-address-at-the-white-house"
+      ],
+      "cves": [],
+      "id": "s32"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Ukraine fires two senior security officials amid corruption probe into scam call centers",
+      "url": "https://therecord.media/ukraine-fires-senior-security-officials-amid-scam-center-corruption-investigation",
+      "publishedAt": "2026-11-05T00:00:00.000Z",
+      "excerpt": "Ukraine's security service has fired two senior officials amid a corruption investigation into an alleged criminal network that bribed law enforcement officers to protect fraudulent call centers and other illegal operations.",
+      "canonicalUrl": "https://therecord.media/ukraine-fires-senior-security-officials-amid-scam-center-corruption-investigation",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/ukraine-fires-senior-security-officials-amid-scam-center-corruption-investigation"
+      ],
+      "cves": [],
+      "id": "s34"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Critical Rails Bug Threatens to Derail Vulnerable Servers",
+      "url": "https://www.darkreading.com/application-security/critical-rails-bug-derail-vulnerable-servers",
+      "publishedAt": "2026-11-04T21:48:18.000Z",
+      "excerpt": "An attacker could write arbitrary files and read sensitive files via images uploaded to the Rails Active Storage ImageMagick integration, possibly positioning a threat actor for lateral movement.",
+      "canonicalUrl": "https://darkreading.com/application-security/critical-rails-bug-derail-vulnerable-servers",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/application-security/critical-rails-bug-derail-vulnerable-servers"
+      ],
+      "cves": [],
+      "id": "s35"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Vercel rolls out new protection against stolen session cookie attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/vercel-rolls-out-new-protection-against-stolen-session-cookie-attacks/",
+      "publishedAt": "2026-11-04T21:31:18.000Z",
+      "excerpt": "Vercel is gradually rolling out Device Bound Session Credentials (DBSC) on its platform as a key defense against information stealer malware. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/vercel-rolls-out-new-protection-against-stolen-session-cookie-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/vercel-rolls-out-new-protection-against-stolen-session-cookie-attacks"
+      ],
+      "cves": [],
+      "id": "s36"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "More Asian airlines announce data breaches after attack on Spanish IT provider Amadeus",
+      "url": "https://therecord.media/asian-airlines-announce-data-breach-it-provider-incident",
+      "publishedAt": "2026-11-04T21:30:00.000Z",
+      "excerpt": "Japan Airlines, Cathay Pacific, Korean Air, Asiana Airlines, Singapore Airlines and Malaysia Airlines have all come forward over the last week to report data breaches traced back to Amadeus IT Group — a company that builds and maintains platforms for flight reservation, ticketing and check-in platforms.",
+      "canonicalUrl": "https://therecord.media/asian-airlines-announce-data-breach-it-provider-incident",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/asian-airlines-announce-data-breach-it-provider-incident"
+      ],
+      "cves": [],
+      "id": "s37"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Canadian extradited to US for allegedly hacking schools in at least four states",
+      "url": "https://therecord.media/canadian-nationals-accused-us-education-hacks-cryptomining",
+      "publishedAt": "2026-11-04T19:17:00.000Z",
+      "excerpt": "The Department of Justice said it identified two suspects in a case that dates back to 2016 and involved illicit cryptomining on the computers of U.S. educational institutions.",
+      "canonicalUrl": "https://therecord.media/canadian-nationals-accused-us-education-hacks-cryptomining",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/canadian-nationals-accused-us-education-hacks-cryptomining"
+      ],
+      "cves": [],
+      "id": "s39"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "CISA Adds One Known Exploited Vulnerability to Catalog",
+      "url": "https://www.cisa.gov/news-events/alerts/2026/11/04/cisa-adds-one-known-exploited-vulnerability-catalog",
+      "publishedAt": "2026-11-04T12:00:00.000Z",
+      "excerpt": "CISA has added one new vulnerability to its Known Exploited Vulnerabilities (KEV) Catalog, based on evidence of active exploitation. CVE-2024-27834 Apple Multiple Products Improper Authentication Vulnerability This type of vulnerability is a frequent attack vector for malicious cyber actors and poses significant risks to the federal enterprise. Binding Operational Directive (BOD) 26-04:…",
+      "canonicalUrl": "https://cisa.gov/news-events/alerts/2026/11/04/cisa-adds-one-known-exploited-vulnerability-catalog",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/alerts/2026/11/04/cisa-adds-one-known-exploited-vulnerability-catalog"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2024-27834",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Apple",
+            "product": "Multiple Products",
+            "vulnerabilityName": "Apple Multiple Products Improper Authentication Vulnerability",
+            "dateAdded": "2026-11-04",
+            "shortDescription": "Apple iOS, iPadOS, macOS, Safari, tvOS and watchOS 10.5 contain an improper authentication vulnerability which could allow an attacker with arbitrary read and write capability to bypass pointer authentication.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-18",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://support.apple.com/en-us/120896 ; https://support.apple.com/en-us/120898 ; https://support.apple.com/en-us/120901 ; https://support.apple.com/en-us/120902 ; https://support.apple.com/en-us/120903 ; https://support.apple.com/en-us/120905 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2024-27834",
+            "cwes": [
+              "CWE-287"
+            ]
+          },
+          "nvd": {
+            "description": "The issue was addressed with improved checks. This issue is fixed in Safari 17.5, iOS 16.7.8 and iPadOS 16.7.8, iOS 17.5 and iPadOS 17.5, macOS Sonoma 14.5, tvOS 17.5, watchOS 10.5. An attacker with arbitrary read and write capability may be able to bypass Pointer Authentication.",
+            "cvss": {
+              "version": "3.1",
+              "score": 5.5,
+              "severity": "MEDIUM",
+              "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+              "source": "nvd@nist.gov",
+              "type": "Primary"
+            },
+            "cwes": [
+              "CWE-287"
+            ],
+            "published": "2024-05-14T15:13:06.953",
+            "lastModified": "2026-11-05T12:56:20.313",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://support.apple.com/en-us/120896",
+                "source": "product-security@apple.com",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/120898",
+                "source": "product-security@apple.com",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/120901",
+                "source": "product-security@apple.com",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/120902",
+                "source": "product-security@apple.com",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/120903",
+                "source": "product-security@apple.com",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/120905",
+                "source": "product-security@apple.com",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "http://seclists.org/fulldisclosure/2024/May/10",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://seclists.org/fulldisclosure/2024/May/12",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://seclists.org/fulldisclosure/2024/May/16",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://seclists.org/fulldisclosure/2024/May/17",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://seclists.org/fulldisclosure/2024/May/9",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2024/05/21/1",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ADCLQW54XN37VJZNYD3UKCYATJFIMYXG/",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/WKIXADCW3O4R2OOSDZGPU55XQFE6NA3M/",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/HT214101",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/HT214102",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/HT214103",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/HT214104",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/en-us/HT214106",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/kb/HT214100",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/kb/HT214102",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/kb/HT214104",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://support.apple.com/kb/HT214106",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Vendor Advisory",
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2024-27834",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              },
+              {
+                "url": "https://www.sekoia.com/blog/poisoned-source-apt29-watering-holes-targets-mobile-devices-with-n-day-exploits",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:apple:safari:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D80D1AA1-D37A-4ABD-87A0-2C3B12EDA955",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "17.5"
+              },
+              {
+                "criteria": "cpe:2.3:o:apple:ipados:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "732206AE-D798-41FB-8D91-F796820F912D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "16.7.8"
+              },
+              {
+                "criteria": "cpe:2.3:o:apple:ipados:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0C520138-1984-4369-8615-09FF57F0BB70",
+                "versionStartIncluding": "17.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "17.5"
+              },
+              {
+                "criteria": "cpe:2.3:o:apple:iphone_os:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0EDF6AF0-A238-47E5-9A9D-F6FDB832DD8C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "16.7.8"
+              },
+              {
+                "criteria": "cpe:2.3:o:apple:iphone_os:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "DEC0ACF3-F486-4536-8415-A176C68CE183",
+                "versionStartIncluding": "17.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "17.5"
+              },
+              {
+                "criteria": "cpe:2.3:o:apple:macos:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "018F7001-D2CD-4A28-853F-749408A7D1AF",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "14.5"
+              },
+              {
+                "criteria": "cpe:2.3:o:apple:tvos:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "003383BF-F06C-4300-908D-D1C8498C6BCD",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "17.5"
+              },
+              {
+                "criteria": "cpe:2.3:o:apple:watchos:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "CC4B1E01-BE73-48F8-9BD5-32F7C57EB45A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "10.5"
+              },
+              {
+                "criteria": "cpe:2.3:a:webkitgtk:webkitgtk:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "AA94B870-B434-4F05-B149-71C7F45683D4",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "2.44.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:wpewebkit:wpe_webkit:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F141E2F3-8281-4400-BE1E-D48F174EA615",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "2.44.2"
+              },
+              {
+                "criteria": "cpe:2.3:o:fedoraproject:fedora:39:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B8EDB836-4E6A-4B71-B9B2-AA3E03E0F646",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:fedoraproject:fedora:40:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "CA277A6C-83EC-4536-9125-97B84C4FAF59",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/11/04/cisa-adds-one-known-exploited-vulnerability-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.04",
+              "dateReleased": "2026-11-04T20:00:05.774Z",
+              "retrievedAt": "2026-11-05T19:23:16.369Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-107441%2CCVE-2024-27834",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2024-27834",
+              "retrievedAt": "2026-11-05T19:23:16.369Z"
+            }
+          }
+        }
+      ],
+      "id": "s40"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1280,
+    "promptCacheMissTokens": 11475,
+    "outputTokens": 10119,
+    "estimatedCostUsd": 0.004443404000000001
+  }
+}
