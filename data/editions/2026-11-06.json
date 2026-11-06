@@ -1,0 +1,1036 @@
+{
+  "date": "2026-11-06",
+  "generatedAt": "2026-11-06T18:47:08.394Z",
+  "collection": [
+    {
+      "sourceId": "krebs",
+      "attemptedAt": "2026-11-06T18:47:08.394Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "attemptedAt": "2026-11-06T18:47:08.394Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "thehackernews",
+      "attemptedAt": "2026-11-06T18:47:08.394Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "therecord",
+      "attemptedAt": "2026-11-06T18:47:08.394Z",
+      "status": "ok",
+      "items": 5,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securityweek",
+      "attemptedAt": "2026-11-06T18:47:08.394Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "darkreading",
+      "attemptedAt": "2026-11-06T18:47:08.394Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "attemptedAt": "2026-11-06T18:47:08.394Z",
+      "status": "ok",
+      "items": 30,
+      "skipped": 0
+    },
+    {
+      "sourceId": "projectzero",
+      "attemptedAt": "2026-11-06T18:47:08.394Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securelist",
+      "attemptedAt": "2026-11-06T18:47:08.394Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "talos",
+      "attemptedAt": "2026-11-06T18:47:08.394Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "unit42",
+      "attemptedAt": "2026-11-06T18:47:08.394Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "microsoft-security",
+      "attemptedAt": "2026-11-06T18:47:08.394Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    }
+  ],
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 229,
+    "published": 45
+  },
+  "mode": "article",
+  "headline": "OpenSSH bypass draws immediate exploit attempts as Barracuda patches a root chain",
+  "standfirst": "Attempted exploitation of an OpenSSH authentication bypass began within hours of disclosure, with one honeypot rooted, while QNAP and WordPress users face live attacks and Barracuda patches an unauthenticated root chain.",
+  "bodyMarkdown": "## Actively exploited\n\nThreat actors began attempting to exploit CVE-2026-123158, an OpenSSH authentication bypass nicknamed SSHole, within hours of disclosure, and one honeypot was rooted, according to [[s8]]. The High-severity flaw (CVSS 8.1) affects Linux systems running OpenSSH on musl libc without PAM; NVD says some account configurations accept any password between 256 and 1,024 characters, and the excerpt notes sign-ins to accounts with no password set. Analysis: the narrow configuration still leaves exposed musl-based servers the story to watch.\n\nQNAP says hackers are exploiting the Plex2Shell vulnerability chain against NAS devices and urges users to update Plex Media Server to the latest version in the QNAP App Center [[s4]]. The supplied excerpt gives no CVE, affected versions or post-exploitation detail, so exposed appliances remain the immediate concern.\n\nSites running an actively exploited WordPress flaw can be exposed again while installing the fix, because the update unpacks files using the site's old, unpatched code; an attacker who strikes at the right moment can run code on the server [[s6]]. Analysis: the patch window itself becomes part of the incident response.\n\n## Breaches\n\nChainalysis says an attack on its systems and internal tools exposed credentials and live tokens for all customers [[s13]]. Analysis: that makes it a customer-wide credential problem, not just a vendor incident.\n\n## Vulnerabilities\n\nBarracuda's Email Security Gateway has two flaws that researchers chained to run commands as root with no login; patches are available and the chain has been detailed publicly [[s31]]. The named flaw, CVE-2026-116606, is Critical (CVSS 9.3) in versions earlier than 9.4.0.030: an unauthenticated remote attacker can invoke a configuration-import function and restore a crafted backup archive, modifying the appliance's global configuration. The second flaw and the chain's full prerequisites were not supplied.\n\nD-Link has published mitigation measures for multiple unpatched zero-days in DGS-3130 series managed switches, with no patches supplied in the excerpt [[s19]]. Analysis: for those models, mitigation is the only near-term defense.\n\n## Industry\n\nThe FBI and CISA warn that hackers are actively targeting industrial refrigeration and cold-chain monitoring systems worldwide, with potential food spoilage, equipment damage and fire hazards [[s33]]. Analysis: that puts physical safety and supply-chain continuity, not just data confidentiality, in the threat model.\n\n## Research\n\nAPT29, described as Russian state-sponsored, is compromising websites, fingerprinting visitors and harvesting information from the interesting ones, in a campaign targeting thousands of mobile users [[s42]]. Analysis: the mobile focus suggests watering-hole tradecraft tuned to a different endpoint.",
+  "selected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Hackers Target OpenSSH SSHole Flaw Within Hours of Disclosure, Gain Root on Honeypot",
+      "url": "https://thehackernews.com/2026/11/hackers-exploited-openssh-sshole-flaw.html",
+      "publishedAt": "2026-11-06T15:21:49.000Z",
+      "excerpt": "Threat actors are attempting to exploit a recently disclosed security flaw impacting OpenSSH that can enable sign-ins to accounts that have no password set, according to Previdian. The vulnerability, tracked as CVE-2026-123158 (CVSS score: 8.1) and codenamed SSHole (or *sshole), impacts Linux systems that run OpenSSH on the musl C library with Pluggable Authentication Modules (PAM) disabled,",
+      "canonicalUrl": "https://thehackernews.com/2026/11/hackers-exploited-openssh-sshole-flaw.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/hackers-exploited-openssh-sshole-flaw.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-123158",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "sshd in OpenSSH before 10.6p2 on Linux, when musl libc is used without PAM, lacks a workaround for a password authentication bypass (related to misinterpretation of whether a string is intended to be a password hash). For some configurations of accounts, any password between 256 and 1024 characters succeeds. An example of a platform using musl libc without PAM is Alpine Linux.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.1,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "cve@mitre.org",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-394"
+            ],
+            "published": "2026-11-05T16:17:47.110",
+            "lastModified": "2026-11-06T05:18:26.710",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://github.com/leonjza/sshhole-lab",
+                "source": "cve@mitre.org",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/openssh/openssh-portable/commit/4353fdc43ef646c43a8dda7025cc1a898caf1482",
+                "source": "cve@mitre.org",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/predkambrij/sshhole-repro",
+                "source": "cve@mitre.org",
+                "tags": []
+              },
+              {
+                "url": "https://hachyderm.io/@damienmiller/117563026759098135",
+                "source": "cve@mitre.org",
+                "tags": []
+              },
+              {
+                "url": "https://marc.info/?l=openssh-unix-dev&m=179388064263131&w=2",
+                "source": "cve@mitre.org",
+                "tags": []
+              },
+              {
+                "url": "https://news.ycombinator.com/item?id=50377976",
+                "source": "cve@mitre.org",
+                "tags": []
+              },
+              {
+                "url": "https://news.ycombinator.com/item?id=50378228",
+                "source": "cve@mitre.org",
+                "tags": []
+              },
+              {
+                "url": "https://www.openssh.org/releasenotes.html#10.6p2",
+                "source": "cve@mitre.org",
+                "tags": []
+              },
+              {
+                "url": "https://alpinelinux.org/posts/2026-11-05-openssh-password-authentication-bypass/",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": []
+              },
+              {
+                "url": "https://github.com/google/goonami-scanner/pull/277",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": []
+              },
+              {
+                "url": "https://news.ycombinator.com/item?id=50379704",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": []
+              },
+              {
+                "url": "https://sshhole.com",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/11/hackers-exploited-openssh-sshole-flaw.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.04",
+              "dateReleased": "2026-11-04T20:00:05.774Z",
+              "retrievedAt": "2026-11-06T18:47:08.394Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-123158%2CCVE-2026-83844%2CCVE-2026-116606",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-123158",
+              "retrievedAt": "2026-11-06T18:47:08.394Z"
+            }
+          }
+        }
+      ],
+      "id": "s8",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "Attempted exploitation began within hours of disclosure and one honeypot was rooted, showing the OpenSSH SSHole auth bypass is an immediate threat to exposed musl-based servers."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "QNAP says hackers breaching NAS devices in Plex2Shell attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/qnap-says-hackers-breaching-nas-devices-in-plex2shell-attacks/",
+      "publishedAt": "2026-11-06T17:04:23.000Z",
+      "excerpt": "QNAP urges users to update Plex Media Server to the latest version available in the QNAP App Center, as hackers are exploiting the Plex2Shell vulnerability chain. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/qnap-says-hackers-breaching-nas-devices-in-plex2shell-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/qnap-says-hackers-breaching-nas-devices-in-plex2shell-attacks"
+      ],
+      "cves": [],
+      "id": "s4",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "QNAP confirms live Plex2Shell attacks against NAS devices, so exposed appliances are an immediate attack surface for data theft or disruption."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Installing the Fix for an Exploited WordPress Flaw Can Expose Some Sites One Last Time",
+      "url": "https://thehackernews.com/2026/11/installing-fix-for-exploited-wordpress.html",
+      "publishedAt": "2026-11-06T16:08:38.000Z",
+      "excerpt": "Some WordPress sites can still be attacked while they install the fix for an actively exploited flaw, according to Umut Bayram, the Picus Security researcher who found it. The update that installs the fix still unpacks its files using the site's old, unpatched code, so an attacker who strikes at the right moment can run code on the server. The researcher advises blocking web access to the",
+      "canonicalUrl": "https://thehackernews.com/2026/11/installing-fix-for-exploited-wordpress.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/installing-fix-for-exploited-wordpress.html"
+      ],
+      "cves": [],
+      "id": "s6",
+      "section": "exploited",
+      "rank": 3,
+      "angle": "A fix for an actively exploited WordPress flaw can temporarily expose sites during installation, complicating emergency patching."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Chainalysis says breach exposed credentials for all customers",
+      "url": "https://www.bleepingcomputer.com/news/security/chainalysis-says-breach-exposed-credentials-for-all-customers/",
+      "publishedAt": "2026-11-06T14:17:07.000Z",
+      "excerpt": "Blockchain intelligence firm Chainalysis says a recent attack on its systems and internal tools has exposed credentials and live tokens for all customers. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/chainalysis-says-breach-exposed-credentials-for-all-customers",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/chainalysis-says-breach-exposed-credentials-for-all-customers"
+      ],
+      "cves": [],
+      "id": "s13",
+      "section": "breaches",
+      "rank": 4,
+      "angle": "Chainalysis says credentials and live tokens for all customers were exposed, widening the blast radius of a security-vendor compromise."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Experts Demonstrate Barracuda Email Security Gateway Chain Enabling Root Access Without Login",
+      "url": "https://thehackernews.com/2026/11/experts-demonstrate-barracuda-email.html",
+      "publishedAt": "2026-11-06T05:39:10.000Z",
+      "excerpt": "Two flaws in Barracuda's Email Security Gateway, an email-filtering appliance, can be chained to run commands on it as root, its highest level of access, with no login required. The company released patches on Monday, and the security firm watchTowr detailed the attack chain on Thursday. One flaw, CVE-2026-116606, is an authorization bypass. An unauthenticated attacker can use it to restore a",
+      "canonicalUrl": "https://thehackernews.com/2026/11/experts-demonstrate-barracuda-email.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/experts-demonstrate-barracuda-email.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-116606",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "An authentication bypass in Barracuda Email Security Gateway versions earlier than 9.4.0.030 allows an unauthenticated remote attacker to invoke a configuration-import function and restore a crafted, compatible backup archive, resulting in unauthorized modification of the appliance’s global configuration.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.3,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "mandiant-cve@google.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-288"
+            ],
+            "published": "2026-11-02T13:17:37.017",
+            "lastModified": "2026-11-03T05:18:31.200",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://github.com/mandiant/Vulnerability-Disclosures/blob/master/2026/MNDT-2026-0042.md",
+                "source": "mandiant-cve@google.com",
+                "tags": []
+              },
+              {
+                "url": "https://trust.barracuda.com/security/pre-authentication-authorization-bypass-command-injection",
+                "source": "mandiant-cve@google.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/11/experts-demonstrate-barracuda-email.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.04",
+              "dateReleased": "2026-11-04T20:00:05.774Z",
+              "retrievedAt": "2026-11-06T18:47:08.394Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-123158%2CCVE-2026-83844%2CCVE-2026-116606",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-116606",
+              "retrievedAt": "2026-11-06T18:47:08.394Z"
+            }
+          }
+        }
+      ],
+      "id": "s31",
+      "section": "vulnerabilities",
+      "rank": 5,
+      "angle": "Barracuda patches a critical chain that gives unauthenticated root on Email Security Gateway appliances, raising the stakes for internet-facing deployments."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "D-Link warns of multiple zero-days in DGS-3130 Series switches",
+      "url": "https://www.bleepingcomputer.com/news/security/d-link-warns-of-multiple-zero-days-in-dgs-3130-series-switches/",
+      "publishedAt": "2026-11-06T12:37:22.000Z",
+      "excerpt": "D-Link shared mitigation measures for multiple unpatched security flaws affecting DGS-3130 series managed Gigabit stackable switches. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/d-link-warns-of-multiple-zero-days-in-dgs-3130-series-switches",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/d-link-warns-of-multiple-zero-days-in-dgs-3130-series-switches"
+      ],
+      "cves": [],
+      "id": "s19",
+      "section": "vulnerabilities",
+      "rank": 6,
+      "angle": "D-Link has no patches for multiple zero-days in DGS-3130 switches, leaving mitigation as the only near-term defense."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "FBI, CISA warn of cyberattacks targeting refrigeration systems",
+      "url": "https://www.bleepingcomputer.com/news/security/fbi-cisa-warn-of-cyberattacks-targeting-refrigeration-systems/",
+      "publishedAt": "2026-11-06T00:56:44.000Z",
+      "excerpt": "The FBI and CISA warn that hackers are actively targeting industrial refrigeration and cold-chain monitoring systems worldwide, potentially causing food spoilage, equipment damage, and fire hazards. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/fbi-cisa-warn-of-cyberattacks-targeting-refrigeration-systems",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/fbi-cisa-warn-of-cyberattacks-targeting-refrigeration-systems"
+      ],
+      "cves": [],
+      "id": "s33",
+      "section": "industry",
+      "rank": 7,
+      "angle": "FBI and CISA warn of active attacks on refrigeration and cold-chain systems, making physical safety and supply-chain disruption part of the threat model."
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "APT29's Watering Holes Target Thousands of Mobile Users",
+      "url": "https://www.darkreading.com/mobile-security/apt29-watering-holes-target-mobile-users",
+      "publishedAt": "2026-11-05T20:05:39.000Z",
+      "excerpt": "After compromising websites, the Russian state-sponsored threat group is fingerprinting victims, then harvesting information from the interesting ones.",
+      "canonicalUrl": "https://darkreading.com/mobile-security/apt29-watering-holes-target-mobile-users",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/mobile-security/apt29-watering-holes-target-mobile-users"
+      ],
+      "cves": [],
+      "id": "s42",
+      "section": "research",
+      "rank": 8,
+      "angle": "APT29 is compromising websites to fingerprint and harvest mobile users, showing watering-hole campaigns shifting to mobile victims."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Fake security tools on GitHub push backdoors and infostealers",
+      "url": "https://www.bleepingcomputer.com/news/security/fake-security-tools-on-github-push-backdoors-and-infostealers/",
+      "publishedAt": "2026-11-06T18:46:52.000Z",
+      "excerpt": "Cybersecurity professionals are being targeted with infected security projects on GitHub that deploy a backdoor and information stealer malware. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/fake-security-tools-on-github-push-backdoors-and-infostealers",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/fake-security-tools-on-github-push-backdoors-and-infostealers"
+      ],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Japan Announces Emergency Cybersecurity Package Following a Wave of Attacks",
+      "url": "https://www.securityweek.com/japan-announces-emergency-cybersecurity-package-following-a-wave-of-attacks/",
+      "publishedAt": "2026-11-06T18:28:41.000Z",
+      "excerpt": "The emergency package comes after dozens of companies and government agencies were hit by unauthorized access to their systems and leaks of client data, prompting uneasiness across Japan. The post Japan Announces Emergency Cybersecurity Package Following a Wave of Attacks appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/japan-announces-emergency-cybersecurity-package-following-a-wave-of-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/japan-announces-emergency-cybersecurity-package-following-a-wave-of-attacks"
+      ],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "AI Gave Your Incident Archive a Second Job",
+      "url": "https://www.darkreading.com/cyber-risk/ai-gave-your-incident-archive-second-job",
+      "publishedAt": "2026-11-06T18:27:30.000Z",
+      "excerpt": "Security records are increasingly being used by vendors to train their models, creating new risks for enterprises.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/ai-gave-your-incident-archive-second-job",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyber-risk/ai-gave-your-incident-archive-second-job"
+      ],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "FBI agent pleads guilty to stealing $2.4 million in crypto from nation-state hackers",
+      "url": "https://therecord.media/fbi-agent-pleads-guilty-to-stealing-from-nation-state-hackers",
+      "publishedAt": "2026-11-06T16:53:00.000Z",
+      "excerpt": "Patrick Steven Yaroch, 37, is facing up to 20 years in prison on wire fraud and money laundering charges after admitting to using his position on an FBI investigative squad to steal more than $2.4 million in cryptocurrency to cover his debts.",
+      "canonicalUrl": "https://therecord.media/fbi-agent-pleads-guilty-to-stealing-from-nation-state-hackers",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/fbi-agent-pleads-guilty-to-stealing-from-nation-state-hackers"
+      ],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Veeam warns of Software Appliance boot failures on AMD EPYC hosts",
+      "url": "https://www.bleepingcomputer.com/news/security/veeam-software-appliance-vms-fail-to-boot-on-amd-epyc-hosts/",
+      "publishedAt": "2026-11-06T15:25:31.000Z",
+      "excerpt": "​Veeam warned customers about boot failures affecting Software Appliance virtual machines (VMs) on hosts with AMD EPYC processors. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/veeam-software-appliance-vms-fail-to-boot-on-amd-epyc-hosts",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/veeam-software-appliance-vms-fail-to-boot-on-amd-epyc-hosts"
+      ],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "IMSI vs IMEI: What Your Phone Broadcasts and Who Can Read It",
+      "url": "https://www.bleepingcomputer.com/news/security/imsi-vs-imei-what-your-phone-broadcasts-and-who-can-read-it/",
+      "publishedAt": "2026-11-06T15:00:10.000Z",
+      "excerpt": "IMSI and IMEI are IDs your phone shares with networks. Learn how they differ, how attackers get them, and why rotating your IMSI blunts tracking. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/imsi-vs-imei-what-your-phone-broadcasts-and-who-can-read-it",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/imsi-vs-imei-what-your-phone-broadcasts-and-who-can-read-it"
+      ],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "OpenAI Launches GPT-6 Cyber After AI Helps Find 81 Firefox Flaws, 948 Linux Exploits",
+      "url": "https://thehackernews.com/2026/11/openai-launches-gpt-6-cyber-after-ai.html",
+      "publishedAt": "2026-11-06T14:58:32.000Z",
+      "excerpt": "OpenAI on Thursday unveiled GPT‑6 Cyber, which it described as a major step forward in security research that brings together stronger cybersecurity capabilities with a step-change improvement in model alignment. The new model is \"more capable at finding and fixing vulnerabilities, and far more reliable staying within the boundaries researchers set,\" OpenAI said. It has classified the model as",
+      "canonicalUrl": "https://thehackernews.com/2026/11/openai-launches-gpt-6-cyber-after-ai.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/openai-launches-gpt-6-cyber-after-ai.html"
+      ],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "In Other News: Trezor Implant, LLMJacking Bills Hit $1M, SAP Flaws Weaponized Within Days",
+      "url": "https://www.securityweek.com/in-other-news-trezor-implant-llmjacking-bills-hit-1m-sap-flaws-weaponized-within-days/",
+      "publishedAt": "2026-11-06T14:40:09.000Z",
+      "excerpt": "Noteworthy stories that might have slipped under the radar: Synology warns about NAS ransomware attacks, Flowise ‘hello’ attacks, Chainalysis breach impact expands. The post In Other News: Trezor Implant, LLMJacking Bills Hit $1M, SAP Flaws Weaponized Within Days appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/in-other-news-trezor-implant-llmjacking-bills-hit-1m-sap-flaws-weaponized-within-days",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/in-other-news-trezor-implant-llmjacking-bills-hit-1m-sap-flaws-weaponized-within-days"
+      ],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "CEO-spoofing scammers used AI to help steal more than $100 million, feds say",
+      "url": "https://therecord.media/ceo-spoofing-scammers-charged",
+      "publishedAt": "2026-11-06T14:30:00.000Z",
+      "excerpt": "The U.S. is working on extraditing three suspects from Europe in a case involving more than $100 million in fraud from CEO impersonations.",
+      "canonicalUrl": "https://therecord.media/ceo-spoofing-scammers-charged",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/ceo-spoofing-scammers-charged"
+      ],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "DigiCert Data Breach Impacts Business Customer Information",
+      "url": "https://www.securityweek.com/digicert-data-breach-impacts-business-customer-information/",
+      "publishedAt": "2026-11-06T14:00:07.000Z",
+      "excerpt": "Hackers created an account on an internal system and accessed names, email addresses, phone numbers, and business addresses. The post DigiCert Data Breach Impacts Business Customer Information appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/digicert-data-breach-impacts-business-customer-information",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/digicert-data-breach-impacts-business-customer-information"
+      ],
+      "cves": [],
+      "id": "s14"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Why Europe's Freezer Hacks Spread So Far, So Fast",
+      "url": "https://www.darkreading.com/ics-ot-security/europes-freezer-hacks-spread-so-far-so-fast",
+      "publishedAt": "2026-11-06T14:00:00.000Z",
+      "excerpt": "Europe's supermarket freezer hacks show how security issues can cascade across an industry, disrupting supply chains at scale.",
+      "canonicalUrl": "https://darkreading.com/ics-ot-security/europes-freezer-hacks-spread-so-far-so-fast",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/ics-ot-security/europes-freezer-hacks-spread-so-far-so-fast"
+      ],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "OpenAI Says New GPT-6 Cyber Model Hunts Flaws Without Crossing the Line",
+      "url": "https://www.securityweek.com/openai-says-new-gpt-6-cyber-model-hunts-flaws-without-crossing-the-line/",
+      "publishedAt": "2026-11-06T13:19:52.000Z",
+      "excerpt": "Rated Critical for cybersecurity, OpenAI’s new model beats GPT-5.6 Cyber at exploitation while staying in scope more reliably. The post OpenAI Says New GPT-6 Cyber Model Hunts Flaws Without Crossing the Line appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/openai-says-new-gpt-6-cyber-model-hunts-flaws-without-crossing-the-line",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/openai-says-new-gpt-6-cyber-model-hunts-flaws-without-crossing-the-line"
+      ],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "US Agencies Urge Organizations to Harden Refrigeration Controllers",
+      "url": "https://www.securityweek.com/us-agencies-urge-organizations-to-harden-refrigeration-controllers/",
+      "publishedAt": "2026-11-06T13:02:26.000Z",
+      "excerpt": "The recommendations come amid attacks targeting fridges and freezers in supermarkets and blood banks in Europe. The post US Agencies Urge Organizations to Harden Refrigeration Controllers appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/us-agencies-urge-organizations-to-harden-refrigeration-controllers",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/us-agencies-urge-organizations-to-harden-refrigeration-controllers"
+      ],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Grocery Giant Ahold Delhaize Estimates Financial Toll of October Cyberattack",
+      "url": "https://www.securityweek.com/grocery-giant-ahold-delhaize-estimates-financial-toll-of-october-cyberattack/",
+      "publishedAt": "2026-11-06T12:47:55.000Z",
+      "excerpt": "The October incident will cut fourth-quarter sales by up to €250 million and has led Ahold Delhaize to lower its 2026 outlook. The post Grocery Giant Ahold Delhaize Estimates Financial Toll of October Cyberattack appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/grocery-giant-ahold-delhaize-estimates-financial-toll-of-october-cyberattack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/grocery-giant-ahold-delhaize-estimates-financial-toll-of-october-cyberattack"
+      ],
+      "cves": [],
+      "id": "s18"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Researchers Find Residential Proxies on White House Network",
+      "url": "https://www.securityweek.com/researchers-find-residential-proxies-on-white-house-network/",
+      "publishedAt": "2026-11-06T12:16:13.000Z",
+      "excerpt": "In a month, 28 residential proxy services used 6 addresses, mainly between 5 p.m. and midnight, Eastern Time. The post Researchers Find Residential Proxies on White House Network appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/researchers-find-residential-proxies-on-white-house-network",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/researchers-find-residential-proxies-on-white-house-network"
+      ],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "OpenSSH Rushes Patches for ‘SSHole’ Authentication Bypass",
+      "url": "https://www.securityweek.com/openssh-rushes-patches-for-sshole-authentication-bypass/",
+      "publishedAt": "2026-11-06T12:07:42.000Z",
+      "excerpt": "On Linux distributions using musl libc without PAM, some accounts accept any password between 257 and 1024 characters. The post OpenSSH Rushes Patches for ‘SSHole’ Authentication Bypass appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/openssh-rushes-patches-for-sshole-authentication-bypass",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/openssh-rushes-patches-for-sshole-authentication-bypass"
+      ],
+      "cves": [],
+      "id": "s21"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Microsoft Paint RCE Fix Now Available, but Windows Update Won't Deliver It",
+      "url": "https://thehackernews.com/2026/11/microsoft-paint-rce-fix-now-available.html",
+      "publishedAt": "2026-11-06T12:06:43.000Z",
+      "excerpt": "A fix for CVE-2026-83844, a remote code execution flaw in Windows Paint, is now in the Microsoft Store. Paint gets this fix only through a Store update, not through Windows updates. The fixed build, 11.2609.401.0, was the newest Paint build in all ten countries The Hacker News checked today. The flaw is an out-of-bounds read that could let an attacker run code over a network. Microsoft rates",
+      "canonicalUrl": "https://thehackernews.com/2026/11/microsoft-paint-rce-fix-now-available.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/microsoft-paint-rce-fix-now-available.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-83844",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Out-of-bounds read in Windows Paint allows an unauthorized attacker to execute code over a network.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.1,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "secure@microsoft.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-125"
+            ],
+            "published": "2026-10-13T19:20:32.890",
+            "lastModified": "2026-10-13T21:18:55.230",
+            "vulnStatus": "Undergoing Analysis",
+            "references": [
+              {
+                "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-83844",
+                "source": "secure@microsoft.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/11/microsoft-paint-rce-fix-now-available.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.04",
+              "dateReleased": "2026-11-04T20:00:05.774Z",
+              "retrievedAt": "2026-11-06T18:47:08.394Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-123158%2CCVE-2026-83844%2CCVE-2026-116606",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-83844",
+              "retrievedAt": "2026-11-06T18:47:08.394Z"
+            }
+          }
+        }
+      ],
+      "id": "s22"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Malicious Browser Extensions Could Use Claude Dispatch to Run Code on Users' Computers",
+      "url": "https://thehackernews.com/2026/11/malicious-browser-extensions-could-use.html",
+      "publishedAt": "2026-11-06T12:06:35.000Z",
+      "excerpt": "A browser extension that can run scripts on claude.ai could make Claude Desktop run code on a person's computer, researchers at Forever Security, an endpoint security company, showed in a test. The attack needs Dispatch, a Claude feature that lets people send tasks from their phone to Claude Desktop. The flaw that makes this possible can still be exploited, the researchers said earlier this",
+      "canonicalUrl": "https://thehackernews.com/2026/11/malicious-browser-extensions-could-use.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/malicious-browser-extensions-could-use.html"
+      ],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "The Flood is Coming And The Pipes Were Already Full",
+      "url": "https://thehackernews.com/2026/11/the-flood-is-coming-and-pipes-were.html",
+      "publishedAt": "2026-11-06T11:30:00.000Z",
+      "excerpt": "An update on Athena, and some unsolicited predictions on what's coming next On Saturday, Dario Amodei published We Must Pace the Frontier. I agree with him. Go read it if you haven't. I've spent the summer looking at what these models find, and the gap he describes between what they can do and what the rest of us are ready for is the one I've been staring at since May. The hardest piece of his",
+      "canonicalUrl": "https://thehackernews.com/2026/11/the-flood-is-coming-and-pipes-were.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/the-flood-is-coming-and-pipes-were.html"
+      ],
+      "cves": [],
+      "id": "s24"
+    },
+    {
+      "sourceId": "securelist",
+      "sourceKind": "rss",
+      "title": "Virtualization security: attack layers and misconfiguration impact",
+      "url": "https://securelist.com/virtualization-security-esxi-and-proxmox-ransomware-cases/121819/",
+      "publishedAt": "2026-11-06T10:00:12.000Z",
+      "excerpt": "A detailed breakdown of misconfigurations in virtual environment cybersecurity as shown by examples of ransomware cases on ESXi and Proxmox environments.",
+      "canonicalUrl": "https://securelist.com/virtualization-security-esxi-and-proxmox-ransomware-cases/121819",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securelist.com/virtualization-security-esxi-and-proxmox-ransomware-cases/121819"
+      ],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "OpenAI Model Wrote Its Own Network Code to Get Around Sandbox Restrictions",
+      "url": "https://www.securityweek.com/openai-model-wrote-its-own-network-code-to-get-around-sandbox-restrictions/",
+      "publishedAt": "2026-11-06T09:33:51.000Z",
+      "excerpt": "After its sandbox proxy failed, an internal OpenAI model crafted raw packets and probed AWS services trying to reach the internet. The post OpenAI Model Wrote Its Own Network Code to Get Around Sandbox Restrictions appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/openai-model-wrote-its-own-network-code-to-get-around-sandbox-restrictions",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/openai-model-wrote-its-own-network-code-to-get-around-sandbox-restrictions"
+      ],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "MetaMask says recent attack didn't affect wallet infrastructure",
+      "url": "https://www.bleepingcomputer.com/news/security/metamask-says-recent-attack-didnt-affect-wallet-infrastructure/",
+      "publishedAt": "2026-11-06T09:22:28.000Z",
+      "excerpt": "Cryptocurrency wallet provider MetaMask said a recent security incident has not affected MetaMask wallets or its wallet infrastructure. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/metamask-says-recent-attack-didnt-affect-wallet-infrastructure",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/metamask-says-recent-attack-didnt-affect-wallet-infrastructure"
+      ],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "UK Warns Its Critical Infrastructure Faces Grave Risk",
+      "url": "https://www.darkreading.com/cybersecurity-operations/uk-warns-critical-infrastructure-grave-risk",
+      "publishedAt": "2026-11-06T09:00:00.000Z",
+      "excerpt": "Britain's new Labour-led government is making a concerted push to get ahead of the AI risks to its national networks and the industrial complex.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/uk-warns-critical-infrastructure-grave-risk",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cybersecurity-operations/uk-warns-critical-infrastructure-grave-risk"
+      ],
+      "cves": [],
+      "id": "s28"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Chainalysis Breach Exposes All Users' Credentials, Forces Shutdown of Key Services",
+      "url": "https://thehackernews.com/2026/11/chainalysis-breach-exposes-all-users.html",
+      "publishedAt": "2026-11-06T08:04:49.000Z",
+      "excerpt": "Blockchain analysis firm Chainalysis has revealed that its ongoing investigation into the agentic cyber attack targeting its systems also exposed names, usernames, password hashes and live tokens for all users. \"While we investigated, we removed access to Reactor and Data Solutions,\" the company said. \"At this time we continue to have no evidence that any investigations data has been accessed",
+      "canonicalUrl": "https://thehackernews.com/2026/11/chainalysis-breach-exposes-all-users.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/chainalysis-breach-exposes-all-users.html"
+      ],
+      "cves": [],
+      "id": "s29"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Hackers Hide Linux Backdoor in Control Web Panel Server to Execute Commands Without Logs",
+      "url": "https://thehackernews.com/2026/11/hackers-hide-linux-backdoor-in-control.html",
+      "publishedAt": "2026-11-06T05:58:54.000Z",
+      "excerpt": "A backdoor has been found hiding in the web server that runs Control Web Panel (CWP), a free panel for managing Linux hosting servers, researchers at QiAnXin's XLab said this week. The backdoored web server executes commands that attackers send via web requests, and those requests never appear in its access logs. Installing it takes root access, so the attackers must already control the server.",
+      "canonicalUrl": "https://thehackernews.com/2026/11/hackers-hide-linux-backdoor-in-control.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/hackers-hide-linux-backdoor-in-control.html"
+      ],
+      "cves": [],
+      "id": "s30"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "3 Charged in Scheme to Use AI to Impersonate CEOs and Attorneys to Steal $129 Million",
+      "url": "https://www.securityweek.com/3-charged-in-scheme-to-use-ai-to-impersonate-ceos-and-attorneys-to-steal-129-million/",
+      "publishedAt": "2026-11-06T03:03:29.000Z",
+      "excerpt": "The trio, who have nicknames that include “Rocky Balboa,” “Superman Cash” and “Fat Boy,” often targeted the companies’ accounting departments. The post 3 Charged in Scheme to Use AI to Impersonate CEOs and Attorneys to Steal $129 Million appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/3-charged-in-scheme-to-use-ai-to-impersonate-ceos-and-attorneys-to-steal-129-million",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/3-charged-in-scheme-to-use-ai-to-impersonate-ceos-and-attorneys-to-steal-129-million"
+      ],
+      "cves": [],
+      "id": "s32"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "EU accuses TikTok of trapping users in harmful ‘rabbit holes’",
+      "url": "https://therecord.media/eu-accuses-tiktok-of-rabbit-hole-DSA-violation",
+      "publishedAt": "2026-11-06T00:00:00.000Z",
+      "excerpt": "The European Commission accused TikTok on Friday of failing to prevent its recommendation algorithm from drawing users into “rabbit holes” of content about sadness, self-harm and body image.",
+      "canonicalUrl": "https://therecord.media/eu-accuses-tiktok-of-rabbit-hole-DSA-violation",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/eu-accuses-tiktok-of-rabbit-hole-DSA-violation"
+      ],
+      "cves": [],
+      "id": "s34"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "Threat actors use agentic AI tooling to find and abuse exposed secrets",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/11/05/threat-actors-use-agentic-ai-tooling-to-find-and-abuse-exposed-secrets/",
+      "publishedAt": "2026-11-05T23:46:50.000Z",
+      "excerpt": "Microsoft Threat Intelligence has observed threat actors using the agentic offensive security framework ARTEX to search GitHub for OAuth application secrets, which can be used to compromise the associated OAuth application and perform authenticated actions in the application’s tenant. Agents operating on behalf of threat actors then used the compromised OAuth applications to perform a variety of…",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/11/05/threat-actors-use-agentic-ai-tooling-to-find-and-abuse-exposed-secrets",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://microsoft.com/en-us/security/blog/2026/11/05/threat-actors-use-agentic-ai-tooling-to-find-and-abuse-exposed-secrets"
+      ],
+      "cves": [],
+      "id": "s35"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Queens Public Library says ransomware attack disrupted Wi-Fi, on-site computers",
+      "url": "https://therecord.media/queens-library-ransomware-causes-disruptions",
+      "publishedAt": "2026-11-05T22:08:00.000Z",
+      "excerpt": "The library system, which has 66 branches serving the borough’s 2.3 million residents, published multiple alerts on Wednesday confirming that the disruption was caused by a ransomware attack.",
+      "canonicalUrl": "https://therecord.media/queens-library-ransomware-causes-disruptions",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/queens-library-ransomware-causes-disruptions"
+      ],
+      "cves": [],
+      "id": "s36"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "US Government Email Systems Open to Abuse Thanks to Typos",
+      "url": "https://www.darkreading.com/cybersecurity-operations/us-government-email-systems-abuse-typos",
+      "publishedAt": "2026-11-05T21:35:05.000Z",
+      "excerpt": "Erroneous or outdated DNS records can give attackers surprising powers over organizations' email systems.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/us-government-email-systems-abuse-typos",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cybersecurity-operations/us-government-email-systems-abuse-typos"
+      ],
+      "cves": [],
+      "id": "s37"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Fake OpenAI, SpaceX events used to steal Microsoft, Google accounts",
+      "url": "https://www.bleepingcomputer.com/news/security/fake-openai-spacex-events-used-to-steal-microsoft-google-accounts/",
+      "publishedAt": "2026-11-05T21:30:30.000Z",
+      "excerpt": "Hackers are using fake OpenAI, SpaceX, and Anthropic event invitations to lure employees into phishing attacks, using two different phishing-as-a-service platforms to steal Microsoft and Google account credentials and authentication sessions. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/fake-openai-spacex-events-used-to-steal-microsoft-google-accounts",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/fake-openai-spacex-events-used-to-steal-microsoft-google-accounts"
+      ],
+      "cves": [],
+      "id": "s38"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "What We Missed: Knicks Phishing Test Goes Out of Bounds",
+      "url": "https://www.darkreading.com/cyber-risk/what-we-missed-knicks-phishing-test-out-of-bounds",
+      "publishedAt": "2026-11-05T21:00:47.000Z",
+      "excerpt": "In this video conversation, Dark Reading editors discuss some of the news they didn't get a chance to cover, from an ill-conceived phishing simulation to a hacktivist attack on a US government agency.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/what-we-missed-knicks-phishing-test-out-of-bounds",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyber-risk/what-we-missed-knicks-phishing-test-out-of-bounds"
+      ],
+      "cves": [],
+      "id": "s39"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Social media giants sue California to overturn law shielding kids 15 and under from compulsive use",
+      "url": "https://therecord.media/social-media-giants-sue-california-over-social-media-law",
+      "publishedAt": "2026-11-05T20:48:00.000Z",
+      "excerpt": "Google, Meta and TikTok each filed suit in federal court against an incoming California law that blocks platforms from deploying features considered “psychologically exploitative.”",
+      "canonicalUrl": "https://therecord.media/social-media-giants-sue-california-over-social-media-law",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/social-media-giants-sue-california-over-social-media-law"
+      ],
+      "cves": [],
+      "id": "s40"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Nearly 1.5 million exposed secrets targeted in new revocation program",
+      "url": "https://www.bleepingcomputer.com/news/security/truffle-security-launches-program-to-revoke-14-million-live-secrets/",
+      "publishedAt": "2026-11-05T20:15:08.000Z",
+      "excerpt": "Truffle Security has launched the Secrets Revocation Program, a free initiative that helps API key issuers revoke 1.4 million publicly exposed secrets that remain valid. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/truffle-security-launches-program-to-revoke-14-million-live-secrets",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/truffle-security-launches-program-to-revoke-14-million-live-secrets"
+      ],
+      "cves": [],
+      "id": "s41"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "OpenAI’s GPT-6 Astra silently obstructed safety research tasks",
+      "url": "https://www.bleepingcomputer.com/news/security/openais-gpt-6-astra-silently-obstructed-safety-research-tasks/",
+      "publishedAt": "2026-11-05T19:24:26.000Z",
+      "excerpt": "OpenAI has disclosed another AI alignment incident where GPT-6 Astra was found to sometimes quietly withhold help on safety research. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/openais-gpt-6-astra-silently-obstructed-safety-research-tasks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/openais-gpt-6-astra-silently-obstructed-safety-research-tasks"
+      ],
+      "cves": [],
+      "id": "s43"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "OpenSSH Issues Emergency Fix for Flaw Letting Long Passwords Bypass SSH Auth on Alpine Linux",
+      "url": "https://thehackernews.com/2026/11/openssh-issues-emergency-fix-for-flaw.html",
+      "publishedAt": "2026-11-05T16:42:46.000Z",
+      "excerpt": "Attackers can log in to accounts that have no password, such as SSH key-only accounts, on some Alpine Linux servers running the standard openssh-server package. They need network access to the server, an account name, and a password between 257 and 1,024 bytes long. OpenSSH, which rates the flaw critical, released version 10.6p2 today to block it. Alpine has published fixed packages for every",
+      "canonicalUrl": "https://thehackernews.com/2026/11/openssh-issues-emergency-fix-for-flaw.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/openssh-issues-emergency-fix-for-flaw.html"
+      ],
+      "cves": [],
+      "id": "s44"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Researchers Bypass ChatGPT Lockdown Mode to Exfiltrate Chats Without User Interaction",
+      "url": "https://thehackernews.com/2026/11/researchers-bypass-chatgpt-lockdown.html",
+      "publishedAt": "2026-11-05T16:42:32.000Z",
+      "excerpt": "Cybersecurity researchers have disclosed details of a now-patched vulnerability that could be exploited to bypass Lockdown Mode protections in OpenAI ChatGPT. Lockdown Mode was introduced by the artificial intelligence (AI) company in June 2026 as an optional setting to minimize data exfiltration risks arising from prompt injections. \"The flaw could enable silent chat data theft, phishing,",
+      "canonicalUrl": "https://thehackernews.com/2026/11/researchers-bypass-chatgpt-lockdown.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/researchers-bypass-chatgpt-lockdown.html"
+      ],
+      "cves": [],
+      "id": "s45"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1280,
+    "promptCacheMissTokens": 8370,
+    "outputTokens": 14774,
+    "estimatedCostUsd": 0.005312104
+  }
+}

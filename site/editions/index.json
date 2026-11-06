@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-11-06",
+    "mode": "article",
+    "headline": "OpenSSH bypass draws immediate exploit attempts as Barracuda patches a root chain",
+    "count": 45
+  },
+  {
     "date": "2026-11-05",
     "mode": "article",
     "headline": "CISA lists a patched Apple auth bypass as exploited, as a Zyxel zero-day's toll nears 1,000 switches",
