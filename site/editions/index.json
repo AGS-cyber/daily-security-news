@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-11-07",
+    "mode": "article",
+    "headline": "SonicWall's exploited SAML bypass leads a day of third-party and AI-agent breaches",
+    "count": 14
+  },
+  {
     "date": "2026-11-06",
     "mode": "article",
     "headline": "OpenSSH bypass draws immediate exploit attempts as Barracuda patches a root chain",
