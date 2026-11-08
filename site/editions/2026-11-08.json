@@ -1,0 +1,150 @@
+{
+  "date": "2026-11-08",
+  "generatedAt": "2026-11-08T17:30:16.898Z",
+  "collection": [
+    {
+      "sourceId": "krebs",
+      "attemptedAt": "2026-11-08T17:30:16.898Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "attemptedAt": "2026-11-08T17:30:16.898Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "thehackernews",
+      "attemptedAt": "2026-11-08T17:30:16.898Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "therecord",
+      "attemptedAt": "2026-11-08T17:30:16.898Z",
+      "status": "ok",
+      "items": 5,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securityweek",
+      "attemptedAt": "2026-11-08T17:30:16.898Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "darkreading",
+      "attemptedAt": "2026-11-08T17:30:16.898Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "attemptedAt": "2026-11-08T17:30:16.898Z",
+      "status": "ok",
+      "items": 30,
+      "skipped": 0
+    },
+    {
+      "sourceId": "projectzero",
+      "attemptedAt": "2026-11-08T17:30:16.898Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securelist",
+      "attemptedAt": "2026-11-08T17:30:16.898Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "talos",
+      "attemptedAt": "2026-11-08T17:30:16.898Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "unit42",
+      "attemptedAt": "2026-11-08T17:30:16.898Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "microsoft-security",
+      "attemptedAt": "2026-11-08T17:30:16.898Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    }
+  ],
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 229,
+    "published": 2
+  },
+  "mode": "article",
+  "headline": "Iris Ohyama Cloud Breach May Expose 7.7M",
+  "standfirst": "A third-party cloud breach at Iris Ohyama may have exposed 7.7 million people's data; Brava Security launched with $15 million for AI attack telemetry.",
+  "bodyMarkdown": "## Breaches\n\nIris Ohyama says unauthorized third-party cloud access may have exposed data on about 7.7 million people [[s1]]. Access details were not supplied.\n\n## Industry\n\nBrava Security emerged from stealth with $15 million for a multi-agent AI platform that generates telemetry an attack would produce to fix enterprise defense gaps [[s2]]. Analysis: investor interest in proactive AI defense continues; efficacy is unproven.",
+  "selected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Iris Ohyama data cloud breach exposes info of 7.7 million customers",
+      "url": "https://www.bleepingcomputer.com/news/security/iris-ohyama-data-cloud-breach-exposes-info-of-77-million-customers/",
+      "publishedAt": "2026-11-08T15:43:08.000Z",
+      "excerpt": "Japanese manufacturer Iris Ohyama, the operator of the Iris Plaza shopping platform, disclosed that personal information belonging to about 7.7 million people may have been exposed after unauthorized access to a third-party cloud service the company used. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/iris-ohyama-data-cloud-breach-exposes-info-of-77-million-customers",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/iris-ohyama-data-cloud-breach-exposes-info-of-77-million-customers"
+      ],
+      "cves": [],
+      "id": "s1",
+      "section": "breaches",
+      "rank": 1,
+      "angle": "A third-party cloud compromise exposed data on 7.7 million Iris Ohyama customers, underscoring cloud supply-chain and data governance risk."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Brava Security Emerges From Stealth With $15 Million in Funding",
+      "url": "https://www.securityweek.com/brava-security-emerges-from-stealth-with-15-million-in-funding/",
+      "publishedAt": "2026-11-08T12:14:00.000Z",
+      "excerpt": "Its multi-agent AI platform generates the telemetry an attack would produce to fix gaps in enterprise defenses. The post Brava Security Emerges From Stealth With $15 Million in Funding appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/brava-security-emerges-from-stealth-with-15-million-in-funding",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/brava-security-emerges-from-stealth-with-15-million-in-funding"
+      ],
+      "cves": [],
+      "id": "s2",
+      "section": "industry",
+      "rank": 2,
+      "angle": "Brava Security's $15M launch signals continued investor interest in AI-driven proactive enterprise defense and attack telemetry."
+    }
+  ],
+  "alsoCollected": [],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1280,
+    "promptCacheMissTokens": 971,
+    "outputTokens": 3668,
+    "estimatedCostUsd": 0.0011665640000000001
+  }
+}
