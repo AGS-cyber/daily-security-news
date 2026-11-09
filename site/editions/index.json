@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-11-09",
+    "mode": "article",
+    "headline": "CISA's four-flaw KEV batch leads a day of active exploitation and third-party trust failures",
+    "count": 42
+  },
+  {
     "date": "2026-11-08",
     "mode": "article",
     "headline": "Iris Ohyama Cloud Breach May Expose 7.7M",

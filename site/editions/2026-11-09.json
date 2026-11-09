@@ -1,0 +1,1991 @@
+{
+  "date": "2026-11-09",
+  "generatedAt": "2026-11-09T21:51:35.926Z",
+  "collection": [
+    {
+      "sourceId": "krebs",
+      "attemptedAt": "2026-11-09T21:51:35.926Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "attemptedAt": "2026-11-09T21:51:35.926Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "thehackernews",
+      "attemptedAt": "2026-11-09T21:51:35.926Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "therecord",
+      "attemptedAt": "2026-11-09T21:51:35.926Z",
+      "status": "ok",
+      "items": 5,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securityweek",
+      "attemptedAt": "2026-11-09T21:51:35.926Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "darkreading",
+      "attemptedAt": "2026-11-09T21:51:35.926Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "attemptedAt": "2026-11-09T21:51:35.926Z",
+      "status": "ok",
+      "items": 30,
+      "skipped": 0
+    },
+    {
+      "sourceId": "projectzero",
+      "attemptedAt": "2026-11-09T21:51:35.926Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securelist",
+      "attemptedAt": "2026-11-09T21:51:35.926Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "talos",
+      "attemptedAt": "2026-11-09T21:51:35.926Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "unit42",
+      "attemptedAt": "2026-11-09T21:51:35.926Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "microsoft-security",
+      "attemptedAt": "2026-11-09T21:51:35.926Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    }
+  ],
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 229,
+    "published": 42
+  },
+  "mode": "article",
+  "headline": "CISA's four-flaw KEV batch leads a day of active exploitation and third-party trust failures",
+  "standfirst": "CISA added four actively exploited flaws to its Known Exploited Vulnerabilities catalog and separately listed a SonicWall SSLVPN bypass, while exploitation also hit QNAP NAS devices and Keplr wallets. France attributed disruptive retail refrigeration attacks to Iranian state-backed hackers, N-able pulled hosted N-central offline over published alleged zero-days, and researchers described an AI-agent intrusion into Taipei dispatch records.",
+  "bodyMarkdown": "## Actively exploited\n\nCISA added four flaws to KEV on evidence of active exploitation: GPUStack improper authentication (CVE-2026-102895, 9.8 Critical), FreeSWITCH code injection (CVE-2026-116779, 9.8 Critical), OpenSSH password authentication bypass (CVE-2026-123158, 8.1 High) and IBM Aspera Faspex incorrect authorization (CVE-2026-123218, 9.8 Critical) [[s32]]. Three are Critical, but the set is mixed, not uniformly so. GPUStack before 2.2.0 let unauthenticated remote requests gain administrator access by appearing to come from loopback; exploitation was observed against a 2.1.1 deployment. FreeSWITCH before 1.11.3 let a peer whose SIP MESSAGE was accepted reach API command execution; exploitation was observed. OpenSSH before 10.6p2 on Linux with musl libc and no PAM can accept any 256–1024-character password for some account configurations. Aspera Faspex 5.0.0–5.0.19 lets an authorized user craft a message to gain full administrative privileges. CISA's federal remediation deadline applies to federal agencies, not every organization.\n\nCISA also listed CVE-2026-19868, a 7.5 High SonicOS SSLVPN authentication-enforcement flaw, after reports it may have been exploited [[s42]]. A user with valid credentials for an alternate authentication method can bypass SAML controls and SAML-enforced MFA; affected SonicOS is before 7.3.4-7015.\n\nPlex2Shell, a four-flaw chain against Plex Media Server on QNAP NAS devices, is being exploited, although the excerpt supplies no CVE IDs, affected versions or patch details [[s27]].\n\nSome Keplr wallets created with Google or Apple sign-in were drained after an attacker exploited a Web3Auth flaw; Web3Auth then used the attacker's route to empty other at-risk wallets, the companies said [[s35]]. The flaw and affected configurations were not supplied.\n\n## Industry\n\nFrance has linked cyberattacks that disrupted refrigeration at more than 700 supermarkets and other retail locations to Iranian state-backed hackers, saying the attacks caused food losses and sparked at least 15 fires [[s9]]. The attribution is France's, and the excerpt does not detail the intrusion path. Analysis: the reported fires make this a safety story as much as an availability one, but the supplied text does not explain how the cyber operation led to ignition.\n\n## Vulnerabilities\n\nN-able took hosted N-central environments offline and urged on-premises customers to shut down servers after a researcher published more than 30 alleged zero-days, including exploit code that could let attackers take over systems [[s2]]. The excerpt does not list the flaws, affected versions or evidence of exploitation. Analysis: for MSPs, hosted N-central is shared operational plumbing, so the defensive action is disruptive; the claims remain alleged and unverified here.\n\n## Breaches\n\nAn attacker broke into AWS accounts belonging to multiple Qubole customers, stealing stored secrets and data, according to Wiz [[s12]]. The attacker used credentials for an AWS account that Qubole's platform uses to reach customers; how those credentials were obtained has not been disclosed. Qubole is a data lake platform owned by Idera. The excerpt does not give customer counts, data types or notification status. Analysis: this is a third-party trust failure, with Qubole's cross-account access as the path, but initial access remains unknown.\n\n## Research\n\nAcronis researchers say a single attacker using AI agents pulled emergency dispatch records covering seven Taipei districts and found a Taipei fire department platform exposing historical patient data, including ECG readings and ambulance video, without a login [[s38]]. They are highly confident the attacker is one person. The excerpt does not describe the agent tooling or whether the exposed platform was compromised or merely accessed. Analysis: the notable element is operational tempo—agents finding and aggregating exposed data—not a newly described exploit.",
+  "selected": [
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "CISA Adds Four Known Exploited Vulnerabilities to Catalog",
+      "url": "https://www.cisa.gov/news-events/alerts/2026/11/09/cisa-adds-four-known-exploited-vulnerabilities-catalog",
+      "publishedAt": "2026-11-09T12:00:00.000Z",
+      "excerpt": "CISA has added four new vulnerabilities to its Known Exploited Vulnerabilities (KEV) Catalog, based on evidence of active exploitation. CVE-2026-102895 GPUStack Improper Authentication Vulnerability CVE-2026-116779 SignalWire FreeSwitch Code Injection Vulnerability CVE-2026-123158 OpenBSD OpenSSH Unexpected Status Code or Return Value Vulnerability CVE-2026-123218 IBM Aspera Faspex Incorrect…",
+      "canonicalUrl": "https://cisa.gov/news-events/alerts/2026/11/09/cisa-adds-four-known-exploited-vulnerabilities-catalog",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/alerts/2026/11/09/cisa-adds-four-known-exploited-vulnerabilities-catalog"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-102895",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "GPUStack",
+            "product": "GPUStack",
+            "vulnerabilityName": "GPUStack Improper Authentication Vulnerability",
+            "dateAdded": "2026-11-09",
+            "shortDescription": "GPUStack contains an improper authentication vulnerability which could allow unauthenticated administrative access, including user and model changes, persistent administrator API-key creation, disclosure of worker and cloud-provider secrets, and code execution through POST /v2/inference-backends/from-yaml.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-12",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "This vulnerability affects an open-source component, third-party library, protocol, or proprietary implementation that could be used by different products. For more information, please see: ; https://github.com/gpustack/gpustack/security/advisories/GHSA-gj9m-f8ph-pmhr ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-102895",
+            "cwes": [
+              "CWE-287",
+              "CWE-290",
+              "CWE-346"
+            ]
+          },
+          "nvd": {
+            "description": "GPUStack is an open-source GPU cluster manager for AI model serving and GPU instance provisioning. Prior to 2.2.0, get_current_user in gpustack/api/auth.py treated a loopback request source as the built-in administrator when force_auth_localhost was false, which was the default. A remote request could appear to originate from 127.0.0.1 because client_ip_getter accepted a same-host reverse proxy peer or a client-supplied X-GPUStack-Real-IP loopback value. The bypass allowed unauthenticated administrative access, including user and model changes, persistent administrator API-key creation, disclosure of worker and cloud-provider secrets, and code execution through POST /v2/inference-backends/from-yaml. Exploitation was observed in the wild against a 2.1.1 deployment. This issue is fixed in version 2.2.0.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-287",
+              "CWE-290",
+              "CWE-346"
+            ],
+            "published": "2026-11-04T22:17:44.613",
+            "lastModified": "2026-11-09T19:42:09.450",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://github.com/gpustack/gpustack/commit/53f42a6a553542974396d16a4ff6b12bcbedb48d",
+                "source": "security-advisories@github.com",
+                "tags": [
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://github.com/gpustack/gpustack/pull/5346",
+                "source": "security-advisories@github.com",
+                "tags": [
+                  "Issue Tracking",
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://github.com/gpustack/gpustack/releases/tag/v2.2.0",
+                "source": "security-advisories@github.com",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://github.com/gpustack/gpustack/security/advisories/GHSA-gj9m-f8ph-pmhr",
+                "source": "security-advisories@github.com",
+                "tags": [
+                  "Mitigation",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-102895",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:gpustack:gpustack:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3439BFF0-7E02-4EFF-B772-F42FFB05A582",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "2.2.0"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/11/09/cisa-adds-four-known-exploited-vulnerabilities-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.09",
+              "dateReleased": "2026-11-09T19:54:37.4945Z",
+              "retrievedAt": "2026-11-09T21:51:35.926Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-123158%2CCVE-2026-102895%2CCVE-2026-116779%2CCVE-2026-123218%2CCVE-2026-19868",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-102895",
+              "retrievedAt": "2026-11-09T21:51:35.926Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-116779",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "SignalWire",
+            "product": "FreeSwitch",
+            "vulnerabilityName": "SignalWire FreeSwitch Code Injection Vulnerability",
+            "dateAdded": "2026-11-09",
+            "shortDescription": "SignalWire FreeSwitch contains a code injection vulnerability that permits configuration and credential disclosure, arbitrary call control, and command execution.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-12",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "This vulnerability affects an open-source component, third-party library, protocol, or proprietary implementation that could be used by different products. For more information, please see: https://github.com/signalwire/freeswitch/security/advisories/GHSA-mg63-h38w-8p9p ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-116779",
+            "cwes": [
+              "CWE-77",
+              "CWE-78",
+              "CWE-749"
+            ]
+          },
+          "nvd": {
+            "description": "FreeSWITCH is a Software Defined Telecom Stack enabling the digital transformation from proprietary telecom switches to a software implementation that runs on any commodity hardware. Prior to 1.11.3, sofia_presence_handle_sip_i_message() split the To user of an inbound SIP MESSAGE on a plus sign and treated the left side as a chat protocol selector. Selecting the api chat proto reached switch_api_execute(), allowing a peer whose MESSAGE was accepted to run FreeSWITCH API commands, including operating-system command sinks, with the daemon's privileges. Inbound chat is enabled on the stock internal and external profiles, and any authenticated profile account is sufficient; stock directory users without password material can also remove that barrier in affected configurations. The flaw permits configuration and credential disclosure, arbitrary call control, and command execution, and exploitation has been observed in the wild. This issue is fixed in version 1.11.3.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-77",
+              "CWE-78",
+              "CWE-749"
+            ],
+            "published": "2026-11-05T20:17:44.790",
+            "lastModified": "2026-11-09T19:48:09.357",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://github.com/signalwire/freeswitch/commit/7015f6a73ab3d67fed5fbfc277ecfb88a74c2a86",
+                "source": "security-advisories@github.com",
+                "tags": [
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://github.com/signalwire/freeswitch/pull/3135",
+                "source": "security-advisories@github.com",
+                "tags": [
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://github.com/signalwire/freeswitch/releases/tag/v1.11.3",
+                "source": "security-advisories@github.com",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://github.com/signalwire/freeswitch/security/advisories/GHSA-mg63-h38w-8p9p",
+                "source": "security-advisories@github.com",
+                "tags": [
+                  "Mitigation",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-116779",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:freeswitch:freeswitch:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FABBABC9-CD91-486F-8E9E-16692A1A45BB",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.11.3"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/11/09/cisa-adds-four-known-exploited-vulnerabilities-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.09",
+              "dateReleased": "2026-11-09T19:54:37.4945Z",
+              "retrievedAt": "2026-11-09T21:51:35.926Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-123158%2CCVE-2026-102895%2CCVE-2026-116779%2CCVE-2026-123218%2CCVE-2026-19868",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-116779",
+              "retrievedAt": "2026-11-09T21:51:35.926Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-123158",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "OpenBSD",
+            "product": "OpenSSH",
+            "vulnerabilityName": "OpenBSD OpenSSH Unexpected Status Code or Return Value Vulnerability",
+            "dateAdded": "2026-11-09",
+            "shortDescription": "OpenBSD OpenSSH on Linux contains an unexpected status code or return value vulnerability that could allow for authentication bypass.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-12",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "This vulnerability affects an open-source component, third-party library, protocol, or proprietary implementation that could be used by different products. For more information, please see: https://www.openssh.org/releasenotes.html ; https://alpinelinux.org/posts/2026-11-05-openssh-password-authentication-bypass/ ; https://github.com/openssh/openssh-portable/commit/4353fdc43ef646c43a8dda7025cc1a898caf1482 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-123158",
+            "cwes": [
+              "CWE-394"
+            ]
+          },
+          "nvd": {
+            "description": "sshd in OpenSSH before 10.6p2 on Linux, when musl libc is used without PAM, lacks a workaround for a password authentication bypass (related to misinterpretation of whether a string is intended to be a password hash). For some configurations of accounts, any password between 256 and 1024 characters succeeds. An example of a platform using musl libc without PAM is Alpine Linux.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.1,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "cve@mitre.org",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-394"
+            ],
+            "published": "2026-11-05T16:17:47.110",
+            "lastModified": "2026-11-09T19:45:28.487",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://github.com/leonjza/sshhole-lab",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Exploit",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/openssh/openssh-portable/commit/4353fdc43ef646c43a8dda7025cc1a898caf1482",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://github.com/predkambrij/sshhole-repro",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Exploit",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://hachyderm.io/@damienmiller/117563026759098135",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://marc.info/?l=openssh-unix-dev&m=179388064263131&w=2",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Mailing List",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://news.ycombinator.com/item?id=50377976",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Issue Tracking"
+                ]
+              },
+              {
+                "url": "https://news.ycombinator.com/item?id=50378228",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Issue Tracking"
+                ]
+              },
+              {
+                "url": "https://www.openssh.org/releasenotes.html#10.6p2",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://alpinelinux.org/posts/2026-11-05-openssh-password-authentication-bypass/",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/coollabsio/coolify/discussions/12484",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/google/goonami-scanner/pull/277",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/panubo/docker-sshd/issues/93",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://news.ycombinator.com/item?id=50379704",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Issue Tracking"
+                ]
+              },
+              {
+                "url": "https://isc.sans.edu/diary.html?storyid=33498",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Not Applicable"
+                ]
+              },
+              {
+                "url": "https://sshhole.com",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://sshole.events.greynoise.io/",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-123158",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:openbsd:openssh:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "09209468-5A53-45C0-8698-8C668E53EBEA",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "10.6"
+              },
+              {
+                "criteria": "cpe:2.3:a:openbsd:openssh:10.6:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "4C93748B-FD1E-4BD4-9D18-0D4D2BD9C518",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:openbsd:openssh:10.6:p1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "AD8BE997-294C-4E7A-A714-6FCED9884258",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:alpinelinux:alpine_linux:*:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "70B1C408-9879-44A0-ADA0-5E0B0B3447EA",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "3.21.10"
+              },
+              {
+                "criteria": "cpe:2.3:o:alpinelinux:alpine_linux:*:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "D4963B56-DEDA-43CE-B636-6715C4C3C1EE",
+                "versionStartIncluding": "3.22.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "3.22.8"
+              },
+              {
+                "criteria": "cpe:2.3:o:alpinelinux:alpine_linux:*:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "3C30A060-F2D9-4A44-A839-7CE86E222A88",
+                "versionStartIncluding": "3.23.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "3.23.8"
+              },
+              {
+                "criteria": "cpe:2.3:o:alpinelinux:alpine_linux:*:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "3A5F114B-8B24-43BB-AF9C-F2AB8A12F3B0",
+                "versionStartIncluding": "3.24.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "3.24.4"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/11/09/cisa-adds-four-known-exploited-vulnerabilities-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.09",
+              "dateReleased": "2026-11-09T19:54:37.4945Z",
+              "retrievedAt": "2026-11-09T21:51:35.926Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-123158%2CCVE-2026-102895%2CCVE-2026-116779%2CCVE-2026-123218%2CCVE-2026-19868",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-123158",
+              "retrievedAt": "2026-11-09T21:51:35.926Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-123218",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "IBM",
+            "product": "Aspera Faspex",
+            "vulnerabilityName": "IBM Aspera Faspex Incorrect Authorization Vulnerability",
+            "dateAdded": "2026-11-09",
+            "shortDescription": "IBM Aspera Faspex contains an incorrect authorization vulnerability that could allow an authenticated user to craft a specific message to bypass authorization, causing privilege escalations.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-12",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://www.ibm.com/support/pages/node/7295921 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-123218",
+            "cwes": [
+              "CWE-863"
+            ]
+          },
+          "nvd": {
+            "description": "IBM Aspera Faspex 5.0.0 through 5.0.19 could allow an authorized user to craft a specific message to bypass user authorization and gain full administrative privileges.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "psirt@us.ibm.com",
+              "type": "Primary"
+            },
+            "cwes": [
+              "CWE-863"
+            ],
+            "published": "2026-11-07T04:17:28.900",
+            "lastModified": "2026-11-07T04:17:29.027",
+            "vulnStatus": "Undergoing Analysis",
+            "references": [
+              {
+                "url": "https://www.ibm.com/support/pages/node/7295921",
+                "source": "psirt@us.ibm.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/11/09/cisa-adds-four-known-exploited-vulnerabilities-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.09",
+              "dateReleased": "2026-11-09T19:54:37.4945Z",
+              "retrievedAt": "2026-11-09T21:51:35.926Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-123158%2CCVE-2026-102895%2CCVE-2026-116779%2CCVE-2026-123218%2CCVE-2026-19868",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-123218",
+              "retrievedAt": "2026-11-09T21:51:35.926Z"
+            }
+          }
+        }
+      ],
+      "id": "s32",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "CISA added four actively exploited flaws—OpenSSH, FreeSWITCH, GPUStack, and IBM Aspera—with Nov. 12 due dates, making immediate patching urgent."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "France blames Iranian hackers for supermarket attacks that sparked fires",
+      "url": "https://www.bleepingcomputer.com/news/security/france-blames-iranian-hackers-for-supermarket-attacks-that-sparked-fires/",
+      "publishedAt": "2026-11-09T18:32:42.000Z",
+      "excerpt": "France has linked October cyberattacks that disrupted refrigeration systems at more than 700 supermarkets and other retail locations to Iranian state-backed hackers, saying the attacks caused food losses and sparked at least 15 fires. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/france-blames-iranian-hackers-for-supermarket-attacks-that-sparked-fires",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/france-blames-iranian-hackers-for-supermarket-attacks-that-sparked-fires"
+      ],
+      "cves": [],
+      "id": "s9",
+      "section": "industry",
+      "rank": 2,
+      "angle": "France blames Iranian state-backed hackers for attacks that disrupted refrigeration at 700+ retail sites and sparked at least 15 fires, elevating ICS physical-risk concerns."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "N-able takes cloud platform offline after 30+ \"zero-days\" published",
+      "url": "https://www.bleepingcomputer.com/news/security/n-able-takes-cloud-platform-offline-after-30-plus-zero-days-published/",
+      "publishedAt": "2026-11-09T21:26:25.000Z",
+      "excerpt": "N-able has taken its hosted N-central environments offline and urged on-premises customers to shut down their servers after a security researcher publicly disclosed more than 30 alleged zero-day vulnerabilities, including exploits that could let attackers take over vulnerable systems. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/n-able-takes-cloud-platform-offline-after-30-plus-zero-days-published",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/n-able-takes-cloud-platform-offline-after-30-plus-zero-days-published"
+      ],
+      "cves": [],
+      "id": "s2",
+      "section": "vulnerabilities",
+      "rank": 3,
+      "angle": "N-able pulled hosted N-central offline and told on-prem customers to shut down after 30+ alleged zero-days with exploit code were published—MSP exposure is immediate."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "CISA Flags SonicWall SonicOS MFA Bypass Flaw Amid Reports of Possible Exploitation",
+      "url": "https://thehackernews.com/2026/11/cisa-flags-sonicwall-sonicos-mfa-bypass.html",
+      "publishedAt": "2026-11-09T06:05:24.000Z",
+      "excerpt": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA) has added a high-severity vulnerability impacting SonicWall SonicOS to its Known Exploited Vulnerabilities (KEV) catalog, following reports that it said may have been exploited in real-world attacks. The vulnerability, tracked as CVE-2026-19868 (CVSS score: 7.1 / 7.5), has been described as an authentication reinforcement",
+      "canonicalUrl": "https://thehackernews.com/2026/11/cisa-flags-sonicwall-sonicos-mfa-bypass.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/cisa-flags-sonicwall-sonicos-mfa-bypass.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-19868",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "SonicWall",
+            "product": "SonicOS SSLVPN",
+            "vulnerabilityName": "SonicWall SonicOS SSLVPN Use of Single-factor Authentication Vulnerability",
+            "dateAdded": "2026-11-06",
+            "shortDescription": "SonicWall SonicOS SSLVPN contains a use of single-factor authentication vulnerability that may allow a user with valid credentials for an alternate authentication method to bypass SAML authentication controls. Successful exploitation may also bypass SAML-enforced multi-factor authentication (MFA).",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-20",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://psirt.global.sonicwall.com/vuln-detail/SNWLID-2026-0014 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-19868",
+            "cwes": [
+              "CWE-308"
+            ]
+          },
+          "nvd": {
+            "description": "An authentication enforcement vulnerability in SonicOS SSLVPN service may allow a user with valid credentials for an alternate authentication method to bypass SAML authentication controls. Successful exploitation may also bypass SAML-enforced multi-factor authentication (MFA).",
+            "cvss": {
+              "version": "3.1",
+              "score": 7.5,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:L/A:N",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-308"
+            ],
+            "published": "2026-11-06T19:17:48.437",
+            "lastModified": "2026-11-09T19:42:13.887",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://psirt.global.sonicwall.com/vuln-detail/SNWLID-2026-0014",
+                "source": "PSIRT@sonicwall.com",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-19868",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:o:sonicwall:sonicos:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "639FC5E5-9895-4770-9663-0DCC1DB9CC2D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "7.3.4-7015"
+              },
+              {
+                "criteria": "cpe:2.3:a:sonicwall:nsv_270:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "50F3A318-F082-4BDD-80EA-51DB15D3458C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:sonicwall:nsv_470:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "09CAD976-F02B-40D6-9584-B8146A5A2EA1",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:sonicwall:nsv_870:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "9079ED9F-0458-4EA8-8E89-5D3D4CA8096F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:nsa_2700:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "8D8B0C7A-FD65-47CA-A625-150A90EFA7A1",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:nsa_3700:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "A69E000B-5806-46FD-A233-4E2CC9DD38D2",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:nsa_4700:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "8DF4A322-7CC7-4AB9-B10E-FFF34DF2182D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:nsa_5700:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "4C15FED5-C48C-47CF-9645-0563D77883C1",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:nsa_6700:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "A884B1BB-F201-4C77-9F6E-B8A884DCD4C2",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:nssp_10700:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "7C3BA5A3-1160-4793-A8D6-40B9D264BCC4",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:nssp_11700:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "6739DEA3-06FF-4FEB-9931-0DB27F63B70E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:nssp_13700:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "0250EDF9-0AEF-4711-8EF6-D447CF48BCAF",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:nssp_15700:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "7D6CF3CF-256C-4C04-8BDF-B16398CD0459",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:tz270:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "70340DD4-687B-402C-85AF-C2B80D0F1600",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:tz270w:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "52847BA2-470B-4078-A79B-52095DB9214B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:tz370:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "9853AE3A-B0EA-4249-AA7D-1F2051C9BF91",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:tz370w:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "4DBDD10C-F89D-4051-BC70-67B41167FF9B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:tz470:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "6C23940E-2F9D-447B-A740-42035ED5D400",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:tz470w:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "90C790AD-C40E-4527-8F83-D278282A9600",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:tz570:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "C7DF76E0-8E3D-4E0D-A3BB-F5AE05A4C7C9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:tz570p:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "352DFCF9-E333-41C0-8033-91265768FD8E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:tz570w:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "4C882C38-9DA5-4C03-BB23-AB2B448E3307",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:tz670:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "AEEA6065-48D3-4EC7-BD94-CBAE3D1010FF",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:sonicwall:sonicos:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5A473DAB-8000-444D-BEA2-3B0B38E8375E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "8.2.2-8015"
+              },
+              {
+                "criteria": "cpe:2.3:a:sonicwall:nsv_l:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "0E181C4C-8FB3-492A-8202-9C48EC07B76F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:sonicwall:nsv_m:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "2D8A8488-D765-4F6F-93CF-61E188B1B7D6",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:sonicwall:nsv_s:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "0372B9D5-9774-4CF5-8D3A-7131B0A03061",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:sonicwall:nsv_xs:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "855302DC-3FD6-48EE-BD9F-789AEBB3A518",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:nsa_2800:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "559FE8B8-E5E1-4E74-98AF-79AF0ECF9064",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:nsa_3800:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "3ED8014A-C7A4-4624-8D50-A9844871C1B6",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:nsa_4800:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "1BDD4AB6-878B-41BE-BA33-6A2ECE2BC85B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:nsa_5800:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "D28BF416-D019-438B-954E-FB94697DC011",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:tz280:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "56EC904E-4FCA-4B35-B188-639AE688DD14",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:tz280w:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "4B1618BE-A465-4E2F-BB7F-79E0AA930B1C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:tz380:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "83B9556B-0A33-4A27-B9E2-00F47969A566",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:tz380w:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "72D94F4D-CEC8-473B-A49C-466F6F7274D3",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:tz480:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "DCFE3403-6A5B-4735-9248-99297A2E4461",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:tz580:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "AAEE386F-5FE4-4F21-AD34-33B862AAD1CC",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:tz680:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "AE6BC579-21A1-4C2F-B655-73B14C3409A7",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:sonicwall:tz80:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "129CC10F-E822-4BF7-9EB5-0D702020CB0C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/11/cisa-flags-sonicwall-sonicos-mfa-bypass.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.09",
+              "dateReleased": "2026-11-09T19:54:37.4945Z",
+              "retrievedAt": "2026-11-09T21:51:35.926Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-123158%2CCVE-2026-102895%2CCVE-2026-116779%2CCVE-2026-123218%2CCVE-2026-19868",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-19868",
+              "retrievedAt": "2026-11-09T21:51:35.926Z"
+            }
+          }
+        }
+      ],
+      "id": "s42",
+      "section": "exploited",
+      "rank": 4,
+      "angle": "CISA's KEV listing for the SonicWall SonicOS SSLVPN MFA bypass signals observed exploitation, putting edge VPN appliances on a priority remediation path."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Hackers Exploit Qubole's Trusted AWS Access to Breach Customer Accounts and Steal Data",
+      "url": "https://thehackernews.com/2026/11/hackers-exploit-quboles-trusted-aws.html",
+      "publishedAt": "2026-11-09T17:51:21.000Z",
+      "excerpt": "An attacker broke into AWS accounts belonging to multiple Qubole customers between October 14 and October 26 and stole stored secrets and data, cloud security company Wiz said today. The attacker used credentials for an AWS account that Qubole's platform uses to reach those customers. How the attacker got those credentials has not been disclosed. Qubole, a data lake platform owned by Idera,",
+      "canonicalUrl": "https://thehackernews.com/2026/11/hackers-exploit-quboles-trusted-aws.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/hackers-exploit-quboles-trusted-aws.html"
+      ],
+      "cves": [],
+      "id": "s12",
+      "section": "breaches",
+      "rank": 5,
+      "angle": "An attacker abused Qubole's trusted AWS credentials to reach multiple customer accounts and steal secrets and data, highlighting third-party cloud trust risk."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Taiwan-Based Hacker Used BOSSAI AI Agents to Steal Taipei Emergency Dispatch Records",
+      "url": "https://thehackernews.com/2026/11/taiwan-based-hacker-used-bossai-ai.html",
+      "publishedAt": "2026-11-09T09:01:50.000Z",
+      "excerpt": "A single attacker using AI agents pulled emergency dispatch records covering seven Taipei districts, researchers at Acronis's Threat Research Unit said last week. The agents also found a Taipei fire department platform exposing patient data from 2018, including ECG readings and ambulance video footage, without a login. The researchers are highly confident that the attacker is a single person",
+      "canonicalUrl": "https://thehackernews.com/2026/11/taiwan-based-hacker-used-bossai-ai.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/taiwan-based-hacker-used-bossai-ai.html"
+      ],
+      "cves": [],
+      "id": "s38",
+      "section": "research",
+      "rank": 6,
+      "angle": "Acronis says a lone attacker used AI agents to exfiltrate Taipei emergency dispatch records and find exposed patient data, showing agentic AI's operational reach."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Plex2Shell Exploited Against QNAP NAS Users",
+      "url": "https://www.securityweek.com/plex2shell-exploited-against-qnap-nas-users/",
+      "publishedAt": "2026-11-09T13:13:28.000Z",
+      "excerpt": "Threat actors are exploiting the four-flaw chain to hack the Plex Media Server application on QNAP NAS devices. The post Plex2Shell Exploited Against QNAP NAS Users appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/plex2shell-exploited-against-qnap-nas-users",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/plex2shell-exploited-against-qnap-nas-users"
+      ],
+      "cves": [],
+      "id": "s27",
+      "section": "exploited",
+      "rank": 7,
+      "angle": "Threat actors are exploiting the Plex2Shell four-flaw chain against QNAP NAS devices, making internet-facing media servers a priority patch target."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Web3Auth Flaw Exploited to Steal Keplr Crypto, Provider Empties Other Wallets for Safety",
+      "url": "https://thehackernews.com/2026/11/web3auth-flaw-exploited-to-steal-keplr.html",
+      "publishedAt": "2026-11-09T10:56:25.000Z",
+      "excerpt": "Some people who set up a Keplr crypto wallet with their Google or Apple account have had money stolen by an attacker. Keplr uses a company called Web3Auth to run that Google and Apple sign-in. The attacker used a security flaw at that company to reach the wallets, both companies said late last week. Web3Auth then used the attacker's own route to empty other at-risk wallets before the attacker",
+      "canonicalUrl": "https://thehackernews.com/2026/11/web3auth-flaw-exploited-to-steal-keplr.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/web3auth-flaw-exploited-to-steal-keplr.html"
+      ],
+      "cves": [],
+      "id": "s35",
+      "section": "exploited",
+      "rank": 8,
+      "angle": "A Web3Auth flaw let an attacker steal funds from Keplr wallets tied to Google/Apple sign-in, and the provider preemptively drained other at-risk wallets—wallet auth trust is under scrutiny."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "CISA Announces Enhanced Reporting Form for Cyber Incidents",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/cisa-announces-enhanced-reporting-form-cyber-incidents",
+      "publishedAt": "2026-11-09T21:38:20.000Z",
+      "excerpt": "New questionnaire captures critical data and information that improves the agency’s ability to assess incidents, identify trends and prioritize response actions.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/cisa-announces-enhanced-reporting-form-cyber-incidents",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyberattacks-data-breaches/cisa-announces-enhanced-reporting-form-cyber-incidents"
+      ],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "York University breach exposed personal information dating to 2007",
+      "url": "https://www.bleepingcomputer.com/news/security/york-university-breach-exposed-personal-information-dating-to-2007/",
+      "publishedAt": "2026-11-09T21:22:31.000Z",
+      "excerpt": "York University has announced it suffered a cybersecurity incident in which a threat actor stole personal information people submitted through online forms. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/york-university-breach-exposed-personal-information-dating-to-2007",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/york-university-breach-exposed-personal-information-dating-to-2007"
+      ],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Microsoft Fixes RCE Bug in Windows Paint After Weeks of Confusion",
+      "url": "https://www.darkreading.com/application-security/microsoft-rce-bug-windows-paint-confusion",
+      "publishedAt": "2026-11-09T21:12:24.000Z",
+      "excerpt": "Last month, Microsoft disclosed a vulnerability in Microsoft Paint, but messaging regarding a patch was unclear.",
+      "canonicalUrl": "https://darkreading.com/application-security/microsoft-rce-bug-windows-paint-confusion",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/application-security/microsoft-rce-bug-windows-paint-confusion"
+      ],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Data breach at hearing aid giant Amplifon impacts thousands",
+      "url": "https://therecord.media/amplifon-hearing-aid-company-data-breach",
+      "publishedAt": "2026-11-09T20:44:00.000Z",
+      "excerpt": "The U.S arm of international hearing aid company Amplifon has been notifying customers about a data breach early this year that included medical information.",
+      "canonicalUrl": "https://therecord.media/amplifon-hearing-aid-company-data-breach",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/amplifon-hearing-aid-company-data-breach"
+      ],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Black Hat India 2026 Makes a Landmark Debut in Bengaluru, Bringing the Global Cybersecurity Community to India",
+      "url": "https://www.darkreading.com/cybersecurity-operations/black-hat-india-2026-landmark-debut",
+      "publishedAt": "2026-11-09T20:19:56.000Z",
+      "excerpt": "Inaugural edition by Informa Markets in India brings together leading researchers, security practitioners and industry decision makers for four days of cutting-edge research, technical exchange and strategic dialogue.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/black-hat-india-2026-landmark-debut",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cybersecurity-operations/black-hat-india-2026-landmark-debut"
+      ],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "FORGE Lab uses agentic tools to identify memory safety issues in Rust",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/11/09/forge-lab-uses-agentic-tools-to-identify-memory-safety-issues-in-rust/",
+      "publishedAt": "2026-11-09T20:17:31.000Z",
+      "excerpt": "Microsoft FORGE Lab researchers found memory-safety bugs in Rust's core and std libraries, including cases where safe Rust code can trigger undefined behavior. Using Hyenas, FORGE's frontier research version of codename MDASH, the team investigated three patterns of misplaced trust in unsafe code and what they reveal about Rust's safety guarantees. The post FORGE Lab uses agentic tools to…",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/11/09/forge-lab-uses-agentic-tools-to-identify-memory-safety-issues-in-rust",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://microsoft.com/en-us/security/blog/2026/11/09/forge-lab-uses-agentic-tools-to-identify-memory-safety-issues-in-rust"
+      ],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "France blames Iran for fridge cyberattacks, says some caused fires",
+      "url": "https://therecord.media/france-blames-iran-for-fridge-cyberattacks",
+      "publishedAt": "2026-11-09T18:45:00.000Z",
+      "excerpt": "In the first attribution since the October attacks, the French authorities identified the perpetrators as part of Shahid Kaveh, an IRGC cyber unit previously linked to attacks on industrial controllers at U.S. water utilities.",
+      "canonicalUrl": "https://therecord.media/france-blames-iran-for-fridge-cyberattacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/france-blames-iran-for-fridge-cyberattacks"
+      ],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Vanderbilt cybersecurity incident impacting campus devices and systems",
+      "url": "https://therecord.media/vanderbilt-cyberattack-ransomware-alert",
+      "publishedAt": "2026-11-09T18:30:00.000Z",
+      "excerpt": "Vanderbilt University announced a cyberattack, warning students and employees that campus devices and systems may be impacted by the incident.",
+      "canonicalUrl": "https://therecord.media/vanderbilt-cyberattack-ransomware-alert",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/vanderbilt-cyberattack-ransomware-alert"
+      ],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Attackers Crash Claude's 'Office Party' Flaw to Run Malicious Code on Linux",
+      "url": "https://www.darkreading.com/endpoint-security/attackers-claude-office-party-flaw-malicious-code-linux",
+      "publishedAt": "2026-11-09T18:08:30.000Z",
+      "excerpt": "Attackers can exploit a flaw in Claude's document-processing tool by creating a temporary file that Anthropic's AI assistant can access and run on a user's machine.",
+      "canonicalUrl": "https://darkreading.com/endpoint-security/attackers-claude-office-party-flaw-malicious-code-linux",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/endpoint-security/attackers-claude-office-party-flaw-malicious-code-linux"
+      ],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Russian cloud firm Beget rebuilds from scratch after data wiper attack",
+      "url": "https://www.bleepingcomputer.com/news/security/russian-cloud-firm-beget-rebuilds-from-scratch-after-data-wiper-attack/",
+      "publishedAt": "2026-11-09T17:50:32.000Z",
+      "excerpt": "A data-wiping malware attack has forced Russian cloud services provider Beget to rebuild its cloud infrastructure from scratch, the company said. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/russian-cloud-firm-beget-rebuilds-from-scratch-after-data-wiper-attack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/russian-cloud-firm-beget-rebuilds-from-scratch-after-data-wiper-attack"
+      ],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Hackers Compromise Ethersphere's bee-js and Swarm Desktop to Deliver Wallet-Stealing Malware",
+      "url": "https://thehackernews.com/2026/11/hackers-compromise-etherspheres-bee-js.html",
+      "publishedAt": "2026-11-09T17:36:28.000Z",
+      "excerpt": "Attackers used the Ethersphere project's own release automation to publish malicious versions of two of its tools for the Swarm decentralized storage network: bee-js 13.3.0 and Swarm Desktop 0.56.2. Both releases download and run code built to steal the wallet key that Swarm Desktop keeps for its node, along with the stored password that unlocks it. The code is also built to install a backdoor",
+      "canonicalUrl": "https://thehackernews.com/2026/11/hackers-compromise-etherspheres-bee-js.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/hackers-compromise-etherspheres-bee-js.html"
+      ],
+      "cves": [],
+      "id": "s14"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "PwC's CISO on AI, Robots &amp; What's Next for Security",
+      "url": "https://www.darkreading.com/cybersecurity-operations/pwc-ciso-ai-robots-security",
+      "publishedAt": "2026-11-09T17:17:23.000Z",
+      "excerpt": "As AI accelerates change across the enterprise, PwC's James Shira explains why security teams must rethink their approach to risk and adapt their strategies.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/pwc-ciso-ai-robots-security",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cybersecurity-operations/pwc-ciso-ai-robots-security"
+      ],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Binance denies data breach after alleged ShinyHunters claims",
+      "url": "https://www.bleepingcomputer.com/news/security/binance-denies-data-breach-after-alleged-shinyhunters-claims/",
+      "publishedAt": "2026-11-09T16:12:39.000Z",
+      "excerpt": "Binance, the world's largest crypto exchange, has denied claims of a new security breach made by a threat actor using the 'ShinyHunters' handle on a newly emerged underground cybercrime forum. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/binance-denies-data-breach-after-alleged-shinyhunters-claims",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/binance-denies-data-breach-after-alleged-shinyhunters-claims"
+      ],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers exploit SSHole OpenSSH flaw to breach Linux systems",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-sshole-openssh-flaw-to-breach-linux-systems/",
+      "publishedAt": "2026-11-09T16:04:57.000Z",
+      "excerpt": "Hackers are actively exploiting the \"SSHole\" vulnerability (CVE-2026-123158) in OpenSSH to execute commands, steal credentials, and establish persistent access. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-exploit-sshole-openssh-flaw-to-breach-linux-systems",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/hackers-exploit-sshole-openssh-flaw-to-breach-linux-systems"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-123158",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "OpenBSD",
+            "product": "OpenSSH",
+            "vulnerabilityName": "OpenBSD OpenSSH Unexpected Status Code or Return Value Vulnerability",
+            "dateAdded": "2026-11-09",
+            "shortDescription": "OpenBSD OpenSSH on Linux contains an unexpected status code or return value vulnerability that could allow for authentication bypass.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-12",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "This vulnerability affects an open-source component, third-party library, protocol, or proprietary implementation that could be used by different products. For more information, please see: https://www.openssh.org/releasenotes.html ; https://alpinelinux.org/posts/2026-11-05-openssh-password-authentication-bypass/ ; https://github.com/openssh/openssh-portable/commit/4353fdc43ef646c43a8dda7025cc1a898caf1482 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-123158",
+            "cwes": [
+              "CWE-394"
+            ]
+          },
+          "nvd": {
+            "description": "sshd in OpenSSH before 10.6p2 on Linux, when musl libc is used without PAM, lacks a workaround for a password authentication bypass (related to misinterpretation of whether a string is intended to be a password hash). For some configurations of accounts, any password between 256 and 1024 characters succeeds. An example of a platform using musl libc without PAM is Alpine Linux.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.1,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "cve@mitre.org",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-394"
+            ],
+            "published": "2026-11-05T16:17:47.110",
+            "lastModified": "2026-11-09T19:45:28.487",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://github.com/leonjza/sshhole-lab",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Exploit",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/openssh/openssh-portable/commit/4353fdc43ef646c43a8dda7025cc1a898caf1482",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://github.com/predkambrij/sshhole-repro",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Exploit",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://hachyderm.io/@damienmiller/117563026759098135",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://marc.info/?l=openssh-unix-dev&m=179388064263131&w=2",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Mailing List",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://news.ycombinator.com/item?id=50377976",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Issue Tracking"
+                ]
+              },
+              {
+                "url": "https://news.ycombinator.com/item?id=50378228",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Issue Tracking"
+                ]
+              },
+              {
+                "url": "https://www.openssh.org/releasenotes.html#10.6p2",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://alpinelinux.org/posts/2026-11-05-openssh-password-authentication-bypass/",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/coollabsio/coolify/discussions/12484",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/google/goonami-scanner/pull/277",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/panubo/docker-sshd/issues/93",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://news.ycombinator.com/item?id=50379704",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Issue Tracking"
+                ]
+              },
+              {
+                "url": "https://isc.sans.edu/diary.html?storyid=33498",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Not Applicable"
+                ]
+              },
+              {
+                "url": "https://sshhole.com",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://sshole.events.greynoise.io/",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-123158",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:openbsd:openssh:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "09209468-5A53-45C0-8698-8C668E53EBEA",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "10.6"
+              },
+              {
+                "criteria": "cpe:2.3:a:openbsd:openssh:10.6:-:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "4C93748B-FD1E-4BD4-9D18-0D4D2BD9C518",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:openbsd:openssh:10.6:p1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "AD8BE997-294C-4E7A-A714-6FCED9884258",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:alpinelinux:alpine_linux:*:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "70B1C408-9879-44A0-ADA0-5E0B0B3447EA",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "3.21.10"
+              },
+              {
+                "criteria": "cpe:2.3:o:alpinelinux:alpine_linux:*:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "D4963B56-DEDA-43CE-B636-6715C4C3C1EE",
+                "versionStartIncluding": "3.22.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "3.22.8"
+              },
+              {
+                "criteria": "cpe:2.3:o:alpinelinux:alpine_linux:*:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "3C30A060-F2D9-4A44-A839-7CE86E222A88",
+                "versionStartIncluding": "3.23.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "3.23.8"
+              },
+              {
+                "criteria": "cpe:2.3:o:alpinelinux:alpine_linux:*:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "3A5F114B-8B24-43BB-AF9C-F2AB8A12F3B0",
+                "versionStartIncluding": "3.24.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "3.24.4"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "bleepingcomputer",
+                "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-sshole-openssh-flaw-to-breach-linux-systems/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.09",
+              "dateReleased": "2026-11-09T19:54:37.4945Z",
+              "retrievedAt": "2026-11-09T21:51:35.926Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-123158%2CCVE-2026-102895%2CCVE-2026-116779%2CCVE-2026-123218%2CCVE-2026-19868",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-123158",
+              "retrievedAt": "2026-11-09T21:51:35.926Z"
+            }
+          }
+        }
+      ],
+      "id": "s17"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "NIST: Solo Shouldn't Mean Less Secure",
+      "url": "https://www.darkreading.com/cybersecurity-operations/nist-solo-shouldnt-mean-less-secure",
+      "publishedAt": "2026-11-09T15:46:10.000Z",
+      "excerpt": "New guidance provides a basic framework for less-technical solo business owners, but it may miss the mark on how to secure technology that requires no human oversight.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/nist-solo-shouldnt-mean-less-secure",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cybersecurity-operations/nist-solo-shouldnt-mean-less-secure"
+      ],
+      "cves": [],
+      "id": "s18"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Ukraine arrests four in $5 million crypto scam targeting Germans",
+      "url": "https://therecord.media/ukraine-arrests-scam-call-centers-germany",
+      "publishedAt": "2026-11-09T15:24:00.000Z",
+      "excerpt": "Ukraine's cyber police said the four arrested men included the alleged leader of the scam call centers.",
+      "canonicalUrl": "https://therecord.media/ukraine-arrests-scam-call-centers-germany",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/ukraine-arrests-scam-call-centers-germany"
+      ],
+      "cves": [],
+      "id": "s19"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "The Biggest Threat to Your GRC Job Isn’t AI. It’s Ignoring AI.",
+      "url": "https://www.bleepingcomputer.com/news/security/the-biggest-threat-to-your-grc-job-isnt-ai-its-ignoring-ai/",
+      "publishedAt": "2026-11-09T15:05:15.000Z",
+      "excerpt": "AI agents are taking over routine governance, risk, and compliance tasks, forcing GRC professionals to rethink the skills needed to stay relevant. Anecdotes examines three essential skills for the AI-driven GRC workplace: data literacy, agent governance, and communication. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/the-biggest-threat-to-your-grc-job-isnt-ai-its-ignoring-ai",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/the-biggest-threat-to-your-grc-job-isnt-ai-its-ignoring-ai"
+      ],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "FBI agent stole $2.5 million in crypto from hackers under investigation",
+      "url": "https://www.bleepingcomputer.com/news/security/fbi-agent-stole-25-million-in-crypto-from-hackers-fraud-victims/",
+      "publishedAt": "2026-11-09T14:34:03.000Z",
+      "excerpt": "A former FBI agent has pleaded guilty to stealing nearly $2.5 million from the wallets of fraud victims and nation-state hackers under investigation. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/fbi-agent-stole-25-million-in-crypto-from-hackers-fraud-victims",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/fbi-agent-stole-25-million-in-crypto-from-hackers-fraud-victims"
+      ],
+      "cves": [],
+      "id": "s21"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Bitter Hackers Deploy New PapRAT Backdoor in Cyberespionage Campaign Targeting South Asia",
+      "url": "https://thehackernews.com/2026/11/bitter-hackers-deploy-new-paprat.html",
+      "publishedAt": "2026-11-09T14:31:29.000Z",
+      "excerpt": "The South Asian cyber espionage group known as Bitter (aka APT-C-08, APT-Q-37, Hazy Tiger, Orange Yali, T-APT-17, and TA397) has been observed targeting South Asian organizations with a previously unreported remote access trojan called PapRAT. \"PapRAT has both C++ and Rust implementations,\" Fortinet FortiGuard Labs researcher Cara Lin said. \"Its capabilities include command execution, file",
+      "canonicalUrl": "https://thehackernews.com/2026/11/bitter-hackers-deploy-new-paprat.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/bitter-hackers-deploy-new-paprat.html"
+      ],
+      "cves": [],
+      "id": "s22"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Alleged AI-aided cyberattack exploits assistant interface to breach German web host",
+      "url": "https://therecord.media/cyberattack-germany-ai-mittwald",
+      "publishedAt": "2026-11-09T14:15:00.000Z",
+      "excerpt": "Hackers allegedly assisted by AI breached a German web hosting company through a tool designed to allow customers to connect AI assistants to their accounts, the company disclosed.",
+      "canonicalUrl": "https://therecord.media/cyberattack-germany-ai-mittwald",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/cyberattack-germany-ai-mittwald"
+      ],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Revolve Puts Data Breach Victim Count at 1.5 Million",
+      "url": "https://www.securityweek.com/revolve-puts-data-breach-victim-count-at-1-5-million/",
+      "publishedAt": "2026-11-09T14:08:08.000Z",
+      "excerpt": "Online fashion retailer Revolve has told regulators that the September cyberattack affected more than 1.5 million individuals. The post Revolve Puts Data Breach Victim Count at 1.5 Million appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/revolve-puts-data-breach-victim-count-at-1-5-million",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/revolve-puts-data-breach-victim-count-at-1-5-million"
+      ],
+      "cves": [],
+      "id": "s24"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "US bans MEXC crypto exchange over sanctions evasion, cybercrime links",
+      "url": "https://www.bleepingcomputer.com/news/security/us-bans-mexc-crypto-exchange-over-sanctions-evasion-cybercrime-links/",
+      "publishedAt": "2026-11-09T13:28:56.000Z",
+      "excerpt": "The US Department of the Treasury has cut off the MEXC Global crypto exchange from the US financial system over sanctions evasion and links with cybercrime gangs. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/us-bans-mexc-crypto-exchange-over-sanctions-evasion-cybercrime-links",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/us-bans-mexc-crypto-exchange-over-sanctions-evasion-cybercrime-links"
+      ],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "⚡ Weekly Recap: SSHole Exploited, APT Root RCE, Robot Takeovers, 15K Hacked Sites, and More",
+      "url": "https://thehackernews.com/2026/11/weekly-recap-sshole-exploited-apt-root.html",
+      "publishedAt": "2026-11-09T13:28:25.000Z",
+      "excerpt": "A system doesn't always need a complicated bug to let someone in. Sometimes, a blank password is enough. That's one of the bigger stories this week. And it gets worse when the tools meant to keep systems updated or running safely become part of the attack. Elsewhere, attackers are hiding inside normal web traffic, stealing credentials from network devices, and finding new uses for exposed",
+      "canonicalUrl": "https://thehackernews.com/2026/11/weekly-recap-sshole-exploited-apt-root.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/weekly-recap-sshole-exploited-apt-root.html"
+      ],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Iris Plaza Breach May Have Exposed Data of 7.7 Million Customers",
+      "url": "https://www.securityweek.com/iris-plaza-breach-may-have-exposed-data-of-7-7-million-customers/",
+      "publishedAt": "2026-11-09T12:41:27.000Z",
+      "excerpt": "Hackers compromised an external cloud service used by the shopping platform and may have stolen personal information from it. The post Iris Plaza Breach May Have Exposed Data of 7.7 Million Customers appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/iris-plaza-breach-may-have-exposed-data-of-7-7-million-customers",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/iris-plaza-breach-may-have-exposed-data-of-7-7-million-customers"
+      ],
+      "cves": [],
+      "id": "s28"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Italy’s Meloni Blames Pro-Russian Hackers for Leak of Foreign Minister’s Data on the Dark Web",
+      "url": "https://www.securityweek.com/italys-meloni-blames-pro-russian-hackers-for-leak-of-foreign-ministers-data-on-the-dark-web/",
+      "publishedAt": "2026-11-09T12:22:12.000Z",
+      "excerpt": "Italian Foreign Minister Antonio Tajani said Saturday that his personal data had been disseminated on the dark web. The post Italy’s Meloni Blames Pro-Russian Hackers for Leak of Foreign Minister’s Data on the Dark Web appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/italys-meloni-blames-pro-russian-hackers-for-leak-of-foreign-ministers-data-on-the-dark-web",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/italys-meloni-blames-pro-russian-hackers-for-leak-of-foreign-ministers-data-on-the-dark-web"
+      ],
+      "cves": [],
+      "id": "s29"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Ukraine dismantles crypto scam network that stole €4.3 million",
+      "url": "https://www.bleepingcomputer.com/news/security/ukraine-dismantles-crypto-scam-network-that-stole-43-million/",
+      "publishedAt": "2026-11-09T12:16:13.000Z",
+      "excerpt": "Ukrainian law enforcement arrested four suspects in a case involving the theft of more than €4.3 million using a network of cryptocurrency investment scam call centers. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/ukraine-dismantles-crypto-scam-network-that-stole-43-million",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/ukraine-dismantles-crypto-scam-network-that-stole-43-million"
+      ],
+      "cves": [],
+      "id": "s30"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Hackers Exploiting ‘SSHole’ Authentication Bypass in OpenSSH",
+      "url": "https://www.securityweek.com/hackers-exploiting-sshole-authentication-bypass-in-openssh/",
+      "publishedAt": "2026-11-09T12:13:32.000Z",
+      "excerpt": "The initial exploitation attempts are attributed to botnets and crypto miners, but other threat actors are expected to follow suit. The post Hackers Exploiting ‘SSHole’ Authentication Bypass in OpenSSH appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/hackers-exploiting-sshole-authentication-bypass-in-openssh",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/hackers-exploiting-sshole-authentication-bypass-in-openssh"
+      ],
+      "cves": [],
+      "id": "s31"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Default 'admin:admin' Server Password Helps Researchers Hack Two Automakers, Unlock and Start Cars",
+      "url": "https://thehackernews.com/2026/11/default-adminadmin-server-password.html",
+      "publishedAt": "2026-11-09T11:27:53.000Z",
+      "excerpt": "The login systems behind two car brands' mobile apps could be taken over completely, two security researchers found, allowing them to access any customer's account and, for an owner with a connected car, unlock the doors and start the engine. Both apps signed customers in through ForgeRock, an identity platform now part of Ping Identity, and on those servers the researchers reached an",
+      "canonicalUrl": "https://thehackernews.com/2026/11/default-adminadmin-server-password.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/default-adminadmin-server-password.html"
+      ],
+      "cves": [],
+      "id": "s33"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Amplifon Americas Data Breach Impacts 1.3 Million",
+      "url": "https://www.securityweek.com/amplifon-americas-data-breach-impacts-1-3-million/",
+      "publishedAt": "2026-11-09T11:20:09.000Z",
+      "excerpt": "Hackers stole personal, health, and insurance information, including Social Security numbers, from the company’s internal systems. The post Amplifon Americas Data Breach Impacts 1.3 Million appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/amplifon-americas-data-breach-impacts-1-3-million",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/amplifon-americas-data-breach-impacts-1-3-million"
+      ],
+      "cves": [],
+      "id": "s34"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Over 3 Million People Hit by Frontline Education Data Breach",
+      "url": "https://www.securityweek.com/3-million-people-hit-by-frontline-education-data-breach/",
+      "publishedAt": "2026-11-09T10:09:02.000Z",
+      "excerpt": "Frontline Education told Indiana regulators that its August data breach affected over 3 million school district staff and students. The post Over 3 Million People Hit by Frontline Education Data Breach appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/3-million-people-hit-by-frontline-education-data-breach",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/3-million-people-hit-by-frontline-education-data-breach"
+      ],
+      "cves": [],
+      "id": "s36"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "LNbits Urges All Operators to Shut Down Their Bitcoin Lightning Wallet Servers Amid Attacks",
+      "url": "https://thehackernews.com/2026/11/lnbits-urges-all-operators-to-shut-down.html",
+      "publishedAt": "2026-11-09T10:01:21.000Z",
+      "excerpt": "Everyone running LNbits, a free, open-source Bitcoin Lightning wallet system, should shut down their servers now because of a wave of attacks, the project said yesterday. It has several security fixes to release and asked operators to be careful until they are out. One operator said new accounts used an exploit to withdraw 2,285,545 satoshis, about 0.023 bitcoin, from his server before he could",
+      "canonicalUrl": "https://thehackernews.com/2026/11/lnbits-urges-all-operators-to-shut-down.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/lnbits-urges-all-operators-to-shut-down.html"
+      ],
+      "cves": [],
+      "id": "s37"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Google DeepMind’s AI Agents Make 1024-Bit RSA Keys Cheaper to Attack",
+      "url": "https://www.securityweek.com/google-deepminds-ai-agents-make-1024-bit-rsa-keys-cheaper-to-attack/",
+      "publishedAt": "2026-11-09T08:35:50.000Z",
+      "excerpt": "Working with cryptographers, DeepMind’s AI agents cut the cost of forging RSA-1024 signatures and found a cheaper way to factor keys. The post Google DeepMind’s AI Agents Make 1024-Bit RSA Keys Cheaper to Attack appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/google-deepminds-ai-agents-make-1024-bit-rsa-keys-cheaper-to-attack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/google-deepminds-ai-agents-make-1024-bit-rsa-keys-cheaper-to-attack"
+      ],
+      "cves": [],
+      "id": "s39"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Former OpenAI Engineer Pleads Not Guilty to Planting Covert Device in Executive Meeting Room",
+      "url": "https://thehackernews.com/2026/11/former-openai-engineer-pleads-not.html",
+      "publishedAt": "2026-11-09T07:05:48.000Z",
+      "excerpt": "The OpenAI engineer who was arrested and charged last month for planting a covert audio recording device in the company's office has pleaded not guilty. According to reports from Bloomberg and CNBC, Saudi national Abdulrahman Alfozan made an appearance in San Francisco federal court on Friday, where he entered the plea. His next hearing is scheduled for November 17, 2026. If proven guilty, the",
+      "canonicalUrl": "https://thehackernews.com/2026/11/former-openai-engineer-pleads-not.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/former-openai-engineer-pleads-not.html"
+      ],
+      "cves": [],
+      "id": "s40"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "U.S. Agencies Warn Refrigeration Controller Attacks Could Cause Fires and Inventory Losses",
+      "url": "https://thehackernews.com/2026/11/us-agencies-warn-refrigeration.html",
+      "publishedAt": "2026-11-09T06:15:10.000Z",
+      "excerpt": "U.S. government agencies have warned that threat actors are actively targeting industrial refrigeration and cold-chain monitoring systems globally with an aim to cause service disruptions, fire hazards, and loss of inventory. \"The actors may exploit vulnerabilities or weaknesses in unpatched or internet-accessible controllers to remotely alter settings and force units into continuous heating",
+      "canonicalUrl": "https://thehackernews.com/2026/11/us-agencies-warn-refrigeration.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/us-agencies-warn-refrigeration.html"
+      ],
+      "cves": [],
+      "id": "s41"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1280,
+    "promptCacheMissTokens": 18035,
+    "outputTokens": 11437,
+    "estimatedCostUsd": 0.0057308440000000006
+  }
+}
