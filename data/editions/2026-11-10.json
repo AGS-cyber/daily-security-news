@@ -1,0 +1,1419 @@
+{
+  "date": "2026-11-10",
+  "generatedAt": "2026-11-10T19:13:56.501Z",
+  "collection": [
+    {
+      "sourceId": "krebs",
+      "attemptedAt": "2026-11-10T19:13:56.501Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "attemptedAt": "2026-11-10T19:13:56.501Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "thehackernews",
+      "attemptedAt": "2026-11-10T19:13:56.501Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "therecord",
+      "attemptedAt": "2026-11-10T19:13:56.501Z",
+      "status": "ok",
+      "items": 5,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securityweek",
+      "attemptedAt": "2026-11-10T19:13:56.501Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "darkreading",
+      "attemptedAt": "2026-11-10T19:13:56.501Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "attemptedAt": "2026-11-10T19:13:56.501Z",
+      "status": "ok",
+      "items": 30,
+      "skipped": 0
+    },
+    {
+      "sourceId": "projectzero",
+      "attemptedAt": "2026-11-10T19:13:56.501Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securelist",
+      "attemptedAt": "2026-11-10T19:13:56.501Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "talos",
+      "attemptedAt": "2026-11-10T19:13:56.501Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "unit42",
+      "attemptedAt": "2026-11-10T19:13:56.501Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "microsoft-security",
+      "attemptedAt": "2026-11-10T19:13:56.501Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    }
+  ],
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 229,
+    "published": 43
+  },
+  "mode": "article",
+  "headline": "Record Patch Tuesday, live Xen and Chrome exploits, and N-central’s shutdown",
+  "standfirst": "A record Patch Tuesday with an exploited Outlook zero-day sets the urgency, alongside fresh exploitation of Xen Orchestra and Chrome and CISA’s four-flaw KEV addition; N-able’s hosted N-central shutdown, two breach reports and France’s Iran attribution broaden the day beyond patching [[s1]] [[s7]] [[s39]] [[s41]] [[s40]] [[s21]] [[s19]] [[s33]].",
+  "bodyMarkdown": "## Actively exploited\n\nMicrosoft’s latest Patch Tuesday addresses a record-breaking 1,235 flaws and includes one actively exploited Outlook zero-day, making this the lead patching event for Outlook-heavy estates [[s1]]. No CVE or affected-version detail for the Outlook bug is supplied here.\n\nAttackers are already exploiting a critical authentication bypass in Xen Orchestra to gain administrator privileges and take over XCP-ng virtualization hosts [[s7]]. No CVE or patch detail is supplied for that flaw.\n\nCISA added four flaws to its KEV catalog citing evidence of active exploitation, including CVE-2026-123218 in IBM Aspera Faspex [[s41]]. The enriched Aspera bug is Critical at 9.8, an incorrect-authorization issue (CWE-863) affecting 5.0.0 through before 5.0.19.1, and it carries a CISA remediation requirement with a near-term federal due date. The other three entries — GPUStack, SignalWire FreeSWITCH and OpenBSD OpenSSH — were not individually enriched here, so their severity and deadlines should not be inferred from the Aspera record.\n\nGoogle’s Chrome update fixes nine vulnerabilities, including CVE-2026-125350, a high-severity use-after-free in XML that is under active exploitation and is described as the eighth actively exploited Chrome zero-day of the year [[s39]]. NVD ties it to Chrome before 157.0.8103.50 and crafted HTML pages that can execute code inside the sandbox; no CVSS score is supplied, and KEV lists it with a federal remediation requirement.\n\n## Vulnerabilities\n\nN-able has taken its hosted N-central environment offline and is telling on-premises customers to shut down servers until further notice after public disclosure of more than 30 vulnerabilities tracked as Able2Shell [[s40]]. The disclosure is described as 33 zero-days with PoC exploits, while the excerpt says more than 30 vulnerabilities and supplies no CVE IDs or root cause. Analysis: the shutdown advice turns this from routine patching into an operational stop for affected N-central users.\n\n## Breaches\n\nRussian state-linked hackers compromised government email servers in Romania and Kazakhstan to intercept messages exchanged with NATO and European Union officials, according to researchers [[s21]]. The reported reach beyond the first victim is the espionage signal; no CVE, malware family or affected product is supplied.\n\nMore than a dozen organizations were hit in a Qubole supply-chain attack in which compromised IAM credentials were used to steal customer files, secrets, keys, environment variables and credentials [[s19]]. The credential theft is the stated vector; the excerpt does not name victims, give a more precise count or describe remediation.\n\n## Industry\n\nThe French government attributed an attack on refrigeration controllers at about 700 retail sites to an IRGC cyber unit, saying intruders changed defrost settings to high temperatures, causing food losses and at least 15 fires [[s33]]. The public attribution is the notable element: a government formally naming a state cyber unit for OT sabotage against civilian retail infrastructure. Analysis: the excerpt does not describe initial access or whether the technique was novel, so the significance rests on the formal naming rather than on supplied technical detail.",
+  "selected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft November 2026 Patch Tuesday fixes 1,235 flaws, Outlook zero-day",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-november-2026-patch-tuesday-fixes-1-235-flaws-outlook-zero-day/",
+      "publishedAt": "2026-11-10T19:07:36.000Z",
+      "excerpt": "Today is Microsoft's November 2026 Patch Tuesday, with security updates addressing a record-breaking 1,235 flaws, including one actively exploited Microsoft Outlook zero-day vulnerability. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-november-2026-patch-tuesday-fixes-1-235-flaws-outlook-zero-day",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/microsoft/microsoft-november-2026-patch-tuesday-fixes-1-235-flaws-outlook-zero-day"
+      ],
+      "cves": [],
+      "id": "s1",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "A record 1,235 fixes plus an actively exploited Outlook zero-day make this the day's most urgent patching event for Exchange/Outlook-heavy estates."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Critical Xen Orchestra auth bypass flaw exploited to hijack VM servers",
+      "url": "https://www.bleepingcomputer.com/news/security/critical-xen-orchestra-auth-bypass-flaw-exploited-to-hijack-vm-servers/",
+      "publishedAt": "2026-11-10T16:17:16.000Z",
+      "excerpt": "A critical authentication bypass vulnerability in Xen Orchestra is being actively exploited in attacks that could grant administrator privileges and allow takeover of XCP-ng virtualization hosts. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/critical-xen-orchestra-auth-bypass-flaw-exploited-to-hijack-vm-servers",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/critical-xen-orchestra-auth-bypass-flaw-exploited-to-hijack-vm-servers"
+      ],
+      "cves": [],
+      "id": "s7",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "Attackers are already using the Xen Orchestra auth bypass to seize admin rights and take over XCP-ng virtualization hosts, so exposed management interfaces need attention now."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "CISA Warns of Active Exploitation of OpenSSH, GPUStack, FreeSWITCH, and IBM Flaws",
+      "url": "https://thehackernews.com/2026/11/cisa-warns-of-active-exploitation-of.html",
+      "publishedAt": "2026-11-10T06:31:42.000Z",
+      "excerpt": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Monday added four security flaws impacting GPUStack, SignalWire FreeSwitch, OpenBSD OpenSSH, and IBM Aspera Faspex to its Known Exploited Vulnerabilities (KEV) catalog, citing evidence of active exploitation. The vulnerabilities are listed below - CVE-2026-123218 (CVSS score: 9.8) - An incorrect authorization vulnerability",
+      "canonicalUrl": "https://thehackernews.com/2026/11/cisa-warns-of-active-exploitation-of.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/cisa-warns-of-active-exploitation-of.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-123218",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "IBM",
+            "product": "Aspera Faspex",
+            "vulnerabilityName": "IBM Aspera Faspex Incorrect Authorization Vulnerability",
+            "dateAdded": "2026-11-09",
+            "shortDescription": "IBM Aspera Faspex contains an incorrect authorization vulnerability that could allow an authenticated user to craft a specific message to bypass authorization, causing privilege escalations.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-12",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://www.ibm.com/support/pages/node/7295921 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-123218",
+            "cwes": [
+              "CWE-863"
+            ]
+          },
+          "nvd": {
+            "description": "IBM Aspera Faspex 5.0.0 through 5.0.19 could allow an authorized user to craft a specific message to bypass user authorization and gain full administrative privileges.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "psirt@us.ibm.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-863"
+            ],
+            "published": "2026-11-07T04:17:28.900",
+            "lastModified": "2026-11-10T13:49:00.563",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://www.ibm.com/support/pages/node/7295921",
+                "source": "psirt@us.ibm.com",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-123218",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:ibm:aspera_faspex:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "CA93A2D7-D967-470E-B484-3234D8DF4A42",
+                "versionStartIncluding": "5.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.0.19.1"
+              },
+              {
+                "criteria": "cpe:2.3:o:linux:linux_kernel:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "703AF700-7A70-47E2-BC3A-7FD03B3CA9C1",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/11/cisa-warns-of-active-exploitation-of.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.10",
+              "dateReleased": "2026-11-10T19:03:29.8375Z",
+              "retrievedAt": "2026-11-10T19:13:56.501Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-105133%2CCVE-2026-105134%2CCVE-2026-116779%2CCVE-2026-123218%2CCVE-2026-125350",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-123218",
+              "retrievedAt": "2026-11-10T19:13:56.501Z"
+            }
+          }
+        }
+      ],
+      "id": "s41",
+      "section": "exploited",
+      "rank": 3,
+      "angle": "Four flaws newly added to CISA KEV — including OpenSSH and FreeSWITCH — come with a three-day federal remediation deadline, signaling live exploitation across widely deployed software."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Google Issues Chrome Security Update for Eighth Actively Exploited Zero-Day of 2026",
+      "url": "https://thehackernews.com/2026/11/google-issues-chrome-security-update.html",
+      "publishedAt": "2026-11-10T06:52:54.000Z",
+      "excerpt": "Google on Monday released updates to patch nine security vulnerabilities, including one that has come under active exploitation in the wild. The high-severity vulnerability, assigned the CVE identifier CVE-2026-125350 (CVSS score: N/A), has been described as a use-after-free bug in the XML component. Use-after-free bugs typically occur when a program attempts to access a memory location after",
+      "canonicalUrl": "https://thehackernews.com/2026/11/google-issues-chrome-security-update.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/google-issues-chrome-security-update.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-125350",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Google",
+            "product": "Chromium",
+            "vulnerabilityName": "Google Chromium Use-After-Free Vulnerability",
+            "dateAdded": "2026-11-10",
+            "shortDescription": "Google Chromium contains a use-after-free vulnerability in the XML component that could allow a remote attacker to execute arbitrary code inside the sandbox via a specially crafted webpage. This vulnerability could affect multiple web browsers that utilize Chromium, including, but not limited to, Google Chrome, Microsoft Edge, and Opera.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-24",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://chromereleases.googleblog.com/2026/11/stable-channel-update-for-desktop_018223192.html ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-125350",
+            "cwes": [
+              "CWE-416"
+            ]
+          },
+          "nvd": {
+            "description": "Use after free in XML in Google Chrome prior to 157.0.8103.50 allowed a remote attacker to execute arbitrary code inside the sandbox via a crafted HTML page. (Chromium security severity: High)",
+            "cvss": null,
+            "cwes": [
+              "CWE-416"
+            ],
+            "published": "2026-11-10T18:17:35.237",
+            "lastModified": "2026-11-10T18:17:35.327",
+            "vulnStatus": "Undergoing Analysis",
+            "references": [
+              {
+                "url": "https://chromereleases.googleblog.com/2026/11/stable-channel-update-for-desktop_018223192.html",
+                "source": "chrome-cve-admin@google.com",
+                "tags": []
+              },
+              {
+                "url": "https://issues.chromium.org/issues/582442907",
+                "source": "chrome-cve-admin@google.com",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/11/google-issues-chrome-security-update.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.10",
+              "dateReleased": "2026-11-10T19:03:29.8375Z",
+              "retrievedAt": "2026-11-10T19:13:56.501Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-105133%2CCVE-2026-105134%2CCVE-2026-116779%2CCVE-2026-123218%2CCVE-2026-125350",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-125350",
+              "retrievedAt": "2026-11-10T19:13:56.501Z"
+            }
+          }
+        }
+      ],
+      "id": "s39",
+      "section": "exploited",
+      "rank": 4,
+      "angle": "Chrome's eighth exploited zero-day of 2026 (CVE-2026-125350, use-after-free in XML) means browser fleets need emergency updates before the weekend."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "N-able Takes N-central Cloud Offline After Researcher Discloses 33 Zero-Days with PoC Exploits",
+      "url": "https://thehackernews.com/2026/11/n-able-takes-hosted-n-central-offline.html",
+      "publishedAt": "2026-11-10T06:44:36.000Z",
+      "excerpt": "N-able said it has taken N-central Hosted Environments offline and is urging on-premises customers to shut down their servers until further notice following the public disclosure of over 30 vulnerabilities collectively tracked as Able2Shell. \"As a precautionary measure, we are temporarily taking our Hosted N-central environment offline while we take the necessary actions to secure the",
+      "canonicalUrl": "https://thehackernews.com/2026/11/n-able-takes-hosted-n-central-offline.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/n-able-takes-hosted-n-central-offline.html"
+      ],
+      "cves": [],
+      "id": "s40",
+      "section": "vulnerabilities",
+      "rank": 5,
+      "angle": "N-able has taken hosted N-central offline and is telling on-prem customers to shut down servers after 33 zero-days with public PoCs — a severe exposure for MSP-managed environments."
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Russian hackers compromised government email servers to steal NATO, EU correspondence",
+      "url": "https://therecord.media/russia-hackers-espionage-romania-kazakhstan",
+      "publishedAt": "2026-11-10T13:00:00.000Z",
+      "excerpt": "Russian state-linked hackers have compromised government email servers in Romania and Kazakhstan to secretly intercept messages exchanged with NATO and European Union officials, researchers said.",
+      "canonicalUrl": "https://therecord.media/russia-hackers-espionage-romania-kazakhstan",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/russia-hackers-espionage-romania-kazakhstan"
+      ],
+      "cves": [],
+      "id": "s21",
+      "section": "breaches",
+      "rank": 6,
+      "angle": "Russian state-linked intrusions into Romanian and Kazakh government mail servers intercepted NATO and EU correspondence, showing espionage reach beyond the initial victim."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Over a Dozen Organizations Hit in Qubole Supply Chain Attack",
+      "url": "https://www.securityweek.com/over-a-dozen-organizations-hit-in-qubole-supply-chain-attack/",
+      "publishedAt": "2026-11-10T13:27:44.000Z",
+      "excerpt": "Hackers used compromised Qubole IAM credentials to steal customer files, secrets, keys, environment variables, and credentials. The post Over a Dozen Organizations Hit in Qubole Supply Chain Attack appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/over-a-dozen-organizations-hit-in-qubole-supply-chain-attack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/over-a-dozen-organizations-hit-in-qubole-supply-chain-attack"
+      ],
+      "cves": [],
+      "id": "s19",
+      "section": "breaches",
+      "rank": 7,
+      "angle": "Compromised Qubole IAM credentials turned a data platform into a supply-chain vector, exposing files, secrets and keys at more than a dozen downstream organizations."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "France Blames Iran for Sabotage Attack on Refrigeration Controllers at About 700 Retail Sites",
+      "url": "https://thehackernews.com/2026/11/france-blames-iran-for-sabotage-attack.html",
+      "publishedAt": "2026-11-10T09:08:20.000Z",
+      "excerpt": "An October cyberattack on refrigeration controllers at about 700 French retail sites was carried out by a cyber unit of Iran's Islamic Revolutionary Guard Corps (IRGC), the French government said yesterday. The attackers broke into controllers on the night of October 11 and changed their defrost settings to high temperatures. That caused food losses and, in at least 15 cases, fires. The unit",
+      "canonicalUrl": "https://thehackernews.com/2026/11/france-blames-iran-for-sabotage-attack.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/france-blames-iran-for-sabotage-attack.html"
+      ],
+      "cves": [],
+      "id": "s33",
+      "section": "industry",
+      "rank": 8,
+      "angle": "France's formal attribution of the refrigeration-controller sabotage to an IRGC cyber unit sets a precedent for naming state actors behind OT attacks on civilian infrastructure."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "AI Coding Agents Leak Thousands of Secrets to GitHub",
+      "url": "https://www.darkreading.com/cyber-risk/ai-coding-agents-leak-secrets-github",
+      "publishedAt": "2026-11-10T18:46:22.000Z",
+      "excerpt": "A command in Claude Code inadvertently saves files with credentials and other sensitive data to public Git repositories, creating security gaps for organizations.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/ai-coding-agents-leak-secrets-github",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyber-risk/ai-coding-agents-leak-secrets-github"
+      ],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Windows 11 KB5132061 & KB5131087 cumulative updates released",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/windows-11-kb5132061-and-kb5131087-cumulative-updates-released/",
+      "publishedAt": "2026-11-10T18:33:26.000Z",
+      "excerpt": "Microsoft has released the Patch Tuesday Windows 11 and cumulative updates for versions 26H2/25H2/24H2 and 23H2 to fix security vulnerabilities and bugs, and add new features. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/windows-11-kb5132061-and-kb5131087-cumulative-updates-released",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/microsoft/windows-11-kb5132061-and-kb5131087-cumulative-updates-released"
+      ],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Adobe Patches 110 Vulnerabilities Across 9 Products",
+      "url": "https://www.securityweek.com/adobe-patches-110-vulnerabilities-across-9-products/",
+      "publishedAt": "2026-11-10T18:11:54.000Z",
+      "excerpt": "Adobe has fixed vulnerabilities in AEM, Premiere, Photoshop, After Effects, Connect, Audition, Dimension, Content Credentials SDK, and Media Encoder. The post Adobe Patches 110 Vulnerabilities Across 9 Products appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/adobe-patches-110-vulnerabilities-across-9-products",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/adobe-patches-110-vulnerabilities-across-9-products"
+      ],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Software Transparency Is Changing: Allan Friedman on SBOM, AI BOMs and What Comes Next",
+      "url": "https://www.securityweek.com/software-transparency-is-changing-allan-friedman-on-sbom-ai-boms-and-what-comes-next/",
+      "publishedAt": "2026-11-10T16:45:00.000Z",
+      "excerpt": "SBOM pioneer Allan Friedman joined the SecurityWeek Podcast to discuss why knowing what is inside software is only the beginning, how AI is complicating software supply chain visibility, and what organizations should be doing with SBOM data once they have it. The post Software Transparency Is Changing: Allan Friedman on SBOM, AI BOMs and What Comes Next appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/software-transparency-is-changing-allan-friedman-on-sbom-ai-boms-and-what-comes-next",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/software-transparency-is-changing-allan-friedman-on-sbom-ai-boms-and-what-comes-next"
+      ],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Google Widens Gemini 4 Carbon Access After AI Agents Verify Signal Code",
+      "url": "https://www.securityweek.com/google-widens-gemini-4-carbon-access-after-ai-agents-verify-signal-code/",
+      "publishedAt": "2026-11-10T16:42:02.000Z",
+      "excerpt": "Google opened Carbon to paying developers and businesses as DeepMind used agents built on it to prove libsignal security guarantees. The post Google Widens Gemini 4 Carbon Access After AI Agents Verify Signal Code appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/google-widens-gemini-4-carbon-access-after-ai-agents-verify-signal-code",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/google-widens-gemini-4-carbon-access-after-ai-agents-verify-signal-code"
+      ],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "AI company Fireworks says hackers stole data, billing info during October breaches",
+      "url": "https://therecord.media/ai-company-fireworks-says-hackers-stole-data-in-oct-attacks",
+      "publishedAt": "2026-11-10T16:08:00.000Z",
+      "excerpt": "Fireworks said the incident affected a “limited number of customer accounts” — all of whom were notified of the attack.",
+      "canonicalUrl": "https://therecord.media/ai-company-fireworks-says-hackers-stole-data-in-oct-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/ai-company-fireworks-says-hackers-stole-data-in-oct-attacks"
+      ],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Attackers Exploit AhsayCBS Flaws to Deploy Sandbox-Evading Python Backdoor",
+      "url": "https://thehackernews.com/2026/11/attackers-exploit-ahsaycbs-flaws-to.html",
+      "publishedAt": "2026-11-10T16:00:55.000Z",
+      "excerpt": "Cybersecurity researchers have disclosed details of an attack that exploited two now-patched vulnerabilities in AhsayCBS to deliver a Python-based implant. The activity, observed by Huntress in October 2026, involves the exploitation of a chain comprising CVE-2026-105133 and CVE-2026-105134 to bypass authentication and execute arbitrary commands on affected systems. Patches for the two",
+      "canonicalUrl": "https://thehackernews.com/2026/11/attackers-exploit-ahsaycbs-flaws-to.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/attackers-exploit-ahsaycbs-flaws-to.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-105133",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Ahsay",
+            "product": "AhsayCBS",
+            "vulnerabilityName": "Ahsay AhsayCBS Improper Authentication Vulnerability",
+            "dateAdded": "2026-10-14",
+            "shortDescription": "Ahsay AhsayCBS contains an improper authentication vulnerability that could allow a remote attacker to bypass authentication via manipulation of the random parameter in the API component’s checkSysPwd function. This vulnerability can be chained with CVE-2026-105134.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-10-17",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://www.ahsay.com/en/company/announcements/patch-cve-105133-105134-update ; ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-105133",
+            "cwes": [
+              "CWE-287"
+            ]
+          },
+          "nvd": {
+            "description": "A vulnerability was detected in Ahsay AhsayCBS up to 9.15.2.69/10.3.4.44. This affects the function checkSysPwd of the file com/ahsay/obs/api/ApiStructsAction.java of the component API. Performing a manipulation of the argument random results in improper authentication. It is possible to initiate the attack remotely. The exploit is now public and may be used. Upgrading to version 9.15.2.70 and 10.3.4.45 is able to mitigate this issue. It is recommended to upgrade the affected component. The initial patch did not fix the security vulnerability properly. An update of the CVE entry to reflect this became necessary.",
+            "cvss": {
+              "version": "4.0",
+              "score": 6.9,
+              "severity": "MEDIUM",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:A/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "cna@vuldb.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-287"
+            ],
+            "published": "2026-10-04T07:16:33.087",
+            "lastModified": "2026-10-26T18:07:09.000",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://vuldb.com/cve/CVE-2026-105133",
+                "source": "cna@vuldb.com",
+                "tags": [
+                  "Third Party Advisory",
+                  "VDB Entry"
+                ]
+              },
+              {
+                "url": "https://vuldb.com/submit/942688",
+                "source": "cna@vuldb.com",
+                "tags": [
+                  "Third Party Advisory",
+                  "VDB Entry"
+                ]
+              },
+              {
+                "url": "https://vuldb.com/vuln/413350",
+                "source": "cna@vuldb.com",
+                "tags": [
+                  "Third Party Advisory",
+                  "VDB Entry"
+                ]
+              },
+              {
+                "url": "https://vuldb.com/vuln/413350/cti",
+                "source": "cna@vuldb.com",
+                "tags": [
+                  "Permissions Required",
+                  "VDB Entry"
+                ]
+              },
+              {
+                "url": "https://www.ahsay.com/en/company/announcements/patch-cve-105133-105134-update",
+                "source": "cna@vuldb.com",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.huntress.com/blog/ahsaycbs-flaws-exploit",
+                "source": "cna@vuldb.com",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-105133",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:ahsay:cloud_backup_suite:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D6A20B7D-F0A0-45EC-B5BC-C3CDE88FE850",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "9.15.2.70"
+              },
+              {
+                "criteria": "cpe:2.3:a:ahsay:cloud_backup_suite:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "20845190-89C7-44CE-A749-495EB194808C",
+                "versionStartIncluding": "10.1.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "10.3.4.45"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/11/attackers-exploit-ahsaycbs-flaws-to.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.10",
+              "dateReleased": "2026-11-10T19:03:29.8375Z",
+              "retrievedAt": "2026-11-10T19:13:56.501Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-105133%2CCVE-2026-105134%2CCVE-2026-116779%2CCVE-2026-123218%2CCVE-2026-125350",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-105133",
+              "retrievedAt": "2026-11-10T19:13:56.501Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-105134",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Ahsay",
+            "product": "AhsayCBS",
+            "vulnerabilityName": "Ahsay AhsayCBS Command Injection Vulnerability",
+            "dateAdded": "2026-10-14",
+            "shortDescription": "Ahsay AhsayCBS contains a command injection vulnerability that could allow a remote attacker to execute operating system commands via manipulation of the random parameter in the Replication Receiver component’s /rps/api/json/UpdateReceivers.do endpoint. This vulnerability can be chained with CVE-2026-105133.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-10-17",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://www.ahsay.com/en/company/announcements/patch-cve-105133-105134-update ; ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-105134",
+            "cwes": [
+              "CWE-77",
+              "CWE-78"
+            ]
+          },
+          "nvd": {
+            "description": "A flaw has been found in Ahsay AhsayCBS up to 9.15.2.69/10.3.4.44. This vulnerability affects unknown code of the file /rps/api/json/UpdateReceivers.do of the component Replication Receiver. Executing a manipulation of the argument random can lead to os command injection. It is possible to launch the attack remotely. The exploit has been published and may be used. Upgrading to version 9.15.2.70 and 10.3.4.45 is able to resolve this issue. Upgrading the affected component is advised. The initial patch did not fix the security vulnerability properly. An update of the CVE entry to reflect this became necessary.",
+            "cvss": {
+              "version": "4.0",
+              "score": 10,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:A/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "cna@vuldb.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-77",
+              "CWE-78"
+            ],
+            "published": "2026-10-04T07:16:33.480",
+            "lastModified": "2026-10-26T18:06:57.930",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://vuldb.com/cve/CVE-2026-105134",
+                "source": "cna@vuldb.com",
+                "tags": [
+                  "Third Party Advisory",
+                  "VDB Entry"
+                ]
+              },
+              {
+                "url": "https://vuldb.com/submit/942743",
+                "source": "cna@vuldb.com",
+                "tags": [
+                  "Third Party Advisory",
+                  "VDB Entry"
+                ]
+              },
+              {
+                "url": "https://vuldb.com/vuln/413351",
+                "source": "cna@vuldb.com",
+                "tags": [
+                  "Permissions Required",
+                  "VDB Entry"
+                ]
+              },
+              {
+                "url": "https://vuldb.com/vuln/413351/cti",
+                "source": "cna@vuldb.com",
+                "tags": [
+                  "Permissions Required",
+                  "VDB Entry"
+                ]
+              },
+              {
+                "url": "https://www.ahsay.com/en/company/announcements/patch-cve-105133-105134-update",
+                "source": "cna@vuldb.com",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.huntress.com/blog/ahsaycbs-flaws-exploit",
+                "source": "cna@vuldb.com",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-105134",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:ahsay:cloud_backup_suite:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D6A20B7D-F0A0-45EC-B5BC-C3CDE88FE850",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "9.15.2.70"
+              },
+              {
+                "criteria": "cpe:2.3:a:ahsay:cloud_backup_suite:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "20845190-89C7-44CE-A749-495EB194808C",
+                "versionStartIncluding": "10.1.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "10.3.4.45"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/11/attackers-exploit-ahsaycbs-flaws-to.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.10",
+              "dateReleased": "2026-11-10T19:03:29.8375Z",
+              "retrievedAt": "2026-11-10T19:13:56.501Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-105133%2CCVE-2026-105134%2CCVE-2026-116779%2CCVE-2026-123218%2CCVE-2026-125350",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-105134",
+              "retrievedAt": "2026-11-10T19:13:56.501Z"
+            }
+          }
+        }
+      ],
+      "id": "s9"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Binance warns of iOS flaw that could leak crypto wallet secrets",
+      "url": "https://www.bleepingcomputer.com/news/security/binance-warns-of-ios-flaw-that-could-leak-crypto-wallet-secrets/",
+      "publishedAt": "2026-11-10T15:59:19.000Z",
+      "excerpt": "Binance is warning about a vulnerability in Apple's iOS 26.7.1, 27.0.1, and 27.2 that could allow third-party apps to read private files stored by other apps, including cryptocurrency seed phrases, secret keys, and login credentials. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/binance-warns-of-ios-flaw-that-could-leak-crypto-wallet-secrets",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/binance-warns-of-ios-flaw-that-could-leak-crypto-wallet-secrets"
+      ],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Blind Eagle Uses Fake Court Notices to Deliver Remote Access Trojan Across Latin America",
+      "url": "https://thehackernews.com/2026/11/blind-eagle-uses-fake-court-notices-to.html",
+      "publishedAt": "2026-11-10T15:58:44.000Z",
+      "excerpt": "The threat actor known as Blind Eagle has resurfaced with a new campaign targeting organizations in Latin America through judicial and administrative-themed phishing lures to deliver a remote access trojan (RAT) that shares its lineage with AsyncRAT and DCRat. \"The campaign uses Portuguese and Spanish lures that resemble court notifications, fiscalía notices, tutela proceedings, and",
+      "canonicalUrl": "https://thehackernews.com/2026/11/blind-eagle-uses-fake-court-notices-to.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/blind-eagle-uses-fake-court-notices-to.html"
+      ],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Cybercriminals are increasingly infecting regular people with spyware",
+      "url": "https://therecord.media/spyware-cyber-crime-iverify",
+      "publishedAt": "2026-11-10T15:45:00.000Z",
+      "excerpt": "Cybercriminals are infecting devices on a large scale with spyware, increasingly compromising systems belonging to average people, according to a new report.",
+      "canonicalUrl": "https://therecord.media/spyware-cyber-crime-iverify",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/spyware-cyber-crime-iverify"
+      ],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Fireworks AI Breach Widens to Expose Customer Billing Data and Incomplete Model Weights",
+      "url": "https://thehackernews.com/2026/11/fireworks-ai-breach-widens-to-expose.html",
+      "publishedAt": "2026-11-10T15:33:59.000Z",
+      "excerpt": "Fireworks AI disclosed on Monday that its investigation into a security incident first reported early last month uncovered further malicious activity, affecting account and billing information, alongside secrets, datasets, and incomplete models for a \"limited set of accounts.\" In a notice published on October 10, 2026, the company said it detected unauthorized use of internal Fireworks",
+      "canonicalUrl": "https://thehackernews.com/2026/11/fireworks-ai-breach-widens-to-expose.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/fireworks-ai-breach-widens-to-expose.html"
+      ],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Ransomware recovery is now a client retention metric",
+      "url": "https://www.bleepingcomputer.com/news/security/ransomware-recovery-is-now-a-client-retention-metric/",
+      "publishedAt": "2026-11-10T15:01:11.000Z",
+      "excerpt": "Recovering from ransomware doesn't guarantee an MSP will retain its clients, especially when delays, poor communication, and unexpected costs undermine trust. Kaseya examines how disconnected recovery tools create these problems and how integrated workflows can improve response times, transparency, and client retention. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/ransomware-recovery-is-now-a-client-retention-metric",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/ransomware-recovery-is-now-a-client-retention-metric"
+      ],
+      "cves": [],
+      "id": "s14"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Today: CISO Forum Virtual Summit 2026 – Join Global Cybersecurity Leaders",
+      "url": "https://www.securityweek.com/today-ciso-forum-virtual-summit-2026-join-global-cybersecurity-leaders/",
+      "publishedAt": "2026-11-10T15:00:00.000Z",
+      "excerpt": "Designed for cybersecurity leaders, this immersive two-day virtual event is your premier destination to discuss, share, and learn innovative risk management and defense strategies defining the modern enterprise. The post Today: CISO Forum Virtual Summit 2026 – Join Global Cybersecurity Leaders appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/today-ciso-forum-virtual-summit-2026-join-global-cybersecurity-leaders",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/today-ciso-forum-virtual-summit-2026-join-global-cybersecurity-leaders"
+      ],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "WhiteMatter Raises $20 Million in Series A Funding",
+      "url": "https://www.securityweek.com/whitematter-raises-20-million-in-series-a-funding/",
+      "publishedAt": "2026-11-10T14:58:19.000Z",
+      "excerpt": "The cybersecurity startup deploys a dedicated guardian agent for every AI agent in an organization’s environment. The post WhiteMatter Raises $20 Million in Series A Funding appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/whitematter-raises-20-million-in-series-a-funding",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/whitematter-raises-20-million-in-series-a-funding"
+      ],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "SAP Patches Critical ICM2SHELL, ProxyGate Vulnerabilities",
+      "url": "https://www.securityweek.com/sap-patches-critical-icm2shell-proxygate-vulnerabilities/",
+      "publishedAt": "2026-11-10T14:46:28.000Z",
+      "excerpt": "SAP has published 42 new and updated security advisories, including nine that address critical-severity vulnerabilities. The post SAP Patches Critical ICM2SHELL, ProxyGate Vulnerabilities appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/sap-patches-critical-icm2shell-proxygate-vulnerabilities",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/sap-patches-critical-icm2shell-proxygate-vulnerabilities"
+      ],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Palantir exec nominated to lead CISA; lame-duck Senate vote is uncertain",
+      "url": "https://therecord.media/michael-losapio-cisa-director-nomination",
+      "publishedAt": "2026-11-10T14:31:00.000Z",
+      "excerpt": "Michael LoSapio, Palantir's chief information security officer, is officially President Donald Trump's pick to lead the Cybersecurity and Infrastructure Security Agency.",
+      "canonicalUrl": "https://therecord.media/michael-losapio-cisa-director-nomination",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/michael-losapio-cisa-director-nomination"
+      ],
+      "cves": [],
+      "id": "s18"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "AI Makes Reverse Engineering Mainstream Software &amp; Malware Far Easier",
+      "url": "https://www.darkreading.com/application-security/ai-reverse-engineering-apps",
+      "publishedAt": "2026-11-10T13:00:00.000Z",
+      "excerpt": "Researchers unpacked, mapped, and recreated complex software and the Turla malware, raising fresh concerns for defenders.",
+      "canonicalUrl": "https://darkreading.com/application-security/ai-reverse-engineering-apps",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/application-security/ai-reverse-engineering-apps"
+      ],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Anthropic Rolls Out Mythos 5.2 With Improved Bug Hunting, Fewer Sandbox Escapes",
+      "url": "https://www.securityweek.com/anthropic-rolls-out-mythos-5-2-with-improved-bug-hunting-fewer-sandbox-escapes/",
+      "publishedAt": "2026-11-10T12:17:13.000Z",
+      "excerpt": "Anthropic says Mythos 5.2 improves vulnerability discovery while showing a lower tendency to escape sandboxes in controlled tests. The post Anthropic Rolls Out Mythos 5.2 With Improved Bug Hunting, Fewer Sandbox Escapes appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/anthropic-rolls-out-mythos-5-2-with-improved-bug-hunting-fewer-sandbox-escapes",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/anthropic-rolls-out-mythos-5-2-with-improved-bug-hunting-fewer-sandbox-escapes"
+      ],
+      "cves": [],
+      "id": "s22"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Binance Warns of iOS Sandbox Escape That Could Expose Crypto Wallet Keys, No Fix Confirmed",
+      "url": "https://thehackernews.com/2026/11/binance-warns-of-ios-sandbox-escape.html",
+      "publishedAt": "2026-11-10T12:15:31.000Z",
+      "excerpt": "An iOS sandbox escape published on GitHub lets an app read other apps' files on iPhones running iOS 26 and 27. That puts seed phrases, private keys, and login credentials at risk of exposure to malicious apps, Binance warned today. Apple's updates for iOS 26 and 27, released yesterday, do not list a fix. A researcher who goes by forcequit, in collaboration with 0xjohnny,",
+      "canonicalUrl": "https://thehackernews.com/2026/11/binance-warns-of-ios-sandbox-escape.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/binance-warns-of-ios-sandbox-escape.html"
+      ],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "SAP patches ICM2SHELL and PROXYGATE maximum severity flaws",
+      "url": "https://www.bleepingcomputer.com/news/security/sap-patches-four-maximum-severity-security-vulnerabilities/",
+      "publishedAt": "2026-11-10T12:07:03.000Z",
+      "excerpt": "SAP patched 35 vulnerabilities in its November 2026 security updates, including four maximum-severity issues affecting its NetWeaver, Web Dispatcher, and Gateway software. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/sap-patches-four-maximum-severity-security-vulnerabilities",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/sap-patches-four-maximum-severity-security-vulnerabilities"
+      ],
+      "cves": [],
+      "id": "s24"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Beyond the Alert: The Case for Rich Network Data",
+      "url": "https://thehackernews.com/2026/11/beyond-alert-case-for-rich-network-data.html",
+      "publishedAt": "2026-11-10T11:38:13.000Z",
+      "excerpt": "At some point your security will fail. This isn’t pessimism. It’s not because your team and tools aren’t sophisticated enough. It’s the reason we have detections in the first place. And, it’s why once we accept that prevention has its limits, we arrive at an interdiction strategy: finding and disrupting what got in. After the alert The alert tells you something happened. However, gaining",
+      "canonicalUrl": "https://thehackernews.com/2026/11/beyond-alert-case-for-rich-network-data.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/beyond-alert-case-for-rich-network-data.html"
+      ],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Apple Patches iMessage Group Chat Privacy Flaws and Bluetooth Pairing Vulnerabilities",
+      "url": "https://thehackernews.com/2026/11/apple-patches-imessage-group-chat.html",
+      "publishedAt": "2026-11-10T10:16:51.000Z",
+      "excerpt": "An iMessage flaw could let a remote attacker join a group chat and receive its messages, Apple said yesterday, and it released updates to fix it. The updates also fix a separate iMessage flaw that could let someone added to a group access messages sent before they joined. As of today, other updates released yesterday for the iPhone XS, XS Max and XR, the iPad (7th generation) and some Apple",
+      "canonicalUrl": "https://thehackernews.com/2026/11/apple-patches-imessage-group-chat.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/apple-patches-imessage-group-chat.html"
+      ],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers now exploit critical Barracuda ESG flaws to gain root access",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-barracuda-email-security-gateway-flaws-to-get-root-access/",
+      "publishedAt": "2026-11-10T10:10:20.000Z",
+      "excerpt": "Cybersecurity company Barracuda Networks warned that attackers have begun exploiting two recently patched Email Security Gateway (ESG) vulnerabilities that let them run commands with root privileges. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-exploit-barracuda-email-security-gateway-flaws-to-get-root-access",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/hackers-exploit-barracuda-email-security-gateway-flaws-to-get-root-access"
+      ],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Russian Turla Hackers Use New Cereal Malware to Steal Emails From Government Exchange Servers",
+      "url": "https://thehackernews.com/2026/11/russian-turla-hackers-use-new-cereal.html",
+      "publishedAt": "2026-11-10T10:07:29.000Z",
+      "excerpt": "The Russia-aligned state-sponsored threat actor known as Turla (aka Snake) is wielding a previously undocumented cyber espionage toolset called Cereal that's used to break into victims' Microsoft Exchange servers with an aim to surreptitiously collect emails. According to an ESET report shared with The Hacker News ahead of publication, the sophisticated and modular tool is designed for",
+      "canonicalUrl": "https://thehackernews.com/2026/11/russian-turla-hackers-use-new-cereal.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/russian-turla-hackers-use-new-cereal.html"
+      ],
+      "cves": [],
+      "id": "s28"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Turla hackers use new Cereal malware to spy on govt Exchange servers",
+      "url": "https://www.bleepingcomputer.com/news/security/turla-hackers-use-new-ceral-malware-to-spy-on-govt-exchange-servers/",
+      "publishedAt": "2026-11-10T10:04:32.000Z",
+      "excerpt": "The Russian state-backed threat group Turla has been using a new malicious toolset called 'Cereal' to intercept emails on Microsoft Exchange servers at government organizations. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/turla-hackers-use-new-ceral-malware-to-spy-on-govt-exchange-servers",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/turla-hackers-use-new-ceral-malware-to-spy-on-govt-exchange-servers"
+      ],
+      "cves": [],
+      "id": "s29"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "SAP Patches Four CVSS 10.0 Flaws, Including Two Enabling Remote Code Execution",
+      "url": "https://thehackernews.com/2026/11/sap-patches-four-cvss-100-flaws.html",
+      "publishedAt": "2026-11-10T10:02:40.000Z",
+      "excerpt": "Four flaws that attackers could exploit without logging in were fixed today as part of SAP's monthly Security Patch Day—the vendor rates all four 10.0, the maximum CVSS score. Three are in the SAP NetWeaver application server, the software SAP systems run on, and one is in the Web Dispatcher, which receives web requests from the internet and passes them on to that server. The flaws in the Web",
+      "canonicalUrl": "https://thehackernews.com/2026/11/sap-patches-four-cvss-100-flaws.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/sap-patches-four-cvss-100-flaws.html"
+      ],
+      "cves": [],
+      "id": "s30"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "N-able Takes N-central Offline as Researcher Drops Over 30 Zero-Days",
+      "url": "https://www.securityweek.com/n-able-takes-n-central-offline-as-researcher-drops-over-30-zero-days/",
+      "publishedAt": "2026-11-10T09:56:28.000Z",
+      "excerpt": "Attackers could exploit the flaws for remote code execution, credential theft, and administrator account creation. The post N-able Takes N-central Offline as Researcher Drops Over 30 Zero-Days appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/n-able-takes-n-central-offline-as-researcher-drops-over-30-zero-days",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/n-able-takes-n-central-offline-as-researcher-drops-over-30-zero-days"
+      ],
+      "cves": [],
+      "id": "s31"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "IBM Aspera Faspex, SignalWire FreeSwitch Vulnerabilities Exploited in Attacks",
+      "url": "https://www.securityweek.com/ibm-aspera-faspex-signalwire-freeswitch-vulnerabilities-exploited-in-attacks/",
+      "publishedAt": "2026-11-10T09:42:27.000Z",
+      "excerpt": "CISA has added CVE-2026-123218 and CVE-2026-116779 to KEV, urging federal agencies to patch them within three days. The post IBM Aspera Faspex, SignalWire FreeSwitch Vulnerabilities Exploited in Attacks appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/ibm-aspera-faspex-signalwire-freeswitch-vulnerabilities-exploited-in-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/ibm-aspera-faspex-signalwire-freeswitch-vulnerabilities-exploited-in-attacks"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-116779",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "SignalWire",
+            "product": "FreeSwitch",
+            "vulnerabilityName": "SignalWire FreeSwitch Code Injection Vulnerability",
+            "dateAdded": "2026-11-09",
+            "shortDescription": "SignalWire FreeSwitch contains a code injection vulnerability that permits configuration and credential disclosure, arbitrary call control, and command execution.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-12",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "This vulnerability affects an open-source component, third-party library, protocol, or proprietary implementation that could be used by different products. For more information, please see: https://github.com/signalwire/freeswitch/security/advisories/GHSA-mg63-h38w-8p9p ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-116779",
+            "cwes": [
+              "CWE-77",
+              "CWE-78",
+              "CWE-749"
+            ]
+          },
+          "nvd": {
+            "description": "FreeSWITCH is a Software Defined Telecom Stack enabling the digital transformation from proprietary telecom switches to a software implementation that runs on any commodity hardware. Prior to 1.11.3, sofia_presence_handle_sip_i_message() split the To user of an inbound SIP MESSAGE on a plus sign and treated the left side as a chat protocol selector. Selecting the api chat proto reached switch_api_execute(), allowing a peer whose MESSAGE was accepted to run FreeSWITCH API commands, including operating-system command sinks, with the daemon's privileges. Inbound chat is enabled on the stock internal and external profiles, and any authenticated profile account is sufficient; stock directory users without password material can also remove that barrier in affected configurations. The flaw permits configuration and credential disclosure, arbitrary call control, and command execution, and exploitation has been observed in the wild. This issue is fixed in version 1.11.3.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-77",
+              "CWE-78",
+              "CWE-749"
+            ],
+            "published": "2026-11-05T20:17:44.790",
+            "lastModified": "2026-11-10T05:17:57.830",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://github.com/signalwire/freeswitch/commit/7015f6a73ab3d67fed5fbfc277ecfb88a74c2a86",
+                "source": "security-advisories@github.com",
+                "tags": [
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://github.com/signalwire/freeswitch/pull/3135",
+                "source": "security-advisories@github.com",
+                "tags": [
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://github.com/signalwire/freeswitch/releases/tag/v1.11.3",
+                "source": "security-advisories@github.com",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://github.com/signalwire/freeswitch/security/advisories/GHSA-mg63-h38w-8p9p",
+                "source": "security-advisories@github.com",
+                "tags": [
+                  "Mitigation",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-116779",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:freeswitch:freeswitch:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FABBABC9-CD91-486F-8E9E-16692A1A45BB",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.11.3"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/ibm-aspera-faspex-signalwire-freeswitch-vulnerabilities-exploited-in-attacks/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.10",
+              "dateReleased": "2026-11-10T19:03:29.8375Z",
+              "retrievedAt": "2026-11-10T19:13:56.501Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-105133%2CCVE-2026-105134%2CCVE-2026-116779%2CCVE-2026-123218%2CCVE-2026-125350",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-116779",
+              "retrievedAt": "2026-11-10T19:13:56.501Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-123218",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "IBM",
+            "product": "Aspera Faspex",
+            "vulnerabilityName": "IBM Aspera Faspex Incorrect Authorization Vulnerability",
+            "dateAdded": "2026-11-09",
+            "shortDescription": "IBM Aspera Faspex contains an incorrect authorization vulnerability that could allow an authenticated user to craft a specific message to bypass authorization, causing privilege escalations.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-12",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://www.ibm.com/support/pages/node/7295921 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-123218",
+            "cwes": [
+              "CWE-863"
+            ]
+          },
+          "nvd": {
+            "description": "IBM Aspera Faspex 5.0.0 through 5.0.19 could allow an authorized user to craft a specific message to bypass user authorization and gain full administrative privileges.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "psirt@us.ibm.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-863"
+            ],
+            "published": "2026-11-07T04:17:28.900",
+            "lastModified": "2026-11-10T13:49:00.563",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://www.ibm.com/support/pages/node/7295921",
+                "source": "psirt@us.ibm.com",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-123218",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:ibm:aspera_faspex:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "CA93A2D7-D967-470E-B484-3234D8DF4A42",
+                "versionStartIncluding": "5.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.0.19.1"
+              },
+              {
+                "criteria": "cpe:2.3:o:linux:linux_kernel:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "703AF700-7A70-47E2-BC3A-7FD03B3CA9C1",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/ibm-aspera-faspex-signalwire-freeswitch-vulnerabilities-exploited-in-attacks/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.10",
+              "dateReleased": "2026-11-10T19:03:29.8375Z",
+              "retrievedAt": "2026-11-10T19:13:56.501Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-105133%2CCVE-2026-105134%2CCVE-2026-116779%2CCVE-2026-123218%2CCVE-2026-125350",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-123218",
+              "retrievedAt": "2026-11-10T19:13:56.501Z"
+            }
+          }
+        }
+      ],
+      "id": "s32"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Google patches eighth Chrome zero-day exploited in attacks this year",
+      "url": "https://www.bleepingcomputer.com/news/security/google-patches-eighth-chrome-zero-day-exploited-in-attacks-this-year/",
+      "publishedAt": "2026-11-10T08:51:25.000Z",
+      "excerpt": "Google has released emergency security updates to patch a new Chrome vulnerability exploited in zero-day attacks, the eighth such flaw since the start of the year. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/google-patches-eighth-chrome-zero-day-exploited-in-attacks-this-year",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/google-patches-eighth-chrome-zero-day-exploited-in-attacks-this-year"
+      ],
+      "cves": [],
+      "id": "s34"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Anthropic's Claude Fable 5.2 Beats GPT-6 Cyber in Multi-Stage Cyberattack Benchmark",
+      "url": "https://thehackernews.com/2026/11/anthropics-claude-fable-52-beats-gpt-6.html",
+      "publishedAt": "2026-11-10T08:16:14.000Z",
+      "excerpt": "Anthropic on Monday released Claude Fable 5.2 and Claude Mythos 5.2 models, which it said exhibit improvements in coding, reasoning, and vision. During pre-release training, the large language models (LLMs) helped its engineers \"complete otherwise-infeasible software migrations, designed three working electronic devices from scratch, solved two open problems in the physics of black holes, made",
+      "canonicalUrl": "https://thehackernews.com/2026/11/anthropics-claude-fable-52-beats-gpt-6.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/anthropics-claude-fable-52-beats-gpt-6.html"
+      ],
+      "cves": [],
+      "id": "s35"
+    },
+    {
+      "sourceId": "securelist",
+      "sourceKind": "rss",
+      "title": "IT threat evolution in Q3 2026. Non-mobile statistics",
+      "url": "https://securelist.com/malware-report-q3-2026-pc-iot-statistics/121843/",
+      "publishedAt": "2026-11-10T08:00:37.000Z",
+      "excerpt": "Key trends and statistics on malware targeting Windows and macOS computers and Internet of Things (IoT) devices in Q3 2026.",
+      "canonicalUrl": "https://securelist.com/malware-report-q3-2026-pc-iot-statistics/121843",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securelist.com/malware-report-q3-2026-pc-iot-statistics/121843"
+      ],
+      "cves": [],
+      "id": "s36"
+    },
+    {
+      "sourceId": "securelist",
+      "sourceKind": "rss",
+      "title": "IT threat evolution in Q3 2026. Mobile statistics",
+      "url": "https://securelist.com/malware-report-q3-2026-mobile-statistics/121844/",
+      "publishedAt": "2026-11-10T08:00:17.000Z",
+      "excerpt": "Q3 2026 mobile threat statistics for Android malware, adware, and unwanted software, plus the most notable malware found during the quarter.",
+      "canonicalUrl": "https://securelist.com/malware-report-q3-2026-mobile-statistics/121844",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securelist.com/malware-report-q3-2026-mobile-statistics/121844"
+      ],
+      "cves": [],
+      "id": "s37"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Fireworks AI discloses new breach after cloud provider hack",
+      "url": "https://www.bleepingcomputer.com/news/security/fireworks-ai-discloses-new-breach-after-cloud-provider-hack/",
+      "publishedAt": "2026-11-10T07:49:58.000Z",
+      "excerpt": "AI infrastructure startup Fireworks has disclosed a new security breach in which attackers accessed its development machines after breaching a third-party cloud provider. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/fireworks-ai-discloses-new-breach-after-cloud-provider-hack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/fireworks-ai-discloses-new-breach-after-cloud-provider-hack"
+      ],
+      "cves": [],
+      "id": "s38"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Vanderbilt University hit in BYOD ransomware attack, data theft claimed",
+      "url": "https://www.bleepingcomputer.com/news/security/vanderbilt-university-hit-in-byod-ransomware-attack-data-theft-claimed/",
+      "publishedAt": "2026-11-09T23:52:12.000Z",
+      "excerpt": "Vanderbilt University warns it is responding to a cyberattack claimed by the BYOD ransomware gang, which claims to have encrypted the university's databases and stolen sensitive student, employee, and research data. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/vanderbilt-university-hit-in-byod-ransomware-attack-data-theft-claimed",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/vanderbilt-university-hit-in-byod-ransomware-attack-data-theft-claimed"
+      ],
+      "cves": [],
+      "id": "s42"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "SEGA newsletter data breach exposes 2.2 million email addresses",
+      "url": "https://www.bleepingcomputer.com/news/security/sega-newsletter-data-breach-exposes-22-million-email-addresses/",
+      "publishedAt": "2026-11-09T22:09:33.000Z",
+      "excerpt": "Japanese gaming giant SEGA has disclosed that a data breach at its third-party newsletter provider, ARARA, exposed the email addresses of 2.2 million newsletter subscribers. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/sega-newsletter-data-breach-exposes-22-million-email-addresses",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/sega-newsletter-data-breach-exposes-22-million-email-addresses"
+      ],
+      "cves": [],
+      "id": "s43"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1280,
+    "promptCacheMissTokens": 11590,
+    "outputTokens": 12960,
+    "estimatedCostUsd": 0.005254984000000001
+  }
+}

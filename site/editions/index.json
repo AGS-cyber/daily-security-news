@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-11-10",
+    "mode": "article",
+    "headline": "Record Patch Tuesday, live Xen and Chrome exploits, and N-central’s shutdown",
+    "count": 43
+  },
+  {
     "date": "2026-11-09",
     "mode": "article",
     "headline": "CISA's four-flaw KEV batch leads a day of active exploitation and third-party trust failures",
