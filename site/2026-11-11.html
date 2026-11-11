@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-8eJjJoGewI/PAw1tfDgUX01ZwrPFqoQKNueaGjOsRXk='; style-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080b08">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22108%22%20height%3D%22108%22%20viewBox%3D%220%200%20108%20108%22%3E%0A%3Cpath%20d%3D%22M0%2C0h108v108h-108z%22%20fill%3D%22%23080b08%22%2F%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%237dffa4%22%20stroke-width%3D%227%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20transform%3D%22translate(54%2054)%20scale(1.45)%20translate(-54%20-54)%22%3E%0A%3Cpath%20d%3D%22M%2054%2044%20C%2054%2036%2043%2032.5%2036%2036%20C%2029.5%2039.5%2029.5%2048%2037.5%2052%20C%2046%2056%2054%2059.5%2053%2066.5%20C%2052%2073.5%2040.5%2075.5%2033%2071%22%2F%3E%0A%3Cpath%20d%3D%22M%2041.5%2027%20L%2041.5%2080%22%2F%3E%0A%3Cpath%20d%3D%22M%2064.5%2071.5%20L%2078.5%2071.5%22%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E">
+<title>CISA&#39;s KEV clock starts on Cisco, Barracuda and Openwave bugs while Microsoft ships 1,259 fixes — 11 November 2026</title>
+<style>
+:root { color-scheme: dark;
+  --bg:#080b08; --fg:#c9f5d5; --bright:#7dffa4; --muted:#6aa87f; --dim:#4a7f5e;
+  --rule:#1e3327; --link:#79dfff; --warn:#ffb642; --warn-bg:#1e1505; --warn-fg:#ffdca6;
+  --note:#79dfff; --note-bg:#06181f;
+  --mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { background: var(--bg); scrollbar-color: var(--dim) var(--bg);
+  -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { margin: 0; color: var(--fg); line-height: 1.6; font-family: var(--mono); font-size: 1rem;
+  overflow-wrap: anywhere;
+  background: radial-gradient(ellipse at 50% -10%, #0f1c13 0%, var(--bg) 60%) no-repeat; }
+::selection { background: var(--bright); color: var(--bg); }
+main, header, footer { max-width: 76ch; margin: 0 auto; padding: 0 1rem; }
+main:focus { outline: none; }
+.skip { position: absolute; left: .5rem; top: -4rem; z-index: 10; padding: .5rem .75rem;
+  background: var(--bright); color: var(--bg); border: 0; }
+.skip:focus { top: .5rem; }
+header { display: flex; flex-wrap: wrap; gap: .4rem 1.25rem; align-items: baseline;
+  border-bottom: 1px solid var(--rule); padding-top: 1.25rem; padding-bottom: .6rem; }
+header .brand { color: var(--bright); font-weight: 700; }
+header .brand::before { content: "root@sec:~$ "; color: var(--dim); font-weight: 400; }
+.nav { display: flex; flex-wrap: wrap; gap: .25rem .9rem; }
+.nav a { border-bottom: 0; padding: .15rem 0; }
+.nav a::before { content: "["; color: var(--dim); }
+.nav a::after { content: "]"; color: var(--dim); }
+.nav a[aria-current="page"] { color: var(--bright); font-weight: 700; }
+.nav a:hover::before, .nav a:hover::after, .nav a:focus-visible::before, .nav a:focus-visible::after {
+  color: inherit; }
+a { color: var(--link); text-decoration: none; border-bottom: 1px dotted currentColor; }
+a:hover, a:focus-visible { background: var(--link); color: var(--bg); border-bottom-color: transparent; }
+:focus-visible { outline: 2px solid var(--bright); outline-offset: 2px; }
+h1 { font-size: 1.4rem; line-height: 1.35; margin: 1.5rem 0 .75rem; color: var(--bright); }
+h1::before { content: "$ "; color: var(--dim); font-weight: 400; }
+h2 { font-size: 1.05rem; line-height: 1.4; margin: 0 0 .5rem; color: var(--bright); }
+strong { color: var(--bright); }
+hr { border: 0; border-top: 1px dashed var(--rule); margin: 2rem 0; }
+code { color: var(--warn); }
+pre { border: 1px solid var(--rule); padding: .75rem; overflow-x: auto; }
+.summary { color: var(--muted); font-size: .875rem; margin: 0 0 .5rem; }
+.summary::before { content: "// "; color: var(--dim); }
+.summary .warn { color: var(--warn); font-weight: 700; }
+.edition-status { border-left: 2px solid var(--dim); padding: .1rem 0 .1rem .9rem; margin: 0 0 1.5rem;
+  font-size: .875rem; color: var(--muted); }
+.edition-status p { margin: 0 0 .35rem; }
+.edition-status .kind { color: var(--fg); }
+.edition-status[data-state="due"], .edition-status[data-state="stale"],
+.edition-status[data-state="future"], .edition-status[data-state="invalid"] { border-left-color: var(--warn); }
+.age-status p { margin: .35rem 0 0; }
+.age-status .warn-line { color: var(--warn-fg); background: var(--warn-bg); border: 1px solid var(--warn);
+  padding: .5rem .75rem; }
+.age-status .warn-line strong { color: var(--warn); }
+.toc { margin: .35rem 0 0; }
+.toc ul { display: inline; list-style: none; margin: 0; padding: 0; }
+.toc li { display: inline; }
+.toc li + li::before { content: " \00B7 "; color: var(--dim); }
+.notice, .degraded { border: 1px solid; padding: .75rem 1rem; margin: 1.25rem 0; font-size: .9rem; }
+.notice::before, .degraded::before { display: block; letter-spacing: .12em; font-size: .75rem;
+  margin-bottom: .4rem; }
+.notice { border-color: var(--note); background: var(--note-bg); }
+.notice::before { content: "[ NOTICE ]"; color: var(--note); }
+.notice h2 { color: var(--note); font-size: .95rem; }
+.degraded { border-color: var(--warn); background: var(--warn-bg); color: var(--warn-fg); }
+.degraded::before { content: "[ !! DEGRADED ]"; color: var(--warn); }
+.degraded h2 { color: var(--warn); font-size: .95rem; letter-spacing: .04em; text-transform: uppercase; }
+.degraded ul, .notice ul { list-style: none; margin: .5rem 0 0; padding: 0; }
+.degraded li, .notice li { padding-left: 2ch; text-indent: -2ch; }
+.degraded li::before { content: "! "; color: var(--warn); }
+.notice li::before { content: "- "; color: var(--note); }
+.standfirst { color: var(--fg); margin: 0 0 1.75rem; padding-left: 1rem; border-left: 2px solid var(--dim); }
+.article h2 { margin: 2rem 0 .75rem; }
+.article h2::before { content: "## "; color: var(--dim); }
+.article p { margin: 0 0 1.1rem; }
+.article ul, .article ol { padding-left: 2ch; }
+.article li { margin: 0 0 .35rem; }
+.article li::marker { color: var(--dim); }
+.block { border-top: 1px solid var(--rule); margin-top: 2.5rem; padding-top: 1.25rem; }
+.block > h2::before, .stories-block > h2::before { content: "## "; color: var(--dim); }
+.stories-block { margin-top: 1.5rem; }
+.block-intro { color: var(--muted); font-size: .875rem; margin: 0 0 1rem; }
+ol.stories { list-style: none; margin: 0; padding: 0; }
+ol.stories > li { border-top: 1px solid var(--rule); padding: 1rem 0; }
+.story-title { font-size: 1rem; font-weight: 700; margin: 0 0 .3rem; }
+.story-title::before { content: "[" attr(data-n) "] "; color: var(--dim); font-weight: 400; }
+.meta { color: var(--muted); font-size: .875rem; margin: 0 0 .45rem; }
+.excerpt { margin: .4rem 0 0; }
+.also { font-size: .875rem; color: var(--muted); margin: .5rem 0 0; }
+.filters { border: 1px solid var(--rule); padding: .75rem; margin: 0 0 1rem; font-size: .875rem; }
+.filters .controls { display: flex; flex-wrap: wrap; gap: .6rem 1rem; align-items: flex-end; }
+.filters .field { display: flex; flex-direction: column; gap: .2rem; min-width: 0; flex: 1 1 12rem; }
+.filters label { color: var(--muted); }
+.filters input, .filters select, .filters button { font: inherit; font-size: 1rem; color: var(--fg); background: #0d140e;
+  border: 1px solid var(--dim); border-radius: 0; padding: .4rem .5rem; min-height: 2.75rem; max-width: 100%; }
+.filters button { cursor: pointer; color: var(--link); border-color: var(--link); flex: 0 0 auto; }
+.filters button:hover, .filters button:focus-visible { background: var(--link); color: var(--bg); }
+.filters .count { margin: .6rem 0 0; color: var(--fg); }
+.filters[data-active="true"] .count { color: var(--bright); }
+.filters .empty { padding: .5rem 0 0; }
+.vuln-list { list-style: none; margin: 0; padding: 0; }
+.vuln-list > li { color: var(--muted); font-size: .875rem; padding: .2rem 0; }
+.vuln-meta { margin: .35rem 0 0; }
+.vuln-meta > li::before { content: "> "; color: var(--dim); }
+.vuln-head span + span::before { content: " \00B7 "; color: var(--dim); }
+.vuln-summary .vuln-list > li { border-left: 2px solid var(--rule); padding: .5rem 0 .5rem .75rem; margin: 0 0 .75rem; }
+.vuln-summary .vuln-list > li.prio-known_exploited { border-left-color: var(--warn); }
+.vuln-summary .vuln-list > li.prio-critical { border-left-color: var(--bright); }
+.vuln-summary p { margin: .25rem 0; }
+.vuln-head { color: var(--fg); }
+.vuln-action { color: var(--fg); }
+.flag { color: var(--warn); }
+.coverage, .vuln-evidence { margin: .5rem 0; font-size: .875rem; color: var(--muted); }
+.coverage summary, .vuln-evidence summary { cursor: pointer; color: var(--link); padding: .2rem 0; }
+.vuln-evidence p { margin: .4rem 0; }
+.sources ul { list-style: none; margin: .5rem 0 0; padding: 0; font-size: .875rem; }
+.sources li { padding: .3rem 0; border-top: 1px dashed var(--rule); color: var(--muted); }
+.sources .tag { display: inline-block; min-width: 9ch; color: var(--fg); }
+.sources .src-failed .tag, .sources .src-empty .tag, .sources .src-unknown .tag { color: var(--warn); }
+.sources p { font-size: .875rem; color: var(--muted); margin: 0 0 .5rem; }
+table.cal { border-collapse: collapse; table-layout: fixed; width: 100%; margin: 0 0 2rem; }
+table.cal caption { text-align: left; color: var(--bright); font-size: 1.05rem; padding: 1.5rem 0 .6rem; }
+table.cal caption::before { content: "## "; color: var(--dim); }
+table.cal caption .count { color: var(--muted); font-size: .875rem; }
+table.cal th { font-weight: 400; font-size: .75rem; letter-spacing: .1em; color: var(--muted);
+  padding: .35rem 0; text-align: center; }
+table.cal th abbr { text-decoration: none; }
+table.cal td { border: 1px solid var(--rule); padding: 0; text-align: center; font-size: .9rem; }
+table.cal td.pad { border-color: transparent; }
+table.cal td span, table.cal td a { display: block; padding: .6rem 0; }
+table.cal td.off { border-style: dashed; }
+table.cal td.off span { color: var(--muted); }
+table.cal td a { border-bottom: 0; }
+table.cal td a.article { color: var(--bright); font-weight: 700; }
+table.cal td.latest { outline: 2px dashed var(--muted); outline-offset: -4px; }
+table.cal td a:hover, table.cal td a:focus-visible { background: var(--link); color: var(--bg); }
+table.cal td a.article:hover, table.cal td a.article:focus-visible { background: var(--bright); }
+.legend { color: var(--muted); font-size: .875rem; margin: 0 0 .5rem; }
+footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
+  padding-bottom: 3rem; color: var(--muted); font-size: .875rem; }
+footer::before { content: "// "; color: var(--dim); }
+.empty { color: var(--muted); padding: 1rem 0; }
+.empty::before { content: "# "; color: var(--dim); }
+@media (max-width: 30rem) {
+  body { font-size: .95rem; }
+  h1 { font-size: 1.2rem; }
+  main, header, footer { padding: 0 .75rem; }
+  table.cal td { font-size: .85rem; }
+}
+@media print {
+  .skip, .filters, .nav { display: none !important; }
+  body { background: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header>
+<span class="brand">daily-security-news</span>
+<nav class="nav" aria-label="Site">
+<a href="index.html">latest</a>
+<a href="archive.html">archive</a>
+</nav>
+</header>
+<main id="main" tabindex="-1">
+<h1>CISA&#39;s KEV clock starts on Cisco, Barracuda and Openwave bugs while Microsoft ships 1,259 fixes</h1>
+<section class="edition-status" aria-label="Edition date and status" data-age data-role="edition" data-generated-at="2026-11-11T19:09:55.374Z">
+<p class="summary">8 of 53 stories written up · 12 sources configured; feeds 12 with entries · <a href="#edition-sources">source status</a> · generated 19:09 UTC</p>
+<p><strong>Edition 11 November 2026</strong> &middot; Generated <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time><span data-age-out hidden> (<span data-age-text></span>)</span>. Scheduled daily at 12:00 UTC; publication can be delayed.</p>
+<p class="kind"><strong>Stored edition</strong>: the permanent page for 11 November 2026. It is not updated after generation, so newer editions may exist; see <a href="index.html">latest</a> or the <a href="archive.html">archive</a>.</p>
+<div class="age-status" role="status"><p class="warn-line" data-age-when="future" hidden><strong>Clock mismatch.</strong> This page’s generation time is later than this device’s clock, so its age cannot be shown. Check the device’s date and time.</p><p class="warn-line" data-age-when="invalid" hidden><strong>Age unknown.</strong> The stored generation time could not be read.</p></div>
+<nav class="toc" aria-label="On this page"><ul><li><a href="#edition-article">Article</a></li><li><a href="#edition-vulns">Vulnerability intelligence (4)</a></li><li><a href="#edition-stories-h">Also collected (45)</a></li><li><a href="#edition-sources">Source status</a></li></ul></nav>
+</section>
+
+<p class="standfirst">Three of the six entries CISA added to its Known Exploited Vulnerabilities catalog sit in enterprise communications and email infrastructure, and one carries a federal remediation deadline only three days out. The same day brought a 1,259-flaw Microsoft patch release, an actively exploited authentication bypass in a virtualization console, and confirmation of a 37.6-million-record retail breach. Four distinct CVE IDs are in scope below — a count of primary records in this selection, not a daily vulnerability total.</p>
+<div class="article" id="edition-article">
+<h2>Actively exploited</h2>
+<p>CISA&#39;s latest KEV update adds six vulnerabilities on evidence of active exploitation; the three detailed in the supplied material are Cisco BroadWorks, Barracuda Networks appliances and Openwave Webtop Media Transcoder <a href="https://www.cisa.gov/news-events/alerts/2026/11/10/cisa-adds-six-known-exploited-vulnerabilities-catalog">CISA Adds Six Known Exploited Vulnerabilities to Catalog</a>. The Cisco bug, CVE-2026-20320, is an XML external entity flaw in the BroadWorks Open Client Interface parser rated 7.5 High: an unauthenticated, remote attacker sending a crafted XML message to the OCI-P service could read sensitive configuration files with the privileges of the BroadWorks user, with no user interaction and no privileges required. CVE-2026-111560 in Barracuda products is an OS command injection rated 8.6 High under CVSS 4.0, but it is not a zero-day free-for-all — it requires an authenticated administrator to plant a crafted timezone value that later executes with root privileges. CISA&#39;s federal due date for that one is the tightest of the set; the Cisco and Openwave deadlines fall later in the month. But those dates bind federal agencies under the cited binding directive, not every organization. CVE-2026-111793, the Openwave flaw, is the outlier on severity: 4.3 Medium, an authenticated user bypassing the webmail experience to convert file types the administrator blocked, affecting versions before 1.1.22.0. KEV membership, not CVSS, is why all three belong on a triage list today.</p>
+<p>Microsoft&#39;s November release covers 1,259 vulnerabilities, the second consecutive month above a thousand, spread across Windows, Office, SQL Server, SharePoint and developer tooling, plus 165 CVE identifiers issued by other parties <a href="https://thehackernews.com/2026/11/microsoft-patches-1259-flaws-including.html">Microsoft Patches 1,259 Flaws, Including Exploited Outlook Bug That May Expose NTLMv2 Hashes</a>. The supplied detail names an exploited Outlook bug that may expose NTLMv2 hashes; no CVE ID or CVSS value was provided for it, so treat the patch volume as the actionable signal rather than any specific severity claim here.</p>
+<p>Separately, an authentication bypass in Xen Orchestra tracked as VSA-2026-062 has no CVE identifier yet but is reported as exploited in the wild to gain admin access, with the vendor pointing to REST cookie parsing that collapses an authentication token into an empty object <a href="https://thehackernews.com/2026/11/hackers-exploit-critical-xen-orchestra.html">Hackers Exploit Critical Xen Orchestra Auth Bypass Flaw to Gain Admin Access</a>. Operators of the virtualisation stack should assume exposure checks are time-sensitive.</p>
+<h2>Breaches</h2>
+<p>Nitori says an attacker reached a system on its network and may have stolen 37.62 million customer records — the &quot;may&quot; matters, and notification and identity-risk work will follow regardless of the final count <a href="https://www.bleepingcomputer.com/news/security/japanese-furniture-giant-nitori-says-hackers-stole-376m-customer-records/">Japanese furniture giant Nitori says hackers stole 37.6M customer records</a>. Poland shut down its nationwide ePUAP platform, which handles document submission and communication with government agencies, after a cyberattack <a href="https://therecord.media/poland-shuts-down-government-services-platform-cyberattack">Poland shuts down government services platform ePUAP following cyberattack</a>; the supplied material describes an availability impact on public-sector users and nothing about data loss. Maersk confirmed data was extracted from a local legacy system inherited through an earlier acquisition, as WhiteArmor demanded $5 million <a href="https://www.bleepingcomputer.com/news/security/maersk-confirms-data-breach-as-whitearmor-ransomware-demands-5-million/">Maersk confirms data breach as WhiteArmor ransomware demands $5 million</a> — inherited M&amp;A estates remain a durable weak point, though no technical root cause was supplied.</p>
+<h2>Vulnerabilities</h2>
+<p>Zoom patched two flaws in Zoom Workplace for Windows, including CVE-2026-108186, an improper input validation bug rated 9.6 Critical that could let an unauthenticated user escalate privileges over the network <a href="https://thehackernews.com/2026/11/critical-zoom-workplace-flaw-could.html">Critical Zoom Workplace Flaw Could Allow Unauthenticated Remote Privilege Escalation</a>. The supplied vector includes a user-interaction requirement, so this is not a silent remote takeover — the attacker needs a victim to do something. It is not in KEV, and no exploitation is reported; that is an absence of evidence, not proof of safety.</p>
+<h2>Research</h2>
+<p>Reporting traces the administrator of Qilin — described as the most active ransomware affiliate program, with at least 365 claimed victims in three months — to a 36-year-old man in St. Petersburg, based on a decade of operational security errors <a href="https://krebsonsecurity.com/2026/11/who-runs-the-ransomware-group-qilin/">Who Runs the Ransomware Group Qilin?</a>. Analysis: the identification rests on the reporting&#39;s own correlation of missteps, and the supplied excerpt does not detail charges or government confirmation, so treat it as attribution reporting rather than established fact.</p>
+
+</div>
+<section class="block vuln-summary" id="edition-vulns" aria-labelledby="edition-vulns-h">
+<h2 id="edition-vulns-h">Vulnerability intelligence</h2>
+<p class="block-intro">CVEs named in the stories this article covers that CISA lists as known exploited (KEV) or NVD rates High or Critical: KEV listings first, then by NVD CVSS score. Each source is shown as retrieved at the time given, not live.</p>
+<ul class="vuln-list"><li class="prio-known_exploited"><p class="vuln-head"><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-111560">CVE-2026-111560</a></span><span>CVSS 8.6 (4.0)</span><span>High</span><span>CISA KEV</span></p><p>Mentioned in: <a href="https://www.cisa.gov/news-events/alerts/2026/11/10/cisa-adds-six-known-exploited-vulnerabilities-catalog">CISA Adds Six Known Exploited Vulnerabilities to Catalog</a> (CISA Advisories)</p><p class="vuln-action"><strong>CISA required action:</strong> Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset&#39;s internet exposure and ensuring adherence to BOD 26-04 patching guidelines.</p><p>CISA catalog due date: 2026-11-13 (not a universal deadline).</p><details class="vuln-evidence"><summary>Sources</summary><p><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">CISA KEV</a>: record found; retrieved <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>.</p><p><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-111560">NVD</a>: record found; retrieved <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>.</p><p>Absence from KEV does not establish absence of exploitation.</p></details></li>
+<li class="prio-known_exploited"><p class="vuln-head"><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-20320">CVE-2026-20320</a></span><span>CVSS 7.5 (3.1)</span><span>High</span><span>CISA KEV</span></p><p>Mentioned in: <a href="https://www.cisa.gov/news-events/alerts/2026/11/10/cisa-adds-six-known-exploited-vulnerabilities-catalog">CISA Adds Six Known Exploited Vulnerabilities to Catalog</a> (CISA Advisories)</p><p class="vuln-action"><strong>CISA required action:</strong> Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset&#39;s internet exposure and ensuring adherence to BOD 26-04 patching guidelines.</p><p>CISA catalog due date: 2026-11-24 (not a universal deadline).</p><details class="vuln-evidence"><summary>Sources</summary><p><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">CISA KEV</a>: record found; retrieved <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>.</p><p><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-20320">NVD</a>: record found; retrieved <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>.</p><p>Absence from KEV does not establish absence of exploitation.</p></details></li>
+<li class="prio-known_exploited"><p class="vuln-head"><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-111793">CVE-2026-111793</a></span><span>CVSS 4.3 (3.1)</span><span>Medium</span><span>CISA KEV</span></p><p>Mentioned in: <a href="https://www.cisa.gov/news-events/alerts/2026/11/10/cisa-adds-six-known-exploited-vulnerabilities-catalog">CISA Adds Six Known Exploited Vulnerabilities to Catalog</a> (CISA Advisories)</p><p class="vuln-action"><strong>CISA required action:</strong> Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset&#39;s internet exposure and ensuring adherence to BOD 26-04 patching guidelines.</p><p>CISA catalog due date: 2026-11-24 (not a universal deadline).</p><details class="vuln-evidence"><summary>Sources</summary><p><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">CISA KEV</a>: record found; retrieved <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>.</p><p><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-111793">NVD</a>: record found; retrieved <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>.</p><p>Absence from KEV does not establish absence of exploitation.</p></details></li>
+<li class="prio-critical"><p class="vuln-head"><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-108186">CVE-2026-108186</a></span><span>CVSS 9.6 (3.1)</span><span>Critical</span></p><p>Mentioned in: <a href="https://thehackernews.com/2026/11/critical-zoom-workplace-flaw-could.html">Critical Zoom Workplace Flaw Could Allow Unauthenticated Remote Privilege Escalation</a> (The Hacker News)</p><details class="vuln-evidence"><summary>Sources</summary><p><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">CISA KEV</a>: not in retrieved source; retrieved <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>.</p><p><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-108186">NVD</a>: record found; retrieved <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>.</p><p>Absence from KEV does not establish absence of exploitation.</p></details></li></ul>
+</section>
+<section class="block" aria-labelledby="edition-stories-h">
+<h2 id="edition-stories-h">Also collected in this edition</h2>
+<div class="filters" role="search" aria-label="Filter these stories" data-filters data-filter-target="edition-stories" hidden>
+<div class="controls">
+<div class="field"><label for="edition-stories-q">Search text</label><input id="edition-stories-q" type="search" data-filter="q" autocomplete="off" spellcheck="false"></div>
+<div class="field"><label for="edition-stories-priority">Vulnerability priority</label><select id="edition-stories-priority" data-filter="priority"><option value="">All stories (45)</option><option value="cve">Mentions any CVE (3)</option><option value="high">High, Critical or CISA KEV (2)</option><option value="critical">Critical or CISA KEV (2)</option><option value="known_exploited">CISA KEV (known exploited) (2)</option></select></div>
+<div class="field"><label for="edition-stories-source">Source</label><select id="edition-stories-source" data-filter="source"><option value="">All sources (45)</option><option value="bleepingcomputer">BleepingComputer (9)</option><option value="talos">Cisco Talos (1)</option><option value="darkreading">Dark Reading (6)</option><option value="krebs">Krebs on Security (1)</option><option value="microsoft-security">Microsoft Security (2)</option><option value="securelist">Securelist (1)</option><option value="securityweek">SecurityWeek (9)</option><option value="thehackernews">The Hacker News (11)</option><option value="therecord">The Record (4)</option><option value="unit42">Unit 42 (1)</option></select></div><button type="button" data-filter-reset>Reset filters</button>
+</div>
+<p class="count" role="status" data-filter-count>Showing all 45 stories.</p>
+<p class="empty" data-filter-empty hidden>No stories match. Choose “Reset filters” to show all 45 stories again.</p>
+</div>
+<ol class="stories" id="edition-stories">
+<li id="s2" data-story data-source="therecord" data-priority="none">
+<p class="story-title" data-n="01"><a href="https://therecord.media/iran-backed-network-directed-london-attacks-over-facetime">Iran-backed network directed London attacks over FaceTime, US prosecutors say</a></p>
+<p class="meta">The Record · <time datetime="2026-11-11T16:57:00.000Z">11 November 2026 16:57 UTC</time></p>
+<p class="excerpt">An indictment unsealed Tuesday says the broader campaign, targeting Jewish and American sites, included attacks on synagogues in Belgium, the Netherlands and London, and U.S. bank buildings in Amsterdam and Paris.</p>
+
+</li>
+<li id="s3" data-story data-source="microsoft-security" data-priority="none">
+<p class="story-title" data-n="02"><a href="https://www.microsoft.com/en-us/security/blog/2026/11/11/lessons-from-59-linux-kernel-bug-reports/">Lessons from 59 Linux Kernel Bug Reports</a></p>
+<p class="meta">Microsoft Security · <time datetime="2026-11-11T16:55:00.000Z">11 November 2026 16:55 UTC</time></p>
+<p class="excerpt">Microsoft FORGE Lab researchers used codename MDASH to investigate Linux kernel vulnerabilities, resulting in 59 upstream bug reports, 33 assigned CVEs, and 38 merged fixes. The research includes eight demonstrated local root privilege-escalation exploits and examines the challenges of turning AI-generated findings into validated vulnerabilities and upstream fixes. The post Lessons from 59 Linux…</p>
+
+</li>
+<li id="s6" data-story data-source="securityweek" data-priority="none">
+<p class="story-title" data-n="03"><a href="https://www.securityweek.com/critical-xen-orchestra-flaws-exploited-in-attacks/">Critical Xen Orchestra Flaws Exploited in Attacks</a></p>
+<p class="meta">SecurityWeek · <time datetime="2026-11-11T15:42:47.000Z">11 November 2026 15:42 UTC</time></p>
+<p class="excerpt">A critical authentication bypass allows attackers to execute arbitrary code as admin and take over XCP-ng nodes. The post Critical Xen Orchestra Flaws Exploited in Attacks appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s7" data-story data-source="thehackernews" data-priority="none">
+<p class="story-title" data-n="04"><a href="https://thehackernews.com/2026/11/antifox-ai-pentesting-platform-linked.html">AntiFox AI Pentesting Platform Linked to Attacks That Accessed AWS Production Secrets</a></p>
+<p class="meta">The Hacker News · <time datetime="2026-11-11T15:34:27.000Z">11 November 2026 15:34 UTC</time></p>
+<p class="excerpt">Cybersecurity researchers have disclosed details of a campaign in which an emerging agentic penetration testing platform called AntiFox has been used to steal Amazon Web Services (AWS) credentials and pivot laterally into compromised environments. &quot;In several recently observed intrusions, Alibaba Cloud systems hosting AntiFox interfaces were associated with confirmed malicious actions against</p>
+
+</li>
+<li id="s8" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="05"><a href="https://www.bleepingcomputer.com/news/security/hackers-use-antifox-ai-agents-in-aws-credential-theft-attacks/">Hackers use AntiFox AI agents in AWS credential-theft attacks</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-11-11T15:12:59.000Z">11 November 2026 15:12 UTC</time></p>
+<p class="excerpt">Attackers are using Alibaba Cloud to host self-managed instances of AntiFox, an open-source agentic penetration testing platform, to target web services and AWS environments. [...]</p>
+
+</li>
+<li id="s9" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="06"><a href="https://www.bleepingcomputer.com/news/security/ebpf-rootkits-why-underground-actors-are-taking-notice/">eBPF Rootkits: Why Underground Actors Are Taking Notice</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-11-11T15:01:11.000Z">11 November 2026 15:01 UTC</time></p>
+<p class="excerpt">Linux eBPF rootkits can hide malicious activity and evade traditional detection methods without loading kernel modules. Flare reveals how these techniques are spreading through underground forums, where threat actors are sharing rootkit source code, tutorials, and exploits targeting Linux systems. [...]</p>
+
+</li>
+<li id="s10" data-story data-source="unit42" data-priority="none">
+<p class="story-title" data-n="07"><a href="https://unit42.paloaltonetworks.com/falcon-c2-browser-compromise/">The XG Files: Falcon C2 Flying Under The (Browser) Radar</a></p>
+<p class="meta">Unit 42 · <time datetime="2026-11-11T15:00:23.000Z">11 November 2026 15:00 UTC</time></p>
+<p class="excerpt">We uncover Falcon C2, a browser-based threat framework targeting governments via malicious scripts, extensions, and the Antino implant. The post The XG Files: Falcon C2 Flying Under The (Browser) Radar appeared first on Unit 42.</p>
+
+</li>
+<li id="s11" data-story data-source="thehackernews" data-priority="none">
+<p class="story-title" data-n="08"><a href="https://thehackernews.com/2026/11/hackers-target-qlik-sense-servers-with.html">Hackers Target Qlik Sense Servers With Reverse Shells, Stage ActiveMQ and Veeam Exploits</a></p>
+<p class="meta">The Hacker News · <time datetime="2026-11-11T14:01:00.000Z">11 November 2026 14:01 UTC</time></p>
+<p class="excerpt">Threat actors have been observed targeting Qlik Sense servers to unsuccessfully deliver PowerShell reverse shell commands against multiple environments in October 2026. Cynet&#39;s CyOps and Research teams said they identified the suspicious activity in October 2026 against several E.U.-based customers within a narrow window of just over three minutes. The activity has been found to share some</p>
+
+</li>
+<li id="s12" data-story data-source="securityweek" data-priority="none">
+<p class="story-title" data-n="09"><a href="https://www.securityweek.com/asus-zoom-release-security-patches/">Asus, Zoom Release Security Patches</a></p>
+<p class="meta">SecurityWeek · <time datetime="2026-11-11T13:58:38.000Z">11 November 2026 13:58 UTC</time></p>
+<p class="excerpt">Attackers could exploit them for command execution, memory overwrites, and privilege escalation. The post Asus, Zoom Release Security Patches appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s13" data-story data-source="securityweek" data-priority="none">
+<p class="story-title" data-n="10"><a href="https://www.securityweek.com/citrix-ivanti-patch-critical-and-high-severity-vulnerabilities/">Citrix, Ivanti Patch Critical and High-Severity Vulnerabilities</a></p>
+<p class="meta">SecurityWeek · <time datetime="2026-11-11T13:37:19.000Z">11 November 2026 13:37 UTC</time></p>
+<p class="excerpt">Attackers could exploit the bugs to tamper with certificate entries, achieve remote code execution, and compromise hosts. The post Citrix, Ivanti Patch Critical and High-Severity Vulnerabilities appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s15" data-story data-source="therecord" data-priority="none">
+<p class="story-title" data-n="11"><a href="https://therecord.media/britain-france-set-out-guidelines-for-commercial-hacking-firms">Britain, France set out first guidelines for commercial hacking firms</a></p>
+<p class="meta">The Record · <time datetime="2026-11-11T13:11:00.000Z">11 November 2026 13:11 UTC</time></p>
+<p class="excerpt">The guidelines call on businesses that develop, sell or finance CCICs to vet their customers, establish technical safeguards against misuse and to maintain systems for monitoring and reporting abuses.</p>
+
+</li>
+<li id="s16" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="12"><a href="https://www.bleepingcomputer.com/news/security/n-able-releases-security-hotfixes-for-zero-day-vulnerabilities/">N-able releases security hotfixes for zero-day vulnerabilities</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-11-11T12:32:27.000Z">11 November 2026 12:32 UTC</time></p>
+<p class="excerpt">N-able released hotfixes to address zero-day bugs affecting its N-central remote monitoring and management (RMM) platform, which were publicly disclosed over the weekend and forced it to take vulnerable hosted environments offline. [...]</p>
+
+</li>
+<li id="s17" data-story data-source="securityweek" data-priority="none">
+<p class="story-title" data-n="13"><a href="https://www.securityweek.com/finite-state-raises-27-million-to-secure-software-and-firmware-in-connected-devices/">Finite State Raises $27 Million to Secure Software and Firmware in Connected Devices</a></p>
+<p class="meta">SecurityWeek · <time datetime="2026-11-11T12:24:33.000Z">11 November 2026 12:24 UTC</time></p>
+<p class="excerpt">The Series C round will fund international expansion and more autonomous features for the firm’s device security platform. The post Finite State Raises $27 Million to Secure Software and Firmware in Connected Devices appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s18" data-story data-source="thehackernews" data-priority="none">
+<p class="story-title" data-n="14"><a href="https://thehackernews.com/2026/11/over-35000-grok-built-apps-exposed.html">Over 35,000 Grok-Built Apps Exposed Online, Some Leaking Confidential Data and Passwords</a></p>
+<p class="meta">The Hacker News · <time datetime="2026-11-11T12:19:40.000Z">11 November 2026 12:19 UTC</time></p>
+<p class="excerpt">Of the 37,571 Grok-built apps that security company Claroc found online, 35,578 were open to anyone without a sign-in, the researchers said yesterday. They included 24 apps built by staff at the social network X and at SpaceXSI, the company that makes the Grok AI assistant. Most of the open apps were games, landing pages, and calculators, but about 1 in 10 contained internal business or</p>
+
+</li>
+<li id="s19" data-story data-source="securityweek" data-priority="none">
+<p class="story-title" data-n="15"><a href="https://www.securityweek.com/fortinet-patches-nearly-100-vulnerabilities/">Fortinet Patches Nearly 100 Vulnerabilities</a></p>
+<p class="meta">SecurityWeek · <time datetime="2026-11-11T12:10:14.000Z">11 November 2026 12:10 UTC</time></p>
+<p class="excerpt">The massive drop comes after the company integrated frontier AI models into its product security testing. The post Fortinet Patches Nearly 100 Vulnerabilities appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s20" data-story data-source="thehackernews" data-priority="none">
+<p class="story-title" data-n="16"><a href="https://thehackernews.com/2026/11/we-built-agent-that-broke-all-of-our.html">We Built An Agent That Broke All of Our Security Rules. Here&#39;s What We Learned.</a></p>
+<p class="meta">The Hacker News · <time datetime="2026-11-11T12:01:59.000Z">11 November 2026 12:01 UTC</time></p>
+<p class="excerpt">We tell customers three things about securing AI agents: they need their own identities, access that fits the job they’re given, and traceability that’s separate from any human’s. That was true for us at Token as well. Then, we built an agent that broke all three by default. This helped us think through how such agents should be defended. When a browser agent acts inside a user’s authenticated</p>
+
+</li>
+<li id="s21" data-story data-source="thehackernews" data-priority="none">
+<p class="story-title" data-n="17"><a href="https://thehackernews.com/2026/11/emudhra-revokes-8-more-cas-it.html">eMudhra Revokes 8 More CAs It Previously Declared Unaffected by Key Compromise</a></p>
+<p class="meta">The Hacker News · <time datetime="2026-11-11T12:00:53.000Z">11 November 2026 12:00 UTC</time></p>
+<p class="excerpt">The in-house Python script behind eMudhra&#39;s October key compromise has now cost the company 8 more of its intermediate certificate authorities (CAs), even though it did not weaken their keys. Each intermediate CA has its own private key, which the company uses to sign the certificates it issues. The 8 intermediate CAs compromised in October had a different problem: a single line in the script</p>
+
+</li>
+<li id="s22" data-story data-source="securityweek" data-priority="none">
+<p class="story-title" data-n="18"><a href="https://www.securityweek.com/bay-raises-50-million-to-control-what-enterprise-ai-agents-can-do/">Bay Raises $50 Million to Control What Enterprise AI Agents Can Do</a></p>
+<p class="meta">SecurityWeek · <time datetime="2026-11-11T11:30:00.000Z">11 November 2026 11:30 UTC</time></p>
+<p class="excerpt">Founded by three ex-IDF Unit 8200 intelligence officers, Bay is launched to provide a control plane for AI agents. The post Bay Raises $50 Million to Control What Enterprise AI Agents Can Do appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s23" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="19"><a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-usb-audio-issues-caused-by-september-security-updates/">Microsoft fixes audio issues caused by September security updates</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-11-11T11:18:36.000Z">11 November 2026 11:18 UTC</time></p>
+<p class="excerpt">Microsoft says the November 2026 cumulative updates resolve USB audio issues plaguing Windows users who have installed security updates released since September. [...]</p>
+
+</li>
+<li id="s24" data-story data-source="securityweek" data-priority="none">
+<p class="story-title" data-n="20"><a href="https://www.securityweek.com/dreeze-emerges-from-stealth-with-33m-to-rebuild-cloud-apps-after-cyberattacks/">Dreeze Emerges From Stealth With $33M to Rebuild Cloud Apps After Cyberattacks</a></p>
+<p class="meta">SecurityWeek · <time datetime="2026-11-11T11:16:40.000Z">11 November 2026 11:16 UTC</time></p>
+<p class="excerpt">Created by Zerto and Kashya veterans, the startup has launched a platform designed to recover whole cloud applications. The post Dreeze Emerges From Stealth With $33M to Rebuild Cloud Apps After Cyberattacks appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s25" data-story data-source="securityweek" data-priority="none">
+<p class="story-title" data-n="21"><a href="https://www.securityweek.com/ics-patch-tuesday-siemens-flags-high-severity-flaws-node2shell-exposure/">ICS Patch Tuesday: Siemens Flags High-Severity Flaws, Node2Shell Exposure</a></p>
+<p class="meta">SecurityWeek · <time datetime="2026-11-11T10:35:15.000Z">11 November 2026 10:35 UTC</time></p>
+<p class="excerpt">Pre-Patch Tuesday advisories were published by VDE CERT, Phoenix Contact, Johnson Controls, and Hitachi Energy. The post ICS Patch Tuesday: Siemens Flags High-Severity Flaws, Node2Shell Exposure appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s26" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="22"><a href="https://www.bleepingcomputer.com/news/security/cisa-flags-cisco-broadworks-flaw-as-actively-exploited-in-attacks/">CISA flags Cisco BroadWorks flaw as actively exploited in attacks</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-11-11T10:12:08.000Z">11 November 2026 10:12 UTC</time></p>
+<p class="excerpt">The US Cybersecurity and Infrastructure Security Agency (CISA) warned on Tuesday that hackers are now exploiting a high-severity Cisco BroadWorks vulnerability in attacks. [...]</p>
+
+</li>
+<li id="s27" data-story data-source="securelist" data-priority="none">
+<p class="story-title" data-n="23"><a href="https://securelist.com/citrus-ransomware/121879/">Citrus Ransomware: VLESS for traffic, Sn00py for encryption, and LLMs lending a hand</a></p>
+<p class="meta">Securelist · <time datetime="2026-11-11T10:00:25.000Z">11 November 2026 10:00 UTC</time></p>
+<p class="excerpt">We break down the Citrus Ransomware group&#39;s attacks: the attackers&#39; TTPs and tooling, including VLESS traffic tunneling and LLM use, plus their links to Toy Ghouls.</p>
+
+</li>
+<li id="s28" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="24"><a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-exchange-sign-ins-broken-by-october-windows-server-updates/">Microsoft fixes Exchange sign-ins broken by Windows Server updates</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-11-11T09:07:27.000Z">11 November 2026 09:07 UTC</time></p>
+<p class="excerpt">Microsoft has fixed Outlook sign-in and mail delivery issues on Exchange Server systems after installing the October 2026 Windows Server security updates. [...]</p>
+
+</li>
+<li id="s29" data-story data-source="securityweek" data-priority="known_exploited">
+<p class="story-title" data-n="25"><a href="https://www.securityweek.com/threat-actors-exploit-openwave-cisco-broadworks-vulnerabilities/">Threat Actors Exploit Openwave, Cisco BroadWorks Vulnerabilities</a></p>
+<p class="meta">SecurityWeek · <time datetime="2026-11-11T09:01:07.000Z">11 November 2026 09:01 UTC</time></p>
+<p class="excerpt">The flaws, CVE-2026-111793 and CVE-2026-20320, let attackers leak sensitive information, including configuration data. The post Threat Actors Exploit Openwave, Cisco BroadWorks Vulnerabilities appeared first on SecurityWeek.</p>
+<ul class="vuln-list vuln-meta"><li><span class="vuln-head"><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-20320">CVE-2026-20320</a></span><span>CVSS 7.5 (3.1)</span><span>High</span><span>CISA KEV</span></span><details class="vuln-evidence"><summary>Sources and required action</summary><p><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">CISA KEV</a>: record found; retrieved <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>.</p><p><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-20320">NVD</a>: record found; retrieved <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>.</p><p class="vuln-action"><strong>CISA required action:</strong> Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset&#39;s internet exposure and ensuring adherence to BOD 26-04 patching guidelines.</p><p>CISA catalog due date: 2026-11-24 (not a universal deadline).</p><p>Absence from KEV does not establish absence of exploitation.</p></details></li>
+<li><span class="vuln-head"><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-111793">CVE-2026-111793</a></span><span>CVSS 4.3 (3.1)</span><span>Medium</span><span>CISA KEV</span></span><details class="vuln-evidence"><summary>Sources and required action</summary><p><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">CISA KEV</a>: record found; retrieved <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>.</p><p><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-111793">NVD</a>: record found; retrieved <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>.</p><p class="vuln-action"><strong>CISA required action:</strong> Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset&#39;s internet exposure and ensuring adherence to BOD 26-04 patching guidelines.</p><p>CISA catalog due date: 2026-11-24 (not a universal deadline).</p><p>Absence from KEV does not establish absence of exploitation.</p></details></li></ul>
+
+</li>
+<li id="s31" data-story data-source="thehackernews" data-priority="none">
+<p class="story-title" data-n="26"><a href="https://thehackernews.com/2026/11/railway-says-stolen-customer-ai-keys.html">Railway Says Stolen Customer AI Keys Led to $740,000 in Estimated Unauthorized Usage Charges</a></p>
+<p class="meta">The Hacker News · <time datetime="2026-11-11T07:49:04.000Z">11 November 2026 07:49 UTC</time></p>
+<p class="excerpt">AI provider keys that customers stored on Railway were stolen in an October breach and used to commit an estimated $740,000 in unauthorized spending, the platform-as-a-service provider said yesterday. It has promised to pay those charges itself when an AI provider will not refund them. The company builds and runs apps for its customers and stores their secrets, such as API keys and database</p>
+
+</li>
+<li id="s32" data-story data-source="thehackernews" data-priority="none">
+<p class="story-title" data-n="27"><a href="https://thehackernews.com/2026/11/microsoft-researchers-show-ai-agents.html">Microsoft Researchers Show AI Agents Can Be Backdoored by Editing Fewer Than 10 Neurons</a></p>
+<p class="meta">The Hacker News · <time datetime="2026-11-11T07:21:05.000Z">11 November 2026 07:21 UTC</time></p>
+<p class="excerpt">An AI model can be given a hidden backdoor by editing fewer than 10 of its rarely used neurons, without retraining the model, Microsoft researchers have shown. When a chosen trigger appears, the model outputs an attacker&#39;s command, which an agent using that model would run with the agent&#39;s own permissions. The attacker must be able to change the model&#39;s weights. The team tested the method on</p>
+
+</li>
+<li id="s33" data-story data-source="thehackernews" data-priority="known_exploited">
+<p class="story-title" data-n="28"><a href="https://thehackernews.com/2026/11/cisco-broadworks-and-openwave-flaws.html">Cisco BroadWorks and Openwave Flaws Actively Exploited Despite Available Patches</a></p>
+<p class="meta">The Hacker News · <time datetime="2026-11-11T06:04:02.000Z">11 November 2026 06:04 UTC</time></p>
+<p class="excerpt">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) Tuesday added two security flaws impacting Cisco BroadWorks and Openwave Messaging Webtop Media Transcoder to its Known Exploited Vulnerabilities (KEV) catalog, citing evidence of active exploitation. Details of the vulnerabilities are below - CVE-2026-20320 (CVSS score: 7.5) - An improper restriction of XML external entity</p>
+<ul class="vuln-list vuln-meta"><li><span class="vuln-head"><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-20320">CVE-2026-20320</a></span><span>CVSS 7.5 (3.1)</span><span>High</span><span>CISA KEV</span></span><details class="vuln-evidence"><summary>Sources and required action</summary><p><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">CISA KEV</a>: record found; retrieved <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>.</p><p><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-20320">NVD</a>: record found; retrieved <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>.</p><p class="vuln-action"><strong>CISA required action:</strong> Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset&#39;s internet exposure and ensuring adherence to BOD 26-04 patching guidelines.</p><p>CISA catalog due date: 2026-11-24 (not a universal deadline).</p><p>Absence from KEV does not establish absence of exploitation.</p></details></li></ul>
+
+</li>
+<li id="s34" data-story data-source="talos" data-priority="none">
+<p class="story-title" data-n="29"><a href="https://blog.talosintelligence.com/microsoft-patch-tuesday-for-november-2026/">Microsoft Patch Tuesday for November 2026 — Snort rules and prominent vulnerabilities</a></p>
+<p class="meta">Cisco Talos · <time datetime="2026-11-11T01:41:17.000Z">11 November 2026 01:41 UTC</time></p>
+<p class="excerpt">Microsoft has released its monthly security update for November 2026, which includes 1328 vulnerabilities affecting a range of products, including 60 that Microsoft marked as &quot;critical.&quot; Out of 60 &quot;critical&quot; vulnerabilities, 45 are remote code execution (RCE) vulnerabilities.</p>
+
+</li>
+<li id="s35" data-story data-source="microsoft-security" data-priority="none">
+<p class="story-title" data-n="30"><a href="https://www.microsoft.com/en-us/security/blog/2026/11/10/detecting-sleeper-agents-hiding-in-ai-model-neurons/">Detecting sleeper agents hiding in AI model neurons</a></p>
+<p class="meta">Microsoft Security · <time datetime="2026-11-10T23:00:00.000Z">10 November 2026 23:00 UTC</time></p>
+<p class="excerpt">Microsoft Research has released new threat research detailing how a capable agent model could be turned into a sleeper agent by editing fewer than ten neurons to inject a short payload; Microsoft Research has also found that this threat is detectable by frontier agents, which can identify anomalous weight edits. The post Detecting sleeper agents hiding in AI model neurons appeared first on…</p>
+
+</li>
+<li id="s36" data-story data-source="darkreading" data-priority="none">
+<p class="story-title" data-n="31"><a href="https://www.darkreading.com/vulnerabilities-threats/november-patch-tuesday-cornucopia-cves">November Patch Tuesday: An Overflowing Cornucopia of CVEs</a></p>
+<p class="meta">Dark Reading · <time datetime="2026-11-10T22:26:51.000Z">10 November 2026 22:26 UTC</time></p>
+<p class="excerpt">Microsoft serves up an actively exploited Outlook zero-day, and a wave of critical Exchange, SharePoint, Windows Search, and LDAP bugs that exhausted defenders need to prioritize fast.</p>
+
+</li>
+<li id="s37" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="32"><a href="https://www.bleepingcomputer.com/news/apple/railway-breach-leads-to-740-000-in-fraudulent-ai-charges/">Railway breach leads to $740,000 in fraudulent AI charges</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-11-10T22:20:19.000Z">10 November 2026 22:20 UTC</time></p>
+<p class="excerpt">Cloud hosting provider Railway says hackers exploited vulnerabilities in its infrastructure to steal customer authentication secrets and generate approximately $740,000 in fraudulent AI usage, potentially exposing credentials for up to 100,000 workspaces. [...]</p>
+
+</li>
+<li id="s38" data-story data-source="krebs" data-priority="none">
+<p class="story-title" data-n="33"><a href="https://krebsonsecurity.com/2026/11/microsoft-fixes-nearly-1100-security-vulnerabilities/">Microsoft Fixes Nearly 1,100 Security Vulnerabilities</a></p>
+<p class="meta">Krebs on Security · <time datetime="2026-11-10T21:55:03.000Z">10 November 2026 21:55 UTC</time></p>
+<p class="excerpt">Microsoft did another four-digit patch drop today, releasing updates to fix almost 1,100 security vulnerabilities in its Windows operating systems and supported software. This month&#39;s Patch Tuesday addresses 63 critical flaws -- including a zero-day in Microsoft Outlook -- and comes amid important security updates from other software makers, including Adobe, Apple, Google and Mozilla.</p>
+
+</li>
+<li id="s39" data-story data-source="therecord" data-priority="none">
+<p class="story-title" data-n="34"><a href="https://therecord.media/us-army-member-arrested-in-uk-spying-for-russia">US Army member arrested in UK over allegations of spying for Russia</a></p>
+<p class="meta">The Record · <time datetime="2026-11-10T21:13:00.000Z">10 November 2026 21:13 UTC</time></p>
+<p class="excerpt">The unnamed soldier was arrested by British counterterrorism police “working closely” with U.S. authorities, including the FBI and the military, the Metropolitan Police said in a statement.</p>
+
+</li>
+<li id="s40" data-story data-source="darkreading" data-priority="none">
+<p class="story-title" data-n="35"><a href="https://www.darkreading.com/cyberattacks-data-breaches/artex-ai-pen-test-tool-hackers-weapon">Artex: The AI Pen-Test Tool Hackers Turned Into a Weapon</a></p>
+<p class="meta">Dark Reading · <time datetime="2026-11-10T21:01:14.000Z">10 November 2026 21:01 UTC</time></p>
+<p class="excerpt">Forks of the open source Artex framework, along with 45 similar pen-testing tools, remain capable of executing credential attacks and cloud breaches at machine speed across multiple industries.</p>
+
+</li>
+<li id="s41" data-story data-source="therecord" data-priority="none">
+<p class="story-title" data-n="36"><a href="https://therecord.media/patch-tuesday-microsoft-1000-bugs-again">Microsoft’s Patch Tuesday surpasses 1,000 bugs for second month in a row</a></p>
+<p class="meta">The Record · <time datetime="2026-11-10T20:55:00.000Z">10 November 2026 20:55 UTC</time></p>
+<p class="excerpt">An exploited Outlook vulnerability drew most of the attention in Microsoft&#39;s latest Patch Tuesday, which listed 1,093 bugs total.</p>
+
+</li>
+<li id="s43" data-story data-source="darkreading" data-priority="none">
+<p class="story-title" data-n="37"><a href="https://www.darkreading.com/application-security/f-secure-26-ways-ai-harm-consumers-where-to-stop-them">F-Secure Identifies 26 Ways AI Can Harm Consumers, and Where to Stop Them</a></p>
+<p class="meta">Dark Reading · <time datetime="2026-11-10T20:41:45.000Z">10 November 2026 20:41 UTC</time></p>
+<p class="excerpt">New AI Harms Taxonomy traces how harm moves through AI systems, from misleading chatbot answers to compromised autonomous agents, and identifies where defenses can intervene.</p>
+
+</li>
+<li id="s44" data-story data-source="darkreading" data-priority="none">
+<p class="story-title" data-n="38"><a href="https://www.darkreading.com/cybersecurity-careers/checkmarx-appoints-kobi-sivilya-chief-information-security-officer">Checkmarx Appoints Kobi Sivilya as Chief Information Security Officer</a></p>
+<p class="meta">Dark Reading · <time datetime="2026-11-10T20:35:34.000Z">10 November 2026 20:35 UTC</time></p>
+<p class="excerpt">Sivilya brings deep cybersecurity and technology leadership to Checkmarx as AI transforms software development.</p>
+
+</li>
+<li id="s45" data-story data-source="darkreading" data-priority="none">
+<p class="story-title" data-n="39"><a href="https://www.darkreading.com/ics-ot-security/assess-ot-incident-response-preparedness">How to Assess OT Incident Response Preparedness</a></p>
+<p class="meta">Dark Reading · <time datetime="2026-11-10T20:18:43.000Z">10 November 2026 20:18 UTC</time></p>
+<p class="excerpt">Cloud Range&#39;s free 28-question OT Cyber Readiness Assessment helps organizations identify gaps in operational technology (OT) incident response.</p>
+
+</li>
+<li id="s46" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="40"><a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-releases-windows-10-kb5131096-extended-security-update/">Microsoft releases Windows 10 KB5131096 extended security update</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-11-10T20:04:36.000Z">10 November 2026 20:04 UTC</time></p>
+<p class="excerpt">Microsoft released the Windows 10 KB5131096 extended security update, which includes this month&#39;s November 2026 Patch Tuesday fixes and a few bug fixes and changes. [...]</p>
+
+</li>
+<li id="s47" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="41"><a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-trusted-aws-access-to-breach-multiple-cloud-environments/">Hackers exploit trusted AWS access to breach multiple cloud environments</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-11-10T19:31:11.000Z">10 November 2026 19:31 UTC</time></p>
+<p class="excerpt">A threat actor used compromised identity and access management (IAM) credentials for a Qubole big data platform&#39;s AWS account to access and exfiltrate data from multiple customers&#39; AWS environments. [...]</p>
+
+</li>
+<li id="s48" data-story data-source="thehackernews" data-priority="cve">
+<p class="story-title" data-n="42"><a href="https://thehackernews.com/2026/11/git-patches-flaw-that-lets-malicious.html">Git Patches Flaw That Lets Malicious Repositories Execute Code During Recursive Clones</a></p>
+<p class="meta">The Hacker News · <time datetime="2026-11-10T19:23:10.000Z">10 November 2026 19:23 UTC</time></p>
+<p class="excerpt">A flaw in Git can let a malicious repository run an attacker&#39;s code on a computer that clones it recursively, together with its submodules. The Git project fixed it this week in Git 2.56.1, with matching fixes for the 2.50 through 2.55 series in 2.50.2, 2.51.3, 2.52.1, 2.53.1, 2.54.1 and 2.55.1. The flaw, tracked as CVE-2026-111760, is an integer truncation in how Git handles its index. An</p>
+<ul class="vuln-list vuln-meta"><li><span class="vuln-head"><span>CVE-2026-111760</span><span>NVD record not found</span></span><details class="vuln-evidence"><summary>Sources</summary><p><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">CISA KEV</a>: not in retrieved source; retrieved <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>.</p><p><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-111760">NVD</a>: not in retrieved source; retrieved <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>.</p><p>Absence from KEV does not establish absence of exploitation.</p></details></li></ul>
+
+</li>
+<li id="s49" data-story data-source="thehackernews" data-priority="none">
+<p class="story-title" data-n="43"><a href="https://thehackernews.com/2026/11/sglang-rce-exploit-breaches-near-ai.html">SGLang RCE Exploit Breaches NEAR AI, Steals Data From 18 Agents and About 100 Users</a></p>
+<p class="meta">The Hacker News · <time datetime="2026-11-10T19:19:39.000Z">10 November 2026 19:19 UTC</time></p>
+<p class="excerpt">An attacker exploited a remote code execution flaw in SGLang, an open-source inference engine, and ran code on one of NEAR AI&#39;s inference servers last Sunday. The attacker could also have seen requests being processed on that server that day, including requests sent in confidential mode, the company said earlier this week. That mode processes requests inside a trusted execution environment (TEE</p>
+
+</li>
+<li id="s51" data-story data-source="thehackernews" data-priority="none">
+<p class="story-title" data-n="44"><a href="https://thehackernews.com/2026/11/three-china-nexus-espionage-campaigns.html">Three China-Nexus Espionage Campaigns Linked Through Sparrow Malware Ecosystem</a></p>
+<p class="meta">The Hacker News · <time datetime="2026-11-10T17:43:23.000Z">10 November 2026 17:43 UTC</time> · 25 hours before this edition</p>
+<p class="excerpt">Three distinct threat activity clusters with shared infrastructure and malware code similarities have been observed targeting telecommunications providers, government organizations, military entities, research institutions, and critical infrastructure across Latin America, Asia, and Europe over the past year. Check Point Research is tracking the clusters under the names SilentDelivery,</p>
+
+</li>
+<li id="s53" data-story data-source="darkreading" data-priority="none">
+<p class="story-title" data-n="45"><a href="https://www.darkreading.com/cyber-risk/people-are-getting-weird-about-ai">People Are Getting Weird About AI</a></p>
+<p class="meta">Dark Reading · <time datetime="2026-11-09T23:06:22.000Z">9 November 2026 23:06 UTC</time> · 44 hours before this edition</p>
+<p class="excerpt">Dark Reading Confidential Episode 22: You can love AI without being blind to cybersecurity being sacrificed for utility.</p>
+
+</li>
+</ol>
+</section>
+<section class="block sources" id="edition-sources" aria-labelledby="edition-sources-h">
+<h2 id="edition-sources-h">Source status</h2>
+<p>All 12 configured sources have a recorded result: 12 with entries, 0 empty, 0 failed. Failures are listed first.</p>
+<p>Counts precede date validation, deduplication and the seven-day news window. A successful fetch does not establish that a source has new reporting.</p>
+<ul><li class="src-ok"><span class="tag">FETCHED</span> Krebs on Security: 10 entries collected; checked <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> BleepingComputer: 15 entries collected; checked <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> The Hacker News: 50 entries collected; checked <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> The Record: 5 entries collected; checked <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> SecurityWeek: 10 entries collected; checked <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> Dark Reading: 50 entries collected; checked <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> CISA Advisories: 30 entries collected; checked <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> Google Project Zero: 10 entries collected; checked <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> Securelist: 10 entries collected; checked <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> Cisco Talos: 15 entries collected; checked <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> Unit 42: 15 entries collected; checked <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> Microsoft Security: 10 entries collected; checked <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>.</li></ul>
+<p>No collected entries were excluded during normalization.</p>
+</section>
+</main>
+<footer>Edition generated <time datetime="2026-11-11T19:09:55.374Z">11 November 2026 19:09 UTC</time>; this page shows that run and is not regenerated with newer data. Stored record: <a href="editions/2026-11-11.json">editions/2026-11-11.json</a>.</footer>
+<script>(function () {
+"use strict";
+var ISO = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d{1,3})?)?(?:Z|[+-]\d{2}:\d{2})$/;
+var GRACE = 7200000;
+var SKEW = 300000;
+var DAY = 86400000;
+var RANK = { none: 0, cve: 1, high: 2, critical: 3, known_exploited: 4 };
+function own(o, k) { return Object.prototype.hasOwnProperty.call(o, k); }
+function parseTime(value) {
+  if (typeof value !== "string" || !ISO.test(value)) return NaN;
+  var ms = Date.parse(value);
+  return isFinite(ms) ? ms : NaN;
+}
+function result(state, ageMs) { return { state: state, ageMs: ageMs }; }
+function ageState(role, generatedMs, dueMs, nowMs) {
+  var hasGen = isFinite(generatedMs);
+  var hasDue = role !== "edition" && isFinite(dueMs);
+  if (!isFinite(nowMs)) return result("invalid", NaN);
+  if (hasGen && generatedMs - nowMs > SKEW) return result("future", NaN);
+  if (hasDue && dueMs - nowMs > 1.5 * DAY) return result("future", NaN);
+  var age = hasGen ? Math.max(0, nowMs - generatedMs) : NaN;
+  if (!hasDue) return result(hasGen ? "ok" : "invalid", age);
+  if (nowMs < dueMs) return result("current", age);
+  if (nowMs < dueMs + GRACE) return result("due", age);
+  return result("stale", age);
+}
+function plural(n, unit) { return n + " " + unit + (n === 1 ? "" : "s"); }
+function formatAge(ms) {
+  if (typeof ms !== "number" || !isFinite(ms) || ms < 0) return "";
+  var minutes = Math.floor(ms / 60000);
+  if (minutes < 1) return "less than a minute ago";
+  if (minutes < 60) return plural(minutes, "minute") + " ago";
+  var hours = Math.floor(minutes / 60);
+  if (hours < 48) return plural(hours, "hour") + " ago";
+  return plural(Math.floor(hours / 24), "day") + " ago";
+}
+function queryTokens(query) {
+  var parts = String(query == null ? "" : query).toLowerCase().split(/\s+/);
+  var out = [];
+  for (var i = 0; i < parts.length && out.length < 20; i++) if (parts[i]) out.push(parts[i]);
+  return out;
+}
+function storyMatches(story, filter) {
+  var want = filter.priority || "";
+  if (want && own(RANK, want)) {
+    var have = own(RANK, story.priority) ? RANK[story.priority] : 0;
+    if (want === "known_exploited" ? story.priority !== "known_exploited" : have < RANK[want]) return false;
+  }
+  if (filter.source && story.source !== filter.source) return false;
+  for (var i = 0; i < filter.tokens.length; i++) {
+    if (story.text.indexOf(filter.tokens[i]) === -1) return false;
+  }
+  return true;
+}
+function countText(shown, total) {
+  var noun = total === 1 ? " story." : " stories.";
+  if (total === 0) return "There are no stories in this list.";
+  if (shown === total) return "Showing all " + total + noun;
+  if (shown === 0) return "No stories match these filters (0 of " + total + ").";
+  return "Showing " + shown + " of " + total + noun;
+}
+var logic = {
+  parseTime: parseTime, ageState: ageState, formatAge: formatAge,
+  queryTokens: queryTokens, storyMatches: storyMatches, countText: countText
+};
+
+if (typeof document === "undefined" || !document.querySelectorAll) return;
+var ages = [];
+var filters = [];
+function each(list, fn) { for (var i = 0; i < list.length; i++) fn(list[i]); }
+function show(el, on) { if (el && el.hidden === on) el.hidden = !on; }
+function setText(el, text) { if (el && el.textContent !== text) el.textContent = text; }
+function refreshAges() {
+  var now = Date.now();
+  each(ages, function (box) {
+    var r = logic.ageState(
+      box.getAttribute("data-role") || "edition",
+      logic.parseTime(box.getAttribute("data-generated-at")),
+      logic.parseTime(box.getAttribute("data-next-due")),
+      now
+    );
+    if (box.getAttribute("data-state") !== r.state) box.setAttribute("data-state", r.state);
+    var text = logic.formatAge(r.ageMs);
+    each(box.querySelectorAll("[data-age-text]"), function (el) { setText(el, text); });
+    each(box.querySelectorAll("[data-age-out]"), function (el) { show(el, text !== ""); });
+    each(box.querySelectorAll("[data-age-when]"), function (el) {
+      show(el, el.getAttribute("data-age-when") === r.state);
+    });
+  });
+}
+function bindFilters(box) {
+  var list = document.getElementById(box.getAttribute("data-filter-target") || "");
+  if (!list) return;
+  var q = box.querySelector('[data-filter="q"]');
+  var priority = box.querySelector('[data-filter="priority"]');
+  var source = box.querySelector('[data-filter="source"]');
+  var reset = box.querySelector("[data-filter-reset]");
+  var count = box.querySelector("[data-filter-count]");
+  var empty = box.querySelector("[data-filter-empty]");
+  var stories = [];
+  each(list.querySelectorAll("li[data-story]"), function (el) {
+    stories.push({
+      el: el,
+      text: String(el.textContent || "").toLowerCase(),
+      source: el.getAttribute("data-source") || "",
+      priority: el.getAttribute("data-priority") || "none"
+    });
+  });
+  function value(el) { return el ? String(el.value || "") : ""; }
+  function apply() {
+    var f = { tokens: logic.queryTokens(value(q)), priority: value(priority), source: value(source) };
+    var shown = 0;
+    each(stories, function (s) {
+      var ok = logic.storyMatches(s, f);
+      if (ok) shown++;
+      show(s.el, ok);
+    });
+    setText(count, logic.countText(shown, stories.length));
+    show(empty, shown === 0 && stories.length > 0);
+    var active = f.tokens.length > 0 || f.priority !== "" || f.source !== "";
+    box.setAttribute("data-active", active ? "true" : "false");
+  }
+  if (q) q.addEventListener("input", apply);
+  each([priority, source], function (el) {
+    if (!el) return;
+    el.addEventListener("change", apply);
+    el.addEventListener("input", apply);
+  });
+  if (reset) reset.addEventListener("click", function () {
+    if (q) q.value = "";
+    if (priority) priority.value = "";
+    if (source) source.value = "";
+    apply();
+  });
+  filters.push(apply);
+  box.hidden = false;
+  apply();
+}
+each(document.querySelectorAll("[data-age]"), function (el) { ages.push(el); });
+each(document.querySelectorAll("[data-filters]"), bindFilters);
+refreshAges();
+function resume() {
+  refreshAges();
+  each(filters, function (apply) { apply(); });
+}
+document.addEventListener("visibilitychange", function () { if (!document.hidden) resume(); });
+window.addEventListener("pageshow", resume);
+window.addEventListener("focus", refreshAges);
+if (ages.length) setInterval(function () { if (!document.hidden) refreshAges(); }, 60000);
+})();</script>
+</body>
+</html>

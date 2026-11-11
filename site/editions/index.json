@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-11-11",
+    "mode": "article",
+    "headline": "CISA's KEV clock starts on Cisco, Barracuda and Openwave bugs while Microsoft ships 1,259 fixes",
+    "count": 53
+  },
+  {
     "date": "2026-11-10",
     "mode": "article",
     "headline": "Record Patch Tuesday, live Xen and Chrome exploits, and N-central’s shutdown",

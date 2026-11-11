@@ -1,0 +1,1655 @@
+{
+  "date": "2026-11-11",
+  "generatedAt": "2026-11-11T19:09:55.374Z",
+  "collection": [
+    {
+      "sourceId": "krebs",
+      "attemptedAt": "2026-11-11T19:09:55.374Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "attemptedAt": "2026-11-11T19:09:55.374Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "thehackernews",
+      "attemptedAt": "2026-11-11T19:09:55.374Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "therecord",
+      "attemptedAt": "2026-11-11T19:09:55.374Z",
+      "status": "ok",
+      "items": 5,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securityweek",
+      "attemptedAt": "2026-11-11T19:09:55.374Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "darkreading",
+      "attemptedAt": "2026-11-11T19:09:55.374Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "attemptedAt": "2026-11-11T19:09:55.374Z",
+      "status": "ok",
+      "items": 30,
+      "skipped": 0
+    },
+    {
+      "sourceId": "projectzero",
+      "attemptedAt": "2026-11-11T19:09:55.374Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securelist",
+      "attemptedAt": "2026-11-11T19:09:55.374Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "talos",
+      "attemptedAt": "2026-11-11T19:09:55.374Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "unit42",
+      "attemptedAt": "2026-11-11T19:09:55.374Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "microsoft-security",
+      "attemptedAt": "2026-11-11T19:09:55.374Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    }
+  ],
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 229,
+    "published": 53
+  },
+  "mode": "article",
+  "headline": "CISA's KEV clock starts on Cisco, Barracuda and Openwave bugs while Microsoft ships 1,259 fixes",
+  "standfirst": "Three of the six entries CISA added to its Known Exploited Vulnerabilities catalog sit in enterprise communications and email infrastructure, and one carries a federal remediation deadline only three days out. The same day brought a 1,259-flaw Microsoft patch release, an actively exploited authentication bypass in a virtualization console, and confirmation of a 37.6-million-record retail breach. Four distinct CVE IDs are in scope below — a count of primary records in this selection, not a daily vulnerability total.",
+  "bodyMarkdown": "## Actively exploited\n\nCISA's latest KEV update adds six vulnerabilities on evidence of active exploitation; the three detailed in the supplied material are Cisco BroadWorks, Barracuda Networks appliances and Openwave Webtop Media Transcoder [[s52]]. The Cisco bug, CVE-2026-20320, is an XML external entity flaw in the BroadWorks Open Client Interface parser rated 7.5 High: an unauthenticated, remote attacker sending a crafted XML message to the OCI-P service could read sensitive configuration files with the privileges of the BroadWorks user, with no user interaction and no privileges required. CVE-2026-111560 in Barracuda products is an OS command injection rated 8.6 High under CVSS 4.0, but it is not a zero-day free-for-all — it requires an authenticated administrator to plant a crafted timezone value that later executes with root privileges. CISA's federal due date for that one is the tightest of the set; the Cisco and Openwave deadlines fall later in the month. But those dates bind federal agencies under the cited binding directive, not every organization. CVE-2026-111793, the Openwave flaw, is the outlier on severity: 4.3 Medium, an authenticated user bypassing the webmail experience to convert file types the administrator blocked, affecting versions before 1.1.22.0. KEV membership, not CVSS, is why all three belong on a triage list today.\n\nMicrosoft's November release covers 1,259 vulnerabilities, the second consecutive month above a thousand, spread across Windows, Office, SQL Server, SharePoint and developer tooling, plus 165 CVE identifiers issued by other parties [[s30]]. The supplied detail names an exploited Outlook bug that may expose NTLMv2 hashes; no CVE ID or CVSS value was provided for it, so treat the patch volume as the actionable signal rather than any specific severity claim here.\n\nSeparately, an authentication bypass in Xen Orchestra tracked as VSA-2026-062 has no CVE identifier yet but is reported as exploited in the wild to gain admin access, with the vendor pointing to REST cookie parsing that collapses an authentication token into an empty object [[s50]]. Operators of the virtualisation stack should assume exposure checks are time-sensitive.\n\n## Breaches\n\nNitori says an attacker reached a system on its network and may have stolen 37.62 million customer records — the \"may\" matters, and notification and identity-risk work will follow regardless of the final count [[s42]]. Poland shut down its nationwide ePUAP platform, which handles document submission and communication with government agencies, after a cyberattack [[s14]]; the supplied material describes an availability impact on public-sector users and nothing about data loss. Maersk confirmed data was extracted from a local legacy system inherited through an earlier acquisition, as WhiteArmor demanded $5 million [[s4]] — inherited M&A estates remain a durable weak point, though no technical root cause was supplied.\n\n## Vulnerabilities\n\nZoom patched two flaws in Zoom Workplace for Windows, including CVE-2026-108186, an improper input validation bug rated 9.6 Critical that could let an unauthenticated user escalate privileges over the network [[s5]]. The supplied vector includes a user-interaction requirement, so this is not a silent remote takeover — the attacker needs a victim to do something. It is not in KEV, and no exploitation is reported; that is an absence of evidence, not proof of safety.\n\n## Research\n\nReporting traces the administrator of Qilin — described as the most active ransomware affiliate program, with at least 365 claimed victims in three months — to a 36-year-old man in St. Petersburg, based on a decade of operational security errors [[s1]]. Analysis: the identification rests on the reporting's own correlation of missteps, and the supplied excerpt does not detail charges or government confirmation, so treat it as attribution reporting rather than established fact.",
+  "selected": [
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "CISA Adds Six Known Exploited Vulnerabilities to Catalog",
+      "url": "https://www.cisa.gov/news-events/alerts/2026/11/10/cisa-adds-six-known-exploited-vulnerabilities-catalog",
+      "publishedAt": "2026-11-10T12:00:00.000Z",
+      "excerpt": "CISA has added six new vulnerabilities to its Known Exploited Vulnerabilities (KEV) Catalog, based on evidence of active exploitation. CVE-2026-20320 Cisco BroadWorks Improper Restriction of XML External Entity Reference Vulnerability CVE-2026-111560 Barracuda Networks Multiple Products OS Command Injection Vulnerability CVE-2026-111793 Openwave Messaging Limited Webtop Media Transcoder Incorrect…",
+      "canonicalUrl": "https://cisa.gov/news-events/alerts/2026/11/10/cisa-adds-six-known-exploited-vulnerabilities-catalog",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/alerts/2026/11/10/cisa-adds-six-known-exploited-vulnerabilities-catalog"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-111560",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Barracuda Networks",
+            "product": "Multiple Products",
+            "vulnerabilityName": "Barracuda Networks Multiple Products OS Command Injection Vulnerability",
+            "dateAdded": "2026-11-10",
+            "shortDescription": "Barracuda Networks Email Security Gateway (ESG), Load Balancer, Application Delivery Controller (ADC), Message Archiver (BMA), WAF Control Center (WCC), Web Application Firewall (WAF), and Web Security Gateway (WSG) contain an OS command injection vulnerability. This vulnerability could allow an authenticated administrator to inject OS commands that execute with root privileges when the crafted timezone value is subsequently processed. This vulnerability can be chained with CVE-2026-116606",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-13",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://trust.barracuda.com/security/pre-authentication-authorization-bypass-command-injection ; https://github.com/mandiant/Vulnerability-Disclosures/blob/master/2026/MNDT-2026-0041.md ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-111560",
+            "cwes": [
+              "CWE-78"
+            ]
+          },
+          "nvd": {
+            "description": "Improper neutralization of shell metacharacters in the timezone configuration field in certain Barracuda appliance products using common Barracuda code allows an authenticated administrator to inject OS commands that execute with root privileges when the crafted timezone value is subsequently processed.",
+            "cvss": {
+              "version": "4.0",
+              "score": 8.6,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "mandiant-cve@google.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-78"
+            ],
+            "published": "2026-11-02T13:17:35.190",
+            "lastModified": "2026-11-11T05:19:20.373",
+            "vulnStatus": "Undergoing Analysis",
+            "references": [
+              {
+                "url": "https://github.com/mandiant/Vulnerability-Disclosures/blob/master/2026/MNDT-2026-0041.md",
+                "source": "mandiant-cve@google.com",
+                "tags": []
+              },
+              {
+                "url": "https://trust.barracuda.com/security/pre-authentication-authorization-bypass-command-injection",
+                "source": "mandiant-cve@google.com",
+                "tags": []
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-111560",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/11/10/cisa-adds-six-known-exploited-vulnerabilities-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.10",
+              "dateReleased": "2026-11-10T19:03:29.8375Z",
+              "retrievedAt": "2026-11-11T19:09:55.374Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-108186%2CCVE-2026-111793%2CCVE-2026-20320%2CCVE-2026-111760%2CCVE-2026-111560",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-111560",
+              "retrievedAt": "2026-11-11T19:09:55.374Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-111793",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Openwave Messaging Limited",
+            "product": "Webtop Media Transcoder",
+            "vulnerabilityName": "Openwave Messaging Limited Webtop Media Transcoder Incorrect Resource Transfer Between Spheres Vulnerability",
+            "dateAdded": "2026-11-10",
+            "shortDescription": "Openwave Messaging Limited Webtop Media Transcoder contains an incorrect resource transfer between spheres vulnerability that may allow an authenticated user to process and convert unintended document types if bypassing the Webmail experience.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-24",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://github.com/GISOpenwave/security-advisories-public/blob/main/CAN-2026-2032674.md ; https://jvn.jp/en/vu/JVNVU93403064/ ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-111793",
+            "cwes": [
+              "CWE-669"
+            ]
+          },
+          "nvd": {
+            "description": "Openwave Webtop Media Transcoder does not enforce administrator-defined file type restrictions to restrict the file-types to be converted. This may allow an authenticated user to process and convert unintended document types if bypassing the Webmail experience.",
+            "cvss": {
+              "version": "3.1",
+              "score": 4.3,
+              "severity": "MEDIUM",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L",
+              "source": "cve@mitre.org",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-669"
+            ],
+            "published": "2026-10-16T19:17:05.680",
+            "lastModified": "2026-11-11T05:19:21.073",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://github.com/GISOpenwave/security-advisories-public/blob/main/CAN-2026-2032674.md",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://openwave.ai",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Product"
+                ]
+              },
+              {
+                "url": "https://jvn.jp/en/vu/JVNVU93403064/",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-111793",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:openwave:webtop_media_transcoder:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3648EF22-BE01-47AC-94BC-0C92499BCD77",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.1.22.0"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/11/10/cisa-adds-six-known-exploited-vulnerabilities-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.10",
+              "dateReleased": "2026-11-10T19:03:29.8375Z",
+              "retrievedAt": "2026-11-11T19:09:55.374Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-108186%2CCVE-2026-111793%2CCVE-2026-20320%2CCVE-2026-111760%2CCVE-2026-111560",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-111793",
+              "retrievedAt": "2026-11-11T19:09:55.374Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-20320",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Cisco",
+            "product": "BroadWorks",
+            "vulnerabilityName": "Cisco BroadWorks Improper Restriction of XML External Entity Reference Vulnerability",
+            "dateAdded": "2026-11-10",
+            "shortDescription": "Cisco BroadWorks contains an improper restriction of XML external entity reference vulnerability that could allow an unauthenticated, remote attacker to read sensitive configuration information on an affected system.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-24",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-bworks-xxe-uwUd7CEt ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-20320",
+            "cwes": [
+              "CWE-611"
+            ]
+          },
+          "nvd": {
+            "description": "A vulnerability in the Open Client Interface (OCI) XML Parser of Cisco BroadWorks could allow an unauthenticated, remote attacker to read sensitive configuration information on an affected system.\r\n\r This vulnerability exists because XML entries are improperly parsed due to external entity resolution being allowed by default. An attacker could exploit this vulnerability by sending a crafted XML message to the Open Client Interface &ndash; Provisioning (OCI-P) service. A successful exploit could allow the attacker to view sensitive files from the filesystem with the privileges of the Cisco BroadWorks user.",
+            "cvss": {
+              "version": "3.1",
+              "score": 7.5,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+              "source": "psirt@cisco.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-611"
+            ],
+            "published": "2026-08-19T17:18:40.433",
+            "lastModified": "2026-11-11T05:19:43.487",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-bworks-xxe-uwUd7CEt",
+                "source": "psirt@cisco.com",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://malbearlabs.com/posts/operation-snowball-inside-an-autonomous-ai-intrusion-campaign",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Exploit",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-20320",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:cisco:broadworks_application_delivery_platform:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "642652DB-982D-4EAC-8241-05123D621B78",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "ri.2026.07"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:broadworks_application_server:*:*:*:*:release_independent:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "36D4F82F-4377-4564-B29B-2407268516A2",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "2026.0"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:broadworks_profile_server:*:*:*:*:release_independent:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7D599E22-8EE5-4BC3-8444-7643F1C1AD4B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "2026.07"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:broadworks_xtended_services_platform:*:*:*:*:release_independent:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2F17FFA8-A16C-4051-B21A-103F63DDD080",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "2026.07"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/11/10/cisa-adds-six-known-exploited-vulnerabilities-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.10",
+              "dateReleased": "2026-11-10T19:03:29.8375Z",
+              "retrievedAt": "2026-11-11T19:09:55.374Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-108186%2CCVE-2026-111793%2CCVE-2026-20320%2CCVE-2026-111760%2CCVE-2026-111560",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-20320",
+              "retrievedAt": "2026-11-11T19:09:55.374Z"
+            }
+          }
+        }
+      ],
+      "id": "s52",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "CISA added six KEV entries, including Cisco BroadWorks, Openwave, and Barracuda, with Barracuda's fix due Nov. 13, making immediate exposure checks urgent."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Microsoft Patches 1,259 Flaws, Including Exploited Outlook Bug That May Expose NTLMv2 Hashes",
+      "url": "https://thehackernews.com/2026/11/microsoft-patches-1259-flaws-including.html",
+      "publishedAt": "2026-11-11T08:17:53.000Z",
+      "excerpt": "Microsoft on Tuesday released patches for a total of 1,259 vulnerabilities spanning its software portfolio, the second consecutive month where the patch volume has exceeded 1,000 flaws. These cover 726 flaws in Windows, 174 in Office, 61 in Developer Tools, 59 in SQL Server, 53 in Developer Tools, and 27 in SharePoint Server. The patches also include 165 non-Microsoft-issued CVE identifiers.",
+      "canonicalUrl": "https://thehackernews.com/2026/11/microsoft-patches-1259-flaws-including.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/microsoft-patches-1259-flaws-including.html"
+      ],
+      "cves": [],
+      "id": "s30",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "Microsoft's November Patch Tuesday fixes 1,259 flaws, including an exploited Outlook bug that may expose NTLMv2 hashes, making it the day's broadest patching priority."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Hackers Exploit Critical Xen Orchestra Auth Bypass Flaw to Gain Admin Access",
+      "url": "https://thehackernews.com/2026/11/hackers-exploit-critical-xen-orchestra.html",
+      "publishedAt": "2026-11-10T18:12:21.000Z",
+      "excerpt": "French software company Vates VMS has warned of a critical security vulnerability in Xen Orchestra that it said is being actively exploited in the wild. The authentication bypass flaw, which does not yet have a CVE identifier, is tracked as VSA-2026-062. \"REST cookie parsing turns authenticationToken=j:%7B%7D into {},\" Vates VMS said in an alert. \"REST authentication passes that object to the",
+      "canonicalUrl": "https://thehackernews.com/2026/11/hackers-exploit-critical-xen-orchestra.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/hackers-exploit-critical-xen-orchestra.html"
+      ],
+      "cves": [],
+      "id": "s50",
+      "section": "exploited",
+      "rank": 3,
+      "angle": "Vates VMS says a critical Xen Orchestra auth bypass (VSA-2026-062, no CVE yet) is actively exploited to gain admin access, so XCP-ng operators need to check exposure now."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Japanese furniture giant Nitori says hackers stole 37.6M customer records",
+      "url": "https://www.bleepingcomputer.com/news/security/japanese-furniture-giant-nitori-says-hackers-stole-376m-customer-records/",
+      "publishedAt": "2026-11-10T20:54:55.000Z",
+      "excerpt": "Nitori, a major Japanese furniture and home accessories retailer, discovered that an attacker accessed a system on its network and may have stolen 37.62 million customer records. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/japanese-furniture-giant-nitori-says-hackers-stole-376m-customer-records",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/japanese-furniture-giant-nitori-says-hackers-stole-376m-customer-records"
+      ],
+      "cves": [],
+      "id": "s42",
+      "section": "breaches",
+      "rank": 4,
+      "angle": "Nitori says attackers may have stolen 37.6 million customer records, a massive retail breach that will drive notification and identity-risk work."
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Poland shuts down government services platform ePUAP following cyberattack",
+      "url": "https://therecord.media/poland-shuts-down-government-services-platform-cyberattack",
+      "publishedAt": "2026-11-11T13:18:00.000Z",
+      "excerpt": "The attack targeted a nationwide system that allows users to submit official documents, communicate with government agencies and complete administrative procedures online.",
+      "canonicalUrl": "https://therecord.media/poland-shuts-down-government-services-platform-cyberattack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/poland-shuts-down-government-services-platform-cyberattack"
+      ],
+      "cves": [],
+      "id": "s14",
+      "section": "breaches",
+      "rank": 5,
+      "angle": "Poland shut down the nationwide ePUAP government services platform after a cyberattack, a high-impact availability incident for public-sector users."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Critical Zoom Workplace Flaw Could Allow Unauthenticated Remote Privilege Escalation",
+      "url": "https://thehackernews.com/2026/11/critical-zoom-workplace-flaw-could.html",
+      "publishedAt": "2026-11-11T16:12:46.000Z",
+      "excerpt": "Zoom has released software updates to address two security flaws impacting Zoom Workplace for Windows, including a critical bug that could result in privilege escalation on affected systems. The vulnerabilities are listed below - CVE-2026-108186 (CVSS score: 9.6) - An improper input validation vulnerability that could allow an unauthenticated user to conduct an escalation of privilege via",
+      "canonicalUrl": "https://thehackernews.com/2026/11/critical-zoom-workplace-flaw-could.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/critical-zoom-workplace-flaw-could.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-108186",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Improper Input Validation in Zoom Workplace for Windows may allow an unauthenticated user to conduct an escalation of privilege via network access.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.6,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:H",
+              "source": "security@zoom.us",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-20"
+            ],
+            "published": "2026-11-10T16:17:14.183",
+            "lastModified": "2026-11-11T11:17:10.357",
+            "vulnStatus": "Awaiting Analysis",
+            "references": [
+              {
+                "url": "https://www.zoom.com/en/trust/security-bulletin/zsb-26023",
+                "source": "security@zoom.us",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/11/critical-zoom-workplace-flaw-could.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.10",
+              "dateReleased": "2026-11-10T19:03:29.8375Z",
+              "retrievedAt": "2026-11-11T19:09:55.374Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-108186%2CCVE-2026-111793%2CCVE-2026-20320%2CCVE-2026-111760%2CCVE-2026-111560",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-108186",
+              "retrievedAt": "2026-11-11T19:09:55.374Z"
+            }
+          }
+        }
+      ],
+      "id": "s5",
+      "section": "vulnerabilities",
+      "rank": 6,
+      "angle": "Zoom fixed a critical Zoom Workplace for Windows flaw (CVE-2026-108186, CVSS 9.6) that could let an unauthenticated user escalate privileges; patching is the immediate action."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Maersk confirms data breach as WhiteArmor ransomware demands $5 million",
+      "url": "https://www.bleepingcomputer.com/news/security/maersk-confirms-data-breach-as-whitearmor-ransomware-demands-5-million/",
+      "publishedAt": "2026-11-11T16:24:18.000Z",
+      "excerpt": "Maersk announced that a threat actor gained unauthorized access to a local legacy system inherited through an earlier acquisition and extracted data from it. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/maersk-confirms-data-breach-as-whitearmor-ransomware-demands-5-million",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/maersk-confirms-data-breach-as-whitearmor-ransomware-demands-5-million"
+      ],
+      "cves": [],
+      "id": "s4",
+      "section": "breaches",
+      "rank": 7,
+      "angle": "Maersk confirmed data was extracted from a legacy acquired system as WhiteArmor demanded $5 million, highlighting inherited M&A risk and extortion pressure."
+    },
+    {
+      "sourceId": "krebs",
+      "sourceKind": "rss",
+      "title": "Who Runs the Ransomware Group Qilin?",
+      "url": "https://krebsonsecurity.com/2026/11/who-runs-the-ransomware-group-qilin/",
+      "publishedAt": "2026-11-11T18:06:01.000Z",
+      "excerpt": "The cybercrime group Qilin has emerged as the world's most active ransomware affiliate program, claiming at least 365 victim organizations in the past three months alone. But even top Russian hackers make operational security mistakes, and the administrator of Qilin has made a few key missteps over the last decade that all point to a 36-year-old man living in St. Petersburg, Russia.",
+      "canonicalUrl": "https://krebsonsecurity.com/2026/11/who-runs-the-ransomware-group-qilin",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://krebsonsecurity.com/2026/11/who-runs-the-ransomware-group-qilin"
+      ],
+      "cves": [],
+      "id": "s1",
+      "section": "research",
+      "rank": 8,
+      "angle": "Krebs traces Qilin's administrator to a 36-year-old in St. Petersburg, offering rare attribution insight into the most active ransomware affiliate program."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Iran-backed network directed London attacks over FaceTime, US prosecutors say",
+      "url": "https://therecord.media/iran-backed-network-directed-london-attacks-over-facetime",
+      "publishedAt": "2026-11-11T16:57:00.000Z",
+      "excerpt": "An indictment unsealed Tuesday says the broader campaign, targeting Jewish and American sites, included attacks on synagogues in Belgium, the Netherlands and London, and U.S. bank buildings in Amsterdam and Paris.",
+      "canonicalUrl": "https://therecord.media/iran-backed-network-directed-london-attacks-over-facetime",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/iran-backed-network-directed-london-attacks-over-facetime"
+      ],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "Lessons from 59 Linux Kernel Bug Reports",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/11/11/lessons-from-59-linux-kernel-bug-reports/",
+      "publishedAt": "2026-11-11T16:55:00.000Z",
+      "excerpt": "Microsoft FORGE Lab researchers used codename MDASH to investigate Linux kernel vulnerabilities, resulting in 59 upstream bug reports, 33 assigned CVEs, and 38 merged fixes. The research includes eight demonstrated local root privilege-escalation exploits and examines the challenges of turning AI-generated findings into validated vulnerabilities and upstream fixes. The post Lessons from 59 Linux…",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/11/11/lessons-from-59-linux-kernel-bug-reports",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://microsoft.com/en-us/security/blog/2026/11/11/lessons-from-59-linux-kernel-bug-reports"
+      ],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Critical Xen Orchestra Flaws Exploited in Attacks",
+      "url": "https://www.securityweek.com/critical-xen-orchestra-flaws-exploited-in-attacks/",
+      "publishedAt": "2026-11-11T15:42:47.000Z",
+      "excerpt": "A critical authentication bypass allows attackers to execute arbitrary code as admin and take over XCP-ng nodes. The post Critical Xen Orchestra Flaws Exploited in Attacks appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/critical-xen-orchestra-flaws-exploited-in-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/critical-xen-orchestra-flaws-exploited-in-attacks"
+      ],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "AntiFox AI Pentesting Platform Linked to Attacks That Accessed AWS Production Secrets",
+      "url": "https://thehackernews.com/2026/11/antifox-ai-pentesting-platform-linked.html",
+      "publishedAt": "2026-11-11T15:34:27.000Z",
+      "excerpt": "Cybersecurity researchers have disclosed details of a campaign in which an emerging agentic penetration testing platform called AntiFox has been used to steal Amazon Web Services (AWS) credentials and pivot laterally into compromised environments. \"In several recently observed intrusions, Alibaba Cloud systems hosting AntiFox interfaces were associated with confirmed malicious actions against",
+      "canonicalUrl": "https://thehackernews.com/2026/11/antifox-ai-pentesting-platform-linked.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/antifox-ai-pentesting-platform-linked.html"
+      ],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers use AntiFox AI agents in AWS credential-theft attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-use-antifox-ai-agents-in-aws-credential-theft-attacks/",
+      "publishedAt": "2026-11-11T15:12:59.000Z",
+      "excerpt": "Attackers are using Alibaba Cloud to host self-managed instances of AntiFox, an open-source agentic penetration testing platform, to target web services and AWS environments. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-use-antifox-ai-agents-in-aws-credential-theft-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/hackers-use-antifox-ai-agents-in-aws-credential-theft-attacks"
+      ],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "eBPF Rootkits: Why Underground Actors Are Taking Notice",
+      "url": "https://www.bleepingcomputer.com/news/security/ebpf-rootkits-why-underground-actors-are-taking-notice/",
+      "publishedAt": "2026-11-11T15:01:11.000Z",
+      "excerpt": "Linux eBPF rootkits can hide malicious activity and evade traditional detection methods without loading kernel modules. Flare reveals how these techniques are spreading through underground forums, where threat actors are sharing rootkit source code, tutorials, and exploits targeting Linux systems. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/ebpf-rootkits-why-underground-actors-are-taking-notice",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/ebpf-rootkits-why-underground-actors-are-taking-notice"
+      ],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "unit42",
+      "sourceKind": "rss",
+      "title": "The XG Files: Falcon C2 Flying Under The (Browser) Radar",
+      "url": "https://unit42.paloaltonetworks.com/falcon-c2-browser-compromise/",
+      "publishedAt": "2026-11-11T15:00:23.000Z",
+      "excerpt": "We uncover Falcon C2, a browser-based threat framework targeting governments via malicious scripts, extensions, and the Antino implant. The post The XG Files: Falcon C2 Flying Under The (Browser) Radar appeared first on Unit 42.",
+      "canonicalUrl": "https://unit42.paloaltonetworks.com/falcon-c2-browser-compromise",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://unit42.paloaltonetworks.com/falcon-c2-browser-compromise"
+      ],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Hackers Target Qlik Sense Servers With Reverse Shells, Stage ActiveMQ and Veeam Exploits",
+      "url": "https://thehackernews.com/2026/11/hackers-target-qlik-sense-servers-with.html",
+      "publishedAt": "2026-11-11T14:01:00.000Z",
+      "excerpt": "Threat actors have been observed targeting Qlik Sense servers to unsuccessfully deliver PowerShell reverse shell commands against multiple environments in October 2026. Cynet's CyOps and Research teams said they identified the suspicious activity in October 2026 against several E.U.-based customers within a narrow window of just over three minutes. The activity has been found to share some",
+      "canonicalUrl": "https://thehackernews.com/2026/11/hackers-target-qlik-sense-servers-with.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/hackers-target-qlik-sense-servers-with.html"
+      ],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Asus, Zoom Release Security Patches",
+      "url": "https://www.securityweek.com/asus-zoom-release-security-patches/",
+      "publishedAt": "2026-11-11T13:58:38.000Z",
+      "excerpt": "Attackers could exploit them for command execution, memory overwrites, and privilege escalation. The post Asus, Zoom Release Security Patches appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/asus-zoom-release-security-patches",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/asus-zoom-release-security-patches"
+      ],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Citrix, Ivanti Patch Critical and High-Severity Vulnerabilities",
+      "url": "https://www.securityweek.com/citrix-ivanti-patch-critical-and-high-severity-vulnerabilities/",
+      "publishedAt": "2026-11-11T13:37:19.000Z",
+      "excerpt": "Attackers could exploit the bugs to tamper with certificate entries, achieve remote code execution, and compromise hosts. The post Citrix, Ivanti Patch Critical and High-Severity Vulnerabilities appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/citrix-ivanti-patch-critical-and-high-severity-vulnerabilities",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/citrix-ivanti-patch-critical-and-high-severity-vulnerabilities"
+      ],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Britain, France set out first guidelines for commercial hacking firms",
+      "url": "https://therecord.media/britain-france-set-out-guidelines-for-commercial-hacking-firms",
+      "publishedAt": "2026-11-11T13:11:00.000Z",
+      "excerpt": "The guidelines call on businesses that develop, sell or finance CCICs to vet their customers, establish technical safeguards against misuse and to maintain systems for monitoring and reporting abuses.",
+      "canonicalUrl": "https://therecord.media/britain-france-set-out-guidelines-for-commercial-hacking-firms",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/britain-france-set-out-guidelines-for-commercial-hacking-firms"
+      ],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "N-able releases security hotfixes for zero-day vulnerabilities",
+      "url": "https://www.bleepingcomputer.com/news/security/n-able-releases-security-hotfixes-for-zero-day-vulnerabilities/",
+      "publishedAt": "2026-11-11T12:32:27.000Z",
+      "excerpt": "N-able released hotfixes to address zero-day bugs affecting its N-central remote monitoring and management (RMM) platform, which were publicly disclosed over the weekend and forced it to take vulnerable hosted environments offline. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/n-able-releases-security-hotfixes-for-zero-day-vulnerabilities",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/n-able-releases-security-hotfixes-for-zero-day-vulnerabilities"
+      ],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Finite State Raises $27 Million to Secure Software and Firmware in Connected Devices",
+      "url": "https://www.securityweek.com/finite-state-raises-27-million-to-secure-software-and-firmware-in-connected-devices/",
+      "publishedAt": "2026-11-11T12:24:33.000Z",
+      "excerpt": "The Series C round will fund international expansion and more autonomous features for the firm’s device security platform. The post Finite State Raises $27 Million to Secure Software and Firmware in Connected Devices appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/finite-state-raises-27-million-to-secure-software-and-firmware-in-connected-devices",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/finite-state-raises-27-million-to-secure-software-and-firmware-in-connected-devices"
+      ],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Over 35,000 Grok-Built Apps Exposed Online, Some Leaking Confidential Data and Passwords",
+      "url": "https://thehackernews.com/2026/11/over-35000-grok-built-apps-exposed.html",
+      "publishedAt": "2026-11-11T12:19:40.000Z",
+      "excerpt": "Of the 37,571 Grok-built apps that security company Claroc found online, 35,578 were open to anyone without a sign-in, the researchers said yesterday. They included 24 apps built by staff at the social network X and at SpaceXSI, the company that makes the Grok AI assistant. Most of the open apps were games, landing pages, and calculators, but about 1 in 10 contained internal business or",
+      "canonicalUrl": "https://thehackernews.com/2026/11/over-35000-grok-built-apps-exposed.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/over-35000-grok-built-apps-exposed.html"
+      ],
+      "cves": [],
+      "id": "s18"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Fortinet Patches Nearly 100 Vulnerabilities",
+      "url": "https://www.securityweek.com/fortinet-patches-nearly-100-vulnerabilities/",
+      "publishedAt": "2026-11-11T12:10:14.000Z",
+      "excerpt": "The massive drop comes after the company integrated frontier AI models into its product security testing. The post Fortinet Patches Nearly 100 Vulnerabilities appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/fortinet-patches-nearly-100-vulnerabilities",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/fortinet-patches-nearly-100-vulnerabilities"
+      ],
+      "cves": [],
+      "id": "s19"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "We Built An Agent That Broke All of Our Security Rules. Here's What We Learned.",
+      "url": "https://thehackernews.com/2026/11/we-built-agent-that-broke-all-of-our.html",
+      "publishedAt": "2026-11-11T12:01:59.000Z",
+      "excerpt": "We tell customers three things about securing AI agents: they need their own identities, access that fits the job they’re given, and traceability that’s separate from any human’s. That was true for us at Token as well. Then, we built an agent that broke all three by default. This helped us think through how such agents should be defended. When a browser agent acts inside a user’s authenticated",
+      "canonicalUrl": "https://thehackernews.com/2026/11/we-built-agent-that-broke-all-of-our.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/we-built-agent-that-broke-all-of-our.html"
+      ],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "eMudhra Revokes 8 More CAs It Previously Declared Unaffected by Key Compromise",
+      "url": "https://thehackernews.com/2026/11/emudhra-revokes-8-more-cas-it.html",
+      "publishedAt": "2026-11-11T12:00:53.000Z",
+      "excerpt": "The in-house Python script behind eMudhra's October key compromise has now cost the company 8 more of its intermediate certificate authorities (CAs), even though it did not weaken their keys. Each intermediate CA has its own private key, which the company uses to sign the certificates it issues. The 8 intermediate CAs compromised in October had a different problem: a single line in the script",
+      "canonicalUrl": "https://thehackernews.com/2026/11/emudhra-revokes-8-more-cas-it.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/emudhra-revokes-8-more-cas-it.html"
+      ],
+      "cves": [],
+      "id": "s21"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Bay Raises $50 Million to Control What Enterprise AI Agents Can Do",
+      "url": "https://www.securityweek.com/bay-raises-50-million-to-control-what-enterprise-ai-agents-can-do/",
+      "publishedAt": "2026-11-11T11:30:00.000Z",
+      "excerpt": "Founded by three ex-IDF Unit 8200 intelligence officers, Bay is launched to provide a control plane for AI agents. The post Bay Raises $50 Million to Control What Enterprise AI Agents Can Do appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/bay-raises-50-million-to-control-what-enterprise-ai-agents-can-do",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/bay-raises-50-million-to-control-what-enterprise-ai-agents-can-do"
+      ],
+      "cves": [],
+      "id": "s22"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft fixes audio issues caused by September security updates",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-usb-audio-issues-caused-by-september-security-updates/",
+      "publishedAt": "2026-11-11T11:18:36.000Z",
+      "excerpt": "Microsoft says the November 2026 cumulative updates resolve USB audio issues plaguing Windows users who have installed security updates released since September. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-fixes-usb-audio-issues-caused-by-september-security-updates",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/microsoft/microsoft-fixes-usb-audio-issues-caused-by-september-security-updates"
+      ],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Dreeze Emerges From Stealth With $33M to Rebuild Cloud Apps After Cyberattacks",
+      "url": "https://www.securityweek.com/dreeze-emerges-from-stealth-with-33m-to-rebuild-cloud-apps-after-cyberattacks/",
+      "publishedAt": "2026-11-11T11:16:40.000Z",
+      "excerpt": "Created by Zerto and Kashya veterans, the startup has launched a platform designed to recover whole cloud applications. The post Dreeze Emerges From Stealth With $33M to Rebuild Cloud Apps After Cyberattacks appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/dreeze-emerges-from-stealth-with-33m-to-rebuild-cloud-apps-after-cyberattacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/dreeze-emerges-from-stealth-with-33m-to-rebuild-cloud-apps-after-cyberattacks"
+      ],
+      "cves": [],
+      "id": "s24"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "ICS Patch Tuesday: Siemens Flags High-Severity Flaws, Node2Shell Exposure",
+      "url": "https://www.securityweek.com/ics-patch-tuesday-siemens-flags-high-severity-flaws-node2shell-exposure/",
+      "publishedAt": "2026-11-11T10:35:15.000Z",
+      "excerpt": "Pre-Patch Tuesday advisories were published by VDE CERT, Phoenix Contact, Johnson Controls, and Hitachi Energy. The post ICS Patch Tuesday: Siemens Flags High-Severity Flaws, Node2Shell Exposure appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/ics-patch-tuesday-siemens-flags-high-severity-flaws-node2shell-exposure",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/ics-patch-tuesday-siemens-flags-high-severity-flaws-node2shell-exposure"
+      ],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "CISA flags Cisco BroadWorks flaw as actively exploited in attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/cisa-flags-cisco-broadworks-flaw-as-actively-exploited-in-attacks/",
+      "publishedAt": "2026-11-11T10:12:08.000Z",
+      "excerpt": "The US Cybersecurity and Infrastructure Security Agency (CISA) warned on Tuesday that hackers are now exploiting a high-severity Cisco BroadWorks vulnerability in attacks. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/cisa-flags-cisco-broadworks-flaw-as-actively-exploited-in-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/cisa-flags-cisco-broadworks-flaw-as-actively-exploited-in-attacks"
+      ],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "securelist",
+      "sourceKind": "rss",
+      "title": "Citrus Ransomware: VLESS for traffic, Sn00py for encryption, and LLMs lending a hand",
+      "url": "https://securelist.com/citrus-ransomware/121879/",
+      "publishedAt": "2026-11-11T10:00:25.000Z",
+      "excerpt": "We break down the Citrus Ransomware group's attacks: the attackers' TTPs and tooling, including VLESS traffic tunneling and LLM use, plus their links to Toy Ghouls.",
+      "canonicalUrl": "https://securelist.com/citrus-ransomware/121879",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securelist.com/citrus-ransomware/121879"
+      ],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft fixes Exchange sign-ins broken by Windows Server updates",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-exchange-sign-ins-broken-by-october-windows-server-updates/",
+      "publishedAt": "2026-11-11T09:07:27.000Z",
+      "excerpt": "Microsoft has fixed Outlook sign-in and mail delivery issues on Exchange Server systems after installing the October 2026 Windows Server security updates. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-fixes-exchange-sign-ins-broken-by-october-windows-server-updates",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/microsoft/microsoft-fixes-exchange-sign-ins-broken-by-october-windows-server-updates"
+      ],
+      "cves": [],
+      "id": "s28"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Threat Actors Exploit Openwave, Cisco BroadWorks Vulnerabilities",
+      "url": "https://www.securityweek.com/threat-actors-exploit-openwave-cisco-broadworks-vulnerabilities/",
+      "publishedAt": "2026-11-11T09:01:07.000Z",
+      "excerpt": "The flaws, CVE-2026-111793 and CVE-2026-20320, let attackers leak sensitive information, including configuration data. The post Threat Actors Exploit Openwave, Cisco BroadWorks Vulnerabilities appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/threat-actors-exploit-openwave-cisco-broadworks-vulnerabilities",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/threat-actors-exploit-openwave-cisco-broadworks-vulnerabilities"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-111793",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Openwave Messaging Limited",
+            "product": "Webtop Media Transcoder",
+            "vulnerabilityName": "Openwave Messaging Limited Webtop Media Transcoder Incorrect Resource Transfer Between Spheres Vulnerability",
+            "dateAdded": "2026-11-10",
+            "shortDescription": "Openwave Messaging Limited Webtop Media Transcoder contains an incorrect resource transfer between spheres vulnerability that may allow an authenticated user to process and convert unintended document types if bypassing the Webmail experience.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-24",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://github.com/GISOpenwave/security-advisories-public/blob/main/CAN-2026-2032674.md ; https://jvn.jp/en/vu/JVNVU93403064/ ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-111793",
+            "cwes": [
+              "CWE-669"
+            ]
+          },
+          "nvd": {
+            "description": "Openwave Webtop Media Transcoder does not enforce administrator-defined file type restrictions to restrict the file-types to be converted. This may allow an authenticated user to process and convert unintended document types if bypassing the Webmail experience.",
+            "cvss": {
+              "version": "3.1",
+              "score": 4.3,
+              "severity": "MEDIUM",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L",
+              "source": "cve@mitre.org",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-669"
+            ],
+            "published": "2026-10-16T19:17:05.680",
+            "lastModified": "2026-11-11T05:19:21.073",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://github.com/GISOpenwave/security-advisories-public/blob/main/CAN-2026-2032674.md",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://openwave.ai",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Product"
+                ]
+              },
+              {
+                "url": "https://jvn.jp/en/vu/JVNVU93403064/",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-111793",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:openwave:webtop_media_transcoder:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3648EF22-BE01-47AC-94BC-0C92499BCD77",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.1.22.0"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/threat-actors-exploit-openwave-cisco-broadworks-vulnerabilities/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.10",
+              "dateReleased": "2026-11-10T19:03:29.8375Z",
+              "retrievedAt": "2026-11-11T19:09:55.374Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-108186%2CCVE-2026-111793%2CCVE-2026-20320%2CCVE-2026-111760%2CCVE-2026-111560",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-111793",
+              "retrievedAt": "2026-11-11T19:09:55.374Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-20320",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Cisco",
+            "product": "BroadWorks",
+            "vulnerabilityName": "Cisco BroadWorks Improper Restriction of XML External Entity Reference Vulnerability",
+            "dateAdded": "2026-11-10",
+            "shortDescription": "Cisco BroadWorks contains an improper restriction of XML external entity reference vulnerability that could allow an unauthenticated, remote attacker to read sensitive configuration information on an affected system.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-24",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-bworks-xxe-uwUd7CEt ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-20320",
+            "cwes": [
+              "CWE-611"
+            ]
+          },
+          "nvd": {
+            "description": "A vulnerability in the Open Client Interface (OCI) XML Parser of Cisco BroadWorks could allow an unauthenticated, remote attacker to read sensitive configuration information on an affected system.\r\n\r This vulnerability exists because XML entries are improperly parsed due to external entity resolution being allowed by default. An attacker could exploit this vulnerability by sending a crafted XML message to the Open Client Interface &ndash; Provisioning (OCI-P) service. A successful exploit could allow the attacker to view sensitive files from the filesystem with the privileges of the Cisco BroadWorks user.",
+            "cvss": {
+              "version": "3.1",
+              "score": 7.5,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+              "source": "psirt@cisco.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-611"
+            ],
+            "published": "2026-08-19T17:18:40.433",
+            "lastModified": "2026-11-11T05:19:43.487",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-bworks-xxe-uwUd7CEt",
+                "source": "psirt@cisco.com",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://malbearlabs.com/posts/operation-snowball-inside-an-autonomous-ai-intrusion-campaign",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Exploit",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-20320",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:cisco:broadworks_application_delivery_platform:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "642652DB-982D-4EAC-8241-05123D621B78",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "ri.2026.07"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:broadworks_application_server:*:*:*:*:release_independent:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "36D4F82F-4377-4564-B29B-2407268516A2",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "2026.0"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:broadworks_profile_server:*:*:*:*:release_independent:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7D599E22-8EE5-4BC3-8444-7643F1C1AD4B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "2026.07"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:broadworks_xtended_services_platform:*:*:*:*:release_independent:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2F17FFA8-A16C-4051-B21A-103F63DDD080",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "2026.07"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/threat-actors-exploit-openwave-cisco-broadworks-vulnerabilities/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.10",
+              "dateReleased": "2026-11-10T19:03:29.8375Z",
+              "retrievedAt": "2026-11-11T19:09:55.374Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-108186%2CCVE-2026-111793%2CCVE-2026-20320%2CCVE-2026-111760%2CCVE-2026-111560",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-20320",
+              "retrievedAt": "2026-11-11T19:09:55.374Z"
+            }
+          }
+        }
+      ],
+      "id": "s29"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Railway Says Stolen Customer AI Keys Led to $740,000 in Estimated Unauthorized Usage Charges",
+      "url": "https://thehackernews.com/2026/11/railway-says-stolen-customer-ai-keys.html",
+      "publishedAt": "2026-11-11T07:49:04.000Z",
+      "excerpt": "AI provider keys that customers stored on Railway were stolen in an October breach and used to commit an estimated $740,000 in unauthorized spending, the platform-as-a-service provider said yesterday. It has promised to pay those charges itself when an AI provider will not refund them. The company builds and runs apps for its customers and stores their secrets, such as API keys and database",
+      "canonicalUrl": "https://thehackernews.com/2026/11/railway-says-stolen-customer-ai-keys.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/railway-says-stolen-customer-ai-keys.html"
+      ],
+      "cves": [],
+      "id": "s31"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Microsoft Researchers Show AI Agents Can Be Backdoored by Editing Fewer Than 10 Neurons",
+      "url": "https://thehackernews.com/2026/11/microsoft-researchers-show-ai-agents.html",
+      "publishedAt": "2026-11-11T07:21:05.000Z",
+      "excerpt": "An AI model can be given a hidden backdoor by editing fewer than 10 of its rarely used neurons, without retraining the model, Microsoft researchers have shown. When a chosen trigger appears, the model outputs an attacker's command, which an agent using that model would run with the agent's own permissions. The attacker must be able to change the model's weights. The team tested the method on",
+      "canonicalUrl": "https://thehackernews.com/2026/11/microsoft-researchers-show-ai-agents.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/microsoft-researchers-show-ai-agents.html"
+      ],
+      "cves": [],
+      "id": "s32"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Cisco BroadWorks and Openwave Flaws Actively Exploited Despite Available Patches",
+      "url": "https://thehackernews.com/2026/11/cisco-broadworks-and-openwave-flaws.html",
+      "publishedAt": "2026-11-11T06:04:02.000Z",
+      "excerpt": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA) Tuesday added two security flaws impacting Cisco BroadWorks and Openwave Messaging Webtop Media Transcoder to its Known Exploited Vulnerabilities (KEV) catalog, citing evidence of active exploitation. Details of the vulnerabilities are below - CVE-2026-20320 (CVSS score: 7.5) - An improper restriction of XML external entity",
+      "canonicalUrl": "https://thehackernews.com/2026/11/cisco-broadworks-and-openwave-flaws.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/cisco-broadworks-and-openwave-flaws.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-20320",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Cisco",
+            "product": "BroadWorks",
+            "vulnerabilityName": "Cisco BroadWorks Improper Restriction of XML External Entity Reference Vulnerability",
+            "dateAdded": "2026-11-10",
+            "shortDescription": "Cisco BroadWorks contains an improper restriction of XML external entity reference vulnerability that could allow an unauthenticated, remote attacker to read sensitive configuration information on an affected system.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-24",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-bworks-xxe-uwUd7CEt ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-20320",
+            "cwes": [
+              "CWE-611"
+            ]
+          },
+          "nvd": {
+            "description": "A vulnerability in the Open Client Interface (OCI) XML Parser of Cisco BroadWorks could allow an unauthenticated, remote attacker to read sensitive configuration information on an affected system.\r\n\r This vulnerability exists because XML entries are improperly parsed due to external entity resolution being allowed by default. An attacker could exploit this vulnerability by sending a crafted XML message to the Open Client Interface &ndash; Provisioning (OCI-P) service. A successful exploit could allow the attacker to view sensitive files from the filesystem with the privileges of the Cisco BroadWorks user.",
+            "cvss": {
+              "version": "3.1",
+              "score": 7.5,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+              "source": "psirt@cisco.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-611"
+            ],
+            "published": "2026-08-19T17:18:40.433",
+            "lastModified": "2026-11-11T05:19:43.487",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-bworks-xxe-uwUd7CEt",
+                "source": "psirt@cisco.com",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://malbearlabs.com/posts/operation-snowball-inside-an-autonomous-ai-intrusion-campaign",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Exploit",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-20320",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:cisco:broadworks_application_delivery_platform:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "642652DB-982D-4EAC-8241-05123D621B78",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "ri.2026.07"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:broadworks_application_server:*:*:*:*:release_independent:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "36D4F82F-4377-4564-B29B-2407268516A2",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "2026.0"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:broadworks_profile_server:*:*:*:*:release_independent:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7D599E22-8EE5-4BC3-8444-7643F1C1AD4B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "2026.07"
+              },
+              {
+                "criteria": "cpe:2.3:a:cisco:broadworks_xtended_services_platform:*:*:*:*:release_independent:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2F17FFA8-A16C-4051-B21A-103F63DDD080",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "2026.07"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/11/cisco-broadworks-and-openwave-flaws.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.10",
+              "dateReleased": "2026-11-10T19:03:29.8375Z",
+              "retrievedAt": "2026-11-11T19:09:55.374Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-108186%2CCVE-2026-111793%2CCVE-2026-20320%2CCVE-2026-111760%2CCVE-2026-111560",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-20320",
+              "retrievedAt": "2026-11-11T19:09:55.374Z"
+            }
+          }
+        }
+      ],
+      "id": "s33"
+    },
+    {
+      "sourceId": "talos",
+      "sourceKind": "rss",
+      "title": "Microsoft Patch Tuesday for November 2026 — Snort rules and prominent vulnerabilities",
+      "url": "https://blog.talosintelligence.com/microsoft-patch-tuesday-for-november-2026/",
+      "publishedAt": "2026-11-11T01:41:17.000Z",
+      "excerpt": "Microsoft has released its monthly security update for November 2026, which includes 1328 vulnerabilities affecting a range of products, including 60 that Microsoft marked as \"critical.\" Out of 60 \"critical\" vulnerabilities, 45 are remote code execution (RCE) vulnerabilities.",
+      "canonicalUrl": "https://blog.talosintelligence.com/microsoft-patch-tuesday-for-november-2026",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://blog.talosintelligence.com/microsoft-patch-tuesday-for-november-2026"
+      ],
+      "cves": [],
+      "id": "s34"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "Detecting sleeper agents hiding in AI model neurons",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/11/10/detecting-sleeper-agents-hiding-in-ai-model-neurons/",
+      "publishedAt": "2026-11-10T23:00:00.000Z",
+      "excerpt": "Microsoft Research has released new threat research detailing how a capable agent model could be turned into a sleeper agent by editing fewer than ten neurons to inject a short payload; Microsoft Research has also found that this threat is detectable by frontier agents, which can identify anomalous weight edits. The post Detecting sleeper agents hiding in AI model neurons appeared first on…",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/11/10/detecting-sleeper-agents-hiding-in-ai-model-neurons",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://microsoft.com/en-us/security/blog/2026/11/10/detecting-sleeper-agents-hiding-in-ai-model-neurons"
+      ],
+      "cves": [],
+      "id": "s35"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "November Patch Tuesday: An Overflowing Cornucopia of CVEs",
+      "url": "https://www.darkreading.com/vulnerabilities-threats/november-patch-tuesday-cornucopia-cves",
+      "publishedAt": "2026-11-10T22:26:51.000Z",
+      "excerpt": "Microsoft serves up an actively exploited Outlook zero-day, and a wave of critical Exchange, SharePoint, Windows Search, and LDAP bugs that exhausted defenders need to prioritize fast.",
+      "canonicalUrl": "https://darkreading.com/vulnerabilities-threats/november-patch-tuesday-cornucopia-cves",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/vulnerabilities-threats/november-patch-tuesday-cornucopia-cves"
+      ],
+      "cves": [],
+      "id": "s36"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Railway breach leads to $740,000 in fraudulent AI charges",
+      "url": "https://www.bleepingcomputer.com/news/apple/railway-breach-leads-to-740-000-in-fraudulent-ai-charges/",
+      "publishedAt": "2026-11-10T22:20:19.000Z",
+      "excerpt": "Cloud hosting provider Railway says hackers exploited vulnerabilities in its infrastructure to steal customer authentication secrets and generate approximately $740,000 in fraudulent AI usage, potentially exposing credentials for up to 100,000 workspaces. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/apple/railway-breach-leads-to-740-000-in-fraudulent-ai-charges",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/apple/railway-breach-leads-to-740-000-in-fraudulent-ai-charges"
+      ],
+      "cves": [],
+      "id": "s37"
+    },
+    {
+      "sourceId": "krebs",
+      "sourceKind": "rss",
+      "title": "Microsoft Fixes Nearly 1,100 Security Vulnerabilities",
+      "url": "https://krebsonsecurity.com/2026/11/microsoft-fixes-nearly-1100-security-vulnerabilities/",
+      "publishedAt": "2026-11-10T21:55:03.000Z",
+      "excerpt": "Microsoft did another four-digit patch drop today, releasing updates to fix almost 1,100 security vulnerabilities in its Windows operating systems and supported software. This month's Patch Tuesday addresses 63 critical flaws -- including a zero-day in Microsoft Outlook -- and comes amid important security updates from other software makers, including Adobe, Apple, Google and Mozilla.",
+      "canonicalUrl": "https://krebsonsecurity.com/2026/11/microsoft-fixes-nearly-1100-security-vulnerabilities",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://krebsonsecurity.com/2026/11/microsoft-fixes-nearly-1100-security-vulnerabilities"
+      ],
+      "cves": [],
+      "id": "s38"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "US Army member arrested in UK over allegations of spying for Russia",
+      "url": "https://therecord.media/us-army-member-arrested-in-uk-spying-for-russia",
+      "publishedAt": "2026-11-10T21:13:00.000Z",
+      "excerpt": "The unnamed soldier was arrested by British counterterrorism police “working closely” with U.S. authorities, including the FBI and the military, the Metropolitan Police said in a statement.",
+      "canonicalUrl": "https://therecord.media/us-army-member-arrested-in-uk-spying-for-russia",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/us-army-member-arrested-in-uk-spying-for-russia"
+      ],
+      "cves": [],
+      "id": "s39"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Artex: The AI Pen-Test Tool Hackers Turned Into a Weapon",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/artex-ai-pen-test-tool-hackers-weapon",
+      "publishedAt": "2026-11-10T21:01:14.000Z",
+      "excerpt": "Forks of the open source Artex framework, along with 45 similar pen-testing tools, remain capable of executing credential attacks and cloud breaches at machine speed across multiple industries.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/artex-ai-pen-test-tool-hackers-weapon",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyberattacks-data-breaches/artex-ai-pen-test-tool-hackers-weapon"
+      ],
+      "cves": [],
+      "id": "s40"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Microsoft’s Patch Tuesday surpasses 1,000 bugs for second month in a row",
+      "url": "https://therecord.media/patch-tuesday-microsoft-1000-bugs-again",
+      "publishedAt": "2026-11-10T20:55:00.000Z",
+      "excerpt": "An exploited Outlook vulnerability drew most of the attention in Microsoft's latest Patch Tuesday, which listed 1,093 bugs total.",
+      "canonicalUrl": "https://therecord.media/patch-tuesday-microsoft-1000-bugs-again",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/patch-tuesday-microsoft-1000-bugs-again"
+      ],
+      "cves": [],
+      "id": "s41"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "F-Secure Identifies 26 Ways AI Can Harm Consumers, and Where to Stop Them",
+      "url": "https://www.darkreading.com/application-security/f-secure-26-ways-ai-harm-consumers-where-to-stop-them",
+      "publishedAt": "2026-11-10T20:41:45.000Z",
+      "excerpt": "New AI Harms Taxonomy traces how harm moves through AI systems, from misleading chatbot answers to compromised autonomous agents, and identifies where defenses can intervene.",
+      "canonicalUrl": "https://darkreading.com/application-security/f-secure-26-ways-ai-harm-consumers-where-to-stop-them",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/application-security/f-secure-26-ways-ai-harm-consumers-where-to-stop-them"
+      ],
+      "cves": [],
+      "id": "s43"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Checkmarx Appoints Kobi Sivilya as Chief Information Security Officer",
+      "url": "https://www.darkreading.com/cybersecurity-careers/checkmarx-appoints-kobi-sivilya-chief-information-security-officer",
+      "publishedAt": "2026-11-10T20:35:34.000Z",
+      "excerpt": "Sivilya brings deep cybersecurity and technology leadership to Checkmarx as AI transforms software development.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-careers/checkmarx-appoints-kobi-sivilya-chief-information-security-officer",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cybersecurity-careers/checkmarx-appoints-kobi-sivilya-chief-information-security-officer"
+      ],
+      "cves": [],
+      "id": "s44"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "How to Assess OT Incident Response Preparedness",
+      "url": "https://www.darkreading.com/ics-ot-security/assess-ot-incident-response-preparedness",
+      "publishedAt": "2026-11-10T20:18:43.000Z",
+      "excerpt": "Cloud Range's free 28-question OT Cyber Readiness Assessment helps organizations identify gaps in operational technology (OT) incident response.",
+      "canonicalUrl": "https://darkreading.com/ics-ot-security/assess-ot-incident-response-preparedness",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/ics-ot-security/assess-ot-incident-response-preparedness"
+      ],
+      "cves": [],
+      "id": "s45"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft releases Windows 10 KB5131096 extended security update",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-releases-windows-10-kb5131096-extended-security-update/",
+      "publishedAt": "2026-11-10T20:04:36.000Z",
+      "excerpt": "Microsoft released the Windows 10 KB5131096 extended security update, which includes this month's November 2026 Patch Tuesday fixes and a few bug fixes and changes. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-releases-windows-10-kb5131096-extended-security-update",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/microsoft/microsoft-releases-windows-10-kb5131096-extended-security-update"
+      ],
+      "cves": [],
+      "id": "s46"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers exploit trusted AWS access to breach multiple cloud environments",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-trusted-aws-access-to-breach-multiple-cloud-environments/",
+      "publishedAt": "2026-11-10T19:31:11.000Z",
+      "excerpt": "A threat actor used compromised identity and access management (IAM) credentials for a Qubole big data platform's AWS account to access and exfiltrate data from multiple customers' AWS environments. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-exploit-trusted-aws-access-to-breach-multiple-cloud-environments",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/hackers-exploit-trusted-aws-access-to-breach-multiple-cloud-environments"
+      ],
+      "cves": [],
+      "id": "s47"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Git Patches Flaw That Lets Malicious Repositories Execute Code During Recursive Clones",
+      "url": "https://thehackernews.com/2026/11/git-patches-flaw-that-lets-malicious.html",
+      "publishedAt": "2026-11-10T19:23:10.000Z",
+      "excerpt": "A flaw in Git can let a malicious repository run an attacker's code on a computer that clones it recursively, together with its submodules. The Git project fixed it this week in Git 2.56.1, with matching fixes for the 2.50 through 2.55 series in 2.50.2, 2.51.3, 2.52.1, 2.53.1, 2.54.1 and 2.55.1. The flaw, tracked as CVE-2026-111760, is an integer truncation in how Git handles its index. An",
+      "canonicalUrl": "https://thehackernews.com/2026/11/git-patches-flaw-that-lets-malicious.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/git-patches-flaw-that-lets-malicious.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-111760",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/11/git-patches-flaw-that-lets-malicious.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.10",
+              "dateReleased": "2026-11-10T19:03:29.8375Z",
+              "retrievedAt": "2026-11-11T19:09:55.374Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-108186%2CCVE-2026-111793%2CCVE-2026-20320%2CCVE-2026-111760%2CCVE-2026-111560",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-111760",
+              "retrievedAt": "2026-11-11T19:09:55.374Z"
+            }
+          }
+        }
+      ],
+      "id": "s48"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "SGLang RCE Exploit Breaches NEAR AI, Steals Data From 18 Agents and About 100 Users",
+      "url": "https://thehackernews.com/2026/11/sglang-rce-exploit-breaches-near-ai.html",
+      "publishedAt": "2026-11-10T19:19:39.000Z",
+      "excerpt": "An attacker exploited a remote code execution flaw in SGLang, an open-source inference engine, and ran code on one of NEAR AI's inference servers last Sunday. The attacker could also have seen requests being processed on that server that day, including requests sent in confidential mode, the company said earlier this week. That mode processes requests inside a trusted execution environment (TEE",
+      "canonicalUrl": "https://thehackernews.com/2026/11/sglang-rce-exploit-breaches-near-ai.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/sglang-rce-exploit-breaches-near-ai.html"
+      ],
+      "cves": [],
+      "id": "s49"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Three China-Nexus Espionage Campaigns Linked Through Sparrow Malware Ecosystem",
+      "url": "https://thehackernews.com/2026/11/three-china-nexus-espionage-campaigns.html",
+      "publishedAt": "2026-11-10T17:43:23.000Z",
+      "excerpt": "Three distinct threat activity clusters with shared infrastructure and malware code similarities have been observed targeting telecommunications providers, government organizations, military entities, research institutions, and critical infrastructure across Latin America, Asia, and Europe over the past year. Check Point Research is tracking the clusters under the names SilentDelivery,",
+      "canonicalUrl": "https://thehackernews.com/2026/11/three-china-nexus-espionage-campaigns.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/three-china-nexus-espionage-campaigns.html"
+      ],
+      "cves": [],
+      "id": "s51"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "People Are Getting Weird About AI",
+      "url": "https://www.darkreading.com/cyber-risk/people-are-getting-weird-about-ai",
+      "publishedAt": "2026-11-09T23:06:22.000Z",
+      "excerpt": "Dark Reading Confidential Episode 22: You can love AI without being blind to cybersecurity being sacrificed for utility.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/people-are-getting-weird-about-ai",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyber-risk/people-are-getting-weird-about-ai"
+      ],
+      "cves": [],
+      "id": "s53"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1280,
+    "promptCacheMissTokens": 14583,
+    "outputTokens": 8755,
+    "estimatedCostUsd": 0.004496604
+  }
+}
