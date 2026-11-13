@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-11-13",
+    "mode": "article",
+    "headline": "Check Point gateways, an N-central zero-day and a PostgreSQL RCE dominate patch urgency",
+    "count": 43
+  },
+  {
     "date": "2026-11-12",
     "mode": "article",
     "headline": "ScreenConnect Exploitation Anchors a Day of RMM, PLM and HTTP/2 Exposure",

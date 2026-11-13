@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-8eJjJoGewI/PAw1tfDgUX01ZwrPFqoQKNueaGjOsRXk='; style-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080b08">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22108%22%20height%3D%22108%22%20viewBox%3D%220%200%20108%20108%22%3E%0A%3Cpath%20d%3D%22M0%2C0h108v108h-108z%22%20fill%3D%22%23080b08%22%2F%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%237dffa4%22%20stroke-width%3D%227%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20transform%3D%22translate(54%2054)%20scale(1.45)%20translate(-54%20-54)%22%3E%0A%3Cpath%20d%3D%22M%2054%2044%20C%2054%2036%2043%2032.5%2036%2036%20C%2029.5%2039.5%2029.5%2048%2037.5%2052%20C%2046%2056%2054%2059.5%2053%2066.5%20C%2052%2073.5%2040.5%2075.5%2033%2071%22%2F%3E%0A%3Cpath%20d%3D%22M%2041.5%2027%20L%2041.5%2080%22%2F%3E%0A%3Cpath%20d%3D%22M%2064.5%2071.5%20L%2078.5%2071.5%22%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E">
+<title>Check Point gateways, an N-central zero-day and a PostgreSQL RCE dominate patch urgency — 13 November 2026</title>
+<style>
+:root { color-scheme: dark;
+  --bg:#080b08; --fg:#c9f5d5; --bright:#7dffa4; --muted:#6aa87f; --dim:#4a7f5e;
+  --rule:#1e3327; --link:#79dfff; --warn:#ffb642; --warn-bg:#1e1505; --warn-fg:#ffdca6;
+  --note:#79dfff; --note-bg:#06181f;
+  --mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { background: var(--bg); scrollbar-color: var(--dim) var(--bg);
+  -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { margin: 0; color: var(--fg); line-height: 1.6; font-family: var(--mono); font-size: 1rem;
+  overflow-wrap: anywhere;
+  background: radial-gradient(ellipse at 50% -10%, #0f1c13 0%, var(--bg) 60%) no-repeat; }
+::selection { background: var(--bright); color: var(--bg); }
+main, header, footer { max-width: 76ch; margin: 0 auto; padding: 0 1rem; }
+main:focus { outline: none; }
+.skip { position: absolute; left: .5rem; top: -4rem; z-index: 10; padding: .5rem .75rem;
+  background: var(--bright); color: var(--bg); border: 0; }
+.skip:focus { top: .5rem; }
+header { display: flex; flex-wrap: wrap; gap: .4rem 1.25rem; align-items: baseline;
+  border-bottom: 1px solid var(--rule); padding-top: 1.25rem; padding-bottom: .6rem; }
+header .brand { color: var(--bright); font-weight: 700; }
+header .brand::before { content: "root@sec:~$ "; color: var(--dim); font-weight: 400; }
+.nav { display: flex; flex-wrap: wrap; gap: .25rem .9rem; }
+.nav a { border-bottom: 0; padding: .15rem 0; }
+.nav a::before { content: "["; color: var(--dim); }
+.nav a::after { content: "]"; color: var(--dim); }
+.nav a[aria-current="page"] { color: var(--bright); font-weight: 700; }
+.nav a:hover::before, .nav a:hover::after, .nav a:focus-visible::before, .nav a:focus-visible::after {
+  color: inherit; }
+a { color: var(--link); text-decoration: none; border-bottom: 1px dotted currentColor; }
+a:hover, a:focus-visible { background: var(--link); color: var(--bg); border-bottom-color: transparent; }
+:focus-visible { outline: 2px solid var(--bright); outline-offset: 2px; }
+h1 { font-size: 1.4rem; line-height: 1.35; margin: 1.5rem 0 .75rem; color: var(--bright); }
+h1::before { content: "$ "; color: var(--dim); font-weight: 400; }
+h2 { font-size: 1.05rem; line-height: 1.4; margin: 0 0 .5rem; color: var(--bright); }
+strong { color: var(--bright); }
+hr { border: 0; border-top: 1px dashed var(--rule); margin: 2rem 0; }
+code { color: var(--warn); }
+pre { border: 1px solid var(--rule); padding: .75rem; overflow-x: auto; }
+.summary { color: var(--muted); font-size: .875rem; margin: 0 0 .5rem; }
+.summary::before { content: "// "; color: var(--dim); }
+.summary .warn { color: var(--warn); font-weight: 700; }
+.edition-status { border-left: 2px solid var(--dim); padding: .1rem 0 .1rem .9rem; margin: 0 0 1.5rem;
+  font-size: .875rem; color: var(--muted); }
+.edition-status p { margin: 0 0 .35rem; }
+.edition-status .kind { color: var(--fg); }
+.edition-status[data-state="due"], .edition-status[data-state="stale"],
+.edition-status[data-state="future"], .edition-status[data-state="invalid"] { border-left-color: var(--warn); }
+.age-status p { margin: .35rem 0 0; }
+.age-status .warn-line { color: var(--warn-fg); background: var(--warn-bg); border: 1px solid var(--warn);
+  padding: .5rem .75rem; }
+.age-status .warn-line strong { color: var(--warn); }
+.toc { margin: .35rem 0 0; }
+.toc ul { display: inline; list-style: none; margin: 0; padding: 0; }
+.toc li { display: inline; }
+.toc li + li::before { content: " \00B7 "; color: var(--dim); }
+.notice, .degraded { border: 1px solid; padding: .75rem 1rem; margin: 1.25rem 0; font-size: .9rem; }
+.notice::before, .degraded::before { display: block; letter-spacing: .12em; font-size: .75rem;
+  margin-bottom: .4rem; }
+.notice { border-color: var(--note); background: var(--note-bg); }
+.notice::before { content: "[ NOTICE ]"; color: var(--note); }
+.notice h2 { color: var(--note); font-size: .95rem; }
+.degraded { border-color: var(--warn); background: var(--warn-bg); color: var(--warn-fg); }
+.degraded::before { content: "[ !! DEGRADED ]"; color: var(--warn); }
+.degraded h2 { color: var(--warn); font-size: .95rem; letter-spacing: .04em; text-transform: uppercase; }
+.degraded ul, .notice ul { list-style: none; margin: .5rem 0 0; padding: 0; }
+.degraded li, .notice li { padding-left: 2ch; text-indent: -2ch; }
+.degraded li::before { content: "! "; color: var(--warn); }
+.notice li::before { content: "- "; color: var(--note); }
+.standfirst { color: var(--fg); margin: 0 0 1.75rem; padding-left: 1rem; border-left: 2px solid var(--dim); }
+.article h2 { margin: 2rem 0 .75rem; }
+.article h2::before { content: "## "; color: var(--dim); }
+.article p { margin: 0 0 1.1rem; }
+.article ul, .article ol { padding-left: 2ch; }
+.article li { margin: 0 0 .35rem; }
+.article li::marker { color: var(--dim); }
+.block { border-top: 1px solid var(--rule); margin-top: 2.5rem; padding-top: 1.25rem; }
+.block > h2::before, .stories-block > h2::before { content: "## "; color: var(--dim); }
+.stories-block { margin-top: 1.5rem; }
+.block-intro { color: var(--muted); font-size: .875rem; margin: 0 0 1rem; }
+ol.stories { list-style: none; margin: 0; padding: 0; }
+ol.stories > li { border-top: 1px solid var(--rule); padding: 1rem 0; }
+.story-title { font-size: 1rem; font-weight: 700; margin: 0 0 .3rem; }
+.story-title::before { content: "[" attr(data-n) "] "; color: var(--dim); font-weight: 400; }
+.meta { color: var(--muted); font-size: .875rem; margin: 0 0 .45rem; }
+.excerpt { margin: .4rem 0 0; }
+.also { font-size: .875rem; color: var(--muted); margin: .5rem 0 0; }
+.filters { border: 1px solid var(--rule); padding: .75rem; margin: 0 0 1rem; font-size: .875rem; }
+.filters .controls { display: flex; flex-wrap: wrap; gap: .6rem 1rem; align-items: flex-end; }
+.filters .field { display: flex; flex-direction: column; gap: .2rem; min-width: 0; flex: 1 1 12rem; }
+.filters label { color: var(--muted); }
+.filters input, .filters select, .filters button { font: inherit; font-size: 1rem; color: var(--fg); background: #0d140e;
+  border: 1px solid var(--dim); border-radius: 0; padding: .4rem .5rem; min-height: 2.75rem; max-width: 100%; }
+.filters button { cursor: pointer; color: var(--link); border-color: var(--link); flex: 0 0 auto; }
+.filters button:hover, .filters button:focus-visible { background: var(--link); color: var(--bg); }
+.filters .count { margin: .6rem 0 0; color: var(--fg); }
+.filters[data-active="true"] .count { color: var(--bright); }
+.filters .empty { padding: .5rem 0 0; }
+.vuln-list { list-style: none; margin: 0; padding: 0; }
+.vuln-list > li { color: var(--muted); font-size: .875rem; padding: .2rem 0; }
+.vuln-meta { margin: .35rem 0 0; }
+.vuln-meta > li::before { content: "> "; color: var(--dim); }
+.vuln-head span + span::before { content: " \00B7 "; color: var(--dim); }
+.vuln-summary .vuln-list > li { border-left: 2px solid var(--rule); padding: .5rem 0 .5rem .75rem; margin: 0 0 .75rem; }
+.vuln-summary .vuln-list > li.prio-known_exploited { border-left-color: var(--warn); }
+.vuln-summary .vuln-list > li.prio-critical { border-left-color: var(--bright); }
+.vuln-summary p { margin: .25rem 0; }
+.vuln-head { color: var(--fg); }
+.vuln-action { color: var(--fg); }
+.flag { color: var(--warn); }
+.coverage, .vuln-evidence { margin: .5rem 0; font-size: .875rem; color: var(--muted); }
+.coverage summary, .vuln-evidence summary { cursor: pointer; color: var(--link); padding: .2rem 0; }
+.vuln-evidence p { margin: .4rem 0; }
+.sources ul { list-style: none; margin: .5rem 0 0; padding: 0; font-size: .875rem; }
+.sources li { padding: .3rem 0; border-top: 1px dashed var(--rule); color: var(--muted); }
+.sources .tag { display: inline-block; min-width: 9ch; color: var(--fg); }
+.sources .src-failed .tag, .sources .src-empty .tag, .sources .src-unknown .tag { color: var(--warn); }
+.sources p { font-size: .875rem; color: var(--muted); margin: 0 0 .5rem; }
+table.cal { border-collapse: collapse; table-layout: fixed; width: 100%; margin: 0 0 2rem; }
+table.cal caption { text-align: left; color: var(--bright); font-size: 1.05rem; padding: 1.5rem 0 .6rem; }
+table.cal caption::before { content: "## "; color: var(--dim); }
+table.cal caption .count { color: var(--muted); font-size: .875rem; }
+table.cal th { font-weight: 400; font-size: .75rem; letter-spacing: .1em; color: var(--muted);
+  padding: .35rem 0; text-align: center; }
+table.cal th abbr { text-decoration: none; }
+table.cal td { border: 1px solid var(--rule); padding: 0; text-align: center; font-size: .9rem; }
+table.cal td.pad { border-color: transparent; }
+table.cal td span, table.cal td a { display: block; padding: .6rem 0; }
+table.cal td.off { border-style: dashed; }
+table.cal td.off span { color: var(--muted); }
+table.cal td a { border-bottom: 0; }
+table.cal td a.article { color: var(--bright); font-weight: 700; }
+table.cal td.latest { outline: 2px dashed var(--muted); outline-offset: -4px; }
+table.cal td a:hover, table.cal td a:focus-visible { background: var(--link); color: var(--bg); }
+table.cal td a.article:hover, table.cal td a.article:focus-visible { background: var(--bright); }
+.legend { color: var(--muted); font-size: .875rem; margin: 0 0 .5rem; }
+footer { border-top: 1px solid var(--rule); margin-top: 3rem; padding-top: 1rem;
+  padding-bottom: 3rem; color: var(--muted); font-size: .875rem; }
+footer::before { content: "// "; color: var(--dim); }
+.empty { color: var(--muted); padding: 1rem 0; }
+.empty::before { content: "# "; color: var(--dim); }
+@media (max-width: 30rem) {
+  body { font-size: .95rem; }
+  h1 { font-size: 1.2rem; }
+  main, header, footer { padding: 0 .75rem; }
+  table.cal td { font-size: .85rem; }
+}
+@media print {
+  .skip, .filters, .nav { display: none !important; }
+  body { background: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header>
+<span class="brand">daily-security-news</span>
+<nav class="nav" aria-label="Site">
+<a href="index.html">latest</a>
+<a href="archive.html">archive</a>
+</nav>
+</header>
+<main id="main" tabindex="-1">
+<h1>Check Point gateways, an N-central zero-day and a PostgreSQL RCE dominate patch urgency</h1>
+<section class="edition-status" aria-label="Edition date and status" data-age data-role="edition" data-generated-at="2026-11-13T19:05:41.650Z">
+<p class="summary">8 of 43 stories written up · 12 sources configured; feeds 12 with entries · <a href="#edition-sources">source status</a> · generated 19:05 UTC</p>
+<p><strong>Edition 13 November 2026</strong> &middot; Generated <time datetime="2026-11-13T19:05:41.650Z">13 November 2026 19:05 UTC</time><span data-age-out hidden> (<span data-age-text></span>)</span>. Scheduled daily at 12:00 UTC; publication can be delayed.</p>
+<p class="kind"><strong>Stored edition</strong>: the permanent page for 13 November 2026. It is not updated after generation, so newer editions may exist; see <a href="index.html">latest</a> or the <a href="archive.html">archive</a>.</p>
+<div class="age-status" role="status"><p class="warn-line" data-age-when="future" hidden><strong>Clock mismatch.</strong> This page’s generation time is later than this device’s clock, so its age cannot be shown. Check the device’s date and time.</p><p class="warn-line" data-age-when="invalid" hidden><strong>Age unknown.</strong> The stored generation time could not be read.</p></div>
+<nav class="toc" aria-label="On this page"><ul><li><a href="#edition-article">Article</a></li><li><a href="#edition-vulns">Vulnerability intelligence (2)</a></li><li><a href="#edition-stories-h">Also collected (35)</a></li><li><a href="#edition-sources">Source status</a></li></ul></nav>
+</section>
+
+<p class="standfirst">Actively exploited flaws in Check Point gateways and N-able N-central lead the day, while PostgreSQL’s latest update fixes an authenticated code-execution bug. Police disruption, GitHub account abuse, DPRK crypto theft and telecom interception round out the picture.</p>
+<div class="article" id="edition-article">
+<h2>Actively exploited</h2>
+<p>Check Point gateways are the lead story: PHP2Shell was used for initial compromise, while CVE-2026-123039 let attackers elevate to root in destructive attacks <a href="https://www.securityweek.com/php2shell-exploited-in-destructive-check-point-gateway-attacks/">PHP2Shell Exploited in Destructive Check Point Gateway Attacks</a>. The flaw is a High-severity 7.8 permission-assignment issue in which the Gaia OS DynamicCLI daemon listens on a world-writable local socket without authenticating connecting processes; an authenticated local user can have commands executed as root. CISA lists it in KEV and sets a federal remediation deadline, which raises urgency but does not create a universal one. The local, authenticated precondition matters: this is not a remote unauthenticated path.</p>
+<p>N-able’s N-central zero-day, dubbed 4EverAble2Shell, was exploited within hours of a PoC release to compromise servers and deploy cryptocurrency miners, with researchers reporting at least 21 affected systems, including 19 running the latest security update <a href="https://www.bleepingcomputer.com/news/security/new-n-able-4everable2shell-zero-day-exploited-hours-after-poc-released/">New N-able &quot;4EverAble2Shell&quot; zero-day exploited hours after PoC released</a>. No CVE was supplied. Analysis: that concentration on current builds makes patch-bypass risk the immediate question for MSPs, though the excerpt does not explain the mechanism.</p>
+<h2>Vulnerabilities</h2>
+<p>PostgreSQL’s latest release fixes 52 flaws, including CVE-2026-6460, a 22-year-old type-confusion bug that lets a database user who can create objects execute code as the OS user running the database <a href="https://thehackernews.com/2026/11/postgresql-patches-52-flaws-including.html">PostgreSQL Patches 52 Flaws, Including 22-Year-Old Bug Enabling Authenticated RCE</a>. It is High severity at 8.8 with a network vector but low privileges required, and NVD lists versions before 18.7, 17.12, 16.16, 15.20 and 14.25 as affected. Full protection also requires rebuilding C-language extensions. No KEV entry was supplied. Separately, Nightmare Eclipse released a Windows zero-day exploit called SignDrop that abuses CLFS and Windows Defender to trigger arbitrary file creation in the context of the antimalware process <a href="https://www.securityweek.com/nightmare-eclipse-drops-windows-zero-day-exploit-signdrop/">Nightmare Eclipse Drops Windows Zero-Day Exploit ‘SignDrop’</a>. No CVE, affected versions or patch status were supplied. The significance is the attack path itself: a Defender-context file write is a primitive defenders should track, but the excerpt does not establish in-the-wild exploitation.</p>
+<h2>Industry</h2>
+<p>Operation Endgame took down servers behind Gootloader, CastleRAT and StealC, and police seized about 6.4 million stolen logins belonging to more than 40,000 victims, according to Germany’s BKA <a href="https://thehackernews.com/2026/11/operation-endgame-takes-down-gootloader.html">Operation Endgame Takes Down Gootloader, CastleRAT and StealC Servers, Seizes 6.4M Stolen Logins</a>. The tools were used for access, password theft and ransomware, so the disruption targets infrastructure that feeds criminal access and extortion.</p>
+<h2>Breaches</h2>
+<p>The wfx-loot campaign used 4,837 compromised GitHub accounts to probe 61,764 repositories, open pull requests and push secrets-stealing malware <a href="https://www.bleepingcomputer.com/news/security/hackers-compromise-4-800-github-accounts-to-steal-cloud-credentials/">Hackers compromise 4,800 GitHub accounts to steal cloud credentials</a>. The scale is the story: cloud credentials are the prize, and repository write access is the delivery mechanism. Analysis: that combination is a supply-chain risk for organizations whose code depends on GitHub, though the excerpt does not name victims or estimate credential loss. The FBI attributes more than $400 million in cryptocurrency theft to DPRK-tied actors running a social-engineering scheme codenamed FaceStealer, using deepfake video calls <a href="https://thehackernews.com/2026/11/fbi-says-north-korean-hackers-stole.html">FBI Says North Korean Hackers Stole Over $400 Million in Crypto Using Deepfake Video Calls</a>. The alleged campaign ran over an 18-month span and is part of a coordinated set of U.S. government actions. The attribution is the FBI’s, not an independent assessment in the excerpt. Analysis: the case reinforces that deepfake-assisted social engineering can convert trust into direct financial loss, but no technical indicators were supplied.</p>
+<h2>Research</h2>
+<p>Enea named SilentAir, a spying group it assesses with high confidence to be state-level, after finding attack sources inside mobile operators in at least six Asian countries <a href="https://thehackernews.com/2026/11/silentair-hijacks-asian-telecom.html">SilentAir Hijacks Asian Telecom Networks to Intercept SMS 2FA Codes and Spy on Taiwanese Users</a>. The group used hacked equipment to intercept calls and texts, including SMS 2FA codes, for selected people, mostly in Taiwan. Analysis: operator-level interception is a direct challenge to SMS-based second factors for targeted users, though the excerpt does not detail how targets were selected.</p>
+
+</div>
+<section class="block vuln-summary" id="edition-vulns" aria-labelledby="edition-vulns-h">
+<h2 id="edition-vulns-h">Vulnerability intelligence</h2>
+<p class="block-intro">CVEs named in the stories this article covers that CISA lists as known exploited (KEV) or NVD rates High or Critical: KEV listings first, then by NVD CVSS score. Each source is shown as retrieved at the time given, not live.</p>
+<ul class="vuln-list"><li class="prio-known_exploited"><p class="vuln-head"><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-123039">CVE-2026-123039</a></span><span>CVSS 7.8 (3.1)</span><span>High</span><span>CISA KEV</span></p><p>Mentioned in: <a href="https://www.securityweek.com/php2shell-exploited-in-destructive-check-point-gateway-attacks/">PHP2Shell Exploited in Destructive Check Point Gateway Attacks</a> (SecurityWeek)</p><p class="vuln-action"><strong>CISA required action:</strong> Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset&#39;s internet exposure and ensuring adherence to BOD 26-04 patching guidelines.</p><p>CISA catalog due date: 2026-11-16 (not a universal deadline).</p><details class="vuln-evidence"><summary>Sources</summary><p><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">CISA KEV</a>: record found; retrieved <time datetime="2026-11-13T19:05:41.650Z">13 November 2026 19:05 UTC</time>.</p><p><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-123039">NVD</a>: record found; retrieved <time datetime="2026-11-13T19:05:41.650Z">13 November 2026 19:05 UTC</time>.</p><p>Absence from KEV does not establish absence of exploitation.</p></details></li>
+<li class="prio-high"><p class="vuln-head"><span><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-6460">CVE-2026-6460</a></span><span>CVSS 8.8 (3.1)</span><span>High</span></p><p>Mentioned in: <a href="https://thehackernews.com/2026/11/postgresql-patches-52-flaws-including.html">PostgreSQL Patches 52 Flaws, Including 22-Year-Old Bug Enabling Authenticated RCE</a> (The Hacker News)</p><details class="vuln-evidence"><summary>Sources</summary><p><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">CISA KEV</a>: not in retrieved source; retrieved <time datetime="2026-11-13T19:05:41.650Z">13 November 2026 19:05 UTC</time>.</p><p><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-6460">NVD</a>: record found; retrieved <time datetime="2026-11-13T19:05:41.650Z">13 November 2026 19:05 UTC</time>.</p><p>Absence from KEV does not establish absence of exploitation.</p></details></li></ul>
+</section>
+<section class="block" aria-labelledby="edition-stories-h">
+<h2 id="edition-stories-h">Also collected in this edition</h2>
+<div class="filters" role="search" aria-label="Filter these stories" data-filters data-filter-target="edition-stories" hidden>
+<div class="controls">
+<div class="field"><label for="edition-stories-q">Search text</label><input id="edition-stories-q" type="search" data-filter="q" autocomplete="off" spellcheck="false"></div>
+<div class="field"><label for="edition-stories-priority">Vulnerability priority</label><select id="edition-stories-priority" data-filter="priority"><option value="">All stories (35)</option><option value="cve">Mentions any CVE (0)</option><option value="high">High, Critical or CISA KEV (0)</option><option value="critical">Critical or CISA KEV (0)</option><option value="known_exploited">CISA KEV (known exploited) (0)</option></select></div>
+<div class="field"><label for="edition-stories-source">Source</label><select id="edition-stories-source" data-filter="source"><option value="">All sources (35)</option><option value="bleepingcomputer">BleepingComputer (9)</option><option value="darkreading">Dark Reading (6)</option><option value="projectzero">Google Project Zero (1)</option><option value="securelist">Securelist (1)</option><option value="securityweek">SecurityWeek (8)</option><option value="thehackernews">The Hacker News (5)</option><option value="therecord">The Record (5)</option></select></div><button type="button" data-filter-reset>Reset filters</button>
+</div>
+<p class="count" role="status" data-filter-count>Showing all 35 stories.</p>
+<p class="empty" data-filter-empty hidden>No stories match. Choose “Reset filters” to show all 35 stories again.</p>
+</div>
+<ol class="stories" id="edition-stories">
+<li id="s1" data-story data-source="therecord" data-priority="none">
+<p class="story-title" data-n="01"><a href="https://therecord.media/nyc-council-passes-bill-ban-surveillance-pricing">NYC to bar surveillance pricing as momentum for bans grows nationwide</a></p>
+<p class="meta">The Record · <time datetime="2026-11-13T18:35:00.000Z">13 November 2026 18:35 UTC</time></p>
+<p class="excerpt">The New York City government will be able to fine companies $1,000 for each verified instance of surveillance pricing.</p>
+
+</li>
+<li id="s2" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="02"><a href="https://www.bleepingcomputer.com/news/security/german-military-drone-operations-disrupted-by-cyberattack/">German military drone operations disrupted by cyberattack</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-11-13T17:31:56.000Z">13 November 2026 17:31 UTC</time></p>
+<p class="excerpt">German defense technology company Quantum Systems confirmed that it detected an incident in late October that was part of an active cyberattack by &quot;hostile actors.&quot; [...]</p>
+
+</li>
+<li id="s3" data-story data-source="therecord" data-priority="none">
+<p class="story-title" data-n="03"><a href="https://therecord.media/university-of-texas-arlington-warns-data-breach">University of Texas at Arlington warns personal information stolen during cyberattack</a></p>
+<p class="meta">The Record · <time datetime="2026-11-13T17:26:00.000Z">13 November 2026 17:26 UTC</time></p>
+<p class="excerpt">In a statement to Recorded Future News, a spokesperson said an investigation into the attack confirmed the stolen data but declined to say what information was obtained by the threat actors.</p>
+
+</li>
+<li id="s5" data-story data-source="therecord" data-priority="none">
+<p class="story-title" data-n="04"><a href="https://therecord.media/german-parliament-passes-law-giving-spy-agencies-hacking-power">German parliament passes law giving spy agencies hacking, sabotage powers</a></p>
+<p class="meta">The Record · <time datetime="2026-11-13T16:32:00.000Z">13 November 2026 16:32 UTC</time></p>
+<p class="excerpt">In the biggest overhaul of the country’s spy laws of the postwar era, the Bundestag approved the bill by 308 votes to 190 — with 71 abstentions — months after Chancellor Friedrich Merz’s cabinet signed off on the draft.</p>
+
+</li>
+<li id="s6" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="05"><a href="https://www.bleepingcomputer.com/news/security/check-point-gateways-hacked-via-php2shell-to-deploy-vmware-esxi-wiper/">Check Point gateways hacked via PHP2Shell to deploy VMware ESXi wiper</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-11-13T16:21:43.000Z">13 November 2026 16:21 UTC</time></p>
+<p class="excerpt">Vulnerable Check Point Security Gateway instances have been targeted in PHP2Shell attacks that deployed data-wiping malware on VMware ESXi hosts. [...]</p>
+
+</li>
+<li id="s7" data-story data-source="therecord" data-priority="none">
+<p class="story-title" data-n="06"><a href="https://therecord.media/gootloader-ransomware-doj-details">DOJ: Gootloader used in at least 44 ransomware attacks costing $29 million since 2018</a></p>
+<p class="meta">The Record · <time datetime="2026-11-13T15:59:00.000Z">13 November 2026 15:59 UTC</time></p>
+<p class="excerpt">In a briefing adjacent to European announcements about an international anti-malware operation, U.S. officials detailed the history and impact of the Gootloader ransomware.</p>
+
+</li>
+<li id="s8" data-story data-source="thehackernews" data-priority="none">
+<p class="story-title" data-n="07"><a href="https://thehackernews.com/2026/11/new-mior-and-skyfall-attacks-let-rogue.html">New Mior and Skyfall Attacks Let Rogue Cloud Hosts Steal Secrets From AMD SEV-SNP VMs</a></p>
+<p class="meta">The Hacker News · <time datetime="2026-11-13T15:27:05.000Z">13 November 2026 15:27 UTC</time></p>
+<p class="excerpt">Two attacks made public this week allow a malicious host to read data inside AMD SEV-SNP-protected virtual machines (VMs), which are built to keep the server&#39;s operator out. One of them, Mior, can also modify a VM&#39;s memory and fake the signed report confirming which software it runs. Both need control of the server&#39;s hypervisor, and Mior also needs control of the server&#39;s BIOS. Researchers</p>
+
+</li>
+<li id="s9" data-story data-source="securityweek" data-priority="none">
+<p class="story-title" data-n="08"><a href="https://www.securityweek.com/in-other-news-new-cisa-director-nominee-connected-car-hacking-baker-tilly-data-breach/">In Other News: New CISA Director Nominee, Connected Car Hacking, Baker Tilly Data Breach</a></p>
+<p class="meta">SecurityWeek · <time datetime="2026-11-13T15:20:00.000Z">13 November 2026 15:20 UTC</time></p>
+<p class="excerpt">Noteworthy stories that might have slipped under the radar: Siemens details security advisory policy, OpenAI Codex backdoor risk, Microsoft warns of model weight backdoors. The post In Other News: New CISA Director Nominee, Connected Car Hacking, Baker Tilly Data Breach appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s10" data-story data-source="therecord" data-priority="none">
+<p class="story-title" data-n="09"><a href="https://therecord.media/tsmc-confirms-employee-data-breach-cloud-provider">TSMC confirms employee data breach tied to cloud service provider</a></p>
+<p class="meta">The Record · <time datetime="2026-11-13T15:06:00.000Z">13 November 2026 15:06 UTC</time></p>
+<p class="excerpt">An investigation into the breach found that no TSMC systems were compromised but the information was “verified to match data stored in the system services of a cloud service provider, but is unrelated to the company’s operations or customer-related data.”</p>
+
+</li>
+<li id="s11" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="10"><a href="https://www.bleepingcomputer.com/news/security/how-one-ai-agent-exposed-five-critical-enterprise-security-gaps/">How one AI agent exposed five critical enterprise security gaps</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-11-13T15:01:11.000Z">13 November 2026 15:01 UTC</time></p>
+<p class="excerpt">An AI agent built to automate invoice processing could be manipulated into changing vendor bank details through a malicious email, without triggering traditional security alerts. Token Security examines five critical AI agent security gaps and shares practical guidance from industry security leaders on preventing them. [...]</p>
+
+</li>
+<li id="s13" data-story data-source="thehackernews" data-priority="none">
+<p class="story-title" data-n="11"><a href="https://thehackernews.com/2026/11/trezor-confirms-hidden-hardware.html">Trezor Confirms Hidden Implants in CryptoBilis-Sold Wallets That Can Steal Recovery Phrases</a></p>
+<p class="meta">The Hacker News · <time datetime="2026-11-13T13:54:20.000Z">13 November 2026 13:54 UTC</time></p>
+<p class="excerpt">Three Trezor Safe 5 wallets bought from the reseller CryptoBilis contain an implant, an extra circuit board that can copy their recovery phrases, hardware wallet maker Trezor said yesterday. The implant reads the phrase from the wallet&#39;s screen and sends it over the mobile network to a server controlled by the attackers. The company examined one of the wallets in its lab, identified the other</p>
+
+</li>
+<li id="s14" data-story data-source="securityweek" data-priority="none">
+<p class="story-title" data-n="12"><a href="https://www.securityweek.com/microsoft-struggles-to-restore-email-and-other-services-in-a-global-outage/">Microsoft Struggles to Restore Email and Other Services in a Global Outage</a></p>
+<p class="meta">SecurityWeek · <time datetime="2026-11-13T13:47:42.000Z">13 November 2026 13:47 UTC</time></p>
+<p class="excerpt">Microsoft is trying different ways to identify the cause of the problem and get its servers back online, using “a measured approach to identify and repair affected infrastructure.” The post Microsoft Struggles to Restore Email and Other Services in a Global Outage appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s15" data-story data-source="darkreading" data-priority="none">
+<p class="story-title" data-n="13"><a href="https://www.darkreading.com/cybersecurity-operations/attackers-binance-breach-targeted-weakness-missing-controls">Attackers in Binance Breach Targeted Known Weakness, Missing Controls</a></p>
+<p class="meta">Dark Reading · <time datetime="2026-11-13T13:00:00.000Z">13 November 2026 13:00 UTC</time></p>
+<p class="excerpt">Blockchain complexities, such as attacker-deployed sweepers, hobble security controls designed to limit the damage of an exchange compromise.</p>
+
+</li>
+<li id="s16" data-story data-source="securityweek" data-priority="none">
+<p class="story-title" data-n="14"><a href="https://www.securityweek.com/apify-confirms-customer-data-accessed-in-cyberattack/">Apify Confirms Customer Data Accessed in Cyberattack</a></p>
+<p class="meta">SecurityWeek · <time datetime="2026-11-13T12:41:01.000Z">13 November 2026 12:41 UTC</time></p>
+<p class="excerpt">The web scraping company says an intruder accessed customer accounts and obtained personal information or stored data. The post Apify Confirms Customer Data Accessed in Cyberattack appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s17" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="15"><a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-says-november-security-updates-cause-printing-issues/">Microsoft says November security updates cause printing issues</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-11-13T12:27:40.000Z">13 November 2026 12:27 UTC</time></p>
+<p class="excerpt">Microsoft warned customers earlier this week that the November 2026 security updates may break printing for documents with complex formatting. [...]</p>
+
+</li>
+<li id="s18" data-story data-source="securityweek" data-priority="none">
+<p class="story-title" data-n="16"><a href="https://www.securityweek.com/silentair-hackers-intercept-calls-sms-from-inside-mobile-networks/">SilentAir Hackers Intercept Calls, SMS From Inside Mobile Networks</a></p>
+<p class="meta">SecurityWeek · <time datetime="2026-11-13T12:20:28.000Z">13 November 2026 12:20 UTC</time></p>
+<p class="excerpt">Enea says SilentAir hijacked mobile network nodes to intercept calls and messages, with Taiwanese subscribers the primary targets. The post SilentAir Hackers Intercept Calls, SMS From Inside Mobile Networks appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s19" data-story data-source="thehackernews" data-priority="none">
+<p class="story-title" data-n="17"><a href="https://thehackernews.com/2026/11/when-ai-agent-goes-wrong-can-you-stop-it.html">When an AI Agent Goes Wrong, Can You Stop It?</a></p>
+<p class="meta">The Hacker News · <time datetime="2026-11-13T11:52:31.000Z">13 November 2026 11:52 UTC</time></p>
+<p class="excerpt">Suppose an AI agent is asked to sort support tickets and look up account details. A ticket contains instructions that lead the agent to export records to an unfamiliar destination. The agent can make the request because its identity has access to the records and its connected tools allow the action. That kind of scenario raises a response question: what does “stop the agent” actually mean? A</p>
+
+</li>
+<li id="s22" data-story data-source="securityweek" data-priority="none">
+<p class="story-title" data-n="18"><a href="https://www.securityweek.com/law-enforcement-disrupts-gootloader-castlerat-and-stealc-infrastructure/">Law Enforcement Disrupts Gootloader, CastleRAT, and StealC Infrastructure</a></p>
+<p class="meta">SecurityWeek · <time datetime="2026-11-13T10:48:40.000Z">13 November 2026 10:48 UTC</time></p>
+<p class="excerpt">Investigators seized 235 servers and 257 domains, along with 6.4 million victim credentials as part of Operation Endgame. The post Law Enforcement Disrupts Gootloader, CastleRAT, and StealC Infrastructure appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s23" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="19"><a href="https://www.bleepingcomputer.com/news/security/check-point-patches-zero-day-that-lets-hackers-get-root-access/">Check Point warns of zero-day flaw exploited for root access</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-11-13T10:44:22.000Z">13 November 2026 10:44 UTC</time></p>
+<p class="excerpt">Check Point Software has released emergency hotfixes to address a high-severity flaw that hackers have been exploiting to gain root privileges and establish persistence on vulnerable devices since late October. [...]</p>
+
+</li>
+<li id="s24" data-story data-source="securityweek" data-priority="none">
+<p class="story-title" data-n="20"><a href="https://www.securityweek.com/citrix-patches-10-critical-netscaler-vulnerabilities/">Citrix Patches 10 Critical NetScaler Vulnerabilities</a></p>
+<p class="meta">SecurityWeek · <time datetime="2026-11-13T09:36:56.000Z">13 November 2026 09:36 UTC</time></p>
+<p class="excerpt">Successful exploitation could lead to unexpected behavior or denial-of-service (DoS) conditions. The post Citrix Patches 10 Critical NetScaler Vulnerabilities appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s25" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="21"><a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-confirms-windows-activation-failures-after-november-updates/">Microsoft confirms Windows activation failures after November updates</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-11-13T09:36:18.000Z">13 November 2026 09:36 UTC</time></p>
+<p class="excerpt">Microsoft has confirmed that this month&#39;s Patch Tuesday security updates are causing Windows activation and licensing failures with 0x80041008 error codes. [...]</p>
+
+</li>
+<li id="s26" data-story data-source="securityweek" data-priority="none">
+<p class="story-title" data-n="22"><a href="https://www.securityweek.com/openai-unveils-daybreak-red-team-defense-factory-security-tools/">OpenAI Unveils Daybreak Red Team, Defense Factory Security Tools</a></p>
+<p class="meta">SecurityWeek · <time datetime="2026-11-13T09:21:01.000Z">13 November 2026 09:21 UTC</time></p>
+<p class="excerpt">Daybreak Red Team pentests web applications with AI agents, while Defense Factory investigates security findings and prepares patches. The post OpenAI Unveils Daybreak Red Team, Defense Factory Security Tools appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s27" data-story data-source="securelist" data-priority="none">
+<p class="story-title" data-n="23"><a href="https://securelist.com/esxi-ransomware/121959/">Ransomware at the hypervisor layer: how attackers use ESXi and vCenter features for malicious purposes</a></p>
+<p class="meta">Securelist · <time datetime="2026-11-13T09:00:43.000Z">13 November 2026 09:00 UTC</time></p>
+<p class="excerpt">Kaspersky experts analyze a recent ransomware incident and discuss why the hypervisor layer remains difficult to monitor, what common access paths adversaries use to reach it, and how to protect your ESXi systems.</p>
+
+</li>
+<li id="s29" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="24"><a href="https://www.bleepingcomputer.com/news/security/police-arrest-354-vendors-buyers-in-global-cybercrime-crackdown/">Police arrest 354 suspects in dark web cybercrime crackdown</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-11-13T08:34:20.000Z">13 November 2026 08:34 UTC</time></p>
+<p class="excerpt">Authorities arrested 354 suspects in a joint international operation targeting vendors and buyers on the Archetyp, Nemesis, Tor2Door, Bohemia, and Kingdom dark web marketplaces. [...]</p>
+
+</li>
+<li id="s30" data-story data-source="thehackernews" data-priority="none">
+<p class="story-title" data-n="25"><a href="https://thehackernews.com/2026/11/hackers-exploit-php2shell-flaws-in.html">Hackers Exploit PHP2Shell Flaws in Check Point Gateways to Deploy TSGA Backdoor and Wipe ESXi Files</a></p>
+<p class="meta">The Hacker News · <time datetime="2026-11-13T08:05:49.000Z">13 November 2026 08:05 UTC</time></p>
+<p class="excerpt">An unknown threat actor has been observed targeting unpatched Check Point Security Gateways to obtain initial access via the PHP2Shell vulnerabilities and then a previously unreported local privilege escalation flaw in Gaia OS to deploy a backdoor called TSGA. The activity, detailed by Check Point, began on October 30, 2026, and targeted Israeli organizations, with a broader follow-up</p>
+
+</li>
+<li id="s31" data-story data-source="projectzero" data-priority="none">
+<p class="story-title" data-n="26"><a href="https://projectzero.google/2026/11/disclosure-policy.html">Policy and Disclosure: 2026 Edition</a></p>
+<p class="meta">Google Project Zero · <time datetime="2026-11-13T08:00:00.000Z">13 November 2026 08:00 UTC</time></p>
+<p class="excerpt">Since 2021, Project Zero has followed a “90 + 30” vulnerability disclosure policy, allowing vendors up to 90 days to remediate a vulnerability plus an extra 30 days “soak time” for patch rollout. Our goal was to encourage faster patching and give vendors time to deliver patches to users. The advent of AI-assisted vulnerability discovery and exploitation has changed the threat landscape such that…</p>
+
+</li>
+<li id="s33" data-story data-source="securityweek" data-priority="none">
+<p class="story-title" data-n="27"><a href="https://www.securityweek.com/hackers-exploit-new-n-central-zero-day-hours-after-poc-publication/">Hackers Exploit New N-central Zero-Day Hours After PoC Publication</a></p>
+<p class="meta">SecurityWeek · <time datetime="2026-11-13T07:20:50.000Z">13 November 2026 07:20 UTC</time></p>
+<p class="excerpt">Dubbed 4EverAble2Shell, the flaw could allow remote, unauthenticated attackers to execute code with root privileges. The post Hackers Exploit New N-central Zero-Day Hours After PoC Publication appeared first on SecurityWeek.</p>
+
+</li>
+<li id="s34" data-story data-source="thehackernews" data-priority="none">
+<p class="story-title" data-n="28"><a href="https://thehackernews.com/2026/11/hackers-exploit-n-central-flaws-to.html">Hackers Exploit N-central Flaws to Infect 21 Servers, Including 19 Running Hotfix 2</a></p>
+<p class="meta">The Hacker News · <time datetime="2026-11-13T05:43:28.000Z">13 November 2026 05:43 UTC</time></p>
+<p class="excerpt">N-able on Thursday said it&#39;s taking additional precautions in the wake of public disclosure of a new set of flaws tracked as 4EverAble2Shell and Agent2Shell. &quot;We are restricting certain N-central features and integrations,&quot; the company said in a Thursday update. &quot;These measures may affect some functionality, but we believe taking additional precautions while remediation is completed is the</p>
+
+</li>
+<li id="s35" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="29"><a href="https://www.bleepingcomputer.com/news/security/new-worm-like-sckit-malware-targets-msps-in-screenconnect-attacks/">New worm-like &#39;SCKit&#39; malware targets MSPs in ScreenConnect attacks</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-11-12T22:53:10.000Z">12 November 2026 22:53 UTC</time></p>
+<p class="excerpt">A new worm-like malware toolkit named SCKit was deployed in the recent ScreenConnect attacks targeting managed service providers (MSPs), designed to spread from infected customer devices to MSP technicians&#39; computers and compromise additional managed networks. [...]</p>
+
+</li>
+<li id="s36" data-story data-source="darkreading" data-priority="none">
+<p class="story-title" data-n="30"><a href="https://www.darkreading.com/cybersecurity-operations/getting-past-post-quantum-cryptography-discovery">Getting Past the Post-Quantum Cryptography Discovery Phase</a></p>
+<p class="meta">Dark Reading · <time datetime="2026-11-12T22:46:05.000Z">12 November 2026 22:46 UTC</time></p>
+<p class="excerpt">Most organizations haven&#39;t sorted out their cryptographic estate enough to even know where they&#39;d start with post-quantum cryptography (PQC).</p>
+
+</li>
+<li id="s38" data-story data-source="darkreading" data-priority="none">
+<p class="story-title" data-n="31"><a href="https://www.darkreading.com/cybersecurity-operations/cyber-experts-fight-artex-antifox">Cyber Experts Weigh In: How to Fight Artex &amp;amp; AntiFox</a></p>
+<p class="meta">Dark Reading · <time datetime="2026-11-12T21:18:52.000Z">12 November 2026 21:18 UTC</time></p>
+<p class="excerpt">Cybercriminals using agentic pen-testing tools is a proverbial genie out of the bottle at this point, so enterprises need to get a defense plan in place right away.</p>
+
+</li>
+<li id="s39" data-story data-source="bleepingcomputer" data-priority="none">
+<p class="story-title" data-n="32"><a href="https://www.bleepingcomputer.com/news/microsoft/massive-microsoft-365-outage-disrupts-outlook-teams-copilot-worldwide/">Massive Microsoft 365 outage disrupts Outlook, Teams, Copilot worldwide</a></p>
+<p class="meta">BleepingComputer · <time datetime="2026-11-12T20:15:16.000Z">12 November 2026 20:15 UTC</time></p>
+<p class="excerpt">Microsoft is investigating a widespread outage affecting multiple Microsoft 365 services, including Outlook, Microsoft Teams, and Copilot, as users report connectivity problems worldwide. [...]</p>
+
+</li>
+<li id="s40" data-story data-source="darkreading" data-priority="none">
+<p class="story-title" data-n="33"><a href="https://www.darkreading.com/data-privacy/extortion-luna-moth-law-firms-second-time">Extortion Group Luna Moth Flits Into Law Firms a Second Time</a></p>
+<p class="meta">Dark Reading · <time datetime="2026-11-12T20:09:41.000Z">12 November 2026 20:09 UTC</time></p>
+<p class="excerpt">The cybercriminals are retargeting law firms that refused to pay its first ransom, with a social engineering con aimed at stealing Microsoft access tokens.</p>
+
+</li>
+<li id="s42" data-story data-source="darkreading" data-priority="none">
+<p class="story-title" data-n="34"><a href="https://www.darkreading.com/cybersecurity-operations/japan-emergency-funding-cybersecurity-ai-assisted-breaches-japanese">AIを活用したサイバー攻撃の増加を受け、日本がサイバーセキュリティへの緊急資金拠出を推進</a></p>
+<p class="meta">Dark Reading · <time datetime="2026-11-11T22:14:44.000Z">11 November 2026 22:14 UTC</time> · 44 hours before this edition</p>
+<p class="excerpt">この対策パッケージには、官民合同のサイバー対応チーム、経済省が主導するAI専門チーム、および政府の新たな能動的サイバー防衛権限の行使に関する裁量の拡大が含まれている。</p>
+
+</li>
+<li id="s43" data-story data-source="darkreading" data-priority="none">
+<p class="story-title" data-n="35"><a href="https://www.darkreading.com/cybersecurity-operations/test-takers-ai-exam-security-catch-up">As Test Takers Turn to AI for Answers, Exam Security Must Catch Up</a></p>
+<p class="meta">Dark Reading · <time datetime="2026-11-11T20:27:00.000Z">11 November 2026 20:27 UTC</time> · 46 hours before this edition</p>
+<p class="excerpt">It&#39;s hard to detect whether someone is using artificial intelligence (AI) to cheat on IT certification exams, but new tools and processes are emerging to boost trust.</p>
+
+</li>
+</ol>
+</section>
+<section class="block sources" id="edition-sources" aria-labelledby="edition-sources-h">
+<h2 id="edition-sources-h">Source status</h2>
+<p>All 12 configured sources have a recorded result: 12 with entries, 0 empty, 0 failed. Failures are listed first.</p>
+<p>Counts precede date validation, deduplication and the seven-day news window. A successful fetch does not establish that a source has new reporting.</p>
+<ul><li class="src-ok"><span class="tag">FETCHED</span> Krebs on Security: 10 entries collected; checked <time datetime="2026-11-13T19:05:41.650Z">13 November 2026 19:05 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> BleepingComputer: 15 entries collected; checked <time datetime="2026-11-13T19:05:41.650Z">13 November 2026 19:05 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> The Hacker News: 50 entries collected; checked <time datetime="2026-11-13T19:05:41.650Z">13 November 2026 19:05 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> The Record: 5 entries collected; checked <time datetime="2026-11-13T19:05:41.650Z">13 November 2026 19:05 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> SecurityWeek: 10 entries collected; checked <time datetime="2026-11-13T19:05:41.650Z">13 November 2026 19:05 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> Dark Reading: 50 entries collected; checked <time datetime="2026-11-13T19:05:41.650Z">13 November 2026 19:05 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> CISA Advisories: 30 entries collected; checked <time datetime="2026-11-13T19:05:41.650Z">13 November 2026 19:05 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> Google Project Zero: 10 entries collected; checked <time datetime="2026-11-13T19:05:41.650Z">13 November 2026 19:05 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> Securelist: 10 entries collected; checked <time datetime="2026-11-13T19:05:41.650Z">13 November 2026 19:05 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> Cisco Talos: 15 entries collected; checked <time datetime="2026-11-13T19:05:41.650Z">13 November 2026 19:05 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> Unit 42: 15 entries collected; checked <time datetime="2026-11-13T19:05:41.650Z">13 November 2026 19:05 UTC</time>.</li><li class="src-ok"><span class="tag">FETCHED</span> Microsoft Security: 10 entries collected; checked <time datetime="2026-11-13T19:05:41.650Z">13 November 2026 19:05 UTC</time>.</li></ul>
+<p>No collected entries were excluded during normalization.</p>
+</section>
+</main>
+<footer>Edition generated <time datetime="2026-11-13T19:05:41.650Z">13 November 2026 19:05 UTC</time>; this page shows that run and is not regenerated with newer data. Stored record: <a href="editions/2026-11-13.json">editions/2026-11-13.json</a>.</footer>
+<script>(function () {
+"use strict";
+var ISO = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d{1,3})?)?(?:Z|[+-]\d{2}:\d{2})$/;
+var GRACE = 7200000;
+var SKEW = 300000;
+var DAY = 86400000;
+var RANK = { none: 0, cve: 1, high: 2, critical: 3, known_exploited: 4 };
+function own(o, k) { return Object.prototype.hasOwnProperty.call(o, k); }
+function parseTime(value) {
+  if (typeof value !== "string" || !ISO.test(value)) return NaN;
+  var ms = Date.parse(value);
+  return isFinite(ms) ? ms : NaN;
+}
+function result(state, ageMs) { return { state: state, ageMs: ageMs }; }
+function ageState(role, generatedMs, dueMs, nowMs) {
+  var hasGen = isFinite(generatedMs);
+  var hasDue = role !== "edition" && isFinite(dueMs);
+  if (!isFinite(nowMs)) return result("invalid", NaN);
+  if (hasGen && generatedMs - nowMs > SKEW) return result("future", NaN);
+  if (hasDue && dueMs - nowMs > 1.5 * DAY) return result("future", NaN);
+  var age = hasGen ? Math.max(0, nowMs - generatedMs) : NaN;
+  if (!hasDue) return result(hasGen ? "ok" : "invalid", age);
+  if (nowMs < dueMs) return result("current", age);
+  if (nowMs < dueMs + GRACE) return result("due", age);
+  return result("stale", age);
+}
+function plural(n, unit) { return n + " " + unit + (n === 1 ? "" : "s"); }
+function formatAge(ms) {
+  if (typeof ms !== "number" || !isFinite(ms) || ms < 0) return "";
+  var minutes = Math.floor(ms / 60000);
+  if (minutes < 1) return "less than a minute ago";
+  if (minutes < 60) return plural(minutes, "minute") + " ago";
+  var hours = Math.floor(minutes / 60);
+  if (hours < 48) return plural(hours, "hour") + " ago";
+  return plural(Math.floor(hours / 24), "day") + " ago";
+}
+function queryTokens(query) {
+  var parts = String(query == null ? "" : query).toLowerCase().split(/\s+/);
+  var out = [];
+  for (var i = 0; i < parts.length && out.length < 20; i++) if (parts[i]) out.push(parts[i]);
+  return out;
+}
+function storyMatches(story, filter) {
+  var want = filter.priority || "";
+  if (want && own(RANK, want)) {
+    var have = own(RANK, story.priority) ? RANK[story.priority] : 0;
+    if (want === "known_exploited" ? story.priority !== "known_exploited" : have < RANK[want]) return false;
+  }
+  if (filter.source && story.source !== filter.source) return false;
+  for (var i = 0; i < filter.tokens.length; i++) {
+    if (story.text.indexOf(filter.tokens[i]) === -1) return false;
+  }
+  return true;
+}
+function countText(shown, total) {
+  var noun = total === 1 ? " story." : " stories.";
+  if (total === 0) return "There are no stories in this list.";
+  if (shown === total) return "Showing all " + total + noun;
+  if (shown === 0) return "No stories match these filters (0 of " + total + ").";
+  return "Showing " + shown + " of " + total + noun;
+}
+var logic = {
+  parseTime: parseTime, ageState: ageState, formatAge: formatAge,
+  queryTokens: queryTokens, storyMatches: storyMatches, countText: countText
+};
+
+if (typeof document === "undefined" || !document.querySelectorAll) return;
+var ages = [];
+var filters = [];
+function each(list, fn) { for (var i = 0; i < list.length; i++) fn(list[i]); }
+function show(el, on) { if (el && el.hidden === on) el.hidden = !on; }
+function setText(el, text) { if (el && el.textContent !== text) el.textContent = text; }
+function refreshAges() {
+  var now = Date.now();
+  each(ages, function (box) {
+    var r = logic.ageState(
+      box.getAttribute("data-role") || "edition",
+      logic.parseTime(box.getAttribute("data-generated-at")),
+      logic.parseTime(box.getAttribute("data-next-due")),
+      now
+    );
+    if (box.getAttribute("data-state") !== r.state) box.setAttribute("data-state", r.state);
+    var text = logic.formatAge(r.ageMs);
+    each(box.querySelectorAll("[data-age-text]"), function (el) { setText(el, text); });
+    each(box.querySelectorAll("[data-age-out]"), function (el) { show(el, text !== ""); });
+    each(box.querySelectorAll("[data-age-when]"), function (el) {
+      show(el, el.getAttribute("data-age-when") === r.state);
+    });
+  });
+}
+function bindFilters(box) {
+  var list = document.getElementById(box.getAttribute("data-filter-target") || "");
+  if (!list) return;
+  var q = box.querySelector('[data-filter="q"]');
+  var priority = box.querySelector('[data-filter="priority"]');
+  var source = box.querySelector('[data-filter="source"]');
+  var reset = box.querySelector("[data-filter-reset]");
+  var count = box.querySelector("[data-filter-count]");
+  var empty = box.querySelector("[data-filter-empty]");
+  var stories = [];
+  each(list.querySelectorAll("li[data-story]"), function (el) {
+    stories.push({
+      el: el,
+      text: String(el.textContent || "").toLowerCase(),
+      source: el.getAttribute("data-source") || "",
+      priority: el.getAttribute("data-priority") || "none"
+    });
+  });
+  function value(el) { return el ? String(el.value || "") : ""; }
+  function apply() {
+    var f = { tokens: logic.queryTokens(value(q)), priority: value(priority), source: value(source) };
+    var shown = 0;
+    each(stories, function (s) {
+      var ok = logic.storyMatches(s, f);
+      if (ok) shown++;
+      show(s.el, ok);
+    });
+    setText(count, logic.countText(shown, stories.length));
+    show(empty, shown === 0 && stories.length > 0);
+    var active = f.tokens.length > 0 || f.priority !== "" || f.source !== "";
+    box.setAttribute("data-active", active ? "true" : "false");
+  }
+  if (q) q.addEventListener("input", apply);
+  each([priority, source], function (el) {
+    if (!el) return;
+    el.addEventListener("change", apply);
+    el.addEventListener("input", apply);
+  });
+  if (reset) reset.addEventListener("click", function () {
+    if (q) q.value = "";
+    if (priority) priority.value = "";
+    if (source) source.value = "";
+    apply();
+  });
+  filters.push(apply);
+  box.hidden = false;
+  apply();
+}
+each(document.querySelectorAll("[data-age]"), function (el) { ages.push(el); });
+each(document.querySelectorAll("[data-filters]"), bindFilters);
+refreshAges();
+function resume() {
+  refreshAges();
+  each(filters, function (apply) { apply(); });
+}
+document.addEventListener("visibilitychange", function () { if (!document.hidden) resume(); });
+window.addEventListener("pageshow", resume);
+window.addEventListener("focus", refreshAges);
+if (ages.length) setInterval(function () { if (!document.hidden) refreshAges(); }, 60000);
+})();</script>
+</body>
+</html>
