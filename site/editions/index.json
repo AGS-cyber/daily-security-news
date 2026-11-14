@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-11-14",
+    "mode": "article",
+    "headline": "CISA confirms live exploitation of UnrealIRCd and Check Point flaws as Cursor and Trezor trace their own supply-chain breaches",
+    "count": 14
+  },
+  {
     "date": "2026-11-13",
     "mode": "article",
     "headline": "Check Point gateways, an N-central zero-day and a PostgreSQL RCE dominate patch urgency",
