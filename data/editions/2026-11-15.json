@@ -1,0 +1,202 @@
+{
+  "date": "2026-11-15",
+  "generatedAt": "2026-11-15T18:23:38.019Z",
+  "collection": [
+    {
+      "sourceId": "krebs",
+      "attemptedAt": "2026-11-15T18:23:38.019Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "attemptedAt": "2026-11-15T18:23:38.019Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "thehackernews",
+      "attemptedAt": "2026-11-15T18:23:38.019Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "therecord",
+      "attemptedAt": "2026-11-15T18:23:38.019Z",
+      "status": "ok",
+      "items": 5,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securityweek",
+      "attemptedAt": "2026-11-15T18:23:38.019Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "darkreading",
+      "attemptedAt": "2026-11-15T18:23:38.019Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "attemptedAt": "2026-11-15T18:23:38.019Z",
+      "status": "ok",
+      "items": 30,
+      "skipped": 0
+    },
+    {
+      "sourceId": "projectzero",
+      "attemptedAt": "2026-11-15T18:23:38.019Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securelist",
+      "attemptedAt": "2026-11-15T18:23:38.019Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "talos",
+      "attemptedAt": "2026-11-15T18:23:38.019Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "unit42",
+      "attemptedAt": "2026-11-15T18:23:38.019Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "microsoft-security",
+      "attemptedAt": "2026-11-15T18:23:38.019Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    }
+  ],
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 229,
+    "published": 5
+  },
+  "mode": "article",
+  "headline": "TSMC employee data leaks; a stolen key trojanizes an AI extension",
+  "standfirst": "TSMC confirmed a leak of employee data, and a trojanized AI coding extension was traced to a stolen access key. Neither story carries a CVE. Italy fined Meta, and the Pentagon renamed its AI office.",
+  "bodyMarkdown": "## Breaches\n\nTSMC confirmed that personal employee data was leaked online, after a threat actor put 6.9GB of allegedly stolen information up for auction [[s1]]. The headline links the incident to a cloud provider; the excerpt names neither the provider nor the access path. Analysis: a third-party route would shift scrutiny away from TSMC's own perimeter, but the supplied text does not establish one.\n\nCursor traced the compromise of Anthropic's official Claude Code extension on its marketplace to an access key it had issued to Fireworks AI, which exposed the key; an attacker used it to copy data from a read-only resource [[s4]]. Analysis: the chain is the story — one vendor's exposed credential becoming another's distribution problem.\n\n## Industry\n\nItaly's data protection authority fined Meta €805 million over a Facebook for Android feature that suggests gallery photos and videos for posting, finding it default-on and that the app accessed photos, videos and metadata without explicit consent; a 60-day window followed [[s3]].\n\nThe Pentagon renamed its CDAO the \"Super Intelligence Office,\" following an order to swap \"artificial intelligence\" for \"super intelligence\" in executive branch communications [[s2]]. Analysis: a messaging change with no operational security effect evident here.",
+  "selected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "TSMC employee data breach linked to cloud provider",
+      "url": "https://www.bleepingcomputer.com/news/security/tsmc-employee-data-breach-linked-to-cloud-provider/",
+      "publishedAt": "2026-11-15T15:23:48.000Z",
+      "excerpt": "Taiwan Semiconductor Manufacturing Company (TSMC) confirmed that personal employee data has been leaked online after a threat actor put 6.9GB of information allegedly stolen from the company up for auction. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/tsmc-employee-data-breach-linked-to-cloud-provider",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/tsmc-employee-data-breach-linked-to-cloud-provider"
+      ],
+      "cves": [],
+      "id": "s1",
+      "section": "breaches",
+      "rank": 1,
+      "angle": "Confirmed leak of TSMC employee data with 6.9GB allegedly up for auction puts third-party cloud exposure and extortion risk on a critical chipmaker."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Cursor Says Stolen Fireworks AI Key Led to Trojanized Claude Code Extension Incident",
+      "url": "https://thehackernews.com/2026/11/stolen-fireworks-ai-key-led-to-cursor.html",
+      "publishedAt": "2026-11-15T08:22:04.000Z",
+      "excerpt": "The compromise of Anthropic's official Claude Code extension on Cursor's extension marketplace was the result of the theft of an access key that was exposed in the wake of a breach targeting Fireworks AI. \"An attacker obtained an access key we had issued to Fireworks,\" Cursor said in a Friday update. \"The key was exposed by Fireworks, and the attacker used it to copy data from a read-only",
+      "canonicalUrl": "https://thehackernews.com/2026/11/stolen-fireworks-ai-key-led-to-cursor.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/stolen-fireworks-ai-key-led-to-cursor.html"
+      ],
+      "cves": [],
+      "id": "s4",
+      "section": "breaches",
+      "rank": 2,
+      "angle": "Stolen Fireworks AI access key was used to trojanize Anthropic's Claude Code extension on Cursor's marketplace, exposing supply-chain risk in AI developer tooling."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Italy Fines Meta €805 Million Over Facebook's Android Gallery Access Without Explicit Consent",
+      "url": "https://thehackernews.com/2026/11/italy-fines-meta-805-million-over.html",
+      "publishedAt": "2026-11-15T11:27:31.000Z",
+      "excerpt": "Meta was fined €805 million in Italy yesterday over a Facebook for Android feature that suggests photos and videos from users' phone galleries for them to post. The Garante, Italy's data protection authority, found that the feature was enabled by default and that the app accessed Italian users' photos, videos, and related metadata without their explicit consent. The company has 60 days to",
+      "canonicalUrl": "https://thehackernews.com/2026/11/italy-fines-meta-805-million-over.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/italy-fines-meta-805-million-over.html"
+      ],
+      "cves": [],
+      "id": "s3",
+      "section": "industry",
+      "rank": 3,
+      "angle": "Italy's €805 million fine over default Facebook gallery access signals aggressive consent enforcement and a 60-day compliance deadline for Meta."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Pentagon Renames CDAO ‘Super Intelligence Office’",
+      "url": "https://www.securityweek.com/pentagon-renames-cdao-super-intelligence-office/",
+      "publishedAt": "2026-11-15T12:51:33.000Z",
+      "excerpt": "The move follows President Trump’s order to replace “artificial intelligence” with “super intelligence” in executive branch communications. The post Pentagon Renames CDAO ‘Super Intelligence Office’ appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/pentagon-renames-cdao-super-intelligence-office",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/pentagon-renames-cdao-super-intelligence-office"
+      ],
+      "cves": [],
+      "id": "s2",
+      "section": "industry",
+      "rank": 4,
+      "angle": "Pentagon renaming its AI office to 'Super Intelligence Office' shows defense policy messaging shifting, though it has little immediate operational security impact."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Meta Fined $887 Million in Italy Over Android Gallery Photos and Videos on Facebook",
+      "url": "https://www.securityweek.com/meta-fined-887-million-in-italy-over-android-gallery-photos-and-videos-on-facebook/",
+      "publishedAt": "2026-11-14T19:00:00.000Z",
+      "excerpt": "The directive protects smartphones as part of a person’s private sphere and requires “free and informed consent” for such access, the authority said. The post Meta Fined $887 Million in Italy Over Android Gallery Photos and Videos on Facebook appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/meta-fined-887-million-in-italy-over-android-gallery-photos-and-videos-on-facebook",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/meta-fined-887-million-in-italy-over-android-gallery-photos-and-videos-on-facebook"
+      ],
+      "cves": [],
+      "id": "s5"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1280,
+    "promptCacheMissTokens": 1716,
+    "outputTokens": 5335,
+    "estimatedCostUsd": 0.0017376240000000001
+  }
+}

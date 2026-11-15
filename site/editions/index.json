@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-11-15",
+    "mode": "article",
+    "headline": "TSMC employee data leaks; a stolen key trojanizes an AI extension",
+    "count": 5
+  },
+  {
     "date": "2026-11-14",
     "mode": "article",
     "headline": "CISA confirms live exploitation of UnrealIRCd and Check Point flaws as Cursor and Trezor trace their own supply-chain breaches",
