@@ -1,0 +1,3397 @@
+{
+  "date": "2026-11-17",
+  "generatedAt": "2026-11-17T20:22:24.987Z",
+  "collection": [
+    {
+      "sourceId": "krebs",
+      "attemptedAt": "2026-11-17T20:22:24.987Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "attemptedAt": "2026-11-17T20:22:24.987Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "thehackernews",
+      "attemptedAt": "2026-11-17T20:22:24.987Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "therecord",
+      "attemptedAt": "2026-11-17T20:22:24.987Z",
+      "status": "ok",
+      "items": 5,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securityweek",
+      "attemptedAt": "2026-11-17T20:22:24.987Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "darkreading",
+      "attemptedAt": "2026-11-17T20:22:24.987Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "attemptedAt": "2026-11-17T20:22:24.987Z",
+      "status": "ok",
+      "items": 30,
+      "skipped": 0
+    },
+    {
+      "sourceId": "projectzero",
+      "attemptedAt": "2026-11-17T20:22:24.987Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securelist",
+      "attemptedAt": "2026-11-17T20:22:24.987Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "talos",
+      "attemptedAt": "2026-11-17T20:22:24.987Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "unit42",
+      "attemptedAt": "2026-11-17T20:22:24.987Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "microsoft-security",
+      "attemptedAt": "2026-11-17T20:22:24.987Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    }
+  ],
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 229,
+    "published": 57
+  },
+  "mode": "article",
+  "headline": "ScreenConnect abuse, hijacked Optimizely scripts and Node2Shell's industrial reach",
+  "standfirst": "Two confirmed-exploited flaws and a supply-chain script hijack dominate: a month-long campaign against MSP-run ScreenConnect servers, an Optimizely compromise that pushed skimmers and iOS exploit code across hundreds of sites, and a KEV-listed Brotli bug that has turned up in a Siemens industrial advisory. The breach, research and patch stories below round out what deserves attention.",
+  "bodyMarkdown": "## Actively exploited\n\nMore than 40 MSP-run ScreenConnect servers absorbed over 688,000 requests in a month-long campaign abusing CVE-2026-84869 to execute files pushed from a guest session [[s21]]. The flaw is KEV-listed with exploitation confirmed and rated 9.9 Critical (CVSS 3.1) for improper privilege management and missing authorization; the vector needs low privileges and an active remote session, so it is not pre-authentication. One conflict in the supplied records is worth flagging: the campaign hit servers, while the NVD description places the condition in the client and states that servers are not impacted. Affected versions run below 26.6.5.9742, and CISA's federal remediation deadline has already elapsed.\n\nSeparately, an attacker exploited a flaw in Optimizely Web Experimentation to plant code in the scripts customers load from the service, so visitors to sites run by at least 178 organisations — among them CNN, the BBC and Zoom — received it [[s49]]. The payload combined a card skimmer with iOS exploit kits. No CVE was supplied for the Optimizely flaw, and the excerpt does not describe how the attacker reached it.\n\nNode2Shell, tracked as CVE-2026-111497, keeps widening. The Brotli decoder out-of-bounds write — 9.2 Critical under CVSS 4.0, reachable by a remote unauthenticated attacker through a crafted compressed stream, with memory disclosure, denial of service and possible code execution — is KEV-listed with exploitation confirmed and now features in a Siemens advisory covering industrial automation products [[s30]]. Affected ranges span Brotli 1.0.3 through 1.2.0 (fixed in 1.0.10, 1.1.1, 1.2.1), several Node.js branches, .NET 8 through 10, brotlicffi and Debian 12. The excerpt does not name the specific Siemens products; treat the advisory as a prompt to inventory bundled decoders, not a complete list.\n\n## Breaches\n\nUber is notifying nearly 150,000 drivers that their data was stolen after attackers breached AI infrastructure provider Fireworks [[s45]]. The excerpt stops at that relationship: it does not describe the initial access path, the data fields taken, or how the two incidents connect.\n\n## Research\n\nGoogle's latest AI threat tracker says a Chinese state group is developing an automated attack tool, part of a broader drift toward autonomous multi-agent offensive frameworks — Artex, CAIRN, CyberStrikeAI and PentAGI among them — that run multi-stage intrusions at higher operational velocity [[s5]]. The attribution is Google's, and the underlying evidence is not in the excerpt, so the actor-to-tooling link should be read as the vendor's assessment rather than established fact.\n\n## Vulnerabilities\n\nN-able's critical N-central hotfix addresses 17 flaws, a mix of recently disclosed zero-days and vulnerabilities already exploited in the wild, and the vendor is retiring legacy APIs alongside it [[s25]]. No CVE identifiers or severity values were supplied, so treat the count as the vendor's grouping rather than a scored set.\n\nOracle is preparing Java SE patches for 11 vulnerabilities, all remotely exploitable without authentication and carrying a maximum CVSS 3.1 score of 8.1 per the advance notice, while separate reports warn of a potentially critical OpenJDK remote code execution flaw tracked as CVE-2026-114938 [[s14]]. That CVE has no NVD record in the supplied intelligence and is not KEV-listed, so its \"critical\" billing rests on the reports rather than a scored entry — and it is distinct from the 11 issues being patched. Prioritisation: the patch batch is scored and imminent; the OpenJDK report is of unconfirmed severity.\n\n## Industry\n\nCalifornia is suing OpenAI, seeking court-ordered changes after the Hugging Face hack, alleging the company misled and endangered the public and its users by knowingly developing advanced models without necessary safeguards [[s39]]. The allegations are untested, and the excerpt does not detail the Hugging Face incident or the specific safeguards at issue. Analysis: the case matters less for its merits than for whether courts begin setting baseline safeguard expectations for model developers whose platforms are abused — an outcome the supplied text does not predict.",
+  "selected": [
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "MSP ScreenConnect Servers Targeted in Month-Long Campaign",
+      "url": "https://www.securityweek.com/msp-screenconnect-servers-targeted-in-month-long-campaign/",
+      "publishedAt": "2026-11-17T13:24:43.000Z",
+      "excerpt": "More than 40 servers received over 688,000 requests exploiting CVE-2026-84869 to execute guest-pushed files. The post MSP ScreenConnect Servers Targeted in Month-Long Campaign appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/msp-screenconnect-servers-targeted-in-month-long-campaign",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/msp-screenconnect-servers-targeted-in-month-long-campaign"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-84869",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "ConnectWise",
+            "product": "ScreenConnect",
+            "vulnerabilityName": "ConnectWise ScreenConnect Improper Privilege Management and Missing Authorization Vulnerability",
+            "dateAdded": "2026-09-11",
+            "shortDescription": "ConnectWise ScreenConnect contains both an improper privilege management and missing authorization vulnerability that may allow an attacker to transfer and execute files through an active remote session without authorization or host confirmation.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-09-14",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://www.connectwise.com/company/trust/security-bulletins/2026-09-08-screenconnect-bulletin ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-84869",
+            "cwes": [
+              "CWE-269",
+              "CWE-862"
+            ]
+          },
+          "nvd": {
+            "description": "A condition in the ScreenConnect client may allow files to be transferred and executed through an active remote session without authorization or Host confirmation in certain circumstances. ScreenConnect servers are not impacted.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.9,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+              "source": "7d616e1a-3288-43b1-a0dd-0a65d3e70a49",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-269",
+              "CWE-862"
+            ],
+            "published": "2026-09-08T20:18:51.147",
+            "lastModified": "2026-09-12T04:16:42.757",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://github.com/ConnectWise-Advisories/Disclosures/tree/main/CVE-2026-84869",
+                "source": "7d616e1a-3288-43b1-a0dd-0a65d3e70a49",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.connectwise.com/company/trust/advisories",
+                "source": "7d616e1a-3288-43b1-a0dd-0a65d3e70a49",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.connectwise.com/company/trust/security-bulletins/2026-09-08-screenconnect-bulletin",
+                "source": "7d616e1a-3288-43b1-a0dd-0a65d3e70a49",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-84869",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              },
+              {
+                "url": "https://www.huntress.com/blog/rogue-screenconnect-installations",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:connectwise:screenconnect:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "270783CF-B4ED-4608-A583-A9F7B80DC877",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "26.6.5.9742"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/msp-screenconnect-servers-targeted-in-month-long-campaign/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.17",
+              "dateReleased": "2026-11-17T17:53:15.5664Z",
+              "retrievedAt": "2026-11-17T20:22:24.987Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-114938%2CCVE-2026-84869%2CCVE-2026-117659%2CCVE-2026-120157%2CCVE-2026-120255%2CCVE-2026-111497",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-84869",
+              "retrievedAt": "2026-11-17T20:22:24.987Z"
+            }
+          }
+        }
+      ],
+      "id": "s21",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "A KEV-listed ScreenConnect flaw is being exploited in a month-long campaign against more than 40 MSP servers, with CISA's required action already past due."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Hijacked Optimizely Scripts Served Card Skimmer and iOS Exploit Kits to CNN, BBC and Zoom Visitors",
+      "url": "https://thehackernews.com/2026/11/hijacked-optimizely-scripts-served-card.html",
+      "publishedAt": "2026-11-17T07:12:13.000Z",
+      "excerpt": "An attacker exploited a flaw in Optimizely Web Experimentation to plant malicious code in some of the scripts that customers' websites load from the service, Optimizely said early today. Visitors to sites run by at least 178 organizations, including CNN, the BBC and Zoom, received the code yesterday, according to Report URI, a firm that monitors the scripts websites run. The code was built to",
+      "canonicalUrl": "https://thehackernews.com/2026/11/hijacked-optimizely-scripts-served-card.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/hijacked-optimizely-scripts-served-card.html"
+      ],
+      "cves": [],
+      "id": "s49",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "An Optimizely flaw let attackers plant card-skimmers and iOS exploit kits on scripts served to CNN, BBC, Zoom and hundreds of other sites."
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Siemens Industrial Automation Software Products",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-03",
+      "publishedAt": "2026-11-17T12:00:00.000Z",
+      "excerpt": "View CSAF Summary On October 21, 2026, the Node.js project released security updates addressing a critical vulnerability in the Brotli decoder bundled with Node.js, commonly referred to as \"Node2Shell\" (tracked as CVE-2026-111497). The vulnerability is an out-of-bounds write that could allow a remote attacker to cause memory corruption and potentially execute arbitrary code. This advisory covers…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-321-03",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-advisories/icsa-26-321-03"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-111497",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Google",
+            "product": "Brotli",
+            "vulnerabilityName": "Google Brotli Unchecked Return Value Vulnerability",
+            "dateAdded": "2026-10-27",
+            "shortDescription": "Google Brotli contains an unchecked return value vulnerability that allows a remote unauthenticated attacker to corrupt adjacent decoder state memory, disclose sensitive memory contents, cause a denial of service, or potentially execute arbitrary code using a crafted Brotli-compressed stream.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-10",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "This vulnerability affects an open-source component, third-party library, protocol, or proprietary implementation that could be used by different products. For more information, please see: https://github.com/google/brotli/releases/tag/v1.2.1 ; ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-111497",
+            "cwes": [
+              "CWE-252",
+              "CWE-787"
+            ]
+          },
+          "nvd": {
+            "description": "A buffer overflow vulnerability in the Brotli decoder (c/dec/decode.c) in Google Brotli versions 1.0.3 through 1.2.0 on all platforms allows a remote unauthenticated attacker to corrupt adjacent decoder state memory, disclose sensitive memory contents, cause a denial of service, or potentially execute arbitrary code using a crafted Brotli-compressed stream.\n\n\n\n\n\nUsers need to update any Brotli libraries or binaries between 1.0.3 through 1.2.0 to the latest available version: 1.0.10 or 1.1.1 or 1.2.1.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.2,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "cve-coordination@google.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-252",
+              "CWE-787"
+            ],
+            "published": "2026-10-22T14:17:37.190",
+            "lastModified": "2026-11-10T20:25:59.130",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://github.com/andybalholm/brotli/releases/tag/v1.2.7",
+                "source": "cve-coordination@google.com",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases#nodejs-brotli-decoder-out-of-bounds-write-permits-remote-code-execution-cve-2026-111497---high",
+                "source": "cve-coordination@google.com",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/10/23/25",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/10/24/6",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/10/26/12",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/10/26/13",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/10/26/16",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/11/03/2",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://broccoli2shell.com",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/advisories/GHSA-9v8h-qqgm-4m35",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/dotnet/announcements/issues/494",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Issue Tracking",
+                  "Mitigation",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/google/brotli/releases/tag/v1.0.10",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://github.com/google/brotli/releases/tag/v1.1.1",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://github.com/google/brotli/releases/tag/v1.2.1",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://lists.debian.org/debian-lts-announce/2026/10/msg00049.html",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://patchtheplanet.org/brotli",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.aikido.dev/blog/node2shell-nodejs-brotli-rce-cve-2026-111497",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://cert-portal.siemens.com/productcert/html/ssa-045512.html",
+                "source": "0b142b55-0307-4c5a-b3c9-f314f3fb7c5e",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://cert-portal.siemens.com/productcert/html/ssa-242944.html",
+                "source": "0b142b55-0307-4c5a-b3c9-f314f3fb7c5e",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://cert-portal.siemens.com/productcert/html/ssa-443410.html",
+                "source": "0b142b55-0307-4c5a-b3c9-f314f3fb7c5e",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://cert-portal.siemens.com/productcert/html/ssa-678870.html",
+                "source": "0b142b55-0307-4c5a-b3c9-f314f3fb7c5e",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://cert-portal.siemens.com/productcert/html/ssa-898633.html",
+                "source": "0b142b55-0307-4c5a-b3c9-f314f3fb7c5e",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://ellio.tech/en/blog/node2shell-cve-2026-111497-rce-on-stock-nodejs-builds/",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-111497",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:google:brotli:*:*:*:*:*:-:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8A7BE60F-21B0-4779-8D59-6E5E58C5826B",
+                "versionStartIncluding": "1.0.3",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.0.10"
+              },
+              {
+                "criteria": "cpe:2.3:a:google:brotli:*:*:*:*:*:-:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "48E72297-AFBD-4460-A732-5A6803CCCDB0",
+                "versionStartIncluding": "1.1.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.1.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:google:brotli:*:*:*:*:*:-:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C8CA5C74-26A8-44E3-B893-1FA01CED49F5",
+                "versionStartIncluding": "1.2.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.2.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:nodejs:node.js:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "02348F18-5E17-4427-8B78-63B4082F2FB4",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "22.23.4"
+              },
+              {
+                "criteria": "cpe:2.3:a:nodejs:node.js:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "852D09BB-A396-4813-81C9-7D89D5DD5FB6",
+                "versionStartIncluding": "23.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "24.22.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:nodejs:node.js:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "219CA855-3A40-42CE-BAB6-79CCFEE7746F",
+                "versionStartIncluding": "25.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "26.12.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:python-hyper:brotlicffi:*:*:*:*:*:python:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E732E75B-4BEF-4D7E-8520-E03B707FB4F6",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.2.1.0"
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "65DCE51C-2CD9-4179-9354-5323D28573AA",
+                "versionStartIncluding": "8.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "8.0.33"
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "98654489-8C4E-4801-8728-29B01A22DEED",
+                "versionStartIncluding": "9.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "9.0.22"
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "27DF5CF4-58E3-4F01-A3AA-D44B7DCC3D67",
+                "versionStartIncluding": "10.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "10.0.14"
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:preview1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5DACF2FE-CF61-43E4-8A3F-F7A358DE8A01",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:preview2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "280B2E64-3163-40AB-A048-14D58DEC42FD",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:preview3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "12357908-3294-46EF-85A0-DA3F86C97489",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:preview4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "849FC8F5-86CD-4B5D-ADFD-9CB16EA75D09",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:preview5:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C86E87E2-B236-4AC9-B6C3-64B9CDEC91EB",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:preview6:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9B14656E-2BB0-4B4B-B518-F3D5108253ED",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:preview7:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E09C9DB3-F42C-4442-9CF0-24A780D094C8",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:rc1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "67035E86-61F5-421E-B243-EF64458AD8BA",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:rc2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C46300CA-BA84-48B3-85C5-C20CB487C733",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:debian:debian_linux:12.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "46D69DCC-AE4D-4EA5-861C-D60951444C6C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:istio:istio:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9F01FA9D-7190-431F-84DD-24D4EBC41A2D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.29.9"
+              },
+              {
+                "criteria": "cpe:2.3:a:istio:istio:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B8DE25CE-AFCB-4685-9836-B8EC9C820975",
+                "versionStartIncluding": "1.30.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.30.6"
+              },
+              {
+                "criteria": "cpe:2.3:a:istio:istio:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "55EBE231-2EB8-4C9C-B279-D07F82EA5B55",
+                "versionStartIncluding": "1.31.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.31.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:anthropic:bun:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "51DD72B3-85F6-4B10-AEB4-41E0679ED0AA",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.4.4"
+              },
+              {
+                "criteria": "cpe:2.3:a:envoyproxy:envoy:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8EE6278D-A48A-427C-8A7E-1D4103E2ADF7",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.37.8"
+              },
+              {
+                "criteria": "cpe:2.3:a:envoyproxy:envoy:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "CDCA301F-83CA-4DDB-AAE4-24D5235EE2D5",
+                "versionStartIncluding": "1.38.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.38.6"
+              },
+              {
+                "criteria": "cpe:2.3:a:envoyproxy:envoy:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B9A47DD3-2655-4722-9B9D-3888B590C82F",
+                "versionStartIncluding": "1.39.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.39.3"
+              },
+              {
+                "criteria": "cpe:2.3:a:tianocore:edk2:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C4CFCBFB-4A38-481B-93AE-7D86CCDC6FB5",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": "202608",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:google:woff2:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6D1FC23A-20F7-48F7-ABB8-8D37903DFB58",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:duckdb:duckdb:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0DFA4F95-92F9-4369-BE42-387520F0765B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": "2.0.0",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:clickhouse:clickhouse:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B40EE389-E2AC-4D86-91B2-79A895470317",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": "26.10.2.103",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:apache:arrow:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "46A78CA5-1E4A-4DAA-B40D-387B96C1E2F9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": "26.0.0",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:apache:arrow:27.0.0:dev:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "130A7077-7885-43CB-8AFF-B6056D380156",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:mcmilk:7-zip-zstd:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FB91A353-9BE9-49E7-86FD-6B5FBB291351",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": "26.02-1.5.7-r2",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:7-zip:p7zip:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "76A26292-08BE-459A-B25A-CA14AF8D3C29",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": "16.02",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:andybalholm:brotli:*:*:*:*:*:go:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F3E50F12-AEFE-4B4F-B474-3676F145E032",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.2.7"
+              },
+              {
+                "criteria": "cpe:2.3:o:siemens:ruggedcom_ape1808_firmware:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "37FDCA69-9049-40B4-88AF-F476901022B6",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:siemens:ruggedcom_ape1808:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "B89A6863-B602-4404-8D26-337FECABFFF0",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:common_configurator:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1F93AD0A-C29E-4FA6-A18B-1F0D03CC900C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:data_flow_monitoring:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3562BB8C-6E76-4B16-A2EF-D343EED30DA0",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "3.0.18"
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:dataxess_configurator:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "076198F2-9992-4803-8377-8B264E1D7ADA",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.5.7"
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:edge_opc_ua_server_configurator:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F1122EBA-DB7C-4680-AEEF-309C95843D0D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "2.3.10"
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:flow_creator_configurator:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "90BE4EB2-0B14-44F4-881D-F0DBAFCEF322",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.15.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:industrial_edge_cloud_connector_configurator:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D0E0C6F6-40D0-4D71-ABCE-84449C4E743A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.24.3"
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:industrial_edge_databus_configurator:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B57AD29D-69CF-4C76-AACA-3EAE3F8CBC15",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "4.0.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:industrial_edge_hub:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "70BA5718-0A9F-4B7D-9175-D6719B795363",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:industrial_edge_management_cloud:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "4EA7E869-9428-4D5E-95C0-F19B6BC1BFA9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:comos_walkinside:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8C7AAED9-567F-4EE0-BC1B-F18E1109D316",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_braumat:8.2:update1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "EFA8804E-1E7E-482F-A701-B988F6C0BCE9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_braumat:8.2:update2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A7C12A3B-925A-4219-909B-6D2D0ADA6131",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_braumat:8.2:update3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3288CF66-F9D9-4DDD-9CAA-1EB2E075C87A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_braumat:8.2:update4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9B3EF16B-8281-4159-ABDE-A36881CD8460",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_braumat:8.2:update5:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9DF55BA1-F06B-4868-AC51-15ADC8BFED3C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_profiling_tool:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0D473CE5-B139-422C-AFCF-5FBBDB2C0759",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_sistar:8.2:update1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "28A180EC-5DB8-4E8A-B063-813FA3973068",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_sistar:8.2:update2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "31122237-42B0-4B10-B33B-D6E6DEBC19B3",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_sistar:8.2:update3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2955D58B-350F-4F96-A41F-6594639403DA",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_sistar:8.2:update4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0E95149C-B212-4670-8DFC-EEC713E87741",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_sistar:8.2:update5:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "173F36F4-23F4-4650-805F-25A9032AF64A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_wincc:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "DA06F4BD-1512-4700-AD3E-25C6CDA60246",
+                "versionStartIncluding": "7.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "8.2",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_wincc_companion:-:*:*:*:*:-:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "174C0674-3100-4CCB-B55E-6BB1FB8F8442",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_wincc_runtime:-:*:*:*:professional:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E6BFBAED-EE2B-4DE4-A76C-824DD15F4608",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_wincc_unified_for_industrial_edge:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "4DC1EDC8-DA6D-476F-9656-0FB9809F9E30",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_wincc_unified_pc_runtime:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "49B72BEA-DE75-4A5E-8658-30E5EBBFFF69",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_wincc_unified_siqence:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E2E193FF-ED70-432A-8B33-2453A8B2B21B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:tia_administrator:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FC8C7680-9033-4ECF-9764-5179A4033F64",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:tia_project-server_web_administration_tool:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "14BA6E1D-4D4E-4133-8869-5ADEC9CE545C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:user_management_component:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7139EEDB-2DCD-4C55-9DAC-423FB5807D11",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:hyperlynx:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "92D6ED26-34E3-46A6-B025-F7DC263AA75A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:innexis_architecture_native_acceleration:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "BE57EA6F-BA70-409D-B037-EDD603FAC0B9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:insights_hub:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1B8E91A0-4BF0-4BDE-8F83-4FF374697A76",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:opcenter_connect_electronics:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0EC96381-D0C9-4949-86E7-1A1E8239A8F2",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:opcenter_connect_manufacturing_operations_management:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B0F5FAC2-E6E0-4ECA-86B6-9D082C1D674B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:opcenter_execution_core:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0A6E1786-F0A9-498F-9DE9-F503B5DAD84A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:opcenter_execution_discrete:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F04BAB87-71BB-4AB4-BC42-F89616698EEF",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:opcenter_execution_foundation:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9FE353B7-07A1-4B50-8A43-62577C2208EE",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:opcenter_execution_pharma:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "4CC50DA8-906E-4BD5-9861-668273EE3A76",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:opcenter_execution_process:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5CCA2643-1E89-49AE-B8CB-3A9CDA3031A6",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:opcenter_intelligence:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8E3FA7CB-6931-4D0C-A3E6-1BE71EA0D30F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:opcenter_quality:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9D9D89CD-FDA5-42F0-8161-3752C8AED7F3",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:opcenter_rd\\&l:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "69EDC5E0-6CCE-4120-913C-E598E0FE2D24",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:opcenter_x:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A12051E1-2DC9-47C6-A320-927D0A7B9F47",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:pads_professional:-:*:*:*:essentials:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C9033337-D032-403D-8BBF-3EA50253A40E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:pads_professional:-:*:*:*:student:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F06B80D2-6A35-4AF5-A07A-0F5C3370C3E7",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:pave360_automotive:2026:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B8DBFD9C-B213-4238-B39C-D4B537523CB1",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:process_preparation_x:-:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FEBDB60C-D759-476D-AF06-3C0691FC72CF",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simcenter_executable_digital_twin:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F6ACF933-A876-4DE5-BBA7-D5BF97DB1AB4",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simcenter_studio:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B8C684EC-BECB-4833-B1F9-F773225A6172",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:teamcenter:2412.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "963C8AAA-D3E0-4B10-93AE-DB15619EC5EE",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:teamcenter:2506.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "261C46FE-1C63-4A1F-8C8E-FC331E8F119E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:teamcenter:2512.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7946C16C-5B81-42D2-BA6D-C8AA8FD5AD0C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:teamcenter:2606.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "86E64B27-FE8F-45AD-BE78-219E4067F8DE",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:xpedition_designer:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F52F6405-0228-4C3D-842F-839192076657",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:xpedition_enterprise:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "AD525494-2807-48EA-AED0-11B9CB5A6A9B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-03",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.17",
+              "dateReleased": "2026-11-17T17:53:15.5664Z",
+              "retrievedAt": "2026-11-17T20:22:24.987Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-114938%2CCVE-2026-84869%2CCVE-2026-117659%2CCVE-2026-120157%2CCVE-2026-120255%2CCVE-2026-111497",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-111497",
+              "retrievedAt": "2026-11-17T20:22:24.987Z"
+            }
+          }
+        }
+      ],
+      "id": "s30",
+      "section": "exploited",
+      "rank": 3,
+      "angle": "The KEV-listed Node2Shell/Brotli bug now appears in a Siemens industrial advisory, broadening exposure beyond Node.js to automation software."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Uber notifies drivers of data breach affecting nearly 150,000 people",
+      "url": "https://www.bleepingcomputer.com/news/security/uber-notifies-drivers-of-data-breach-affecting-nearly-150-000-people/",
+      "publishedAt": "2026-11-17T08:35:42.000Z",
+      "excerpt": "Ride-hailing company Uber is notifying nearly 150,000 drivers that attackers stole their data after breaching AI infrastructure provider Fireworks in early October. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/uber-notifies-drivers-of-data-breach-affecting-nearly-150-000-people",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/uber-notifies-drivers-of-data-breach-affecting-nearly-150-000-people"
+      ],
+      "cves": [],
+      "id": "s45",
+      "section": "breaches",
+      "rank": 4,
+      "angle": "Uber is notifying nearly 150,000 drivers after attackers used stolen credentials from AI infrastructure provider Fireworks."
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Chinese state group developing automated attack tool for cyber espionage, Google says",
+      "url": "https://therecord.media/chinese-state-group-developing-automated-attack-tool-espionage",
+      "publishedAt": "2026-11-17T18:50:00.000Z",
+      "excerpt": "Google released its latest AI Threat Tracker report on Monday, writing that threat actors are rapidly evolving their use of artificial intelligence in attacks — now leaning more heavily on autonomous multi-agent offensive frameworks like Artex, CAIRN, CyberStrikeAI and PentAGI to execute multi-stage intrusions at greater operational velocity.",
+      "canonicalUrl": "https://therecord.media/chinese-state-group-developing-automated-attack-tool-espionage",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/chinese-state-group-developing-automated-attack-tool-espionage"
+      ],
+      "cves": [],
+      "id": "s5",
+      "section": "research",
+      "rank": 5,
+      "angle": "Google says a Chinese state group is developing an automated attack tool, part of a broader shift to multi-agent offensive frameworks that speed real intrusions."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "N-able Kills Legacy APIs, Patches 17 N-central Zero-Days",
+      "url": "https://www.securityweek.com/n-able-kills-legacy-apis-patches-17-n-central-zero-days/",
+      "publishedAt": "2026-11-17T12:28:45.000Z",
+      "excerpt": "The patches target recently disclosed zero-days, as well as vulnerabilities already exploited in the wild. The post N-able Kills Legacy APIs, Patches 17 N-central Zero-Days appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/n-able-kills-legacy-apis-patches-17-n-central-zero-days",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/n-able-kills-legacy-apis-patches-17-n-central-zero-days"
+      ],
+      "cves": [],
+      "id": "s25",
+      "section": "vulnerabilities",
+      "rank": 6,
+      "angle": "N-able's critical N-central hotfix covers 17 flaws, including recently disclosed zero-days and bugs already exploited in the wild."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Oracle to Patch 11 Java Flaws Today as Critical OpenJDK RCE (CVE-2026-114938) Report Emerges",
+      "url": "https://thehackernews.com/2026/11/oracle-to-patch-11-java-flaws-today-as.html",
+      "publishedAt": "2026-11-17T15:17:36.000Z",
+      "excerpt": "Oracle is preparing to release security patches for 11 vulnerabilities in Java SE on Tuesday, November 17, 2026, all of which may be exploited remotely without authentication, as separate reports warn of a potentially critical remote code execution (RCE) flaw affecting OpenJDK. The 11 vulnerabilities carry a maximum CVSS 3.1 severity score of 8.1, according to Oracle's advance security notice.",
+      "canonicalUrl": "https://thehackernews.com/2026/11/oracle-to-patch-11-java-flaws-today-as.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/oracle-to-patch-11-java-flaws-today-as.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-114938",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/11/oracle-to-patch-11-java-flaws-today-as.html",
+                "field": "title"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.17",
+              "dateReleased": "2026-11-17T17:53:15.5664Z",
+              "retrievedAt": "2026-11-17T20:22:24.987Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-114938%2CCVE-2026-84869%2CCVE-2026-117659%2CCVE-2026-120157%2CCVE-2026-120255%2CCVE-2026-111497",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-114938",
+              "retrievedAt": "2026-11-17T20:22:24.987Z"
+            }
+          }
+        }
+      ],
+      "id": "s14",
+      "section": "vulnerabilities",
+      "rank": 7,
+      "angle": "Oracle's Java SE patch batch and a reported critical OpenJDK RCE create an urgent prioritization question for enterprises running Java."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "California Sues OpenAI, Seeking Court-Ordered Changes After the Hugging Face Hack",
+      "url": "https://www.securityweek.com/california-sues-openai-seeking-court-ordered-changes-after-the-hugging-face-hack/",
+      "publishedAt": "2026-11-17T12:00:00.000Z",
+      "excerpt": "The lawsuit alleges that OpenAI misled and endangered the public and users by knowingly developing advanced AI models without necessary safeguards. The post California Sues OpenAI, Seeking Court-Ordered Changes After the Hugging Face Hack appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/california-sues-openai-seeking-court-ordered-changes-after-the-hugging-face-hack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/california-sues-openai-seeking-court-ordered-changes-after-the-hugging-face-hack"
+      ],
+      "cves": [],
+      "id": "s39",
+      "section": "industry",
+      "rank": 8,
+      "angle": "California's lawsuit against OpenAI over the Hugging Face hack tests what safeguards AI developers must maintain when their models or platforms are abused."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Uber says nearly 150,000 impacted by third-party breach",
+      "url": "https://therecord.media/uber-says-150000-impacted-third-party-breach",
+      "publishedAt": "2026-11-18T01:20:00.000Z",
+      "excerpt": "In breach notification letters, the rideshare company said it was notified by a third party service provider on October 9 that internal credentials were stolen and used to access Uber’s account.",
+      "canonicalUrl": "https://therecord.media/uber-says-150000-impacted-third-party-breach",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/uber-says-150000-impacted-third-party-breach"
+      ],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Researchers Claim Two RCE Exploits That Bypass Telegram’s New Android Defenses",
+      "url": "https://thehackernews.com/2026/11/researchers-claim-two-rce-exploits-that.html",
+      "publishedAt": "2026-11-17T19:34:20.000Z",
+      "excerpt": "A malicious widget can bypass the security filter that Telegram added to its Android app last week and run code outside it, according to NebuSec, a security company. Widgets are small interactive blocks that bots send inside chat messages, and their JavaScript runs on the user's phone. The researchers ran their demonstration on a Telegram test server, because only approved bots can send",
+      "canonicalUrl": "https://thehackernews.com/2026/11/researchers-claim-two-rce-exploits-that.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/researchers-claim-two-rce-exploits-that.html"
+      ],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Apple reports outages affecting iCloud Mail, AppleCare and more",
+      "url": "https://www.bleepingcomputer.com/news/apple/apple-reports-outages-affecting-icloud-mail-applecare-and-more/",
+      "publishedAt": "2026-11-17T19:24:07.000Z",
+      "excerpt": "Apple is reporting service disruptions affecting several of its services, including iCloud Mail, iCloud Account & Sign In, Apple School Manager, and Schoolwork. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/apple/apple-reports-outages-affecting-icloud-mail-applecare-and-more",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/apple/apple-reports-outages-affecting-icloud-mail-applecare-and-more"
+      ],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Kazakh ransomware hacking suspect extradited from Italy",
+      "url": "https://therecord.media/kazakh-suspected-extradited-charges-8-digits-team-inc-lynx",
+      "publishedAt": "2026-11-17T19:09:00.000Z",
+      "excerpt": "The U.S. accused Roman Khlynovskiy of participating in ransomware attacks against healthcare organizations, schools and companies as part of the \"8 Digits Team\" connected with INC and Lynx.",
+      "canonicalUrl": "https://therecord.media/kazakh-suspected-extradited-charges-8-digits-team-inc-lynx",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/kazakh-suspected-extradited-charges-8-digits-team-inc-lynx"
+      ],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Cursor Traces Malicious Claude Code Extension to Third-Party Breach",
+      "url": "https://www.darkreading.com/application-security/cursor-malicious-claude-code-extension-third-party-breach",
+      "publishedAt": "2026-11-17T18:38:37.000Z",
+      "excerpt": "A compromised key issued to AI infrastructure provider Fireworks was used by threat actors to access Cursor data and credentials.",
+      "canonicalUrl": "https://darkreading.com/application-security/cursor-malicious-claude-code-extension-third-party-breach",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/application-security/cursor-malicious-claude-code-extension-third-party-breach"
+      ],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Researchers hijack Hugging Face account for popular Kokoro AI model",
+      "url": "https://www.bleepingcomputer.com/news/security/researchers-hijack-hugging-face-account-for-popular-kokoro-ai-model/",
+      "publishedAt": "2026-11-17T18:21:24.000Z",
+      "excerpt": "A Lack of ownership verification on the Hugging Face platform allowed researchers to take control of Kokoro, a text-to-speech model used in projects from Google, NVIDIA, AMD, Intel, and Amazon Web Services. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/researchers-hijack-hugging-face-account-for-popular-kokoro-ai-model",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/researchers-hijack-hugging-face-account-for-popular-kokoro-ai-model"
+      ],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "AI Framework Autonomously Weaponized Flaws in Real Attacks, Google Says",
+      "url": "https://www.securityweek.com/ai-framework-autonomously-weaponized-flaws-in-real-attacks-google-says/",
+      "publishedAt": "2026-11-17T18:16:17.000Z",
+      "excerpt": "Threat actors are deploying multi-agent offensive frameworks to increase the velocity of multi-stage intrusions. The post AI Framework Autonomously Weaponized Flaws in Real Attacks, Google Says appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/ai-framework-autonomously-weaponized-flaws-in-real-attacks-google-says",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/ai-framework-autonomously-weaponized-flaws-in-real-attacks-google-says"
+      ],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "Security for the agentic era, powered by Microsoft Perception",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/11/17/security-for-the-agentic-era-powered-by-microsoft-perception/",
+      "publishedAt": "2026-11-17T18:14:00.000Z",
+      "excerpt": "Read about updates to Microsoft Perception and the new Microsoft Security cyber stack to defend against threats, secure agents, and protect your digital estate. The post Security for the agentic era, powered by Microsoft Perception appeared first on Microsoft Security Blog.",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/11/17/security-for-the-agentic-era-powered-by-microsoft-perception",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://microsoft.com/en-us/security/blog/2026/11/17/security-for-the-agentic-era-powered-by-microsoft-perception"
+      ],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Tor releases emergency update amid ongoing DDoS attack",
+      "url": "https://www.bleepingcomputer.com/news/security/tor-releases-emergency-update-amid-ongoing-ddos-attack/",
+      "publishedAt": "2026-11-17T18:04:15.000Z",
+      "excerpt": "The Tor Project has released a security update for its network relay software to increase defenses against an ongoing distributed denial-of-service attack that it says has overwhelmed relays and affected most operators. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/tor-releases-emergency-update-amid-ongoing-ddos-attack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/tor-releases-emergency-update-amid-ongoing-ddos-attack"
+      ],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "California fines Hertz $1.5 million for breaking state data privacy law",
+      "url": "https://therecord.media/california-fines-hertz-state-data-privacy-law",
+      "publishedAt": "2026-11-17T17:13:00.000Z",
+      "excerpt": "Hertz agreed to the fine and said it would change its business practices, according to a court filing shared by the regulator, the California Privacy Protection Agency (CPPA).",
+      "canonicalUrl": "https://therecord.media/california-fines-hertz-state-data-privacy-law",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/california-fines-hertz-state-data-privacy-law"
+      ],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "NSA Net, agency’s classified internal network, faces unspecified disruptions",
+      "url": "https://therecord.media/nsa-net-disruptions",
+      "publishedAt": "2026-11-17T16:21:00.000Z",
+      "excerpt": "The NSA has ordered staggered arrivals at its headquarters at Fort Meade, Maryland, as technicians work to fully restore the classified internal network NSA Net.",
+      "canonicalUrl": "https://therecord.media/nsa-net-disruptions",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/nsa-net-disruptions"
+      ],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Flipper Devices launches $399 ‘Flipper One’ Linux-based multi-tool",
+      "url": "https://www.bleepingcomputer.com/news/hardware/flipper-devices-launches-399-flipper-one-linux-based-multi-tool/",
+      "publishedAt": "2026-11-17T16:00:00.000Z",
+      "excerpt": "Flipper Devices, the company behind the popular Flipper Zero pentesting device, has launched a crowdfunding campaign for Flipper One, a portable Linux computer and networking multi-tool. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/hardware/flipper-devices-launches-399-flipper-one-linux-based-multi-tool",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/hardware/flipper-devices-launches-399-flipper-one-linux-based-multi-tool"
+      ],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Trigram Campaign Impersonates About 50 AI and Blockchain Brands to Target Devs with Infostealers",
+      "url": "https://thehackernews.com/2026/11/trigram-campaign-impersonates-about-50.html",
+      "publishedAt": "2026-11-17T15:17:28.000Z",
+      "excerpt": "Artificial intelligence (AI), blockchain, and logistics sectors across Europe and the U.S. have emerged as the target of a large-scale, industrialized campaign dubbed Trigram. \"Trigram is a large-scale campaign that impersonates about 50 brands in the blockchain and AI sectors, to trick developers into executing an infostealer themselves,\" Stormshield said in a deep-dive technical report",
+      "canonicalUrl": "https://thehackernews.com/2026/11/trigram-campaign-impersonates-about-50.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/trigram-campaign-impersonates-about-50.html"
+      ],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Inside Modern Phishing Kits Built to Steal Microsoft 365 Sessions",
+      "url": "https://www.bleepingcomputer.com/news/security/inside-modern-phishing-kits-built-to-steal-microsoft-365-sessions/",
+      "publishedAt": "2026-11-17T15:01:11.000Z",
+      "excerpt": "Huntress researchers break down how EvilTokens, Knight Office, and Kali365 capture and replay M365 tokens, plus how defenders can detect and contain them. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/inside-modern-phishing-kits-built-to-steal-microsoft-365-sessions",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/inside-modern-phishing-kits-built-to-steal-microsoft-365-sessions"
+      ],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "The risks of device code authentication for AI coding agents",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/11/17/the-risks-of-device-code-authentication-for-ai-coding-agents/",
+      "publishedAt": "2026-11-17T15:00:00.000Z",
+      "excerpt": "Lab research shows how device code phishing, a technique that applies to any device-flow client, can extend to AI coding agents, using GitHub Copilot CLI as an illustrative example. The post The risks of device code authentication for AI coding agents appeared first on Microsoft Security Blog.",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/11/17/the-risks-of-device-code-authentication-for-ai-coding-agents",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://microsoft.com/en-us/security/blog/2026/11/17/the-risks-of-device-code-authentication-for-ai-coding-agents"
+      ],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Market Research Giant Ipsos Investigating Breach of Internal System",
+      "url": "https://www.securityweek.com/market-research-giant-ipsos-investigating-breach-of-internal-system/",
+      "publishedAt": "2026-11-17T14:55:30.000Z",
+      "excerpt": "The company made the incident public on Monday, November 16, five days after filing a complaint with authorities. The post Market Research Giant Ipsos Investigating Breach of Internal System appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/market-research-giant-ipsos-investigating-breach-of-internal-system",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/market-research-giant-ipsos-investigating-breach-of-internal-system"
+      ],
+      "cves": [],
+      "id": "s18"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Fandango Warns Ticket Buyers of Payment Card Data Exposure",
+      "url": "https://www.securityweek.com/fandango-warns-ticket-buyers-of-payment-card-data-exposure/",
+      "publishedAt": "2026-11-17T14:14:24.000Z",
+      "excerpt": "Card numbers, CVVs, expiration dates, and email addresses used at Fandango’s ticketing checkout over four days in October may have been exposed. The post Fandango Warns Ticket Buyers of Payment Card Data Exposure appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/fandango-warns-ticket-buyers-of-payment-card-data-exposure",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/fandango-warns-ticket-buyers-of-payment-card-data-exposure"
+      ],
+      "cves": [],
+      "id": "s19"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Pretxt Emerges Stealth With $5M Seed and an AI Supervision Tool",
+      "url": "https://www.securityweek.com/pretxt-emerges-stealth-with-5m-seed-and-an-ai-supervision-tool/",
+      "publishedAt": "2026-11-17T14:00:00.000Z",
+      "excerpt": "Pretxt provides technology to prevent AI agents escaping their guardrails and causing unintended harm. The post Pretxt Emerges Stealth With $5M Seed and an AI Supervision Tool appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/pretxt-emerges-stealth-with-5m-seed-and-an-ai-supervision-tool",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/pretxt-emerges-stealth-with-5m-seed-and-an-ai-supervision-tool"
+      ],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Grok Bots Attempt to Access Corporate Data Without User Approval",
+      "url": "https://www.darkreading.com/application-security/grok-bots-corporate-data-without-user-approval",
+      "publishedAt": "2026-11-17T13:12:56.000Z",
+      "excerpt": "Two AI agents, separately over a five-day period, autonomously tried to access connected applications, including Google Calendar, Gmail, Slack, and GitHub, without account owner approval.",
+      "canonicalUrl": "https://darkreading.com/application-security/grok-bots-corporate-data-without-user-approval",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/application-security/grok-bots-corporate-data-without-user-approval"
+      ],
+      "cves": [],
+      "id": "s22"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Access Dental Management Data Breach Impacts Over 340,000",
+      "url": "https://www.securityweek.com/access-dental-management-data-breach-impacts-over-340000/",
+      "publishedAt": "2026-11-17T12:59:04.000Z",
+      "excerpt": "Hackers breached Access Dental’s network and stole personal, health, and insurance information. The post Access Dental Management Data Breach Impacts Over 340,000 appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/access-dental-management-data-breach-impacts-over-340000",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/access-dental-management-data-breach-impacts-over-340000"
+      ],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Corma Receives $125 Million to Train Foundation Models for Defensive Cybersecurity",
+      "url": "https://www.securityweek.com/corma-receives-125-million-to-train-foundation-models-for-defensive-cybersecurity/",
+      "publishedAt": "2026-11-17T12:51:54.000Z",
+      "excerpt": "Led by NEA and supported by existing investors, the funding brings the company’s valuation to $1 billion. The post Corma Receives $125 Million to Train Foundation Models for Defensive Cybersecurity appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/corma-receives-125-million-to-train-foundation-models-for-defensive-cybersecurity",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/corma-receives-125-million-to-train-foundation-models-for-defensive-cybersecurity"
+      ],
+      "cves": [],
+      "id": "s24"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Hackers Found a Way Around GitHub SHA Pinning. This Webinar Explains How to Close the Gap",
+      "url": "https://thehackernews.com/2026/11/hackers-found-way-around-github-sha.html",
+      "publishedAt": "2026-11-17T12:25:06.000Z",
+      "excerpt": "Pinning GitHub Actions to an exact version of their code, known as SHA pinning, has become the go-to defense against software supply chain attacks. Attackers have already found a way around it. In March 2026, the hackers who hijacked Trivy, a widely used open-source security scanner, planted malicious code that looked like it came from GitHub's official checkout tool. They even labeled it a",
+      "canonicalUrl": "https://thehackernews.com/2026/11/hackers-found-way-around-github-sha.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/hackers-found-way-around-github-sha.html"
+      ],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Researchers Detail iPhone Flaw That Let Apps Record Audio Despite Denied Microphone Permission",
+      "url": "https://thehackernews.com/2026/11/researchers-detail-iphone-flaw-that-let.html",
+      "publishedAt": "2026-11-17T12:14:36.000Z",
+      "excerpt": "A now-patched flaw in Apple's audio service let apps on iPhones and iPads record audio even after the user tapped \"Don't Allow\" on the microphone prompt. The first security updates with the fix came out on August 17. Neither Apple nor the two researchers who found the flaw report that it was used in attacks. Nik Tsytsarkin of Meta Red Team X published the technical details last week. Mustafa",
+      "canonicalUrl": "https://thehackernews.com/2026/11/researchers-detail-iphone-flaw-that-let.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/researchers-detail-iphone-flaw-that-let.html"
+      ],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Dorsett Controls InfoScan",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-01",
+      "publishedAt": "2026-11-17T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Successful exploitation of these vulnerabilities could allow an attacker to retrieve sensitive system information, access application data without authorization, recover stored credentials, or intercept and manipulate network communications. The following versions of Dorsett Controls InfoScan are affected: InfoScan <=1.45.0 (CVE-2026-117659, CVE-2026-120157, CVE-2026-120255,…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-321-01",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-advisories/icsa-26-321-01"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-117659",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.17",
+              "dateReleased": "2026-11-17T17:53:15.5664Z",
+              "retrievedAt": "2026-11-17T20:22:24.987Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-114938%2CCVE-2026-84869%2CCVE-2026-117659%2CCVE-2026-120157%2CCVE-2026-120255%2CCVE-2026-111497",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-117659",
+              "retrievedAt": "2026-11-17T20:22:24.987Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-120157",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.17",
+              "dateReleased": "2026-11-17T17:53:15.5664Z",
+              "retrievedAt": "2026-11-17T20:22:24.987Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-114938%2CCVE-2026-84869%2CCVE-2026-117659%2CCVE-2026-120157%2CCVE-2026-120255%2CCVE-2026-111497",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-120157",
+              "retrievedAt": "2026-11-17T20:22:24.987Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-120255",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-01",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.17",
+              "dateReleased": "2026-11-17T17:53:15.5664Z",
+              "retrievedAt": "2026-11-17T20:22:24.987Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-114938%2CCVE-2026-84869%2CCVE-2026-117659%2CCVE-2026-120157%2CCVE-2026-120255%2CCVE-2026-111497",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-120255",
+              "retrievedAt": "2026-11-17T20:22:24.987Z"
+            }
+          }
+        }
+      ],
+      "id": "s28"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Siemens .NET Client Library for SIMATIC S7 Webserver API",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-02",
+      "publishedAt": "2026-11-17T12:00:00.000Z",
+      "excerpt": "View CSAF Summary .NET Client Library for SIMATIC S7 Webserver API contains multiple vulnerabilities that could allow an attacker to obtain sensitive information or write arbitrary files outside the intended download directory. Siemens has released a new version for .NET Client Library for SIMATIC S7 Webserver API and recommends to update to the latest version. The following versions of Siemens…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-321-02",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-advisories/icsa-26-321-02"
+      ],
+      "cves": [],
+      "id": "s29"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Siemens Industrial Software Products",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-04",
+      "publishedAt": "2026-11-17T12:00:00.000Z",
+      "excerpt": "View CSAF Summary On October 21, 2026, the Node.js project released security updates addressing a critical vulnerability in the Brotli decoder bundled with Node.js, commonly referred to as \"Node2Shell\" (tracked as CVE-2026-111497). The vulnerability is an out-of-bounds write that could allow a remote attacker to cause memory corruption and potentially execute arbitrary code. This advisory covers…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-321-04",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-advisories/icsa-26-321-04"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-111497",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Google",
+            "product": "Brotli",
+            "vulnerabilityName": "Google Brotli Unchecked Return Value Vulnerability",
+            "dateAdded": "2026-10-27",
+            "shortDescription": "Google Brotli contains an unchecked return value vulnerability that allows a remote unauthenticated attacker to corrupt adjacent decoder state memory, disclose sensitive memory contents, cause a denial of service, or potentially execute arbitrary code using a crafted Brotli-compressed stream.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-10",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "This vulnerability affects an open-source component, third-party library, protocol, or proprietary implementation that could be used by different products. For more information, please see: https://github.com/google/brotli/releases/tag/v1.2.1 ; ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-111497",
+            "cwes": [
+              "CWE-252",
+              "CWE-787"
+            ]
+          },
+          "nvd": {
+            "description": "A buffer overflow vulnerability in the Brotli decoder (c/dec/decode.c) in Google Brotli versions 1.0.3 through 1.2.0 on all platforms allows a remote unauthenticated attacker to corrupt adjacent decoder state memory, disclose sensitive memory contents, cause a denial of service, or potentially execute arbitrary code using a crafted Brotli-compressed stream.\n\n\n\n\n\nUsers need to update any Brotli libraries or binaries between 1.0.3 through 1.2.0 to the latest available version: 1.0.10 or 1.1.1 or 1.2.1.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.2,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "cve-coordination@google.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-252",
+              "CWE-787"
+            ],
+            "published": "2026-10-22T14:17:37.190",
+            "lastModified": "2026-11-10T20:25:59.130",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://github.com/andybalholm/brotli/releases/tag/v1.2.7",
+                "source": "cve-coordination@google.com",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases#nodejs-brotli-decoder-out-of-bounds-write-permits-remote-code-execution-cve-2026-111497---high",
+                "source": "cve-coordination@google.com",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/10/23/25",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/10/24/6",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/10/26/12",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/10/26/13",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/10/26/16",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "http://www.openwall.com/lists/oss-security/2026/11/03/2",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://broccoli2shell.com",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/advisories/GHSA-9v8h-qqgm-4m35",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/dotnet/announcements/issues/494",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Issue Tracking",
+                  "Mitigation",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/google/brotli/releases/tag/v1.0.10",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://github.com/google/brotli/releases/tag/v1.1.1",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://github.com/google/brotli/releases/tag/v1.2.1",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://lists.debian.org/debian-lts-announce/2026/10/msg00049.html",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mailing List",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://patchtheplanet.org/brotli",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.aikido.dev/blog/node2shell-nodejs-brotli-rce-cve-2026-111497",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://cert-portal.siemens.com/productcert/html/ssa-045512.html",
+                "source": "0b142b55-0307-4c5a-b3c9-f314f3fb7c5e",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://cert-portal.siemens.com/productcert/html/ssa-242944.html",
+                "source": "0b142b55-0307-4c5a-b3c9-f314f3fb7c5e",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://cert-portal.siemens.com/productcert/html/ssa-443410.html",
+                "source": "0b142b55-0307-4c5a-b3c9-f314f3fb7c5e",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://cert-portal.siemens.com/productcert/html/ssa-678870.html",
+                "source": "0b142b55-0307-4c5a-b3c9-f314f3fb7c5e",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://cert-portal.siemens.com/productcert/html/ssa-898633.html",
+                "source": "0b142b55-0307-4c5a-b3c9-f314f3fb7c5e",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://ellio.tech/en/blog/node2shell-cve-2026-111497-rce-on-stock-nodejs-builds/",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-111497",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:google:brotli:*:*:*:*:*:-:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8A7BE60F-21B0-4779-8D59-6E5E58C5826B",
+                "versionStartIncluding": "1.0.3",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.0.10"
+              },
+              {
+                "criteria": "cpe:2.3:a:google:brotli:*:*:*:*:*:-:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "48E72297-AFBD-4460-A732-5A6803CCCDB0",
+                "versionStartIncluding": "1.1.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.1.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:google:brotli:*:*:*:*:*:-:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C8CA5C74-26A8-44E3-B893-1FA01CED49F5",
+                "versionStartIncluding": "1.2.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.2.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:nodejs:node.js:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "02348F18-5E17-4427-8B78-63B4082F2FB4",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "22.23.4"
+              },
+              {
+                "criteria": "cpe:2.3:a:nodejs:node.js:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "852D09BB-A396-4813-81C9-7D89D5DD5FB6",
+                "versionStartIncluding": "23.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "24.22.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:nodejs:node.js:*:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "219CA855-3A40-42CE-BAB6-79CCFEE7746F",
+                "versionStartIncluding": "25.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "26.12.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:python-hyper:brotlicffi:*:*:*:*:*:python:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E732E75B-4BEF-4D7E-8520-E03B707FB4F6",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.2.1.0"
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "65DCE51C-2CD9-4179-9354-5323D28573AA",
+                "versionStartIncluding": "8.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "8.0.33"
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "98654489-8C4E-4801-8728-29B01A22DEED",
+                "versionStartIncluding": "9.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "9.0.22"
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "27DF5CF4-58E3-4F01-A3AA-D44B7DCC3D67",
+                "versionStartIncluding": "10.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "10.0.14"
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:preview1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5DACF2FE-CF61-43E4-8A3F-F7A358DE8A01",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:preview2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "280B2E64-3163-40AB-A048-14D58DEC42FD",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:preview3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "12357908-3294-46EF-85A0-DA3F86C97489",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:preview4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "849FC8F5-86CD-4B5D-ADFD-9CB16EA75D09",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:preview5:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C86E87E2-B236-4AC9-B6C3-64B9CDEC91EB",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:preview6:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9B14656E-2BB0-4B4B-B518-F3D5108253ED",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:preview7:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E09C9DB3-F42C-4442-9CF0-24A780D094C8",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:rc1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "67035E86-61F5-421E-B243-EF64458AD8BA",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:microsoft:.net:11.0.0:rc2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C46300CA-BA84-48B3-85C5-C20CB487C733",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:debian:debian_linux:12.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "46D69DCC-AE4D-4EA5-861C-D60951444C6C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:istio:istio:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9F01FA9D-7190-431F-84DD-24D4EBC41A2D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.29.9"
+              },
+              {
+                "criteria": "cpe:2.3:a:istio:istio:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B8DE25CE-AFCB-4685-9836-B8EC9C820975",
+                "versionStartIncluding": "1.30.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.30.6"
+              },
+              {
+                "criteria": "cpe:2.3:a:istio:istio:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "55EBE231-2EB8-4C9C-B279-D07F82EA5B55",
+                "versionStartIncluding": "1.31.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.31.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:anthropic:bun:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "51DD72B3-85F6-4B10-AEB4-41E0679ED0AA",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.4.4"
+              },
+              {
+                "criteria": "cpe:2.3:a:envoyproxy:envoy:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8EE6278D-A48A-427C-8A7E-1D4103E2ADF7",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.37.8"
+              },
+              {
+                "criteria": "cpe:2.3:a:envoyproxy:envoy:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "CDCA301F-83CA-4DDB-AAE4-24D5235EE2D5",
+                "versionStartIncluding": "1.38.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.38.6"
+              },
+              {
+                "criteria": "cpe:2.3:a:envoyproxy:envoy:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B9A47DD3-2655-4722-9B9D-3888B590C82F",
+                "versionStartIncluding": "1.39.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.39.3"
+              },
+              {
+                "criteria": "cpe:2.3:a:tianocore:edk2:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C4CFCBFB-4A38-481B-93AE-7D86CCDC6FB5",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": "202608",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:google:woff2:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6D1FC23A-20F7-48F7-ABB8-8D37903DFB58",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:duckdb:duckdb:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0DFA4F95-92F9-4369-BE42-387520F0765B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": "2.0.0",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:clickhouse:clickhouse:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B40EE389-E2AC-4D86-91B2-79A895470317",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": "26.10.2.103",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:apache:arrow:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "46A78CA5-1E4A-4DAA-B40D-387B96C1E2F9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": "26.0.0",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:apache:arrow:27.0.0:dev:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "130A7077-7885-43CB-8AFF-B6056D380156",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:mcmilk:7-zip-zstd:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FB91A353-9BE9-49E7-86FD-6B5FBB291351",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": "26.02-1.5.7-r2",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:7-zip:p7zip:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "76A26292-08BE-459A-B25A-CA14AF8D3C29",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": "16.02",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:andybalholm:brotli:*:*:*:*:*:go:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F3E50F12-AEFE-4B4F-B474-3676F145E032",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.2.7"
+              },
+              {
+                "criteria": "cpe:2.3:o:siemens:ruggedcom_ape1808_firmware:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "37FDCA69-9049-40B4-88AF-F476901022B6",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:siemens:ruggedcom_ape1808:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "B89A6863-B602-4404-8D26-337FECABFFF0",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:common_configurator:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1F93AD0A-C29E-4FA6-A18B-1F0D03CC900C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:data_flow_monitoring:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3562BB8C-6E76-4B16-A2EF-D343EED30DA0",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "3.0.18"
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:dataxess_configurator:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "076198F2-9992-4803-8377-8B264E1D7ADA",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.5.7"
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:edge_opc_ua_server_configurator:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F1122EBA-DB7C-4680-AEEF-309C95843D0D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "2.3.10"
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:flow_creator_configurator:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "90BE4EB2-0B14-44F4-881D-F0DBAFCEF322",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.15.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:industrial_edge_cloud_connector_configurator:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D0E0C6F6-40D0-4D71-ABCE-84449C4E743A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.24.3"
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:industrial_edge_databus_configurator:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B57AD29D-69CF-4C76-AACA-3EAE3F8CBC15",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "4.0.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:industrial_edge_hub:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "70BA5718-0A9F-4B7D-9175-D6719B795363",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:industrial_edge_management_cloud:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "4EA7E869-9428-4D5E-95C0-F19B6BC1BFA9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:comos_walkinside:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8C7AAED9-567F-4EE0-BC1B-F18E1109D316",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_braumat:8.2:update1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "EFA8804E-1E7E-482F-A701-B988F6C0BCE9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_braumat:8.2:update2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A7C12A3B-925A-4219-909B-6D2D0ADA6131",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_braumat:8.2:update3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "3288CF66-F9D9-4DDD-9CAA-1EB2E075C87A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_braumat:8.2:update4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9B3EF16B-8281-4159-ABDE-A36881CD8460",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_braumat:8.2:update5:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9DF55BA1-F06B-4868-AC51-15ADC8BFED3C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_profiling_tool:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0D473CE5-B139-422C-AFCF-5FBBDB2C0759",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_sistar:8.2:update1:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "28A180EC-5DB8-4E8A-B063-813FA3973068",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_sistar:8.2:update2:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "31122237-42B0-4B10-B33B-D6E6DEBC19B3",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_sistar:8.2:update3:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "2955D58B-350F-4F96-A41F-6594639403DA",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_sistar:8.2:update4:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0E95149C-B212-4670-8DFC-EEC713E87741",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_sistar:8.2:update5:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "173F36F4-23F4-4650-805F-25A9032AF64A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_wincc:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "DA06F4BD-1512-4700-AD3E-25C6CDA60246",
+                "versionStartIncluding": "7.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "8.2",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_wincc_companion:-:*:*:*:*:-:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "174C0674-3100-4CCB-B55E-6BB1FB8F8442",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_wincc_runtime:-:*:*:*:professional:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E6BFBAED-EE2B-4DE4-A76C-824DD15F4608",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_wincc_unified_for_industrial_edge:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "4DC1EDC8-DA6D-476F-9656-0FB9809F9E30",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_wincc_unified_pc_runtime:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "49B72BEA-DE75-4A5E-8658-30E5EBBFFF69",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simatic_wincc_unified_siqence:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "E2E193FF-ED70-432A-8B33-2453A8B2B21B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:tia_administrator:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FC8C7680-9033-4ECF-9764-5179A4033F64",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:tia_project-server_web_administration_tool:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "14BA6E1D-4D4E-4133-8869-5ADEC9CE545C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:user_management_component:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7139EEDB-2DCD-4C55-9DAC-423FB5807D11",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:hyperlynx:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "92D6ED26-34E3-46A6-B025-F7DC263AA75A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:innexis_architecture_native_acceleration:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "BE57EA6F-BA70-409D-B037-EDD603FAC0B9",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:insights_hub:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1B8E91A0-4BF0-4BDE-8F83-4FF374697A76",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:opcenter_connect_electronics:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0EC96381-D0C9-4949-86E7-1A1E8239A8F2",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:opcenter_connect_manufacturing_operations_management:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B0F5FAC2-E6E0-4ECA-86B6-9D082C1D674B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:opcenter_execution_core:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0A6E1786-F0A9-498F-9DE9-F503B5DAD84A",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:opcenter_execution_discrete:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F04BAB87-71BB-4AB4-BC42-F89616698EEF",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:opcenter_execution_foundation:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9FE353B7-07A1-4B50-8A43-62577C2208EE",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:opcenter_execution_pharma:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "4CC50DA8-906E-4BD5-9861-668273EE3A76",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:opcenter_execution_process:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5CCA2643-1E89-49AE-B8CB-3A9CDA3031A6",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:opcenter_intelligence:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "8E3FA7CB-6931-4D0C-A3E6-1BE71EA0D30F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:opcenter_quality:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "9D9D89CD-FDA5-42F0-8161-3752C8AED7F3",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:opcenter_rd\\&l:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "69EDC5E0-6CCE-4120-913C-E598E0FE2D24",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:opcenter_x:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A12051E1-2DC9-47C6-A320-927D0A7B9F47",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:pads_professional:-:*:*:*:essentials:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C9033337-D032-403D-8BBF-3EA50253A40E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:pads_professional:-:*:*:*:student:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F06B80D2-6A35-4AF5-A07A-0F5C3370C3E7",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:pave360_automotive:2026:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B8DBFD9C-B213-4238-B39C-D4B537523CB1",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:process_preparation_x:-:*:*:*:-:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "FEBDB60C-D759-476D-AF06-3C0691FC72CF",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simcenter_executable_digital_twin:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F6ACF933-A876-4DE5-BBA7-D5BF97DB1AB4",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:simcenter_studio:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B8C684EC-BECB-4833-B1F9-F773225A6172",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:teamcenter:2412.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "963C8AAA-D3E0-4B10-93AE-DB15619EC5EE",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:teamcenter:2506.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "261C46FE-1C63-4A1F-8C8E-FC331E8F119E",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:teamcenter:2512.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7946C16C-5B81-42D2-BA6D-C8AA8FD5AD0C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:teamcenter:2606.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "86E64B27-FE8F-45AD-BE78-219E4067F8DE",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:xpedition_designer:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F52F6405-0228-4C3D-842F-839192076657",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:siemens:xpedition_enterprise:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "AD525494-2807-48EA-AED0-11B9CB5A6A9B",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-04",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.17",
+              "dateReleased": "2026-11-17T17:53:15.5664Z",
+              "retrievedAt": "2026-11-17T20:22:24.987Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-114938%2CCVE-2026-84869%2CCVE-2026-117659%2CCVE-2026-120157%2CCVE-2026-120255%2CCVE-2026-111497",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-111497",
+              "retrievedAt": "2026-11-17T20:22:24.987Z"
+            }
+          }
+        }
+      ],
+      "id": "s31"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Siemens Mendix Studio Pro",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-05",
+      "publishedAt": "2026-11-17T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Mendix Studio Pro contains multiple vulnerabilities in the MCP Server, that could allow an attacker with network access to interact with the server remotely or trick a user's browser into sending unauthorized requests, potentially leading to unauthorized data access, tool execution, or system compromise. Siemens has released new versions for the affected products and recommends…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-321-05",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-advisories/icsa-26-321-05"
+      ],
+      "cves": [],
+      "id": "s32"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Siemens ROS#",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-06",
+      "publishedAt": "2026-11-17T12:00:00.000Z",
+      "excerpt": "View CSAF Summary ROS# before version 2.3.1 contains a code injection vulnerability that could allow an attacker that is able to pass a crafted message definition file to the user to inject arbitrary code into the generated program. Siemens has released a new version for ROS# and recommends to update to the latest version. The following versions of Siemens ROS# are affected: ROS#…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-321-06",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-advisories/icsa-26-321-06"
+      ],
+      "cves": [],
+      "id": "s33"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Siemens RUGGEDCOM APE1808",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-07",
+      "publishedAt": "2026-11-17T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Fortinet has published information on a Double Free vulnerability in FortiOS. This advisory lists the related Siemens Industrial products. Siemens recommends to update Fortigate NGFW to V7.6.9 or later following the secure update recommendation procedure. Contact customer support to receive detailed information The following versions of Siemens RUGGEDCOM APE1808 are affected:…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-321-07",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-advisories/icsa-26-321-07"
+      ],
+      "cves": [],
+      "id": "s34"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Siemens SIMATIC",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-08",
+      "publishedAt": "2026-11-17T12:00:00.000Z",
+      "excerpt": "View CSAF Summary The products listed below contain an authentication bypass vulnerability that could allow an on-path attacker to take over the session of a legitimate user and execute arbitrary code with the privileges of the victim user. Siemens is preparing fixes and recommends specific mitigations for products where fixes are not or not yet available. The following versions of Siemens…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-321-08",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-advisories/icsa-26-321-08"
+      ],
+      "cves": [],
+      "id": "s35"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Siemens SIMATIC WinCC",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-09",
+      "publishedAt": "2026-11-17T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Graphics Designer of SIMATIC WinCC before V8.2 contains an implicit active content execution vulnerability upon opening files, which could allow an attacker to cause arbitrary code execution on the device. Siemens is preparing fixes and recommends specific mitigations for products where fixes are not or not yet available. The following versions of Siemens SIMATIC WinCC are…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-321-09",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-advisories/icsa-26-321-09"
+      ],
+      "cves": [],
+      "id": "s36"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Siemens Simcenter Femap",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-10",
+      "publishedAt": "2026-11-17T12:00:00.000Z",
+      "excerpt": "View CSAF Summary Simcenter Femap is affected by an out of bounds read vulnerability that could be triggered when the application reads files in X_T format. This could allow an attacker to crash the application or execute arbitrary code. Siemens has released a new version for Simcenter Femap and recommends to update to the latest version. The following versions of Siemens Simcenter Femap are…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-321-10",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-advisories/icsa-26-321-10"
+      ],
+      "cves": [],
+      "id": "s37"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "Siemens meta-iot2050",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-11",
+      "publishedAt": "2026-11-17T12:00:00.000Z",
+      "excerpt": "View CSAF Summary meta-iot2050 (https://github.com/siemens/meta-iot2050) from V01.03.01 contains a Command Injection vulnerability in the firmware update tool that could allow an attacker which is able to manipulate a configuration file to have arbitrary commands run as root. Siemens is preparing fixes and recommends mitigations for products where fixes are not or not yet available. The following…",
+      "canonicalUrl": "https://cisa.gov/news-events/ics-advisories/icsa-26-321-11",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/ics-advisories/icsa-26-321-11"
+      ],
+      "cves": [],
+      "id": "s38"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "New GitDoor and GraphDoor Backdoors Turn GitHub and SharePoint Into Covert C2 Channels",
+      "url": "https://thehackernews.com/2026/11/new-gitdoor-and-graphdoor-backdoors.html",
+      "publishedAt": "2026-11-17T11:20:18.000Z",
+      "excerpt": "Government sectors in Asia and Africa have been targeted by an active cyber intrusion campaign that delivers to previously undocumented backdoors that leverage legitimate services like Microsoft SharePoint and GitHub for command‑and‑control (C2). The activity has been codenamed Operation ShadowCloud by Kaspersky. The Russian cybersecurity company said it identified the campaign in early 2026.",
+      "canonicalUrl": "https://thehackernews.com/2026/11/new-gitdoor-and-graphdoor-backdoors.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/new-gitdoor-and-graphdoor-backdoors.html"
+      ],
+      "cves": [],
+      "id": "s40"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft testing Remote Lock for lost or stolen Windows devices",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-testing-remote-lock-for-lost-or-stolen-windows-devices/",
+      "publishedAt": "2026-11-17T11:19:51.000Z",
+      "excerpt": "Microsoft is testing a new feature that lets enterprise IT administrators remotely lock stolen or lost Windows devices without wiping them. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-testing-remote-lock-for-lost-or-stolen-windows-devices",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/microsoft/microsoft-testing-remote-lock-for-lost-or-stolen-windows-devices"
+      ],
+      "cves": [],
+      "id": "s41"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Apple Tightens macOS App Permissions to Limit Data Access Amid AI Agent Security Risks",
+      "url": "https://thehackernews.com/2026/11/apple-tightens-macos-app-permissions-to.html",
+      "publishedAt": "2026-11-17T11:07:31.000Z",
+      "excerpt": "Apple on Monday introduced new controls that allow Mac users to give more granular access to data they give to apps, including those that use artificial intelligence (AI) agents. The changes, currently previewed in macOS 27.3 beta 2, relate to increased transparency and more options for two of its APIs: Device Control and Data Access, and Full Disk Access. \"Before granting an app such",
+      "canonicalUrl": "https://thehackernews.com/2026/11/apple-tightens-macos-app-permissions-to.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/apple-tightens-macos-app-permissions-to.html"
+      ],
+      "cves": [],
+      "id": "s42"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Optimizely Vulnerability Exploited to Serve Malware on Major Websites",
+      "url": "https://www.securityweek.com/optimizely-vulnerability-exploited-to-serve-malware-on-major-websites/",
+      "publishedAt": "2026-11-17T10:22:20.000Z",
+      "excerpt": "Affected organizations include BBC, CNN, Zoom, GitLab, Salesforce, Equifax, HSBC, and IKEA. The post Optimizely Vulnerability Exploited to Serve Malware on Major Websites appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/optimizely-vulnerability-exploited-to-serve-malware-on-major-websites",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/optimizely-vulnerability-exploited-to-serve-malware-on-major-websites"
+      ],
+      "cves": [],
+      "id": "s43"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Court clears brothers of $25 million Ethereum crypto heist charges",
+      "url": "https://www.bleepingcomputer.com/news/security/court-clears-brothers-of-25-million-ethereum-crypto-heist-charges/",
+      "publishedAt": "2026-11-17T09:44:22.000Z",
+      "excerpt": "US District Judge Jessica Clarke has acquitted two brothers accused of stealing $25 million in cryptocurrency in about 12 seconds through a scheme that exploited a bug in the Ethereum blockchain. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/court-clears-brothers-of-25-million-ethereum-crypto-heist-charges",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/court-clears-brothers-of-25-million-ethereum-crypto-heist-charges"
+      ],
+      "cves": [],
+      "id": "s44"
+    },
+    {
+      "sourceId": "securelist",
+      "sourceKind": "rss",
+      "title": "Operation ShadowCloud: cloud service–based backdoors targeting government networks in Asia and Africa. Part 2",
+      "url": "https://securelist.com/operation-shadowcloud-graphdoor/122005/",
+      "publishedAt": "2026-11-17T08:00:43.000Z",
+      "excerpt": "In part 2 of our analysis of the recently uncovered Operation ShadowCloud, we discuss the GraphDoor backdoor, additional plug-ins, and technical attribution.",
+      "canonicalUrl": "https://securelist.com/operation-shadowcloud-graphdoor/122005",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securelist.com/operation-shadowcloud-graphdoor/122005"
+      ],
+      "cves": [],
+      "id": "s46"
+    },
+    {
+      "sourceId": "securelist",
+      "sourceKind": "rss",
+      "title": "Operation ShadowCloud: cloud service–based backdoors targeting government networks in Asia and Africa. Part 1",
+      "url": "https://securelist.com/operation-shadowcloud-gitdoor/122004/",
+      "publishedAt": "2026-11-17T08:00:37.000Z",
+      "excerpt": "In part 1 of our analysis of the recently uncovered Operation ShadowCloud, we discuss the initial infection stage, the GitDoor backdoor using GitHub as a C2, and the shellcode families it loads.",
+      "canonicalUrl": "https://securelist.com/operation-shadowcloud-gitdoor/122004",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securelist.com/operation-shadowcloud-gitdoor/122004"
+      ],
+      "cves": [],
+      "id": "s47"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Ransomware affiliate suspect extradited to US, faces 27 years in prison",
+      "url": "https://www.bleepingcomputer.com/news/security/alleged-inc-lynx-ransomware-affiliate-extradited-to-us-faces-27-years-in-prison/",
+      "publishedAt": "2026-11-17T07:25:44.000Z",
+      "excerpt": "A Kazakh national has been extradited from Italy to face charges alleging he targeted US schools, hospitals, and healthcare entities in ransomware attacks. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/alleged-inc-lynx-ransomware-affiliate-extradited-to-us-faces-27-years-in-prison",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/alleged-inc-lynx-ransomware-affiliate-extradited-to-us-faces-27-years-in-prison"
+      ],
+      "cves": [],
+      "id": "s48"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "ConnectWise Warns ScreenConnect Attacks Continue as SCKit Targets Unpatched Systems",
+      "url": "https://thehackernews.com/2026/11/connectwise-warns-screenconnect-attacks.html",
+      "publishedAt": "2026-11-17T06:29:27.000Z",
+      "excerpt": "ConnectWise on Monday said it completed its investigation into unauthorized access targeting partner ScreenConnect environments, and recommended customers to ensure that the technician client is running version 26.6.5 or later. The company said additional activity targeting on-premises environments continues to be reported where the identified third-party extensions remain enabled and",
+      "canonicalUrl": "https://thehackernews.com/2026/11/connectwise-warns-screenconnect-attacks.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/connectwise-warns-screenconnect-attacks.html"
+      ],
+      "cves": [],
+      "id": "s50"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "N-able Patches 17 N-central Flaws as Attackers Exploit Earlier Bugs to Deploy Crypto Miners",
+      "url": "https://thehackernews.com/2026/11/n-able-patches-17-n-central-flaws-as.html",
+      "publishedAt": "2026-11-17T05:00:34.000Z",
+      "excerpt": "N-able has released a new security update to address additional critical security flaws impacting N-central. Describing N-central 2026.4 Hotfix 3 as a critical security update, the company said it includes a number of security patches and fixes that enhance the security of the Remote Monitoring and Management (RMM) and Unified Endpoint Management (UEM) platform. \"HF3 builds on the",
+      "canonicalUrl": "https://thehackernews.com/2026/11/n-able-patches-17-n-central-flaws-as.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/n-able-patches-17-n-central-flaws-as.html"
+      ],
+      "cves": [],
+      "id": "s51"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Optimizely hack infected CNN, Fox News, BBC, Salesforce sites with malware",
+      "url": "https://www.bleepingcomputer.com/news/security/optimizely-supply-chain-attack-delivers-malware-to-cnn-fox-news-bbc-salesforce-sites/",
+      "publishedAt": "2026-11-17T02:12:17.000Z",
+      "excerpt": "A suspected supply chain attack targeting Optimizely has led to malicious JavaScript being loaded on numerous popular websites, including Zoom, CNN, Fox News, BBC, Salesforce, and GitLab, exposing visitors to scripts designed to steal cryptocurrency and payment information and exploit vulnerabilities in iOS devices. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/optimizely-supply-chain-attack-delivers-malware-to-cnn-fox-news-bbc-salesforce-sites",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/optimizely-supply-chain-attack-delivers-malware-to-cnn-fox-news-bbc-salesforce-sites"
+      ],
+      "cves": [],
+      "id": "s52"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "High volume phishing campaign uses Microsoft 365 outage lures to target multiple industry sectors",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/11/16/high-volume-phishing-campaign-uses-microsoft-365-outage-lures-target-multiple-industry-sectors-2/",
+      "publishedAt": "2026-11-17T00:08:41.000Z",
+      "excerpt": "Microsoft Threat Intelligence observed a high-volume phishing campaign using Microsoft 365 outage-themed lures to target organizations across multiple sectors worldwide. The post High volume phishing campaign uses Microsoft 365 outage lures to target multiple industry sectors appeared first on Microsoft Security Blog.",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/11/16/high-volume-phishing-campaign-uses-microsoft-365-outage-lures-target-multiple-industry-sectors-2",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://microsoft.com/en-us/security/blog/2026/11/16/high-volume-phishing-campaign-uses-microsoft-365-outage-lures-target-multiple-industry-sectors-2"
+      ],
+      "cves": [],
+      "id": "s53"
+    },
+    {
+      "sourceId": "unit42",
+      "sourceKind": "rss",
+      "title": "QUIC and Covert: Novel HTTP/3-Powered RATs Target Southeast Asian Governments",
+      "url": "https://unit42.paloaltonetworks.com/custom-rats-target-southeast-asia-governments/",
+      "publishedAt": "2026-11-16T23:00:55.000Z",
+      "excerpt": "We uncover a Southeast Asian cyberespionage campaign deploying PerfectPioneer RAT, modular KUKURAT and stealth HTTP/3 C2 communication channels. The post QUIC and Covert: Novel HTTP/3-Powered RATs Target Southeast Asian Governments appeared first on Unit 42.",
+      "canonicalUrl": "https://unit42.paloaltonetworks.com/custom-rats-target-southeast-asia-governments",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://unit42.paloaltonetworks.com/custom-rats-target-southeast-asia-governments"
+      ],
+      "cves": [],
+      "id": "s54"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Gemini AI agents repeatedly bypassed safeguards to attack real website",
+      "url": "https://www.bleepingcomputer.com/news/security/gemini-ai-agents-repeatedly-bypassed-safeguards-to-attack-real-website/",
+      "publishedAt": "2026-11-16T22:54:00.000Z",
+      "excerpt": "Google's Gemini AI agents repeatedly attempted to hack a real organization's website during AI model safety testing, finding ways to circumvent increasingly restrictive security controls designed to prevent them from accessing live systems. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/gemini-ai-agents-repeatedly-bypassed-safeguards-to-attack-real-website",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/gemini-ai-agents-repeatedly-bypassed-safeguards-to-attack-real-website"
+      ],
+      "cves": [],
+      "id": "s55"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Google Project Zero Slashes Bug Disclosure Deadlines, Splitting Experts",
+      "url": "https://www.darkreading.com/vulnerabilities-threats/google-project-zero-bug-disclosure-deadlines",
+      "publishedAt": "2026-11-16T22:08:20.000Z",
+      "excerpt": "One of the oldest running bug disclosure programs announced it would shorten public disclosure timelines to vendors from 120 days to 30 over the next 14 months.",
+      "canonicalUrl": "https://darkreading.com/vulnerabilities-threats/google-project-zero-bug-disclosure-deadlines",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/vulnerabilities-threats/google-project-zero-bug-disclosure-deadlines"
+      ],
+      "cves": [],
+      "id": "s56"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "NIST Finalizes Post-Quantum Cryptography Guidance, GAO Offers a Reality Check",
+      "url": "https://www.darkreading.com/cyber-risk/nist-finalizes-post-quantum-cryptography-guidance-gao-offers-a-reality-check",
+      "publishedAt": "2026-11-16T14:22:15.000Z",
+      "excerpt": "The emerging technology will soon break the \"lock and key\" encryption currently protecting sensitive data. A new GAO report shows agencies are behind on building their defenses.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/nist-finalizes-post-quantum-cryptography-guidance-gao-offers-a-reality-check",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyber-risk/nist-finalizes-post-quantum-cryptography-guidance-gao-offers-a-reality-check"
+      ],
+      "cves": [],
+      "id": "s57"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1280,
+    "promptCacheMissTokens": 17453,
+    "outputTokens": 10892,
+    "estimatedCostUsd": 0.005496764
+  }
+}
