@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-11-18",
+    "mode": "article",
+    "headline": "Puppet and Roller hit active exploitation while NGINX patches a decade-old HTTP/2 flaw",
+    "count": 48
+  },
+  {
     "date": "2026-11-17",
     "mode": "article",
     "headline": "ScreenConnect abuse, hijacked Optimizely scripts and Node2Shell's industrial reach",
