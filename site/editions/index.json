@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-11-20",
+    "mode": "article",
+    "headline": "Suspected China-nexus group used a 9.8 vCenter zero-day; Cisco Expressway root-level flaw exploited after PoC release",
+    "count": 42
+  },
+  {
     "date": "2026-11-19",
     "mode": "article",
     "headline": "vCenter zero-day, PHP firewall exploits, and four new KEV entries",
