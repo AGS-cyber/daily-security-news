@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-11-21",
+    "mode": "article",
+    "headline": "CISA flags four exploited enterprise flaws as Microsoft breach and GPGME bug sharpen risk",
+    "count": 15
+  },
+  {
     "date": "2026-11-20",
     "mode": "article",
     "headline": "Suspected China-nexus group used a 9.8 vCenter zero-day; Cisco Expressway root-level flaw exploited after PoC release",

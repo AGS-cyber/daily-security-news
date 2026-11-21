@@ -1,0 +1,505 @@
+{
+  "date": "2026-11-21",
+  "generatedAt": "2026-11-21T18:36:28.045Z",
+  "collection": [
+    {
+      "sourceId": "krebs",
+      "attemptedAt": "2026-11-21T18:36:28.045Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "attemptedAt": "2026-11-21T18:36:28.045Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "thehackernews",
+      "attemptedAt": "2026-11-21T18:36:28.045Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "therecord",
+      "attemptedAt": "2026-11-21T18:36:28.045Z",
+      "status": "ok",
+      "items": 5,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securityweek",
+      "attemptedAt": "2026-11-21T18:36:28.045Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "darkreading",
+      "attemptedAt": "2026-11-21T18:36:28.045Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "attemptedAt": "2026-11-21T18:36:28.045Z",
+      "status": "ok",
+      "items": 30,
+      "skipped": 0
+    },
+    {
+      "sourceId": "projectzero",
+      "attemptedAt": "2026-11-21T18:36:28.045Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securelist",
+      "attemptedAt": "2026-11-21T18:36:28.045Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "talos",
+      "attemptedAt": "2026-11-21T18:36:28.045Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "unit42",
+      "attemptedAt": "2026-11-21T18:36:28.045Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "microsoft-security",
+      "attemptedAt": "2026-11-21T18:36:28.045Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    }
+  ],
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 230,
+    "published": 15
+  },
+  "mode": "article",
+  "headline": "CISA flags four exploited enterprise flaws as Microsoft breach and GPGME bug sharpen risk",
+  "standfirst": "CISA’s addition of four enterprise flaws to its known-exploited catalog leads a day of active-exploitation reports, a suspected AI-agent intrusion into medical-imaging infrastructure, a Microsoft identity-data breach, a reported FBI database compromise, a critical GPGME bug, a ransomware-recovery fraud case and new research on Com vishing and BADBOX ad fraud.",
+  "bodyMarkdown": "## Actively exploited\n\nCISA added four flaws affecting Apache Roller, Cisco Expressway, SAP NetWeaver and Broadcom VMware vCenter to KEV, citing evidence of active exploitation [[s9]]. The enriched record is CVE-2026-129448, a critical 9.8 deserialization bug in Apache Roller 4.0 through before 6.1.5; NVD says an unauthenticated remote attacker can execute arbitrary code through the XML-RPC endpoint before authentication. CISA’s required action is tied to federal guidance, not a universal deadline, and the record does not establish ransomware use.\n\nA threat-intelligence report states that suspected China-linked hackers used autonomous AI agents to find a zero-day in MONAI Label and gain root on a university server [[s7]]. The flaw lets an attacker with no account write files outside the server’s storage folder; it affects MONAI Label 0.8.5 and earlier in the default setup. The attribution remains suspected, and no CVE was supplied.\n\nMicrosoft says it suffered a data breach after attackers exploited a vulnerability in Entra Connect Health, exposing administrator email addresses and tenant configuration information [[s1]]. No CVE, affected versions or remediation were supplied. Analysis: the exposed tenant configuration could help attackers map identity trust, though the excerpt does not describe follow-on abuse.\n\n## Breaches\n\nThe FBI has reportedly been breached for the second time in two months, with the latest incident targeting the National Crime Information Center, the cross-agency law enforcement data-sharing system [[s3]]. The report is unconfirmed in the supplied excerpt, and no scope, attacker or data impact was provided.\n\n## Vulnerabilities\n\nThe GnuPG project warned that CVE-2026-129975, a critical memory bug in GPGME, can be triggered by a malicious OpenPGP key with an unusually long user ID and could steal data from affected applications [[s6]]. All software using GPGME before 2.3.0 is affected, and fixed versions are available. The CVE has no KEV match in the supplied intelligence; that is a catalog miss, not evidence that exploitation has not occurred.\n\n## Industry\n\nThe CTO and co-founder of ransomwarehelp.com has been indicted for wire fraud after an FBI sting found the recovery service was paying attackers for decryption keys and charging victims a markup for work never performed [[s10]]. Analysis: the case is a cautionary tale about recovery vendors whose claims outrun their technical work.\n\n## Research\n\nA new analysis maps how Com affiliates blend vishing, cloud data theft and extortion against healthcare and finance, with defense guidance [[s11]]. Analysis: the TTP detail is the useful part for defenders facing social-engineering-led cloud intrusions.\n\nBADBOX malware in generic Android TV boxes has returned to large-scale ad fraud after last year’s disruptions, with 40 billion daily ad requests [[s2]]. Analysis: the reported volume suggests the botnet remains durable despite prior disruption efforts.",
+  "selected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Hackers Exploit Critical VMware, Cisco, and Apache Flaws as Espionage Attacks Emerge",
+      "url": "https://thehackernews.com/2026/11/hackers-exploit-critical-vmware-cisco.html",
+      "publishedAt": "2026-11-21T08:49:13.000Z",
+      "excerpt": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Friday added four flaws impacting Apache Roller, Cisco Expressway, SAP NetWeaver, and Broadcom VMware vCenter to its Known Exploited Vulnerabilities (KEV), citing evidence of active exploitation. The vulnerabilities are listed below - CVE-2026-129448 (CVSS score: 9.8) - A deserialization of untrusted data vulnerability in",
+      "canonicalUrl": "https://thehackernews.com/2026/11/hackers-exploit-critical-vmware-cisco.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/hackers-exploit-critical-vmware-cisco.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-129448",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Apache",
+            "product": "Roller",
+            "vulnerabilityName": "Apache Roller Deserialization of Untrusted Data Vulnerability",
+            "dateAdded": "2026-11-20",
+            "shortDescription": "Apache Roller contains a deserialization of untrusted data vulnerability that allows an unauthenticated remote attacker to execute arbitrary code via the XML-RPC endpoint, which accepts and deserializes vendor extension types before authentication. This CVE covers the same underlying vulnerability as CVE-2026-82384 but applies to a broader range of affected versions.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-23",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://lists.apache.org/thread/cc0jck13nb9vvcmzxzwotr6n16mx28z9 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-129448",
+            "cwes": [
+              "CWE-502"
+            ]
+          },
+          "nvd": {
+            "description": "Deserialization of Untrusted Data in Apache Roller versions 4.0.0 through 6.1.4 allows an unauthenticated remote attacker to execute arbitrary code. The XML-RPC endpoint accepts vendor extension types and deserializes them before authenticating the requester.\n\nThis is the same vulnerability as CVE-2026-82384, which listed only Apache Roller 6.1.5 as affected. This issue is being actively exploited.\n\nUsers are recommended to upgrade to Apache Roller 6.1.6 or later, which disables the extension types and rejects XML-RPC requests when the XML-RPC feature is disabled.\n\nUsers who cannot upgrade right away should set \"enabledForExtensions\" to \"false\" in WEB-INF/web.xml, or remove the \"/roller-services/xmlrpc\" servlet mapping, and restart Roller. Disabling XML-RPC in the administration UI is not enough, because older versions deserialize the request before checking that setting.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "security@apache.org",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-502"
+            ],
+            "published": "2026-11-17T11:17:28.190",
+            "lastModified": "2026-11-21T05:18:11.013",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://github.com/apache/roller/pull/171",
+                "source": "security@apache.org",
+                "tags": [
+                  "Issue Tracking",
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://lists.apache.org/thread.html/lnz4s26tv6hdo03wngtdbpfj4hg4gtds",
+                "source": "security@apache.org",
+                "tags": [
+                  "Mailing List",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://lists.apache.org/thread/cc0jck13nb9vvcmzxzwotr6n16mx28z9",
+                "source": "security@apache.org",
+                "tags": [
+                  "Mailing List",
+                  "Not Applicable"
+                ]
+              },
+              {
+                "url": "https://www.cve.org/CVERecord?id=CVE-2026-82384",
+                "source": "security@apache.org",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-129448",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Third Party Advisory",
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:apache:roller:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "57A7D7F0-5220-4AA1-B627-4CF01E9A9222",
+                "versionStartIncluding": "4.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "6.1.5"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/11/hackers-exploit-critical-vmware-cisco.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.20",
+              "dateReleased": "2026-11-20T17:48:39.1516Z",
+              "retrievedAt": "2026-11-21T18:36:28.045Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-129975%2CCVE-2026-129448",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-129448",
+              "retrievedAt": "2026-11-21T18:36:28.045Z"
+            }
+          }
+        }
+      ],
+      "id": "s9",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "CISA KEV additions confirm active exploitation of multiple enterprise flaws across Apache Roller, Cisco Expressway, SAP NetWeaver and VMware vCenter, with a near-term federal patch deadline."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Attackers' AI Agents Found a Zero-Day in Medical-Imaging Software and Gained Root Access",
+      "url": "https://thehackernews.com/2026/11/attackers-ai-agents-found-zero-day-in.html",
+      "publishedAt": "2026-11-21T11:03:17.000Z",
+      "excerpt": "Suspected China-linked hackers used autonomous AI agents to find a previously unknown flaw in MONAI Label, an open-source medical imaging server, and gain root access to a university server, Amazon Threat Intelligence said this week. The flaw allows an attacker with no account to write files outside the server's storage folder, and it affects MONAI Label 0.8.5 and earlier in the default setup,",
+      "canonicalUrl": "https://thehackernews.com/2026/11/attackers-ai-agents-found-zero-day-in.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/attackers-ai-agents-found-zero-day-in.html"
+      ],
+      "cves": [],
+      "id": "s7",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "A suspected China-linked campaign used autonomous AI agents to discover and exploit a MONAI Label zero-day and gain root on a university server, showing agentic vulnerability discovery against exposed medical-imaging infrastructure."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft Entra Connect Health flaw exploited to steal tenant data",
+      "url": "https://www.bleepingcomputer.com/news/security/microsoft-entra-connect-health-flaw-exploited-to-steal-tenant-data/",
+      "publishedAt": "2026-11-21T18:01:58.000Z",
+      "excerpt": "Microsoft is warning organizations that it suffered a data breach after attackers exploited a vulnerability in its Entra Connect Health service to gain unauthorized access to administrator email addresses and tenant configuration information. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/microsoft-entra-connect-health-flaw-exploited-to-steal-tenant-data",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/microsoft-entra-connect-health-flaw-exploited-to-steal-tenant-data"
+      ],
+      "cves": [],
+      "id": "s1",
+      "section": "exploited",
+      "rank": 3,
+      "angle": "Microsoft confirms an exploited Entra Connect Health flaw exposed administrator email addresses and tenant configuration data, widening the blast radius for cloud identity trust."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "FBI reportedly hacked again, this time targeting nationwide police database",
+      "url": "https://www.bleepingcomputer.com/news/security/fbi-reportedly-hacked-again-this-time-targeting-nationwide-police-database/",
+      "publishedAt": "2026-11-21T14:26:04.000Z",
+      "excerpt": "FBI systems have reportedly been breached for the second time in two months, this time targeting the agency's National Crime Information Center (NCIC), which is used to share information between local, state, and federal law enforcement agencies. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/fbi-reportedly-hacked-again-this-time-targeting-nationwide-police-database",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/fbi-reportedly-hacked-again-this-time-targeting-nationwide-police-database"
+      ],
+      "cves": [],
+      "id": "s3",
+      "section": "breaches",
+      "rank": 4,
+      "angle": "A reported compromise of the FBI’s NCIC, the system used for cross-agency law enforcement data sharing, would be a major government breach if confirmed."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "GnuPG Warns Critical GPGME Flaw Could Expose App Data via Malicious OpenPGP Keys",
+      "url": "https://thehackernews.com/2026/11/gnupg-warns-critical-gpgme-flaw-could.html",
+      "publishedAt": "2026-11-21T11:05:53.000Z",
+      "excerpt": "A malicious OpenPGP key with an unusually long user ID can trigger a critical memory bug in GPGME, the standard library that programs use to work with GnuPG. The GnuPG project warned yesterday that the flaw could be used to steal data from affected applications and has released fixed versions. The bug, tracked as CVE-2026-129975, affects all software that uses GPGME before version 2.3.0,",
+      "canonicalUrl": "https://thehackernews.com/2026/11/gnupg-warns-critical-gpgme-flaw-could.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/gnupg-warns-critical-gpgme-flaw-could.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-129975",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/11/gnupg-warns-critical-gpgme-flaw-could.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.20",
+              "dateReleased": "2026-11-20T17:48:39.1516Z",
+              "retrievedAt": "2026-11-21T18:36:28.045Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-129975%2CCVE-2026-129448",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-129975",
+              "retrievedAt": "2026-11-21T18:36:28.045Z"
+            }
+          }
+        }
+      ],
+      "id": "s6",
+      "section": "vulnerabilities",
+      "rank": 5,
+      "angle": "A critical GPGME memory bug reachable via a malicious OpenPGP key puts applications that parse untrusted keys at risk, and fixed versions are available."
+    },
+    {
+      "sourceId": "krebs",
+      "sourceKind": "rss",
+      "title": "CTO of ‘RansomwareHelp’ Indicted for Wire Fraud",
+      "url": "https://krebsonsecurity.com/2026/11/cto-of-ransomwarehelp-indicted-for-wire-fraud/",
+      "publishedAt": "2026-11-21T00:36:39.000Z",
+      "excerpt": "The chief technology officer and co-founder of ransomwarehelp.com, a six year old Florida business that claimed to use \"advanced cryptographic tools\" to restore data locked by ransomware, has been charged with wire fraud after an FBI sting operation found the company was simply paying the attackers for a decryption key and charging victims a markup for work that was never performed.",
+      "canonicalUrl": "https://krebsonsecurity.com/2026/11/cto-of-ransomwarehelp-indicted-for-wire-fraud",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://krebsonsecurity.com/2026/11/cto-of-ransomwarehelp-indicted-for-wire-fraud"
+      ],
+      "cves": [],
+      "id": "s10",
+      "section": "industry",
+      "rank": 6,
+      "angle": "The indictment turns a ransomware recovery service into a cautionary tale about firms that allegedly paid attackers and charged victims a markup for work never performed."
+    },
+    {
+      "sourceId": "unit42",
+      "sourceKind": "rss",
+      "title": "Dialing for Data: Inside the Com’s High-Profile Heists",
+      "url": "https://unit42.paloaltonetworks.com/com-affiliate-vishing-attacks/",
+      "publishedAt": "2026-11-20T22:00:25.000Z",
+      "excerpt": "Our analysis of Com affiliate vishing attacks, cloud data theft and extortion campaigns targeting healthcare and finance, with actionable defense guidance. The post Dialing for Data: Inside the Com’s High-Profile Heists appeared first on Unit 42.",
+      "canonicalUrl": "https://unit42.paloaltonetworks.com/com-affiliate-vishing-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://unit42.paloaltonetworks.com/com-affiliate-vishing-attacks"
+      ],
+      "cves": [],
+      "id": "s11",
+      "section": "research",
+      "rank": 7,
+      "angle": "Unit 42’s analysis maps how Com affiliates blend vishing, cloud data theft and extortion against healthcare and finance, giving defenders concrete TTPs."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "BADBOX botnet returns with record-breaking 40 billion daily ad requests",
+      "url": "https://www.bleepingcomputer.com/news/security/badbox-30-botnet-returns-with-record-breaking-40-billion-daily-ad-requests/",
+      "publishedAt": "2026-11-21T15:17:27.000Z",
+      "excerpt": "The BADBOX malware found in a broad range of generic Android TV boxes has returned to large-scale ad-fraud operations following last year's disruptions. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/badbox-30-botnet-returns-with-record-breaking-40-billion-daily-ad-requests",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/badbox-30-botnet-returns-with-record-breaking-40-billion-daily-ad-requests"
+      ],
+      "cves": [],
+      "id": "s2",
+      "section": "research",
+      "rank": 8,
+      "angle": "BADBOX’s return at record scale shows Android TV box malware remains a durable ad-fraud platform despite prior disruption efforts."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Amazon: China-Linked Hackers’ AI Agents Exploited Medical Software Zero-Day",
+      "url": "https://www.securityweek.com/amazon-china-linked-hackers-ai-agents-exploited-medical-software-zero-day/",
+      "publishedAt": "2026-11-21T12:08:50.000Z",
+      "excerpt": "A threat actor used autonomous Cairn AI agents to discover and exploit a critical MONAI Label vulnerability. The post Amazon: China-Linked Hackers’ AI Agents Exploited Medical Software Zero-Day appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/amazon-china-linked-hackers-ai-agents-exploited-medical-software-zero-day",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/amazon-china-linked-hackers-ai-agents-exploited-medical-software-zero-day"
+      ],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "A Single Malicious Webpage Let Researchers Hijack Meta Muse and Access Private Chats",
+      "url": "https://thehackernews.com/2026/11/a-single-malicious-webpage-let.html",
+      "publishedAt": "2026-11-21T11:53:07.000Z",
+      "excerpt": "A malicious webpage could extract a Meta Muse user's private conversations and stored memories from the assistant without triggering any approval prompt, researchers have shown. The same attack could be extended to reach the credentials Muse stores for the user's connected accounts. The work was a laboratory demonstration, not an attack on real users, and it stayed inside the individual user's",
+      "canonicalUrl": "https://thehackernews.com/2026/11/a-single-malicious-webpage-let.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/a-single-malicious-webpage-let.html"
+      ],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Signal Blocks AI Agents From Reading Private Chats via Screenshots on Android and iOS",
+      "url": "https://thehackernews.com/2026/11/signal-blocks-ai-agents-from-reading.html",
+      "publishedAt": "2026-11-21T08:49:20.000Z",
+      "excerpt": "Signal has announced that it will restrict screenshots by default to stop artificial intelligence (AI) agents from reading private chats on Android and iOS devices, but conceded that the protection is \"incomplete.\" The feature applies to agentic systems built into iOS 27 and on Android versions where the encrypted messaging platform can detect an AI assistant attempting to read the Signal",
+      "canonicalUrl": "https://thehackernews.com/2026/11/signal-blocks-ai-agents-from-reading.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/signal-blocks-ai-agents-from-reading.html"
+      ],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "West Virginia Legislature hit with cyber incident affecting IT systems",
+      "url": "https://therecord.media/west-virginia-legislature-cyberattack",
+      "publishedAt": "2026-11-20T21:34:36.000Z",
+      "excerpt": "A cybersecurity incident that began Thursday was still ongoing Friday in the West Virginia Legislature. A spokesperson said the disruption did not spread to other government entities.",
+      "canonicalUrl": "https://therecord.media/west-virginia-legislature-cyberattack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/west-virginia-legislature-cyberattack"
+      ],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "China's 'Armory Castle' Lays Siege to VMware vCenter Zero-Day",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/china-armory-castle-vmware-vcenter-zero-day",
+      "publishedAt": "2026-11-20T21:03:27.000Z",
+      "excerpt": "During the last wave of major VMware vCenter security updates, a China-nexus threat group likely already had its next zero-day up its sleeve.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/china-armory-castle-vmware-vcenter-zero-day",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyberattacks-data-breaches/china-armory-castle-vmware-vcenter-zero-day"
+      ],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "US companies’ use of Chinese open weight AI draws rebuke from House chairmen",
+      "url": "https://therecord.media/chinese-open-weight-AI-use-by-US-companies-house-investigation",
+      "publishedAt": "2026-11-20T20:25:00.000Z",
+      "excerpt": "An investigation led by the House Homeland Security Committee focused on the dangers of U.S. companies using lower-cost open weight AI models for certain projects.",
+      "canonicalUrl": "https://therecord.media/chinese-open-weight-AI-use-by-US-companies-house-investigation",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/chinese-open-weight-AI-use-by-US-companies-house-investigation"
+      ],
+      "cves": [],
+      "id": "s14"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Container Store restores systems after cyberattack",
+      "url": "https://therecord.media/container-store-restores-systems-cyberattack",
+      "publishedAt": "2026-11-20T19:32:00.000Z",
+      "excerpt": "The firm’s parent company, Neighborhood Intelligence, said in a statement that The Container Store has “restored its website and systems following a cybersecurity incident this past weekend.”",
+      "canonicalUrl": "https://therecord.media/container-store-restores-systems-cyberattack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/container-store-restores-systems-cyberattack"
+      ],
+      "cves": [],
+      "id": "s15"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1280,
+    "promptCacheMissTokens": 5005,
+    "outputTokens": 10149,
+    "estimatedCostUsd": 0.0035460040000000006
+  }
+}
