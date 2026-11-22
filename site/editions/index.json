@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-11-22",
+    "mode": "article",
+    "headline": "GL.iNet cloud flaw leaves routers and KVM devices backdoored as FBI database hack is probed",
+    "count": 8
+  },
+  {
     "date": "2026-11-21",
     "mode": "article",
     "headline": "CISA flags four exploited enterprise flaws as Microsoft breach and GPGME bug sharpen risk",

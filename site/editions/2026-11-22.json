@@ -1,0 +1,256 @@
+{
+  "date": "2026-11-22",
+  "generatedAt": "2026-11-22T18:57:05.535Z",
+  "collection": [
+    {
+      "sourceId": "krebs",
+      "attemptedAt": "2026-11-22T18:57:05.535Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "attemptedAt": "2026-11-22T18:57:05.535Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "thehackernews",
+      "attemptedAt": "2026-11-22T18:57:05.535Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "therecord",
+      "attemptedAt": "2026-11-22T18:57:05.535Z",
+      "status": "ok",
+      "items": 5,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securityweek",
+      "attemptedAt": "2026-11-22T18:57:05.535Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "darkreading",
+      "attemptedAt": "2026-11-22T18:57:05.535Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "attemptedAt": "2026-11-22T18:57:05.535Z",
+      "status": "ok",
+      "items": 30,
+      "skipped": 0
+    },
+    {
+      "sourceId": "projectzero",
+      "attemptedAt": "2026-11-22T18:57:05.535Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securelist",
+      "attemptedAt": "2026-11-22T18:57:05.535Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "talos",
+      "attemptedAt": "2026-11-22T18:57:05.535Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "unit42",
+      "attemptedAt": "2026-11-22T18:57:05.535Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "microsoft-security",
+      "attemptedAt": "2026-11-22T18:57:05.535Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    }
+  ],
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 230,
+    "published": 8
+  },
+  "mode": "article",
+  "headline": "GL.iNet cloud flaw leaves routers and KVM devices backdoored as FBI database hack is probed",
+  "standfirst": "A confirmed router compromise, an apparent FBI database intrusion and three data breaches set the day's agenda, alongside research showing months of undetected prompt theft at AI inference providers and a sandbox escape reached through ordinary file uploads.",
+  "bodyMarkdown": "## Actively exploited\n\nGL.iNet confirmed that attackers exploited a vulnerability in its cloud remote management services to install custom malware on customers' routers and KVM devices, with some affected users reporting backdoors and reverse shells that gave remote access to infected devices [[s1]]. No CVE identifier, affected version range or remediation detail was supplied. Analysis: the entry point is a vendor cloud service rather than the device firmware, which is why this warrants attention beyond GL.iNet's own customers — but the excerpt does not describe the flaw or say whether compromise is ongoing, so the exposure window stays unknown.\n\n## Breaches\n\nThe FBI is investigating an apparent hack of a national criminal justice database it maintains [[s6]]. Detail is thin: no scope, timeline or data categories were supplied, so the severity is unresolved. Rackspace warned that attackers breached its Spot cloud platform using compromised credentials, deploying unauthorised workloads and reaching Kubernetes secrets in customer clusters [[s7]]; how those credentials were obtained and how many tenants were affected is not stated. Cleverbridge told customers that attackers stole payment card numbers and CVV codes [[s2]], with no volume disclosed. Analysis: of the three, the Rackspace case carries the clearest downstream risk, since secrets held in a cluster often outlive the credential that was misused.\n\n## Research\n\nAttackers stole data from inside three AI inference providers for months, and none knew until researchers told them, per Dragos; some stolen requests carried the Zero Data Retention flag, the setting meant to guarantee a prompt is never stored, and OpenRouter dropped three providers as a result [[s4]]. The excerpt does not name the providers or reproduce Dragos's evidence. Analysis: this is a policy violation rather than a proven cryptographic break, but it shows ZDR is a promise about handling, not a technical control a customer can verify.\n\nA now-patched Ghostscript flaw lets a crafted file escape the interpreter's sandbox and run commands on the processing server, and pwn.ai demonstrated reach through ordinary upload flows in popular apps that never call Ghostscript directly [[s5]]. No CVE was supplied, and the affected applications were not enumerated.\n\n## Industry\n\nSignal announced protections that block screenshots on iOS 27 and stop AI assistants from capturing conversations on supported Android devices [[s3]]. The excerpt gives no rollout timing or detail on how the blocking is enforced, so the durability of the protection against on-device assistants remains unestablished.",
+  "selected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers exploit GL.iNet cloud flaw to infect routers, KVM devices",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-glinet-cloud-flaw-to-infect-routers-kvm-devices/",
+      "publishedAt": "2026-11-22T18:45:37.000Z",
+      "excerpt": "GL.iNet has confirmed that hackers exploited a vulnerability in its cloud remote management services to install custom malware on customers' routers and KVM devices, with some affected users reporting backdoors and reverse shells giving remote access to infected devices. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-exploit-glinet-cloud-flaw-to-infect-routers-kvm-devices",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/hackers-exploit-glinet-cloud-flaw-to-infect-routers-kvm-devices"
+      ],
+      "cves": [],
+      "id": "s1",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "Confirmed in-the-wild exploitation of GL.iNet's cloud management service left routers and KVM devices with backdoors and reverse shells, making this the day's most actionable story for anyone running that hardware."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "FBI Investigating Apparent Hack of Its Key National Criminal Justice Database, AP Source Says",
+      "url": "https://www.securityweek.com/fbi-investigating-apparent-hack-of-its-key-national-criminal-justice-database-ap-source-says/",
+      "publishedAt": "2026-11-22T00:53:02.000Z",
+      "excerpt": "The FBI is investigating an apparent hack of a national law enforcement database that it maintains. The post FBI Investigating Apparent Hack of Its Key National Criminal Justice Database, AP Source Says appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/fbi-investigating-apparent-hack-of-its-key-national-criminal-justice-database-ap-source-says",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/fbi-investigating-apparent-hack-of-its-key-national-criminal-justice-database-ap-source-says"
+      ],
+      "cves": [],
+      "id": "s6",
+      "section": "breaches",
+      "rank": 2,
+      "angle": "An apparent intrusion into an FBI-maintained national criminal justice database would be a serious law-enforcement data exposure, even with details still thin."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Rackspace Spot breach let hackers access customer Kubernetes secrets",
+      "url": "https://www.bleepingcomputer.com/news/security/rackspace-spot-breach-let-hackers-access-customer-kubernetes-secrets/",
+      "publishedAt": "2026-11-21T22:59:58.000Z",
+      "excerpt": "Rackspace warned customers that hackers breached its Rackspace Spot cloud platform using compromised credentials, allowing them to deploy unauthorized workloads and access Kubernetes secrets in customer clusters. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/rackspace-spot-breach-let-hackers-access-customer-kubernetes-secrets",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/rackspace-spot-breach-let-hackers-access-customer-kubernetes-secrets"
+      ],
+      "cves": [],
+      "id": "s7",
+      "section": "breaches",
+      "rank": 3,
+      "angle": "Compromised credentials let attackers run workloads and reach Kubernetes secrets inside customer clusters, so Rackspace Spot tenants should treat cluster credentials as exposed."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Cleverbridge warns hackers stole credit card numbers, CVVs in data breach",
+      "url": "https://www.bleepingcomputer.com/news/security/cleverbridge-warns-hackers-stole-credit-card-numbers-cvvs-in-data-breach/",
+      "publishedAt": "2026-11-22T15:43:04.000Z",
+      "excerpt": "E-commerce platform Cleverbridge is warning that hackers breached its systems and stole customers' payment card information, including credit card numbers and CVV security codes. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/cleverbridge-warns-hackers-stole-credit-card-numbers-cvvs-in-data-breach",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/cleverbridge-warns-hackers-stole-credit-card-numbers-cvvs-in-data-breach"
+      ],
+      "cves": [],
+      "id": "s2",
+      "section": "breaches",
+      "rank": 4,
+      "angle": "Cleverbridge says card numbers and CVVs were stolen, putting merchant customers and their buyers on notice for fraud and card-reissuance risk."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "OpenRouter Drops 3 Providers After Researchers Catch Months of Prompt Theft at AI Hosting Firms",
+      "url": "https://thehackernews.com/2026/11/openrouter-drops-3-providers-after.html",
+      "publishedAt": "2026-11-22T05:06:55.000Z",
+      "excerpt": "Attackers stole data from inside three AI inference providers for months, and none of the three knew until researchers told them, the industrial cybersecurity company Dragos said this week. Some of the stolen requests were flagged as Zero Data Retention, the setting that is supposed to mean a prompt is never stored. OpenRouter, a gateway that routes customers' AI requests to a pool of",
+      "canonicalUrl": "https://thehackernews.com/2026/11/openrouter-drops-3-providers-after.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/openrouter-drops-3-providers-after.html"
+      ],
+      "cves": [],
+      "id": "s4",
+      "section": "research",
+      "rank": 5,
+      "angle": "Months-long prompt theft inside three AI inference providers — including requests marked Zero Data Retention — undermines the trust model behind hosted LLM gateways."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Researchers Demonstrate Ghostscript Sandbox-Escape RCE via Crafted File Uploads in Popular Apps",
+      "url": "https://thehackernews.com/2026/11/researchers-demonstrate-ghostscript.html",
+      "publishedAt": "2026-11-22T05:03:41.000Z",
+      "excerpt": "A now-patched flaw in Ghostscript allows a crafted file to escape the program's security sandbox and run commands on the server that processes it. Ghostscript is the interpreter that many Linux servers use to convert uploaded PDFs, PostScript files, and images into other formats, often without the application calling it directly. Security firm pwn.ai showed this week that ordinary upload,",
+      "canonicalUrl": "https://thehackernews.com/2026/11/researchers-demonstrate-ghostscript.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/researchers-demonstrate-ghostscript.html"
+      ],
+      "cves": [],
+      "id": "s5",
+      "section": "research",
+      "rank": 6,
+      "angle": "A demonstrated sandbox escape via ordinary file uploads shows how patched Ghostscript flaws can still be reached indirectly through applications that never call it explicitly."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Signal to block Siri, Gemini AI from capturing chats on iOS, Android",
+      "url": "https://www.bleepingcomputer.com/news/security/signal-to-block-siri-gemini-ai-from-capturing-chats-on-ios-android/",
+      "publishedAt": "2026-11-22T15:15:25.000Z",
+      "excerpt": "Signal has announced new protections that block screenshots on iOS 27 and prevent AI assistants from capturing conversations on supported Android devices. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/signal-to-block-siri-gemini-ai-from-capturing-chats-on-ios-android",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/signal-to-block-siri-gemini-ai-from-capturing-chats-on-ios-android"
+      ],
+      "cves": [],
+      "id": "s3",
+      "section": "industry",
+      "rank": 7,
+      "angle": "Signal's move to block screenshot and AI-assistant capture on mobile sets an early precedent for messaging apps defending against on-device assistants."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "President Trump Taps Kirsten Davies as National Cyber Director",
+      "url": "https://www.securityweek.com/president-trump-taps-kirsten-davies-as-national-cyber-director/",
+      "publishedAt": "2026-11-21T13:00:00.000Z",
+      "excerpt": "White House says the battle-tested cyber leader will drive an America First cyber strategy. The post President Trump Taps Kirsten Davies as National Cyber Director appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/president-trump-taps-kirsten-davies-as-national-cyber-director",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/president-trump-taps-kirsten-davies-as-national-cyber-director"
+      ],
+      "cves": [],
+      "id": "s8"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1280,
+    "promptCacheMissTokens": 2381,
+    "outputTokens": 2800,
+    "estimatedCostUsd": 0.0011209240000000001
+  }
+}
