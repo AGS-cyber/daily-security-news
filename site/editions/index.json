@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-11-23",
+    "mode": "article",
+    "headline": "Azure secrets, helpdesk sessions and a forgotten DLL: four exploited flaws lead the day",
+    "count": 42
+  },
+  {
     "date": "2026-11-22",
     "mode": "article",
     "headline": "GL.iNet cloud flaw leaves routers and KVM devices backdoored as FBI database hack is probed",
