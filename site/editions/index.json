@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-11-24",
+    "mode": "article",
+    "headline": "CISA Confirms Active Exploitation of N-able MailAssure and MONAI Label Flaws",
+    "count": 38
+  },
+  {
     "date": "2026-11-23",
     "mode": "article",
     "headline": "Azure secrets, helpdesk sessions and a forgotten DLL: four exploited flaws lead the day",
