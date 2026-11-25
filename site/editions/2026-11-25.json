@@ -1,0 +1,1752 @@
+{
+  "date": "2026-11-25",
+  "generatedAt": "2026-11-25T20:58:09.946Z",
+  "collection": [
+    {
+      "sourceId": "krebs",
+      "attemptedAt": "2026-11-25T20:58:09.946Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "attemptedAt": "2026-11-25T20:58:09.946Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "thehackernews",
+      "attemptedAt": "2026-11-25T20:58:09.946Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "therecord",
+      "attemptedAt": "2026-11-25T20:58:09.946Z",
+      "status": "ok",
+      "items": 5,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securityweek",
+      "attemptedAt": "2026-11-25T20:58:09.946Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "darkreading",
+      "attemptedAt": "2026-11-25T20:58:09.946Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "attemptedAt": "2026-11-25T20:58:09.946Z",
+      "status": "ok",
+      "items": 30,
+      "skipped": 0
+    },
+    {
+      "sourceId": "projectzero",
+      "attemptedAt": "2026-11-25T20:58:09.946Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securelist",
+      "attemptedAt": "2026-11-25T20:58:09.946Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "talos",
+      "attemptedAt": "2026-11-25T20:58:09.946Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "unit42",
+      "attemptedAt": "2026-11-25T20:58:09.946Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "microsoft-security",
+      "attemptedAt": "2026-11-25T20:58:09.946Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    }
+  ],
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 230,
+    "published": 47
+  },
+  "mode": "article",
+  "headline": "Drupal's KEV-listed RCE leads a day of active exploitation and high-value breaches",
+  "standfirst": "A critical Drupal Core remote-code-execution flaw is now KEV-listed and actively exploited, while two GeoServer flaws are also under attack and a critical NGINX HTTP/2 use-after-free demands triage. Elsewhere, a reported CIA breach, a confirmed FinCEN intrusion, a Check Point management-server campaign, suspected hospital ransomware and Australia's new duty-of-care law round out the day.",
+  "bodyMarkdown": "## Actively exploited\n\nThe lead item is Drupal Core's Fail2Install flaw, CVE-2026-132165, a CVSS 9.8 remote code execution issue that CISA has added to KEV [[s24]]. The catalog entry confirms known exploitation and directs federal agencies to apply mitigations under BOD 26-04; that requirement is agency-specific, not a universal deadline. Ransomware campaign use is listed as unknown. Exploit details are reported to be emerging, but the supplied excerpt does not describe the exploit chain or affected Drupal versions.\n\nGeoServer is the second active-exploitation item: CVE-2026-120705, an arbitrary file read rated 8.6, and CVE-2026-129243 are being exploited, with researchers warning they can chain to unauthenticated RCE [[s21]]. The second flaw's severity is not supplied. Neither appears in KEV in the supplied fields—a catalog miss, not proof that exploitation has not occurred.\n\n## Breaches\n\nUnknown attackers have reportedly breached an open-source intelligence analysis system at the CIA [[s38]]. Details of access, data and attribution were not supplied. Analysis: if confirmed, an intrusion into an intelligence-analysis platform raises counterintelligence and source-exposure concerns beyond a routine breach, but the excerpt supports only the reported compromise.\n\nFinCEN said unauthorized access hit a limited subset of its systems and took some systems offline as a precaution [[s22]]. The bureau collects suspicious activity reports and other BSA filings. Analysis: offline systems at a financial-intelligence bureau raise reporting-disruption questions, though the excerpt does not confirm deadline changes or data loss.\n\nTwenty-four Check Point Security Management servers were compromised across 22 organizations worldwide by an unknown threat actor using suspected AI-driven offensive tooling, tracked as GT13 [[s39]]. Listed sectors include financial services, energy and government. Analysis: management servers are high-value because they can govern security controls, but the excerpt does not specify access, persistence or data taken.\n\nA suspected ransomware attack impaired the University Hospital of Guadeloupe's systems, forcing postponed surgeries, suspension of some cancer treatments and a return to pen and paper; the national cybersecurity agency is investigating [[s20]]. The attack is suspected, not confirmed, and the operational impact is the story.\n\n## Vulnerabilities\n\nThe NGINX HTTP/2 use-after-free CVE-2026-123633 is rated CVSS 4.0 9.2 Critical and CWE-416 [[s42]]. NVD says exploitation requires HTTP/2 client connections and proxying to a backend, with a crafted request triggering use-after-free when the worker is low on worker_connections. Impact is denial of service, or code execution if ASLR is disabled or bypassed; there is no control-plane exposure. Affected configurations include NGINX Open Source, NGINX Plus, Ingress Controller, Gateway Fabric, Instance Manager and WAF. No KEV listing is supplied. Analysis: high attack complexity and configuration dependence mean the headline CVSS score alone is a poor exposure test.\n\n## Industry\n\nAustralia's Parliament passed the Digital Duty of Care Act, requiring online providers to establish protocols protecting users from threats of violence and rape and from behavior that could cause significant harms [[s7]]. The mandate is framed around preempting foreseeable harms. Analysis: it could become a regulatory template beyond Australia, but the excerpt does not detail enforcement, penalties or covered services.",
+  "selected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Drupal Fail2Install Exploit Details Emerge as Critical RCE Flaw Faces Active Exploitation",
+      "url": "https://thehackernews.com/2026/11/drupal-fail2install-exploit-details.html",
+      "publishedAt": "2026-11-25T11:23:26.000Z",
+      "excerpt": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Tuesday added a critical flaw impacting Drupal to its Known Exploited Vulnerabilities (KEV) catalog, requiring federal agencies to apply the fixes by November 27, 2026. The vulnerability, tracked as CVE-2026-132165 aka Fail2Install (CVSS score: 9.8), is a case of remote code execution (RCE) impacting Drupal core. \"Drupal Core",
+      "canonicalUrl": "https://thehackernews.com/2026/11/drupal-fail2install-exploit-details.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/drupal-fail2install-exploit-details.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-132165",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Drupal",
+            "product": "Core",
+            "vulnerabilityName": "Drupal Core Remote Code Execution Vulnerability",
+            "dateAdded": "2026-11-24",
+            "shortDescription": "Drupal Core contains a not failing securely vulnerability that could allow an unauthenticated attacker to take over an existing site or execute arbitrary code via the Drupal installer. Under specific conditions, the attacker can use install.php to attempt to reinstall Drupal on the site.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-27",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://www.drupal.org/sa-core-2026-017 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-132165",
+            "cwes": [
+              "CWE-636"
+            ]
+          },
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/11/drupal-fail2install-exploit-details.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.25",
+              "dateReleased": "2026-11-25T19:48:12.4344Z",
+              "retrievedAt": "2026-11-25T20:58:09.946Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-120705%2CCVE-2026-129243%2CCVE-2026-132165%2CCVE-2026-131914%2CCVE-2026-123633%2CCVE-2026-132224",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-132165",
+              "retrievedAt": "2026-11-25T20:58:09.946Z"
+            }
+          }
+        }
+      ],
+      "id": "s24",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "CISA KEV-listed Drupal Core RCE (CVE-2026-132165, CVSS 9.8) is actively exploited, with federal patching due Nov. 27."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers reportedly breached CIA intelligence analysis system",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-reportedly-breached-cia-intelligence-analysis-system/",
+      "publishedAt": "2026-11-25T07:45:03.000Z",
+      "excerpt": "Unknown attackers have reportedly breached an open-source intelligence analysis system at the US Central Intelligence Agency (CIA) [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-reportedly-breached-cia-intelligence-analysis-system",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/hackers-reportedly-breached-cia-intelligence-analysis-system"
+      ],
+      "cves": [],
+      "id": "s38",
+      "section": "breaches",
+      "rank": 2,
+      "angle": "Reported compromise of a CIA open-source intelligence analysis system raises espionage and exposure concerns beyond a routine breach."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "U.S. Treasury's Financial Crimes Agency Takes Some Systems Offline After Cyber Intrusion",
+      "url": "https://thehackernews.com/2026/11/us-treasurys-fincen-takes-some-systems.html",
+      "publishedAt": "2026-11-25T12:30:08.000Z",
+      "excerpt": "The U.S. Treasury Department's Financial Crimes Enforcement Network (FinCEN) has been hit by a cybersecurity incident that resulted in \"unauthorized access to a limited subset of its systems,\" the bureau said on Tuesday. As a precaution, it has taken some systems offline. The bureau collects suspicious activity reports and other Bank Secrecy Act (BSA) filings from banks and other financial",
+      "canonicalUrl": "https://thehackernews.com/2026/11/us-treasurys-fincen-takes-some-systems.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/us-treasurys-fincen-takes-some-systems.html"
+      ],
+      "cves": [],
+      "id": "s22",
+      "section": "breaches",
+      "rank": 3,
+      "angle": "FinCEN took systems offline after unauthorized access to a limited subset, disrupting financial-crime reporting and extending deadlines."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Hackers Compromise 24 Check Point Management Servers in Suspected AI-Driven Attack Campaign",
+      "url": "https://thehackernews.com/2026/11/hackers-compromise-24-check-point.html",
+      "publishedAt": "2026-11-25T06:50:19.000Z",
+      "excerpt": "An unknown threat actor has been using artificial intelligence (AI)-driven offensive tooling in a campaign targeting Check Point Security Management servers, impacting 22 distinct organizations across the world. The intrusion activity, tracked by GreyNoise under the moniker GreyNoise Threat 13 (GT13), is assessed to have targeted organizations in the financial services, energy, government,",
+      "canonicalUrl": "https://thehackernews.com/2026/11/hackers-compromise-24-check-point.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/hackers-compromise-24-check-point.html"
+      ],
+      "cves": [],
+      "id": "s39",
+      "section": "breaches",
+      "rank": 4,
+      "angle": "Unknown attackers compromised 24 Check Point management servers across 22 organizations using suspected AI-driven tooling, hitting security infrastructure itself."
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Suspected ransomware attack disrupts cancer treatments, surgeries at Guadeloupe hospital",
+      "url": "https://therecord.media/guadeloupe-ransomware-hospital-cyber",
+      "publishedAt": "2026-11-25T13:30:00.000Z",
+      "excerpt": "France’s national cybersecurity agency is investigating a suspected ransomware attack that impaired the computer systems of the University Hospital of Guadeloupe, forcing doctors to postpone surgeries, suspend some cancer treatments and revert to pen and paper.",
+      "canonicalUrl": "https://therecord.media/guadeloupe-ransomware-hospital-cyber",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/guadeloupe-ransomware-hospital-cyber"
+      ],
+      "cves": [],
+      "id": "s20",
+      "section": "breaches",
+      "rank": 5,
+      "angle": "Suspected ransomware at Guadeloupe's university hospital forced postponed surgeries and suspended cancer treatments, underscoring healthcare operational risk."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Hackers Exploit Two GeoServer Flaws as Researchers Warn of Unauthenticated RCE Chains",
+      "url": "https://thehackernews.com/2026/11/hackers-exploit-two-geoserver-flaws-as.html",
+      "publishedAt": "2026-11-25T12:48:54.000Z",
+      "excerpt": "Threat actors are actively exploiting two newly patched security flaws in GeoServer, according to watchTowr. The vulnerabilities in question are CVE-2026-120705 and CVE-2026-129243, details of which are below - CVE-2026-120705 (CVSS score: 8.6) - An arbitrary file read vulnerability that could enable an attacker to access local text files readable by the GeoServer process or fetch",
+      "canonicalUrl": "https://thehackernews.com/2026/11/hackers-exploit-two-geoserver-flaws-as.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/hackers-exploit-two-geoserver-flaws-as.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-120705",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/11/hackers-exploit-two-geoserver-flaws-as.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.25",
+              "dateReleased": "2026-11-25T19:48:12.4344Z",
+              "retrievedAt": "2026-11-25T20:58:09.946Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-120705%2CCVE-2026-129243%2CCVE-2026-132165%2CCVE-2026-131914%2CCVE-2026-123633%2CCVE-2026-132224",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-120705",
+              "retrievedAt": "2026-11-25T20:58:09.946Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-129243",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/11/hackers-exploit-two-geoserver-flaws-as.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.25",
+              "dateReleased": "2026-11-25T19:48:12.4344Z",
+              "retrievedAt": "2026-11-25T20:58:09.946Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-120705%2CCVE-2026-129243%2CCVE-2026-132165%2CCVE-2026-131914%2CCVE-2026-123633%2CCVE-2026-132224",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-129243",
+              "retrievedAt": "2026-11-25T20:58:09.946Z"
+            }
+          }
+        }
+      ],
+      "id": "s21",
+      "section": "exploited",
+      "rank": 6,
+      "angle": "Two newly patched GeoServer flaws are under active attack and can chain to unauthenticated RCE, making exposed instances urgent."
+    },
+    {
+      "sourceId": "unit42",
+      "sourceKind": "rss",
+      "title": "NGINX HTTP/2 Use-After-Free: CVE-2026-123633",
+      "url": "https://unit42.paloaltonetworks.com/cve-2026-123633-nginx-http2-vulnerability/",
+      "publishedAt": "2026-11-24T23:00:14.000Z",
+      "excerpt": "Technical analysis of CVE-2026-123633, an NGINX HTTP/2 use-after-free flaw, with details on affected versions, sanitizer tests, and patch guidance. The post NGINX HTTP/2 Use-After-Free: CVE-2026-123633 appeared first on Unit 42.",
+      "canonicalUrl": "https://unit42.paloaltonetworks.com/cve-2026-123633-nginx-http2-vulnerability",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://unit42.paloaltonetworks.com/cve-2026-123633-nginx-http2-vulnerability"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-123633",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "When NGINX Plus or NGINX Open Source is configured to use HTTP/2 for client connections and proxy client requests to a backend, a specially crafted request can result in use-after-free in the worker process, if this process is running low on worker_connections. Additionally, attackers can execute code on systems with Address Space Layout Randomization (ASLR) disabled or when the attacker can bypass ASLR.\n\n\n\n\nImpact:\n\n\n\nThis vulnerability may allow remote attackers to cause a denial-of-service (DoS) on the NGINX system or may allow a code execution. There is no control plane exposure; this is a data plane issue only.\n\n\n\nNote: Software versions which have reached End of Technical Support (EoTS) are not evaluated.",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.2,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "f5sirt@f5.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-416"
+            ],
+            "published": "2026-11-18T16:18:04.207",
+            "lastModified": "2026-11-20T12:18:21.030",
+            "vulnStatus": "Modified",
+            "references": [
+              {
+                "url": "https://my.f5.com/manage/s/article/K000163928",
+                "source": "f5sirt@f5.com",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://access.redhat.com/security/cve/cve-2026-123633",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/Azure/aks-app-routing-operator/issues/623",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Issue Tracking"
+                ]
+              },
+              {
+                "url": "https://github.com/advisories/GHSA-7xxj-p8w5-434q",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/chainguard-forks/ingress-nginx/pull/68",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://github.com/nginx/nginx/commit/0c87dd1db413e440a4e3ef7ee8acc518509e8809",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Patch"
+                ]
+              },
+              {
+                "url": "https://github.com/nginx/nginx/issues/2002",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Issue Tracking"
+                ]
+              },
+              {
+                "url": "https://github.com/openresty/openresty/issues/1165",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Issue Tracking"
+                ]
+              },
+              {
+                "url": "https://news.ycombinator.com/item?id=50547374",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Issue Tracking"
+                ]
+              },
+              {
+                "url": "https://nginx.org/en/CHANGES",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Release Notes"
+                ]
+              },
+              {
+                "url": "https://nginx2root.com",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Permissions Required"
+                ]
+              },
+              {
+                "url": "https://ubuntu.com/security/CVE-2026-123633",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.wiz.io/blog/nginx-http2-rce-vulnerabilities",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Mitigation",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://xint.io/blog/nginx2root-remote-code-execution",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Exploit",
+                  "Mitigation",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://cert-portal.siemens.com/productcert/html/ssa-935812.html",
+                "source": "0b142b55-0307-4c5a-b3c9-f314f3fb7c5e",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:f5:dos:*:*:*:*:*:nginx:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D33633EB-8C0C-42ED-953A-EC44585A9AC4",
+                "versionStartIncluding": "4.5.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "4.7.0",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:f5:dos:*:*:*:*:*:nginx:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "57CEB201-7CBD-426B-9E04-71C6BBE4AE19",
+                "versionStartIncluding": "4.8.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "4.13.0"
+              },
+              {
+                "criteria": "cpe:2.3:a:f5:nginx_gateway_fabric:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "1E74CFBA-DBBB-4D35-B149-953A71093ECA",
+                "versionStartIncluding": "1.5.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "1.6.2",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:f5:nginx_gateway_fabric:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7F0199FA-9AF8-49B8-B851-C57D0ABAB4BF",
+                "versionStartIncluding": "2.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "2.9.0"
+              },
+              {
+                "criteria": "cpe:2.3:a:f5:nginx_ingress_controller:*:*:*:*:continuous_releases:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C497E7B2-344E-4DD5-ADB0-6BF508E8CD61",
+                "versionStartIncluding": "5.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.8.0"
+              },
+              {
+                "criteria": "cpe:2.3:a:f5:nginx_ingress_controller:*:*:*:*:long-term_support:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "A74E95B1-B36C-4DB4-A832-7736C9E0C07F",
+                "versionStartIncluding": "2026-lts-r1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "2026-lts-r11"
+              },
+              {
+                "criteria": "cpe:2.3:a:f5:nginx_ingress_controller:3.7.1:*:*:*:continuous_releases:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6EBC6BD0-168C-4640-8F22-3E7DB411C13D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:f5:nginx_ingress_controller:3.7.2:*:*:*:continuous_releases:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "5C909D18-2182-4DCB-8CED-A4E5847AF4A4",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:f5:nginx_ingress_controller:4.0.0:*:*:*:continuous_releases:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "109F4C2E-4A5E-4B5E-B282-21AFD52AEC60",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:f5:nginx_ingress_controller:4.0.1:*:*:*:continuous_releases:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "717D820A-78A2-41EF-BB3C-5745B6D954C1",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:f5:nginx_instance_manager:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "779DAFB6-59B2-4C08-AF4C-D24F8F9209CA",
+                "versionStartIncluding": "2.18.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "2.24.0"
+              },
+              {
+                "criteria": "cpe:2.3:a:f5:nginx_open_source:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6F11A787-6EE0-4782-AA47-A446F24FDB11",
+                "versionStartIncluding": "1.19.7",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.30.7"
+              },
+              {
+                "criteria": "cpe:2.3:a:f5:nginx_open_source:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C93BF318-5674-4FFA-A961-133201234CF6",
+                "versionStartIncluding": "1.31.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "1.31.9"
+              },
+              {
+                "criteria": "cpe:2.3:a:f5:nginx_plus:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "70D17564-D2C5-4023-A719-E5D62FD95EAF",
+                "versionStartIncluding": "37.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "37.0.7.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:f5:nginx_plus:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "52EE220B-EDF2-4F90-8863-BE03B2B2C9DE",
+                "versionStartIncluding": "37.1.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "37.2.0.1"
+              },
+              {
+                "criteria": "cpe:2.3:a:f5:nginx_plus:r34:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "86358605-55F9-4F6F-846A-3F48738F6E05",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:f5:nginx_plus:r35:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "C643CEF2-F421-4E2C-AD39-51CE820F2238",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:f5:nginx_plus:r36:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "942CA349-3FF8-4B9D-B87E-FBA8930CE913",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:f5:waf:*:*:*:*:*:nginx:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F42CE0E0-B917-4F36-9708-45BFDA51385C",
+                "versionStartIncluding": "4.12.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "4.16.0",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:f5:waf:*:*:*:*:*:nginx:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "B08EBD8F-D8FE-4256-87D7-4EA447BBB6C2",
+                "versionStartIncluding": "5.4.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": "5.8.0",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:f5:waf:*:*:*:*:*:nginx:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "62F0F5BF-13E7-4822-83EC-6B35005E87CB",
+                "versionStartIncluding": "5.9.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "5.16.2"
+              },
+              {
+                "criteria": "cpe:2.3:a:redhat:3scale_api_management_platform:2.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "653A5B08-0D02-4362-A8B1-D00B24C6C6F2",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:redhat:hardened_images:-:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "87DEB507-5B64-47D7-9A50-3B87FD1E571F",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:redhat:enterprise_linux:8.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "F4CFF558-3C47-480D-A2F0-BABF26042943",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:redhat:enterprise_linux:9.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "7F6FB57C-2BC7-487C-96DD-132683AEB35D",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:o:redhat:enterprise_linux:10.0:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D65C2163-CFC2-4ABB-8F4E-CB09CEBD006C",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "unit42",
+                "url": "https://unit42.paloaltonetworks.com/cve-2026-123633-nginx-http2-vulnerability/",
+                "field": "title"
+              },
+              {
+                "sourceId": "unit42",
+                "url": "https://unit42.paloaltonetworks.com/cve-2026-123633-nginx-http2-vulnerability/",
+                "field": "excerpt"
+              },
+              {
+                "sourceId": "unit42",
+                "url": "https://unit42.paloaltonetworks.com/cve-2026-123633-nginx-http2-vulnerability/",
+                "field": "url"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.25",
+              "dateReleased": "2026-11-25T19:48:12.4344Z",
+              "retrievedAt": "2026-11-25T20:58:09.946Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-120705%2CCVE-2026-129243%2CCVE-2026-132165%2CCVE-2026-131914%2CCVE-2026-123633%2CCVE-2026-132224",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-123633",
+              "retrievedAt": "2026-11-25T20:58:09.946Z"
+            }
+          }
+        }
+      ],
+      "id": "s42",
+      "section": "vulnerabilities",
+      "rank": 7,
+      "angle": "Critical NGINX HTTP/2 use-after-free (CVE-2026-123633, CVSS 9.2) affects widely deployed web infrastructure and needs patch triage."
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Australia passes tough legislation requiring big tech to preempt foreseeable harms",
+      "url": "https://therecord.media/australia-passes-online-safety-legislation-preempt-harms",
+      "publishedAt": "2026-11-25T17:07:00.000Z",
+      "excerpt": "The Digital Duty of Care Act sailed through Australia's Parliament. It will mandate that online providers establish protocols to protect users from threats of violence and rape as well as behavior that could cause significant harms.",
+      "canonicalUrl": "https://therecord.media/australia-passes-online-safety-legislation-preempt-harms",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/australia-passes-online-safety-legislation-preempt-harms"
+      ],
+      "cves": [],
+      "id": "s7",
+      "section": "industry",
+      "rank": 8,
+      "angle": "Australia's Digital Duty of Care Act mandates platforms preempt foreseeable harms, setting a broader regulatory template."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "FIFA says hackers accessed ‘limited set of personal and business information’",
+      "url": "https://therecord.media/fifa-data-breach-limited",
+      "publishedAt": "2026-11-25T20:40:00.000Z",
+      "excerpt": "The Switzerland-based international governing body for soccer says it's working with relevant authorities and law enforcement to investigate a recent breach.",
+      "canonicalUrl": "https://therecord.media/fifa-data-breach-limited",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/fifa-data-breach-limited"
+      ],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Italy and Switzerland warn of autonomous AI-driven cyberattacks",
+      "url": "https://www.bleepingcomputer.com/news/security/italy-and-switzerland-warn-of-autonomous-ai-driven-cyberattacks/",
+      "publishedAt": "2026-11-25T19:39:31.000Z",
+      "excerpt": "Swiss and Italian cybersecurity agencies are warning about automated cyberattacks powered by AI agents targeting organizations in the critical infrastructure sector. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/italy-and-switzerland-warn-of-autonomous-ai-driven-cyberattacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/italy-and-switzerland-warn-of-autonomous-ai-driven-cyberattacks"
+      ],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "talos",
+      "sourceKind": "rss",
+      "title": "Oh, is it Thanksgiving? I hadn’t noticed!",
+      "url": "https://blog.talosintelligence.com/oh-is-it-thanksgiving-i-hadnt-noticed/",
+      "publishedAt": "2026-11-25T19:00:00.000Z",
+      "excerpt": "In true Thanksgiving fashion, David has a few thank-yous to give to the cybersecurity community (and a few choice words for threat actors).",
+      "canonicalUrl": "https://blog.talosintelligence.com/oh-is-it-thanksgiving-i-hadnt-noticed",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://blog.talosintelligence.com/oh-is-it-thanksgiving-i-hadnt-noticed"
+      ],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "What defenders need to know about ARTEX, the agentic AI framework threat actors abuse",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/11/25/what-defenders-need-to-know-artex-agentic-ai-framework-threat-actors-abuse/",
+      "publishedAt": "2026-11-25T18:09:06.000Z",
+      "excerpt": "The AI-powered penetration testing framework ARTEX has been abused by threat actors like Storm-0940, Storm-3358, Onyx Sleet, Pearl Sleet, Crystal Typhoon, and Salt Typhoon to accelerate their existing workflows related to network reconnaissance, credential attacks, and web application exploitation. The post What defenders need to know about ARTEX, the agentic AI framework threat actors abuse…",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/11/25/what-defenders-need-to-know-artex-agentic-ai-framework-threat-actors-abuse",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://microsoft.com/en-us/security/blog/2026/11/25/what-defenders-need-to-know-artex-agentic-ai-framework-threat-actors-abuse"
+      ],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Florida ransomware recovery CEO indicted for allegedly paying hacker ransoms",
+      "url": "https://therecord.media/ransomware-doj-indictment-recovery",
+      "publishedAt": "2026-11-25T17:30:00.000Z",
+      "excerpt": "The CEO of a ransomware recovery firm was indicted by a federal grand jury over allegations he lied about his services and paid out ransoms to cybercriminals.",
+      "canonicalUrl": "https://therecord.media/ransomware-doj-indictment-recovery",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/ransomware-doj-indictment-recovery"
+      ],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "microsoft-security",
+      "sourceKind": "rss",
+      "title": "Microsoft named a Leader in the 2026 Gartner® Magic Quadrant™ for Email Security",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/11/25/microsoft-named-a-leader-in-the-2026-gartner-magic-quadrant-for-email-security/",
+      "publishedAt": "2026-11-25T17:15:00.000Z",
+      "excerpt": "We're honored to share that Microsoft has been named a Leader in the 2026 Gartner® Magic Quadrant™ for Email Security, for the second consecutive year. The post Microsoft named a Leader in the 2026 Gartner® Magic Quadrant™ for Email Security appeared first on Microsoft Security Blog.",
+      "canonicalUrl": "https://microsoft.com/en-us/security/blog/2026/11/25/microsoft-named-a-leader-in-the-2026-gartner-magic-quadrant-for-email-security",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://microsoft.com/en-us/security/blog/2026/11/25/microsoft-named-a-leader-in-the-2026-gartner-magic-quadrant-for-email-security"
+      ],
+      "cves": [],
+      "id": "s6"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "CISA warns of critical unpatched flaw in Danfoss refrigeration controllers",
+      "url": "https://www.bleepingcomputer.com/news/security/cisa-warns-of-critical-unpatched-flaw-in-danfoss-refrigeration-controllers/",
+      "publishedAt": "2026-11-25T16:13:40.000Z",
+      "excerpt": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA) is warning about a critical vulnerability in Danfoss AK-SM 8xxA Series controllers used by food retailers to manage commercial refrigeration, HVAC, and lighting systems. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/cisa-warns-of-critical-unpatched-flaw-in-danfoss-refrigeration-controllers",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/cisa-warns-of-critical-unpatched-flaw-in-danfoss-refrigeration-controllers"
+      ],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Attackers Target .NET Developers With Poisoned Job Assessments",
+      "url": "https://www.darkreading.com/threat-intelligence/attackers-net-developers-poisoned-job-assessments",
+      "publishedAt": "2026-11-25T15:48:04.000Z",
+      "excerpt": "Researchers discovered 13 malicious NuGet packages as part of a fake recruitment campaign that spreads malware and gives attackers access to developers' machines.",
+      "canonicalUrl": "https://darkreading.com/threat-intelligence/attackers-net-developers-poisoned-job-assessments",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/threat-intelligence/attackers-net-developers-poisoned-job-assessments"
+      ],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Two Newly Disclosed GeoServer Vulnerabilities Under Attack",
+      "url": "https://www.securityweek.com/two-newly-disclosed-geoserver-vulnerabilities-under-attack/",
+      "publishedAt": "2026-11-25T15:27:36.000Z",
+      "excerpt": "Attackers are probing GeoServer instances for two high-severity flaws that can be chained with other bugs for unauthenticated RCE. The post Two Newly Disclosed GeoServer Vulnerabilities Under Attack appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/two-newly-disclosed-geoserver-vulnerabilities-under-attack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/two-newly-disclosed-geoserver-vulnerabilities-under-attack"
+      ],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "It's a Bot World. We're Just Living in It",
+      "url": "https://www.darkreading.com/cyber-risk/bot-world-just-living",
+      "publishedAt": "2026-11-25T15:20:27.000Z",
+      "excerpt": "Bot detection has become a losing game. Security teams need to limit privileged access for humans and their machine counterparts equally.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/bot-world-just-living",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyber-risk/bot-world-just-living"
+      ],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "More Pentests Without More Pentesters: Where AI Safely Helps",
+      "url": "https://www.bleepingcomputer.com/news/security/more-pentests-without-more-pentesters-where-ai-safely-helps/",
+      "publishedAt": "2026-11-25T15:00:10.000Z",
+      "excerpt": "Penetration testers spend a significant portion of their engagements on documentation, reporting, and other tasks outside of testing. PentestPad explains how AI can reduce this workload, help teams handle more engagements, and keep sensitive client data within their own infrastructure. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/more-pentests-without-more-pentesters-where-ai-safely-helps",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/more-pentests-without-more-pentesters-where-ai-safely-helps"
+      ],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "unit42",
+      "sourceKind": "rss",
+      "title": "The AI Threat Horizon: Why Speed, Edge AI and Baselines Are Our Best Defense",
+      "url": "https://unit42.paloaltonetworks.com/ai-threat-horizon/",
+      "publishedAt": "2026-11-25T15:00:09.000Z",
+      "excerpt": "Unit 42 examines the evolution of AI-driven cyberattacks and outlines proactive defense strategies for security teams. The post The AI Threat Horizon: Why Speed, Edge AI and Baselines Are Our Best Defense appeared first on Unit 42.",
+      "canonicalUrl": "https://unit42.paloaltonetworks.com/ai-threat-horizon",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://unit42.paloaltonetworks.com/ai-threat-horizon"
+      ],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "InfraTrust warns of exploited supply chain flaws in network appliances",
+      "url": "https://www.bleepingcomputer.com/news/security/infratrust-warns-of-exploited-supply-chain-flaws-in-network-appliances/",
+      "publishedAt": "2026-11-25T15:00:00.000Z",
+      "excerpt": "Eclypsium's November InfraTrust report warns that most infrastructure security advisories addressing exploited vulnerabilities over the past month involve flaws in third-party software bundled into products rather than code developed by the vendors themselves. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/infratrust-warns-of-exploited-supply-chain-flaws-in-network-appliances",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/infratrust-warns-of-exploited-supply-chain-flaws-in-network-appliances"
+      ],
+      "cves": [],
+      "id": "s14"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Cyber Insurers See New Divide: AI Defense 'Haves' &amp; 'Have Nots'",
+      "url": "https://www.darkreading.com/cybersecurity-operations/cyber-insurers-see-new-ai-divide",
+      "publishedAt": "2026-11-25T15:00:00.000Z",
+      "excerpt": "Dark Reading Confidential Episode 23: Cyber insurers share their view of the AI-driven threat landscape and how mounting challenges are putting pressure on both sides of the policy, leaving the current model unsustainable.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/cyber-insurers-see-new-ai-divide",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cybersecurity-operations/cyber-insurers-see-new-ai-divide"
+      ],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "ShinyHunters Claims Comeback, New Inception Group Rejects Alleged Ties",
+      "url": "https://www.securityweek.com/shinyhunters-claims-comeback-new-inception-group-rejects-alleged-ties/",
+      "publishedAt": "2026-11-25T14:15:25.000Z",
+      "excerpt": "An account tied to ShinyHunters announced the group’s return, as Okta spots possible links between Inception and ShinyHunters hackers. The post ShinyHunters Claims Comeback, New Inception Group Rejects Alleged Ties appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/shinyhunters-claims-comeback-new-inception-group-rejects-alleged-ties",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/shinyhunters-claims-comeback-new-inception-group-rejects-alleged-ties"
+      ],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Latin America Sees Cyberattacks on Ports, Pipelines &amp; Manufacturing",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/latin-america-cyberattacks-ports-pipelines-manufacturing",
+      "publishedAt": "2026-11-25T14:00:00.000Z",
+      "excerpt": "From the Port of Santos in Brazil to a pipeline in Argentina, cyberattacks are increasingly affecting industrial systems throughout the region.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/latin-america-cyberattacks-ports-pipelines-manufacturing",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyberattacks-data-breaches/latin-america-cyberattacks-ports-pipelines-manufacturing"
+      ],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "US Treasury’s FinCEN Disconnects Systems Following Cyber Incident",
+      "url": "https://www.securityweek.com/us-treasurys-fincen-disconnects-systems-following-cyber-incident/",
+      "publishedAt": "2026-11-25T13:39:21.000Z",
+      "excerpt": "FinCEN has extended deadlines for filers affected by the disruptions while it is investigating the incident. The post US Treasury’s FinCEN Disconnects Systems Following Cyber Incident appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/us-treasurys-fincen-disconnects-systems-following-cyber-incident",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/us-treasurys-fincen-disconnects-systems-following-cyber-incident"
+      ],
+      "cves": [],
+      "id": "s18"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Ground Truth: CISO Matt Martin on Building a Real Security Program Without an Enterprise Budget",
+      "url": "https://www.securityweek.com/ground-truth-ciso-matt-martin-on-building-a-real-security-program-without-an-enterprise-budget/",
+      "publishedAt": "2026-11-25T13:30:00.000Z",
+      "excerpt": "Matthew Martin is Chief Information Security and Privacy Officer at Western Carolina University. The post Ground Truth: CISO Matt Martin on Building a Real Security Program Without an Enterprise Budget appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/ground-truth-ciso-matt-martin-on-building-a-real-security-program-without-an-enterprise-budget",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/ground-truth-ciso-matt-martin-on-building-a-real-security-program-without-an-enterprise-budget"
+      ],
+      "cves": [],
+      "id": "s19"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Credential Remediation Is Slow When You Don’t Know What Will Break",
+      "url": "https://thehackernews.com/2026/11/credential-remediation-is-slow-when-you.html",
+      "publishedAt": "2026-11-25T11:51:48.000Z",
+      "excerpt": "TL;DR More than 64% still valid after four years: GitGuardian’s State of Secrets Sprawl 2026 found that most valid secrets discovered in 2022 still worked in January 2026, because teams stall on what a revoke will break. Validity-only triage misses 46% of critical secrets: Prioritize by impact instead, weighing what a credential can access and whether it leaked publicly, and update the",
+      "canonicalUrl": "https://thehackernews.com/2026/11/credential-remediation-is-slow-when-you.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/credential-remediation-is-slow-when-you.html"
+      ],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft fixes Microsoft 365 bug blocking access to Office apps",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-blank-dialog-that-made-microsoft-365-office-apps-unusable/",
+      "publishedAt": "2026-11-25T11:16:32.000Z",
+      "excerpt": "Earlier this week, Microsoft resolved a known issue that was preventing some Microsoft 365 customers from accessing Office applications. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-fixes-blank-dialog-that-made-microsoft-365-office-apps-unusable",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/microsoft/microsoft-fixes-blank-dialog-that-made-microsoft-365-office-apps-unusable"
+      ],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "talos",
+      "sourceKind": "rss",
+      "title": "Securing Grandma's groceries with Pierre Cadieux",
+      "url": "https://blog.talosintelligence.com/securing-grandmas-groceries-with-pierre-cadieux/",
+      "publishedAt": "2026-11-25T11:00:00.000Z",
+      "excerpt": "Pierre takes us back to his early days on help desks in the 90s, where learning to correlate logs between Windows and Unix systems sparked the curiosity that eventually led him to security.",
+      "canonicalUrl": "https://blog.talosintelligence.com/securing-grandmas-groceries-with-pierre-cadieux",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://blog.talosintelligence.com/securing-grandmas-groceries-with-pierre-cadieux"
+      ],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "talos",
+      "sourceKind": "rss",
+      "title": "The Great Escape: Tradecraft insights from an agentic swarm",
+      "url": "https://blog.talosintelligence.com/the-great-escape-tradecraft-insights-from-an-agentic-swarm/",
+      "publishedAt": "2026-11-25T11:00:00.000Z",
+      "excerpt": "The OpenAI-linked swarm activity in 2026 is fully traceable through public records. This blog analyzes its tradecraft and compares it to early signals and behaviors from current agentic attack activity seen in the wild.",
+      "canonicalUrl": "https://blog.talosintelligence.com/the-great-escape-tradecraft-insights-from-an-agentic-swarm",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://blog.talosintelligence.com/the-great-escape-tradecraft-insights-from-an-agentic-swarm"
+      ],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Ex-OpenAI Employee Accused of Bugging Company Offices Granted $1 Million Bail",
+      "url": "https://thehackernews.com/2026/11/ex-openai-employee-accused-of-bugging.html",
+      "publishedAt": "2026-11-25T10:43:07.000Z",
+      "excerpt": "A former OpenAI employee accused of concealing a covert recording device at the company's San Francisco offices will be allowed to be released from jail on a $1 million bond, a San Francisco federal court judge ruled Tuesday. Abdulrahman Alfozan, a 35-year-old Saudi national, was arrested on October 9, 2026, for allegedly bugging the artificial intelligence (AI) company's offices with the aim",
+      "canonicalUrl": "https://thehackernews.com/2026/11/ex-openai-employee-accused-of-bugging.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/ex-openai-employee-accused-of-bugging.html"
+      ],
+      "cves": [],
+      "id": "s28"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Plagiarism Checker Turnitin Investigating Cyberattack",
+      "url": "https://www.securityweek.com/plagiarism-checker-turnitin-investigating-cyberattack/",
+      "publishedAt": "2026-11-25T10:40:07.000Z",
+      "excerpt": "The edtech company says the systems are fully operational and safe to use while it investigates the incident. The post Plagiarism Checker Turnitin Investigating Cyberattack appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/plagiarism-checker-turnitin-investigating-cyberattack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/plagiarism-checker-turnitin-investigating-cyberattack"
+      ],
+      "cves": [],
+      "id": "s29"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Treasury's FinCEN takes systems offline after cybersecurity incident",
+      "url": "https://therecord.media/treasury-fincen-takes-systems-offline-after-cyber-incident",
+      "publishedAt": "2026-11-25T10:15:00.000Z",
+      "excerpt": "The Treasury Department has taken some systems offline after a cybersecurity incident that “resulted in unauthorized access to a limited subset of its systems.”",
+      "canonicalUrl": "https://therecord.media/treasury-fincen-takes-systems-offline-after-cyber-incident",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/treasury-fincen-takes-systems-offline-after-cyber-incident"
+      ],
+      "cves": [],
+      "id": "s30"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Hackers now exploit critical Drupal RCE flaw to hijack sites",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-now-exploit-critical-drupal-rce-flaw-to-hijack-sites/",
+      "publishedAt": "2026-11-25T10:10:20.000Z",
+      "excerpt": "The Drupal security team has confirmed that a critical vulnerability that lets attackers hijack unpatched sites has been actively exploited since at least Thursday. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/hackers-now-exploit-critical-drupal-rce-flaw-to-hijack-sites",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/hackers-now-exploit-critical-drupal-rce-flaw-to-hijack-sites"
+      ],
+      "cves": [],
+      "id": "s31"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Hackers Exploited CVSS 10.0 Hex.pm RCE Flaw to Compromise 6 Package Registry Servers",
+      "url": "https://thehackernews.com/2026/11/hackers-exploited-cvss-100-hexpm-rce.html",
+      "publishedAt": "2026-11-25T09:06:59.000Z",
+      "excerpt": "An attacker ran operating system commands on Monday on six production servers of Hex.pm, the package registry that Elixir and Erlang developers fetch their dependencies from. The flaw used in the attack had been in the registry's code since February 2016, and the team that maintains the service had every server on a patched build within about 15 minutes of the first malicious request. Checks",
+      "canonicalUrl": "https://thehackernews.com/2026/11/hackers-exploited-cvss-100-hexpm-rce.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/hackers-exploited-cvss-100-hexpm-rce.html"
+      ],
+      "cves": [],
+      "id": "s32"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Hackers Exploit Unpatched Flaw in Defunct Idunno AntiCsrf Library",
+      "url": "https://www.securityweek.com/hackers-exploit-unpatched-flaw-in-defunct-idunno-anticsrf-library/",
+      "publishedAt": "2026-11-25T09:05:13.000Z",
+      "excerpt": "Attackers can exploit CVE-2026-131914 to achieve remote code execution via a single web request containing specially crafted data. The post Hackers Exploit Unpatched Flaw in Defunct Idunno AntiCsrf Library appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/hackers-exploit-unpatched-flaw-in-defunct-idunno-anticsrf-library",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/hackers-exploit-unpatched-flaw-in-defunct-idunno-anticsrf-library"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-131914",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Idunno",
+            "product": "AntiCsrf",
+            "vulnerabilityName": "Idunno AntiCsrf Deserialization of Untrusted Data Vulnerability",
+            "dateAdded": "2026-11-24",
+            "shortDescription": "Idunno AntiCsrf contains a deserialization of untrusted data vulnerability that allows an unauthenticated remote attacker to execute arbitrary code via object injection. The impacted product(s) could be end-of-life (EoL) and/or end-of-service (EoS). Users are advised to discontinue use and/or transition to a supported version.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-27",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "This vulnerability could affect an open-source component, third-party library, protocol, or proprietary implementation that could be used by different products. For more information, please see: https://github.com/mandiant/Vulnerability-Disclosures/blob/master/2026/MNDT-2026-0048.md ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-131914",
+            "cwes": [
+              "CWE-502"
+            ]
+          },
+          "nvd": {
+            "description": "Deserialization of untrusted data in double-submit cookie vs. form field validation in Idunno.AntiCsrf versions through 0.9.1 Beta on ASP.NET allows remote unauthenticated attackers to execute code via object injection",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.3,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:A/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "mandiant-cve@google.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-502"
+            ],
+            "published": "2026-11-19T02:17:20.360",
+            "lastModified": "2026-11-25T05:18:30.107",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://codeplexarchive.org/project/AntiCSRF",
+                "source": "mandiant-cve@google.com",
+                "tags": [
+                  "Permissions Required"
+                ]
+              },
+              {
+                "url": "https://github.com/mandiant/Vulnerability-Disclosures/blob/master/2026/MNDT-2026-0048.md",
+                "source": "mandiant-cve@google.com",
+                "tags": [
+                  "Mitigation",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-131914",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:blowdart:anticsrf:0.9.0:beta:*:*:*:asp.net:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "810F6550-9AD9-482A-A27B-E0F039BE59A3",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:blowdart:anticsrf:0.9.1:beta:*:*:*:asp.net:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "27A5D01F-0E04-4AF4-90A8-AA7341969797",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/hackers-exploit-unpatched-flaw-in-defunct-idunno-anticsrf-library/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.25",
+              "dateReleased": "2026-11-25T19:48:12.4344Z",
+              "retrievedAt": "2026-11-25T20:58:09.946Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-120705%2CCVE-2026-129243%2CCVE-2026-132165%2CCVE-2026-131914%2CCVE-2026-123633%2CCVE-2026-132224",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-131914",
+              "retrievedAt": "2026-11-25T20:58:09.946Z"
+            }
+          }
+        }
+      ],
+      "id": "s33"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft confirms authentication issues after November updates",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-confirms-authentication-issues-after-november-updates/",
+      "publishedAt": "2026-11-25T09:02:57.000Z",
+      "excerpt": "Microsoft has confirmed that customers may experience authentication issues after installing November security updates that address a high-severity remote code execution vulnerability. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-confirms-authentication-issues-after-november-updates",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/microsoft/microsoft-confirms-authentication-issues-after-november-updates"
+      ],
+      "cves": [],
+      "id": "s34"
+    },
+    {
+      "sourceId": "securelist",
+      "sourceKind": "rss",
+      "title": "How to protect against preinstalled Android malware",
+      "url": "https://securelist.com/tr/how-to-protect-against-preinstalled-android-malware/122093/",
+      "publishedAt": "2026-11-25T09:00:35.000Z",
+      "excerpt": "We look at Trojans in the firmware of Android devices, share some statistics, and discuss the risks to corporate users and ways to counter the threat with Kaspersky Next.",
+      "canonicalUrl": "https://securelist.com/tr/how-to-protect-against-preinstalled-android-malware/122093",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securelist.com/tr/how-to-protect-against-preinstalled-android-malware/122093"
+      ],
+      "cves": [],
+      "id": "s35"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Palo Alto Networks Patches Fragnesia Flaw Used to Root Firewalls",
+      "url": "https://www.securityweek.com/palo-alto-networks-patches-fragnesia-flaw-used-to-root-firewalls/",
+      "publishedAt": "2026-11-25T08:12:24.000Z",
+      "excerpt": "A China-linked hacking group chained PHP2Shell with Fragnesia in AI-assisted attacks that hit 25 servers. The post Palo Alto Networks Patches Fragnesia Flaw Used to Root Firewalls appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/palo-alto-networks-patches-fragnesia-flaw-used-to-root-firewalls",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/palo-alto-networks-patches-fragnesia-flaw-used-to-root-firewalls"
+      ],
+      "cves": [],
+      "id": "s36"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Drupal Flaw Found by Anthropic Scanner Exploited in Attacks",
+      "url": "https://www.securityweek.com/drupal-flaw-found-by-anthropic-scanner-exploited-in-attacks/",
+      "publishedAt": "2026-11-25T08:01:06.000Z",
+      "excerpt": "CISA has added the vulnerability to its KEV catalog and instructed federal agencies to patch it within three days. The post Drupal Flaw Found by Anthropic Scanner Exploited in Attacks appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/drupal-flaw-found-by-anthropic-scanner-exploited-in-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/drupal-flaw-found-by-anthropic-scanner-exploited-in-attacks"
+      ],
+      "cves": [],
+      "id": "s37"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Com-Affiliated Hackers Hijack Cloud Accounts via Vishing for Data Theft and Extortion",
+      "url": "https://thehackernews.com/2026/11/com-affiliated-hackers-hijack-cloud.html",
+      "publishedAt": "2026-11-25T06:37:06.000Z",
+      "excerpt": "Palo Alto Networks Unit 42 has disclosed that it's tracking and has responded to \"numerous waves of vishing attacks\" orchestrated by Com-affiliated threat actors since August 2026 that have led to data theft and extortion attempts. The attacks have targeted financial services, healthcare, and legal services located in the U.S., the U.K., and Australia. Other targets include construction,",
+      "canonicalUrl": "https://thehackernews.com/2026/11/com-affiliated-hackers-hijack-cloud.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/com-affiliated-hackers-hijack-cloud.html"
+      ],
+      "cves": [],
+      "id": "s40"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "WordPress Blocks Six Backdoored WP Connect Plugins Before Malicious Releases Go Live",
+      "url": "https://thehackernews.com/2026/11/wordpress-blocks-six-backdoored-wp.html",
+      "publishedAt": "2026-11-25T06:21:12.000Z",
+      "excerpt": "WordPress has removed six WordPress plugins developed by WP Connect after they were backdoored on November 22, 2026, to enable arbitrary code execution on sites that have them installed, following a suspected compromise of the developer's account. The WordPress plugins team has proactively detected and blocked the threat before it could be officially released. Visiting each plugin listing now",
+      "canonicalUrl": "https://thehackernews.com/2026/11/wordpress-blocks-six-backdoored-wp.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/wordpress-blocks-six-backdoored-wp.html"
+      ],
+      "cves": [],
+      "id": "s41"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "An Unclassified CIA System Was Breached in a Cyberattack, AP Source Says",
+      "url": "https://www.securityweek.com/an-unclassified-cia-system-was-breached-in-a-cyberattack-ap-source-says/",
+      "publishedAt": "2026-11-24T22:41:58.000Z",
+      "excerpt": "It was not clear what specific information was compromised or who was responsible. The post An Unclassified CIA System Was Breached in a Cyberattack, AP Source Says appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/an-unclassified-cia-system-was-breached-in-a-cyberattack-ap-source-says",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/an-unclassified-cia-system-was-breached-in-a-cyberattack-ap-source-says"
+      ],
+      "cves": [],
+      "id": "s43"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Satellites Have a Ground-Level Cybersecurity Problem",
+      "url": "https://www.darkreading.com/cyber-risk/satellites-ground-level-cybersecurity-problem",
+      "publishedAt": "2026-11-24T22:05:34.000Z",
+      "excerpt": "Weaknesses in the ground-based infrastructure supporting satellite services are becoming more consequential as a new space race gathers pace.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/satellites-ground-level-cybersecurity-problem",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyber-risk/satellites-ground-level-cybersecurity-problem"
+      ],
+      "cves": [],
+      "id": "s44"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Webworm APT Slithers Into Networks With Customized SoftEther VPN",
+      "url": "https://www.darkreading.com/perimeter/webworm-slithers-customized-softether-vpn",
+      "publishedAt": "2026-11-24T21:48:06.000Z",
+      "excerpt": "The China-aligned espionage group rebuilt the open source VPN software from source, stripping out the artifacts that would normally expose it to defenders.",
+      "canonicalUrl": "https://darkreading.com/perimeter/webworm-slithers-customized-softether-vpn",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/perimeter/webworm-slithers-customized-softether-vpn"
+      ],
+      "cves": [],
+      "id": "s45"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "How Southeastern University Got a Handle on Its Data",
+      "url": "https://www.darkreading.com/cybersecurity-operations/how-southeastern-university-handle-data",
+      "publishedAt": "2026-11-24T15:46:46.000Z",
+      "excerpt": "Data security posture management (DSPM) allowed the university to uncover sensitive information, tighten access controls, and lay the groundwork for safer AI adoption.",
+      "canonicalUrl": "https://darkreading.com/cybersecurity-operations/how-southeastern-university-handle-data",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cybersecurity-operations/how-southeastern-university-handle-data"
+      ],
+      "cves": [],
+      "id": "s46"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "CISA Adds Three Known Exploited Vulnerabilities to Catalog",
+      "url": "https://www.cisa.gov/news-events/alerts/2026/11/24/cisa-adds-three-known-exploited-vulnerabilities-catalog",
+      "publishedAt": "2026-11-24T12:00:00.000Z",
+      "excerpt": "CISA has added three new vulnerabilities to its Known Exploited Vulnerabilities (KEV) Catalog, based on evidence of active exploitation. CVE-2026-131914 Idunno AntiCsrf Deserialization of Untrusted Data Vulnerability CVE-2026-132165 Drupal Core Remote Code Execution Vulnerability CVE-2026-132224 Optimizely Web Experimentation External Control of Critical State Data Vulnerability These types of…",
+      "canonicalUrl": "https://cisa.gov/news-events/alerts/2026/11/24/cisa-adds-three-known-exploited-vulnerabilities-catalog",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/alerts/2026/11/24/cisa-adds-three-known-exploited-vulnerabilities-catalog"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-131914",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Idunno",
+            "product": "AntiCsrf",
+            "vulnerabilityName": "Idunno AntiCsrf Deserialization of Untrusted Data Vulnerability",
+            "dateAdded": "2026-11-24",
+            "shortDescription": "Idunno AntiCsrf contains a deserialization of untrusted data vulnerability that allows an unauthenticated remote attacker to execute arbitrary code via object injection. The impacted product(s) could be end-of-life (EoL) and/or end-of-service (EoS). Users are advised to discontinue use and/or transition to a supported version.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-27",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "This vulnerability could affect an open-source component, third-party library, protocol, or proprietary implementation that could be used by different products. For more information, please see: https://github.com/mandiant/Vulnerability-Disclosures/blob/master/2026/MNDT-2026-0048.md ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-131914",
+            "cwes": [
+              "CWE-502"
+            ]
+          },
+          "nvd": {
+            "description": "Deserialization of untrusted data in double-submit cookie vs. form field validation in Idunno.AntiCsrf versions through 0.9.1 Beta on ASP.NET allows remote unauthenticated attackers to execute code via object injection",
+            "cvss": {
+              "version": "4.0",
+              "score": 9.3,
+              "severity": "CRITICAL",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:A/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "mandiant-cve@google.com",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-502"
+            ],
+            "published": "2026-11-19T02:17:20.360",
+            "lastModified": "2026-11-25T05:18:30.107",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://codeplexarchive.org/project/AntiCSRF",
+                "source": "mandiant-cve@google.com",
+                "tags": [
+                  "Permissions Required"
+                ]
+              },
+              {
+                "url": "https://github.com/mandiant/Vulnerability-Disclosures/blob/master/2026/MNDT-2026-0048.md",
+                "source": "mandiant-cve@google.com",
+                "tags": [
+                  "Mitigation",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-131914",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:blowdart:anticsrf:0.9.0:beta:*:*:*:asp.net:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "810F6550-9AD9-482A-A27B-E0F039BE59A3",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:a:blowdart:anticsrf:0.9.1:beta:*:*:*:asp.net:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "27A5D01F-0E04-4AF4-90A8-AA7341969797",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/11/24/cisa-adds-three-known-exploited-vulnerabilities-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.25",
+              "dateReleased": "2026-11-25T19:48:12.4344Z",
+              "retrievedAt": "2026-11-25T20:58:09.946Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-120705%2CCVE-2026-129243%2CCVE-2026-132165%2CCVE-2026-131914%2CCVE-2026-123633%2CCVE-2026-132224",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-131914",
+              "retrievedAt": "2026-11-25T20:58:09.946Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-132165",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Drupal",
+            "product": "Core",
+            "vulnerabilityName": "Drupal Core Remote Code Execution Vulnerability",
+            "dateAdded": "2026-11-24",
+            "shortDescription": "Drupal Core contains a not failing securely vulnerability that could allow an unauthenticated attacker to take over an existing site or execute arbitrary code via the Drupal installer. Under specific conditions, the attacker can use install.php to attempt to reinstall Drupal on the site.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-27",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://www.drupal.org/sa-core-2026-017 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-132165",
+            "cwes": [
+              "CWE-636"
+            ]
+          },
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/11/24/cisa-adds-three-known-exploited-vulnerabilities-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.25",
+              "dateReleased": "2026-11-25T19:48:12.4344Z",
+              "retrievedAt": "2026-11-25T20:58:09.946Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-120705%2CCVE-2026-129243%2CCVE-2026-132165%2CCVE-2026-131914%2CCVE-2026-123633%2CCVE-2026-132224",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-132165",
+              "retrievedAt": "2026-11-25T20:58:09.946Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-132224",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Optimizely",
+            "product": "Web Experimentation",
+            "vulnerabilityName": "Optimizely Web Experimentation External Control of Critical State Data Vulnerability",
+            "dateAdded": "2026-11-24",
+            "shortDescription": "Optimizely Web Experimentation contains an external control of critical state data vulnerability in its account signup flow that could allow an attacker to impersonate existing customer users and modify Project JavaScript. Successful exploitation can result in attacker-controlled JavaScript being distributed through Optimizely-hosted assets and executed in browsers visiting affected customer websites.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-27",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://pages.optimizely.com/rs/947-RKE-048/images/Security%20Incident%20Report%20-%20Optimizely%20Web%20Experimentation%20-%20Nov%2017%202026.pdf ; https://status.optimizely.com/incidents/ftw0fh9wx43z ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-132224",
+            "cwes": [
+              "CWE-642"
+            ]
+          },
+          "nvd": {
+            "description": "Optimizely Web Experimentation before 2026-11-17 mishandles the account signup flow, leading to presence of attacker-controlled code in the projectJS (aka Project JavaScript) field of certain cdn.optimizely.com assets.",
+            "cvss": {
+              "version": "4.0",
+              "score": 7.1,
+              "severity": "HIGH",
+              "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "source": "cve@mitre.org",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-642"
+            ],
+            "published": "2026-11-18T16:18:15.627",
+            "lastModified": "2026-11-25T05:18:30.523",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://arstechnica.com/security/2026/11/malicious-code-delivered-through-optimizely-hits-visitors-to-hundreds-of-sites/",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Press/Media Coverage"
+                ]
+              },
+              {
+                "url": "https://blog.report-uri.com/worlds-largest-brands-infected-with-malware-via-optimizely/",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/brave/adblock-resources/pull/355",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Issue Tracking",
+                  "Mitigation",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://krebsonsecurity.com/2026/11/attackers-used-optimizely-to-a-b-test-malware-on-top-websites/",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://news.ycombinator.com/item?id=50524767",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Issue Tracking",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://pages.optimizely.com/rs/947-RKE-048/images/Security%20Incident%20Report%20-%20Optimizely%20Web%20Experimentation%20-%20Nov%2017%202026.pdf",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://scotthelme.co.uk/reflecting-on-the-optimizely-incident-and-why-we-keep-failing/",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://status.optimizely.com/incidents/ftw0fh9wx43z",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://therecord.media/optimizely-malicious-code-customer-sites",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.bleepingcomputer.com/news/security/optimizely-supply-chain-attack-delivers-malware-to-cnn-fox-news-bbc-salesforce-sites/",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Press/Media Coverage"
+                ]
+              },
+              {
+                "url": "https://www.thatprivacyguy.com/blog/optimizely-bbc-cnn-consent/",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-132224",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:optimizely:web_experimentation:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "6950E31E-D8B4-4D67-8390-D43379C40928",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "2026-11-17"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/11/24/cisa-adds-three-known-exploited-vulnerabilities-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.25",
+              "dateReleased": "2026-11-25T19:48:12.4344Z",
+              "retrievedAt": "2026-11-25T20:58:09.946Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-120705%2CCVE-2026-129243%2CCVE-2026-132165%2CCVE-2026-131914%2CCVE-2026-123633%2CCVE-2026-132224",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-132224",
+              "retrievedAt": "2026-11-25T20:58:09.946Z"
+            }
+          }
+        }
+      ],
+      "id": "s47"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1280,
+    "promptCacheMissTokens": 14782,
+    "outputTokens": 13520,
+    "estimatedCostUsd": 0.0058586639999999995
+  }
+}
