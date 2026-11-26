@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-11-26",
+    "mode": "article",
+    "headline": "Juniper's 9.8 command injection and a Drupal core takeover flaw anchor active exploitation",
+    "count": 21
+  },
+  {
     "date": "2026-11-25",
     "mode": "article",
     "headline": "Drupal's KEV-listed RCE leads a day of active exploitation and high-value breaches",

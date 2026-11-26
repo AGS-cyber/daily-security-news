@@ -1,0 +1,1191 @@
+{
+  "date": "2026-11-26",
+  "generatedAt": "2026-11-26T20:50:56.452Z",
+  "collection": [
+    {
+      "sourceId": "krebs",
+      "attemptedAt": "2026-11-26T20:50:56.452Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "attemptedAt": "2026-11-26T20:50:56.452Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "thehackernews",
+      "attemptedAt": "2026-11-26T20:50:56.452Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "therecord",
+      "attemptedAt": "2026-11-26T20:50:56.452Z",
+      "status": "ok",
+      "items": 5,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securityweek",
+      "attemptedAt": "2026-11-26T20:50:56.452Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "darkreading",
+      "attemptedAt": "2026-11-26T20:50:56.452Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "attemptedAt": "2026-11-26T20:50:56.452Z",
+      "status": "ok",
+      "items": 30,
+      "skipped": 0
+    },
+    {
+      "sourceId": "projectzero",
+      "attemptedAt": "2026-11-26T20:50:56.452Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securelist",
+      "attemptedAt": "2026-11-26T20:50:56.452Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "talos",
+      "attemptedAt": "2026-11-26T20:50:56.452Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "unit42",
+      "attemptedAt": "2026-11-26T20:50:56.452Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "microsoft-security",
+      "attemptedAt": "2026-11-26T20:50:56.452Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    }
+  ],
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 229,
+    "published": 21
+  },
+  "mode": "article",
+  "headline": "Juniper's 9.8 command injection and a Drupal core takeover flaw anchor active exploitation",
+  "standfirst": "A CVSS 9.8 Juniper Session Smart command injection is confirmed exploited with a tight federal remediation window, Drupal warns that a separate core takeover flaw is already being used, and a compromised employee GitHub account led to stolen 1Password customer data. The rest of the day: suspected AI-assisted MiCollab attacks, chained PAN-OS exploits, a sprawling GitHub malware campaign, state groups adopting an AI tool, and a delayed UK cyber strategy.",
+  "bodyMarkdown": "## Actively exploited\n\nCVE-2026-103406 is a CVSS 9.8 critical OS command injection (CWE-78) in Juniper's AutomatedProvisioner, allowing a remote, unauthenticated attacker with no user interaction to execute commands as root via a crafted salt minion ID [[s7]]. CISA's KEV catalog lists it as known exploited, naming both Session Smart Conductor and Session Smart Router, while the supplied NVD configuration covers Conductor. Federal remediation is due within days under CISA's BOD guidance, not a universal deadline. NVD lists Conductor ranges below 7.0.5-14-lts, from 7.1.0-50r1 to below 7.1.7-15-sts, and from 7.2.0-29r1 to below 7.2.3-8r2. Analysis: the combination of root-level impact, network reach and confirmed exploitation makes internet-exposed Session Smart deployments the first thing to inventory; the KEV listing does not establish how many estates are affected.\n\nDrupal says CVE-2026-136716, a \"highly critical\" core flaw, has been exploited in the wild and can lead to site takeover [[s14]]. NVD describes an improper check for unusual or exceptional conditions enabling forceful browsing, with no CVSS score supplied; the supplied enrichment does not place this CVE in KEV. The related CVE-2026-132165, aka Fail2Install, is in KEV as a known-exploited missing-authentication flaw and affects core through 10.6.22, 11.3.22 and 11.4.13. The newer flaw affects through 10.6.23, 11.3.23 and 11.4.14; the story links it to Fail2Install by saying it addresses remaining vulnerable installation states. Analysis: the earlier installer fix may not close every vulnerable installation state, and the KEV entry's federal due date is only days out.\n\nAccenture reports that Mitel MiCollab zero-days were exploited before Mitel's advisory, in a suspected extortion campaign, and says AI likely assisted the attackers [[s9]]. No CVE IDs or affected versions were supplied in this evidence. Analysis: exploitation before an advisory leaves defenders responding after the fact; the AI-assistance claim remains a suspicion, not an established cause.\n\nPalo Alto Networks warns that exploits for Fragnesia are being used in PAN-OS attacks, chained with PHP2Shell against devices whose management interfaces are exposed to the internet [[s18]]. The supplied evidence gives no CVE IDs, affected versions or patch details. Analysis: the clearest supplied precondition is internet exposure of the management interface.\n\n## Breaches\n\n1Password disclosed a breach after an employee's corporate GitHub account was compromised and used to deploy malicious code to backend services to steal customer data [[s19]]. The evidence does not say vault contents were accessed. Analysis: repository and CI identities are high-value breach vectors because they can reach backend deployment paths.\n\n## Research\n\nPolinRider, described as North Korea-linked, has planted a Python loader in more than 7,600 GitHub repositories, hiding it in a small utils package or conftest.py [[s6]]. The loader runs when Python imports the file; the excerpt is truncated there. Evidence suggests the activity may predate the campaign's discovery. Analysis: repository trust is the exposure, since an ordinary Python import triggers the loader.\n\nMicrosoft says China's Salt Typhoon group and North Korean groups are rapidly integrating the Artex AI tool into their intrusion suites, with the tool implicated in several high-profile breaches [[s20]]. Analysis: the reported speed of adoption points to AI-assisted operations becoming more routine state-actor tradecraft, but the excerpt does not quantify the effect on intrusion success.\n\n## Industry\n\nThe UK's National Cyber Action Plan has been delayed beyond its intended publication window, with officials now targeting a later rollout [[s17]]. The plan is meant to set the strategy for defending the wider economy against state-backed and criminal hackers; the delay leaves the framework unpublished.",
+  "selected": [
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Critical Juniper Session Smart Conductor Flaw Exploited in Attacks",
+      "url": "https://www.securityweek.com/critical-juniper-session-smart-conductor-flaw-exploited-in-attacks/",
+      "publishedAt": "2026-11-26T13:04:06.000Z",
+      "excerpt": "Tracked as CVE-2026-103406, the vulnerability allows remote attackers to execute arbitrary commands as root. The post Critical Juniper Session Smart Conductor Flaw Exploited in Attacks appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/critical-juniper-session-smart-conductor-flaw-exploited-in-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/critical-juniper-session-smart-conductor-flaw-exploited-in-attacks"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-103406",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Hewlett Packard Enterprise (HPE)",
+            "product": "Juniper Session Smart Conductor and Session Smart Router",
+            "vulnerabilityName": "Hewlett Packard Enterprise (HPE) Juniper Session Smart Conductor and Session Smart Router OS Command Injection Vulnerability",
+            "dateAdded": "2026-11-25",
+            "shortDescription": "Hewlett Packard Enterprise (HPE) Juniper Session Smart Conductor and Session Smart Router contain an OS command injection vulnerability that could allow a remote attacker to execute arbitrary commands as root via a specially crafted salt minion ID.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-28",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://supportportal.juniper.net/s/article/2026-10-On-Demand-Security-Bulletin-Session-Smart-Router-and-Session-Smart-Conductor-Multiple-internally-discovered-vulnerabilities-resolved ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-103406",
+            "cwes": [
+              "CWE-78"
+            ]
+          },
+          "nvd": {
+            "description": "An Improper Neutralization of Special Elements used in an OS Command vulnerability in the AutomatedProvisioner in Juniper Networks Session Smart Conductor allows a remote attacker to execute arbitrary commands as root via a specially crafted salt minion ID.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "sirt@juniper.net",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-78"
+            ],
+            "published": "2026-10-28T17:17:25.830",
+            "lastModified": "2026-11-26T05:18:07.963",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://supportportal.juniper.net/JSA112183",
+                "source": "sirt@juniper.net",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-103406",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:o:juniper:session_smart_conductor:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D8F84771-A96E-4307-9EB0-87EB7E57D875",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "7.0.5-14-lts"
+              },
+              {
+                "criteria": "cpe:2.3:o:juniper:session_smart_conductor:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "DC5B82D6-C89E-4ABC-AB2E-D45CC74C522C",
+                "versionStartIncluding": "7.1.0-50r1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "7.1.7-15-sts"
+              },
+              {
+                "criteria": "cpe:2.3:o:juniper:session_smart_conductor:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "35EDD1F7-F923-4E9B-A6B9-3299201E84C7",
+                "versionStartIncluding": "7.2.0-29r1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "7.2.3-8r2"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "securityweek",
+                "url": "https://www.securityweek.com/critical-juniper-session-smart-conductor-flaw-exploited-in-attacks/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.25",
+              "dateReleased": "2026-11-25T19:48:12.4344Z",
+              "retrievedAt": "2026-11-26T20:50:56.452Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-103406%2CCVE-2026-132165%2CCVE-2026-136716%2CCVE-2026-133275%2CCVE-2023-25914%2CCVE-2023-25915%2CCVE-2025-41450",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-103406",
+              "retrievedAt": "2026-11-26T20:50:56.452Z"
+            }
+          }
+        }
+      ],
+      "id": "s7",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "A CVSS 9.8 unauthenticated OS command injection in Juniper Session Smart Conductor is confirmed exploited in the wild, with CISA's KEV remediation deadline set for November 28 — internet-exposed Session Smart Router/Conductor estates must be treated as compromised until patched."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Drupal Warns of New Highly Critical Site Takeover Vulnerability Under Active Exploitation",
+      "url": "https://thehackernews.com/2026/11/drupal-warns-of-new-highly-critical.html",
+      "publishedAt": "2026-11-26T07:02:34.000Z",
+      "excerpt": "Drupal has warned of a new \"highly critical\" security flaw impacting Drupal core that it said has been exploited in the wild. The vulnerability, tracked as CVE-2026-136716 (CVSS score: N/A), has been described as a case of improper checking for unusual or exceptional conditions. It also relates to CVE-2026-132165 aka Fail2Install in that it addresses remaining vulnerable installation states",
+      "canonicalUrl": "https://thehackernews.com/2026/11/drupal-warns-of-new-highly-critical.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/drupal-warns-of-new-highly-critical.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-132165",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Drupal",
+            "product": "Core",
+            "vulnerabilityName": "Drupal Core Remote Code Execution Vulnerability",
+            "dateAdded": "2026-11-24",
+            "shortDescription": "Drupal Core contains a not failing securely vulnerability that could allow an unauthenticated attacker to take over an existing site or execute arbitrary code via the Drupal installer. Under specific conditions, the attacker can use install.php to attempt to reinstall Drupal on the site.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-27",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://www.drupal.org/sa-core-2026-017 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-132165",
+            "cwes": [
+              "CWE-636"
+            ]
+          },
+          "nvd": {
+            "description": "Missing Authentication for Critical Function vulnerability in Drupal Drupal core allows Exploiting Incorrectly Configured Access Control Security Levels. This issue affects Drupal core versions: from 0.0.0 to 10.6.22, from 11.0.0 to 11.3.22, from 11.4.0 to 11.4.13.",
+            "cvss": null,
+            "cwes": [
+              "CWE-306"
+            ],
+            "published": "2026-11-26T01:17:10.290",
+            "lastModified": "2026-11-26T01:17:10.290",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://www.drupal.org/sa-core-2026-017",
+                "source": "mlhess@drupal.org",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/11/drupal-warns-of-new-highly-critical.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.25",
+              "dateReleased": "2026-11-25T19:48:12.4344Z",
+              "retrievedAt": "2026-11-26T20:50:56.452Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-103406%2CCVE-2026-132165%2CCVE-2026-136716%2CCVE-2026-133275%2CCVE-2023-25914%2CCVE-2023-25915%2CCVE-2025-41450",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-132165",
+              "retrievedAt": "2026-11-26T20:50:56.452Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-136716",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "Improper Check for Unusual or Exceptional Conditions vulnerability in Drupal Drupal core allows Forceful Browsing. This issue affects Drupal core versions: from 0.0.0 to 10.6.23, from 11.0.0 to 11.3.23, from 11.4.0 to 11.4.14.",
+            "cvss": null,
+            "cwes": [
+              "CWE-754"
+            ],
+            "published": "2026-11-26T01:17:10.517",
+            "lastModified": "2026-11-26T01:17:10.517",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://www.drupal.org/sa-core-2026-019",
+                "source": "mlhess@drupal.org",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/11/drupal-warns-of-new-highly-critical.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.25",
+              "dateReleased": "2026-11-25T19:48:12.4344Z",
+              "retrievedAt": "2026-11-26T20:50:56.452Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-103406%2CCVE-2026-132165%2CCVE-2026-136716%2CCVE-2026-133275%2CCVE-2023-25914%2CCVE-2023-25915%2CCVE-2025-41450",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-136716",
+              "retrievedAt": "2026-11-26T20:50:56.452Z"
+            }
+          }
+        }
+      ],
+      "id": "s14",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "Drupal core is warning of a 'highly critical' site-takeover flaw already exploited in the wild, and the related Fail2Install KEV entry carries a November 27 due date — sites patched only for the earlier installer gap remain exposed."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "1Password customer data stolen after employee GitHub account breach",
+      "url": "https://www.bleepingcomputer.com/news/security/1password-customer-data-stolen-after-employee-github-account-breach/",
+      "publishedAt": "2026-11-25T21:33:33.000Z",
+      "excerpt": "1Password has disclosed a data breach after a an employee's corporate GitHub account was hacked and used to deploy malicious code to the company's backend services to steal customer data. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/1password-customer-data-stolen-after-employee-github-account-breach",
+      "alsoCoveredBy": [
+        {
+          "sourceId": "thehackernews",
+          "name": "The Hacker News",
+          "url": "https://thehackernews.com/2026/11/1password-hacked-customer-data-and.html"
+        }
+      ],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/1password-customer-data-stolen-after-employee-github-account-breach",
+        "https://thehackernews.com/2026/11/1password-hacked-customer-data-and.html"
+      ],
+      "cves": [],
+      "id": "s19",
+      "section": "breaches",
+      "rank": 3,
+      "angle": "A compromised employee GitHub account was used to push malicious code into 1Password's backend and steal customer records, underscoring source-control and CI identities as high-value breach vectors even when vaults stay sealed."
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Mitel MiCollab Zero-Days Exploited in Suspected AI-Assisted Attacks",
+      "url": "https://www.securityweek.com/mitel-micollab-zero-days-exploited-in-suspected-ai-assisted-attacks/",
+      "publishedAt": "2026-11-26T11:35:25.000Z",
+      "excerpt": "Accenture says hackers exploited MiCollab flaws before Mitel’s advisory, likely aided by AI, in a suspected extortion campaign. The post Mitel MiCollab Zero-Days Exploited in Suspected AI-Assisted Attacks appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/mitel-micollab-zero-days-exploited-in-suspected-ai-assisted-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/mitel-micollab-zero-days-exploited-in-suspected-ai-assisted-attacks"
+      ],
+      "cves": [],
+      "id": "s9",
+      "section": "exploited",
+      "rank": 4,
+      "angle": "Accenture reports MiCollab zero-days were exploited before Mitel's advisory in what it suspects is an extortion campaign, with AI assistance reportedly compressing exploit development — patching lags attacker timelines."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Palo Alto Networks warns of Fragnesia flaw exploited in PAN-OS attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/palo-alto-networks-warns-of-fragnesia-flaw-exploited-in-pan-os-attacks/",
+      "publishedAt": "2026-11-25T22:05:09.000Z",
+      "excerpt": "Threat actors are chaining exploits for the PHP2Shell and Fragnesia vulnerabilities to target Palo Alto Networks devices with management interfaces exposed to the internet. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/palo-alto-networks-warns-of-fragnesia-flaw-exploited-in-pan-os-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/palo-alto-networks-warns-of-fragnesia-flaw-exploited-in-pan-os-attacks"
+      ],
+      "cves": [],
+      "id": "s18",
+      "section": "exploited",
+      "rank": 5,
+      "angle": "Exploits for PHP2Shell and Fragnesia are being chained against PAN-OS devices with internet-exposed management interfaces, making management-plane exposure the immediate thing to verify."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "North Korea-Linked PolinRider Poisons Over 7,600 GitHub Repositories to Spread Malware",
+      "url": "https://thehackernews.com/2026/11/north-korea-linked-polinrider-poisons.html",
+      "publishedAt": "2026-11-26T15:13:41.000Z",
+      "excerpt": "The threat actors behind the PolinRider campaign have been observed planting a Python loader in GitHub repositories, as evidence emerges that the activity may have started as far back as February 2025. \"The loader hides in a small utils package or in conftest.py,\" SafeDep said in a report published this week. \"When Python imports the file, the loader reads the newest transaction that an",
+      "canonicalUrl": "https://thehackernews.com/2026/11/north-korea-linked-polinrider-poisons.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/north-korea-linked-polinrider-poisons.html"
+      ],
+      "cves": [],
+      "id": "s6",
+      "section": "research",
+      "rank": 6,
+      "angle": "North Korea-linked PolinRider has planted a Python loader in more than 7,600 GitHub repositories via a small utils package or conftest.py, turning ordinary developer installs into malware delivery since as far back as February 2025."
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Microsoft: China’s Salt Typhoon hackers are using Artex",
+      "url": "https://therecord.media/microsoft-china-salt-typhoon-using-artex-ai-tool",
+      "publishedAt": "2026-11-25T21:18:00.000Z",
+      "excerpt": "An AI tool implicated in several high-profile breaches is rapidly being integrated into the hacking suites of groups from China and North Korea, Microsoft said.",
+      "canonicalUrl": "https://therecord.media/microsoft-china-salt-typhoon-using-artex-ai-tool",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/microsoft-china-salt-typhoon-using-artex-ai-tool"
+      ],
+      "cves": [],
+      "id": "s20",
+      "section": "research",
+      "rank": 7,
+      "angle": "Microsoft says China's Salt Typhoon and North Korean groups are rapidly integrating the Artex AI tool into their intrusion suites, a signal that AI-assisted operations are becoming standard state-actor tradecraft."
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "UK’s long-awaited National Cyber Action Plan delayed until December",
+      "url": "https://therecord.media/britain-delays-national-cyber-action-plan-again",
+      "publishedAt": "2026-11-26T00:00:00.000Z",
+      "excerpt": "Officials, who had planned to publish the document in mid-November, now aim to unveil the strategy for defending the wider economy against state-backed and criminal hackers on December 9.",
+      "canonicalUrl": "https://therecord.media/britain-delays-national-cyber-action-plan-again",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/britain-delays-national-cyber-action-plan-again"
+      ],
+      "cves": [],
+      "id": "s17",
+      "section": "industry",
+      "rank": 8,
+      "angle": "The UK's National Cyber Action Plan has slipped from mid-November to December 9, delaying the strategic framework for defending the wider economy against state-backed and criminal intrusions."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "ThreatsDay: 10M NGINX Services at Risk, 250+ Malicious Extensions, AI Server Hijacking + 17 More Stories",
+      "url": "https://thehackernews.com/2026/11/threatsday-250-rogue-extensions-10m.html",
+      "publishedAt": "2026-11-26T19:39:57.000Z",
+      "excerpt": "A website can look perfectly fine to the person running it. Log out, visit the same page, and things might look different. Something similar is happening with browser extensions, where even the way you find and install one can change what it does. Checking whether software works as expected only tells you so much. Then there’s the question of who gets to use what. Stolen logins are opening",
+      "canonicalUrl": "https://thehackernews.com/2026/11/threatsday-250-rogue-extensions-10m.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/threatsday-250-rogue-extensions-10m.html"
+      ],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "NordVPN Black Friday Deal: Get 78% off VPN plans in 2026",
+      "url": "https://www.bleepingcomputer.com/news/security/nordvpn-black-friday-deal-get-78-percent-off-vpn-plans-in-2026/",
+      "publishedAt": "2026-11-26T17:58:42.000Z",
+      "excerpt": "NordVPN's 2026 Black Friday and Cyber Monday deal is now live, offering savings of up to 78% on VPN subscriptions, plus three extra months of protection. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/nordvpn-black-friday-deal-get-78-percent-off-vpn-plans-in-2026",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/nordvpn-black-friday-deal-get-78-percent-off-vpn-plans-in-2026"
+      ],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Fake paid expert interviews impersonate brands to steal Google logins",
+      "url": "https://www.bleepingcomputer.com/news/apple/fake-paid-expert-interviews-impersonate-brands-to-steal-google-logins/",
+      "publishedAt": "2026-11-26T17:15:27.000Z",
+      "excerpt": "An ongoing phishing campaign dubbed \"GoodGuys\" impersonates major brands, including Google, Nvidia, Accenture, and SpaceX, to steal corporate Google and Okta credentials using fake invitations to paid expert interviews and webinars. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/apple/fake-paid-expert-interviews-impersonate-brands-to-steal-google-logins",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/apple/fake-paid-expert-interviews-impersonate-brands-to-steal-google-logins"
+      ],
+      "cves": [],
+      "id": "s3"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "FIFA Says It Has Been Victim of a Cyberattack Accessing ‘Personal and Business Information’",
+      "url": "https://www.securityweek.com/fifa-says-it-has-been-victim-of-a-cyberattack-accessing-personal-and-business-information/",
+      "publishedAt": "2026-11-26T17:06:55.000Z",
+      "excerpt": "FIFA didn’t say when the cyberattack took place, or the precise nature of the hacked information. The post FIFA Says It Has Been Victim of a Cyberattack Accessing ‘Personal and Business Information’ appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/fifa-says-it-has-been-victim-of-a-cyberattack-accessing-personal-and-business-information",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/fifa-says-it-has-been-victim-of-a-cyberattack-accessing-personal-and-business-information"
+      ],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Remus malware steals Gmail messages via fake Google Sheets extension",
+      "url": "https://www.bleepingcomputer.com/news/security/remus-malware-steals-gmail-messages-via-fake-google-sheets-extension/",
+      "publishedAt": "2026-11-26T15:23:28.000Z",
+      "excerpt": "The Remus infostealer is stealing Gmail messages through a stealthy malicious Chrome extension, a capability the malware operators marketed as a zero-day exploit in Google's email service. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/remus-malware-steals-gmail-messages-via-fake-google-sheets-extension",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/remus-malware-steals-gmail-messages-via-fake-google-sheets-extension"
+      ],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "SYS010 malware abuses browser management to spy on Gmail, Outlook",
+      "url": "https://www.bleepingcomputer.com/news/security/sys010-malware-abuses-browser-management-to-spy-on-gmail-outlook/",
+      "publishedAt": "2026-11-26T11:50:17.000Z",
+      "excerpt": "A new version of the SYS01 infostealer malware delivered through Meta ads is enrolling browsers into enterprise-style management to force the installation of an extension that steals sensitive data, including Gmail and Outlook emails. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/sys010-malware-abuses-browser-management-to-spy-on-gmail-outlook",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/sys010-malware-abuses-browser-management-to-spy-on-gmail-outlook"
+      ],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Most Wanted: The Phishing Kits and Techniques Getting Past Security Controls",
+      "url": "https://thehackernews.com/2026/11/most-wanted-phishing-kits-and.html",
+      "publishedAt": "2026-11-26T10:57:55.000Z",
+      "excerpt": "Every phishing attack has to get past email security, web filtering, and safe browsing before it reaches an employee. Some kits manage that far more often than others, and those are the kits that security teams need to know about. At Push Security, we measure this as breakthrough rate: The share of attacks that get past email security, web gateways, and safe browsing to reach the user. How an",
+      "canonicalUrl": "https://thehackernews.com/2026/11/most-wanted-phishing-kits-and.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/most-wanted-phishing-kits-and.html"
+      ],
+      "cves": [],
+      "id": "s10"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Drupal Installer Patch Left a Gap Attackers Are Already Exploiting",
+      "url": "https://www.securityweek.com/drupal-installer-patch-left-a-gap-attackers-are-already-exploiting/",
+      "publishedAt": "2026-11-26T09:12:26.000Z",
+      "excerpt": "Drupal warns that its previous installer patch left some websites vulnerable to takeover, with attackers already exploiting the gap. The post Drupal Installer Patch Left a Gap Attackers Are Already Exploiting appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/drupal-installer-patch-left-a-gap-attackers-are-already-exploiting",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/drupal-installer-patch-left-a-gap-attackers-are-already-exploiting"
+      ],
+      "cves": [],
+      "id": "s11"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "1Password Breach Exposes Customer Data, Internal Source Code",
+      "url": "https://www.securityweek.com/1password-breach-exposes-customer-data-internal-source-code/",
+      "publishedAt": "2026-11-26T08:32:10.000Z",
+      "excerpt": "A hacker used a compromised employee GitHub account to push malicious code and steal customer records, but vaults were not accessed. The post 1Password Breach Exposes Customer Data, Internal Source Code appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/1password-breach-exposes-customer-data-internal-source-code",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/1password-breach-exposes-customer-data-internal-source-code"
+      ],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Cyprus Becomes Espionage Target for Iranian Hackers",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/cyprus-espionage-target-iranian-hackers",
+      "publishedAt": "2026-11-26T08:00:00.000Z",
+      "excerpt": "A previously undocumented Iranian threat group called \"Volant Manticore\" is targeting Cypriot organizations as part of an intelligence-gathering effort for Tehran.",
+      "canonicalUrl": "https://darkreading.com/cyberattacks-data-breaches/cyprus-espionage-target-iranian-hackers",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyberattacks-data-breaches/cyprus-espionage-target-iranian-hackers"
+      ],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Hackers Exploit 10 Vulnerabilities Across Mitel, Juniper, Vates, and Danfoss Products",
+      "url": "https://thehackernews.com/2026/11/hackers-exploit-10-vulnerabilities.html",
+      "publishedAt": "2026-11-26T06:44:46.000Z",
+      "excerpt": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Wednesday added 10 security flaws to its Known Exploited Vulnerabilities (KEV) catalog, including five vulnerabilities impacting Mitel MiCollab that were disclosed last week. The Mitel MiCollab vulnerabilities are listed below - CVE-2026-133275 (CVSS score: 5.3) - An arbitrary file upload vulnerability in the Audio, Web and",
+      "canonicalUrl": "https://thehackernews.com/2026/11/hackers-exploit-10-vulnerabilities.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/hackers-exploit-10-vulnerabilities.html"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-133275",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Mitel",
+            "product": "MiCollab",
+            "vulnerabilityName": "Mitel MiCollab Unrestricted Upload of File with Dangerous Type Vulnerability",
+            "dateAdded": "2026-11-25",
+            "shortDescription": "Mitel MiCollab contains an unrestricted upload of file with dangerous type vulnerability in the Audio, Web and Video Conferencing (AWV) component due to insufficient file type validation that could allow an unauthenticated attacker to upload arbitrary files.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-28",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://www.mitel.com/support/security-advisories/mitel-product-security-advisory-misa-2026-0012 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-133275",
+            "cwes": [
+              "CWE-434"
+            ]
+          },
+          "nvd": {
+            "description": "A vulnerability in the Audio, Web, and Video Conferencing (AWV) component of Mitel MiCollab through 10.3 (10.3.0.18) could allow an unauthenticated attacker to conduct an arbitrary file upload attack due to insufficient file type validation. A successful exploit could allow an attacker to upload arbitrary files to the target system. This is MTLVULN-1861.",
+            "cvss": {
+              "version": "3.1",
+              "score": 5.3,
+              "severity": "MEDIUM",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+              "source": "cve@mitre.org",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-434"
+            ],
+            "published": "2026-11-19T16:21:31.033",
+            "lastModified": "2026-11-26T05:18:20.573",
+            "vulnStatus": "Modified",
+            "references": [
+              {
+                "url": "https://www.mitel.com/support/security-advisories/mitel-product-security-advisory-misa-2026-0012",
+                "source": "cve@mitre.org",
+                "tags": [
+                  "Mitigation",
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://accenture.github.io/cyber-intelligence/micollab-exploitation/",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": []
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-133275",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:mitel:micollab:*:*:*:*:*:-:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "962D1D1E-C6D0-429C-84E4-3C1B42708EB1",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": "10.3.0.18",
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "thehackernews",
+                "url": "https://thehackernews.com/2026/11/hackers-exploit-10-vulnerabilities.html",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.25",
+              "dateReleased": "2026-11-25T19:48:12.4344Z",
+              "retrievedAt": "2026-11-26T20:50:56.452Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-103406%2CCVE-2026-132165%2CCVE-2026-136716%2CCVE-2026-133275%2CCVE-2023-25914%2CCVE-2023-25915%2CCVE-2025-41450",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-133275",
+              "retrievedAt": "2026-11-26T20:50:56.452Z"
+            }
+          }
+        }
+      ],
+      "id": "s15"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "13 Malicious NuGet Packages Turn Fake .NET Job Assessments Into Malware Delivery Traps",
+      "url": "https://thehackernews.com/2026/11/13-malicious-nuget-packages-turn-fake.html",
+      "publishedAt": "2026-11-26T03:48:52.000Z",
+      "excerpt": "Cybersecurity researchers have discovered 13 malicious NuGet packages that are designed to target Windows .NET developers under the guise of a fake take-home job assessment. \"Most of the packages pose as WinUI 3 and WPF [Windows Presentation Foundation] button controls,\" Socket security researcher Kush Pandya said in a technical write-up. \"In the versions we analyzed, building or running a",
+      "canonicalUrl": "https://thehackernews.com/2026/11/13-malicious-nuget-packages-turn-fake.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/13-malicious-nuget-packages-turn-fake.html"
+      ],
+      "cves": [],
+      "id": "s16"
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "CISA Adds 10 Known Exploited Vulnerabilities to Catalog",
+      "url": "https://www.cisa.gov/news-events/alerts/2026/11/25/cisa-adds-10-known-exploited-vulnerabilities-catalog",
+      "publishedAt": "2026-11-25T12:00:00.000Z",
+      "excerpt": "CISA has added 10 new vulnerabilities to its Known Exploited Vulnerabilities (KEV) Catalog, based on evidence of active exploitation. CVE-2023-25914 Danfoss AK-SM 800A Series Path Traversal Vulnerability CVE-2023-25915 Danfoss AK-SM 800A Series Improper Input Validation Vulnerability CVE-2025-41450 Danfoss AK-SM 800A Series Improper Authentication Vulnerability CVE-2026-103406 Hewlett Packard…",
+      "canonicalUrl": "https://cisa.gov/news-events/alerts/2026/11/25/cisa-adds-10-known-exploited-vulnerabilities-catalog",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/alerts/2026/11/25/cisa-adds-10-known-exploited-vulnerabilities-catalog"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2023-25914",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Danfoss",
+            "product": "AK-SM 800A Series",
+            "vulnerabilityName": "Danfoss AK-SM 800A Series Path Traversal Vulnerability",
+            "dateAdded": "2026-11-25",
+            "shortDescription": "Danfoss AK-SM 800A Series contains a path traversal vulnerability that could allow an attacker to access and read underlying server system files via the XML interface.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-28",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://www.danfoss.com/en/service-and-support/coordinated-vulnerability-disclosure/danfoss-security-advisories/dsa-2023-08-01 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2023-25914",
+            "cwes": [
+              "CWE-22"
+            ]
+          },
+          "nvd": {
+            "description": "Due to improper restriction, authenticated attackers could retrieve and read system files of the underlying server through the XML interface. The information that can be read can lead to a full system compromise.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.8,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+              "source": "nvd@nist.gov",
+              "type": "Primary"
+            },
+            "cwes": [
+              "CWE-22"
+            ],
+            "published": "2023-08-21T21:15:08.970",
+            "lastModified": "2026-11-26T05:17:48.717",
+            "vulnStatus": "Modified",
+            "references": [
+              {
+                "url": "https://csirt.divd.nl/CVE-2023-25914",
+                "source": "csirt@divd.nl",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://csirt.divd.nl/DIVD-2023-00025",
+                "source": "csirt@divd.nl",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://csirt.divd.nl/CVE-2023-25914",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://csirt.divd.nl/DIVD-2023-00025",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2023-25914",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:o:danfoss:ak-sm_800a_firmware:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0FE57274-BA94-492A-9D3A-A74F047E9EF4",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": "3.3",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:danfoss:ak-sm_800a:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "A4EC90A1-18C1-4509-96DF-A528E2AF5989",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/11/25/cisa-adds-10-known-exploited-vulnerabilities-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.25",
+              "dateReleased": "2026-11-25T19:48:12.4344Z",
+              "retrievedAt": "2026-11-26T20:50:56.452Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-103406%2CCVE-2026-132165%2CCVE-2026-136716%2CCVE-2026-133275%2CCVE-2023-25914%2CCVE-2023-25915%2CCVE-2025-41450",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2023-25914",
+              "retrievedAt": "2026-11-26T20:50:56.452Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2023-25915",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Danfoss",
+            "product": "AK-SM 800A Series",
+            "vulnerabilityName": "Danfoss AK-SM 800A Series Improper Input Validation Vulnerability",
+            "dateAdded": "2026-11-25",
+            "shortDescription": "Danfoss AK-SM 800A Series contains an improper input validation vulnerability that could allow a remote attacker to run arbitrary commands on the affected system.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-28",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://www.danfoss.com/en/service-and-support/coordinated-vulnerability-disclosure/danfoss-security-advisories/dsa-2023-08-01 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2023-25915",
+            "cwes": [
+              "CWE-20"
+            ]
+          },
+          "nvd": {
+            "description": "Due to improper input validation, an authenticated remote attacker could execute arbitrary commands on the target system.",
+            "cvss": {
+              "version": "3.1",
+              "score": 8.8,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+              "source": "nvd@nist.gov",
+              "type": "Primary"
+            },
+            "cwes": [
+              "CWE-20"
+            ],
+            "published": "2023-08-21T21:15:09.170",
+            "lastModified": "2026-11-26T05:17:53.213",
+            "vulnStatus": "Modified",
+            "references": [
+              {
+                "url": "https://csirt.divd.nl/CVE-2023-25915",
+                "source": "csirt@divd.nl",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://csirt.divd.nl/DIVD-2023-00025",
+                "source": "csirt@divd.nl",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://csirt.divd.nl/CVE-2023-25915",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://csirt.divd.nl/DIVD-2023-00025",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": [
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2023-25915",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:o:danfoss:ak-sm_800a_firmware:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "0FE57274-BA94-492A-9D3A-A74F047E9EF4",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": "3.3",
+                "versionEndExcluding": null
+              },
+              {
+                "criteria": "cpe:2.3:h:danfoss:ak-sm_800a:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "A4EC90A1-18C1-4509-96DF-A528E2AF5989",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/11/25/cisa-adds-10-known-exploited-vulnerabilities-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.25",
+              "dateReleased": "2026-11-25T19:48:12.4344Z",
+              "retrievedAt": "2026-11-26T20:50:56.452Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-103406%2CCVE-2026-132165%2CCVE-2026-136716%2CCVE-2026-133275%2CCVE-2023-25914%2CCVE-2023-25915%2CCVE-2025-41450",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2023-25915",
+              "retrievedAt": "2026-11-26T20:50:56.452Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2025-41450",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Danfoss",
+            "product": "AK-SM 800A Series",
+            "vulnerabilityName": "Danfoss AK-SM 800A Series Improper Authentication Vulnerability",
+            "dateAdded": "2026-11-25",
+            "shortDescription": "Danfoss AK-SM 800A Series contains an improper authentication vulnerability that could allow an attacker to generate a web report exposing sensitive information, including internal IP addresses, usernames, and store names.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-12-09",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://www.danfoss.com/en/service-and-support/coordinated-vulnerability-disclosure/danfoss-security-advisories/dsa-2025-03-01 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2025-41450",
+            "cwes": [
+              "CWE-305"
+            ]
+          },
+          "nvd": {
+            "description": "Improper Authentication vulnerability in Danfoss AKSM8xxA Series.This issue affects Danfoss AK-SM 8xxA Series prior to version 4.2",
+            "cvss": {
+              "version": "3.1",
+              "score": 7.5,
+              "severity": "HIGH",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+              "source": "nvd@nist.gov",
+              "type": "Primary"
+            },
+            "cwes": [
+              "CWE-305"
+            ],
+            "published": "2025-05-08T10:15:18.380",
+            "lastModified": "2026-11-26T05:18:07.057",
+            "vulnStatus": "Modified",
+            "references": [
+              {
+                "url": "https://www.danfoss.com/en/service-and-support/coordinated-vulnerability-disclosure/danfoss-security-advisories/dsa-2025-03-01/",
+                "source": "d7ff35af-cf88-454c-bab9-af60602f10f8",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://github.com/msuiche/fromagegate",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "Exploit",
+                  "Third Party Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2025-41450",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:o:danfoss:ak-sm_800a_firmware:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "72EF969B-FA4E-4647-A5EA-EC8F3AAE70BF",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "4.2"
+              },
+              {
+                "criteria": "cpe:2.3:h:danfoss:ak-sm_800a:-:*:*:*:*:*:*:*",
+                "vulnerable": false,
+                "matchCriteriaId": "A4EC90A1-18C1-4509-96DF-A528E2AF5989",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": null
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/11/25/cisa-adds-10-known-exploited-vulnerabilities-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.25",
+              "dateReleased": "2026-11-25T19:48:12.4344Z",
+              "retrievedAt": "2026-11-26T20:50:56.452Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-103406%2CCVE-2026-132165%2CCVE-2026-136716%2CCVE-2026-133275%2CCVE-2023-25914%2CCVE-2023-25915%2CCVE-2025-41450",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2025-41450",
+              "retrievedAt": "2026-11-26T20:50:56.452Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-103406",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Hewlett Packard Enterprise (HPE)",
+            "product": "Juniper Session Smart Conductor and Session Smart Router",
+            "vulnerabilityName": "Hewlett Packard Enterprise (HPE) Juniper Session Smart Conductor and Session Smart Router OS Command Injection Vulnerability",
+            "dateAdded": "2026-11-25",
+            "shortDescription": "Hewlett Packard Enterprise (HPE) Juniper Session Smart Conductor and Session Smart Router contain an OS command injection vulnerability that could allow a remote attacker to execute arbitrary commands as root via a specially crafted salt minion ID.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-28",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://supportportal.juniper.net/s/article/2026-10-On-Demand-Security-Bulletin-Session-Smart-Router-and-Session-Smart-Conductor-Multiple-internally-discovered-vulnerabilities-resolved ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-103406",
+            "cwes": [
+              "CWE-78"
+            ]
+          },
+          "nvd": {
+            "description": "An Improper Neutralization of Special Elements used in an OS Command vulnerability in the AutomatedProvisioner in Juniper Networks Session Smart Conductor allows a remote attacker to execute arbitrary commands as root via a specially crafted salt minion ID.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "sirt@juniper.net",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-78"
+            ],
+            "published": "2026-10-28T17:17:25.830",
+            "lastModified": "2026-11-26T05:18:07.963",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://supportportal.juniper.net/JSA112183",
+                "source": "sirt@juniper.net",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              },
+              {
+                "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-103406",
+                "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+                "tags": [
+                  "US Government Resource"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:o:juniper:session_smart_conductor:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "D8F84771-A96E-4307-9EB0-87EB7E57D875",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "7.0.5-14-lts"
+              },
+              {
+                "criteria": "cpe:2.3:o:juniper:session_smart_conductor:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "DC5B82D6-C89E-4ABC-AB2E-D45CC74C522C",
+                "versionStartIncluding": "7.1.0-50r1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "7.1.7-15-sts"
+              },
+              {
+                "criteria": "cpe:2.3:o:juniper:session_smart_conductor:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "35EDD1F7-F923-4E9B-A6B9-3299201E84C7",
+                "versionStartIncluding": "7.2.0-29r1",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "7.2.3-8r2"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/11/25/cisa-adds-10-known-exploited-vulnerabilities-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.25",
+              "dateReleased": "2026-11-25T19:48:12.4344Z",
+              "retrievedAt": "2026-11-26T20:50:56.452Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-103406%2CCVE-2026-132165%2CCVE-2026-136716%2CCVE-2026-133275%2CCVE-2023-25914%2CCVE-2023-25915%2CCVE-2025-41450",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-103406",
+              "retrievedAt": "2026-11-26T20:50:56.452Z"
+            }
+          }
+        }
+      ],
+      "id": "s21"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1280,
+    "promptCacheMissTokens": 9897,
+    "outputTokens": 15376,
+    "estimatedCostUsd": 0.005694444000000001
+  }
+}
