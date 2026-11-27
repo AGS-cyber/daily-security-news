@@ -1,0 +1,834 @@
+{
+  "date": "2026-11-27",
+  "generatedAt": "2026-11-27T20:35:45.698Z",
+  "collection": [
+    {
+      "sourceId": "krebs",
+      "attemptedAt": "2026-11-27T20:35:45.698Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "attemptedAt": "2026-11-27T20:35:45.698Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "thehackernews",
+      "attemptedAt": "2026-11-27T20:35:45.698Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "therecord",
+      "attemptedAt": "2026-11-27T20:35:45.698Z",
+      "status": "ok",
+      "items": 5,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securityweek",
+      "attemptedAt": "2026-11-27T20:35:45.698Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "darkreading",
+      "attemptedAt": "2026-11-27T20:35:45.698Z",
+      "status": "ok",
+      "items": 50,
+      "skipped": 0
+    },
+    {
+      "sourceId": "cisa-advisories",
+      "attemptedAt": "2026-11-27T20:35:45.698Z",
+      "status": "ok",
+      "items": 30,
+      "skipped": 0
+    },
+    {
+      "sourceId": "projectzero",
+      "attemptedAt": "2026-11-27T20:35:45.698Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "securelist",
+      "attemptedAt": "2026-11-27T20:35:45.698Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    },
+    {
+      "sourceId": "talos",
+      "attemptedAt": "2026-11-27T20:35:45.698Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "unit42",
+      "attemptedAt": "2026-11-27T20:35:45.698Z",
+      "status": "ok",
+      "items": 15,
+      "skipped": 0
+    },
+    {
+      "sourceId": "microsoft-security",
+      "attemptedAt": "2026-11-27T20:35:45.698Z",
+      "status": "ok",
+      "items": 10,
+      "skipped": 0
+    }
+  ],
+  "normalizationExclusions": [],
+  "degraded": [],
+  "stats": {
+    "sourcesConfigured": 12,
+    "sourcesOk": 12,
+    "collected": 230,
+    "normalized": 230,
+    "deduped": 230,
+    "published": 28
+  },
+  "mode": "article",
+  "headline": "Drupal and GeoServer join KEV as a 9.8 Linux root bug surfaces",
+  "standfirst": "CISA confirmed active exploitation of three vulnerabilities — two in GeoServer and a 9.8-rated Drupal Core flaw — while Drupal's own team warned of a second critical bug already being used to hijack sites. Switzerland disclosed AI-agent intrusions at critical infrastructure operators, and the vulnerability queue filled with a 12-year-old Linux NFS root flaw and an unpatched Cacti RCE that already has public exploit code. Add a reported Air Force cloud breach, a confirmed SAP incident and trojanized installers, and the patch list is long.",
+  "bodyMarkdown": "## Actively exploited\n\nCISA added three entries to its Known Exploited Vulnerabilities catalog on evidence of active exploitation: an XML injection flaw in GeoServer (CVE-2026-120705), an incorrect authorization flaw in the same product (CVE-2026-129243), and an improper check for unusual or exceptional conditions in Drupal Core (CVE-2026-136716) [[s11]]. Only the Drupal entry carries NVD enrichment, and it is severe: CVSS 9.8, critical, with a network vector that requires no privileges and no user interaction, tracked as CWE-754, affecting Drupal core before 10.6.23 and the 11.x lines before 11.3.23 and 11.4.14. The two GeoServer records supply vendor, product and name but no severity or affected versions. CISA's required action points to vendor mitigations under BOD 26-04, with a remediation deadline falling only days after listing — a federal requirement, not a universal one. Ransomware campaign use is recorded as unknown for all three. Analysis: the unenriched GeoServer entries are the awkward ones, since severity-based triage is impossible from the catalog alone and patch guidance has to come from the vendor.\n\nDrupal's security team says attackers are exploiting a second critical vulnerability that lets them breach and hijack unpatched websites [[s16]]. The supplied reporting gives no CVE, no affected versions and no exploitation mechanism, so it should not be merged with the KEV entry above until that link is confirmed. The practical consequence is that exposure here is framed as full site takeover rather than defacement.\n\n## Vulnerabilities\n\nA 12-year-old flaw in the Linux kernel's NFS server, CVE-2026-99362, allows remote attackers to gain root privileges and is rated 9.8 critical on a network vector with no privileges or user interaction required [[s21]]. The supplied description describes nfsd narrowing a reply buffer to the session's cached limit before accepting the slot seqid; a COMPOUND tag can then fill that buffer without the status word, leaving the operation marked successful and copying the reply into a zero-length slot buffer — a slab-out-of-bounds write. The NVD record lists no affected configurations, so kernel version auditing has to start from distribution advisories rather than from the advisory data itself. The CVE is a confirmed KEV miss, which does not establish that exploitation has not occurred.\n\nCacti has a publicly disclosed zero-day with a proof-of-concept exploit that lets unauthenticated attackers execute commands on vulnerable monitoring servers [[s3]]. No CVE has been assigned in the supplied reporting and no patch is described, which leaves the usual choice between exposure reduction and waiting.\n\n## Breaches\n\nHackers have reportedly breached the Air Force's Cloud One computing platform, described as part of a wave of attacks reportedly affecting other federal agencies [[s6]]. Everything here is reported rather than confirmed, and the supplied text gives no detail on access method or data touched — treat attribution and scope as open.\n\nSAP confirmed a cybersecurity incident following reports that intruders reached its software development infrastructure and may have accessed source code [[s10]]. The confirmation covers the incident; the source-code access is still reported. Analysis: if code was in fact taken, the concern shifts from SAP's own perimeter to the trust its enterprise customers place in shipped software — but the supplied evidence does not establish that theft occurred.\n\nSwitzerland's cybersecurity agency said attackers using AI agents broke into systems in four of five confirmed attacks, the country's first such cases [[s24]]. Three targeted critical infrastructure operators, two of those succeeded, and no major disruptions were reported. Victims were not named and the perpetrator is not known, so the AI-agent element is the agency's characterization of the attacks, not an identified actor.\n\n## Research\n\nInstallers for Q-Dir and DesktopOK distributed through the official SoftwareOK site were tampered with to deliver remote access malware, with evidence that malicious files were generated both on direct download from the official page and during the update process of already-installed copies [[s19]]. The update-channel path is the part worth noting: users who did nothing unusual beyond accepting an update were still in scope.",
+  "selected": [
+    {
+      "sourceId": "cisa-advisories",
+      "sourceKind": "rss",
+      "title": "CISA Adds Three Known Exploited Vulnerabilities to Catalog",
+      "url": "https://www.cisa.gov/news-events/alerts/2026/11/27/cisa-adds-three-known-exploited-vulnerabilities-catalog",
+      "publishedAt": "2026-11-27T12:00:00.000Z",
+      "excerpt": "CISA has added three new vulnerabilities to its Known Exploited Vulnerabilities (KEV) Catalog, based on evidence of active exploitation. CVE-2026-120705 OSGeo GeoServer XML Injection Vulnerability CVE-2026-129243 OSGeo GeoServer Incorrect Authorization Vulnerability CVE-2026-136716 Drupal Core Improper Check for Unusual or Exceptional Conditions Vulnerability These types of vulnerabilities are a…",
+      "canonicalUrl": "https://cisa.gov/news-events/alerts/2026/11/27/cisa-adds-three-known-exploited-vulnerabilities-catalog",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://cisa.gov/news-events/alerts/2026/11/27/cisa-adds-three-known-exploited-vulnerabilities-catalog"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-120705",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "OSGeo",
+            "product": "GeoServer",
+            "vulnerabilityName": "OSGeo GeoServer XML Injection Vulnerability",
+            "dateAdded": "2026-11-27",
+            "shortDescription": "OsGeo GeoServer contains an XML injection vulnerability that allows an unauthenticated remote attacker to cause the server to read local text files accessible to the GeoServer process or fetch attacker-specified HTTP or HTTPS URLs via a crafted ID parameter in the WFS 2.0 GetFeatureById stored query. This vulnerability can be chained with CVE-2026-129244, CVE-2026-129243, CVE-2026-129245, and CVE-2026-129242 to achieve unauthenticated remote code execution on an affected GeoServer instance.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-30",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://geoserver.org/vulnerability/2026/11/23/cve-update.html ; https://github.com/geoserver/geoserver/security/advisories/GHSA-39mw-5chv-jh47 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-120705",
+            "cwes": [
+              "CWE-91",
+              "CWE-611",
+              "CWE-918"
+            ]
+          },
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/11/27/cisa-adds-three-known-exploited-vulnerabilities-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.27",
+              "dateReleased": "2026-11-27T18:03:12.5733Z",
+              "retrievedAt": "2026-11-27T20:35:45.698Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-120705%2CCVE-2026-129243%2CCVE-2026-136716%2CCVE-2026-99362",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-120705",
+              "retrievedAt": "2026-11-27T20:35:45.698Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-129243",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "OSGeo",
+            "product": "GeoServer",
+            "vulnerabilityName": "OSGeo GeoServer Incorrect Authorization Vulnerability",
+            "dateAdded": "2026-11-27",
+            "shortDescription": "GeoServer contains an incorrect authorization vulnerability that allows an unauthenticated remote attacker to bypass service-level role checks and invoke operations protected solely by those checks via a request with a prefixed service parameter. This vulnerability can be chained with CVE-2026-129244, CVE-2026-120705, CVE-2026-129245, and CVE-2026-129242 to achieve unauthenticated remote code execution on an affected GeoServer instance.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-30",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://geoserver.org/vulnerability/2026/11/23/cve-update.html ; https://github.com/geoserver/geoserver/security/advisories/GHSA-rv5g-g2r9-58rj ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-129243",
+            "cwes": [
+              "CWE-863"
+            ]
+          },
+          "nvd": null,
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/11/27/cisa-adds-three-known-exploited-vulnerabilities-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.27",
+              "dateReleased": "2026-11-27T18:03:12.5733Z",
+              "retrievedAt": "2026-11-27T20:35:45.698Z"
+            },
+            "nvd": {
+              "status": "not_found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-120705%2CCVE-2026-129243%2CCVE-2026-136716%2CCVE-2026-99362",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-129243",
+              "retrievedAt": "2026-11-27T20:35:45.698Z"
+            }
+          }
+        },
+        {
+          "id": "CVE-2026-136716",
+          "knownExploited": true,
+          "kev": {
+            "vendorProject": "Drupal",
+            "product": "Core",
+            "vulnerabilityName": "Drupal Core Improper Check for Unusual or Exceptional Conditions Vulnerability",
+            "dateAdded": "2026-11-27",
+            "shortDescription": "Drupal Core contains an improper check for unusual or exceptional conditions vulnerability that allows an unauthenticated remote attacker to take over a site via the exposed Drupal installer when the site is in one of the affected unusual or incomplete installation states.",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-30",
+            "knownRansomwareCampaignUse": "Unknown",
+            "notes": "https://www.drupal.org/sa-core-2026-019 ; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk ; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk ; https://nvd.nist.gov/vuln/detail/CVE-2026-136716",
+            "cwes": [
+              "CWE-754"
+            ]
+          },
+          "nvd": {
+            "description": "Improper Check for Unusual or Exceptional Conditions vulnerability in Drupal Drupal core allows Forceful Browsing. This issue affects Drupal core versions: from 0.0.0 to 10.6.23, from 11.0.0 to 11.3.23, from 11.4.0 to 11.4.14.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            },
+            "cwes": [
+              "CWE-754"
+            ],
+            "published": "2026-11-26T01:17:10.517",
+            "lastModified": "2026-11-27T20:04:11.540",
+            "vulnStatus": "Analyzed",
+            "references": [
+              {
+                "url": "https://www.drupal.org/sa-core-2026-019",
+                "source": "mlhess@drupal.org",
+                "tags": [
+                  "Vendor Advisory"
+                ]
+              }
+            ],
+            "affectedConfigurations": [
+              {
+                "criteria": "cpe:2.3:a:drupal:drupal:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "61F78AF1-4CBF-4038-B22B-E61729525144",
+                "versionStartIncluding": null,
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "10.6.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:drupal:drupal:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "423E3CA4-C0F4-4B81-9B04-6D80669A6BA9",
+                "versionStartIncluding": "11.0.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "11.3.23"
+              },
+              {
+                "criteria": "cpe:2.3:a:drupal:drupal:*:*:*:*:*:*:*:*",
+                "vulnerable": true,
+                "matchCriteriaId": "713EF03C-BB69-45B4-B007-725DFA323D54",
+                "versionStartIncluding": "11.4.0",
+                "versionStartExcluding": null,
+                "versionEndIncluding": null,
+                "versionEndExcluding": "11.4.14"
+              }
+            ]
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "cisa-advisories",
+                "url": "https://www.cisa.gov/news-events/alerts/2026/11/27/cisa-adds-three-known-exploited-vulnerabilities-catalog",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.27",
+              "dateReleased": "2026-11-27T18:03:12.5733Z",
+              "retrievedAt": "2026-11-27T20:35:45.698Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-120705%2CCVE-2026-129243%2CCVE-2026-136716%2CCVE-2026-99362",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-136716",
+              "retrievedAt": "2026-11-27T20:35:45.698Z"
+            }
+          }
+        }
+      ],
+      "id": "s11",
+      "section": "exploited",
+      "rank": 1,
+      "angle": "CISA confirms active exploitation of a 9.8 Drupal Core flaw plus two GeoServer bugs, with federal remediation due Nov 30 — the patch window is measured in hours, not weeks."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Drupal warns of new site takeover flaw exploited in attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/drupal-warns-of-new-access-bypass-flaw-exploited-in-attacks/",
+      "publishedAt": "2026-11-27T10:10:15.000Z",
+      "excerpt": "The Drupal security team says attackers are exploiting a second critical vulnerability that lets them breach and hijack unpatched websites. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/drupal-warns-of-new-access-bypass-flaw-exploited-in-attacks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/drupal-warns-of-new-access-bypass-flaw-exploited-in-attacks"
+      ],
+      "cves": [],
+      "id": "s16",
+      "section": "exploited",
+      "rank": 2,
+      "angle": "Drupal's second critical site-takeover vulnerability is already being exploited, so unpatched sites face full compromise rather than just defacement."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "New NFS2ROOT Linux flaw can let attackers gain root privileges",
+      "url": "https://www.bleepingcomputer.com/news/security/new-nfs2root-linux-flaw-can-let-attackers-gain-root-privileges/",
+      "publishedAt": "2026-11-27T08:06:58.000Z",
+      "excerpt": "​A 12-year-old critical vulnerability in the Linux kernel's Network File System (NFS) server, tracked as CVE-2026-99362, allows remote attackers to gain root privileges. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/new-nfs2root-linux-flaw-can-let-attackers-gain-root-privileges",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/new-nfs2root-linux-flaw-can-let-attackers-gain-root-privileges"
+      ],
+      "cves": [
+        {
+          "id": "CVE-2026-99362",
+          "knownExploited": false,
+          "kev": null,
+          "nvd": {
+            "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnfsd: preflight SEQUENCE replies before accepting a slot\n\nnfsd4_sequence() narrows the reply buffer to the session's cached\nreply limit before it accepts the slot seqid. A client may negotiate\nca_maxresponsesize_cached down to NFSD_MIN_HDR_SEQ_SZ, and\nnfsd4_alloc_slot() then gives every slot a zero-length sl_data[]. A\nCOMPOUND tag can fill that narrowed buffer until it holds the\nSEQUENCE opcode but not the status word that follows.\nnfsd4_encode_operation() returns without running\nnfsd4_encode_sequence(), so cstate.data_offset stays zero. It leaves\nop->status at nfs_ok as well, so the COMPOUND is treated as having\nsucceeded.\n\nnfsd4_store_cache_entry() declines to cache a lone SEQUENCE that\nreturned an error. That test reads the status the operation\nreported, so it passes here. The copy starts at offset zero and\ntakes the whole reply, RPC and COMPOUND headers included, into the\nzero-length sl_data[]. The COMPOUND tag is copied along with it, so\nthe client picks most of the bytes written past the end of the slot:\n\n  BUG: KASAN: slab-out-of-bounds in read_bytes_from_xdr_buf+0x1bc/0x390\n  Write of size 80 at addr ffff888003a549cd by task kunit_try_catch/24\n   __asan_memcpy+0x38/0x60\n   read_bytes_from_xdr_buf+0x1bc/0x390\n   nfsd4_sequence_done+0x5b0/0x810\n   nfs4svc_encode_compoundres+0x1bf/0x240\n\nCheck that the fixed-size SEQUENCE result, plus room for a following\noperation's error status, fits the negotiated limit before narrowing\nthe buffer and consuming the slot seqid. The slot and its reply\ncache are left unchanged, as RFC 8881 Section 2.10.6.1.2 requires of\nan error returned from SEQUENCE.",
+            "cvss": {
+              "version": "3.1",
+              "score": 9.8,
+              "severity": "CRITICAL",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+              "type": "Secondary"
+            },
+            "cwes": [],
+            "published": "2026-11-19T15:17:47.803",
+            "lastModified": "2026-11-27T11:17:06.913",
+            "vulnStatus": "Received",
+            "references": [
+              {
+                "url": "https://git.kernel.org/stable/c/1a5a227bca6a8a9f9d31230697aeb84c62a21da6",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/35ff1a7a7e3835c3e974bc5c45d335897564ceae",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/37fc2ec211630360e9aefcaaec8730db964645f2",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/6a26c5473bb112d8420ffd48d5331bc5fb5a2065",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/aff12e327620258123f847d7d06565f4555c5cb4",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/cd303eb29cf34a6780f4c42aca5b8ca4a05a5d59",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/ed98b0c57e5e84290c5b35428144ab26778905f3",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://git.kernel.org/stable/c/fa85acf074f000ad3d1a5ffb703128ff97de983d",
+                "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+                "tags": []
+              },
+              {
+                "url": "https://lists.debian.org/debian-lts-announce/2026/11/msg00069.html",
+                "source": "af854a3a-2127-422b-91ae-364da2661108",
+                "tags": []
+              }
+            ],
+            "affectedConfigurations": []
+          },
+          "provenance": {
+            "news": [
+              {
+                "sourceId": "bleepingcomputer",
+                "url": "https://www.bleepingcomputer.com/news/security/new-nfs2root-linux-flaw-can-let-attackers-gain-root-privileges/",
+                "field": "excerpt"
+              }
+            ],
+            "cisaKev": {
+              "status": "not_found",
+              "catalogUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+              "dataUrl": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+              "catalogVersion": "2026.11.27",
+              "dateReleased": "2026-11-27T18:03:12.5733Z",
+              "retrievedAt": "2026-11-27T20:35:45.698Z"
+            },
+            "nvd": {
+              "status": "found",
+              "apiUrl": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveIds=CVE-2026-120705%2CCVE-2026-129243%2CCVE-2026-136716%2CCVE-2026-99362",
+              "recordUrl": "https://nvd.nist.gov/vuln/detail/CVE-2026-99362",
+              "retrievedAt": "2026-11-27T20:35:45.698Z"
+            }
+          }
+        }
+      ],
+      "id": "s21",
+      "section": "vulnerabilities",
+      "rank": 3,
+      "angle": "A 12-year-old Linux kernel NFS server bug rated 9.8 gives remote attackers root — kernel version audits and patching should start immediately despite no KEV listing."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "US Air Force cloud platform reportedly hacked in latest federal breach",
+      "url": "https://www.bleepingcomputer.com/news/security/us-air-force-cloud-platform-reportedly-hacked-in-latest-federal-breach/",
+      "publishedAt": "2026-11-27T15:09:40.000Z",
+      "excerpt": "Hackers have reportedly breached the US Air Force's Cloud One computing platform, adding to a recent wave of cyberattacks affecting US government agencies, including the FBI, CIA, and Treasury Department. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/us-air-force-cloud-platform-reportedly-hacked-in-latest-federal-breach",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/us-air-force-cloud-platform-reportedly-hacked-in-latest-federal-breach"
+      ],
+      "cves": [],
+      "id": "s6",
+      "section": "breaches",
+      "rank": 4,
+      "angle": "A reported compromise of the Air Force's Cloud One platform extends a federal breach wave that reportedly reaches the FBI, CIA and Treasury, raising government cloud-trust questions."
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Software giant SAP confirms cyber incident amid reports of source code breach",
+      "url": "https://therecord.media/sap-germany-cyberattack-github",
+      "publishedAt": "2026-11-27T13:15:00.000Z",
+      "excerpt": "German software giant SAP confirmed a cybersecurity incident following reports that hackers infiltrated its software development infrastructure, potentially gaining access to the company’s source code.",
+      "canonicalUrl": "https://therecord.media/sap-germany-cyberattack-github",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/sap-germany-cyberattack-github"
+      ],
+      "cves": [],
+      "id": "s10",
+      "section": "breaches",
+      "rank": 5,
+      "angle": "SAP confirms an intrusion into its development infrastructure amid reports source code was copied — a supply-chain trust problem for its entire enterprise customer base."
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Unpatched Cacti zero-day with public PoC gives remote code execution",
+      "url": "https://www.bleepingcomputer.com/news/security/unpatched-cacti-zero-day-with-public-poc-gives-remote-code-execution/",
+      "publishedAt": "2026-11-27T17:06:13.000Z",
+      "excerpt": "A zero-day vulnerability in the Cacti network monitoring platform has been publicly disclosed, along with a proof-of-concept exploit that lets unauthenticated attackers execute commands on vulnerable servers. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/unpatched-cacti-zero-day-with-public-poc-gives-remote-code-execution",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/unpatched-cacti-zero-day-with-public-poc-gives-remote-code-execution"
+      ],
+      "cves": [],
+      "id": "s3",
+      "section": "vulnerabilities",
+      "rank": 6,
+      "angle": "An unauthenticated Cacti RCE with a public proof-of-concept and no CVE or patch gives attackers a ready-made route into network monitoring servers."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Hackers Trojanize Official Q-Dir and DesktopOK Downloads to Deliver Remote Access Malware",
+      "url": "https://thehackernews.com/2026/11/hackers-trojanize-official-q-dir-and.html",
+      "publishedAt": "2026-11-27T09:29:30.000Z",
+      "excerpt": "Cybersecurity researchers have disclosed details of a software supply chain attack that has tampered with Q-Dir and DesktopOK installation files distributed via the official SoftwareOK website. \"Evidence indicates that malicious files were generated not only when users downloaded the programs directly from the official download page but also during the update process of previously installed",
+      "canonicalUrl": "https://thehackernews.com/2026/11/hackers-trojanize-official-q-dir-and.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/hackers-trojanize-official-q-dir-and.html"
+      ],
+      "cves": [],
+      "id": "s19",
+      "section": "research",
+      "rank": 7,
+      "angle": "Official Q-Dir and DesktopOK installers were trojanized, turning trusted download pages and update channels into malware delivery for remote access."
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Switzerland Confirms AI-Assisted Cyberattacks Breached Critical Infrastructure Operators",
+      "url": "https://thehackernews.com/2026/11/switzerland-confirms-ai-assisted.html",
+      "publishedAt": "2026-11-27T06:04:20.000Z",
+      "excerpt": "Attackers using AI agents have broken into computer systems at Swiss organizations in four of five confirmed attacks, the first such cases in the country, the country's cybersecurity agency said yesterday. Three of the attacks targeted critical infrastructure operators, and two of those succeeded, with no major disruptions reported. The victims have not been named, and it is not known who is",
+      "canonicalUrl": "https://thehackernews.com/2026/11/switzerland-confirms-ai-assisted.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/switzerland-confirms-ai-assisted.html"
+      ],
+      "cves": [],
+      "id": "s24",
+      "section": "breaches",
+      "rank": 8,
+      "angle": "Switzerland confirms AI-agent-driven intrusions at critical infrastructure operators — the country's first such cases and an early warning for defenders elsewhere."
+    }
+  ],
+  "alsoCollected": [
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "pCloud confirms password manager hack after suspicious login alerts",
+      "url": "https://www.bleepingcomputer.com/news/security/pcloud-confirms-password-manager-hack-after-suspicious-login-alerts/",
+      "publishedAt": "2026-11-27T19:26:04.000Z",
+      "excerpt": "The pCloud Pass password manager suffered a cyberattack, with users reporting that unknown devices had connected to their accounts even with two-factor authentication (2FA) enabled. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/pcloud-confirms-password-manager-hack-after-suspicious-login-alerts",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/pcloud-confirms-password-manager-hack-after-suspicious-login-alerts"
+      ],
+      "cves": [],
+      "id": "s1"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "New Boston Scientific data breach exposes personal, medical info",
+      "url": "https://www.bleepingcomputer.com/news/security/new-boston-scientific-data-breach-exposes-personal-medical-info/",
+      "publishedAt": "2026-11-27T18:57:42.000Z",
+      "excerpt": "Medical technology company Boston Scientific is sending data breach notices to individuals affected by a cyberattack on the firm. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/new-boston-scientific-data-breach-exposes-personal-medical-info",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/new-boston-scientific-data-breach-exposes-personal-medical-info"
+      ],
+      "cves": [],
+      "id": "s2"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Suspected Vietnam-Linked Hackers Target Southeast Asia in South China Sea Espionage Campaign",
+      "url": "https://thehackernews.com/2026/11/suspected-vietnam-linked-hackers-target.html",
+      "publishedAt": "2026-11-27T16:36:11.000Z",
+      "excerpt": "A Vietnam-sponsored hacking group has been attributed to attacks targeting Southeast Asian military, government, and legislative organizations with an aim to gather intelligence on South China Sea defense and military agreements. The previously undocumented incursion set, detailed by SOCRadar, has been codenamed WeaveLotus. The activity is assessed to have comprised five intrusions in Thailand",
+      "canonicalUrl": "https://thehackernews.com/2026/11/suspected-vietnam-linked-hackers-target.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/suspected-vietnam-linked-hackers-target.html"
+      ],
+      "cves": [],
+      "id": "s4"
+    },
+    {
+      "sourceId": "darkreading",
+      "sourceKind": "rss",
+      "title": "Matters.AI Lands India’s Largest Cybersecurity Pre-Series A Round to Fight AI Data Risks",
+      "url": "https://www.darkreading.com/cyber-risk/matters-india-cybersecurity-pre-series-ai-data-risks",
+      "publishedAt": "2026-11-27T15:27:20.000Z",
+      "excerpt": "The security startup consolidates four legacy security tools into an autonomous platform that uses context-aware AI to trace sensitive data lineage, analyze user intent, and automatically remediate threats across enterprise environments.",
+      "canonicalUrl": "https://darkreading.com/cyber-risk/matters-india-cybersecurity-pre-series-ai-data-risks",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://darkreading.com/cyber-risk/matters-india-cybersecurity-pre-series-ai-data-risks"
+      ],
+      "cves": [],
+      "id": "s5"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Your Firewall Isn't Enough: The Hidden Risk of Unmanaged VMs",
+      "url": "https://www.bleepingcomputer.com/news/security/your-firewall-isnt-enough-the-hidden-risk-of-unmanaged-vms/",
+      "publishedAt": "2026-11-27T15:00:10.000Z",
+      "excerpt": "Forgotten virtual machines, unpatched servers, and excessive access permissions can create security blind spots across IT infrastructure. ISPsystem explains how centralized infrastructure management, access controls, and resource lifecycle automation can help reduce these risks. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/your-firewall-isnt-enough-the-hidden-risk-of-unmanaged-vms",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/your-firewall-isnt-enough-the-hidden-risk-of-unmanaged-vms"
+      ],
+      "cves": [],
+      "id": "s7"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Malwarebytes Antivirus: Get 50% off during Black Friday 2026",
+      "url": "https://www.bleepingcomputer.com/news/security/malwarebytes-antivirus-get-50-percent-off-during-black-friday-2026/",
+      "publishedAt": "2026-11-27T14:22:06.000Z",
+      "excerpt": "Malwarebytes' 2026 Black Friday and Cyber Monday sale is now live, offering 50% off security subscriptions for individuals, families, and small businesses, including its antivirus software, VPN, identity theft protection, and personal data removal services. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/malwarebytes-antivirus-get-50-percent-off-during-black-friday-2026",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/malwarebytes-antivirus-get-50-percent-off-during-black-friday-2026"
+      ],
+      "cves": [],
+      "id": "s8"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Japan’s education ministry discloses breach of government procurement system",
+      "url": "https://therecord.media/japan-education-ministry-cyberattack",
+      "publishedAt": "2026-11-27T14:15:00.000Z",
+      "excerpt": "Japan’s education ministry disclosed earlier this week that hackers breached its government procurement system, potentially exposing records containing business information and email addresses.",
+      "canonicalUrl": "https://therecord.media/japan-education-ministry-cyberattack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/japan-education-ministry-cyberattack"
+      ],
+      "cves": [],
+      "id": "s9"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Microsoft Store App Found Delivering Vinci RAT Capable of Remote System Control",
+      "url": "https://thehackernews.com/2026/11/microsoft-store-app-found-delivering.html",
+      "publishedAt": "2026-11-27T11:49:34.000Z",
+      "excerpt": "Cybersecurity researchers have disclosed details of a cyber attack in which a threat actor leveraged a Microsoft Store application to deliver a remote access trojan (RAT) called Vinci RAT. The intrusion, according to eSentire, begins with a redirection to a bogus site for a sniping tool (\"snipp.codes-team[.]com\"), from where a Microsoft-signed installer called \"Snipping-Tool.exe\" is",
+      "canonicalUrl": "https://thehackernews.com/2026/11/microsoft-store-app-found-delivering.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/microsoft-store-app-found-delivering.html"
+      ],
+      "cves": [],
+      "id": "s12"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft removes WSUS server role in Windows Server 2028",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-removes-wsus-server-role-in-windows-server-2028/",
+      "publishedAt": "2026-11-27T11:18:36.000Z",
+      "excerpt": "Microsoft will remove the WSUS server role from Windows Server 2028, the next major release of its server operating system. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/microsoft-removes-wsus-server-role-in-windows-server-2028",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/microsoft/microsoft-removes-wsus-server-role-in-windows-server-2028"
+      ],
+      "cves": [],
+      "id": "s13"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "In Other News: Tanker Cyberattacks, EU Quantum Act, New VirusTotal Capabilities",
+      "url": "https://www.securityweek.com/in-other-news-tanker-cyberattacks-eu-quantum-act-new-virustotal-capabilities/",
+      "publishedAt": "2026-11-27T11:00:00.000Z",
+      "excerpt": "Noteworthy stories that might have slipped under the radar: RansomwareHelp accused of profiting from ransom payments, USDA payment systems breach, cybersecurity firm Radware hacked. The post In Other News: Tanker Cyberattacks, EU Quantum Act, New VirusTotal Capabilities appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/in-other-news-tanker-cyberattacks-eu-quantum-act-new-virustotal-capabilities",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/in-other-news-tanker-cyberattacks-eu-quantum-act-new-virustotal-capabilities"
+      ],
+      "cves": [],
+      "id": "s14"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "How to Keep Your Security Picture Current When Attackers Move at AI Speed",
+      "url": "https://thehackernews.com/2026/11/how-to-keep-your-security-picture.html",
+      "publishedAt": "2026-11-27T10:32:18.000Z",
+      "excerpt": "Most security metrics are not built to be used. They are built to be shown. Somewhere between the quarterly review and the next status update, a set of numbers gets assembled that looks reassuring in a room and tells almost no one what is actually happening across the environment that week. Someone pulls them together the week before, cleans them up, and presents a picture of a program that is,",
+      "canonicalUrl": "https://thehackernews.com/2026/11/how-to-keep-your-security-picture.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/how-to-keep-your-security-picture.html"
+      ],
+      "cves": [],
+      "id": "s15"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "SAP confirms security incident after suspicious GitHub activity",
+      "url": "https://www.bleepingcomputer.com/news/security/sap-confirms-security-incident-after-suspicious-github-activity/",
+      "publishedAt": "2026-11-27T09:56:36.000Z",
+      "excerpt": "SAP has confirmed to BleepingComputer that it took urgent action to protect its customers after detecting suspicious activity in its IT environment. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/security/sap-confirms-security-incident-after-suspicious-github-activity",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/security/sap-confirms-security-incident-after-suspicious-github-activity"
+      ],
+      "cves": [],
+      "id": "s17"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "100,000 Potentially Impacted by Colorado Data Breach",
+      "url": "https://www.securityweek.com/100000-potentially-impacted-by-colorado-data-breach/",
+      "publishedAt": "2026-11-27T09:30:54.000Z",
+      "excerpt": "Hackers breached the digital identification and document storage application myColorado and accessed user-uploaded data. The post 100,000 Potentially Impacted by Colorado Data Breach appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/100000-potentially-impacted-by-colorado-data-breach",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/100000-potentially-impacted-by-colorado-data-breach"
+      ],
+      "cves": [],
+      "id": "s18"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "Microsoft pushes emergency hotpatch to fix Windows Server crashes",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/new-out-of-band-oob-emergency-hotpatch-fixes-windows-server-2025-crashes/",
+      "publishedAt": "2026-11-27T09:08:16.000Z",
+      "excerpt": "Microsoft has released an emergency hotpatch update to address Windows Server 2025 crashes triggered after installing this month's security hotpatch update (KB5131077). [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/microsoft/new-out-of-band-oob-emergency-hotpatch-fixes-windows-server-2025-crashes",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/microsoft/new-out-of-band-oob-emergency-hotpatch-fixes-windows-server-2025-crashes"
+      ],
+      "cves": [],
+      "id": "s20"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "Hex Package Manager Warns of Potential Data Breach",
+      "url": "https://www.securityweek.com/hex-package-manager-warns-of-potential-data-breach/",
+      "publishedAt": "2026-11-27T07:44:49.000Z",
+      "excerpt": "A vulnerability in hex.pm allowed hackers to run commands on web servers. No evidence of data modification was found, but database reads are not logged. The post Hex Package Manager Warns of Potential Data Breach appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/hex-package-manager-warns-of-potential-data-breach",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/hex-package-manager-warns-of-potential-data-breach"
+      ],
+      "cves": [],
+      "id": "s22"
+    },
+    {
+      "sourceId": "securityweek",
+      "sourceKind": "rss",
+      "title": "SAP Confirms Cyberattack, Source Code Reportedly Compromised",
+      "url": "https://www.securityweek.com/sap-confirms-cyberattack-source-code-reportedly-compromised/",
+      "publishedAt": "2026-11-27T07:36:14.000Z",
+      "excerpt": "SAP has detected suspicious activity on GitHub, where hackers reportedly used stolen employee tokens to copy and alter source code. The post SAP Confirms Cyberattack, Source Code Reportedly Compromised appeared first on SecurityWeek.",
+      "canonicalUrl": "https://securityweek.com/sap-confirms-cyberattack-source-code-reportedly-compromised",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://securityweek.com/sap-confirms-cyberattack-source-code-reportedly-compromised"
+      ],
+      "cves": [],
+      "id": "s23"
+    },
+    {
+      "sourceId": "thehackernews",
+      "sourceKind": "rss",
+      "title": "Unpatched Cacti Zero-Day Enables RCE in Just Four HTTP Requests via Guest Access",
+      "url": "https://thehackernews.com/2026/11/unpatched-cacti-zero-day-enables-rce-in.html",
+      "publishedAt": "2026-11-27T05:48:20.000Z",
+      "excerpt": "Details have emerged about a new zero-day vulnerability in Cacti, an open-source network monitoring tool, that could be exploited to achieve remote code execution. The proof-of-concept (PoC) exploit, which has yet to be assigned a CVE identifier, has been tracked as 4HTTP2SHELL and 4HTTP2ROOT. \"I found a path from a fresh, unauthenticated HTTP session to command execution as the Cacti server",
+      "canonicalUrl": "https://thehackernews.com/2026/11/unpatched-cacti-zero-day-enables-rce-in.html",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://thehackernews.com/2026/11/unpatched-cacti-zero-day-enables-rce-in.html"
+      ],
+      "cves": [],
+      "id": "s25"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "Cyberattack disrupts global news distribution platform at France’s AFP",
+      "url": "https://therecord.media/france-afp-hit-by-cyberattack",
+      "publishedAt": "2026-11-27T00:00:00.000Z",
+      "excerpt": "French international news agency Agence France-Presse was hit by a cyberattack Thursday, forcing it to take offline one of its main platforms for distributing news content to media organizations worldwide.",
+      "canonicalUrl": "https://therecord.media/france-afp-hit-by-cyberattack",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/france-afp-hit-by-cyberattack"
+      ],
+      "cves": [],
+      "id": "s26"
+    },
+    {
+      "sourceId": "therecord",
+      "sourceKind": "rss",
+      "title": "British government takes services offline following ‘cyber incident’",
+      "url": "https://therecord.media/uk-department-work-pensions-cyber-incident",
+      "publishedAt": "2026-11-27T00:00:00.000Z",
+      "excerpt": "The Department for Work and Pensions said Friday that it had experienced a cyber incident, with several services taken down as a precaution.",
+      "canonicalUrl": "https://therecord.media/uk-department-work-pensions-cyber-incident",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://therecord.media/uk-department-work-pensions-cyber-incident"
+      ],
+      "cves": [],
+      "id": "s27"
+    },
+    {
+      "sourceId": "bleepingcomputer",
+      "sourceKind": "rss",
+      "title": "OpenAI warns GPT-6.2 Astra will hit usage limits 40% faster because it fixed a bug",
+      "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/openai-warns-gpt-62-astra-will-hit-usage-limits-40-percent-faster-because-it-fixed-a-bug/",
+      "publishedAt": "2026-11-26T21:06:22.000Z",
+      "excerpt": "OpenAI confirmed that it fixed a 'bug' that incorrectly discounted GPT-6.2 usage, which means you'll now hit GPT usage limits 40% faster than before. [...]",
+      "canonicalUrl": "https://bleepingcomputer.com/news/artificial-intelligence/openai-warns-gpt-62-astra-will-hit-usage-limits-40-percent-faster-because-it-fixed-a-bug",
+      "alsoCoveredBy": [],
+      "memberCanonicalUrls": [
+        "https://bleepingcomputer.com/news/artificial-intelligence/openai-warns-gpt-62-astra-will-hit-usage-limits-40-percent-faster-because-it-fixed-a-bug"
+      ],
+      "cves": [],
+      "id": "s28"
+    }
+  ],
+  "usage": {
+    "model": "deepseek-v4-flash",
+    "promptCacheHitTokens": 1280,
+    "promptCacheMissTokens": 8248,
+    "outputTokens": 4894,
+    "estimatedCostUsd": 0.002528624
+  }
+}

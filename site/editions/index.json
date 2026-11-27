@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-11-27",
+    "mode": "article",
+    "headline": "Drupal and GeoServer join KEV as a 9.8 Linux root bug surfaces",
+    "count": 28
+  },
+  {
     "date": "2026-11-26",
     "mode": "article",
     "headline": "Juniper's 9.8 command injection and a Drupal core takeover flaw anchor active exploitation",
